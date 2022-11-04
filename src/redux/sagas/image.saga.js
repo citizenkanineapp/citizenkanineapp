@@ -8,7 +8,7 @@ function* uploadImage(action){
     try{
         const image = yield axios({
             method: 'POST',
-            url: '/api/upload',
+            url: '/api/image',
             data: action.payload
         })
         yield put ({type: 'FETCH_IMAGE'});

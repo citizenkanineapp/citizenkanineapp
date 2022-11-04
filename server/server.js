@@ -12,7 +12,11 @@ const userRouter = require('./routes/user.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ 
+  limit: '50mb',
+  extended: true,
+  parameterLimit:50000
+}));
 
 // Passport Session Configuration //
 app.use(sessionMiddleware);

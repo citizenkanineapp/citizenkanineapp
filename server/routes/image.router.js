@@ -25,11 +25,13 @@ router.get('/', (req, res) => {
 //    console.log(req.body)
     try{
         const fileStr = req.body.new_image_url;
-        // console.log(fileStr);
+        // need to either configure upload_preset
+        //or remove.  Does not seem to be doing anything
         const uploadResponse = await cloudinary.uploader.upload(fileStr, {
-            upload_preset: 'citizen_kanine',
+            upload_preset: 'dog_photos',
+            folder: 'dog_photos',
         });
-        console.log(uploadResponse);
+        console.log('url for photo:', uploadResponse.url);
         res.send(uploadResponse.url);
         // const queryTxt = `
         //     INSERT INTO image ("image_url")

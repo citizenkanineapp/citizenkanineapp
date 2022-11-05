@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageUpload from '../AllPages/ImageUpload/ImageUpload';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import {useSelector} from 'react-redux';
 
@@ -9,6 +10,7 @@ function UserPage() {
     <div className="container">
       <h2>Welcome, {user.username}!</h2>
       <p>Your ID is: {user.id}</p>
+      <ImageUpload />
       <LogOutButton className="btn" />
     </div>
   );

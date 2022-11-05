@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
+//for testing of Image Upload
+import ImageUpload from '../AllPages/ImageUpload/ImageUpload';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
@@ -17,8 +19,8 @@ import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
+import LoginPage from '../Login/LoginPage/LoginPage';
+import RegisterPage from '../Login/RegisterPage/RegisterPage';
 
 import './App.css';
 

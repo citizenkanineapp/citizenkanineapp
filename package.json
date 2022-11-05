@@ -7,6 +7,9 @@
     "node": "16.x"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.10.12",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.32.0",

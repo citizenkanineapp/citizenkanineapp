@@ -7,10 +7,6 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const {cloudinary } = require('../modules/cloudinary.js');
 
-//maybe don't need this here AND server
-// router.use(express.json({limit: '50mb'}));
-// router.use(express.urlencoded({limit: '50mb', extended: true}))
-
 /**
  * GET route template
  */
@@ -33,13 +29,8 @@ router.get('/', (req, res) => {
         });
         console.log('url for photo:', uploadResponse.url);
         res.send(uploadResponse.url);
-        // const queryTxt = `
-        //     INSERT INTO image ("image_url")
-        //     VALUES
-        //     ($1);
-        // `
-        // const queryValues= [uploadResponse.url]
-        // pool.query(queryTxt, queryValues)
+        //I think no post to database is needed.  Will 
+        //post to database with dog registration
     } catch (error){
         console.log(error)
         res.sendStatus(500);

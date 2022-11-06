@@ -1,32 +1,22 @@
-DATABASE NAME: citizen_kanine
+-- DATABASE NAME: citizen_kanine
 -- USER is a reserved keyword with Postgres
 -- You must use double quotes in every query that user is in:
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
 
-DROP TABLE IF EXISTS daily_dogs;
-DROP TABLE IF EXISTS dogs_schedule_changes;
-DROP TABLE IF EXISTS dogs_schedule;
-DROP TABLE IF EXISTS dogs;
-DROP TABLE IF EXISTS clients;
-DROP TABLE IF EXISTS routes;
-DROP TABLE IF EXISTS employees_schedule;
+
+-- ORDERING BASED ON DEPENDENT COLUMNS/SECTIONS:
 DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS employees;
+DROP TABLE IF EXISTS employees_schedule;
+DROP TABLE IF EXISTS clients;
+DROP TABLE IF EXISTS dogs;
+DROP TABLE IF EXISTS dogs_schedule;
+DROP TABLE IF EXISTS dogs_schedule_changes;
+DROP TABLE IF EXISTS daily_dogs;
+DROP TABLE IF EXISTS routes;
 DROP TABLE IF EXISTS admin_notes;
 
-
-
-
-CREATE TABLE employees (
-	"id" SERIAL PRIMARY KEY,
-	"first_name" VARCHAR(150) NOT NULL,
-	"last_name" VARCHAR(150), -- not sure if we want to require a last name
-	"email" VARCHAR(150) NOT NULL,
-	"phone" INT NOT NULL, 
-	"image" VARCHAR,
-	"date" DATE DEFAULT CURRENT_DATE
-	);
 
 
 CREATE TABLE "user" (
@@ -34,16 +24,21 @@ CREATE TABLE "user" (
 	"emp_id" INT REFERENCES employees(id) ON DELETE CASCADE,
 	"username" VARCHAR(150) NOT NULL,
 	"password" VARCHAR(150) NOT NULL,
-	"email" VARCHAR(150) NOT NULL,
+	"email" VARCHAR(300), -- LATER CHANGE TO NOT NULL
 	"admin" BOOLEAN DEFAULT NULL,
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	
-	
-CREATE TABLE admin_notes (
+
+
+CREATE TABLE employees (
 	"id" SERIAL PRIMARY KEY,
-	"user_id" INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
-	"notes" VARCHAR
+	"first_name" VARCHAR(150) NOT NULL,
+	"last_name" VARCHAR(150), 
+	"email" VARCHAR(150) NOT NULL,
+	"phone" INT NOT NULL, 
+	"image" VARCHAR,
+	"date" DATE DEFAULT CURRENT_DATE
 	);
 
 
@@ -51,12 +46,6 @@ CREATE TABLE employees_schedule (
 	"id" SERIAL PRIMARY KEY,
 	"emp_id" INT NOT NULL REFERENCES employees(id) ON DELETE CASCADE ,
 	"date" DATE DEFAULT CURRENT_DATE
-	);
-
-
-CREATE TABLE routes (
-	"id" SERIAL PRIMARY KEY,
-	"name" VARCHAR(150)
 	);
 	
 	
@@ -72,7 +61,6 @@ CREATE TABLE clients (
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	
-
 
 CREATE TABLE dogs (
 	"id" SERIAL PRIMARY KEY,
@@ -118,14 +106,14 @@ CREATE TABLE daily_dogs (
 	);
 	
 	
+CREATE TABLE routes (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR(150)
+	);
 	
 	
-	
-	
-		
-		
-		
-		
-		
-		
-		
+CREATE TABLE admin_notes (
+	"id" SERIAL PRIMARY KEY,
+	"user_id" INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+	"notes" VARCHAR
+	);	

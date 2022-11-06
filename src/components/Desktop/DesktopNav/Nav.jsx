@@ -80,9 +80,9 @@ function Nav(props) {
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{mx: 4, px: 0, display: { sm: 'block' } }}
+              sx={{mx: 4, py: 1, display: { sm: 'block' } }}
             >
-              <MenuIcon sx={{ fontSize: "3rem", color: '#7BCEC8', px: 0, }} />
+              <MenuIcon sx={{ fontSize: "3rem", color: '#7BCEC8', p: 0, }} />
             </IconButton>
             <Typography
               variant="h4"

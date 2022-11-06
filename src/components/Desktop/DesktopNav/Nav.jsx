@@ -42,7 +42,7 @@ function Nav(props) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar component="nav">
+      <AppBar component="nav" >
         <Toolbar>
           <Button onClick={handleDrawerToggle} color='secondary'>+</Button>
           <IconButton

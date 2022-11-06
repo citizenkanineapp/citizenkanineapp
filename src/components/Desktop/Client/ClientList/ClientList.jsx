@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import '../../Desktop.css';
 
 //COMPONENTS
 import ClientModal from '../ClientModal/ClientModal';
@@ -31,8 +32,8 @@ function ClientList() {
 
 
   return (
-    <Box >
-      <h1>ClientList</h1>
+    <Box className="desktop_container">
+      <Typography variant="h4">ClientList</Typography> {/* should take out eventually */}
       <Grid container spacing={2} sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
         <Grid item xs={10}>
           <TextField
@@ -63,7 +64,7 @@ function ClientList() {
               <TableBody>
 
                 {/* EXAMPLE ROW THAT WOULD BE MAPPED */}
-                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>
+                <StyledTableRow hover onClick={() => openModal('ClientDetails')}> {/* FETCH CLIENT ROUTE */}
                   <TableCell>Lisa Frank</TableCell>
                   <TableCell>1234 Gates of Hell Dr.</TableCell>
                   <TableCell>2</TableCell>
@@ -71,7 +72,7 @@ function ClientList() {
                 </StyledTableRow>
                 {/* END OF EXAMPLE ROW */}
 
-                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>
+                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>  
                   <TableCell>Lisa Frank</TableCell>
                   <TableCell>1234 Gates of Hell Dr.</TableCell>
                   <TableCell>2</TableCell>

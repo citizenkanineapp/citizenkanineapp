@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LogOutButton from '../../AllPages/LogOutButton/LogOutButton';
 import './Nav.css';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
+import LogOutButton from '../../AllPages/LogOutButton/LogOutButton';
 
 // MUI IMPORTS
 import { Avatar, AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button } from '@mui/material';
@@ -64,7 +63,7 @@ function Nav(props) {
         </ListItem>
 
       </List>
-      <Button color='error' variant='contained'>Log Out</Button>
+      <LogOutButton />
     </Box>
   );
 
@@ -73,32 +72,34 @@ function Nav(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar component="nav" >
-        <Toolbar>
-          {/* <Button onClick={handleDrawerToggle} color='secondary'></Button> */}
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'block' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            Citizen Kanine
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'none' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
+        {user.id && (
+          <Toolbar>
+            {/* <Button onClick={handleDrawerToggle} color='secondary'></Button> */}
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'block' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            >
+              Citizen Kanine
+            </Typography>
+            <Box sx={{ display: { xs: 'none', sm: 'none' } }}>
+              {navItems.map((item) => (
+                <Button key={item} sx={{ color: '#fff' }}>
+                  {item}
+                </Button>
+              ))}
+            </Box>
+          </Toolbar>
+        )}
       </AppBar>
       <Box component="nav">
         <Drawer
@@ -117,7 +118,7 @@ function Nav(props) {
           {drawer}
         </Drawer>
       </Box>
-    </Box>
+    </Box >
   );
 }
 

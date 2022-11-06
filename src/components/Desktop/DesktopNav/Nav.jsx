@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import LogOutButton from '../../AllPages/LogOutButton/LogOutButton';
 import './Nav.css';
 
@@ -16,7 +16,7 @@ const drawerWidth = 350;
 const navItems = ['Home', 'Pack Leaders', 'Clients', 'Reports'];
 
 function Nav(props) {
-
+  const location = useLocation();
   const history = useHistory();
   const user = useSelector((store) => store.user);
 
@@ -29,7 +29,7 @@ function Nav(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', mt: 7 }}>
-      <Avatar sx={{ width: 200, height: 200, fontSize: 50 }}>ADMIN</Avatar>
+      <Avatar sx={{ width: 200, height: 200, fontSize: 50, ml: 10, mb: 5 }}>ADMIN</Avatar>
       <Divider />
       <List>
 
@@ -54,9 +54,9 @@ function Nav(props) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem>
+        <ListItem sx={{ mb: 40 }}>
           <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/invoice')}>
-            <EqualizerIcon sx={{ textAlign: 'flex-end' }}/>
+            <EqualizerIcon sx={{ textAlign: 'flex-end' }} />
             <ListItemText primary='reports' />
           </ListItemButton>
         </ListItem>
@@ -71,7 +71,7 @@ function Nav(props) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <AppBar component="nav" position='sticky'>
-     
+
         {user.id && (
           <Toolbar variant="dense">
             {/* <Button onClick={handleDrawerToggle} color='secondary'></Button> */}
@@ -80,7 +80,7 @@ function Nav(props) {
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{mx: 4, py: 1, display: { sm: 'block' } }}
+              sx={{ mx: 4, py: 1, display: { sm: 'block' } }}
             >
               <MenuIcon sx={{ fontSize: "3rem", color: '#7BCEC8', p: 0, }} />
             </IconButton>
@@ -89,7 +89,15 @@ function Nav(props) {
               component="div"
               sx={{ flexGrow: 1, pb: 0.5, display: { xs: 'none', sm: 'block' } }}
             >
-              CITIZEN KANINE
+              {/* CONDITIONAL RENDERING FOR APPBAR TITLE */}
+              {location.pathname === '/user' ? 'Citizen Kanine' : null}
+              {location.pathname === '/clients' ? 'Clients' : null}
+              {location.pathname === '/employees' ? 'Pack Leaders' : null}
+              {location.pathname === '/invoice' ? 'Invoice Tool' : null}
+              {/* END CONDITIONAL RENDERING */}
+
+
+
             </Typography>
             <Box sx={{ display: { xs: 'none', sm: 'none' } }}>
               {navItems.map((item) => (

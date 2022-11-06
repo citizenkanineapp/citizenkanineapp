@@ -6,8 +6,6 @@ import ClientModal from '../ClientModal/ClientModal';
 
 //MUI
 import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { styled } from '@mui/material/styles';
 
 // NO THESE COLORS AREN'T FINAL BUT WE DEF SHOULD HAVE SOME VISUAL CHANGE
@@ -72,7 +70,7 @@ function ClientList() {
                 </StyledTableRow>
                 {/* END OF EXAMPLE ROW */}
 
-                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>  
+                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>
                   <TableCell>Lisa Frank</TableCell>
                   <TableCell>1234 Gates of Hell Dr.</TableCell>
                   <TableCell>2</TableCell>

@@ -1,8 +1,12 @@
 //this is the file responsible for image upload
 //component
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+
+//MUI components
+import Avatar from '@mui/material/Avatar';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 function ImageUpload () {
     const dispatch = useDispatch();
@@ -10,6 +14,7 @@ function ImageUpload () {
     //useStates needed for image upload and image preview 
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
+    const fileInputRef = useRef();
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
@@ -44,19 +49,41 @@ function ImageUpload () {
     return(
         <div>
             <h1>Image Upload</h1>
-            <form onSubmit={handleSubmitFile}
-                className="form">
-                <input type="file" 
-                    name="image" 
-                    onChange={handleFileInputChange} 
-                    value={fileInputState}
-                    className="form-input"/>
-                <button className="btn" type="submit">Submit</button>
-            </form>
-                {previewSource && (
-                    <img src={previewSource} alt="preview of selected image"
-                    style={{height: '300px'}}/>
-                )}
+        
+                <form onSubmit={handleSubmitFile}
+                    className="form">
+                    {/* avatar onclick calls that useRef variable */}
+                    <Avatar
+                        onClick={()=>fileInputRef.current.click()}
+                        alt="New Dog Avatar"
+                        sx={{ width: 150, height: 150 }}
+                    >
+                    { previewSource ?
+                                <Avatar 
+                                    src={previewSource}
+                                    sx={{ width: 150, height: 150 }} />
+                            :
+                                <AddAPhotoIcon />
+                     }  
+                            </Avatar>
+                    {/* enable confirm photo button if there is an image preview, 
+                        otherwise button is disabled */}
+
+                        { previewSource ?
+                        <button type="submit" size="small" variant="outlined">Confirm</button>
+                        :
+                        <button disabled type="submit" size="small" variant="outlined">Confirm</button>
+                        }
+                    <input type="file" 
+                        hidden
+                        name="image" 
+                        onChange={handleFileInputChange} 
+                        value={fileInputState}
+                        ref={fileInputRef}
+                        className="form-input"/>
+                    {/* <button className="btn" type="submit">Submit</button> */}
+                </form>
+               
         </div>
     )
 }

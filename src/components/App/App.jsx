@@ -1,26 +1,33 @@
 import React, { useEffect } from 'react';
-import {
-  HashRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
-
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
-import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
-
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
-
 import './App.css';
+
+// MUI IMPORTS
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+
+
+//DESKTOP COMPONENTS
+import Nav from '../Desktop/DesktopNav/Nav';
+import AboutPage from '../AboutPage/AboutPage';
+import SplashPage from '../Desktop/SplashPage/SplashPage';
+import LoginPage from '../AllPages/Login/LoginPage/LoginPage';
+import RegisterPage from '../AllPages/Login/RegisterPage/RegisterPage';
+import Invoicing from '../Desktop/Invoicing/Invoicing';
+import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
+import ClientList from '../Desktop/Client/ClientList/ClientList';
+import EmployeeSchedule from '../Desktop/Employee/EmployeeSchedule/EmployeeSchedule';
+//MOBILE COMPONENTS
+import Home from '../Mobile/Home/Home';
+import Map from '../Mobile/MapView/MapView';
+import WalkerSchedule from '../Mobile/WalkerSchedule/WalkerSchedule';
+import Routes from '../Mobile/DailyRoutes/DailyRoutes';
+import LoadBalancing from '../Mobile/LoadBalancing/LoadBalancing';
+//MISC COMPONENTS
+import ImageUpload from '../AllPages/ImageUpload/ImageUpload';
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
+import { theme } from '../AllPages/Theme/Theme';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -33,90 +40,100 @@ function App() {
 
   return (
     <Router>
-      <div>
+      <ThemeProvider theme={theme}>
         <Nav />
-        <Switch>
-          {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+        <div>
+          <Switch>
 
-          {/* Visiting localhost:3000/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path="/about"
-          >
-            <AboutPage />
-          </Route>
+            {/* --------------------- REDIRECTIONS -------------------- */}
 
-          {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path="/user"
-          >
-            <UserPage />
-          </ProtectedRoute>
+            <Redirect exact from="/" to="/home" />
 
-          <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <InfoPage />
-          </ProtectedRoute>
+            {/* needs to be fixed for conditional rendering - screen sizes? */}
+            <Route exact path="/home">
+              {user.id ?  // "/user" --> splash page
+                <Redirect to="/user" />
+                :
+                <LoginPage />}
+            </Route>
 
-          <Route
-            exact
-            path="/login"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect to the /user page
-              <Redirect to="/user" />
-              :
-              // Otherwise, show the login page
-              <LoginPage />
-            }
-          </Route>
+            {/* needs to be fixed for conditional rendering - screen sizes? */}
+            <Route exact path="/login">
+              {user.id ? // "/user" --> splash page
+                <Redirect to="/user" />
+                :
+                <LoginPage />}
+            </Route>
 
-          <Route
-            exact
-            path="/registration"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
-              :
-              // Otherwise, show the registration page
-              <RegisterPage />
-            }
-          </Route>
+            {/* just for building the app, should be worked into add employee */}
+            <Route exact path="/registration">
+              {user.id ? // "/user" --> splash page
+                <Redirect to="/user" />
+                :
+                <RegisterPage />}
+            </Route>
 
-          <Route
-            exact
-            path="/home"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
-              :
-              // Otherwise, show the Landing page
-              <LandingPage />
-            }
-          </Route>
 
-          {/* If none of the other routes matched, we will show a 404. */}
-          <Route>
-            <h1>404</h1>
-          </Route>
-        </Switch>
-        <Footer />
-      </div>
+            {/* ----------------------- DESKTOP ----------------------- */}
+
+            {/* only needed for presentation */}
+            <Route exact path="/about">
+              <AboutPage />
+            </Route>
+
+            <ProtectedRoute exact path="/user">
+              <SplashPage />
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/invoice">
+              <Invoicing />
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/employees">
+              <EmployeeList />
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/schedule">
+              <EmployeeSchedule/>
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/clients">
+              <ClientList/>
+            </ProtectedRoute>
+
+            {/* ----------------------- MOBILE ----------------------- */}
+
+            <ProtectedRoute exact path="/m/user">
+              <Home/>
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/m/map">
+              <Map/>
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/m/employees">
+              <WalkerSchedule/>
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/m/routes">
+              <Routes/>
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/m/routes/admin">
+              <LoadBalancing/>
+            </ProtectedRoute>
+
+            {/* ----------------------------------------------------- */}
+
+            {/* No matching routes: return 404. */}
+            <Route>
+              <h1>404</h1>
+            </Route>
+
+          </Switch>
+
+        </div>
+      </ThemeProvider>
     </Router>
   );
 }

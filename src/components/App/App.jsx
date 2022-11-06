@@ -16,10 +16,11 @@ import RegisterPage from '../AllPages/Login/RegisterPage/RegisterPage';
 import Invoicing from '../Desktop/Invoicing/Invoicing';
 import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
 import ClientList from '../Desktop/Client/ClientList/ClientList';
+import EmployeeSchedule from '../Desktop/Employee/EmployeeSchedule/EmployeeSchedule';
 //MOBILE COMPONENTS
 import Home from '../Mobile/Home/Home';
 import Map from '../Mobile/MapView/MapView';
-import EmployeeSchedule from '../Mobile/EmployeeSchedule/EmployeeSchedule';
+import WalkerSchedule from '../Mobile/WalkerSchedule/WalkerSchedule';
 import Routes from '../Mobile/DailyRoutes/DailyRoutes';
 import LoadBalancing from '../Mobile/LoadBalancing/LoadBalancing';
 //MISC COMPONENTS
@@ -92,34 +93,34 @@ function App() {
               <EmployeeList />
             </ProtectedRoute>
 
-          <ProtectedRoute exact path="/schedule">
-            <EmployeeSchedule/>
-          </ProtectedRoute>
+            <ProtectedRoute exact path="/schedule">
+              <EmployeeSchedule/>
+            </ProtectedRoute>
 
-          <ProtectedRoute exact path="/clients">
-            <ClientList/>
-          </ProtectedRoute>
+            <ProtectedRoute exact path="/clients">
+              <ClientList/>
+            </ProtectedRoute>
 
             {/* ----------------------- MOBILE ----------------------- */}
 
             <ProtectedRoute exact path="/m/user">
-              <Home />
+              <Home/>
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/map">
-              <Map />
+              <Map/>
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/employees">
-              <EmployeeSchedule />
+              <WalkerSchedule/>
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/routes">
-              <Routes />
+              <Routes/>
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/routes/admin">
-              <LoadBalancing />
+              <LoadBalancing/>
             </ProtectedRoute>
 
             {/* ----------------------------------------------------- */}

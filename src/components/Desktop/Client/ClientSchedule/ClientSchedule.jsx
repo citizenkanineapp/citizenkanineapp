@@ -14,11 +14,19 @@ function ClientSchedule() {
 
   const [walk, setWalk] = useState(false);
 
+  // this should gather info on what days are clicked to adjust the weekly schedule...
+  // currently only works for one day
   const handleClick = (event) => {
     // toggle
     setWalk(current => !current);
-    // console.log(event.target.value)
+    console.log(event)
   };
+
+
+  // this should eventually dispatch to a saga with all of these values or whatever
+  const handleSubmit = (event) => {
+    console.log(`${dog}, ${value}, ${action}`)
+  }
 
   // NEEDS LOGIC FOR WEEKLY SCHEDULE STUFF BUT I DIDN'T WANT TO START A REDUCER AND ALL THAT
 
@@ -28,7 +36,7 @@ function ClientSchedule() {
       <h2>Weekly Schedule</h2>
       <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
         <Grid item xs={2}>
-          <Card raised onClick={(event) => handleClick()} value={'Monday'}>
+          <Card raised onClick={(event) => handleClick('Monday')} >
             <CardContent sx={{ backgroundColor: walk ? '#7BCEC8' : null }}>
               Monday
             </CardContent>
@@ -94,7 +102,7 @@ function ClientSchedule() {
           </FormControl>
           {/* THIS IS JUST A VIEW FOR THE DATE PICKER */}
           <TextField value={value} fullWidth sx={{ mr: 4, pb: 1 }}></TextField>
-          <Button variant='contained' color='secondary'>Submit</Button>
+          <Button variant='contained' color='secondary' onClick={handleSubmit}>Submit</Button>
         </Grid>
         <Grid item xs={6}>
           <Calendar onChange={onChange} value={value} />

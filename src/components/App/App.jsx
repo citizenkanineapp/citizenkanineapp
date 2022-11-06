@@ -92,9 +92,13 @@ function App() {
               <EmployeeList />
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/clients">
-              <ClientList />
-            </ProtectedRoute>
+          <ProtectedRoute exact path="/schedule">
+            <EmployeeSchedule/>
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/clients">
+            <ClientList/>
+          </ProtectedRoute>
 
             {/* ----------------------- MOBILE ----------------------- */}
 

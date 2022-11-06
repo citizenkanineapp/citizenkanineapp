@@ -11,6 +11,17 @@ const client = (state = '', action) => {
     }
   };
 
+const employee = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_EMPLOYEE_MODAL':
+      return action.payload;
+    case 'CLEAR_MODALS':
+      return '';
+    default:
+      return state;
+  }
+};
+
 const status = (state = false, action) => {
   switch (action.type) {
     case 'SET_MODAL_STATUS':
@@ -24,6 +35,7 @@ const status = (state = false, action) => {
 
 const modalReducer = combineReducers({
     client,
+    employee,
     status,
 });
  

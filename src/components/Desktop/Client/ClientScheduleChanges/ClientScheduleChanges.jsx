@@ -7,8 +7,8 @@ function ClientScheduleChanges(){
 
   return (
     <div className="container">
-        <h2 id="parent-modal-title">Client Schedule</h2>
-        <p id="parent-modal-description">Here is the schedule form.</p>
+        <h2>Client Schedule</h2>
+        <p>Here is the schedule form.</p>
         <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule'})}>Back</Button>
         <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Save</Button> {/*PUT ROUTE*/}
     </div>

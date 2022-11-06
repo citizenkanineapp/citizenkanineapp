@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 //COMPONENTS
@@ -41,8 +40,8 @@ function ClientModal(){
       case "AddDogForm": return <AddDogForm/>
       case "DogDetails": return <DogDetails/>
       case "EditDogForm": return <EditDogForm/>
-      case "ClientDetails": return<ClientDetails/>
-      default: return<ClientDetails/>
+      case "ClientDetails": return <ClientDetails/>
+      default: return <ClientDetails/>
     };
   };
  

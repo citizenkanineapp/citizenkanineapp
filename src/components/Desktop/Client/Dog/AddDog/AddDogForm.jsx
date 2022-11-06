@@ -10,7 +10,7 @@ function DogDetails(){
           <h1>Add Dog</h1>
           <p>Name: _____________</p>
           <p>Notes: ______________________________.</p>
-          <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>Cancel</Button> 
+          <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Cancel</Button> 
           <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Save</Button> {/*PUT ROUTE*/}
         </div>
       );

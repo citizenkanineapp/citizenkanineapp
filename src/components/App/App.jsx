@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 
 // MUI IMPORTS
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-
+import { ThemeProvider } from '@mui/material/styles';
 
 //DESKTOP COMPONENTS
 import Nav from '../Desktop/DesktopNav/Nav';
+import NavTransition from '../Desktop/DesktopNav/NavTransition';
 import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
 import LoginPage from '../AllPages/Login/LoginPage/LoginPage';
@@ -41,36 +41,38 @@ function App() {
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <Nav />
-        <div>
+        <div className="app_body">
+      
+        <Nav/>
+        <NavTransition/>
           <Switch>
 
             {/* --------------------- REDIRECTIONS -------------------- */}
 
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to="/home"/>
 
             {/* needs to be fixed for conditional rendering - screen sizes? */}
             <Route exact path="/home">
               {user.id ?  // "/user" --> splash page
-                <Redirect to="/user" />
+                <Redirect to="/user"/>
                 :
-                <LoginPage />}
+                <LoginPage/>}
             </Route>
 
             {/* needs to be fixed for conditional rendering - screen sizes? */}
             <Route exact path="/login">
               {user.id ? // "/user" --> splash page
-                <Redirect to="/user" />
+                <Redirect to="/user"/>
                 :
-                <LoginPage />}
+                <LoginPage/>}
             </Route>
 
             {/* just for building the app, should be worked into add employee */}
             <Route exact path="/registration">
               {user.id ? // "/user" --> splash page
-                <Redirect to="/user" />
+                <Redirect to="/user"/>
                 :
-                <RegisterPage />}
+                <RegisterPage/>}
             </Route>
 
 
@@ -78,19 +80,19 @@ function App() {
 
             {/* only needed for presentation */}
             <Route exact path="/about">
-              <AboutPage />
+              <AboutPage/>
             </Route>
 
             <ProtectedRoute exact path="/user">
-              <SplashPage />
+              <SplashPage/>
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/invoice">
-              <Invoicing />
+              <Invoicing/>
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/employees">
-              <EmployeeList />
+              <EmployeeList/>
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/schedule">
@@ -131,7 +133,6 @@ function App() {
             </Route>
 
           </Switch>
-
         </div>
       </ThemeProvider>
     </Router>

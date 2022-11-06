@@ -21,7 +21,7 @@ function ClientForm(){
             </div>
             
             <Button onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Cancel</Button>         
-            <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL' })}>Save</Button>  {/* PUT ROUTE */}                                                                                         
+            <Button onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Save</Button>  {/* PUT ROUTE */}                                                                                         
 
       </div>
     );

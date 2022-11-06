@@ -94,6 +94,8 @@ function Nav(props) {
               {location.pathname === '/clients' ? 'Clients' : null}
               {location.pathname === '/employees' ? 'Pack Leaders' : null}
               {location.pathname === '/invoice' ? 'Invoice Tool' : null}
+              {location.pathname === '/schedule' ? 'Employee Schedule' : null}
+
               {/* END CONDITIONAL RENDERING */}
 
 

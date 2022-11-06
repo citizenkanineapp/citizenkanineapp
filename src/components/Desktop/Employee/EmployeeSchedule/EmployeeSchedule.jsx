@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 //MUI
 import Button from '@mui/material/Button';
 
-function ClientSchedule(){
+function EmployeeSchedule(){
   const dispatch = useDispatch();
   const openModal = (view) => {
     dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: view }); //assures the view to be the right component
@@ -13,7 +13,7 @@ function ClientSchedule(){
  return (
   <div className="container">
 
-    <h1>Client Schedule</h1>
+    <h1>Employee Schedule</h1>
     <p onClick={() => openModal('EmployeeDetails')}>Dolly Parton - Click me</p> 
     <Button>Submit</Button> {/*POST ROUTE*/}
 
@@ -22,4 +22,4 @@ function ClientSchedule(){
  )    
 }
 
-export default ClientSchedule;
+export default EmployeeSchedule;

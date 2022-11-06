@@ -40,10 +40,10 @@ function ClientForm(){
 
             {/*-------------------- DOG PICTURES --------------------*/}
             <Grid sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-              <Card sx={{width: '100%', m: 1}}>
+              <Card sx={{width: '100%', m: 1}}
+                    onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size="small" variant="outlined"
-                            onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
+                        <Button size="small" variant="outlined">
                               Bandit
                         </Button>
                   </CardActions>
@@ -51,10 +51,10 @@ function ClientForm(){
                     image="https://m8r6w9i6.rocketcdn.me/wp-content/uploads/2020/09/Australian-Cattle-Dog.jpeg.webp"/>
               </Card>
 
-              <Card sx={{ width: '100%', m: 1 }}>
+              <Card sx={{ width: '100%', m: 1 }}
+                    onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size="small" variant="outlined"
-                            onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
+                        <Button size="small" variant="outlined">
                               Maggie
                         </Button>
                   </CardActions>
@@ -62,7 +62,7 @@ function ClientForm(){
                     image="https://images.ctfassets.net/sfnkq8lmu5d7/2jiEB2xKaHaQh5DLuT3lMI/204094de400b9dc16f0a8b20bc81ef68/The-Wildest_Editorial_Canine_Vertigo_is_Treatable_but_Scary_to_Witness_Hero.jpg?w=700&h=525&fl=progressive&q=80&fm=jpg"/>
               </Card>
               
-              
+
               {/*------------------ ADD DOG EXAMPLE ------------------*/}
               <Card sx={{ width: '100%', m: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
                   <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "rgb(227, 218, 216, 0.5)", width: "89%", height: "90%", borderRadius: "0.5rem" }} alt="add dog button" 

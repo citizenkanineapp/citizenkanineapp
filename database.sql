@@ -106,7 +106,7 @@ CREATE TABLE dogs (
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 
---** DOGS MOCK DATA **--
+--** Dogs MOCK DATA **--
 insert into dogs 
 	(client_id, name, vet_name, vet_phone) 
 values
@@ -133,15 +133,36 @@ values
 	(3, 'Sheffield', 'Sheffield Crothers', '(430) 5630934');
 	
 -- ** Changed table name to client_schedule since the days will be set for the client and changes will be made to individual dogs.
+-- ** Changed the weekday column titles from m-f to (1-5) to make using MUI calendar data easier.
 CREATE TABLE clients_schedule (
 	"id" SERIAL PRIMARY KEY,
 	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
-	"monday" BOOLEAN DEFAULT FALSE,
-	"tuesday" BOOLEAN DEFAULT FALSE,
-	"wednesday" BOOLEAN DEFAULT FALSE,
-	"thursday" BOOLEAN DEFAULT FALSE,
-	"friday" BOOLEAN DEFAULT FALSE
+	"1" BOOLEAN DEFAULT FALSE,
+	"2" BOOLEAN DEFAULT FALSE,
+	"3" BOOLEAN DEFAULT FALSE,
+	"4" BOOLEAN DEFAULT FALSE,
+	"5" BOOLEAN DEFAULT FALSE
 	);
+
+--** Clients Schedule MOCK DATA **--
+insert into clients_schedule
+	("client_id", "1", "2", "3", "4", "5") 
+values
+	(1, true, true, false, true, true),
+	(2, false, true, false, false, false),
+	(3, false, false, false, false, false),
+	(4, true, true, true, false, true),
+	(5, false, false, false, true, true),
+	(6, false, true, true, true, false),
+	(7, true, true, true, true, false),
+	(8, true, false, false, false, true),
+	(9, false, true, false, false, false),
+	(10, false, false, false, true, true),
+	(11, true, false, false, true, true),
+	(12, false, false, false, true, true),
+	(13, true, false, true, true, true),
+	(14, false, true, true, false, true),
+	(15, true, true, false, true, false);
 	
 	
 CREATE TABLE dogs_schedule_changes (

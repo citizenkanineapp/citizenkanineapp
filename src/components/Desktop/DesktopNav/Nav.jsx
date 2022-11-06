@@ -71,7 +71,7 @@ function Nav(props) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar component="nav" >
+      <AppBar component="nav" position='sticky'>
         {user.id && (
           <Toolbar>
             {/* <Button onClick={handleDrawerToggle} color='secondary'></Button> */}

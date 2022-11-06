@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import EmployeeModal from "../EmployeeModal/EmployeeModal";
 
 //MUI
-import Button from '@mui/material/Button';
+import { Box, Button, Typography } from '@mui/material';
 
 function EmployeeList(){
   const dispatch = useDispatch();
@@ -16,15 +16,15 @@ function EmployeeList(){
   }
 
   return (
-    <div className="container">
-        <h1>Employees</h1>
+    <Box className="desktop_container">
+      <Typography variant="h4">Employees</Typography>
 
       <Button onClick={() => openModal('EmployeeDetails')}>DOLLY PARTON - ID: 12345 - (666)-666-6666 - working9to5@gmail.com </Button>  {/*opens employee details*/}
       <Button onClick={() => openModal('AddEmployee')}>Add Employee</Button> 
       <Button onClick={() => history.push('/schedule')}>Schedule</Button>
 
       <EmployeeModal/> {/* only open when button is pressed */}
-    </div>
+    </Box>
   );
 
 }

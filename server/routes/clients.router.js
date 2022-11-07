@@ -11,7 +11,7 @@ const {
  * GET route template
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
-  console.log('arrived in server get all route')
+//   console.log('arrived in server get all route')
   const queryText = `
             SELECT clients.first_name, clients.id, clients.last_name, clients.address, dogs.name as dog_name from clients
                     JOIN dogs
@@ -21,6 +21,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   `
 pool.query(queryText)
     .then(result => {
+    
         //all IDs from database
         let idArray = [];
             for(let object of result.rows){
@@ -57,7 +58,7 @@ pool.query(queryText)
             clients.push(client)
 
         }
-        console.log('attempting to make clients', clients)
+        res.send(clients);
     })
     .catch(err => {
         console.log('Error getting clients list for client list component', err);

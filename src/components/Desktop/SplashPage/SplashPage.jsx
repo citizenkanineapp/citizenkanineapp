@@ -10,7 +10,7 @@ function SplashPage() {
 
   return (
     <Box className="splash_container">
-      <Grid container display="flex" justifyContent="center" alignItems="center" height={"80vh"}>
+      <Grid container sx={{justifyContent: "center", alignItems: "center", display: "flex", justifyContent:"center", alignItems:"center", height: "80vh" }}>
       <Card sx={{ width: "30%", height: "60%" }}>
         <CardActionArea>
           <CardMedia
@@ -19,8 +19,8 @@ function SplashPage() {
             image="https://static.vecteezy.com/system/resources/thumbnails/000/210/848/small_2x/abstract-border-collie-dog-portrait-in-low-poly-vector-design.jpg"  
             alt="dog with glasses on"
           />
-          <CardContent justifyContent="center" alignItems="center" sx={{ height: '100%' }}>
-            <Typography gutterBottom variant="h5" component="Box" fontStyle="italic">
+          <CardContent sx={{ justifyContent: "center", alignItems: "center", height: '100%' }}>
+            <Typography gutterBottom variant="h5" fontStyle="italic">
               WELCOME BACK, {user.username.toUpperCase()}!
             </Typography>
             <Typography variant="body2" color="text.secondary">

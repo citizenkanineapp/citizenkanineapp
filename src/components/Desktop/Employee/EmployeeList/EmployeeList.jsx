@@ -44,9 +44,9 @@ function EmployeeList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-
+    
                 {/* EXAMPLE ROW THAT WOULD BE MAPPED */}
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}> {/* FETCH CLIENT ROUTE */}
+                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
                   <TableCell>12345</TableCell>
                   <TableCell>Dolly Parton</TableCell>
                   <TableCell>(666)-666-6666</TableCell>
@@ -54,35 +54,35 @@ function EmployeeList() {
                 </StyledTableRow>
                 {/* END OF EXAMPLE ROW */}
 
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}> {/* FETCH CLIENT ROUTE */}
+                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
                   <TableCell>12345</TableCell>
                   <TableCell>Dolly Parton</TableCell>
                   <TableCell>(666)-666-6666</TableCell>
                   <TableCell>working9to5@gmail.com</TableCell>
                 </StyledTableRow>
 
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}> {/* FETCH CLIENT ROUTE */}
+                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
                   <TableCell>12345</TableCell>
                   <TableCell>Dolly Parton</TableCell>
                   <TableCell>(666)-666-6666</TableCell>
                   <TableCell>working9to5@gmail.com</TableCell>
                 </StyledTableRow>
 
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}> {/* FETCH CLIENT ROUTE */}
+                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
                   <TableCell>12345</TableCell>
                   <TableCell>Dolly Parton</TableCell>
                   <TableCell>(666)-666-6666</TableCell>
                   <TableCell>working9to5@gmail.com</TableCell>
                 </StyledTableRow>
 
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}> {/* FETCH CLIENT ROUTE */}
+                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
                   <TableCell>12345</TableCell>
                   <TableCell>Dolly Parton</TableCell>
                   <TableCell>(666)-666-6666</TableCell>
                   <TableCell>working9to5@gmail.com</TableCell>
                 </StyledTableRow>
 
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}> {/* FETCH CLIENT ROUTE */}
+                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
                   <TableCell>12345</TableCell>
                   <TableCell>Dolly Parton</TableCell>
                   <TableCell>(666)-666-6666</TableCell>

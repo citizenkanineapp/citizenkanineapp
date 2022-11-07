@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 //MUI
 import Button from '@mui/material/Button';
+import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
 
 function DogDetails(){
   const dispatch = useDispatch();
@@ -8,6 +9,7 @@ function DogDetails(){
     return (
         <div className="container">
           <h1>Add Dog</h1>
+          <ImageUpload />
           <p>Name: _____________</p>
           <p>Notes: ______________________________.</p>
           <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Cancel</Button> 

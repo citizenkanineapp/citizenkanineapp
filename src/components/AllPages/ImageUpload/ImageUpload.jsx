@@ -48,8 +48,6 @@ function ImageUpload () {
 
     return(
         <div>
-            <h1>Image Upload</h1>
-        
                 <form onSubmit={handleSubmitFile}
                     className="form">
                     {/* avatar onclick calls that useRef variable */}

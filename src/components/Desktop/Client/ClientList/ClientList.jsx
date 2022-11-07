@@ -31,7 +31,7 @@ function ClientList() {
 
   return (
     <Box className="desktop_container">
-      <Typography variant="h4">ClientList</Typography> {/* should take out eventually */}
+      <Typography variant="h4">ClientList</Typography> 
       <Grid container spacing={2} sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
         <Grid item xs={10}>
           <TextField
@@ -62,7 +62,7 @@ function ClientList() {
               <TableBody>
 
                 {/* EXAMPLE ROW THAT WOULD BE MAPPED */}
-                <StyledTableRow hover onClick={() => openModal('ClientDetails')}> {/* FETCH CLIENT ROUTE */}
+                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>
                   <TableCell>Lisa Frank</TableCell>
                   <TableCell>1234 Gates of Hell Dr.</TableCell>
                   <TableCell>2</TableCell>
@@ -104,8 +104,6 @@ function ClientList() {
                   <TableCell>2</TableCell>
                   <TableCell>Spike, Fido</TableCell>
                 </StyledTableRow>
-
-
 
 
               </TableBody>

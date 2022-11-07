@@ -5,7 +5,8 @@ import LogOutButton from '../../AllPages/LogOutButton/LogOutButton';
 import './Nav.css';
 
 // MUI IMPORTS
-import { Avatar, AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button } from '@mui/material';
+import Box from '@mui/material/Box';
+import { Avatar, AppBar, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PetsIcon from '@mui/icons-material/Pets';
 import BadgeIcon from '@mui/icons-material/Badge';

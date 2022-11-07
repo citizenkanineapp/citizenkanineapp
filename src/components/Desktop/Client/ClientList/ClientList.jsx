@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import '../../Desktop.css';
 
 //COMPONENTS
@@ -22,6 +23,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function ClientList() {
   const dispatch = useDispatch();
+  //this route gets all clients to populate client list //
+  useEffect(() => {
+    dispatch({ type: 'FETCH_CLIENTS' })
+
+  }, []);
 
   const openModal = (view) => {
     dispatch({ type: 'SET_CLIENT_MODAL', payload: view }); //assures the view to be the right component

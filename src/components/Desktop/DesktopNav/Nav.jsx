@@ -55,7 +55,7 @@ function Nav(props) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem sx={{ mb: 40 }}>
+        <ListItem sx={{ mb: 20 }}>
           <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/invoice')}>
             <EqualizerIcon sx={{ textAlign: 'flex-end' }} />
             <ListItemText primary='reports' />

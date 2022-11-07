@@ -19,7 +19,6 @@ function EmployeeSchedule() {
       </Grid>
 
       <Grid item sx={10}>
-
         <Calendar onChange={onChange} value={value} />
       </Grid>
     </Grid>

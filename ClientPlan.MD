@@ -6,4 +6,8 @@
 3. Work on POST route for adding a new client
     * Include dog in the object?  
     * How to not temporarily lose the dog when switching between modal views?
-4. 
+4. Put space between dog names
+
+
+# Done
+1. Client get route with dogs

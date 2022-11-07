@@ -23,6 +23,7 @@ import Map from '../Mobile/MapView/MapView';
 import WalkerSchedule from '../Mobile/WalkerSchedule/WalkerSchedule';
 import Routes from '../Mobile/DailyRoutes/DailyRoutes';
 import LoadBalancing from '../Mobile/LoadBalancing/LoadBalancing';
+import MobileNav from '../Mobile/MobileNav/MobileNav';
 //MISC COMPONENTS
 import ImageUpload from '../AllPages/ImageUpload/ImageUpload';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
@@ -42,37 +43,37 @@ function App() {
     <Router>
       <ThemeProvider theme={theme}>
         <div className="app_body">
-      
-        <Nav/>
-        <NavTransition/>
+
+          <Nav />
+          <NavTransition />
           <Switch>
 
             {/* --------------------- REDIRECTIONS -------------------- */}
 
-            <Redirect exact from="/" to="/home"/>
+            <Redirect exact from="/" to="/home" />
 
             {/* needs to be fixed for conditional rendering - screen sizes? */}
             <Route exact path="/home">
               {user.id ?  // "/user" --> splash page
-                <Redirect to="/user"/>
+                <Redirect to="/user" />
                 :
-                <LoginPage/>}
+                <LoginPage />}
             </Route>
 
             {/* needs to be fixed for conditional rendering - screen sizes? */}
             <Route exact path="/login">
               {user.id ? // "/user" --> splash page
-                <Redirect to="/user"/>
+                <Redirect to="/user" />
                 :
-                <LoginPage/>}
+                <LoginPage />}
             </Route>
 
             {/* just for building the app, should be worked into add employee */}
             <Route exact path="/registration">
               {user.id ? // "/user" --> splash page
-                <Redirect to="/user"/>
+                <Redirect to="/user" />
                 :
-                <RegisterPage/>}
+                <RegisterPage />}
             </Route>
 
 
@@ -80,49 +81,49 @@ function App() {
 
             {/* only needed for presentation */}
             <Route exact path="/about">
-              <AboutPage/>
+              <AboutPage />
             </Route>
 
             <ProtectedRoute exact path="/user">
-              <SplashPage/>
+              <SplashPage />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/invoice">
-              <Invoicing/>
+              <Invoicing />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/employees">
-              <EmployeeList/>
+              <EmployeeList />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/schedule">
-              <EmployeeSchedule/>
+              <EmployeeSchedule />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/clients">
-              <ClientList/>
+              <ClientList />
             </ProtectedRoute>
 
             {/* ----------------------- MOBILE ----------------------- */}
 
             <ProtectedRoute exact path="/m/user">
-              <Home/>
+              <Home />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/map">
-              <Map/>
+              <Map />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/employees">
-              <WalkerSchedule/>
+              <WalkerSchedule />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/routes">
-              <Routes/>
+              <Routes />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/routes/admin">
-              <LoadBalancing/>
+              <LoadBalancing />
             </ProtectedRoute>
 
             {/* ----------------------------------------------------- */}
@@ -133,6 +134,7 @@ function App() {
             </Route>
 
           </Switch>
+          <MobileNav />
         </div>
       </ThemeProvider>
     </Router>

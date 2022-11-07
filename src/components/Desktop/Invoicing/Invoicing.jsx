@@ -1,10 +1,11 @@
-import ImageUpload from '../../../components/AllPages/ImageUpload/ImageUpload';
+//MUI
+import { Box, Typography } from '@mui/material';
 
 function Invoicing(){
     return (
-        <div className="container">
-          <h1>Invoicing</h1>
-        </div>
+      <Box className="desktop_container">
+        <Typography variant="h4">Invoicing</Typography>
+      </Box>
       );
 }
 

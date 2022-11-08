@@ -38,7 +38,7 @@ function ClientList() {
 
   return (
     <Box className="desktop_container">
-      <Typography variant="h4">ClientList</Typography> {/* should take out eventually */}
+      <Typography variant="h4">ClientList</Typography> 
       <Grid container spacing={2} sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
         <Grid item xs={10}>
           <TextField

@@ -5,7 +5,8 @@ import LogOutButton from '../../AllPages/LogOutButton/LogOutButton';
 import './Nav.css';
 
 // MUI IMPORTS
-import { Avatar, AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button } from '@mui/material';
+import Box from '@mui/material/Box';
+import { Avatar, AppBar, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PetsIcon from '@mui/icons-material/Pets';
 import BadgeIcon from '@mui/icons-material/Badge';
@@ -54,7 +55,7 @@ function Nav(props) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem sx={{ mb: 40 }}>
+        <ListItem sx={{ mb: 20 }}>
           <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/invoice')}>
             <EqualizerIcon sx={{ textAlign: 'flex-end' }} />
             <ListItemText primary='reports' />
@@ -70,7 +71,7 @@ function Nav(props) {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <AppBar component="nav" position='sticky'>
+      <AppBar component="nav" position='sticky' sx={{ display: { xs: 'none', sm: 'block' } }}>
 
         {user.id && (
           <Toolbar variant="dense">

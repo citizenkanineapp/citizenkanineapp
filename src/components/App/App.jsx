@@ -86,23 +86,23 @@ function App() {
             </Route>
 
             <ProtectedRoute exact path="/user">
-              <SplashPage />
+              {user.admin ? <SplashPage /> : <Redirect to="/m/user" />}
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/invoice">
-              <Invoicing />
+              {user.admin ? <Invoicing /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/employees">
-              <EmployeeList />
+              {user.admin ? <EmployeeList /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/schedule">
-              <EmployeeSchedule />
+              {user.admin ? <EmployeeSchedule /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/clients">
-              <ClientList />
+              {user.admin ? <ClientList /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
             {/* ----------------------- MOBILE ----------------------- */}

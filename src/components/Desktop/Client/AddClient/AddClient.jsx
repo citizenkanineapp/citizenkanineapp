@@ -17,6 +17,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 
 function AddClient(){
   const dispatch = useDispatch();
+  const clientToAdd = useSelector(store => store.clientToAddReducer)
+ 
 
   //use states for client information
 
@@ -66,12 +68,14 @@ function AddClient(){
               {/*-------------------- TEXT FIELDS --------------------*/}
          
             <Grid sx={{display: 'grid', gridTemplateColumns: '1.5fr 2fr 1fr', gap: 1}}>
-              
+             
+                {clientToAdd &&
                 <TextField 
-                  value={firstName} 
+                  value={clientToAdd.first_name} 
                   onChange={(event) => setFirstName(event.target.value)}
                   helperText="First Name"  
                   size="small" />
+                }
                 <TextField 
                   value={lastName} 
                   onChange={(event) => setLastName(event.target.value)}
@@ -120,7 +124,7 @@ function AddClient(){
                   onChange={(event) => {
                     
                     setRoute(event.target.value);
-                    console.log('hi', route)
+        
                   }}
                 >
                   <MenuItem value={'tangletown'}>Tangletown</MenuItem>
@@ -136,6 +140,7 @@ function AddClient(){
                   onChange={(event) => setQbId(event.target.value)}
                   helperText="Quickbooks ID"  
                   size="small" />  */}
+             
             
             </Grid> 
         
@@ -149,7 +154,8 @@ function AddClient(){
          {/*------------------ ADD DOG EXAMPLE ------------------*/}
               <Card sx={{ width: '100%', m: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
                   <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "rgb(227, 218, 216, 0.5)", width: "89%", height: "90%", borderRadius: "0.5rem" }} alt="add dog button" 
-                     onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})}>
+                     onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})}
+                     >
                       <LibraryAddIcon  sx={{ height: "100%", color: "rgb(171, 164, 162)" }}/>
                   </Box>
               </Card>

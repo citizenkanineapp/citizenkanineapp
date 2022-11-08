@@ -35,6 +35,12 @@ function ClientList() {
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
   }
 
+  const fetchOneClient = (client) =>{
+    console.log(client)
+    dispatch({type: 'SET_CLIENT', payload: client })
+    openModal('ClientDetails')
+  }
+
 
   return (
     <Box className="desktop_container">
@@ -67,12 +73,12 @@ function ClientList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {clientList && clientList.map && clientList.map((client, index) => (
-                    <StyledTableRow key={index} hover onClick={() => openModal('ClientDetails')}> 
+                {clientList && clientList.map && clientList.map((client) => (
+                    <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
                       <TableCell>{client.first_name} {client.last_name}</TableCell>
                       <TableCell>{client.address}</TableCell>
                       <TableCell>{client.dogs.length}</TableCell>
-                      <TableCell>{client.dogs.map(dog => (dog.dog_name))}</TableCell>
+                      <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
                     </StyledTableRow>
                 ))}
               </TableBody>
@@ -80,7 +86,7 @@ function ClientList() {
           </TableContainer>
         </Grid>
         <Grid item xs={12} sx={{ mr: 5, display: 'flex', justifyContent: 'flex-end' }}>
-          <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary'  >Add Client</Button>
+          <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary'>Add Client</Button>
         </Grid>
       </Grid>
       {/* <Button onClick={() => openModal('ClientDetails')}>LISA FRANK - SPIKE, FIDO</Button>  opens client details */}

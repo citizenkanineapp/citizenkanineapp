@@ -17,6 +17,7 @@ function DogDetails() {
         <Stack direction='column'>
           <Card>DOG NAME</Card>
           <Card>DOG ADDRESS</Card>
+          <Card><a href="tel:7637447704">CALL</a></Card>
         </Stack>
       </Grid>
       <Grid item xs={12}>

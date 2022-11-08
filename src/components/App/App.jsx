@@ -24,6 +24,7 @@ import WalkerSchedule from '../Mobile/WalkerSchedule/WalkerSchedule';
 import Routes from '../Mobile/DailyRoutes/DailyRoutes';
 import LoadBalancing from '../Mobile/LoadBalancing/LoadBalancing';
 import MobileNav from '../Mobile/MobileNav/MobileNav';
+import DogDetails from '../Mobile/DogDetails/DogDetails';
 //MISC COMPONENTS
 import ImageUpload from '../AllPages/ImageUpload/ImageUpload';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
@@ -120,6 +121,10 @@ function App() {
 
             <ProtectedRoute exact path="/m/routes">
               <Routes />
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/m/dogs/">
+              <DogDetails />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/routes/admin">

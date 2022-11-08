@@ -11,6 +11,7 @@
 7. Where will clients add schedule?
 8. Need to re-route back to client list after saving client
 9. If cancel dog how to get back to add client form with data continuing?
+10. Requiring inputs
 
 
 # Done

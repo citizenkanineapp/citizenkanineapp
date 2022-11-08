@@ -55,7 +55,7 @@ function Nav(props) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem sx={{ mb: 40 }}>
+        <ListItem sx={{ mb: 20 }}>
           <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/invoice')}>
             <EqualizerIcon sx={{ textAlign: 'flex-end' }} />
             <ListItemText primary='reports' />
@@ -71,7 +71,7 @@ function Nav(props) {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <AppBar component="nav" position='sticky'>
+      <AppBar component="nav" position='sticky' sx={{ display: { xs: 'none', sm: 'block' } }}>
 
         {user.id && (
           <Toolbar variant="dense">

@@ -9,7 +9,7 @@ import EmployeeModal from "../EmployeeModal/EmployeeModal";
 import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-// NO THESE COLORS AREN'T FINAL BUT WE DEF SHOULD HAVE SOME VISUAL CHANGE
+// THESE COLORS AREN'T FINAL BUT WE DEF SHOULD HAVE SOME VISUAL CHANGE
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.secondary.light,
@@ -23,6 +23,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function EmployeeList() {
   const dispatch = useDispatch();
   const history = useHistory();
+
   const openModal = (view) => {
     dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: view }); //assures the view to be the right component
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
@@ -34,7 +35,15 @@ function EmployeeList() {
     })
   },[])
 
-  const allEmployees = useSelector(store=> store.employeesReducer);
+  const allEmployees = useSelector(store=> store.employeesReducer.employees);
+  
+  const handleClick = (employee)=> {
+    openModal('EmployeeDetails');
+    dispatch({
+      type: 'SET_EMPLOYEE',
+      payload: employee
+    })
+  }
 
   return (
     <Box className="desktop_container">
@@ -55,8 +64,11 @@ function EmployeeList() {
               <TableBody>
     
                 {/* EXAMPLE ROW THAT WOULD BE MAPPED */}
-                {allEmployees.employees.map(employee => (
-                  <StyledTableRow key={employee.id} hover onClick={() => openModal('EmployeeDetails')}>
+                {allEmployees.map( employee => (
+                  <StyledTableRow 
+                    key={employee.id} 
+                    hover 
+                    onClick={()=> handleClick(employee)}>
                     <TableCell>{employee.first_name} {employee.last_name}</TableCell>
                     <TableCell>{employee.phone}</TableCell>
                     <TableCell>{employee.email}</TableCell>

@@ -6,31 +6,28 @@ import { Button, TextField, Typography, Grid, Avatar } from "@mui/material";
 
 function EmployeeDetails(){
   const dispatch = useDispatch();
+  const employee = useSelector(store=> store.employeesReducer.selectedEmployee);
+  console.log(employee);
+  
+  const initials = employee.first_name[0]+employee.last_name[0];
 
   return (
       <Grid className="container" height="100%">
         {/*----------------------- HEADER -----------------------*/}
           <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', height: "10%", mx: 6, mt: 6 }}>  
             <Typography variant="h3" sx={{ pt: 3 }}>Dolly Parton</Typography>
-            <Avatar sx={{ bgcolor: "primary.main", height: "150%", width: "15%" }}>DP</Avatar> {/* initials need to be conditionally rendered */}
-          </Grid> {/* display only */}
+            <Avatar sx={{ bgcolor: "primary.main", height: "150%", width: "15%" }}>{initials}</Avatar> {/* initials need to be conditionally rendered */}
+          </Grid> 
 
           {/*-------------------- TEXT FIELDS --------------------*/}
           <Grid sx={{display: 'grid', gridTemplateColumns: '0.5fr 1fr', gap: 1, m: 6, height: "20%",}}>
-              <TextField
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
-                className="employeeDetails" 
-                value="134543" 
-                helperText="Employee ID"  
-                size="small" 
-                InputProps={{readOnly: true}}
-                />
+              
               <TextField 
               sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
-              value="dollywood_baby@gmail.com" helperText="Email"  size="small" InputProps={{readOnly: true}}/>
+              value={employee.email} helperText="Email"  size="small" InputProps={{readOnly: true}}/>
               <TextField
               sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
-              value="(666)-666-6666" helperText="Phone"  size="small" InputProps={{readOnly: true}}/>
+              value={employee.phone} helperText="Phone"  size="small" InputProps={{readOnly: true}}/>
               <TextField
               sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
               value="1234 Jolene Ave." helperText="Address"  size="small" InputProps={{readOnly: true}}/>

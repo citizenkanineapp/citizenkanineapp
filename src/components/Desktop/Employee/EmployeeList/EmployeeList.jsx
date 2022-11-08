@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 //COMPONENTS
 import EmployeeModal from "../EmployeeModal/EmployeeModal";
@@ -35,9 +35,6 @@ function EmployeeList() {
   },[])
 
   const allEmployees = useSelector(store=> store.employeesReducer);
-  console.log(allEmployees);
-
-
 
   return (
     <Box className="desktop_container">

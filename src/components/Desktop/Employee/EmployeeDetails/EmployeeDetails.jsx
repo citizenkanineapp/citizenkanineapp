@@ -1,10 +1,26 @@
 import { useSelector, useDispatch } from "react-redux";
+import './EmployeeDetails.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 //MUI
 import { Button, TextField, Typography, Grid, Avatar } from "@mui/material";
 
 function EmployeeDetails(){
   const dispatch = useDispatch();
+
+  // const theme = createTheme({
+  //   overrides: {
+  //     MuiInput: {
+  //       borderColor: 
+  //         'transparent',
+  //       underline: {
+  //         '&:hover:not($disabled):before': {
+  //           backgroundColor: 'rgba(0, 188, 212, 0.7)',
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
 
   return (
       <Grid className="container" height="100%">
@@ -16,7 +32,16 @@ function EmployeeDetails(){
 
           {/*-------------------- TEXT FIELDS --------------------*/}
           <Grid sx={{display: 'grid', gridTemplateColumns: '0.5fr 1fr', gap: 1, m: 6, height: "20%",}}>
-              <TextField value="134543" helperText="Employee ID"  size="small" InputProps={{readOnly: true}}/> 
+                <TextField 
+                  // theme={theme} 
+                  // sx={{
+                  //   fieldset: { borderColor: "transparent"}}}
+                  className="employeeDetails" 
+                  value="134543" 
+                  helperText="Employee ID"  
+                  size="small" 
+                  InputProps={{readOnly: true}}
+                  />
               <TextField value="dollywood_baby@gmail.com" helperText="Email"  size="small" InputProps={{readOnly: true}}/>
               <TextField value="(666)-666-6666" helperText="Phone"  size="small" InputProps={{readOnly: true}}/>
               <TextField value="1234 Jolene Ave." helperText="Address"  size="small" InputProps={{readOnly: true}}/>
@@ -27,10 +52,16 @@ function EmployeeDetails(){
           </Grid>
 
           <Grid sx={{mt: 2, display: 'flex', justifyContent: 'space-between', height: "5%", mx: 5, mt: 3 }}>
-            <Button variant="outlined" color="info"
-                onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Back</Button>  {/*goes back to Employee list*/}
-            <Button variant="contained" color="success"
-                onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EditEmployeeForm'})}>Edit</Button> 
+            <Button 
+              variant="outlined" color="info"
+              onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>
+              Back
+            </Button>  {/*goes back to Employee list*/}
+            <Button 
+              variant="contained" color="success"
+              onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EditEmployeeForm'})}>
+              Edit
+            </Button> 
           </Grid>
       </Grid>
     );

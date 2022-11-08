@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import '../../Desktop.css';
 
 //COMPONENTS
@@ -21,7 +22,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 function ClientList() {
+  const clientList = useSelector(store => store.clientsReducer);
   const dispatch = useDispatch();
+  //this route gets all clients to populate client list //
+  useEffect(() => {
+    dispatch({ type: 'FETCH_CLIENTS' })
+
+  }, []);
 
   const openModal = (view) => {
     dispatch({ type: 'SET_CLIENT_MODAL', payload: view }); //assures the view to be the right component
@@ -60,52 +67,14 @@ function ClientList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-
-                {/* EXAMPLE ROW THAT WOULD BE MAPPED */}
-                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>
-                  <TableCell>Lisa Frank</TableCell>
-                  <TableCell>1234 Gates of Hell Dr.</TableCell>
-                  <TableCell>2</TableCell>
-                  <TableCell>Spike, Fido</TableCell>
-                </StyledTableRow>
-                {/* END OF EXAMPLE ROW */}
-
-                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>
-                  <TableCell>Lisa Frank</TableCell>
-                  <TableCell>1234 Gates of Hell Dr.</TableCell>
-                  <TableCell>2</TableCell>
-                  <TableCell>Spike, Fido</TableCell>
-                </StyledTableRow>
-                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>
-                  <TableCell>Lisa Frank</TableCell>
-                  <TableCell>1234 Gates of Hell Dr.</TableCell>
-                  <TableCell>2</TableCell>
-                  <TableCell>Spike, Fido</TableCell>
-                </StyledTableRow><StyledTableRow hover onClick={() => openModal('ClientDetails')}>
-                  <TableCell>Lisa Frank</TableCell>
-                  <TableCell>1234 Gates of Hell Dr.</TableCell>
-                  <TableCell>2</TableCell>
-                  <TableCell>Spike, Fido</TableCell>
-                </StyledTableRow><StyledTableRow hover onClick={() => openModal('ClientDetails')}>
-                  <TableCell>Lisa Frank</TableCell>
-                  <TableCell>1234 Gates of Hell Dr.</TableCell>
-                  <TableCell>2</TableCell>
-                  <TableCell>Spike, Fido</TableCell>
-                </StyledTableRow>
-                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>
-                  <TableCell>Lisa Frank</TableCell>
-                  <TableCell>1234 Gates of Hell Dr.</TableCell>
-                  <TableCell>2</TableCell>
-                  <TableCell>Spike, Fido</TableCell>
-                </StyledTableRow>
-                <StyledTableRow hover onClick={() => openModal('ClientDetails')}>
-                  <TableCell>Lisa Frank</TableCell>
-                  <TableCell>1234 Gates of Hell Dr.</TableCell>
-                  <TableCell>2</TableCell>
-                  <TableCell>Spike, Fido</TableCell>
-                </StyledTableRow>
-
-
+                {clientList && clientList.map && clientList.map((client, index) => (
+                    <StyledTableRow key={index} hover onClick={() => openModal('ClientDetails')}> 
+                      <TableCell>{client.first_name} {client.last_name}</TableCell>
+                      <TableCell>{client.address}</TableCell>
+                      <TableCell>{client.dogs.length}</TableCell>
+                      <TableCell>{client.dogs.map(dog => (dog.dog_name))}</TableCell>
+                    </StyledTableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -114,10 +83,7 @@ function ClientList() {
           <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary'  >Add Client</Button>
         </Grid>
       </Grid>
-
       {/* <Button onClick={() => openModal('ClientDetails')}>LISA FRANK - SPIKE, FIDO</Button>  opens client details */}
-
-
       <ClientModal /> {/* only open when button is pressed */}
     </Box>
   );

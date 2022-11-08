@@ -32,7 +32,10 @@ function EmployeeList() {
     dispatch({
       type: 'SAGA_FETCH_EMPLOYEES',
     })
-  })
+  },[])
+
+  const allEmployees = useSelector(store=> store.employeesReducer);
+  console.log(allEmployees);
 
 
 
@@ -41,64 +44,28 @@ function EmployeeList() {
       <Typography variant="h4">Employees</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sx={{ mx: 5 }}>
+
           {/* TABLE OPTION */}
           <TableContainer component={Paper}>
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell>ID:</TableCell>
-                  <TableCell>Name:</TableCell>
-                  <TableCell>Phone Number:</TableCell>
-                  <TableCell>E-Mail:</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Phone Number</TableCell>
+                  <TableCell>E-Mail</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
     
                 {/* EXAMPLE ROW THAT WOULD BE MAPPED */}
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
-                  <TableCell>12345</TableCell>
-                  <TableCell>Dolly Parton</TableCell>
-                  <TableCell>(666)-666-6666</TableCell>
-                  <TableCell>working9to5@gmail.com</TableCell>
-                </StyledTableRow>
+                {allEmployees.employees.map(employee => (
+                  <StyledTableRow key={employee.id} hover onClick={() => openModal('EmployeeDetails')}>
+                    <TableCell>{employee.first_name} {employee.last_name}</TableCell>
+                    <TableCell>{employee.phone}</TableCell>
+                    <TableCell>{employee.email}</TableCell>
+                  </StyledTableRow>
+                ))}
                 {/* END OF EXAMPLE ROW */}
-
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
-                  <TableCell>12345</TableCell>
-                  <TableCell>Dolly Parton</TableCell>
-                  <TableCell>(666)-666-6666</TableCell>
-                  <TableCell>working9to5@gmail.com</TableCell>
-                </StyledTableRow>
-
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
-                  <TableCell>12345</TableCell>
-                  <TableCell>Dolly Parton</TableCell>
-                  <TableCell>(666)-666-6666</TableCell>
-                  <TableCell>working9to5@gmail.com</TableCell>
-                </StyledTableRow>
-
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
-                  <TableCell>12345</TableCell>
-                  <TableCell>Dolly Parton</TableCell>
-                  <TableCell>(666)-666-6666</TableCell>
-                  <TableCell>working9to5@gmail.com</TableCell>
-                </StyledTableRow>
-
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
-                  <TableCell>12345</TableCell>
-                  <TableCell>Dolly Parton</TableCell>
-                  <TableCell>(666)-666-6666</TableCell>
-                  <TableCell>working9to5@gmail.com</TableCell>
-                </StyledTableRow>
-
-                <StyledTableRow hover onClick={() => openModal('EmployeeDetails')}>
-                  <TableCell>12345</TableCell>
-                  <TableCell>Dolly Parton</TableCell>
-                  <TableCell>(666)-666-6666</TableCell>
-                  <TableCell>working9to5@gmail.com</TableCell>
-                </StyledTableRow>
-
-
 
               </TableBody>
             </Table>

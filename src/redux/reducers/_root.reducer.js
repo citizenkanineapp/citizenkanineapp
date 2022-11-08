@@ -4,6 +4,8 @@ import user from './user.reducer';
 import modal from './modal.reducer'
 import dogPhotoReducer from './dogImage.reducer';
 import clientsReducer from './clients.reducer';
+import clientToAddReducer from './clientToAdd.reducer';
+import clientReducer from './client.reducer';
 
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
@@ -11,6 +13,8 @@ const rootReducer = combineReducers({
   modal,
   dogPhotoReducer,
   clientsReducer,
+  clientToAddReducer,
+  clientReducer,
 });
 
 export default rootReducer;

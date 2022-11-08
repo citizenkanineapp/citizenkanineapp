@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 
 //COMPONENTS
 import EmployeeModal from "../EmployeeModal/EmployeeModal";
@@ -26,6 +27,14 @@ function EmployeeList() {
     dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: view }); //assures the view to be the right component
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
   }
+
+  useEffect(()=> {
+    dispatch({
+      type: 'SAGA_FETCH_EMPLOYEES',
+    })
+  })
+
+
 
   return (
     <Box className="desktop_container">

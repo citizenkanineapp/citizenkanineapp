@@ -6,6 +6,11 @@ import { Box } from "@mui/system";
 import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, IconButton } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PetsIcon from '@mui/icons-material/Pets';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 
 
 
@@ -13,61 +18,140 @@ import PetsIcon from '@mui/icons-material/Pets';
 function AddClient(){
   const dispatch = useDispatch();
 
+  //use states for client information
+
+  let [firstName, setFirstName] = useState('');
+  let [lastName, setLastName] = useState('');
+  let [email, setEmail] = useState('');
+  let [phoneNumber, setPhoneNumber] = useState('');
+  let [address, setAddress] = useState('');
+  let [notes, setNotes] = useState('');
+  let [route, setRoute] = useState('');
+  let [vetName, setVetName] = useState('');
+  // let [vetClinic, setVetClinic] = useState('');
+  let [vetPhone, setVetPhone] = useState('');
+  // let [qbId, setQbId] = useState('');
+
+  const addClient = event => {
+    event.preventDefault();
+    const action ={
+      type: 'ADD_CLIENT',
+      payload: {
+        first_name: firstName,
+        last_name: lastName,
+        address: address,
+        route: route,
+        phone: phoneNumber,
+        notes: notes,
+        //including dog info in object
+        vet_name: vetName,
+        vet_phone: vetPhone,
+      }
+    }
+    dispatch(action);
+  }
+
   return (
       <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
 
             {/*----------------------- HEADER -----------------------*/}
             <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2}}>  
-              <Typography variant="h3" >New Client</Typography>
-              <IconButton disabled>
+              <Typography variant="h3" >Add Client</Typography>
+              {/* <IconButton disabled>
                 <CalendarMonthIcon sx={{ fontSize: 45, color: 'rgb(163, 147, 142)' }}/> 
-              </IconButton>
+              </IconButton> */}
             </Grid> {/* display only */}
 
          
               {/*-------------------- TEXT FIELDS --------------------*/}
+         
             <Grid sx={{display: 'grid', gridTemplateColumns: '1.5fr 2fr 1fr', gap: 1}}>
-              <TextField value="134543" helperText="Quickbooks ID"  size="small" /> 
-              <TextField value="lisa_loves_dogs@gmail.com" helperText="Email"  size="small" />
-              <TextField value="(666)-666-6666" helperText="Phone"  size="small" />
-              <TextField value="1234 Gates of Hell Dr." helperText="Address"  size="small" />
-              <TextField value="Side Door - Passcode: 666" helperText="Notes"  size="small" />
-              <TextField value="Tangletown" helperText="Route"  size="small" />
-              <TextField value="Dr. Terry" helperText="Vet"  size="small" />
-              <TextField value="All Dogs Go To Heaven Clinic" helperText="Clinic"  size="small" />
-              <TextField value="777-777-7777" helperText="Contact"  size="small" />
-            </Grid> {/* value is what you see in the field, read only*/}
+              
+                <TextField 
+                  value={firstName} 
+                  onChange={(event) => setFirstName(event.target.value)}
+                  helperText="First Name"  
+                  size="small" />
+                <TextField 
+                  value={lastName} 
+                  onChange={(event) => setLastName(event.target.value)}
+                  helperText="Last Name"  
+                  size="small" /> 
+                <TextField 
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)} 
+                  helperText="Email"  
+                  size="small" />
+                <TextField 
+                  value={phoneNumber} 
+                  onChange={(event) => setPhoneNumber(event.target.value)}
+                  helperText="Phone"  
+                  size="small" />
+                <TextField 
+                  value={address}
+                  onChange={(event) => setAddress(event.target.value)}
+                  helperText="Address"  
+                  size="small" />
+                <TextField 
+                  value={notes}
+                  onChange={(event) => setNotes(event.target.value)}
+                  helperText="Notes"  
+                  size="small" />
+                <TextField 
+                  value={vetName}
+                  onChange={(event) => setVetName(event.target.value)} 
+                  helperText="Vet"  
+                  size="small" />
+                {/* <TextField 
+                  value={vetClinic} 
+                  onChange={(event) => setVetClinic(event.target.value)}
+                  helperText="Clinic"  
+                  size="small" /> */}
+                <TextField 
+                  value={vetPhone}
+                  onChange={(event) => setVetPhone(event.target.value)}
+                  helperText="Vet Phone"  
+                  size="small" />
+                    <FormControl>
+                <Select
+                  labelId="route"
+                  id="route"
+                  value={route}
+                  onChange={(event) => {
+                    
+                    setRoute(event.target.value);
+                    console.log('hi', route)
+                  }}
+                >
+                  <MenuItem value={'tangletown'}>Tangletown</MenuItem>
+                  <MenuItem value={'emerson'}>Emerson</MenuItem>
+                  <MenuItem value={'far'}>Far</MenuItem>
+                  <MenuItem value={'misfits'}>Misfits</MenuItem>
+                  <MenuItem value={'unassigned'}>Unassigned</MenuItem>
+                </Select>
+                <FormHelperText>Default Route</FormHelperText>
+              </FormControl>
+                {/* <TextField 
+                  value={qbId}
+                  onChange={(event) => setQbId(event.target.value)}
+                  helperText="Quickbooks ID"  
+                  size="small" />  */}
+            
+            </Grid> 
+        
 
 
           {/*-------------------- DOG PICTURES --------------------*/}
           <Grid sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-              <Card sx={{width: '100%', m: 1}}>
-                  <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size="small" variant="outlined" disabled>
-                              Bandit
-                        </Button>
-                  </CardActions>
-                  <CardMedia component="img" width="100%" alt="client dog photo"
-                    image="https://m8r6w9i6.rocketcdn.me/wp-content/uploads/2020/09/Australian-Cattle-Dog.jpeg.webp"/>
-              </Card>
-
-              <Card sx={{ width: '100%', m: 1 }}>
-                  <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size="small" variant="outlined" disabled>
-                              Maggie
-                        </Button>
-                  </CardActions>
-                  <CardMedia component="img" width="100%" alt="client dog photo"
-                    image="https://images.ctfassets.net/sfnkq8lmu5d7/2jiEB2xKaHaQh5DLuT3lMI/204094de400b9dc16f0a8b20bc81ef68/The-Wildest_Editorial_Canine_Vertigo_is_Treatable_but_Scary_to_Witness_Hero.jpg?w=700&h=525&fl=progressive&q=80&fm=jpg"/>
-              </Card>  {/* display only */}
-
+          
+            
 
          {/*------------------ ADD DOG EXAMPLE ------------------*/}
               <Card sx={{ width: '100%', m: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                  <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 1, 
-                      backgroundColor: "rgb(227, 218, 216, 0.5)", width: "89%", height: "90%", borderRadius: "0.5rem" }} alt="add dog button">
-                      <PetsIcon sx={{ height: "100%", color: "rgb(171, 164, 162)" }}/>
-                  </Box>  {/* display only */}
+                  <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "rgb(227, 218, 216, 0.5)", width: "89%", height: "90%", borderRadius: "0.5rem" }} alt="add dog button" 
+                     onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})}>
+                      <LibraryAddIcon  sx={{ height: "100%", color: "rgb(171, 164, 162)" }}/>
+                  </Box>
               </Card>
           </Grid>
 
@@ -76,8 +160,7 @@ function AddClient(){
           <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
             <Button variant="outlined" color="info"
               onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Back</Button>  {/*goes back to client list*/}
-            {/* <Button variant="contained" color="success"
-              onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Save</Button>  */}
+            <Button variant="contained" color="success" onClick={addClient}>Save</Button> 
           </Box>
       </Box>
     );

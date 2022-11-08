@@ -68,7 +68,7 @@ function ClientList() {
               </TableHead>
               <TableBody>
                 {clientList && clientList.map && clientList.map((client, index) => (
-                    <StyledTableRow key={index} hover onClick={() => openModal('ClientDetails')}>
+                    <StyledTableRow key={index} hover onClick={() => openModal('ClientDetails')}> 
                       <TableCell>{client.first_name} {client.last_name}</TableCell>
                       <TableCell>{client.address}</TableCell>
                       <TableCell>{client.dogs.length}</TableCell>

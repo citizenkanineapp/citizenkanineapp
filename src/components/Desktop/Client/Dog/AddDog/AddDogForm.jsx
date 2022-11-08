@@ -12,7 +12,7 @@ function DogDetails(){
           <ImageUpload />
           <p>Name: _____________</p>
           <p>Notes: ______________________________.</p>
-          <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Cancel</Button> 
+          <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddClient'})}>Cancel</Button> 
           <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Save</Button> {/*PUT ROUTE*/}
         </div>
       );

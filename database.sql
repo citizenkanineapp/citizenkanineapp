@@ -24,10 +24,25 @@ CREATE TABLE employees (
 	"first_name" VARCHAR(150) NOT NULL,
 	"last_name" VARCHAR(150), 
 	"email" VARCHAR(150) NOT NULL,
-	"phone" INT NOT NULL, 
+	"phone" VARCHAR(13), 
 	"image" VARCHAR,
 	"date" DATE DEFAULT CURRENT_DATE
 	);
+
+--** Employees MOCK DATA **--
+insert into employees 
+	(first_name, last_name, email, phone) 
+values 
+	('Den', 'Paolini', 'dpaolini0@paypal.com', '(840)6732127'),
+	('Grantley', 'Abels', 'gabels1@weather.com', '(885)7477091'),
+	('Say', 'O''Hickey', 'sohickey2@google.ru', '(915)6380768'),
+	('Reeba', 'Pretswell', 'rpretswell3@feedburner.com', '(964)6881625'),
+	('Fiorenze', 'Mary', 'fmary4@unesco.org', '(697)2096190'),
+	('Osborne', 'Barrand', 'obarrand5@wufoo.com', '(537)1594107'),
+	('Lidia', 'Nichols', 'lnichols6@virginia.edu', '(802)5280961'),
+	('Stephanie', 'Rimbault', 'srimbault7@state.tx.us', '(609)6392085'),
+	('Andris', 'Batram', 'abatram8@vinaora.com', '(395)7396444'),
+	('Renae', 'Pettwood', 'rpettwood9@printfriendly.com', '(418)8794563');
 
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
@@ -43,8 +58,40 @@ CREATE TABLE "user" (
 CREATE TABLE employees_schedule (
 	"id" SERIAL PRIMARY KEY,
 	"emp_id" INT NOT NULL REFERENCES employees(id) ON DELETE CASCADE ,
-	"date" DATE DEFAULT CURRENT_DATE
+	"week" INT NOT NULL,
+	"1" BOOLEAN DEFAULT FALSE,
+	"2" BOOLEAN DEFAULT FALSE,
+	"3" BOOLEAN DEFAULT FALSE,
+	"4" BOOLEAN DEFAULT FALSE,
+	"5" BOOLEAN DEFAULT FALSE
 	);
+
+
+INSERT INTO employees_schedule
+	("emp_id", "week")
+VALUES	
+	(1,1),
+	(1,2),
+	(2,1),
+	(2,2),
+	(3,1),
+	(3,2),
+	(4,1),
+	(4,2),
+	(5,1),
+	(5,2),
+	(6,1),
+	(6,2),
+	(7,1),
+	(7,2),
+	(8,1),
+	(8,2),
+	(9,1),
+	(9,2),
+	(10,1),
+	(10,2);
+	
+
 
 CREATE TABLE routes (
 	"id" SERIAL PRIMARY KEY,
@@ -57,7 +104,8 @@ VALUES
 	('Tangletown'),
 	('Emerson'),
 	('Far'),
-	('Misfits');
+	('Misfits'),
+	('Unassigned');
 	
 CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,

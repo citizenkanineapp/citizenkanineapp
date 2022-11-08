@@ -17,6 +17,8 @@ import Invoicing from '../Desktop/Invoicing/Invoicing';
 import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
 import ClientList from '../Desktop/Client/ClientList/ClientList';
 import EmployeeSchedule from '../Desktop/Employee/EmployeeSchedule/EmployeeSchedule';
+import AdminSettings from '../Desktop/AdminSettings/AdminSettings';
+
 //MOBILE COMPONENTS
 import Home from '../Mobile/Home/Home';
 import Map from '../Mobile/MapView/MapView';
@@ -77,7 +79,6 @@ function App() {
                 <RegisterPage />}
             </Route>
 
-
             {/* ----------------------- DESKTOP ----------------------- */}
 
             {/* only needed for presentation */}
@@ -103,6 +104,10 @@ function App() {
 
             <ProtectedRoute exact path="/clients">
               {user.admin ? <ClientList /> : <Redirect to="/home" />}
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/admin">
+              {user.admin ? <AdminSettings /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
             {/* ----------------------- MOBILE ----------------------- */}
@@ -139,7 +144,8 @@ function App() {
             </Route>
 
           </Switch>
-          <MobileNav />
+          {/* mobile nav currently displays in desktop */}
+          <MobileNav /> 
         </div>
       </ThemeProvider>
     </Router>

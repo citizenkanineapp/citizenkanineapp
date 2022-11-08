@@ -101,11 +101,11 @@ CREATE TABLE routes (
 INSERT INTO routes
 	("name")
 VALUES
-	('Tangletown'),
-	('Emerson'),
-	('Far'),
-	('Misfits'),
-	('Unassigned');
+	('tangletown'),
+	('emerson'),
+	('far'),
+	('misfits'),
+	('unassigned');
 	
 CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,

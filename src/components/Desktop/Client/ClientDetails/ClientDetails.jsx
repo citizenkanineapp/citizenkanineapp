@@ -13,6 +13,11 @@ function ClientDetails(){
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
 
+  const back = event => {
+    dispatch({type: 'CLEAR_CLIENT'})
+    dispatch({ type: 'SET_MODAL_STATUS' })
+  }
+
   return (
       <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
 
@@ -64,7 +69,7 @@ function ClientDetails(){
                 InputProps={{readOnly: true}}
                 sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
               <TextField 
-                value={client.route} 
+                value={client.route || ''} 
                 helperText="Default Route"  
                 size="small" 
                 InputProps={{readOnly: true}}
@@ -110,7 +115,7 @@ function ClientDetails(){
           {/*-------------------- BUTTONS --------------------*/}
           <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
             <Button variant="outlined" color="info"
-              onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Back</Button>  {/*goes back to client list*/}
+              onClick={back}>Back</Button>  {/*goes back to client list*/}
             <Button variant="contained" color="success"
               onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Edit</Button> 
           </Box>

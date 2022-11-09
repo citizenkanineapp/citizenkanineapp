@@ -9,6 +9,7 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 
 function ClientForm(){
   const dispatch = useDispatch();
+  const client = useSelector(store => store.clientReducer)
 
   //STYLING NOTES: still have to figure out picture size (so it's cropped or uniform)
 
@@ -17,7 +18,7 @@ function ClientForm(){
 
               {/*----------------------- HEADER -----------------------*/}
               <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2 }}>  
-                <Typography variant="h3" >Lisa Frank</Typography>
+                <Typography variant="h3" >{client.first_name} {client.last_name}</Typography>
                 <IconButton onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })}>
                     <CalendarMonthIcon sx={{ fontSize: 45, color: '#341341' }}/>
                 </IconButton>
@@ -25,16 +26,29 @@ function ClientForm(){
 
 
                 {/*-------------------- TEXT FIELDS --------------------*/}
-              <Grid sx={{ display: 'grid', gridTemplateColumns: '1.5fr 2fr 1fr', gap: 1 }}>
-                <TextField value="134543" helperText="Quickbooks ID"  size="small"/> 
-                <TextField value="lisa_loves_dogs@gmail.com" helperText="Email"  size="small"/>
-                <TextField value="(666)-666-6666" helperText="Phone"  size="small"/>
-                <TextField value="1234 Gates of Hell Dr." helperText="Address"  size="small"/>
-                <TextField value="Side Door - Passcode: 666" helperText="Notes"  size="small"/>
-                <TextField value="Tangletown" helperText="Route"  size="small"/>
-                <TextField value="Dr. Terry" helperText="Vet"  size="small"/>
-                <TextField value="All Dogs Go To Heaven Clinic" helperText="Clinic"  size="small"/>
+              <Grid sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr', gap: 1 }}>
+                <TextField 
+                  value={client.address}
+                  helperText="Address"  
+                  size="small"/>
+                <TextField 
+                  value={client.email} 
+                  helperText="Email"  
+                  size="small"/>
+                <TextField 
+                  value={client.phone}
+                  helperText="Phone"  
+                  size="small"/>
+                <TextField 
+                  value={client.notes || ''} 
+                  helperText="Notes"  
+                  size="small"/>
+                <TextField 
+                  value={client.vet_name} 
+                  helperText="Vet"  
+                  size="small"/>
                 <TextField value="777-777-7777" helperText="Contact"  size="small"/>
+                <TextField value="Tangletown" helperText="Route"  size="small"/>
               </Grid> {/* value is what you see in the field, no onChange yet*/}
 
 

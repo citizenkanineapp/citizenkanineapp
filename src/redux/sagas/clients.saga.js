@@ -18,6 +18,7 @@ function* getALlClients(action){
 
 function* addClient(action){
     console.log('arrived in add client route', action.payload);
+
     // try {
     //     const clients = yield axios.get('/api/clients');
     //     // console.log(clients.data)

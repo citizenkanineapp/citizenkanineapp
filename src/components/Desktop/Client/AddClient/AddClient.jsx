@@ -3,7 +3,7 @@ import { useState } from "react";
 
 //MUI
 import { Box } from "@mui/system";
-import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, IconButton } from "@mui/material";
+import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, IconButton, CardContent } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PetsIcon from '@mui/icons-material/Pets';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
@@ -17,41 +17,21 @@ import FormHelperText from '@mui/material/FormHelperText';
 
 function AddClient(){
   const dispatch = useDispatch();
-  const clientToAdd = useSelector(store => store.clientToAddReducer)
+  const clientToAdd = useSelector(store => store.clientReducer)
+
+  // const addClient = event => {
+  //   event.preventDefault();
  
+  //   dispatch({type: 'CLEAR_CLIENT'});
+  //   dispatch({ type: 'SET_MODAL_STATUS' });
+  // }
 
-  //use states for client information
-
-  let [firstName, setFirstName] = useState('');
-  let [lastName, setLastName] = useState('');
-  let [email, setEmail] = useState('');
-  let [phoneNumber, setPhoneNumber] = useState('');
-  let [address, setAddress] = useState('');
-  let [notes, setNotes] = useState('');
-  let [route, setRoute] = useState('');
-  let [vetName, setVetName] = useState('');
-  // let [vetClinic, setVetClinic] = useState('');
-  let [vetPhone, setVetPhone] = useState('');
-  // let [qbId, setQbId] = useState('');
-
-  const addClient = event => {
-    event.preventDefault();
-    const action ={
-      type: 'ADD_CLIENT',
-      payload: {
-        first_name: firstName,
-        last_name: lastName,
-        address: address,
-        route: route,
-        phone: phoneNumber,
-        notes: notes,
-        //including dog info in object
-        vet_name: vetName,
-        vet_phone: vetPhone,
-      }
-    }
-    dispatch(action);
+  const back = event => {
+    dispatch({type: 'CLEAR_CLIENT'});
+    dispatch({ type: 'SET_MODAL_STATUS' })
   }
+
+  
 
   return (
       <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
@@ -71,59 +51,55 @@ function AddClient(){
              
                 {clientToAdd &&
                 <TextField 
-                  value={clientToAdd.first_name} 
-                  onChange={(event) => setFirstName(event.target.value)}
+                  value={clientToAdd.first_name || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_FIRST_NAME', payload: event.target.value})}
                   helperText="First Name"  
                   size="small" />
                 }
                 <TextField 
-                  value={lastName} 
-                  onChange={(event) => setLastName(event.target.value)}
+                  value={clientToAdd.last_name || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_LAST_NAME', payload: event.target.value})}
                   helperText="Last Name"  
                   size="small" /> 
                 <TextField 
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)} 
+                  value={clientToAdd.email || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_EMAIL', payload: event.target.value})}
                   helperText="Email"  
                   size="small" />
                 <TextField 
-                  value={phoneNumber} 
-                  onChange={(event) => setPhoneNumber(event.target.value)}
+                 value={clientToAdd.phone || ''} 
+                 onChange={(event) => dispatch({type: 'ADD_PHONE', payload: event.target.value})}
                   helperText="Phone"  
                   size="small" />
                 <TextField 
-                  value={address}
-                  onChange={(event) => setAddress(event.target.value)}
+                  value={clientToAdd.address || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_ADDRESS', payload: event.target.value})}
                   helperText="Address"  
                   size="small" />
                 <TextField 
-                  value={notes}
-                  onChange={(event) => setNotes(event.target.value)}
+                  value={clientToAdd.notes || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_NOTES', payload: event.target.value})}
                   helperText="Notes"  
                   size="small" />
                 <TextField 
-                  value={vetName}
-                  onChange={(event) => setVetName(event.target.value)} 
+                  value={clientToAdd.vet_name || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_VET_NAME', payload: event.target.value})}
                   helperText="Vet"  
                   size="small" />
-                {/* <TextField 
-                  value={vetClinic} 
-                  onChange={(event) => setVetClinic(event.target.value)}
-                  helperText="Clinic"  
-                  size="small" /> */}
                 <TextField 
-                  value={vetPhone}
-                  onChange={(event) => setVetPhone(event.target.value)}
+                  value={clientToAdd.vet_phone || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_VET_PHONE', payload: event.target.value})}
                   helperText="Vet Phone"  
                   size="small" />
                     <FormControl>
                 <Select
                   labelId="route"
+                  size="small"
                   id="route"
-                  value={route}
+                  value={clientToAdd.route || ''}
                   onChange={(event) => {
                     
-                    setRoute(event.target.value);
+                    dispatch({type: 'ADD_ROUTE', payload: event.target.value})
         
                   }}
                 >
@@ -146,27 +122,33 @@ function AddClient(){
         
 
 
-          {/*-------------------- DOG PICTURES --------------------*/}
-          <Grid sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-          
-            
-
-         {/*------------------ ADD DOG EXAMPLE ------------------*/}
-              <Card sx={{ width: '100%', m: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                  <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "rgb(227, 218, 216, 0.5)", width: "89%", height: "90%", borderRadius: "0.5rem" }} alt="add dog button" 
-                     onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})}
-                     >
-                      <LibraryAddIcon  sx={{ height: "100%", color: "rgb(171, 164, 162)" }}/>
-                  </Box>
+   
+            {/* <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
+          {client.dogs && client.dogs.map && client.dogs.map((dog) => (
+              <Card sx={{width: '35%', m: 1}}>
+                  <CardActions sx={{ justifyContent: 'flex-end' }}>
+                        <Button size="small" variant="outlined" disabled>
+                              {dog.dog_name}
+                        </Button>
+                  </CardActions>
+                  <CardMedia component="img"  
+                    sx={{width: 1}}
+                    alt="client dog photo"
+                    image={dog.image}/>
               </Card>
-          </Grid>
+                 ))}
+
+
+      
+            
+          </Grid> */}
 
 
           {/*-------------------- BUTTONS --------------------*/}
           <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
             <Button variant="outlined" color="info"
-              onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Back</Button>  {/*goes back to client list*/}
-            <Button variant="contained" color="success" onClick={addClient}>Save</Button> 
+              onClick={back}>Back</Button>  {/*goes back to client list*/}
+            <Button variant="contained" color="success" onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})}>Next</Button> 
           </Box>
       </Box>
     );

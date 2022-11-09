@@ -5,6 +5,7 @@ const router = express.Router();
 // GET ROUTE FOR DAILY DOGS SCHEDULE
 router.get('/', (req, res) => {
     // GET route code here
+
 });
 
 /**

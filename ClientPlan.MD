@@ -26,3 +26,7 @@ get value from reducer
 
 openClient has openModal function
 dispatch set client then use select for details page
+
+1. Fill in client info
+2. select dogs at bottom
+3. next to add schedule?

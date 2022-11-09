@@ -30,11 +30,13 @@ function EmployeeForm(){
           <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "5%", mx: 5, mt: 3 }}>
               <Box sx={{ width:"24%", display:"flex", justifyContent:"space-between" }}>
                 <Button variant="outlined" color="info"
-                    onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})}>Back</Button> 
+                    onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})}>Cancel</Button> 
                 <Button variant="contained"
                     onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})}>Delete</Button> 
               </Box>
-            <Button variant="contained" color="secondary"
+            <Button 
+                variant="contained"        
+                color="secondary"
                 onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})}>Save</Button> 
           </Box>
       </Grid>

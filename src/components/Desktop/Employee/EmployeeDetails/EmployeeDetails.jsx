@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 //MUI
-import { Button, TextField, Typography, Grid, Avatar } from "@mui/material";
+import { Button, TextField, Typography, Grid, Avatar, Card, CardContent } from "@mui/material";
 
 function EmployeeDetails(){
   const dispatch = useDispatch();
@@ -14,9 +14,9 @@ function EmployeeDetails(){
   return (
       <Grid className="container" height="100%">
         {/*----------------------- HEADER -----------------------*/}
-          <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', height: "10%", mx: 6, mt: 6 }}>  
-            <Typography variant="h3" sx={{ pt: 3 }}>Dolly Parton</Typography>
-            <Avatar sx={{ bgcolor: "primary.main", height: "150%", width: "15%" }}>{initials}</Avatar> {/* initials need to be conditionally rendered */}
+          <Grid sx={{display: 'flex', flexDirection: 'row', height: "10%", mx: 6, mt: 4, mb: 8}}>  
+            <Avatar sx={{ bgcolor: "primary.main", height: 115 , width: 115 }}>{initials}</Avatar> {/* initials need to be conditionally rendered */}
+            <Typography variant="h3" sx={{ pt: 3, ml: 5}}>{employee.first_name} {employee.last_name}</Typography>
           </Grid> 
 
           {/*-------------------- TEXT FIELDS --------------------*/}

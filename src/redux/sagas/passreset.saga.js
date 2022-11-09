@@ -4,7 +4,7 @@ import axios from 'axios';
 // worker Saga: will be fired on "REGISTER" actions
 function* resetPass(action) {
   try {
-    console.log(action.payload);
+    // console.log(action.payload);
     const userId = action.payload.id;
     // clear any existing error on the registration page
     yield put({ type: 'CLEAR_PASSWORD_ERROR' });
@@ -27,8 +27,17 @@ function* resetPass(action) {
   }
 }
 
+function* clearError(action) {
+  try {
+    yield put({ type: 'CLEAR_PASSWORD_ERROR'});
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function* resetPassSaga() {
   yield takeLatest('RESETPASS', resetPass);
+  yield takeLatest('RESET_PASSWORD_ERROR', clearError)
 }
 
 export default resetPassSaga;

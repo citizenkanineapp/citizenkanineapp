@@ -9,9 +9,18 @@ const employees = (state=[], action)=> {
             return state;
     }
 }
+const selectedEmployee = (state={}, action)=> {
+    switch (action.type){
+        case 'SET_EMPLOYEE':
+            return action.payload
+        default:
+            return state;
+    }
+}
 
 const employeesReducer = combineReducers({
-    employees
+    employees,
+    selectedEmployee
 })
 
 export default employeesReducer;

@@ -11,8 +11,9 @@ import Nav from '../Desktop/DesktopNav/Nav';
 import NavTransition from '../Desktop/DesktopNav/NavTransition';
 import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
-import LoginPage from '../AllPages/Login/LoginPage/LoginPage';
-import RegisterPage from '../AllPages/Login/RegisterPage/RegisterPage';
+import LoginPage from '../AllPages/Login/Login/LoginPage';
+import RegisterPage from '../AllPages/Login/Register/RegisterPage';
+import ResetPassPage from '../AllPages/Login/ResetPass/ResetPassPage';
 import Invoicing from '../Desktop/Invoicing/Invoicing';
 import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
 import ClientList from '../Desktop/Client/ClientList/ClientList';
@@ -70,6 +71,15 @@ function App() {
                 :
                 <LoginPage />}
             </Route>
+            
+            {/* needs to be fixed for conditional rendering - screen sizes? */}
+            <Route exact path="/resetpass">
+              {user.id ? // "/user" --> splash page
+                <Redirect to="/user" />
+                :
+                <ResetPassPage />}
+            </Route>
+            
 
             {/* just for building the app, should be worked into add employee */}
             <Route exact path="/registration">

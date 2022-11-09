@@ -58,6 +58,7 @@ function LoginForm() {
       </div>
       <div>
         <input className="btn" type="submit" name="submit" value="Log In" />
+        <p>Forgot Password?</p>
       </div>
     </form>
   );

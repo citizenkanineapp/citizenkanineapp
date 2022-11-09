@@ -34,12 +34,14 @@ const registrationMessage = (state = '', action) => {
 
 const resetPasswordMessage = (state = '', action) => {
   switch (action.type) {
-    case 'CLEAR_REGISTRATION_ERROR':
+    case 'CLEAR_PASSWORD_ERROR':
       return '';
-    case 'REGISTRATION_INPUT_ERROR':
-      return 'Choose a username and password!';
-    case 'REGISTRATION_FAILED':
-      return "Oops! That didn't work. The username might already be taken. Try again!";
+    case 'PASSWORD_RESET':
+      return 'Password successfully reset.'
+    case 'PASSWORD_INPUT_ERROR':
+      return 'Password must match!';
+    case 'PASSWORD_RESET_FAILED':
+      return 'Password failed to reset.';
     default:
       return state;
   }

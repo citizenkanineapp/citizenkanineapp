@@ -10,14 +10,22 @@ function ResetPassForm() {
 
   const resetPassword = (event) => {
     event.preventDefault();
+    if ((newPass === confPass)  && (newPass != '')) {
+      dispatch({
+        type: 'RESETPASS',
+        payload: {
+          password: newPass,
+          id: user.id
+        },
+      });
 
-    dispatch({
-      type: 'RESETPASS',
-      payload: {
-        password: newPass,
-        id: user.id
-      },
-    });
+      setNewPass('');
+      setConfPass('');
+      dispatch({ type: 'PASSWORD_RESET' });
+    } else {
+      dispatch({ type: 'PASSWORD_INPUT_ERROR' });
+
+    }
   }; // end resetPass
 
   return (

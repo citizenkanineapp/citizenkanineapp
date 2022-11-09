@@ -7,7 +7,7 @@ function* resetPass(action) {
     console.log(action.payload);
     const userId = action.payload.id;
     // clear any existing error on the registration page
-    // yield put({ type: 'CLEAR_REGISTRATION_ERROR' }); IDK ABOUT THIS YET
+    yield put({ type: 'CLEAR_PASSWORD_ERROR' });
 
     // passes the username and password from the payload to the server
     yield axios.put(`/api/user/passreset/${userId}`, action.payload);
@@ -22,8 +22,8 @@ function* resetPass(action) {
 
     yield put({ type: 'SET_TO_LOGIN_MODE' });
   } catch (error) {
-    console.log('Error with user registration:', error);
-    yield put({ type: 'REGISTRATION_FAILED' });
+    console.log('Error with password reset:', error);
+    yield put({ type: 'PASSWORD_RESET_FAIL' });
   }
 }
 

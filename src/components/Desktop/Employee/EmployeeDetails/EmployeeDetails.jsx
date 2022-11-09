@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 //MUI
 import { Button, TextField, Typography, Grid, Avatar, Card, CardContent } from "@mui/material";
 
-function EmployeeDetails(){
+function EmployeeDetails() {
   const dispatch = useDispatch();
   const employee = useSelector(store=> store.employeesReducer.selectedEmployee);
   console.log(employee);
@@ -33,24 +33,25 @@ function EmployeeDetails(){
               value="1234 Jolene Ave." helperText="Address"  size="small" InputProps={{readOnly: true}}/>
           </Grid> {/* value is what you see in the field, read only*/}
 
-          <Grid sx={{ bgcolor: "lightBlue", height: "35%", mx: 5 }}>
-              <Typography>BI-WEEKLY VIEW OF SECTION</Typography>
-          </Grid>
 
-          <Grid sx={{mt: 2, display: 'flex', justifyContent: 'space-between', height: "5%", mx: 5, mt: 3 }}>
-            <Button 
-              variant="outlined" color="info"
-              onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>
-              Back
-            </Button>  {/*goes back to Employee list*/}
-            <Button 
-              variant="contained" color="success"
-              onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EditEmployeeForm'})}>
-              Edit
-            </Button> 
-          </Grid>
+      <Grid sx={{ bgcolor: "lightBlue", height: "35%", mx: 5 }}>
+        <Typography>BI-WEEKLY VIEW OF SECTION</Typography>
       </Grid>
-    );
+
+      <Grid sx={{ mt: 2, display: 'flex', justifyContent: 'space-between', height: "5%", mx: 5, mt: 3 }}>
+        <Button
+          variant="outlined" color="info"
+          onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>
+          Back
+        </Button>  {/*goes back to Employee list*/}
+        <Button
+          variant="contained" color="success"
+          onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EditEmployeeForm' })}>
+          Edit
+        </Button>
+      </Grid>
+    </Grid>
+  );
 }
 
 export default EmployeeDetails;

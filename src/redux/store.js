@@ -1,4 +1,5 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import {autoRehydrate} from 'redux-persist'
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-function ResetPassForm() {
-  const [newPass, setNewPass] = useState('');
-  const [confPass, setConfPass] = useState('');
+function ResetPassReqForm() {
+  const [email, setEmail] = useState('');
   const errors = useSelector((store) => store.errors);
-  const user = useSelector(store => store.user);
   const dispatch = useDispatch();
 
   const resetPassword = (event) => {
@@ -14,8 +12,8 @@ function ResetPassForm() {
     dispatch({
       type: 'RESETPASS',
       payload: {
-        password: newPass,
-        id: user.id
+        username: username,
+        password: password,
       },
     });
   }; // end resetPass
@@ -30,28 +28,17 @@ function ResetPassForm() {
       )}
       <div>
         <label htmlFor="username">
-          New Password:
+          Email address:
           <input
             type="text"
             name="username"
-            value={newPass}
+            value={email}
             required
-            onChange={(event) => setNewPass(event.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
           />
         </label>
       </div>
-      <div>
-        <label htmlFor="username">
-          Confirm New Password:
-          <input
-            type="text"
-            name="username"
-            value={confPass}
-            required
-            onChange={(event) => setConfPass(event.target.value)}
-          />
-        </label>
-      </div>
+
       <div>
         <input className="btn" type="submit" name="submit" value="Reset Password" />
       </div>
@@ -59,4 +46,4 @@ function ResetPassForm() {
   );
 }
 
-export default ResetPassForm;
+export default ResetPassReqForm;

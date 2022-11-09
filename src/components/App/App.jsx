@@ -13,6 +13,7 @@ import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
 import LoginPage from '../AllPages/Login/Login/LoginPage';
 import RegisterPage from '../AllPages/Login/Register/RegisterPage';
+import ResetPassReqPage from '../AllPages/Login/ResetPass/ResetPassReqPage';
 import ResetPassPage from '../AllPages/Login/ResetPass/ResetPassPage';
 import Invoicing from '../Desktop/Invoicing/Invoicing';
 import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
@@ -73,11 +74,11 @@ function App() {
             </Route>
             
             {/* needs to be fixed for conditional rendering - screen sizes? */}
-            <Route exact path="/resetpass">
+            <Route exact path="/resetpassreq">
               {user.id ? // "/user" --> splash page
                 <Redirect to="/user" />
                 :
-                <ResetPassPage />}
+                <ResetPassReqPage />}
             </Route>
             
 
@@ -118,6 +119,10 @@ function App() {
 
             <ProtectedRoute exact path="/admin">
               {user.admin ? <AdminSettings /> : <Redirect to="/home" />}
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/admin/resetpass">
+              {user.admin ? <ResetPassPage /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
             {/* ----------------------- MOBILE ----------------------- */}

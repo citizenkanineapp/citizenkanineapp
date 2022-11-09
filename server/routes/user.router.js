@@ -32,6 +32,25 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+//PUT route for password reset. need user ID params.
+router.put('/passreset/:id', (req, res) => {
+  const userId = req.params.id;
+  console.log(req.params.id)
+  console.log(req.body.password);
+  const password = encryptLib.encryptPassword(req.body.password);
+
+  const queryText = `UPDATE "user" 
+    SET "password" = $1
+    WHERE "id" = $2;`;
+  pool
+    .query(queryText, [password, userId])
+    .then(()=> res.sendStatus(201))
+    .catch((err)=> {
+      console.log('Password reset failed. ', err);
+      res.sendStatus(500);
+    })
+})
+
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
 // this middleware will run our POST if successful

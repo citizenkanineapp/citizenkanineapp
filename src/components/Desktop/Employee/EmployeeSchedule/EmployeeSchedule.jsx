@@ -1,6 +1,20 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import LogOutButton from '../../../AllPages/LogOutButton/LogOutButton'
+
+// Calender Imports:
+import format from "date-fns/format";
+import getDay from "date-fns/getDay";
+import parse from "date-fns/parse";
+import startOfWeek from "date-fns/startOfWeek";
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
+
 
 //COMPONENTS
 import EmployeeModal from "../EmployeeModal/EmployeeModal";
@@ -18,10 +32,25 @@ function EmployeeSchedule(){
   //toggle between edit and viewing calendar
   const [showEditCalendar, setShowEditCalendar] = useState(false);
 
+  const locales ={
+    "en-US": require("date-fns/locale/en-US")
+  }
+
+  const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales
+  });
+
+  console.log(getDay);
   return (
   <div className="container">
     <h1>Employee Schedule</h1>
-
+    {/* <LogOutButton/> */}
+    
+    <Calendar localizer={localizer}  startAccessor="start" endAccessor="end" style={{height: 500, margin: "50px"}} />
     {showEditCalendar === false ?
 
       <div className="display_calendar">
@@ -42,7 +71,7 @@ function EmployeeSchedule(){
 
     <EmployeeModal/> {/* only open when button is pressed */}
   </div>
- )    
+  )    
 }
 
 export default EmployeeSchedule;

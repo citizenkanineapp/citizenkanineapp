@@ -5,6 +5,7 @@ import modal from './modal.reducer'
 import dogPhotoReducer from './dogImage.reducer';
 import clientsReducer from './clients.reducer';
 import dogReducer from './dog.reducer';
+import clientScheduleReducer from './clientSchedule.reducer';
 
 import clientReducer from './client.reducer';
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   clientsReducer,
   clientReducer,
   dogReducer,
+  clientScheduleReducer,
 });
 
 export default rootReducer;

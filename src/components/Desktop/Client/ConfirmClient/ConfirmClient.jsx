@@ -2,20 +2,21 @@ import { useSelector, useDispatch } from "react-redux";
 
 //MUI
 import { Box } from "@mui/system";
-import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, IconButton } from "@mui/material";
+import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, IconButton, CardContent } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PetsIcon from '@mui/icons-material/Pets';
 
 
 
 
-function ClientDetails(){
+function ConfirmClient(){
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
+  const dogs = useSelector(store => store.dogReducer)
+  const clientSchedule = useSelector(store => store.clientScheduleReducer)
 
   const back = event => {
-    dispatch({type: 'CLEAR_CLIENT'})
-    dispatch({ type: 'SET_MODAL_STATUS' })
+    dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})
   }
 
   return (
@@ -24,9 +25,7 @@ function ClientDetails(){
             {/*----------------------- HEADER -----------------------*/}
             <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2}}>  
               <Typography variant="h3" >{client.first_name} {client.last_name}</Typography>
-              <IconButton disabled>
-                <CalendarMonthIcon sx={{ fontSize: 45, color: 'rgb(163, 147, 142)' }}/> 
-              </IconButton>
+             
             </Grid> {/* display only */}
 
          
@@ -92,7 +91,7 @@ function ClientDetails(){
 
           {/*-------------------- DOG PICTURES --------------------*/}
           <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
-          {client.dogs && client.dogs.map && client.dogs.map((dog) => (
+          {dogs && dogs.map && dogs.map((dog) => (
               <Card sx={{width: '35%', m: 1}}>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button size="small" variant="outlined" disabled>
@@ -105,25 +104,63 @@ function ClientDetails(){
                     image="https://m8r6w9i6.rocketcdn.me/wp-content/uploads/2020/09/Australian-Cattle-Dog.jpeg.webp"/>
               </Card>
                  ))}
-
-
-         {/*------------------ ADD DOG EXAMPLE ------------------*/}
             
           </Grid>
 
+          <h2>Weekly Schedule</h2>
+      <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
+        <Grid item xs={2}>
+          <Card raised >
+            <CardContent sx={{ backgroundColor:clientSchedule.monday ? '#7BCEC8' : null }}>
+              Monday
+            </CardContent>
+          </Card>
 
-          
+        </Grid>
+        <Grid item xs={2} >
+          <Card raised  >
+            <CardContent sx={{ backgroundColor: clientSchedule.tuesday ? '#7BCEC8' : null }}>
+              Tuesday
+            </CardContent>
+          </Card>
+
+        </Grid>
+        <Grid item xs={2}>
+          <Card raised>
+            <CardContent sx={{ backgroundColor: clientSchedule.wednesday? '#7BCEC8' : null }}>
+              Wednesday
+            </CardContent>
+          </Card>
+
+        </Grid>
+        <Grid item xs={2}>
+          <Card raised >
+            <CardContent sx={{ backgroundColor: clientSchedule.thursday? '#7BCEC8' : null }}>
+              Thursday
+            </CardContent>
+          </Card>
+
+        </Grid>
+        <Grid item xs={2}>
+          <Card raised>
+            <CardContent sx={{ backgroundColor: clientSchedule.friday? '#7BCEC8' : null }}>
+              Friday
+            </CardContent>
+          </Card>
+
+        </Grid>
+        </Grid>
 
 
           {/*-------------------- BUTTONS --------------------*/}
           <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
             <Button variant="outlined" color="info"
-              onClick={back}>Back</Button>  {/*goes back to client list*/}
+              onClick={back}>Back</Button>  {/*goes back to dog form*/}
             <Button variant="contained" color="success"
-              onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Edit</Button> 
+              onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Save</Button> 
           </Box>
       </Box>
     );
 }
 
-export default ClientDetails;
+export default ConfirmClient;

@@ -35,6 +35,7 @@ function* addClient(action){
 function* clientSaga() {
     yield takeLatest('FETCH_CLIENTS', getALlClients);
     yield takeLatest('ADD_CLIENT', addClient);
+   
     
   }
 

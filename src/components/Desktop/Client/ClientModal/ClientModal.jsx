@@ -9,6 +9,7 @@ import ClientScheduleChanges from '../ClientScheduleChanges/ClientScheduleChange
 import AddDogForm from '../Dog/AddDog/AddDogForm';
 import EditDogForm from '../Dog/EditDog/EditDogForm';
 import DogDetails from '../Dog/DogDetails/DogDetails';
+import ConfirmClient from '../ConfirmClient/ConfirmClient';
 
 //MUI
 import Box from '@mui/material/Box';
@@ -41,6 +42,7 @@ function ClientModal(){
       case "DogDetails": return <DogDetails/>
       case "EditDogForm": return <EditDogForm/>
       case "ClientDetails": return <ClientDetails/>
+      case "ConfirmClient": return <ConfirmClient/>
       default: return <ClientDetails/>
     };
   };

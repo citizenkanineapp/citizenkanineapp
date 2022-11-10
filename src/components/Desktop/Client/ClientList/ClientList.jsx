@@ -38,7 +38,7 @@ function ClientList() {
   const fetchOneClient = (client) =>{
     console.log(client)
     dispatch({type: 'SET_CLIENT', payload: client })
-    // openModal('ClientDetails')
+    openModal('ClientDetails')
   }
 
 

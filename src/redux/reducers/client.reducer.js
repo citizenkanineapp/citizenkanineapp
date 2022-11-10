@@ -20,12 +20,12 @@ const clientReducer = (state = {}, action) => {
             return {...state, vet_phone: action.payload};
         case 'ADD_ROUTE':
             return {...state, route: action.payload};
+        // case 'ADD_DOGS':
+        //     return {...state, dogs: [...state.dogs, action.payload]};
         case 'ADD_DOGS':
-            return {...state, dogs: [...state.dogs, action.payload]};
-        // case 'SET_DOG_PHOTO':
-        //     return {...state, }
-        // case 'ADD_DOG_NAME':
-        //     return{...state, dogs:[...state.dogs, {dog_name: action.payload}]}
+            return {...state, dogs: action.payload};
+        case 'ADD_SCHEDULE':
+            return {...state, schedule:[action.payload]}
         case 'CLEAR_CLIENT':
             return {};
         default:

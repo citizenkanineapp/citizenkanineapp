@@ -12,3 +12,6 @@ const dogReducer = (state = {}, action) => {
 }
 
 export default dogReducer;
+
+//should this be an object or an array?
+//can't map through object

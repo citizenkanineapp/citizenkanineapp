@@ -51,6 +51,7 @@ function AddClient(){
       }
     }
     dispatch(action);
+    dispatch({ type: 'SET_MODAL_STATUS' });
   }
 
   return (

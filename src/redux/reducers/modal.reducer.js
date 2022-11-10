@@ -1,9 +1,12 @@
 import { combineReducers } from 'redux';
 
-const client = (state = '', action) => {
+const client = (state = [], action) => {
     switch (action.type) {
       case 'SET_CLIENT_MODAL':
-        return action.payload;
+        return [...state, action.payload];
+      case 'BACK_TO_VIEW':
+        const currentView = state[state.length-1];
+        return state.filter(view => view !== currentView && view);
       case 'CLEAR_MODALS':
         return '';
       default:

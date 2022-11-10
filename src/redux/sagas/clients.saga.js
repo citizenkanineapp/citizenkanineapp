@@ -19,14 +19,17 @@ function* getALlClients(action){
 function* addClient(action){
     console.log('arrived in add client route', action.payload);
 
-    // try {
-    //     const clients = yield axios.get('/api/clients');
-    //     // console.log(clients.data)
-    //     yield put ({type: 'SET_CLIENTS', payload: clients.data});
-    // } catch (error) {
-    //     console.log(error);
-    //     alert('Error fetching clients');
-    // }
+    try {
+        const client = yield axios({
+            method: 'POST',
+            url: '/api/clients',
+            data: action.payload
+        })
+        yield put ({type: 'FETCH_CLIENTS'});
+    } catch (error) {
+        console.log(error);
+        alert('Error adding clients');
+    }
     
 }
 

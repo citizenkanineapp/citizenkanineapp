@@ -19,7 +19,7 @@ const clientReducer = (state = {}, action) => {
         case 'ADD_VET_PHONE':
             return {...state, vet_phone: action.payload};
         case 'ADD_ROUTE':
-            return {...state, route: action.payload};
+            return {...state, route_id: action.payload};
         // case 'ADD_DOGS':
         //     return {...state, dogs: [...state.dogs, action.payload]};
         case 'ADD_DOGS':

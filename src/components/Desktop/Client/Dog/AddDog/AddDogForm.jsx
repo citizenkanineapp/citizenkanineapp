@@ -69,35 +69,19 @@ function AddDogForm (){
     dispatch({type: 'CLEAR_DOGS'});
   }
 
-  const saveDogs = (view) => {
-    console.log(dogs);
-    dispatch({type: 'ADD_DOGS', payload: dogs})
-    dispatch({ type: 'SET_CLIENT_MODAL', payload: view})
 
-  }
   
  const saveSchedule = (view) => {
-    // console.log(schedule);
-    console.log(clientSchedule)
+
     dispatch({type: 'ADD_SCHEDULE', payload: clientSchedule})
     dispatch({type: 'ADD_DOGS', payload: dogs})
     dispatch({ type: 'SET_CLIENT_MODAL', payload: view})
-    // dispatch({type: 'CLEAR_SCHEDULE'})
+    
  }
 
 
     return (
       <>
-        {/* <div className="container">
-          <h1>Add Dog</h1>
-
-          <ImageUpload />
-            <TextField 
-                value={dogs.dog_name || ''} 
-                onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
-                helperText="Dog Name"  
-                size="small" /> 
-        </div> */}
   <h1>Add Dog</h1>
   <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
 
@@ -131,30 +115,7 @@ function AddDogForm (){
               // setDog([...dog, {dogName:'sam', image:''}]);
             }}/>
           </Fab>
-      
-
-
-
-
-
-
-        {/* Other Cards */}
-        {/* <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
-            <ImageUpload />
-            <TextField 
-                    value={dogs.dog_name || ''} 
-                    onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
-                    helperText="Dog Name"  
-                    size="small" /> 
-        </Card>
-        <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
-            <ImageUpload />
-            <TextField 
-                    value={dogs.dog_name || ''} 
-                    onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
-                    helperText="Dog Name"  
-                    size="small" /> 
-        </Card> */}
+    
     </Grid>
       <div>
       <h2>Weekly Schedule</h2>
@@ -202,10 +163,10 @@ function AddDogForm (){
 
       </Grid>
         <Box sx={{mt: 6, display: 'flex', justifyContent: 'space-between' }}>
-          <Button onClick={back}>Cancel</Button> 
+          <Button onClick={back}>Back</Button> 
           {/* need to make the bottom save data */}
           {/* <Button onClick={() => saveDogs('AddClient')}>Save</Button>  */}
-          <Button onClick={() => saveSchedule('ConfirmClient')}>Save</Button> 
+          <Button onClick={() => saveSchedule('ConfirmClient')}>Next</Button> 
         </Box>
       </div>
       </>
@@ -218,78 +179,4 @@ export default AddDogForm;
 
 
 
-{/* <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
-<Card sx={{width: '35%', m: 1}}>
-        <ImageUpload />
-    </Card>
 
-    <Card sx={{width: '35%', m: 1}}>
-        <ImageUpload />
-    </Card>
-    <Card sx={{width: '35%', m: 1}}>
-        <ImageUpload />
-    </Card>
-
-</Grid> */}
-
-
-
-// <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
-//       {dog &&  dog.map((singleDog, index)=> (
-//         // singleDog = {name:'', image:''}
-//       <Card key={index} sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
-//             <ImageUpload />
-//             <TextField 
-//                     value={singleDog.dogName} 
-//                     onChange={(e)=> {
-//                       setDog(current => current.map(obj => {
-//                         console.log('current dog:',dog)
-//                         if (dog.indexOf(obj)=== index ){
-//                           console.log('current dog2:',dog)
-//                           return {...obj, dogName: e.target.value, image: singleDog.image}
-//                         }
-//                         // console.log('current2:',current)
-//                       }) )
-//                     }}
-//                     helperText="Dog Name"  
-//                     size="small" 
-//                     /> 
-//                     {/*setEmployees(current =>
-//                      current.map(obj => {
-//                       if (obj.id === 2) {
-//                         return {...obj, name: 'Sophia', country: 'Sweden'};
-//                       } */}
-//         </Card>
-//         ))}
-//         <Card>
-//           <Fab color="primary" aria-label="add">
-//             <AddIcon onClick={()=> {
-//               // This is adding another dog object to dog.
-//               setDog([...dog, {dogName:'sam', image:''}]);
-//             }}/>
-//           </Fab>
-//         </Card>
-
-
-
-
-
-// was 103--161
-//         {/* Other Cards */}
-//         {/* <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
-//             <ImageUpload />
-//             <TextField 
-//                     value={dogs.dog_name || ''} 
-//                     onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
-//                     helperText="Dog Name"  
-//                     size="small" /> 
-//         </Card>
-//         <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
-//             <ImageUpload />
-//             <TextField 
-//                     value={dogs.dog_name || ''} 
-//                     onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
-//                     helperText="Dog Name"  
-//                     size="small" /> 
-//         </Card> */}
-//     </Grid>

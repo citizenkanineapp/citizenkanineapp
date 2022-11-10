@@ -96,18 +96,18 @@ function AddClient(){
                   labelId="route"
                   size="small"
                   id="route"
-                  value={clientToAdd.route || ''}
+                  value={clientToAdd.route_id || ''}
                   onChange={(event) => {
                     
                     dispatch({type: 'ADD_ROUTE', payload: event.target.value})
         
                   }}
                 >
-                  <MenuItem value={'tangletown'}>Tangletown</MenuItem>
-                  <MenuItem value={'emerson'}>Emerson</MenuItem>
-                  <MenuItem value={'far'}>Far</MenuItem>
-                  <MenuItem value={'misfits'}>Misfits</MenuItem>
-                  <MenuItem value={'unassigned'}>Unassigned</MenuItem>
+                  <MenuItem value={1}>Tangletown</MenuItem>
+                  <MenuItem value={2}>Emerson</MenuItem>
+                  <MenuItem value={3}>Far</MenuItem>
+                  <MenuItem value={4}>Misfits</MenuItem>
+                  <MenuItem value={5}>Unassigned</MenuItem>
                 </Select>
                 <FormHelperText>Default Route</FormHelperText>
               </FormControl>

@@ -74,8 +74,42 @@ pool.query(queryText)
 /**
  * POST route template
  */
-router.post('/', (req, res) => {
-  // POST route code here
+router.post('/', rejectUnauthenticated, async (req, res) => {
+  // console.log(req.body);
+  const client = await pool.connect();
+  const {first_name, last_name, address, email, route_id, phone, dogs, schedule, vet_name, vet_phone } = req.body
+  const customer = {first_name, last_name, address, phone, email, route_id}
+  const dogArray = dogs
+  const vet = {vet_name, vet_phone}
+  console.log ('vet', vet)
+  const scheduleArray = schedule
+  console.log('client:', customer)
+  // console.log('dogs:', dogArray)
+  // console.log('schedule:', scheduleArray)
+await client.query('BEGIN')
+const clientTxt = await client.query(`
+                        INSERT INTO clients 
+                            ("first_name", "last_name", "address", "route_id", "phone", "email") 
+                          VALUES
+                          ($1, $2, $3, $4, $5, $6)
+                          RETURNING "id";
+`, [first_name, last_name, address, route_id, phone, email])
+const customerId = clientTxt.rows[0].id
+
+await Promise.all(dogArray.map(dog => { 
+    const dogTxt = `
+                        INSERT INTO dogs 
+                            (client_id, name, vet_name, vet_phone) 
+                          VALUES
+                            ($1, $2, $3)
+
+    `
+    const dogValues = [customerId, dog.dog_name, vet_name, vet_phone]
+    return client.query(dogTxt, dogValues)
+}));
+  const scheduleTxt = `
+              
+  `
 });
 
 module.exports = router;

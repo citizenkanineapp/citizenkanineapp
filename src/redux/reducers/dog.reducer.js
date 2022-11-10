@@ -1,5 +1,5 @@
 const dogReducer = (state = [{dog_name: '', image: ''}], action) => {
-    console.log ('in dog reducer', action.payload)
+    // console.log ('in dog reducer', action.payload)
     switch (action.type) {
         case 'ADD_DOG_NAME':
             // change the dog_name value for a given dog object (based on index)

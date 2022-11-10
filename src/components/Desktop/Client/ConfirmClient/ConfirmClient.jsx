@@ -19,14 +19,20 @@ function ConfirmClient(){
     dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})
   }
 
+  const saveClient = event => {
+    dispatch({type: 'ADD_CLIENT', payload: client})
+    // dispatch({type: 'SET_MODAL_STATUS'})
+    //need to add clear client?
+  }
+console.log('client right now', client)
   return (
-      <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{m:2, mt:0, p:2, pt: 0, display: 'flex', flexDirection: 'column' }}>
 
             {/*----------------------- HEADER -----------------------*/}
-            <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2}}>  
+            {/* <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2}}>  
               <Typography variant="h3" >{client.first_name} {client.last_name}</Typography>
              
-            </Grid> {/* display only */}
+            </Grid> */}
 
          
               {/*-------------------- TEXT FIELDS --------------------*/}
@@ -91,8 +97,8 @@ function ConfirmClient(){
 
           {/*-------------------- DOG PICTURES --------------------*/}
           <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
-          {dogs && dogs.map && dogs.map((dog) => (
-              <Card sx={{width: '35%', m: 1}}>
+          {dogs && dogs.map && dogs.map((dog, index) => (
+              <Card key={index} sx={{width: '35%', m: 1}}>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button size="small" variant="outlined" disabled>
                               {dog.dog_name}
@@ -157,7 +163,7 @@ function ConfirmClient(){
             <Button variant="outlined" color="info"
               onClick={back}>Back</Button>  {/*goes back to dog form*/}
             <Button variant="contained" color="success"
-              onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Save</Button> 
+              onClick={saveClient}>Save</Button> 
           </Box>
       </Box>
     );

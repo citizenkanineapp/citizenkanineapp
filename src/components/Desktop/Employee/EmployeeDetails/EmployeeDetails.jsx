@@ -22,15 +22,15 @@ function EmployeeDetails() {
   const [daySelected, setDaySelected] = useState(false);
 
   return (
-      <Grid className="container" height="100%">
+      <Grid className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', width: '65vw', pr: 2, height: '80vh', justifyContent: 'center' }}>
         {/*----------------------- HEADER -----------------------*/}
-          <Grid sx={{display: 'flex', flexDirection: 'row', height: "10%", mx: 6, mt: 4, mb: 8}}>  
+          <Grid sx={{display: 'flex', flexDirection: 'row', height: "10%", mt: 2, mb: 8, ml: 4}}>  
             <Avatar sx={{ bgcolor: "primary.main", height: 115 , width: 115 }}>{initials}</Avatar> {/* initials need to be conditionally rendered */}
             <Typography variant="h3" sx={{ pt: 3, ml: 5}}>{employee.first_name} {employee.last_name}</Typography>
           </Grid> 
 
           {/*-------------------- TEXT FIELDS --------------------*/}
-          <Grid sx={{display: 'grid', gridTemplateColumns: '0.5fr 1fr', gap: 1, m: 6, height: "20%",}}>
+          <Grid sx={{display: 'grid', gridTemplateColumns: '0.5fr 1fr', gap: 1, height: "20%", mb: 7, ml: 4 }}>
               
               <TextField 
               sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
@@ -45,7 +45,7 @@ function EmployeeDetails() {
 
           {/* Schedule day selectors */}
           <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
-            <Grid item xs={2} sx={{display: 'flex', justifyContent: 'right', mt: 2}}>
+            <Grid item xs={1.5} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
               <Typography variant="h6">Week 1:</Typography>
             </Grid>
             {/* Mapping through days of the week array to render buttons for week1 */}
@@ -71,7 +71,7 @@ function EmployeeDetails() {
           </Grid> 
 
           <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mt: 1}} >
-            <Grid item xs={2} sx={{display: 'flex', justifyContent: 'right', mt: 2}}>
+            <Grid item xs={1.5} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
               <Typography variant="h6">Week 2:</Typography>
             </Grid>
             {/* Mapping through days of the week array to render buttons for week2 */}
@@ -86,7 +86,7 @@ function EmployeeDetails() {
                     else {
                       setWeek2({...week2, [index+1]: false});
                     }}}>
-                  <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: week2[index+1]? '#7BCEC8' : null }}t>
+                  <CardContent sx={{ display:'flex', justifyContent: 'center',    backgroundColor: week2[index+1]? '#7BCEC8' : null }}>
                       <Typography variant="h7" sx={{textTransform: 'capitalize'}}>{day}</Typography>
                   </CardContent>
                 </CardActionArea>

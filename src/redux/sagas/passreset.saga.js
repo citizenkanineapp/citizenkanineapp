@@ -27,17 +27,8 @@ function* resetPass(action) {
   }
 }
 
-function* clearError(action) {
-  try {
-    yield put({ type: 'CLEAR_PASSWORD_ERROR'});
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 function* resetPassSaga() {
   yield takeLatest('RESETPASS', resetPass);
-  yield takeLatest('RESET_PASSWORD_ERROR', clearError)
 }
 
 export default resetPassSaga;

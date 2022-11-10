@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,11 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const errors = useSelector(store => store.errors);
   const dispatch = useDispatch();
+
+  useEffect(()=> {
+    console.log('useEffect')
+    dispatch({ type: 'CLEAR_LOGIN_ERROR'});
+  },[]);
 
   const login = (event) => {
     event.preventDefault();

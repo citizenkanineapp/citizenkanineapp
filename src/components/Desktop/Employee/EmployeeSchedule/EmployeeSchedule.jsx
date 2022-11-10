@@ -18,7 +18,7 @@ function EmployeeSchedule(){
   //toggle between edit and viewing calendar
   const [showEditCalendar, setShowEditCalendar] = useState(false);
 
- return (
+  return (
   <div className="container">
     <h1>Employee Schedule</h1>
 

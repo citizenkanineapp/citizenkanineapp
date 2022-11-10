@@ -3,6 +3,9 @@ import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import imageSaga from './image.saga';
+import employeesSaga from './employees.saga.js';
+import clientSaga from './clients.saga';
+
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -17,5 +20,7 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     imageSaga(),
+    employeesSaga(),
+    clientSaga(),
   ]);
 }

@@ -39,7 +39,7 @@ function ClientDetails(){
 
 
           {/*-------------------- DOG PICTURES --------------------*/}
-          <Grid sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
+          <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: 1 }}>
               <Card sx={{width: '100%', m: 1}}>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button size="small" variant="outlined" disabled>
@@ -58,7 +58,7 @@ function ClientDetails(){
                   </CardActions>
                   <CardMedia component="img" width="100%" alt="client dog photo"
                     image="https://images.ctfassets.net/sfnkq8lmu5d7/2jiEB2xKaHaQh5DLuT3lMI/204094de400b9dc16f0a8b20bc81ef68/The-Wildest_Editorial_Canine_Vertigo_is_Treatable_but_Scary_to_Witness_Hero.jpg?w=700&h=525&fl=progressive&q=80&fm=jpg"/>
-              </Card>  {/* display only */}
+              </Card>
 
 
          {/*------------------ ADD DOG EXAMPLE ------------------*/}

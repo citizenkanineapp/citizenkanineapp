@@ -36,11 +36,18 @@ router.get('/', (req, res) => {
     // GET route code here
 });
 
-/**
- * POST route template
- */
+// POST ROUTE FOR DAILY DOGS?
 router.post('/', rejectUnauthenticated, (req, res) => {
-    // POST route code here
+    // takes in an array of objects from a reducer
+    // needs to insert per line item into the daily_dogs table
+    const insertSQL = `
+    INSERT INTO daily_dogs
+        ("dog_id", "route_id")
+    VALUES
+        (18, 1);
+`
+
+
 });
 
 // PUT ROUTE TO UPDATE DOG ROUTES FOR THE DAY

@@ -29,6 +29,7 @@ function ClientForm(){
               <Grid sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr', gap: 1 }}>
                 <TextField 
                   value={client.address}
+                  onChange={() => dispatch({})}
                   helperText="Address"  
                   size="small"/>
                 <TextField 

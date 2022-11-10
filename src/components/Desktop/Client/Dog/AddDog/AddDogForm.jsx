@@ -3,10 +3,12 @@ import { useState } from "react";
 
 //MUI
 import { Button, TextField, Typography, Card, CardActions, Box, CardContent, CardMedia, Grid, IconButton } from "@mui/material";
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
 
-function DogDetails(){
+function AddDogForm (){
   const dispatch = useDispatch();
 
   const dogUrl = useSelector(store => store.dogPhotoReducer);
@@ -14,7 +16,8 @@ function DogDetails(){
   const dogs = useSelector(store => store.dogReducer)
   const clientSchedule = useSelector(store => store.clientScheduleReducer)
 
-  const [dog, setDog] = useState([{name: '', image:  dogUrl.image}])
+
+ 
 
   const [monday, setMonday] = useState(false);
   const [tuesday, setTuesday] = useState(false);
@@ -82,6 +85,7 @@ function DogDetails(){
     // dispatch({type: 'CLEAR_SCHEDULE'})
  }
 
+
     return (
       <>
         {/* <div className="container">
@@ -95,8 +99,47 @@ function DogDetails(){
                 size="small" /> 
         </div> */}
   <h1>Add Dog</h1>
-    <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
-      <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+  <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
+
+      {dogs.map((singleDog, index)=> (
+        // singleDog = {name:'', image:''}
+      <Card key={index} sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+            <ImageUpload index={index} />
+            <TextField 
+                    value={singleDog.dog_name} 
+                    onChange={(e) => {
+                      dispatch({
+                        type: 'ADD_DOG_NAME',
+                        payload: {
+                          dog_name: e.target.value,
+                          index: index
+                        }
+                      })
+                    }}
+                    helperText="Dog Name"  
+                    size="small" 
+                    /> 
+
+        </Card>
+        ))}
+
+        <Card>
+          <Fab color="primary" aria-label="add">
+            <AddIcon onClick={()=> {
+                dispatch({type: 'ADD_DOG_INPUT'})
+              // This is adding another dog object to dog.
+              // setDog([...dog, {dogName:'sam', image:''}]);
+            }}/>
+          </Fab>
+        </Card>
+
+
+
+
+
+
+        {/* Other Cards */}
+        {/* <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
             <ImageUpload />
             <TextField 
                     value={dogs.dog_name || ''} 
@@ -111,15 +154,7 @@ function DogDetails(){
                     onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
                     helperText="Dog Name"  
                     size="small" /> 
-        </Card>
-        <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
-            <ImageUpload />
-            <TextField 
-                    value={dogs.dog_name || ''} 
-                    onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
-                    helperText="Dog Name"  
-                    size="small" /> 
-        </Card>
+        </Card> */}
     </Grid>
       <div>
       <h2>Weekly Schedule</h2>
@@ -178,12 +213,12 @@ function DogDetails(){
       );
 }
 
-export default DogDetails;
+export default AddDogForm;
 
 
 
 
-<Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
+{/* <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
 <Card sx={{width: '35%', m: 1}}>
         <ImageUpload />
     </Card>
@@ -195,4 +230,66 @@ export default DogDetails;
         <ImageUpload />
     </Card>
 
-</Grid>
+</Grid> */}
+
+
+
+// <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
+//       {dog &&  dog.map((singleDog, index)=> (
+//         // singleDog = {name:'', image:''}
+//       <Card key={index} sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+//             <ImageUpload />
+//             <TextField 
+//                     value={singleDog.dogName} 
+//                     onChange={(e)=> {
+//                       setDog(current => current.map(obj => {
+//                         console.log('current dog:',dog)
+//                         if (dog.indexOf(obj)=== index ){
+//                           console.log('current dog2:',dog)
+//                           return {...obj, dogName: e.target.value, image: singleDog.image}
+//                         }
+//                         // console.log('current2:',current)
+//                       }) )
+//                     }}
+//                     helperText="Dog Name"  
+//                     size="small" 
+//                     /> 
+//                     {/*setEmployees(current =>
+//                      current.map(obj => {
+//                       if (obj.id === 2) {
+//                         return {...obj, name: 'Sophia', country: 'Sweden'};
+//                       } */}
+//         </Card>
+//         ))}
+//         <Card>
+//           <Fab color="primary" aria-label="add">
+//             <AddIcon onClick={()=> {
+//               // This is adding another dog object to dog.
+//               setDog([...dog, {dogName:'sam', image:''}]);
+//             }}/>
+//           </Fab>
+//         </Card>
+
+
+
+
+
+// was 103--161
+//         {/* Other Cards */}
+//         {/* <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+//             <ImageUpload />
+//             <TextField 
+//                     value={dogs.dog_name || ''} 
+//                     onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
+//                     helperText="Dog Name"  
+//                     size="small" /> 
+//         </Card>
+//         <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+//             <ImageUpload />
+//             <TextField 
+//                     value={dogs.dog_name || ''} 
+//                     onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
+//                     helperText="Dog Name"  
+//                     size="small" /> 
+//         </Card> */}
+//     </Grid>

@@ -8,9 +8,9 @@ import { useDispatch } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
-function ImageUpload () {
+function ImageUpload ({index}) {
     const dispatch = useDispatch();
-    
+    console.log('does index get here?', index)
     //useStates needed for image upload and image preview 
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
@@ -32,23 +32,25 @@ function ImageUpload () {
 
     //to handle the form submitting and sending to Cloudinary
 
-    const handleSubmitFile = (e) => {
+    const handleSubmitFile = (e, index) => {
         e.preventDefault();
+        // console.log(index)
        if(!previewSource) return;
-       uploadImage(previewSource);
+       uploadImage(previewSource, index);
     }
      
-    const uploadImage = (base64EncodedImage) => {
+    const uploadImage = (base64EncodedImage, index) => {
+       console.log('index last step', index)
         dispatch ({
             type: 'ADD_IMAGE',
-            payload:{new_image_url:base64EncodedImage},
+            payload:{new_image_url:base64EncodedImage, index: index},
             headers:{'Content-type': 'application/json'}
         })
     }
 
     return(
         <div>
-                <form onSubmit={handleSubmitFile}
+                <form onSubmit={(e) => handleSubmitFile(e, index)}
                     className="form">
                     {/* avatar onclick calls that useRef variable */}
                     <Avatar

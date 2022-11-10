@@ -12,15 +12,16 @@ const userRouter = require('./routes/user.router');
 const imageRouter = require('./routes/image.router');
 const employeesRouter = require('./routes/employees.router');
 const clientsRouter = require('./routes/clients.router');
+const mobileRouter = require('./routes/mobile.router');
 
 
 
 // Body parser middleware
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({ 
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({
   limit: '50mb',
   extended: true,
-  parameterLimit:50000
+  parameterLimit: 50000
 }));
 
 // Passport Session Configuration //
@@ -37,6 +38,7 @@ app.use('/api/image', imageRouter);
 app.use('/api/employees', employeesRouter);
 
 app.use('/api/clients', clientsRouter);
+app.use('/api/mobile', mobileRouter);
 
 
 // Serve static files

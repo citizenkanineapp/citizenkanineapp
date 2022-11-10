@@ -15,11 +15,11 @@ function EmployeeDetails() {
   // This object 
   const [week1, setWeek1] = useState({1:false, 2:false, 3:false, 4:false, 5:false});
   const [week2, setWeek2] = useState({1:false, 2:false, 3:false, 4:false, 5:false});
-  console.log('week1:', week1);
-  console.log('week2:', week2);
+
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-  // console.log(daysOfWeek.map)
+
+  const [daySelected, setDaySelected] = useState(false);
 
   return (
       <Grid className="container" height="100%">
@@ -41,25 +41,28 @@ function EmployeeDetails() {
               <TextField
               sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
               value="1234 Jolene Ave." helperText="Address"  size="small" InputProps={{readOnly: true}}/>
-          </Grid> {/* value is what you see in the field, read only*/}
+          </Grid> 
 
           {/* Schedule day selectors */}
           <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
+            <Grid item xs={2} sx={{display: 'flex', justifyContent: 'right', mt: 2}}>
+              <Typography variant="h6">Week 1:</Typography>
+            </Grid>
             {/* Mapping through days of the week array to render buttons for week1 */}
             {daysOfWeek.map((day, index) => (
-              <Grid item xs={2}>
+              <Grid key={index + 1} item xs={2}>
               <Card>
                 <CardActionArea component={Button}
                   onClick={()=>{
-                    console.log(index+1);
                     if (!week1[index+1]){
                       setWeek1({...week1, [index+1]: true});
                     }
                     else {
                       setWeek1({...week1, [index+1]: false});
                     }}}>
-                  <CardContent sx={{ display:'flex', justifyContent: 'center'}}t>
-                      <Typography>{day}</Typography>
+                      
+                  <CardContent sx={{ display:'flex', justifyContent: 'center', backgroundColor: week1[index+1]? '#7BCEC8' : null}}t>
+                      <Typography variant="h7"sx={{textTransform: 'capitalize'}}>{day}</Typography>
                   </CardContent>
                 </CardActionArea>
               </Card> 
@@ -67,22 +70,24 @@ function EmployeeDetails() {
             ))}
           </Grid> 
 
-          <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mt: 1 }} >
+          <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mt: 1}} >
+            <Grid item xs={2} sx={{display: 'flex', justifyContent: 'right', mt: 2}}>
+              <Typography variant="h6">Week 2:</Typography>
+            </Grid>
             {/* Mapping through days of the week array to render buttons for week2 */}
             {daysOfWeek.map((day, index) => (
-            <Grid item xs={2}>
+            <Grid key={index + 1} item xs={2}>
               <Card>
                 <CardActionArea component={Button}
                   onClick={()=>{
-                    console.log(index+1);
                     if (!week2[index+1]){
                       setWeek2({...week2, [index+1]: true});
                     }
                     else {
                       setWeek2({...week2, [index+1]: false});
                     }}}>
-                  <CardContent sx={{ display:'flex', justifyContent: 'center'}}t>
-                      <Typography>{day}</Typography>
+                  <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: week2[index+1]? '#7BCEC8' : null }}t>
+                      <Typography variant="h7" sx={{textTransform: 'capitalize'}}>{day}</Typography>
                   </CardContent>
                 </CardActionArea>
               </Card> 

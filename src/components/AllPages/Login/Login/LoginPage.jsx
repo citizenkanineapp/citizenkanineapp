@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Box, Grid, Typography, Card, TextField, CardContent, Button } from '@mui/material';
 import './LoginPage.css';
 
@@ -29,36 +30,37 @@ function LoginPage() {
   return (
     <Box className="login_container">
       <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", height: "80vh" }}>
-        <Card sx={{ width: "30%", height: "60%" }}>
+        <Card className="login_card" sx={{ width: "30%", height: "60%" }}>
           <Typography sx={{mt: 2}}align="center">
             Login
           </Typography>
             {errors.loginMessage && (
-              <Typography sx={{fontSize: 10}} className="alert" role="alert">
+              <Typography sx={{fontSize: 10}} align="center" className="alert" role="alert">
                 {errors.loginMessage}
               </Typography>
             )}
-            {/* onSubmit? */}
-            <CardContent onSubmit={login} component ="form" className="formPanel" sx={{ justifyContent: "center", alignItems: "center", height: '100%' }}>
-              <TextField
-                margin="dense"
-                label="username"
-                size="small"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
-              />
-              <TextField
-                margin="dense"
-                label="password"
-                size="small"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              />
-              <Button type="submit">
-                Login
-              </Button>
-              <Typography align="center" sx={{fontSize: 14}} >Forgot Password?</Typography>
-            </CardContent>
+          <CardContent onSubmit={login} component ="form" className="formPanel" sx={{ justifyContent: "center", alignItems: "center", height: '100%' }}>
+            <TextField
+              margin="dense"
+              label="username"
+              size="small"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+            />
+            <TextField
+              margin="dense"
+              label="password"
+              size="small"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <Button type="submit">
+              Login
+            </Button>
+            <Link to="/resetpassreq">
+              <Typography gutterBottom align="center" sx={{fontSize: 14}} >Forgot Password?</Typography>
+            </Link>
+          </CardContent>
         </Card>
       </Grid>
     </Box>

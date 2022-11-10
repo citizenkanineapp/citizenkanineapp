@@ -107,7 +107,7 @@ function ClientDetails(){
                  ))}
 
 
-         {/*------------------ ADD DOG EXAMPLE ------------------*/}
+       
             
           </Grid>
 

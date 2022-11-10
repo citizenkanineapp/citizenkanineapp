@@ -14,6 +14,8 @@ function DogDetails(){
   const dogs = useSelector(store => store.dogReducer)
   const clientSchedule = useSelector(store => store.clientScheduleReducer)
 
+  const [dog, setDog] = useState([{name: '', image:  dogUrl.image}])
+
   const [monday, setMonday] = useState(false);
   const [tuesday, setTuesday] = useState(false);
   const [wednesday, setWednesday] = useState(false);
@@ -82,7 +84,7 @@ function DogDetails(){
 
     return (
       <>
-        <div className="container">
+        {/* <div className="container">
           <h1>Add Dog</h1>
 
           <ImageUpload />
@@ -91,7 +93,34 @@ function DogDetails(){
                 onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
                 helperText="Dog Name"  
                 size="small" /> 
-        </div>
+        </div> */}
+  <h1>Add Dog</h1>
+    <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
+      <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+            <ImageUpload />
+            <TextField 
+                    value={dogs.dog_name || ''} 
+                    onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
+                    helperText="Dog Name"  
+                    size="small" /> 
+        </Card>
+        <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+            <ImageUpload />
+            <TextField 
+                    value={dogs.dog_name || ''} 
+                    onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
+                    helperText="Dog Name"  
+                    size="small" /> 
+        </Card>
+        <Card sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+            <ImageUpload />
+            <TextField 
+                    value={dogs.dog_name || ''} 
+                    onChange={(event) => dispatch({type: 'ADD_DOG_NAME', payload: event.target.value})}
+                    helperText="Dog Name"  
+                    size="small" /> 
+        </Card>
+    </Grid>
       <div>
       <h2>Weekly Schedule</h2>
       <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
@@ -150,3 +179,20 @@ function DogDetails(){
 }
 
 export default DogDetails;
+
+
+
+
+<Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
+<Card sx={{width: '35%', m: 1}}>
+        <ImageUpload />
+    </Card>
+
+    <Card sx={{width: '35%', m: 1}}>
+        <ImageUpload />
+    </Card>
+    <Card sx={{width: '35%', m: 1}}>
+        <ImageUpload />
+    </Card>
+
+</Grid>

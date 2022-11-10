@@ -27,7 +27,7 @@ function ClientList() {
   //this route gets all clients to populate client list //
   useEffect(() => {
     dispatch({ type: 'FETCH_CLIENTS' })
-
+    dispatch({ type: 'CLEAR_MODALS'})
   }, []);
 
   const openModal = (view) => {

@@ -103,7 +103,7 @@ function AddDogForm (){
 
       {dogs.map((singleDog, index)=> (
         // singleDog = {name:'', image:''}
-      <Card key={index} sx={{width: '35%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+      <Card key={index} sx={{width: '30%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
             <ImageUpload index={index} />
             <TextField 
                     value={singleDog.dog_name} 
@@ -123,7 +123,7 @@ function AddDogForm (){
         </Card>
         ))}
 
-        <Card>
+        
           <Fab color="primary" aria-label="add">
             <AddIcon onClick={()=> {
                 dispatch({type: 'ADD_DOG_INPUT'})
@@ -131,7 +131,7 @@ function AddDogForm (){
               // setDog([...dog, {dogName:'sam', image:''}]);
             }}/>
           </Fab>
-        </Card>
+      
 
 
 

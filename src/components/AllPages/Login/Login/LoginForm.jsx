@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
+import { Box, Grid, Typography, Card, TextField, CardContent } from '@mui/material';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -25,42 +26,40 @@ function LoginForm() {
   }; // end login
 
   return (
-    <form className="formPanel" onSubmit={login}>
-      <h2>Login</h2>
-      {errors.loginMessage && (
-        <h3 className="alert" role="alert">
-          {errors.loginMessage}
-        </h3>
-      )}
-      <div>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            required
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            required
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <input className="btn" type="submit" name="submit" value="Log In" />
-        <p>Forgot Password?</p>
-      </div>
-    </form>
+<div>
+    <Box className="login_container">
+      <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", height: "80vh" }}>
+        <Card sx={{ width: "30%", height: "60%" }}>
+          <Typography align="center">
+            Login
+          </Typography>
+            {errors.loginMessage && (
+              <Typography sx={{fontSize: 10}} className="alert" role="alert">
+                {errors.loginMessage}
+              </Typography>
+            )}
+            {/* onSubmit? */}
+            <CardContent component ="form" className="formPanel" onSubmit={login} sx={{ justifyContent: "center", alignItems: "center", height: '100%' }}>
+              <TextField
+                label="username"
+                size="small"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              >
+              <TextField
+                label="password"
+                size="small"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+              </TextField>
+              <Typography>Forgot Password?</Typography>
+            </CardContent>
+        </Card>
+      </Grid>
+    </Box>
+
+  </div>
   );
 }
 

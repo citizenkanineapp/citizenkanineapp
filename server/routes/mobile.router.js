@@ -21,7 +21,7 @@ router.get('/dogs', async (req, res) => {
     // the switch below this adds the necessary last two lines of the SQL Query to be Run
     // thus only grabbing dogs with the given day status 
     let searchQuery = `
-    SELECT clients_schedule.id, clients_schedule."1" AS Monday,  clients_schedule."2" AS Tuesday,  clients_schedule."3" AS Wednesday,  clients_schedule."4" AS Thursday,  clients_schedule."5" AS Friday, dogs.client_id, clients.route_id, dogs.name  from clients_schedule
+    SELECT clients_schedule.id, clients_schedule."1" AS Monday,  clients_schedule."2" AS Tuesday,  clients_schedule."3" AS Wednesday,  clients_schedule."4" AS Thursday,  clients_schedule."5" AS Friday, dogs.client_id, clients.route_id, dogs.name, dogs.id AS dog_id from clients_schedule
         JOIN "dogs" ON clients_schedule.client_id = dogs.client_id
         JOIN "clients" ON clients_schedule.client_id = clients.id
     `
@@ -68,27 +68,46 @@ router.get('/dogs', async (req, res) => {
         const scheduleAdjustments = scheduleAdjustmentsResults.rows;
         console.log(scheduleAdjustments);
 
-
+        // add client ID 
         const insertSQL = `
-    INSERT INTO daily_dogs
-        ("dog_id", "route_id")
-    VALUES
-        ($1, $2);
-    `
+        INSERT INTO daily_dogs
+            ("dog_id", "route_id")
+        VALUES
+            ($1, $2);
+        `
         // if there are no changes - add original array to daily_dogs
         if (scheduleAdjustments.length < 1) {
             console.log('Good to Go!');
             // insert into daily_dogs
             await Promise.all(scheduledDogs.map(dog => {
                 const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id") VALUES ($1, $2, $3)`;
-                const insertValues = [dog.route_id, dog.dog_id, dog.client_id];
-                return client.query(updateQuery, updateValues);
+                const insertValues = [dog.dog_id, dog.route_id, dog.client_id];
+                return client.query(insertQuery, insertValues);
             }));
 
             await client.query('COMMIT')
             res.sendStatus(201);
+        } else {
+            const adjustedDogs = [];
+
+            // add existing dog to final dogs
+            // add new dog to final dogs 
+            // don't add to final dogs 
+            console.log('changes to be made:', scheduleAdjustments);
+            // add a key for scheduled? 
+            scheduledDogs.map(dog => )
+            // for each? 
+
+            //creates plant object with companions and growing chart data
+            // const updatedPlants = plants.map(plant => ({...plant,   
+            //     growing: growing.find(chart => chart.id === plant.growing),
+            //     companion: companions.filter(companion => companion.main_plant === plant.id)
+            //   }));
+            // if dog.id matches? .pop or .push?
+            // if dog.is_schedules === false
+            // .slice() to remvoe at the index if it's a cancel?
+
         }
-        // else - check for changes?
 
 
 

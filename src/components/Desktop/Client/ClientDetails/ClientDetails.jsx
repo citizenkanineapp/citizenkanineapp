@@ -31,7 +31,7 @@ function ClientDetails(){
 
          
               {/*-------------------- TEXT FIELDS --------------------*/}
-            <Grid sx={{display: 'grid', gridTemplateColumns: '1.5fr 2fr 1fr', gap: 1}}>
+            <Grid sx={{display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', gap: 1}}>
               <TextField 
                 value={client.first_name} 
                 helperText="First Name"  
@@ -57,7 +57,19 @@ function ClientDetails(){
                 InputProps={{readOnly: true}}
                 sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
               <TextField 
-                value={client.address} 
+                value={client.street} 
+                helperText="Address"  
+                size="small" 
+                InputProps={{readOnly: true}}
+                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+              <TextField 
+                value={client.city} 
+                helperText="Address"  
+                size="small" 
+                InputProps={{readOnly: true}}
+                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+              <TextField 
+                value={client.zip} 
                 helperText="Address"  
                 size="small" 
                 InputProps={{readOnly: true}}
@@ -92,8 +104,8 @@ function ClientDetails(){
 
           {/*-------------------- DOG PICTURES --------------------*/}
           <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
-          {client.dogs && client.dogs.map && client.dogs.map((dog) => (
-              <Card sx={{width: '35%', m: 1}}>
+          {client.dogs && client.dogs.map && client.dogs.map((dog, index) => (
+              <Card key={index} sx={{width: '35%', m: 1}}>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button size="small" variant="outlined" disabled>
                               {dog.dog_name}

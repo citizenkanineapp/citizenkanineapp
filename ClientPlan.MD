@@ -5,14 +5,10 @@
 6. Edit client form
 10. Requiring inputs
 11. Fix image sizing issue
-12. Need to figure out how to display route on confirm page
+12. Need to figure out how to display route NAME on confirm page/details page
 13. Add individual dog notes to add dog form
 14. Different add dog form for editing?
 15. Phone formatting
-16. address object: 
-    * address: 4145 Zarthan Ave
-    * city: St. Louis Park
-    * zipCode: 55416
 17. Have image still be there on back from confirm page?
 
 

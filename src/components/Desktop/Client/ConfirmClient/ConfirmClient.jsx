@@ -66,11 +66,23 @@ console.log('client right now', client)
                 InputProps={{readOnly: true}}
                 sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
               <TextField 
-                value={client.address} 
+                value={client.street} 
                 helperText="Address"  
                 size="small" 
                 InputProps={{readOnly: true}}
                 sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+              <TextField 
+                value={client.city} 
+                helperText="City"  
+                size="small" 
+                InputProps={{readOnly: true}}
+                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+              <TextField 
+                value={client.zip_code} 
+                helperText="Zip"  
+                size="small" 
+                InputProps={{readOnly: true}}
+              sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
               <TextField 
                 value={client.notes || ''} 
                 helperText="Notes"  

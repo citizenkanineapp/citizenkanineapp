@@ -75,11 +75,11 @@ function AddDogForm (){
     return (
       <>
   <h1>Add Dog</h1>
-  <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
+  <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1}}>
 
       {dogs.map((singleDog, index)=> (
         // singleDog = {name:'', image:''}
-      <Card key={index} sx={{width: '30%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+      <Card key={index} sx={{width: '30%', m: 1, mt:0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
             <ImageUpload index={index} />
             <TextField 
               value={singleDog.dog_name} 
@@ -170,7 +170,7 @@ function AddDogForm (){
         </Grid>
 
       </Grid>
-        <Box sx={{mt: 6, display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{mt: 3, display: 'flex', justifyContent: 'space-between' }}>
           <Button onClick={back}>Back</Button> 
           {/* need to make the bottom save data */}
           {/* <Button onClick={() => saveDogs('AddClient')}>Save</Button>  */}

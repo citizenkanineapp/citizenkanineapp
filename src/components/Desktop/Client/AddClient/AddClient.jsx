@@ -67,8 +67,8 @@ function AddClient(){
               helperText="Phone"  
               size="small" />
                 <TextField 
-                  value={clientToAdd.address || ''} 
-                  onChange={(event) => dispatch({type: 'ADD_ADDRESS', payload: event.target.value})}
+                  value={clientToAdd.street || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_STREET', payload: event.target.value})}
                   helperText="Address"  
                   size="small" />
                 <TextField 

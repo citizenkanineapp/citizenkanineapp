@@ -178,7 +178,6 @@ function AddDogForm (){
         </Box>
       </div>
       </>
-        
       );
 }
 

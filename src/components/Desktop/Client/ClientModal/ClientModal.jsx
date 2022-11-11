@@ -29,7 +29,9 @@ const style = {
 
 function ClientModal(){
   const status = useSelector(store => store.modal.status);
-  const modalView = useSelector(store => store.modal.client);
+  const modalArray = useSelector(store => store.modal.client);
+  const modalView = modalArray[modalArray.length-1]; //pulls the last view from the array
+  console.log('Modalview is', modalArray)
 
   //chooses which component to view
   const pickView = () => {

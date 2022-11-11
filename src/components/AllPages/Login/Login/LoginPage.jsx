@@ -35,7 +35,7 @@ function LoginPage() {
   return (
     <Box className="login_container">
       <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", height: "80vh" }}>
-        <Card className="login_card" sx={{ width: "30%", height: "60%" }}>
+        <Card className="login_card" sx={{ width: "30%", height: "70%" }}>
           <Typography sx={{mt: 2}}align="center">
             Login
           </Typography>
@@ -44,7 +44,7 @@ function LoginPage() {
                 {errors.loginMessage}
               </Typography>
             )}
-          <CardContent onSubmit={login} component ="form" className="formPanel" sx={{ justifyContent: "center", alignItems: "center", height: '100%' }}>
+          <CardContent onSubmit={login} component ="form" className="formPanel" sx={{ justifyContent: "center", display: "flex", flexDirection: "column", alignItems: "center", height: '80%' }}>
             <TextField
               margin="dense"
               label="username"

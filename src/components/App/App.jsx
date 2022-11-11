@@ -13,7 +13,6 @@ import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
 import LoginPage from '../AllPages/Login/Login/LoginPage';
 import RegisterPage from '../AllPages/Login/Register/RegisterPage';
-import ResetPassReqPage from '../AllPages/Login/ResetPass/ResetPassReqPage';
 import ResetPassPage from '../AllPages/Login/ResetPass/ResetPassPage';
 import Invoicing from '../Desktop/Invoicing/Invoicing';
 import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
@@ -72,15 +71,6 @@ function App() {
                 :
                 <LoginPage />}
             </Route>
-            
-            {/* needs to be fixed for conditional rendering - screen sizes? */}
-            <Route exact path="/resetpassreq">
-              {user.id ? // "/user" --> splash page
-                <Redirect to="/user" />
-                :
-                <ResetPassReqPage />}
-            </Route>
-            
 
             {/* just for building the app, should be worked into add employee */}
             <Route exact path="/registration">

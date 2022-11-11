@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Box, Grid, Typography, Card, TextField, CardContent, Button } from '@mui/material';
 import './LoginPage.css';
 
@@ -62,9 +61,6 @@ function LoginPage() {
             <Button type="submit">
               Login
             </Button>
-            <Link to="/resetpassreq">
-              <Typography gutterBottom align="center" sx={{fontSize: 14}} >Forgot Password?</Typography>
-            </Link>
           </CardContent>
         </Card>
       </Grid>

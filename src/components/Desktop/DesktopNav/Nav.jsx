@@ -64,7 +64,7 @@ function Nav(props) {
         </ListItem>
 
         <ListItem sx={{ mb: 20 }}>
-          <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/admin')}>
+          <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/resetpass')}>
             <SettingsIcon sx={{ textAlign: 'flex-end' }} />
             <ListItemText primary='account' />
           </ListItemButton>
@@ -104,7 +104,7 @@ function Nav(props) {
               {location.pathname === '/employees' ? 'Pack Leaders' : null}
               {location.pathname === '/invoice' ? 'Invoice Tool' : null}
               {location.pathname === '/schedule' ? 'Employee Schedule' : null}
-              {location.pathname === '/admin' ? 'Account' : null}
+              {location.pathname === '/resetpass' ? 'Account' : null}
 
               {/* END CONDITIONAL RENDERING */}
 

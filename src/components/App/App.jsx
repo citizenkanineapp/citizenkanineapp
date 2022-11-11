@@ -111,7 +111,7 @@ function App() {
               {user.admin ? <AdminSettings /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/admin/resetpass">
+            <ProtectedRoute exact path="/resetpass">
               {user.admin ? <ResetPassPage /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
@@ -139,6 +139,10 @@ function App() {
 
             <ProtectedRoute exact path="/m/routes/admin">
               <LoadBalancing />
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/m/resetpass">
+              <ResetPassPage />
             </ProtectedRoute>
 
             {/* ----------------------------------------------------- */}

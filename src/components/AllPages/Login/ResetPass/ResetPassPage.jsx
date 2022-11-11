@@ -32,8 +32,8 @@ function ResetPassPage() {
       dispatch({ type: 'PASSWORD_RESET' });
       history.push('/home');
     } else {
+      console.log('password input fail!');
       dispatch({ type: 'PASSWORD_INPUT_ERROR' });
-
     }
   }; // end resetPass
 
@@ -44,12 +44,12 @@ function ResetPassPage() {
           <Typography sx={{mt: 2}}align="center">
             Reset Password
           </Typography>
-            {errors.loginMessage && (
+            {errors.resetPasswordMessage && (
               <Typography sx={{fontSize: 10}} align="center" className="alert" role="alert">
-                {errors.loginMessage}
+                {errors.resetPasswordMessage}
               </Typography>
             )}
-          <CardContent onSubmit={resetPassword} component ="form" className="formPanel" sx={{ justifyContent: "center", alignItems: "center", height: '100%' }}>
+          <CardContent onSubmit={resetPassword} component ="form" className="formPanel" sx={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", height: '70%' }}>
             <TextField
               margin="dense"
               label="New password"
@@ -65,55 +65,12 @@ function ResetPassPage() {
               onChange={(event) => setConfPass(event.target.value)}
             />
             <Button type="submit">
-              Login
+              SUBMIT
             </Button>
-            <Link to="/resetpassreq">
-              <Typography gutterBottom align="center" sx={{fontSize: 14}} >Forgot Password?</Typography>
-            </Link>
           </CardContent>
         </Card>
       </Grid>
     </Box>
-
-
-
-
-  //   <form className="formPanel" onSubmit={resetPassword}>
-  //     <h2>Reset Password</h2>
-  //     {errors.resetPasswordMessage && (
-  //       <h3 className="alert" role="alert">
-  //         {errors.resetPasswordMessage}
-  //       </h3>
-  //     )}
-  //     <div>
-  //       <label htmlFor="username">
-  //         New Password:
-  //         <input
-  //           type="text"
-  //           name="username"
-  //           value={newPass}
-  //           required
-  //           onChange={(event) => setNewPass(event.target.value)}
-  //         />
-  //       </label>
-  //     </div>
-  //     <div>
-  //       <label htmlFor="username">
-  //         Confirm New Password:
-  //         <input
-  //           type="text"
-  //           name="username"
-  //           value={confPass}
-  //           required
-  //           onChange={(event) => setConfPass(event.target.value)}
-  //         />
-  //       </label>
-  //     </div>
-  //     <div>
-  //       <input className="btn" type="submit" name="submit" value="Reset Password" />
-  //     </div>
-  //   </form>
   );
 }
-
 export default ResetPassPage;

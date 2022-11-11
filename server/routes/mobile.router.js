@@ -7,48 +7,158 @@ const {
 
 
 // GET ROUTE FOR DAILY DOGS SCHEDULE
-router.get('/', (req, res) => {
-    console.log(req.body)
+router.get('/dogs', async (req, res) => {
+    const client = await pool.connect();
+
+    // hit the route
+    // logic to populate daily dogs if there is nothing for the day?
+    var today = new Date()
+    var weekday = {};
+    weekday.number = today.getDay();
+    console.log('NUMBER IS:', weekday.number);
+    // weekday = "Saturday"
+
+    // the switch below this adds the necessary last two lines of the SQL Query to be Run
+    // thus only grabbing dogs with the given day status 
+    let searchQuery = `
+    SELECT clients_schedule.id, clients_schedule."1" AS Monday,  clients_schedule."2" AS Tuesday,  clients_schedule."3" AS Wednesday,  clients_schedule."4" AS Thursday,  clients_schedule."5" AS Friday, dogs.client_id, clients.route_id, dogs.name  from clients_schedule
+        JOIN "dogs" ON clients_schedule.client_id = dogs.client_id
+        JOIN "clients" ON clients_schedule.client_id = clients.id
+    `
+
+    switch (weekday.number) {
+        case 1:
+            console.log('Monday');
+            searchQuery += 'WHERE "1" = TRUE ORDER BY route_id;';
+            break;
+        case 2:
+            console.log('Tuesday');
+            searchQuery += 'WHERE "2" = TRUE ORDER BY route_id;';
+            break;
+        case 3:
+            console.log('Wednesday');
+            searchQuery += 'WHERE "3" = TRUE ORDER BY route_id;';
+            break;
+        case 4:
+            console.log('Thursday');
+            searchQuery += 'WHERE "4" = TRUE ORDER BY route_id;';
+            break;
+        case 5:
+            console.log('Friday');
+            searchQuery += 'WHERE "5" = TRUE ORDER BY route_id;';
+            break;
+    }
+
+    // SQL to grab schedule adjustments table
+    const scheduleQuery = `
+    SELECT * from dogs_schedule_changes
+	    WHERE dogs_schedule_changes.date_to_change = CURRENT_DATE
+	ORDER BY dogs_schedule_changes.dog_id;
+    `
+
+    try {
+        await client.query('BEGIN');
+        const scheduledDogsResponse = await client.query(searchQuery);
+        const scheduledDogs = scheduledDogsResponse.rows;
+        console.log(scheduledDogs);
+        // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
+
+        // find the schedule changes for the day
+        const scheduleAdjustmentsResults = await client.query(scheduleQuery);
+        const scheduleAdjustments = scheduleAdjustmentsResults.rows;
+        console.log(scheduleAdjustments);
+
+
+        const insertSQL = `
+    INSERT INTO daily_dogs
+        ("dog_id", "route_id")
+    VALUES
+        ($1, $2);
+    `
+        // if there are no changes - add original array to daily_dogs
+        if (scheduleAdjustments.length < 1) {
+            console.log('Good to Go!');
+            // insert into daily_dogs
+            await Promise.all(scheduledDogs.map(dog => {
+                const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id") VALUES ($1, $2, $3)`;
+                const insertValues = [dog.route_id, dog.dog_id, dog.client_id];
+                return client.query(updateQuery, updateValues);
+            }));
+
+            await client.query('COMMIT')
+            res.sendStatus(201);
+        }
+        // else - check for changes?
+
+
+
+    } catch (error) {
+        await client.query('ROLLBACK')
+        console.log('Error POST /api/order', error);
+        res.sendStatus(500);
+    } finally {
+        client.release()
+    }
+
+
+    // pool.query(searchQuery)
+    //     .then(response => {
+    //         // loop through the response checking for schedule changes?
+    //         console.log(response.rows);
+    //         res.send(response.rows);
+    //     })
+    //     .catch(error => {
+    //         console.log('ERROR IN GETTING DAILY DOGS:', error);
+    //         res.sendStatus(500);
+    //     })
+
+
+
     // not sure exactly what our request body is going to look like
     // BUT this is generally what the request should look like? 
     // maybe the 'current date' gets replaced with a PG variable?
     // results are sorted by route ID which hopefully makes things easier?
 
     // OTHERWISE if we need stuff separated on the server side here ... we can probably add route ID to the where statement
+    // const sqlQuery = `
+    // SELECT daily_dogs.*, dogs.name, dogs.client_id, dogs.flag, routes.name AS route_name    from "daily_dogs"
+    //     JOIN "routes" ON daily_dogs.route_id = routes.id
+    //     JOIN "dogs" ON daily_dogs.dog_id = dogs.id
+    //     JOIN "clients" ON dogs.client_id = clients.id
+    // WHERE daily_dogs.date = CURRENT_DATE
+    // ORDER BY daily_dogs.route_id;
+    // `
 
-    const sqlQuery = `
-    SELECT daily_dogs.*, dogs.name, dogs.client_id, dogs.flag, routes.name AS route_name    from "daily_dogs"
-	    JOIN "routes" ON daily_dogs.route_id = routes.id
-	    JOIN "dogs" ON daily_dogs.dog_id = dogs.id
-	    JOIN "clients" ON dogs.client_id = clients.id
-	WHERE daily_dogs.date = CURRENT_DATE
-	ORDER BY daily_dogs.route_id;
-    `
-
-    pool.query(sqlQuery)
-        .then(response => {
-            res.send(response.rows);
-        })
-        .catch(error => {
-            console.log('ERROR IN GETTING DAILY DOGS:', error);
-            res.sensStatus(500);
-        })
+    // pool.query(sqlQuery)
+    //     .then(response => {
+    //         res.send(response.rows);
+    //     })
+    //     .catch(error => {
+    //         console.log('ERROR IN GETTING DAILY DOGS:', error);
+    //         res.sendStatus(500);
+    //     })
     // GET route code here
 });
+
+
 
 // POST ROUTE FOR DAILY DOGS?
 router.post('/', rejectUnauthenticated, (req, res) => {
     // takes in an array of objects from a reducer
     // needs to insert per line item into the daily_dogs table
+
+
+
+
     const insertSQL = `
     INSERT INTO daily_dogs
         ("dog_id", "route_id")
     VALUES
-        (18, 1);
-`
-
-
+        ($1, $2);
+    `
 });
+
+
 
 // PUT ROUTE TO UPDATE DOG ROUTES FOR THE DAY
 // if it's a put per move it's this:
@@ -68,6 +178,24 @@ router.put('/', async (req, res) => {
     // 	"route_id" = 3
     // WHERE "dog_id" = 3;
     // `
+
+    // TAKES IN AN ARRAY THAT LOOKS LIKE THIS
+    //    {
+    //     "dogs": [
+    //         {
+    //             "dog_id":3,
+    //             "route_id":2
+    //         },
+    //          {
+    //             "dog_id":5,
+    //             "route_id":2
+    //         },
+    //         {
+    //             "dog_id":18,
+    //             "route_id":2
+    //         }
+    //     ]
+    //     }
 
     try {
         // expect req.body to be an array of dogs 

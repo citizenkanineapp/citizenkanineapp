@@ -47,7 +47,7 @@ function AddClient(){
          
               {/*-------------------- TEXT FIELDS --------------------*/}
          
-            <Grid sx={{display: 'grid', gridTemplateColumns: '1.5fr 2fr 1fr', gap: 1}}>
+            <Grid sx={{display: 'grid', gridTemplateColumns: '1.5fr 1.5fr 1fr', gap: 1}}>
              
                 {clientToAdd &&
                 <TextField 
@@ -62,35 +62,46 @@ function AddClient(){
                   helperText="Last Name"  
                   size="small" /> 
                 <TextField 
-                  value={clientToAdd.email || ''} 
-                  onChange={(event) => dispatch({type: 'ADD_EMAIL', payload: event.target.value})}
-                  helperText="Email"  
-                  size="small" />
-                <TextField 
-                 value={clientToAdd.phone || ''} 
-                 onChange={(event) => dispatch({type: 'ADD_PHONE', payload: event.target.value})}
-                  helperText="Phone"  
-                  size="small" />
+              value={clientToAdd.phone || ''} 
+              onChange={(event) => dispatch({type: 'ADD_PHONE', payload: event.target.value})}
+              helperText="Phone"  
+              size="small" />
                 <TextField 
                   value={clientToAdd.address || ''} 
                   onChange={(event) => dispatch({type: 'ADD_ADDRESS', payload: event.target.value})}
                   helperText="Address"  
                   size="small" />
                 <TextField 
-                  value={clientToAdd.notes || ''} 
-                  onChange={(event) => dispatch({type: 'ADD_NOTES', payload: event.target.value})}
-                  helperText="Notes"  
+                  value={clientToAdd.city || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_CITY', payload: event.target.value})}
+                  helperText="City"  
                   size="small" />
                 <TextField 
-                  value={clientToAdd.vet_name || ''} 
-                  onChange={(event) => dispatch({type: 'ADD_VET_NAME', payload: event.target.value})}
-                  helperText="Vet"  
+                  value={clientToAdd.zip_code || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_ZIPCODE', payload: event.target.value})}
+                  helperText="Zip Code"  
                   size="small" />
+
                 <TextField 
-                  value={clientToAdd.vet_phone || ''} 
-                  onChange={(event) => dispatch({type: 'ADD_VET_PHONE', payload: event.target.value})}
-                  helperText="Vet Phone"  
+                  value={clientToAdd.email || ''} 
+                  onChange={(event) => dispatch({type: 'ADD_EMAIL', payload: event.target.value})}
+                  helperText="Email"  
                   size="small" />
+              <TextField 
+                value={clientToAdd.notes || ''} 
+                onChange={(event) => dispatch({type: 'ADD_NOTES', payload: event.target.value})}
+                helperText="Notes"  
+                size="small" />
+              <TextField 
+                value={clientToAdd.vet_name || ''} 
+                onChange={(event) => dispatch({type: 'ADD_VET_NAME', payload: event.target.value})}
+                helperText="Vet"  
+                size="small" />
+              <TextField 
+                value={clientToAdd.vet_phone || ''} 
+                onChange={(event) => dispatch({type: 'ADD_VET_PHONE', payload: event.target.value})}
+                helperText="Vet Phone"  
+                size="small" />
                     <FormControl>
                 <Select
                   labelId="route"

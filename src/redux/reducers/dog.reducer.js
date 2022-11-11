@@ -12,7 +12,18 @@ const dogReducer = (state = [{dog_name: '', image: ''}], action) => {
                 }
             })
             return newState;
-            // return {...state, dog_name: action.payload};
+        case 'ADD_DOG_NOTES':
+            // change the dog_name value for a given dog object (based on index)
+            const updateState = state.map((notes, index) => {
+                if (index === action.payload.index) {
+                    notes.dog_notes = action.payload.dog_notes
+                    return notes;
+                } else {
+                    return notes;
+                }
+            })
+            return updateState;
+            
         case 'SET_DOG_PHOTO':
             const photoState = state.map((image , index) => {
                 if(index === action.payload.index) {

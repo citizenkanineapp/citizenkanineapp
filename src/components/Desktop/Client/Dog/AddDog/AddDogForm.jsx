@@ -82,19 +82,34 @@ function AddDogForm (){
       <Card key={index} sx={{width: '30%', m: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
             <ImageUpload index={index} />
             <TextField 
-                    value={singleDog.dog_name} 
-                    onChange={(e) => {
-                      dispatch({
-                        type: 'ADD_DOG_NAME',
-                        payload: {
-                          dog_name: e.target.value,
-                          index: index
-                        }
-                      })
-                    }}
-                    helperText="Dog Name"  
-                    size="small" 
-                    /> 
+              value={singleDog.dog_name} 
+              onChange={(e) => {
+                dispatch({
+                  type: 'ADD_DOG_NAME',
+                  payload: {
+                    dog_name: e.target.value,
+                    index: index
+                  }
+                })
+              }}
+              helperText="Dog Name"  
+              size="small" 
+              /> 
+              <TextField 
+                value={singleDog.dog_notes} 
+                onChange={(e) => {
+                  dispatch({
+                    type: 'ADD_DOG_NOTES',
+                    payload: {
+                      dog_notes: e.target.value,
+                      index: index
+                    }
+                  })
+                }}
+                helperText="Notes"  
+                size="small" 
+                /> 
+
 
         </Card>
         ))}

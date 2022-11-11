@@ -12,6 +12,10 @@ const clientReducer = (state = {}, action) => {
             return {...state, phone: action.payload};
         case 'ADD_ADDRESS':
             return {...state, address: action.payload};
+        case 'ADD_CITY':
+            return {...state, city: action.payload};
+        case 'ADD_ZIPCODE':
+            return {...state, zip_code: action.payload};
         case 'ADD_NOTES':
             return {...state, notes: action.payload};
         case 'ADD_VET_NAME':

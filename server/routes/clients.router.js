@@ -98,12 +98,12 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   await Promise.all(dogArray.map(dog => { 
       const dogTxt = `
                           INSERT INTO dogs 
-                              ("client_id", "name", "image", "vet_name", "vet_phone") 
+                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes") 
                             VALUES
-                              ($1, $2, $3, $4, $5)
+                              ($1, $2, $3, $4, $5, $6)
 
       `
-      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone]
+      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog_notes]
       return client.query(dogTxt, dogValues)
   }));
     const scheduleTxt = `

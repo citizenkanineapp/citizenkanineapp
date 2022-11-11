@@ -96,68 +96,6 @@ function EmployeeDetails() {
           </Grid> 
 
 
-        {/* <Grid item xs={2}>
-          <Card>
-            <CardActionArea component={Button}>
-              <CardContent>
-                  <Typography>Monday</Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card> 
-        </Grid>
-
-        <Grid item xs={2} >
-        <Card>
-            <CardActionArea component={Button} value={1} 
-              onClick={()=>{
-                if (!week1[1]){
-                  setWeek1({...week1, 1: true});
-                  console.log(week1)
-                }
-                else {
-                  setWeek1({...week1, 1: false});
-                }
-              }}>
-              <CardContent>
-                  <Typography>Tuesday</Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={2}>
-          <Card>
-            <CardActionArea component={Button} value={1} >
-              <CardContent>
-                  <Typography>Wednesday</Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card> 
-        </Grid>
-
-        <Grid item xs={2} >
-        <Card>
-            <CardActionArea component={Button} value={1} >
-              <CardContent>
-                  <Typography>Thursday</Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={2} >
-        <Card>
-            <CardActionArea component={Button} value={1} >
-              <CardContent>
-                  <Typography>Friday</Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid> */}
-      
-
-
-
       <Grid sx={{ mt: 2, display: 'flex', justifyContent: 'space-between', height: "5%", mx: 5, mt: 3 }}>
         <Button
           variant="outlined" color="info"

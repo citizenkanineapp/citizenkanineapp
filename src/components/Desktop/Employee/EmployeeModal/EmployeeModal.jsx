@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 //COMPONENTS
 import EditEmployeeForm from '../EditEmployee/EditEmployeeForm';
@@ -24,6 +25,7 @@ const style = {
 function EmployeeModal(){
   const status = useSelector(store => store.modal.status);
   const modalView = useSelector(store => store.modal.employee);
+  const dispatch = useDispatch();
 
   //chooses which component to view
   const pickView = () => {
@@ -34,11 +36,24 @@ function EmployeeModal(){
       default: return <EmployeeDetails/>
     };
   };
- 
+  
+  
   return (
       <div className="container">
-        <Modal open={status}>
-          <Box sx={{ ...style, width: 800, height: 600 }}>
+        <Modal 
+              className='modal'
+              open={status} 
+              // This 👇 gets rid of the funky blue outline around the modal. 
+              disableEnforceFocus={false}
+              // This onClose function allows the user click on the backdrop to exit the modal view only if the modalView is set to EmployeeDetails. This prevents the user from closing out a form that has not been submitted yet. 
+              onClose={(_,reason) => {
+              reason === 'backdropClick';
+              if (modalView === 'EmployeeDetails'){
+                dispatch({ type: 'SET_MODAL_STATUS' })
+              }
+              }} 
+              >
+          <Box sx={{ ...style, width: 800, height: 600, outline: 'none' }}>
             {pickView()}
           </Box>
         </Modal>

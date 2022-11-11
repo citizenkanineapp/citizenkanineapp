@@ -1,18 +1,30 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+
 //MUI
-import Button from '@mui/material/Button';
+import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, IconButton } from "@mui/material";
+
 import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
 
 function DogDetails(){
   const dispatch = useDispatch();
 
+  const dogUrl = useSelector(store => store.dogPhotoReducer);
+
+  let [dogName, setDogName] = useState('');
+  let [dogImage, setDogImage] = useState('');
+ 
+
     return (
         <div className="container">
           <h1>Add Dog</h1>
           <ImageUpload />
-          <p>Name: _____________</p>
-          <p>Notes: ______________________________.</p>
-          <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Cancel</Button> 
+            <TextField 
+                value={dogName} 
+                onChange={(event) => setDogName(event.target.value)}
+                helperText="Dog Name"  
+                size="small" /> 
+          <Button onClick={() => dispatch({ type: 'BACK_TO_VIEW' })}>Cancel</Button> 
           <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Save</Button> {/*PUT ROUTE*/}
         </div>
       );

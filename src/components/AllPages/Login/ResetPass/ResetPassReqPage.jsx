@@ -13,18 +13,16 @@ function ResetPassReqPage() {
   const resetPassword = (event) => {
     event.preventDefault();
 
+    //need error messages!
     dispatch({
-      type: 'RESETPASS',
+      type: 'PASS_RESET_REQ',
       payload: {
-        username: username,
-        password: password,
+        email: email
       },
     });
   }; // end resetPass
 
   return (
-
-
     <Box className="login_container">
       <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", height: "80vh" }}>
         <Card className="login_card" sx={{ width: "30%", height: "60%" }}>

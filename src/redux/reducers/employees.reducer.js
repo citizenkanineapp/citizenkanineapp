@@ -18,9 +18,19 @@ const selectedEmployee = (state={}, action)=> {
     }
 }
 
+const empSchedules = (state=[], action)=> {
+    switch (action.type){
+        case 'SET_EMP_SCHEDULE':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 const employeesReducer = combineReducers({
     employees,
-    selectedEmployee
+    selectedEmployee,
+    empSchedules,
 })
 
 export default employeesReducer;

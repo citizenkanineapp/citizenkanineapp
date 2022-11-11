@@ -59,6 +59,10 @@
     /* padding-top: 10px; */
 } 
 
+.css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
+    color: black !important;
+}
+
 /* current day button */
 /* .css-195y93z-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected) {
     border: none !important;

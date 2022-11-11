@@ -25,11 +25,11 @@ function* fetchEmpSchedules (){
             method: 'GET',
             url: '/api/employees/schedules'
         })
-        yield console.log(empSchedule.data);
-        // yield put({
-        //     type: 'SET_EMP_SCHEDULE',
-        //     payload: employees.data
-        // })
+        // yield console.log(empSchedule.data);
+        yield put({
+            type: 'SET_EMP_SCHEDULE',
+            payload: empSchedule.data
+        })
     }
     catch {
         console.log('error in fetchEmpSchedules');

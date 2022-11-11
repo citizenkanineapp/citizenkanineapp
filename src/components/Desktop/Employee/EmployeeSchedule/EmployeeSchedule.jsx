@@ -26,7 +26,6 @@ import './employeeSchedule.css';
 
 
 
-
 //COMPONENTS
 import EmployeeModal from "../EmployeeModal/EmployeeModal";
 //MUI
@@ -42,16 +41,16 @@ function EmployeeSchedule(){
   const dispatch = useDispatch();
   const history = useHistory();
 
-    useEffect(()=>{
-      // Fetch employee schedules
-      dispatch({
-        type: 'SAGA_FETCH_EMP_SCHEDULES'
-      })
-      // Fetch employee details for employee cards
-      dispatch({
-        type: 'SAGA_FETCH_EMPLOYEES'
-      })
-    },[]);
+  useEffect(()=>{
+    // Fetch employee schedules
+    dispatch({
+      type: 'SAGA_FETCH_EMP_SCHEDULES'
+    })
+    // Fetch employee details for employee cards
+    dispatch({
+      type: 'SAGA_FETCH_EMPLOYEES'
+    })
+  },[]);
 
 
   const openModal = (view) => {
@@ -62,28 +61,45 @@ function EmployeeSchedule(){
   //toggle between edit and viewing calendar
   const [showEditCalendar, setShowEditCalendar] = useState(false);
 
-  const locales ={
-    "en-US": require("date-fns/locale/en-US")
-  }
-
-  const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek,
-    getDay,
-    locales
-  });
 
   const [value, setValue] = useState(dayjs());
-    // Calling dayjs() without parameters returns a fresh day.js object with the current date and time that looks like:
-    // {$L: 'en', $u: undefined, $d: Sat Nov 05 2022 14:37:11 GMT-0500 (Central Daylight Time), $x: {…}, $y: 2022}
-    // console.log(value);
-    // This 👇 state is for the basic datePicker for making changes. 
-    const [value2, setValue2] = useState(dayjs());
-    // 👇 will have to be replaced with the reducer for the clients schedule and the days will have to be in an array. 
-    const [highlightedDays, setHighlightedDays] = useState([1,2,4])
-    // console.log('value of StaticDatePicker',value.$W); // This returns an integer (1-5) representing the days of the week (M-F)
-    // console.log('value2:', value2.$W);
+  // Calling dayjs() without parameters returns a fresh day.js object with the current date and time that looks like:
+  // {$L: 'en', $u: undefined, $d: Sat Nov 05 2022 14:37:11 GMT-0500 (Central Daylight Time), $x: {…}, $y: 2022}
+  // console.log(value);
+  // This 👇 state is for the basic datePicker for making changes. 
+  const [value2, setValue2] = useState(dayjs());
+  // 👇 will have to be replaced with the reducer for the clients schedule and the days will have to be in an array. 
+  const [highlightedDays, setHighlightedDays] = useState([1,2,4])
+  // console.log('value of StaticDatePicker',value.$W); // This returns an integer (1-5) representing the days of the week (M-F)
+  // console.log('value2:', value2.$W);
+
+  // Getting the week number in year:
+  var weekOfYear = require('dayjs/plugin/weekOfYear')
+  dayjs.extend(weekOfYear)
+
+  const thisWeek = dayjs(dayjs().$d).week();
+  console.log('this is week number:', thisWeek);
+  // is this week even?
+  const evenWeek = ()=>{
+    if (thisWeek % 2 === 0 ){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
+  // Employee schedule Logic:
+  const empSchedules = useSelector(store=> store.employeesReducer.empSchedules);
+  // console.log(empSchedules);
+  // {1: true, 2: true, 3: false, 4: true, 5: true, id: 1, first_name: 'Den', last_name: 'Paolini', email: 'dpaolini0@paypal.com', phone: '(840)6732127', …}
+  const allEmployees = useSelector(store=> store.employeesReducer.employees);
+
+  // const oddWeekEmployees = []
+  // const evenWeekEmployees = []
+
+  console.log(dayjs());
+
 
   return (
   <div className="container">
@@ -106,20 +122,41 @@ function EmployeeSchedule(){
                 renderDay={(day, _value, DayComponentProps) => {
                     // console.log('day is:', day.$W);
                     // day.$W returns returns an integer (1-5) representing the days of the week (M-F)
+                    // const isSelected =
+                    //     !DayComponentProps.outsideCurrentMonth &&
+                    //     highlightedDays.includes(day.$W);
+
                     const isSelected =
                         !DayComponentProps.outsideCurrentMonth &&
                         highlightedDays.includes(day.$W);
+                    
+                    const dayOfWeek = day.$W;
 
                     return (
                       <div key={day.$D}>
-                        <Box className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '120px', height: '120px', justifyContent: 'flex-start', border: 1}}>
+                        <Box className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '8vw', height: '13vh', justifyContent: 'flex-start', border: 1}}>
                           <Box sx={{display: 'flex', justifyContent: 'right', flexGrow: '1'}}>
                             <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>
                           </Box>
-                          <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '6'}}>
-                            {/* this is where I would map the employees for the days */}
+                          {/* Want to render an avatar for the employee if th*/}
+                          <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '5'}}>
+                          {empSchedules.map(employee => {
+                            if (employee[day.$W]){
+                              return <Avatar sx={{ bgcolor: "secondary.main", height: 40 , width: 40 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                            }
+                            
+                          })}
+                          </Box>
+
+                          {/* { isSelected ? 
+                            <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '6'}}>
+                            this is where I would map the employees for the days
                             <Avatar sx={{ bgcolor: "secondary.main", height: 20 , width: 20 }}>YH</Avatar>
                           </Box>
+                          :
+                          null
+                          } */}
+                          
                         </Box>
                       </div>
                       

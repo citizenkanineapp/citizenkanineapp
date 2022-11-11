@@ -7,18 +7,18 @@
     display: none !important;
 }
 
-/* This gets fid of the button that normally display on the bottom of the StaticDayPicker */
+/* This gets rid of the button that normally display on the bottom of the StaticDayPicker */
 .css-hlj6pa-MuiDialogActions-root {
     display: none !important;
 }
 
 /* This changes the background and text color. The !important is to override the MUI component styling */
-.css-bkrceb-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+/* .css-bkrceb-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
     color: black !important;
-    /* this changes the color of the circle that usually highlights the day you click on */
+    this changes the color of the circle that usually highlights the day you click on
     background-color: transparent !important;
     
-}
+} */
 
 
 /* changes the size of the calendar div */
@@ -45,15 +45,10 @@
     justify-content: right;
 }
 
-/* maybe the day div? */
-.css-18oiyzd {
-    display: flex;
-    justify-content: right;
-}
 
-.css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
+/* .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
     display: none !important;
-}
+} */
 
 /* individual day buttons (circle) */
 .css-bkrceb-MuiButtonBase-root-MuiPickersDay-root, .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
@@ -65,11 +60,11 @@
 } 
 
 /* current day button */
-.css-195y93z-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected) {
+/* .css-195y93z-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected) {
     border: none !important;
     width: .80rem !important;
     height: .80rem !important;
-}
+} */
 
 
 /* This resized the entire calendar container */
@@ -84,9 +79,6 @@
     min-height: 80vh !important;
 }
 
-/* this changes the badge */
-.css-fvc8ir-MuiBadge-badge {
 
-}
 
 

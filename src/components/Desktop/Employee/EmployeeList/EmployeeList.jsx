@@ -31,7 +31,7 @@ function EmployeeList() {
 
   useEffect(()=> {
     dispatch({
-      type: 'SAGA_FETCH_EMPLOYEES',
+      type: 'SAGA_FETCH_EMPLOYEES'
     })
   },[])
 

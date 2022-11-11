@@ -19,10 +19,26 @@ function* fetchAllEmployees(){
     }
 }
 
-
+function* fetchEmpSchedules (){
+    try{
+        const empSchedule = yield axios({
+            method: 'GET',
+            url: '/api/employees/schedules'
+        })
+        yield console.log(empSchedule.data);
+        // yield put({
+        //     type: 'SET_EMP_SCHEDULE',
+        //     payload: employees.data
+        // })
+    }
+    catch {
+        console.log('error in fetchEmpSchedules');
+    }
+}
 
 function* employeesSaga(){
-    yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees)
+    yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees),
+    yield takeLatest('SAGA_FETCH_EMP_SCHEDULES', fetchEmpSchedules)
 }
 
 export default employeesSaga;

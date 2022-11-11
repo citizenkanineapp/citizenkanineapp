@@ -42,9 +42,16 @@ function EmployeeSchedule(){
   const dispatch = useDispatch();
   const history = useHistory();
 
-  useEffect({
-    
-  })
+    useEffect(()=>{
+      // Fetch employee schedules
+      dispatch({
+        type: 'SAGA_FETCH_EMP_SCHEDULES'
+      })
+      // Fetch employee details for employee cards
+      dispatch({
+        type: 'SAGA_FETCH_EMPLOYEES'
+      })
+    },[]);
 
 
   const openModal = (view) => {
@@ -70,7 +77,7 @@ function EmployeeSchedule(){
   const [value, setValue] = useState(dayjs());
     // Calling dayjs() without parameters returns a fresh day.js object with the current date and time that looks like:
     // {$L: 'en', $u: undefined, $d: Sat Nov 05 2022 14:37:11 GMT-0500 (Central Daylight Time), $x: {…}, $y: 2022}
-    console.log(value);
+    // console.log(value);
     // This 👇 state is for the basic datePicker for making changes. 
     const [value2, setValue2] = useState(dayjs());
     // 👇 will have to be replaced with the reducer for the clients schedule and the days will have to be in an array. 
@@ -91,20 +98,20 @@ function EmployeeSchedule(){
                 openTo="day"
                 value={value}
                 shouldDisableDate={isWeekend}
-                // onChange={(newValue) => {
-                // setValue(newValue);
-                // }}
-                renderInput={(params) => <TextField {...params} sx={{height: '80vh'}} />}
+                onChange={(newValue) => {
+                setValue(newValue);
+                }}
+                renderInput={(params) => <TextField key={day.$D} {...params} sx={{height: '80vh'}} />}
                 // render day loops through the days in the month and performs the given function. 
                 renderDay={(day, _value, DayComponentProps) => {
-                    console.log('day is:', day.$W);
+                    // console.log('day is:', day.$W);
                     // day.$W returns returns an integer (1-5) representing the days of the week (M-F)
                     const isSelected =
                         !DayComponentProps.outsideCurrentMonth &&
                         highlightedDays.includes(day.$W);
 
                     return (
-                      <>
+                      <div key={day.$D}>
                         <Box className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '120px', height: '120px', justifyContent: 'flex-start', border: 1}}>
                           <Box sx={{display: 'flex', justifyContent: 'right', flexGrow: '1'}}>
                             <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>
@@ -114,7 +121,7 @@ function EmployeeSchedule(){
                             <Avatar sx={{ bgcolor: "secondary.main", height: 20 , width: 20 }}>YH</Avatar>
                           </Box>
                         </Box>
-                      </>
+                      </div>
                       
                         // <Badge
                         //     key={day.$W}

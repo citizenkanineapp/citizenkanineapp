@@ -18,6 +18,21 @@ router.get('/', (req, res)=> {
         })
 })
 
+router.get('/schedules', (req, res)=>{
+    const sqlQuery=`
+    SELECT * FROM employees_schedule;
+    `
+    pool.query(sqlQuery)
+        .then(dbRes=> {
+            res.send(dbRes.rows);
+        })
+        .catch(error=> {
+            res.sendStatus(500);
+            console.log('error with GET /employees/shedules:', error);
+        })
+
+
+})
 
 
 

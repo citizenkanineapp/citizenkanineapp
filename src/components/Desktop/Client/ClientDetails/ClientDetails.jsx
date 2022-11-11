@@ -81,7 +81,7 @@ function ClientDetails(){
                 InputProps={{readOnly: true}}
                 sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
               <TextField 
-                value={client.route || ''} 
+                value={client.route_name || ''} 
                 helperText="Default Route"  
                 size="small" 
                 InputProps={{readOnly: true}}

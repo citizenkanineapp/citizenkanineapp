@@ -102,7 +102,7 @@ function AddClient(){
                 onChange={(event) => dispatch({type: 'ADD_VET_PHONE', payload: event.target.value})}
                 helperText="Vet Phone"  
                 size="small" />
-                    <FormControl>
+            <FormControl>
                 <Select
                   labelId="route"
                   size="small"
@@ -121,14 +121,7 @@ function AddClient(){
                   <MenuItem value={5}>Unassigned</MenuItem>
                 </Select>
                 <FormHelperText>Default Route</FormHelperText>
-              </FormControl>
-                {/* <TextField 
-                  value={qbId}
-                  onChange={(event) => setQbId(event.target.value)}
-                  helperText="Quickbooks ID"  
-                  size="small" />  */}
-             
-            
+              </FormControl>          
             </Grid> 
         
 

@@ -15,7 +15,7 @@ const clientReducer = (state = {}, action) => {
         case 'ADD_CITY':
             return {...state, city: action.payload};
         case 'ADD_ZIPCODE':
-            return {...state, zip_code: action.payload};
+            return {...state, zip: action.payload};
         case 'ADD_NOTES':
             return {...state, notes: action.payload};
         case 'ADD_VET_NAME':
@@ -24,6 +24,8 @@ const clientReducer = (state = {}, action) => {
             return {...state, vet_phone: action.payload};
         case 'ADD_ROUTE':
             return {...state, route_id: action.payload};
+        case 'CHANGE_ROUTE':
+            return {...state, route_name: action.payload};
         // case 'ADD_DOGS':
         //     return {...state, dogs: [...state.dogs, action.payload]};
         case 'ADD_DOGS':

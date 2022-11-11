@@ -33,11 +33,29 @@ function* addClient(action){
     
 }
 
+function* editClient(action){
+    console.log('arrived in edit client route', action.payload);
+
+    try {
+        const client = yield axios({
+            method: 'PUT',
+            url: '/api/clients',
+            data: action.payload
+        })
+        yield put ({type: 'FETCH_CLIENTS'});
+    } catch (error) {
+        console.log(error);
+        alert('Error editing clients');
+    }
+    
+}
+
 
 
 function* clientSaga() {
     yield takeLatest('FETCH_CLIENTS', getALlClients);
     yield takeLatest('ADD_CLIENT', addClient);
+    yield takeLatest('EDIT_CLIENT', editClient);
    
     
   }

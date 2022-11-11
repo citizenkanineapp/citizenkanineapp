@@ -10,6 +10,10 @@
 14. Different add dog form for editing?
 15. Phone formatting
 17. Have image still be there on back from confirm page?
+18. Where dpes schedule changes go?
+19.  Need real photos on edit page
+20. Add flag to form
+
 
 
 

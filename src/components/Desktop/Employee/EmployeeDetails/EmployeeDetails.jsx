@@ -40,7 +40,13 @@ function EmployeeDetails() {
               value={employee.phone} helperText="Phone"  size="small" InputProps={{readOnly: true}}/>
               <TextField
               sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
-              value="1234 Jolene Ave." helperText="Address"  size="small" InputProps={{readOnly: true}}/>
+              value={employee.street} helperText="Street"  size="small" InputProps={{readOnly: true}}/>
+              <TextField
+              sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
+              value={employee.city} helperText="City"  size="small" InputProps={{readOnly: true}}/>
+              <TextField
+              sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
+              value={employee.zip} helperText="Zip"  size="small" InputProps={{readOnly: true}}/>
           </Grid> 
 
           {/* Schedule day selectors */}

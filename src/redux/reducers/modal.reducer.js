@@ -2,8 +2,10 @@ import { combineReducers } from 'redux';
 
 const client = (state = [], action) => {
     switch (action.type) {
+      //to set exact path
       case 'SET_CLIENT_MODAL':
         return [...state, action.payload];
+        //back to where user was
       case 'BACK_TO_VIEW':
         const currentView = state[state.length-1];
         return state.filter(view => view !== currentView && view);

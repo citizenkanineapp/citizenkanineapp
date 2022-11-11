@@ -56,7 +56,7 @@ function AddDogForm (){
   };
 
   const back = event => {
-    dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddClient'});
+    dispatch({ type: 'BACK_TO_VIEW'});
     dispatch({type: 'CLEAR_DOGS'});
   }
 

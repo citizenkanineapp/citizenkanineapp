@@ -26,23 +26,26 @@ CREATE TABLE employees (
 	"email" VARCHAR(150) NOT NULL,
 	"phone" VARCHAR(13), 
 	"image" VARCHAR,
+	"street" VARCHAR(150),
+	"city" VARCHAR(150),
+	"zip" INT,
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 
 --** Employees MOCK DATA **--
 insert into employees 
-	(first_name, last_name, email, phone) 
+	(first_name, last_name, email, phone, street, city, "zip") 
 values 
-	('Den', 'Paolini', 'dpaolini0@paypal.com', '(840)6732127'),
-	('Grantley', 'Abels', 'gabels1@weather.com', '(885)7477091'),
-	('Say', 'O''Hickey', 'sohickey2@google.ru', '(915)6380768'),
-	('Reeba', 'Pretswell', 'rpretswell3@feedburner.com', '(964)6881625'),
-	('Fiorenze', 'Mary', 'fmary4@unesco.org', '(697)2096190'),
-	('Osborne', 'Barrand', 'obarrand5@wufoo.com', '(537)1594107'),
-	('Lidia', 'Nichols', 'lnichols6@virginia.edu', '(802)5280961'),
-	('Stephanie', 'Rimbault', 'srimbault7@state.tx.us', '(609)6392085'),
-	('Andris', 'Batram', 'abatram8@vinaora.com', '(395)7396444'),
-	('Renae', 'Pettwood', 'rpettwood9@printfriendly.com', '(418)8794563');
+	('Den', 'Paolini', 'dpaolini0@paypal.com', '(840)6732127', '2900 W 43rd St', 'Minneapolis',  55410),
+	('Grantley', 'Abels', 'gabels1@weather.com', '(885)7477091', '2900 W 43rd St', 'Minneapolis',  55410),
+	('Say', 'O''Hickey', 'sohickey2@google.ru', '(915)6380768', '2900 W 43rd St', 'Minneapolis',  55410),
+	('Reeba', 'Pretswell', 'rpretswell3@feedburner.com', '(964)6881625', '2900 W 43rd St', 'Minneapolis',  55410),
+	('Fiorenze', 'Mary', 'fmary4@unesco.org', '(697)2096190', '2900 W 43rd St', 'Minneapolis',  55410),
+	('Osborne', 'Barrand', 'obarrand5@wufoo.com', '(537)1594107', '2900 W 43rd St', 'Minneapolis',  55410),
+	('Lidia', 'Nichols', 'lnichols6@virginia.edu', '(802)5280961', '2900 W 43rd St', 'Minneapolis',  55410),
+	('Stephanie', 'Rimbault', 'srimbault7@state.tx.us', '(609)6392085', '2900 W 43rd St', 'Minneapolis',  55410),
+	('Andris', 'Batram', 'abatram8@vinaora.com', '(395)7396444', '2900 W 43rd St', 'Minneapolis',  55410),
+	('Renae', 'Pettwood', 'rpettwood9@printfriendly.com', '(418)8794563', '2900 W 43rd St', 'Minneapolis',  55410);
 
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
@@ -65,6 +68,32 @@ CREATE TABLE employees_schedule (
 	"4" BOOLEAN DEFAULT FALSE,
 	"5" BOOLEAN DEFAULT FALSE
 	);
+
+
+--** Employee Schedule MOCK DATA **--
+insert into employees_schedule
+	("emp_id", "week", "1", "2", "3", "4", "5") 
+values
+	(1, 1, true, true, false, true, true),
+	(1, 2, false, true, false, false, false),
+	(2, 1, false, true, false, false, false),
+	(2, 2, false, true, false, false, false),
+	(3, 1, false, false, false, false, false),
+	(3, 2, false, false, false, false, false),
+	(4, 1, true, true, true, false, true),
+	(4, 2, true, true, true, false, true),
+	(5, 1, false, false, false, true, true),
+	(5, 2, false, false, false, true, true),
+	(6, 1, false, true, true, true, false),
+	(6, 2, false, true, true, true, false),
+	(7, 1, true, true, true, true, false),
+	(7, 2, true, true, true, true, false),
+	(8, 1, true, true, true, false, true),
+	(8, 2, true, false, false, false, true),
+	(9, 1, false, true, false, false, false),
+	(9, 2, false, true, false, false, false),
+	(10, 1, false, false, false, true, true),
+	(10, 2, false, false, false, true, true);
 
 
 INSERT INTO employees_schedule
@@ -111,7 +140,9 @@ CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,
 	"first_name" VARCHAR(150) NOT NULL,
 	"last_name" VARCHAR(150),
-	"address" VARCHAR NOT NULL,
+	"street" VARCHAR(150),
+	"city" VARCHAR(150),
+	"zip" INT,
 	"route_id" INT NOT NULL REFERENCES routes(id),
 	"phone" VARCHAR(13),
 	"email" VARCHAR(150) NOT NULL,
@@ -122,23 +153,23 @@ CREATE TABLE clients (
 --** Clients MOCK DATA -- Using addresses found in the area surrounding Lake Harriet **--
 
 insert into clients 
-	(first_name, last_name, address, route_id, phone, email) 
+	(first_name, last_name, street, city, zip, route_id, phone, email) 
 values 
-	('Adolphe', 'Osipov', '2900 W 43rd St, Minneapolis, MN 55410', 4, '(893)236-3575', 'aosipov0@nature.com'),
-	('Yorgos', 'Lyles', '4147 Xerxes Ave S, Minneapolis, MN 55410', 1, '(506)409-5891', 'ylyles1@chicagotribune.com'),
-	('Joyous', 'Tattersall', '3300 W 44th St, Minneapolis, MN 55410', 4, '(636)411-6655', 'jtattersall2@wordpress.org'),
-	('Jocelin', 'Ingerith', '4444 Upton Ave S, Minneapolis, MN 55410', 2, '(422)682-9050', 'jingerith3@mysql.com'),
-	('Gardener', 'Trulocke', '3414 W 47th St Room E021, Minneapolis, MN 55410', 3, '(431)890-0167', 'gtrulocke4@hhs.gov'),
-	('Janene', 'Wrout', '3608 W 50th St, Minneapolis, MN 55410', 2, '(385)750-1935', 'jwrout5@aboutads.info'),
-	('Hamish', 'Lethlay', '4912 Vincent Ave S, Minneapolis, MN 55410', 3, '(438)750-4252', 'hlethlay6@exblog.jp'),
-	('Dulcia', 'Eager', '5000 Penn Ave S, Minneapolis, MN 55419', 2, '(956)761-8143', 'deager7@ibm.com'),
-	('Zebulen', 'Baldick', '5025 Knox Ave S, Minneapolis, MN 55419', 2, '(764)768-8688', 'zbaldick8@sbwire.com'),
-	('Karlene', 'Armall', '812 W 46th St, Minneapolis, MN 55419', 2, '(403)522-9955', 'karmall9@guardian.co.uk'),
-	('Rosaleen', 'Faireclough', '4530 Lyndale Ave S, Minneapolis, MN 55419', 1, '(123)912-1803', 'rfaireclougha@github.io'),
-	('Malva', 'Belfelt', '4249 Bryant Ave S, Minneapolis, MN 55409', 3, '(589)917-5192', 'mbelfeltb@stumbleupon.com'),
-	('Sunny', 'Mateiko', '4100 Lyndale Ave S, Minneapolis, MN 55409', 1, '(838)150-5160', 'smateikoc@illinois.edu'),
-	('Noelyn', 'Rowden', '813 W 50th St, Minneapolis, MN 55419', 2, '(976)109-9306', 'nrowdend@uiuc.edu'),
-	('Madelina', 'Becerro', '1601 W 50th St, Minneapolis, MN 55419', 1, '(849)163-0399', 'mbecerroe@msu.edu');
+	('Adolphe', 'Osipov', '2900 W 43rd St', 'Minneapolis',  55410, 4, '(893)236-3575', 'aosipov0@nature.com'),
+	('Yorgos', 'Lyles', '4147 Xerxes Ave S', 'Minneapolis', 55410, 1, '(506)409-5891', 'ylyles1@chicagotribune.com'),
+	('Joyous', 'Tattersall', '3300 W 44th St', 'Minneapolis', 55410, 4, '(636)411-6655', 'jtattersall2@wordpress.org'),
+	('Jocelin', 'Ingerith', '4444 Upton Ave S', 'Minneapolis', 55410, 2, '(422)682-9050', 'jingerith3@mysql.com'),
+	('Gardener', 'Trulocke', '3414 W 47th St Room E021', 'Minneapolis', 55410, 3, '(431)890-0167', 'gtrulocke4@hhs.gov'),
+	('Janene', 'Wrout', '3608 W 50th St', 'Minneapolis', 55410, 2, '(385)750-1935', 'jwrout5@aboutads.info'),
+	('Hamish', 'Lethlay', '4912 Vincent Ave S', 'Minneapolis', 55410, 3, '(438)750-4252', 'hlethlay6@exblog.jp'),
+	('Dulcia', 'Eager', '5000 Penn Ave S', 'Minneapolis', 55419, 2, '(956)761-8143', 'deager7@ibm.com'),
+	('Zebulen', 'Baldick', '5025 Knox Ave S', 'Minneapolis', 55419, 2, '(764)768-8688', 'zbaldick8@sbwire.com'),
+	('Karlene', 'Armall', '812 W 46th St', 'Minneapolis', 55419, 2, '(403)522-9955', 'karmall9@guardian.co.uk'),
+	('Rosaleen', 'Faireclough', '4530 Lyndale Ave S', 'Minneapolis', 55419, 1, '(123)912-1803', 'rfaireclougha@github.io'),
+	('Malva', 'Belfelt', '4249 Bryant Ave S', 'Minneapolis', 55409, 3, '(589)917-5192', 'mbelfeltb@stumbleupon.com'),
+	('Sunny', 'Mateiko', '4100 Lyndale Ave S', 'Minneapolis', 55409, 1, '(838)150-5160', 'smateikoc@illinois.edu'),
+	('Noelyn', 'Rowden', '813 W 50th St', 'Minneapolis', 55419, 2, '(976)109-9306', 'nrowdend@uiuc.edu'),
+	('Madelina', 'Becerro', '1601 W 50th St', 'Minneapolis', 55419, 1, '(849)163-0399', 'mbecerroe@msu.edu');
 
 
 

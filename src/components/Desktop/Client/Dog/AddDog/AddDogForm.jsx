@@ -24,7 +24,7 @@ function DogDetails(){
                 onChange={(event) => setDogName(event.target.value)}
                 helperText="Dog Name"  
                 size="small" /> 
-          <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddClient'})}>Cancel</Button> 
+          <Button onClick={() => dispatch({ type: 'BACK_TO_VIEW' })}>Cancel</Button> 
           <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Save</Button> {/*PUT ROUTE*/}
         </div>
       );

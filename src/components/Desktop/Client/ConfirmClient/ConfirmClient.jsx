@@ -21,7 +21,11 @@ function ConfirmClient(){
 
   const saveClient = event => {
     dispatch({type: 'ADD_CLIENT', payload: client})
-    // dispatch({type: 'SET_MODAL_STATUS'})
+    dispatch({type: 'SET_MODAL_STATUS'})
+    dispatch({type: 'CLEAR_SCHEDULE'})
+    dispatch({type: 'CLEAR_CLIENT'})
+    dispatch({type: 'CLEAR_DOGS'})
+
     //need to add clear client?
   }
 console.log('client right now', client)
@@ -74,7 +78,7 @@ console.log('client right now', client)
                 InputProps={{readOnly: true}}
                 sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
               <TextField 
-                value={client.route || ''} 
+                value={client.route_id || ''} 
                 helperText="Default Route"  
                 size="small" 
                 InputProps={{readOnly: true}}
@@ -107,7 +111,8 @@ console.log('client right now', client)
                   <CardMedia component="img"  
                     sx={{width: 1}}
                     alt="client dog photo"
-                    image="https://m8r6w9i6.rocketcdn.me/wp-content/uploads/2020/09/Australian-Cattle-Dog.jpeg.webp"/>
+                    // image={dog.image}
+                    />
               </Card>
                  ))}
             
@@ -117,7 +122,7 @@ console.log('client right now', client)
       <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
         <Grid item xs={2}>
           <Card raised >
-            <CardContent sx={{ backgroundColor:clientSchedule.monday ? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor:clientSchedule[1] ? '#7BCEC8' : null }}>
               Monday
             </CardContent>
           </Card>
@@ -125,7 +130,7 @@ console.log('client right now', client)
         </Grid>
         <Grid item xs={2} >
           <Card raised  >
-            <CardContent sx={{ backgroundColor: clientSchedule.tuesday ? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor: clientSchedule[2] ? '#7BCEC8' : null }}>
               Tuesday
             </CardContent>
           </Card>
@@ -133,7 +138,7 @@ console.log('client right now', client)
         </Grid>
         <Grid item xs={2}>
           <Card raised>
-            <CardContent sx={{ backgroundColor: clientSchedule.wednesday? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor: clientSchedule[3] ? '#7BCEC8' : null }}>
               Wednesday
             </CardContent>
           </Card>
@@ -141,7 +146,7 @@ console.log('client right now', client)
         </Grid>
         <Grid item xs={2}>
           <Card raised >
-            <CardContent sx={{ backgroundColor: clientSchedule.thursday? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor: clientSchedule[4] ? '#7BCEC8' : null }}>
               Thursday
             </CardContent>
           </Card>
@@ -149,7 +154,7 @@ console.log('client right now', client)
         </Grid>
         <Grid item xs={2}>
           <Card raised>
-            <CardContent sx={{ backgroundColor: clientSchedule.friday? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor: clientSchedule[5] ? '#7BCEC8' : null }}>
               Friday
             </CardContent>
           </Card>

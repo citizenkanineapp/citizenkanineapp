@@ -17,20 +17,11 @@ function AddDogForm (){
   const clientSchedule = useSelector(store => store.clientScheduleReducer)
 
 
- 
-
   const [monday, setMonday] = useState(false);
   const [tuesday, setTuesday] = useState(false);
   const [wednesday, setWednesday] = useState(false);
   const [thursday, setThursday] = useState(false);
   const [friday, setFriday] = useState(false);
-  const [schedule, setSchedule] = useState({
-    monday: clientSchedule.monday,
-    tuesday: clientSchedule.tuesday,
-    wednesday: clientSchedule.wednesday,
-    thursday: clientSchedule.thursday,
-    friday: clientSchedule.friday,
-});
 
 
   // this should gather info on what days are clicked to adjust the weekly schedule...
@@ -76,7 +67,8 @@ function AddDogForm (){
     dispatch({type: 'ADD_SCHEDULE', payload: clientSchedule})
     dispatch({type: 'ADD_DOGS', payload: dogs})
     dispatch({ type: 'SET_CLIENT_MODAL', payload: view})
-    
+    // dispatch({type: 'CLEAR_SCHEDULE'})
+     
  }
 
 
@@ -122,7 +114,8 @@ function AddDogForm (){
       <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
         <Grid item xs={2}>
           <Card raised onClick={(event) => handleClick('Monday')} >
-            <CardContent sx={{ backgroundColor: monday ? '#7BCEC8' : null }}>
+            {/* try 1 instead of monday */}
+            <CardContent sx={{ backgroundColor: clientSchedule[1] ? '#7BCEC8' : null }}>
               Monday
             </CardContent>
           </Card>
@@ -130,7 +123,7 @@ function AddDogForm (){
         </Grid>
         <Grid item xs={2} >
           <Card raised onClick={(event) => handleClick('Tuesday')} >
-            <CardContent sx={{ backgroundColor: tuesday ? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor: clientSchedule[2] ? '#7BCEC8' : null }}>
               Tuesday
             </CardContent>
           </Card>
@@ -138,7 +131,7 @@ function AddDogForm (){
         </Grid>
         <Grid item xs={2}>
           <Card raised onClick={(event) => handleClick('Wednesday')}>
-            <CardContent sx={{ backgroundColor: wednesday? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor: clientSchedule[3] ? '#7BCEC8' : null }}>
               Wednesday
             </CardContent>
           </Card>
@@ -146,7 +139,7 @@ function AddDogForm (){
         </Grid>
         <Grid item xs={2}>
           <Card raised onClick={(event) => handleClick('Thursday')} >
-            <CardContent sx={{ backgroundColor: thursday? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor: clientSchedule[4] ? '#7BCEC8' : null }}>
               Thursday
             </CardContent>
           </Card>
@@ -154,7 +147,7 @@ function AddDogForm (){
         </Grid>
         <Grid item xs={2}>
           <Card raised onClick={(event) => handleClick('Friday')}>
-            <CardContent sx={{ backgroundColor: friday? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor: clientSchedule[5] ? '#7BCEC8' : null }}>
               Friday
             </CardContent>
           </Card>

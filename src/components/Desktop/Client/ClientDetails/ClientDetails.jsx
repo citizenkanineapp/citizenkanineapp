@@ -100,9 +100,11 @@ function ClientDetails(){
                         </Button>
                   </CardActions>
                   <CardMedia component="img"  
-                    sx={{width: 1}}
+                    // sx={{width: 1}}
+                    width="100%"
                     alt="client dog photo"
-                    image="https://m8r6w9i6.rocketcdn.me/wp-content/uploads/2020/09/Australian-Cattle-Dog.jpeg.webp"/>
+                    // image={dog.image}
+                    />
               </Card>
                  ))}
 

@@ -25,7 +25,7 @@ const clientReducer = (state = {}, action) => {
         case 'ADD_DOGS':
             return {...state, dogs: action.payload};
         case 'ADD_SCHEDULE':
-            return {...state, schedule:[action.payload]}
+            return {...state, schedule: action.payload}
         case 'CLEAR_CLIENT':
             return {};
         default:

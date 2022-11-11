@@ -36,7 +36,9 @@ CREATE TABLE "user" (
 	"password" VARCHAR(150) NOT NULL,
 	"email" VARCHAR(300), -- LATER CHANGE TO NOT NULL
 	"admin" BOOLEAN DEFAULT NULL,
-	"date" DATE DEFAULT CURRENT_DATE
+	"date" DATE DEFAULT CURRENT_DATE,
+	"password_reset_token" VARCHAR (40) NULL,
+	"password_reset_expires" TIMESTAMP NULL
 	);
 	
 

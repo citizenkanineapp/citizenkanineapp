@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 // MUI IMPORTS
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -22,7 +21,7 @@ function MobileNav() {
       onChange={(event, newValue) => {
         setValue(newValue);
       }}
-      sx={{ display: { xs: 'flex', sm: 'flex', md: 'none', position: 'fixed', bottom: 0, left: 0, right: 0, color: 'primary' } }}
+      sx={{ display: { xs: 'flex', sm: 'none', md: 'flex', position: 'fixed', bottom: 0, left: 0, right: 0, color: 'primary' } }}
     >
       <BottomNavigationAction label="Home" icon={<HomeIcon />} onClick={(event) => { history.push('/m/user') }} />
       <BottomNavigationAction label="Routes" icon={<ListAltIcon />} onClick={(event) => { history.push('/m/routes') }} />

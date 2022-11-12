@@ -51,13 +51,32 @@ router.get('/dogs', async (req, res) => {
 
     // SQL to grab schedule adjustments table
     const scheduleQuery = `
-    SELECT * from dogs_schedule_changes
+    SELECT dogs_schedule_changes.*, dogs.name from dogs_schedule_changes
+		JOIN dogs ON dogs_schedule_changes.dog_id = dogs.id
 	    WHERE dogs_schedule_changes.date_to_change = CURRENT_DATE
 	ORDER BY dogs_schedule_changes.dog_id;
     `
 
     try {
         await client.query('BEGIN');
+
+        // const dailyDogs = adjustedDogs.map(dog => {
+        //     final = {
+        //         name: dog.name,
+        //         dog_id: dog.dog_id,
+        //         client_id: dog.client_id,
+        //         route_id: dog.route_id
+        //     };
+        // })
+        // add client ID 
+        const insertSQL = `
+        INSERT INTO daily_dogs
+            ("dog_id", "route_id")
+        VALUES
+            ($1, $2);
+        `
+
+        // find the dogs default scheduled for the day
         const scheduledDogsResponse = await client.query(searchQuery);
         const scheduledDogs = scheduledDogsResponse.rows;
         console.log(scheduledDogs);
@@ -68,13 +87,6 @@ router.get('/dogs', async (req, res) => {
         const scheduleAdjustments = scheduleAdjustmentsResults.rows;
         console.log(scheduleAdjustments);
 
-        // add client ID 
-        const insertSQL = `
-        INSERT INTO daily_dogs
-            ("dog_id", "route_id")
-        VALUES
-            ($1, $2);
-        `
         // if there are no changes - add original array to daily_dogs
         if (scheduleAdjustments.length < 1) {
             console.log('Good to Go!');
@@ -86,31 +98,38 @@ router.get('/dogs', async (req, res) => {
             }));
 
             await client.query('COMMIT')
-            res.sendStatus(201);
+            res.send({ scheduledDogs });
         } else {
-            const adjustedDogs = [];
 
-            // add existing dog to final dogs
-            // add new dog to final dogs 
-            // don't add to final dogs 
-            console.log('changes to be made:', scheduleAdjustments);
-            // add a key for scheduled? 
-            scheduledDogs.map(dog => )
-            // for each? 
+            // taking out the dog_id's from the cancellations to quickly find the dogs that need to be removed.
+            const cancellations = scheduleAdjustments
+                .filter(item => item.is_scheduled === false)
+                .map(item => item.dog_id);
 
-            //creates plant object with companions and growing chart data
-            // const updatedPlants = plants.map(plant => ({...plant,   
-            //     growing: growing.find(chart => chart.id === plant.growing),
-            //     companion: companions.filter(companion => companion.main_plant === plant.id)
-            //   }));
-            // if dog.id matches? .pop or .push?
-            // if dog.is_schedules === false
-            // .slice() to remvoe at the index if it's a cancel?
+            // adjusted dogs is the original dog array MINUS the canceled dogs for the day
+            const adjustedDogs = scheduledDogs.filter(item => !cancellations.includes(item.dog_id));
+
+            // here are the dogs that were added for the day that typically might not be scheduled
+            const additions = scheduleAdjustments.filter(item => item.is_scheduled === true);
+
+            for (let item of additions) {
+                // hard code route to be 'unassigned'
+                item.route_id = 5;
+                adjustedDogs.push(item);
+            }
+
+            console.log('Good to Go!');
+            // insert into daily_dogs
+            await Promise.all(adjustedDogs.map(dog => {
+                const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4)`;
+                const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name];
+                return client.query(insertQuery, insertValues);
+            }));
+
+            await client.query('COMMIT')
+            res.send({ adjustedDogs });
 
         }
-
-
-
     } catch (error) {
         await client.query('ROLLBACK')
         console.log('Error POST /api/order', error);

@@ -53,7 +53,7 @@ function EmployeeModal(){
               }
               }} 
               >
-          <Box sx={{ ...style, width: 800, height: 600, outline: 'none' }}>
+          <Box sx={{ ...style, width: '65vw', height: '80vh', outline: 'none', borderRadius: '5px', display: 'flex', alignContent: 'center', justifyContent: 'left' }}>
             {pickView()}
           </Box>
         </Modal>

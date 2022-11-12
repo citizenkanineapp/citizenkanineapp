@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import LoginPage from '../../AllPages/Login/LoginPage/LoginPage';
+import LoginPage from '../../AllPages/Login/Login/LoginPage';
 import {useSelector} from 'react-redux';
 
 function ProtectedRoute({ component, children, ...props }) {

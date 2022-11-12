@@ -11,12 +11,15 @@ import Nav from '../Desktop/DesktopNav/Nav';
 import NavTransition from '../Desktop/DesktopNav/NavTransition';
 import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
-import LoginPage from '../AllPages/Login/LoginPage/LoginPage';
-import RegisterPage from '../AllPages/Login/RegisterPage/RegisterPage';
+import LoginPage from '../AllPages/Login/Login/LoginPage';
+import RegisterPage from '../AllPages/Login/Register/RegisterPage';
+import ResetPassPage from '../AllPages/Login/ResetPass/ResetPassPage';
 import Invoicing from '../Desktop/Invoicing/Invoicing';
 import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
 import ClientList from '../Desktop/Client/ClientList/ClientList';
 import EmployeeSchedule from '../Desktop/Employee/EmployeeSchedule/EmployeeSchedule';
+import AdminSettings from '../Desktop/AdminSettings/AdminSettings';
+
 //MOBILE COMPONENTS
 import Home from '../Mobile/Home/Home';
 import Map from '../Mobile/MapView/MapView';
@@ -77,7 +80,6 @@ function App() {
                 <RegisterPage />}
             </Route>
 
-
             {/* ----------------------- DESKTOP ----------------------- */}
 
             {/* only needed for presentation */}
@@ -86,23 +88,31 @@ function App() {
             </Route>
 
             <ProtectedRoute exact path="/user">
-              <SplashPage />
+              {user.admin ? <SplashPage /> : <Redirect to="/m/user" />}
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/invoice">
-              <Invoicing />
+              {user.admin ? <Invoicing /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/employees">
-              <EmployeeList />
+              {user.admin ? <EmployeeList /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/schedule">
-              <EmployeeSchedule />
+              {user.admin ? <EmployeeSchedule /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/clients">
-              <ClientList />
+              {user.admin ? <ClientList /> : <Redirect to="/home" />}
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/admin">
+              {user.admin ? <AdminSettings /> : <Redirect to="/home" />}
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/resetpass">
+              {user.admin ? <ResetPassPage /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
             {/* ----------------------- MOBILE ----------------------- */}
@@ -131,6 +141,10 @@ function App() {
               <LoadBalancing />
             </ProtectedRoute>
 
+            <ProtectedRoute exact path="/m/resetpass">
+              <ResetPassPage />
+            </ProtectedRoute>
+
             {/* ----------------------------------------------------- */}
 
             {/* No matching routes: return 404. */}
@@ -139,7 +153,8 @@ function App() {
             </Route>
 
           </Switch>
-          <MobileNav />
+          {/* mobile nav currently displays in desktop */}
+          <MobileNav /> 
         </div>
       </ThemeProvider>
     </Router>

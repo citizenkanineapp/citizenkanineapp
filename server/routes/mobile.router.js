@@ -5,9 +5,18 @@ const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
+// ADMIN ONLY:
+// /daily for generating daily dogs
+// /routes for GETTING all of the available dogs for the day in their default routes
+// PUT to /routes to change dog routes
+// expects an object with {dog_id, route_id}
+
+// EVERYONE:
+// /route/:route_id for GETTING specific route / dog info
+// /dog/:id for GETTING a specific dogs details
 
 // GET ROUTE FOR DAILY DOGS SCHEDULE
-router.get('/dogs', async (req, res) => {
+router.get('/daily', async (req, res) => {
     const client = await pool.connect();
 
     // hit the route
@@ -199,7 +208,7 @@ router.get('/dog/:id', async (req, res) => {
         }));
 })
 
-router.put('/routes/', async (req, res) => {
+router.put('/routes', async (req, res) => {
     // expect an object being sent over for the put request?
     // pull out relevant dog ID and route ID
     const dogID = req.body.dog_id;

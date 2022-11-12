@@ -18,6 +18,50 @@ router.get('/', (req, res)=> {
         })
 })
 
+// gets all employee with schedule data for odd week;
+router.get('/schedules/odd', (req, res)=>{
+    const sqlQuery=`
+    SELECT * FROM 
+        employees
+    INNER JOIN
+        employees_schedule
+    ON
+        employees.id = employees_schedule.emp_id
+    WHERE employees_schedule.week = 1;
+    `
+    pool.query(sqlQuery)
+        .then(dbRes=> {
+            res.send(dbRes.rows);
+        })
+        .catch(error=> {
+            res.sendStatus(500);
+            console.log('error with GET /employees/schedules:', error);
+        })
+
+
+})
+
+router.get('/schedules/even', (req, res)=>{
+    const sqlQuery=`
+    SELECT * FROM 
+        employees
+    INNER JOIN
+        employees_schedule
+    ON
+        employees.id = employees_schedule.emp_id
+    WHERE employees_schedule.week = 2;
+    `
+    pool.query(sqlQuery)
+        .then(dbRes=> {
+            res.send(dbRes.rows);
+        })
+        .catch(error=> {
+            res.sendStatus(500);
+            console.log('error with GET /employees/schedules:', error);
+        })
+
+
+})
 
 
 

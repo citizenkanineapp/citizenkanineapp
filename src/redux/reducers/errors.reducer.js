@@ -32,10 +32,26 @@ const registrationMessage = (state = '', action) => {
   }
 };
 
+const resetPasswordMessage = (state = '', action) => {
+  switch (action.type) {
+    case 'CLEAR_PASSWORD_ERROR':
+      return '';
+    case 'PASSWORD_RESET':
+      return 'Password successfully reset.'
+    case 'PASSWORD_INPUT_ERROR':
+      return 'Password must match!';
+    case 'PASSWORD_RESET_FAILED':
+      return 'Password failed to reset.';
+    default:
+      return state;
+  }
+};
+
 // make one object that has keys loginMessage, registrationMessage
 // these will be on the redux state at:
 // state.errors.loginMessage and state.errors.registrationMessage
 export default combineReducers({
   loginMessage,
   registrationMessage,
+  resetPasswordMessage
 });

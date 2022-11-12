@@ -44,7 +44,10 @@ function EmployeeSchedule(){
   useEffect(()=>{
     // Fetch employee schedules
     dispatch({
-      type: 'SAGA_FETCH_EMP_SCHEDULES'
+      type: 'SAGA_FETCH_EMP_SCHEDULES_ODD'
+    })
+    dispatch({
+      type: 'SAGA_FETCH_EMP_SCHEDULES_EVEN'
     })
     // Fetch employee details for employee cards
     dispatch({
@@ -79,33 +82,23 @@ function EmployeeSchedule(){
 
   const thisWeek = dayjs(dayjs().$d).week();
   console.log('this is week number:', thisWeek);
-  // is this week even?
-  const evenWeek = ()=>{
-    if (thisWeek % 2 === 0 ){
-      return true
-    }
-    else{
-      return false
-    }
-  }
+  
 
   // Employee schedule Logic:
-  const empSchedules = useSelector(store=> store.employeesReducer.empSchedules);
+  const oddEmpSchedules = useSelector(store=> store.employeesReducer.oddEmpSchedules);
+  const evenEmpSchedules = useSelector(store=> store.employeesReducer.evenEmpSchedules);
   // console.log(empSchedules);
   // {1: true, 2: true, 3: false, 4: true, 5: true, id: 1, first_name: 'Den', last_name: 'Paolini', email: 'dpaolini0@paypal.com', phone: '(840)6732127', …}
   const allEmployees = useSelector(store=> store.employeesReducer.employees);
 
-  // const oddWeekEmployees = []
-  // const evenWeekEmployees = []
+  const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
+  console.log(avatarColors[0]);
 
   console.log(dayjs());
 
 
   return (
   <div className="container">
-    <h1>Employee Schedule</h1>
-    {/* <LogOutButton/> */}
-
     {/* // MUI DatePicker: */}
     <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StaticDatePicker
@@ -130,7 +123,9 @@ function EmployeeSchedule(){
                         !DayComponentProps.outsideCurrentMonth &&
                         highlightedDays.includes(day.$W);
                     
-                    const dayOfWeek = day.$W;
+                    {/* Need to check if the week is even or odd */}
+                    const weekInYear = dayjs(day.$d).week();
+                    // is this week even?
 
                     return (
                       <div key={day.$D}>
@@ -138,15 +133,38 @@ function EmployeeSchedule(){
                           <Box sx={{display: 'flex', justifyContent: 'right', flexGrow: '1'}}>
                             <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>
                           </Box>
-                          {/* Want to render an avatar for the employee if th*/}
-                          <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '5'}}>
-                          {empSchedules.map(employee => {
+                          {/* CONDITIONAL RENDERING FOR EMPLOYEE EVEN/ODD WEEKS */}
+                          {/* is the day within the current month and is this week even ? */}
+                          { !DayComponentProps.outsideCurrentMonth && weekInYear % 2 !== 0 ?
+                            <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', alignContent: 'flex-start'}}>
+                            {oddEmpSchedules.map((employee, index) => {
+                              if (employee[day.$W]){
+                                const bgColor = avatarColors[index];
+                                return <Avatar key={employee.emp_id} sx={{ bgcolor: bgColor, height: '5vh' , width: '2.5vw' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                              }
+                              
+                            })}
+                            </Box>
+                            :
+                            <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', alignContent: 'flex-start'}}>
+                            {evenEmpSchedules.map((employee, index) => {
                             if (employee[day.$W]){
-                              return <Avatar sx={{ bgcolor: "secondary.main", height: 40 , width: 40 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                              const bgColor = avatarColors[index];
+                              return <Avatar key={employee.emp_id} sx={{ bgcolor: bgColor, height: '5vh' , width: '2.5vw' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                             }
                             
                           })}
                           </Box>
+                          }
+                          {/* <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', alignContent: 'flex-start'}}>
+                          {oddEmpSchedules.map((employee, index) => {
+                            if (employee[day.$W]){
+                              const bgColor = avatarColors[index];
+                              return <Avatar key={employee.emp_id} sx={{ bgcolor: bgColor, height: '5vh' , width: '2.5vw' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                          }
+                            
+                          })}
+                          </Box> */}
 
                           {/* { isSelected ? 
                             <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '6'}}>

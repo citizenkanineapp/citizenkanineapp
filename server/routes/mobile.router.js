@@ -137,63 +137,90 @@ router.get('/dogs', async (req, res) => {
     } finally {
         client.release()
     }
-
-
-    // pool.query(searchQuery)
-    //     .then(response => {
-    //         // loop through the response checking for schedule changes?
-    //         console.log(response.rows);
-    //         res.send(response.rows);
-    //     })
-    //     .catch(error => {
-    //         console.log('ERROR IN GETTING DAILY DOGS:', error);
-    //         res.sendStatus(500);
-    //     })
-
-
-
-    // not sure exactly what our request body is going to look like
-    // BUT this is generally what the request should look like? 
-    // maybe the 'current date' gets replaced with a PG variable?
-    // results are sorted by route ID which hopefully makes things easier?
-
-    // OTHERWISE if we need stuff separated on the server side here ... we can probably add route ID to the where statement
-    // const sqlQuery = `
-    // SELECT daily_dogs.*, dogs.name, dogs.client_id, dogs.flag, routes.name AS route_name    from "daily_dogs"
-    //     JOIN "routes" ON daily_dogs.route_id = routes.id
-    //     JOIN "dogs" ON daily_dogs.dog_id = dogs.id
-    //     JOIN "clients" ON dogs.client_id = clients.id
-    // WHERE daily_dogs.date = CURRENT_DATE
-    // ORDER BY daily_dogs.route_id;
-    // `
-
-    // pool.query(sqlQuery)
-    //     .then(response => {
-    //         res.send(response.rows);
-    //     })
-    //     .catch(error => {
-    //         console.log('ERROR IN GETTING DAILY DOGS:', error);
-    //         res.sendStatus(500);
-    //     })
-    // GET route code here
 });
 
+// GET ROUTE FOR EMPLOYEE ROUTES
+router.get('/route/:route_id', async (req, res) => {
+    let route = req.params.route_id;
 
-
-// POST ROUTE FOR DAILY DOGS?
-router.post('/', rejectUnauthenticated, (req, res) => {
-    // takes in an array of objects from a reducer
-    // needs to insert per line item into the daily_dogs table
-
-
-
-
-    const insertSQL = `
-    INSERT INTO daily_dogs
-        ("dog_id", "route_id")
-    VALUES
-        ($1, $2);
+    // routes need to be arrays of dog objects ...
+    // do we want separate arrays per route?
+    const routeQuery = `
+    SELECT daily_dogs.*, dogs.flag, dogs.notes from daily_dogs
+	    JOIN dogs
+		    ON daily_dogs.dog_id = dogs.id
+	    WHERE route_id = $1;
     `
+
+    const routeValue = [route];
+
+    pool.query(routeQuery, routeValue)
+        .then(routeResponse => {
+            res.send(routeResponse.rows);
+        }).catch((error => {
+            console.log('/route/:id GET error:', error);
+        }));
+});
+
+router.get('/routes', async (req, res) => {
+    const routesQuery = `
+    SELECT daily_dogs.*, dogs.flag, dogs.notes from daily_dogs
+    JOIN dogs
+        ON daily_dogs.dog_id = dogs.id;
+    `
+
+    pool.query(routesQuery)
+        .then(allRoutesRes => {
+            let dailyRoutes = allRoutesRes.rows;
+            res.send(dailyRoutes);
+        }).catch((error => {
+            console.log('/routes error getting all daily routes:', error);
+        }));
+})
+
+
+router.get('/dog/:id', async (req, res) => {
+    const dogID = req.params.id;
+
+    const dogDetailsQuery = `
+    SELECT dogs.*, clients.* from dogs
+	    JOIN clients
+		    ON dogs.client_id = clients.id
+	    WHERE dogs.id = $1;
+    `
+    const dogDetailsValue = [dogID];
+
+    pool.query(dogDetailsQuery, dogDetailsValue)
+        .then(detailsResults => {
+            const dogDetails = detailsResults.rows;
+            res.send(dogDetails);
+        }).catch((error => {
+            console.log('/dog/:id error getting dog details:', error);
+        }));
+})
+
+router.put('/dog/:dog', async (req, res) => {
+    // expect an object being sent over for the put request?
+    // pull out relevant dog ID and route ID
+    const dogID = req.params.dog.dog_id;
+    const routeID = req.params.dog.route_id;
+
+
+    const updateQuery = `UPDATE daily_dogs SET "route_id" = $1 WHERE "dog_id" = $2`;
+    const updateValues = [routeID, dogID];
+
+    pool.query(updateQuery, updateValues)
+        .then(changeResults => {
+            res.sendStatus(200);
+        }).catch((error => {
+            console.log('/dog/:id error getting dog details:', error);
+        }));
+
+})
+
+// POST ROUTE FOR ADDING A DOG ON THE SPOT!?
+router.post('/', rejectUnauthenticated, (req, res) => {
+
 });
 
 

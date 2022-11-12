@@ -30,6 +30,54 @@ function LoadBalancing(){
       {id: 14, name: 'Flip', route: 'unassigned', flagged: false, notes: 'This dog has special needs!'},
       {id: 15, name: 'Fae', route: 'unassigned', flagged: false, notes: 'This dog has special needs!'},
       {id: 16, name: 'Fraaancheskah', route: 'unassigned', flagged: true, notes: 'This dog has special needs!'},
+      {id: 120192, name: 'Fido', route: 'tangletown', flagged: false, notes: 'This dog has special needs!'},
+      {id: 270017292, name: 'Fiona', route: 'tangletown', flagged: true, notes: 'This dog has special needs!'},
+      {id: 3102792, name: 'Ferris', route: 'emerson', flagged: false, notes: 'This dog has special needs!'},
+      {id: 4007592, name: 'Frenchie', route: 'emerson', flagged: false, notes: 'This dog has special needs!'},
+      {id: 51072792, name: 'Fowler', route: 'emerson', flagged: true, notes: 'This dog has special needs!'},
+      {id: 6701592, name: 'Froggy', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 7715902, name: 'Frodo', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 817012392, name: 'Flora', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 917259002, name: 'Flo', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 10201972, name: 'Fred', route: 'misfits', flagged: true, notes: 'This dog has special needs!'},
+      {id: 11105792, name: 'Ferrah', route: 'misfits', flagged: false, notes: 'This dog has special needs!'},
+      {id: 12001952, name: 'Forrest', route: 'misfits', flagged: true, notes: 'This dog has special needs!'},
+      {id: 13014392, name: 'Fanny', route: 'misfits', flagged: false, notes: 'This dog has special needs!'},
+      {id: 144092, name: 'Flip', route: 'unassigned', flagged: false, notes: 'This dog has special needs!'},
+      {id: 15140092, name: 'Fae', route: 'unassigned', flagged: false, notes: 'This dog has special needs!'},
+      {id: 1614092, name: 'Fraaancheskah', route: 'unassigned', flagged: true, notes: 'This dog has special needs!'},
+      {id: 119004212, name: 'Fido', route: 'tangletown', flagged: false, notes: 'This dog has special needs!'},
+      {id: 21904212, name: 'Fiona', route: 'tangletown', flagged: true, notes: 'This dog has special needs!'},
+      {id: 31902412, name: 'Ferris', route: 'emerson', flagged: false, notes: 'This dog has special needs!'},
+      {id: 40192412, name: 'Frenchie', route: 'emerson', flagged: false, notes: 'This dog has special needs!'},
+      {id: 51942120, name: 'Fowler', route: 'emerson', flagged: true, notes: 'This dog has special needs!'},
+      {id: 61392120, name: 'Froggy', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 71932120, name: 'Frodo', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 81932102, name: 'Flora', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 91923120, name: 'Flo', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 101932120, name: 'Fred', route: 'misfits', flagged: true, notes: 'This dog has special needs!'},
+      {id: 111932120, name: 'Ferrah', route: 'misfits', flagged: false, notes: 'This dog has special needs!'},
+      {id: 121932120, name: 'Forrest', route: 'misfits', flagged: true, notes: 'This dog has special needs!'},
+      {id: 13199320102, name: 'Fanny', route: 'misfits', flagged: false, notes: 'This dog has special needs!'},
+      {id: 14199021212, name: 'Flip', route: 'unassigned', flagged: false, notes: 'This dog has special needs!'},
+      {id: 151992102123, name: 'Fae', route: 'unassigned', flagged: false, notes: 'This dog has special needs!'},
+      {id: 161920912123, name: 'Fraaancheskah', route: 'unassigned', flagged: true, notes: 'This dog has special needs!'},
+      {id: 11920192123, name: 'Fido', route: 'tangletown', flagged: false, notes: 'This dog has special needs!'},
+      {id: 21920192123, name: 'Fiona', route: 'tangletown', flagged: true, notes: 'This dog has special needs!'},
+      {id: 31921091203, name: 'Ferris', route: 'emerson', flagged: false, notes: 'This dog has special needs!'},
+      {id: 419021299123, name: 'Frenchie', route: 'emerson', flagged: false, notes: 'This dog has special needs!'},
+      {id: 519210291023, name: 'Fowler', route: 'emerson', flagged: true, notes: 'This dog has special needs!'},
+      {id: 619021209123, name: 'Froggy', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 711002993, name: 'Frodo', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 8140992, name: 'Flora', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 919099932, name: 'Flo', route: 'far', flagged: false, notes: 'This dog has special needs!'},
+      {id: 103991092, name: 'Fred', route: 'misfits', flagged: true, notes: 'This dog has special needs!'},
+      {id: 11119092, name: 'Ferrah', route: 'misfits', flagged: false, notes: 'This dog has special needs!'},
+      {id: 12019822, name: 'Forrest', route: 'misfits', flagged: true, notes: 'This dog has special needs!'},
+      {id: 133008192, name: 'Fanny', route: 'misfits', flagged: false, notes: 'This dog has special needs!'},
+      {id: 141808192, name: 'Flip', route: 'unassigned', flagged: false, notes: 'This dog has special needs!'},
+      {id: 1528190002, name: 'Fae', route: 'unassigned', flagged: false, notes: 'This dog has special needs!'},
+      {id: 163808008192, name: 'Fraaancheskah', route: 'unassigned', flagged: true, notes: 'This dog has special needs!'}
     ];
 
     const dayRoutes = {
@@ -60,6 +108,7 @@ function LoadBalancing(){
   const [draggingStatus, setDraggingStatus] = useState(true);
   //TRIGGERS DND LOGIC IN REDUCER
   const onDragEnd = (result) => {
+    console.log(result);
     //setDraggingStatus(!draggingStatus);
     if (!result.destination) return; //prevents being triggered if outside of lists
     dispatch({ type: 'MOVE_DOG', payload: result });
@@ -118,6 +167,7 @@ function LoadBalancing(){
             {routes.map((route, i) => (       
               //*-------------CARD-------------*//
                 <Box
+                    key={route}
                     sx={{ 
                           height: '95%',
                           width: '18%', 
@@ -126,7 +176,6 @@ function LoadBalancing(){
                           alignItems: 'center', 
                           flexWrap: 'wrap',
                           bgcolor: '#F0ECE9',
-                          overflowx: 'scroll',
                           borderRadius: '0.5rem',
                         }}
                     >
@@ -156,23 +205,39 @@ function LoadBalancing(){
                   {(provided, snapshot) => (        
                     <Box  {...provided.droppableProps} ref={provided.innerRef}
                       sx={{ height: '85%',
-                            width: '75%',
+                            width: '100%',
                             display: 'flex', 
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifySelf: 'flex-end',
-                            overflowY: 'scroll', pt: 1}}>
+                            flexDirection: 'column', 
+                            alignItems: 'center',  //if dragging doesn't work, change this to flex-start
+                            justifyContent: 'flex-start',
+                            overflow: 'auto',
+                            my: 1 }}>
+
                     {/* maps through each dog in route list and creates a chip */}
                     {dailyRoutes && dailyRoutes[route].map((dog, index) => (dog.route === route &&  
-                    
-                      //*-------------CHIP-------------*//
+                    <>
+
+                    {/*------------DETAILS-------------*/}
+                       {showDetails === true &&
+                       <Popover
+                            id={dog.id}
+                            open={showDetails}
+                            onClose={() => setShowDetails(!showDetails)}
+                            anchorOrigin={{
+                              vertical: 'bottom',
+                              horizontal: 'left',
+                            }}>
+                        <Typography sx={{ p: 2 }}>{dog.details}</Typography>
+                      </Popover>}
+
+
+                      {/*-------------CHIP-------------*/}
                       <Draggable key={dog.id} draggableId={`${dog.id}`} index={index} isDragDisabled={false}> 
                         {(provided, snapshot) => (
-
                         <Box
                           key={dog.id} 
                           //{...bind()}
-                          //onTouchEnd={() => openDetailsDialog(dog)} //opens dog details
+                          onTouchEnd={() => openDetailsDialog(dog)} //opens dog details
                           //----dnd----//
                           {...provided.draggableProps} 
                           {...provided.dragHandleProps} 
@@ -182,19 +247,18 @@ function LoadBalancing(){
                           variant = 'outlined'
                           // className={snapshot.isDragging && "dog_chip"}
                           sx={{ 
-                                width: '80%', 
+                                width: '60%', 
                                 display: 'flex', 
                                 flexDirection: 'row', 
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
-                                borderRadius: 2,
+                                borderRadius: 3,
                                 border: '1px solid grey',
-                              
-                                px: 1, my: 0.3 
+                                px: 1, my: 0.3, mx: 1
                                 }}
                         >
-                        <Typography sx={{ fontSize: '0.6rem', letterSpacing: '0.005rem' }}>
-                          {dog.name.length > 8 ? (dog.name.toUpperCase()).slice(0, 8) +  "..." : dog.name.toUpperCase()}
+                        <Typography sx={{ fontSize: '0.8rem', letterSpacing: '-0.01rem' }}>
+                          {dog.name.length > 8 ? (dog.name).slice(0, 8) +  ".." : dog.name}
                         </Typography> 
                           {dog.flagged === true &&  //conditionally rendering if dog has flag status
                               <FlagIcon sx={{ fontSize: '1rem', fill: '#e0603f'}}/> } 
@@ -203,7 +267,8 @@ function LoadBalancing(){
                         )}
 
                       </Draggable>
-                      ))}
+                    </>
+                  ))}
                     {/*------------------------------*/}
 
                       {/* creates space for possible new chip */}
@@ -216,16 +281,6 @@ function LoadBalancing(){
            {/*------------------------------*/}
 
           </DragDropContext>
-
-        {showDetails === true &&
-                        <Dialog
-                            open={showDetails}
-                            onClose={() => setShowDetails(!showDetails)}>
-                            <DialogTitle>{doggo.name}</DialogTitle>
-                            <DialogContent>
-                              <DialogContentText>{doggo.notes}</DialogContentText>
-                            </DialogContent>
-                        </Dialog>}
         </Grid>
       );
 }

@@ -79,7 +79,7 @@ function Nav(props) {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <AppBar component="nav" position='sticky' sx={{ display: { xs: 'none', sm: 'none'} }}>
+      <AppBar component="nav" position='sticky' sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
 
         {user.id && (
           <Toolbar variant="dense">

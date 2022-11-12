@@ -237,7 +237,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 
 // PUT ROUTE TO UPDATE DOG ROUTES FOR THE DAY
 // if it's a put per move it's this:
-router.put('/', async (req, res) => {
+router.put('/allDogs', async (req, res) => {
     const client = await pool.connect();
 
     // what is the req.body?

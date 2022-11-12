@@ -199,12 +199,13 @@ router.get('/dog/:id', async (req, res) => {
         }));
 })
 
-router.put('/dog/:dog', async (req, res) => {
+router.put('/routes/', async (req, res) => {
     // expect an object being sent over for the put request?
     // pull out relevant dog ID and route ID
-    const dogID = req.params.dog.dog_id;
-    const routeID = req.params.dog.route_id;
+    const dogID = req.body.dog_id;
+    const routeID = req.body.route_id;
 
+    console.log('DOG ID & ROUTE ID', dogID, routeID);
 
     const updateQuery = `UPDATE daily_dogs SET "route_id" = $1 WHERE "dog_id" = $2`;
     const updateValues = [routeID, dogID];

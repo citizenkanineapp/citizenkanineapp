@@ -155,9 +155,11 @@ router.get('/route/:route_id', async (req, res) => {
     // routes need to be arrays of dog objects ...
     // do we want separate arrays per route?
     const routeQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes from daily_dogs
-	    JOIN dogs
-		    ON daily_dogs.dog_id = dogs.id
+    SELECT daily_dogs.*, dogs.flag, dogs.notes, routes.name AS route from daily_dogs
+	JOIN dogs
+		ON daily_dogs.dog_id = dogs.id
+	JOIN routes
+		ON daily_dogs.route_id = routes.id
 	    WHERE route_id = $1;
     `
 
@@ -173,9 +175,11 @@ router.get('/route/:route_id', async (req, res) => {
 
 router.get('/routes', async (req, res) => {
     const routesQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes from daily_dogs
-    JOIN dogs
-        ON daily_dogs.dog_id = dogs.id;
+    SELECT daily_dogs.*, dogs.flag, dogs.notes, routes.name AS route from daily_dogs
+	JOIN dogs
+		ON daily_dogs.dog_id = dogs.id
+	JOIN routes
+		ON daily_dogs.route_id = routes.id;
     `
 
     pool.query(routesQuery)

@@ -60,12 +60,11 @@ function LoadBalancing(){
   const [draggingStatus, setDraggingStatus] = useState(true);
   //TRIGGERS DND LOGIC IN REDUCER
   const onDragEnd = (result) => {
-    setDraggingStatus(!draggingStatus);
+    //setDraggingStatus(!draggingStatus);
     if (!result.destination) return; //prevents being triggered if outside of lists
     dispatch({ type: 'MOVE_DOG', payload: result });
    
   };
-
 
   //COLOR OF ROUTE HEADER
   const getRouteColor = (route) => {
@@ -117,13 +116,10 @@ function LoadBalancing(){
 
             {/* maps through all five routes and creates a card for each */}
             {routes.map((route, i) => (       
-
               //*-------------CARD-------------*//
-              <Droppable droppableId={route} key={i}> 
-              {(provided, snapshot) => (              //allows for list to be horizontal
-                <Box {...provided.droppableProps} ref={provided.innerRef}
+                <Box
                     sx={{ 
-                          height: '90%',
+                          height: '95%',
                           width: '18%', 
                           display: 'flex', 
                           flexDirection: 'column', 
@@ -156,7 +152,9 @@ function LoadBalancing(){
                                                        color: () => getRouteColor(route) }}
                         >{dailyRoutes[route].length}</Avatar>
                     </Box>
-                    <Box
+              <Droppable droppableId={route} key={i}> 
+                  {(provided, snapshot) => (        
+                    <Box  {...provided.droppableProps} ref={provided.innerRef}
                       sx={{ height: '85%',
                             width: '75%',
                             display: 'flex', 
@@ -168,13 +166,13 @@ function LoadBalancing(){
                     {dailyRoutes && dailyRoutes[route].map((dog, index) => (dog.route === route &&  
                     
                       //*-------------CHIP-------------*//
-                      <Draggable key={dog.id} draggableId={`${dog.id}`} index={index} isDragDisabled={draggingStatus}> 
+                      <Draggable key={dog.id} draggableId={`${dog.id}`} index={index} isDragDisabled={false}> 
                         {(provided, snapshot) => (
 
                         <Box
                           key={dog.id} 
                           //{...bind()}
-                          onTouchEnd={() => openDetailsDialog(dog)} //opens dog details
+                          //onTouchEnd={() => openDetailsDialog(dog)} //opens dog details
                           //----dnd----//
                           {...provided.draggableProps} 
                           {...provided.dragHandleProps} 
@@ -192,7 +190,7 @@ function LoadBalancing(){
                                 borderRadius: 2,
                                 border: '1px solid grey',
                               
-                                px: 1, my: 0.5 
+                                px: 1, my: 0.3 
                                 }}
                         >
                         <Typography sx={{ fontSize: '0.6rem', letterSpacing: '0.005rem' }}>
@@ -211,9 +209,9 @@ function LoadBalancing(){
                       {/* creates space for possible new chip */}
                       {provided.placeholder}
                   </Box>
-                </Box>
-                  )}
+                    )}
                 </Droppable>
+                </Box>
               ))}
            {/*------------------------------*/}
 

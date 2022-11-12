@@ -25,25 +25,25 @@
 .css-epd502 {
     width: 60vw !important;
     min-height: 80vh !important;
-    border: 2px lightcoral dotted;
+    /* border: 2px lightcoral dotted; */
     border-radius: 10px;
 }
 
 /*  This customized the weekday label */
 .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel {
-    width: 120px !important;
-    height: 80px !important;
+    width: 8vw !important;
+    height: 5vh !important;
     /* outline: 1px black solid; */
     margin-left: 0px !important;
     margin-right: 0px !important;
 }
 /* This sized up the empty days at the beginning and end of the month */
-.css-1c32n2y-MuiBadge-root{
+/* .css-1c32n2y-MuiBadge-root{
     width: 90px !important;
     height: 90px !important;
     display: flex;
     justify-content: right;
-}
+} */
 
 
 /* .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
@@ -59,9 +59,9 @@
     /* padding-top: 10px; */
 } 
 
-.css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
+/* .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
     color: black !important;
-}
+} */
 
 /* current day button */
 /* .css-195y93z-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected) {
@@ -90,6 +90,14 @@
 }
 
 /* Entire div component */
-.css-1vcokmn-MuiCalendarOrClockPicker-root{
+/* .css-1vcokmn-MuiCalendarOrClockPicker-root{
     margin-top: 10px;
+} */
+
+/* this changes the today's date indicator circle */
+.css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+    color: black !important;
+    background-color: transparent !important;
+    /* border: #7BCEC8 1px solid; */
+
 }

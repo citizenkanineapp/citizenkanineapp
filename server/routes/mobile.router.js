@@ -147,6 +147,7 @@ router.get('/daily', async (req, res) => {
         }
     } catch (error) {
         await client.query('ROLLBACK')
+        // alert('Error Getting Daily Dogs - Could be due to attempted duplicate entries.')
         console.log('Error POST /api/order', error);
         res.sendStatus(500);
     } finally {

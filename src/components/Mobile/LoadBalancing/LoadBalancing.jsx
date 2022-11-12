@@ -30,12 +30,11 @@ function LoadBalancing() {
   const [draggingStatus, setDraggingStatus] = useState(true);
   //TRIGGERS DND LOGIC IN REDUCER
   const onDragEnd = (result) => {
-    setDraggingStatus(!draggingStatus);
+    //setDraggingStatus(!draggingStatus);
     if (!result.destination) return; //prevents being triggered if outside of lists
     dispatch({ type: 'MOVE_DOG', payload: result });
 
   };
-
 
   //COLOR OF ROUTE HEADER
   const getRouteColor = (route) => {
@@ -87,52 +86,51 @@ function LoadBalancing() {
 
         {/* maps through all five routes and creates a card for each */}
         {routes.map((route, i) => (
-
           //*-------------CARD-------------*//
-          <Droppable droppableId={route} key={i}>
-            {(provided, snapshot) => (              //allows for list to be horizontal
-              <Box {...provided.droppableProps} ref={provided.innerRef}
-                sx={{
-                  height: '90%',
-                  width: '18%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  bgcolor: '#F0ECE9',
-                  overflowx: 'scroll',
-                  borderRadius: '0.5rem',
-                }}
-              >
-                <Box sx={{
-                  background: () => getRouteColor(route),
-                  width: '100%',
-                  height: '10%',
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  borderTopLeftRadius: '0.5rem',
-                  borderTopRightRadius: '0.5rem'
-                }}>
-                  <Typography sx={{
-                    fontSize: '0.8rem',
-                    fontStyle: 'italic',
-                    pl: 1,
-                    color: 'whitesmoke'
-                  }}
-                  >{route}</Typography>
-                  <Avatar variant="outlined" sx={{
-                    width: '17%',
-                    height: '70%',
-                    fontSize: '0.8rem',
-                    mr: 0.5,
-                    bgcolor: 'whitesmoke',
-                    color: () => getRouteColor(route)
-                  }}
-                  >{dailyRoutes[route].length}</Avatar>
-                </Box>
-                <Box
+          <Box
+            sx={{
+              height: '95%',
+              width: '18%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              bgcolor: '#F0ECE9',
+              overflowx: 'scroll',
+              borderRadius: '0.5rem',
+            }}
+          >
+            <Box sx={{
+              background: () => getRouteColor(route),
+              width: '100%',
+              height: '10%',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderTopLeftRadius: '0.5rem',
+              borderTopRightRadius: '0.5rem'
+            }}>
+              <Typography sx={{
+                fontSize: '0.8rem',
+                fontStyle: 'italic',
+                pl: 1,
+                color: 'whitesmoke'
+              }}
+              >{route}</Typography>
+              <Avatar variant="outlined" sx={{
+                width: '17%',
+                height: '70%',
+                fontSize: '0.8rem',
+                mr: 0.5,
+                bgcolor: 'whitesmoke',
+                color: () => getRouteColor(route)
+              }}
+              >{dailyRoutes[route].length}</Avatar>
+            </Box>
+            <Droppable droppableId={route} key={i}>
+              {(provided, snapshot) => (
+                <Box  {...provided.droppableProps} ref={provided.innerRef}
                   sx={{
                     height: '85%',
                     width: '75%',
@@ -146,13 +144,13 @@ function LoadBalancing() {
                   {dailyRoutes && dailyRoutes[route].map((dog, index) => (dog.route === route &&
 
                     //*-------------CHIP-------------*//
-                    <Draggable key={dog.id} draggableId={`${dog.id}`} index={index} isDragDisabled={draggingStatus}>
+                    <Draggable key={dog.id} draggableId={`${dog.id}`} index={index} isDragDisabled={false}>
                       {(provided, snapshot) => (
 
                         <Box
                           key={dog.id}
                           //{...bind()}
-                          onTouchEnd={() => openDetailsDialog(dog)} //opens dog details
+                          //onTouchEnd={() => openDetailsDialog(dog)} //opens dog details
                           //----dnd----//
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
@@ -170,7 +168,7 @@ function LoadBalancing() {
                             borderRadius: 2,
                             border: '1px solid grey',
 
-                            px: 1, my: 0.5
+                            px: 1, my: 0.3
                           }}
                         >
                           <Typography sx={{ fontSize: '0.6rem', letterSpacing: '0.005rem' }}>
@@ -189,9 +187,9 @@ function LoadBalancing() {
                   {/* creates space for possible new chip */}
                   {provided.placeholder}
                 </Box>
-              </Box>
-            )}
-          </Droppable>
+              )}
+            </Droppable>
+          </Box>
         ))}
         {/*------------------------------*/}
 

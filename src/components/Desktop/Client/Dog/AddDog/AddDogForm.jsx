@@ -83,6 +83,7 @@ function AddDogForm (){
             <ImageUpload index={index} />
             <TextField 
               value={singleDog.dog_name} 
+              sx={{width: 150}} 
               onChange={(e) => {
                 dispatch({
                   type: 'ADD_DOG_NAME',
@@ -96,7 +97,8 @@ function AddDogForm (){
               size="small" 
               /> 
               <TextField 
-                value={singleDog.dog_notes} 
+                value={singleDog.dog_notes}
+                sx={{width: 150}} 
                 onChange={(e) => {
                   dispatch({
                     type: 'ADD_DOG_NOTES',

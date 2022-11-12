@@ -26,10 +26,10 @@ const clientReducer = (state = {}, action) => {
             return {...state, route_id: action.payload};
         case 'CHANGE_ROUTE':
             return {...state, route_name: action.payload};
-        // case 'ADD_DOGS':
-        //     return {...state, dogs: [...state.dogs, action.payload]};
         case 'ADD_DOGS':
             return {...state, dogs: action.payload};
+        case 'ADD_ONE_DOG':
+            return{...state, newDog: action.payload}
         case 'ADD_SCHEDULE':
             return {...state, schedule: action.payload}
         case 'CLEAR_CLIENT':

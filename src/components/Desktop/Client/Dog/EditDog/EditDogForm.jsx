@@ -4,6 +4,7 @@ import { Box } from "@mui/system";
 import { Button, TextField, Typography, Card, Switch, IconButton } from "@mui/material";
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
 
 function DogDetails(){
   const dispatch = useDispatch();

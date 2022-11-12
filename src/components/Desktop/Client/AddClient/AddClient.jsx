@@ -77,7 +77,7 @@ function AddClient(){
                   helperText="City"  
                   size="small" />
                 <TextField 
-                  value={clientToAdd.zip_code || ''} 
+                  value={clientToAdd.zip || ''} 
                   onChange={(event) => dispatch({type: 'ADD_ZIPCODE', payload: event.target.value})}
                   helperText="Zip Code"  
                   size="small" />

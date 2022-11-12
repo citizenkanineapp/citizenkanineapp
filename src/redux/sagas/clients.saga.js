@@ -50,12 +50,30 @@ function* editClient(action){
     
 }
 
+function* addDog(action){
+    console.log('arrived in add dog route', action.payload);
+
+    try {
+        const dog = yield axios({
+            method: 'POST',
+            url: '/api/clients/dog',
+            data: action.payload
+        })
+        // yield put ({type: 'FETCH_CLIENTS'});
+    } catch (error) {
+        console.log(error);
+        alert('Error adding dog');
+    }
+    
+}
+
 
 
 function* clientSaga() {
     yield takeLatest('FETCH_CLIENTS', getALlClients);
     yield takeLatest('ADD_CLIENT', addClient);
     yield takeLatest('EDIT_CLIENT', editClient);
+    yield takeLatest('ADD_NEW_DOG', addDog);
    
     
   }

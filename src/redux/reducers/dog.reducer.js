@@ -1,4 +1,4 @@
-const dogReducer = (state = [{dog_name: '', image: ''}], action) => {
+const dogReducer = (state = [{dog_name: '', image: '', dog_notes: ''}], action) => {
     // console.log ('in dog reducer', action.payload)
     switch (action.type) {
         case 'ADD_DOG_NAME':
@@ -13,7 +13,7 @@ const dogReducer = (state = [{dog_name: '', image: ''}], action) => {
             })
             return newState;
         case 'ADD_DOG_NOTES':
-            // change the dog_name value for a given dog object (based on index)
+            // change the dog_notes value for a given dog object (based on index)
             const updateState = state.map((notes, index) => {
                 if (index === action.payload.index) {
                     notes.dog_notes = action.payload.dog_notes
@@ -35,11 +35,9 @@ const dogReducer = (state = [{dog_name: '', image: ''}], action) => {
             })
             return photoState;
         case 'ADD_DOG_INPUT':
-            return [...state, {dog_name: '', image: ''}]
-            // change the image alue for a given dog object
-            // return {...state, image: action.payload.data};
+            return [...state, {dog_name: '', image: '', dog_notes: ''}]
         case 'CLEAR_DOGS':
-            return [{dog_name: '', image: ''}];
+            return [{dog_name: '', image: '', dog_notes: ''}];
         default:
             return state;
     }
@@ -47,7 +45,7 @@ const dogReducer = (state = [{dog_name: '', image: ''}], action) => {
 
 export default dogReducer;
 
-//should this be an object or an array?
+
 //can't map through object
 
 // const dogReducer = (state = {}, action) => {

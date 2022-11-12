@@ -78,7 +78,7 @@ console.log('client right now', client)
                 InputProps={{readOnly: true}}
                 sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
               <TextField 
-                value={client.zip_code} 
+                value={client.zip} 
                 helperText="Zip"  
                 size="small" 
                 InputProps={{readOnly: true}}

@@ -173,7 +173,7 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
           vet_name = $1,
           vet_phone = $2
 
-        WHERE id =$3
+        WHERE id =$3;
     `
       const dogValues = [vet_name, vet_phone, dog.dog_id]
       console.log('dog values?', dogValues)
@@ -188,5 +188,27 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+router.post('/dog', rejectUnauthenticated, (req, res) => {
+  console.log(req.body)
+  const{vet_name, vet_phone, newDog, id} = req.body
+  console.log(newDog),
+  console.log(newDog.dog_name)
+  try{
+  const dogTxt = `
+            INSERT INTO dogs 
+              ("client_id", "name", "image", "vet_name", "vet_phone", "notes") 
+              VALUES
+              ($1, $2, $3, $4, $5, $6) ;
+  `
+  const dogValues = [id, newDog[0].dog_name, newDog[0].image, vet_name, vet_phone, newDog[0].dog_notes]
+  pool.query(dogTxt, dogValues)
+  res.sendStatus(201);
+  } catch (error) {
+    console.log('Error adding new dog to client', error)
+    res.sendStatus(500);
+  }
+});
+
 
 module.exports = router;

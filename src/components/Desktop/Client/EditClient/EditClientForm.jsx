@@ -2,9 +2,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 //MUI
 import { Box } from "@mui/system";
-import { Button, TextField, Typography, Card, CardActions, CardMedia, Select, MenuItem, FormControl, FormHelperText, Grid, IconButton } from "@mui/material";
+import { Button, TextField, Avatar, Typography, Card, CardActions, CardMedia, Select, MenuItem, FormControl, FormHelperText, Grid, IconButton } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
+
 
 
 function ClientForm(){
@@ -17,6 +19,12 @@ const saveChanges = event => {
   dispatch({type: 'CLEAR_CLIENT'})
   dispatch({ type: 'SET_MODAL_STATUS' })
   //need to update dogs as well
+}
+
+const back = event => {
+  dispatch({ type: 'SET_MODAL_STATUS' })
+  dispatch({type: 'CLEAR_CLIENT'})
+  dispatch({type: 'CLEAR_DOGS'})
 }
 
   return (
@@ -96,33 +104,26 @@ const saveChanges = event => {
 
             {/*-------------------- DOG PICTURES --------------------*/}
             <Grid sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-              <Card sx={{width: '100%', m: 1}}
+              {client.dogs.map((dog, index) => (
+              <Card key={index} sx={{width: '100%', m: 1}}
                     onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button size="small" variant="outlined">
-                              Bandit
+                              {dog.dog_name}
                         </Button>
                   </CardActions>
                   <CardMedia component="img" width="100%" alt="client dog photo"
-                    image="https://m8r6w9i6.rocketcdn.me/wp-content/uploads/2020/09/Australian-Cattle-Dog.jpeg.webp"/>
+                    src={dog.image}
+                    sx={{height: 175}}/>
               </Card>
-
-              <Card sx={{ width: '100%', m: 1 }}
-                    onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
-                  <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size="small" variant="outlined">
-                              Maggie
-                        </Button>
-                  </CardActions>
-                  <CardMedia component="img" width="100%" alt="client dog photo"
-                    image="https://images.ctfassets.net/sfnkq8lmu5d7/2jiEB2xKaHaQh5DLuT3lMI/204094de400b9dc16f0a8b20bc81ef68/The-Wildest_Editorial_Canine_Vertigo_is_Treatable_but_Scary_to_Witness_Hero.jpg?w=700&h=525&fl=progressive&q=80&fm=jpg"/>
-              </Card>
+                ))}
+         
               
 
               {/*------------------ ADD DOG EXAMPLE ------------------*/}
               <Card sx={{ width: '100%', m: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
                   <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "rgb(227, 218, 216, 0.5)", width: "89%", height: "90%", borderRadius: "0.5rem" }} alt="add dog button" 
-                     onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})}>
+                     onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogFromEdit'})}>
                       <LibraryAddIcon  sx={{ height: "100%", color: "rgb(171, 164, 162)" }}/>
                   </Box>
               </Card>
@@ -132,7 +133,7 @@ const saveChanges = event => {
             {/*-------------------- BUTTONS --------------------*/}
             <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
               <Button variant="outlined" color="info"
-                onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Back</Button>  {/*goes back to client list*/}
+                onClick={back}>Back</Button>  {/*goes back to client list*/}
               <Button variant="contained" color="secondary"
                 onClick={saveChanges}>Save</Button> 
             </Box>

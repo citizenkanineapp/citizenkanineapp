@@ -86,9 +86,9 @@ router.get('/daily', async (req, res) => {
         // add client ID 
         const insertSQL = `
         INSERT INTO daily_dogs
-            ("dog_id", "route_id")
+            ("dog_id", "route_id", "client_id", "name")
         VALUES
-            ($1, $2);
+            ($1, $2, $3, $4);
         `
 
         // find the dogs default scheduled for the day
@@ -107,8 +107,8 @@ router.get('/daily', async (req, res) => {
             console.log('Good to Go!');
             // insert into daily_dogs
             await Promise.all(scheduledDogs.map(dog => {
-                const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id") VALUES ($1, $2, $3)`;
-                const insertValues = [dog.dog_id, dog.route_id, dog.client_id];
+                const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4);`;
+                const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name];
                 return client.query(insertQuery, insertValues);
             }));
 

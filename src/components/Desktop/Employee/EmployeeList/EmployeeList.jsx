@@ -34,14 +34,22 @@ function EmployeeList() {
       type: 'SAGA_FETCH_EMPLOYEES'
     })
   },[])
+  
 
   const allEmployees = useSelector(store=> store.employeesReducer.employees);
+
+  // const modalStatus = useSelector(store=> store.modal.status);
   
   const handleClick = (employee)=> {
     openModal('EmployeeDetails');
+    // Need to send dispatch to fetch employee and their schedule
     dispatch({
       type: 'SET_EMPLOYEE',
       payload: employee
+    })
+    dispatch({
+      type: 'FETCH_EMP_SCHEDULE',
+      payload: employee.id
     })
   }
 

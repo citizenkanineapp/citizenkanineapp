@@ -59,8 +59,27 @@ router.get('/schedules/even', (req, res)=>{
             res.sendStatus(500);
             console.log('error with GET /employees/schedules:', error);
         })
+})
 
+// GET individual employee and their schedules:
+router.get('/details/:id', (req, res)=> {
+    const empID = req.params.id;
+    console.log(empID);
+    const sqlQuery = `
+    SELECT * FROM 
+        employees_schedule
+    WHERE emp_id = $1;
+    `
 
+    pool.query(sqlQuery, [empID] )
+        .then(dbRes=> {
+            res.send(dbRes.rows);
+            
+        })
+        .catch(error=> {
+            res.sendStatus(500);
+            console.log('error with GET /employees:', error);
+        })
 })
 
 

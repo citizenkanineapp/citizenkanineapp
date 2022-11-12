@@ -1,36 +1,190 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 
 //MUI
-import { Box, Button, TextField, Typography, Grid, Avatar } from "@mui/material";
+import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function EmployeeForm(){
   const dispatch = useDispatch();
+  const selectedEmployee = useSelector(store => store.employeesReducer.selectedEmployee);
+  const employee = useSelector(store=> store.employeesReducer.editEmpDetails);
+  // console.log(employee);
+  
+  const initials = employee.first_name[0]+employee.last_name[0];
+
+  const employeeSchedule1 = useSelector(store=> store.employeesReducer.editEmpSchedule1);
+
+  const employeeSchedule2 = useSelector(store=> store.employeesReducer.editEmpSchedule1);
+  // console.log(employeeSchedule);
+  const week1 = employeeSchedule1;
+  const week2 = employeeSchedule2;
+
+  // This object 
+
+
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+  const [daySelected, setDaySelected] = useState(false);
 
   return (
-      <Grid className="container" height="100%">
-        {/*----------------------- HEADER -----------------------*/}
-          <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', height: "10%", mx: 6, mt: 6 }}>  
-            <Typography variant="h3" sx={{ pt: 3 }}>Dolly Parton</Typography>
-            <Avatar sx={{ bgcolor: "primary.main", height: "150%", width: "15%" }}>DP</Avatar> {/* initials need to be conditionally rendered */}
-          </Grid> {/* display only */}
+      <Grid className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>
 
           {/*-------------------- TEXT FIELDS --------------------*/}
-          <Grid sx={{display: 'grid', gridTemplateColumns: '0.5fr 1fr', gap: 1, m: 6, height: "20%",}}>
-              <TextField value="134543" helperText="Employee ID"  size="small"/> 
-              <TextField value="dollywood_baby@gmail.com" helperText="Email"  size="small"/>
-              <TextField value="(666)-666-6666" helperText="Phone"  size="small"/>
-              <TextField value="1234 Jolene Ave." helperText="Address"  size="small"/>
-          </Grid> {/* value is what you see in the field, read only*/}
+          <Grid sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%"}}>
+              <TextField 
+              value={employee.first_name} helperText="First Name"  size="small"
+              onChange={ e => 
+                dispatch({
+                  type: 'UPDATE_EMP_FIRST_NAME',
+                  payload: e.target.value
+                })
+              }
+              />
+              <TextField 
+              value={employee.last_name} helperText="Last Name"  size="small" 
+              onChange={ e => 
+                dispatch({
+                  type: 'UPDATE_EMP_LAST_NAME',
+                  payload: e.target.value
+                })
+              }
+              />
+              <TextField
+              value={employee.phone} helperText="Phone"  size="small" 
+              onChange={ e => 
+                dispatch({
+                  type: 'UPDATE_EMP_PHONE',
+                  payload: e.target.value
+                })
+              }
+              />
+          </Grid> 
 
-          <Grid sx={{ bgcolor: "lightBlue", height: "35%", mx: 5 }}>
-              <Typography>BI-WEEKLY VIEW OF SECTION</Typography>
+          <Grid sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%"}}>
+              <TextField
+              value={employee.street} helperText="Street"  size="small"
+              onChange={ e => 
+                dispatch({
+                  type: 'UPDATE_EMP_STREET',
+                  payload: e.target.value
+                })
+              }
+              />
+              <TextField
+              value={employee.city} helperText="City"  size="small" 
+              onChange={ e => 
+                dispatch({
+                  type: 'UPDATE_EMP_CITY',
+                  payload: e.target.value
+                })
+              }
+              />
+              <TextField
+              value={employee.zip} helperText="Zip"  size="small" 
+              onChange={ e => 
+                dispatch({
+                  type: 'UPDATE_EMP_ZIP',
+                  payload: e.target.value
+                })
+              }
+              />
           </Grid>
+
+          <Grid sx={{display: 'grid', gap: 1, height: "20%", width: 273.09}}>
+            <TextField 
+              value={employee.email} helperText="Email"  size="small"
+              onChange={ e => 
+                dispatch({
+                  type: 'UPDATE_EMP_PHONE',
+                  payload: e.target.value
+                })
+              }
+              />
+          </Grid>
+          
+
+          {/* Schedule day selectors */}
+          <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
+            <Grid item xs={1.5} sx={{display: 'flex', justifyContent: 'left', mt: 2}}>
+              <Typography variant="h6">Week 1:</Typography>
+            </Grid>
+
+            {/* Mapping through days of the week array to render buttons for week1 */}
+            {daysOfWeek.map((day, index) => (
+              <Grid key={index + 1} item xs={2}>
+              <Card>
+                <CardActionArea component={Button}
+                  onClick={()=>{
+                    if (!week2[index+1]){
+                      dispatch({ 
+                        type:'UPDATE_EMP_SCHEDULE1',
+                        payload: {day: index+1, change: true}
+                      
+                    })
+                    }
+                    else {
+                      dispatch({ 
+                        type:'UPDATE_EMP_SCHEDULE1',
+                        payload: {day: index+1, change: false}
+                      
+                    })
+                    }}}
+                  >
+                      
+                  <CardContent sx={{ display:'flex', justifyContent: 'center', backgroundColor: week1[index+1]? '#7BCEC8' : 'none'}}>
+                      <Typography variant="h7"sx={{textTransform: 'capitalize'}}>{day}</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card> 
+            </Grid>
+            ))}
+          </Grid> 
+
+          <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mt: 1}} >
+            <Grid item xs={1.5} sx={{display: 'flex', justifyContent: 'left', mt: 2}}>
+              <Typography variant="h6">Week 2:</Typography>
+            </Grid>
+
+            {/* Mapping through days of the week array to render buttons for week2 */}
+            {daysOfWeek.map((day, index) => (
+            <Grid key={index + 1} item xs={2}>
+              <Card>
+                <CardActionArea component={Button}
+                  onClick={()=>{
+                    if (!week2[index+1]){
+                      dispatch({ 
+                        type:'UPDATE_EMP_SCHEDULE1',
+                        payload: {day: index+1, change: true}
+                      
+                    })
+                    }
+                    else {
+                      dispatch({ 
+                        type:'UPDATE_EMP_SCHEDULE1',
+                        payload: {day: index+1, change: true}
+                      
+                    })
+                    }}}
+                  >
+                  <CardContent sx={{ display:'flex', justifyContent: 'center',    backgroundColor: week2[index+1]? '#7BCEC8' : 'none' }}>
+                      <Typography variant="h7" sx={{textTransform: 'capitalize'}}>{day}</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card> 
+            </Grid>
+            ))}
+          </Grid> 
+
 
           <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "5%", mx: 5, mt: 3 }}>
               <Box sx={{ width:"24%", display:"flex", justifyContent:"space-between" }}>
                 <Button variant="outlined" color="info"
-                    onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})}>Cancel</Button> 
+                    onClick={() => {
+                      dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})
+                      // Need to reset the reducer in case the user hits cancel and then edit again.
+                      dispatch({ type: 'SET_EDIT_EMP_DETAILS', payload: selectedEmployee})
+                    }}>Cancel</Button> 
                 <Button variant="contained"
                     onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})}>Delete</Button> 
               </Box>

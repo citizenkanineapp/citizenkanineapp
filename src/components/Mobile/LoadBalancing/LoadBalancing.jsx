@@ -10,6 +10,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 function LoadBalancing() {
 
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: 'GET_DAILY_ROUTES' });
@@ -32,8 +33,9 @@ function LoadBalancing() {
   const onDragEnd = (result) => {
     //setDraggingStatus(!draggingStatus);
     if (!result.destination) return; //prevents being triggered if outside of lists
+    console.log('RESULT IS', result);
     dispatch({ type: 'MOVE_DOG', payload: result });
-
+    dispatch({ type: 'UPDATE_ROUTE', payload: { routeName: result.destination.droppableId, dogID: result.draggableId } });
   };
 
   //COLOR OF ROUTE HEADER
@@ -144,7 +146,7 @@ function LoadBalancing() {
                   {dailyRoutes && dailyRoutes[route].map((dog, index) => (dog.route === route &&
 
                     //*-------------CHIP-------------*//
-                    <Draggable key={dog.id} draggableId={`${dog.id}`} index={index} isDragDisabled={false}>
+                    <Draggable key={dog.id} draggableId={`${dog.dog_id}`} index={index} isDragDisabled={false}>
                       {(provided, snapshot) => (
 
                         <Box

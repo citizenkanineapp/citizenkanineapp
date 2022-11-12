@@ -56,6 +56,12 @@ router.get('/daily', async (req, res) => {
             console.log('Friday');
             searchQuery += 'WHERE "5" = TRUE ORDER BY route_id;';
             break;
+        case 6:
+            searchQuery = null;
+            break;
+        case 7:
+            searchQuery = null;
+            break;
     }
 
     // SQL to grab schedule adjustments table
@@ -160,7 +166,7 @@ router.get('/route/:route_id', async (req, res) => {
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes
 		ON daily_dogs.route_id = routes.id
-	    WHERE route_id = $1;
+	    WHERE daily_dogs.date = CURRENT_DATE AND route_id = $1;
     `
 
     const routeValue = [route];
@@ -179,7 +185,8 @@ router.get('/routes', async (req, res) => {
 	JOIN dogs
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes
-		ON daily_dogs.route_id = routes.id;
+		ON daily_dogs.route_id = routes.id
+	WHERE daily_dogs.date = CURRENT_DATE;
     `
 
     pool.query(routesQuery)
@@ -215,12 +222,12 @@ router.get('/dog/:id', async (req, res) => {
 router.put('/routes', async (req, res) => {
     // expect an object being sent over for the put request?
     // pull out relevant dog ID and route ID
-    const dogID = req.body.dog_id;
-    const routeID = req.body.route_id;
+    const dogID = req.body.dogID;
+    const routeID = req.body.routeID;
 
     console.log('DOG ID & ROUTE ID', dogID, routeID);
 
-    const updateQuery = `UPDATE daily_dogs SET "route_id" = $1 WHERE "dog_id" = $2`;
+    const updateQuery = `UPDATE daily_dogs SET "route_id" = $1 WHERE "dog_id" = $2 AND daily_dogs.date = CURRENT_DATE`;
     const updateValues = [routeID, dogID];
 
     pool.query(updateQuery, updateValues)

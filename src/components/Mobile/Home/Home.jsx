@@ -24,6 +24,7 @@ function Home() {
         <Stack direction="column" divider={<Divider orientation="vertical" flexItem />} spacing={1}>
           <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/routes')}>ROUTES</Button>
           <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/employees')}>Schedule</Button>
+          <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/resetpass')}>Account</Button>
           <LogOutButton />
         </Stack>
       </Grid>

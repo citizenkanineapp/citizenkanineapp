@@ -11,6 +11,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PetsIcon from '@mui/icons-material/Pets';
 import BadgeIcon from '@mui/icons-material/Badge';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
+import SettingsIcon from '@mui/icons-material/Settings';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const drawerWidth = 350;
@@ -55,10 +56,17 @@ function Nav(props) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem sx={{ mb: 20 }}>
+        <ListItem sx={{ testAlign: 'center' }}>
           <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/invoice')}>
             <EqualizerIcon sx={{ textAlign: 'flex-end' }} />
             <ListItemText primary='reports' />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem sx={{ mb: 20 }}>
+          <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/resetpass')}>
+            <SettingsIcon sx={{ textAlign: 'flex-end' }} />
+            <ListItemText primary='account' />
           </ListItemButton>
         </ListItem>
 
@@ -71,7 +79,7 @@ function Nav(props) {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <AppBar component="nav" position='sticky' sx={{ display: { xs: 'none', sm: 'block' } }}>
+      <AppBar component="nav" position='sticky' sx={{ display: { xs: 'none', sm: 'none', m: 'block' } }}>
 
         {user.id && (
           <Toolbar variant="dense">
@@ -96,6 +104,7 @@ function Nav(props) {
               {location.pathname === '/employees' ? 'Pack Leaders' : null}
               {location.pathname === '/invoice' ? 'Invoice Tool' : null}
               {location.pathname === '/schedule' ? 'Employee Schedule' : null}
+              {location.pathname === '/resetpass' ? 'Account' : null}
 
               {/* END CONDITIONAL RENDERING */}
 

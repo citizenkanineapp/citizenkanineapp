@@ -10,7 +10,7 @@ function SplashPage() {
 
   return (
     <Box className="splash_container">
-      <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
+      <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", height: "80vh" }}>
         <Card sx={{ width: "30%", height: "60%" }}>
           <CardActionArea>
             <CardMedia

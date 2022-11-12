@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, all } from 'redux-saga/effects';
 
 
 
@@ -59,7 +59,9 @@ function* addDog(action){
             url: '/api/clients/dog',
             data: action.payload
         })
-        // yield put ({type: 'FETCH_CLIENTS'});
+        yield all([
+            put ({type: 'FETCH_ONE_CLIENT', payload: action.payload.client_id}),
+        ])
     } catch (error) {
         console.log(error);
         alert('Error adding dog');
@@ -67,6 +69,19 @@ function* addDog(action){
     
 }
 
+function* fetchOneClient(action){
+    console.log('arrived in get one client route', action.payload);
+    let clientId = action.payload
+    try {
+        const client = yield axios.get(`/api/clients/${clientId}`);
+        console.log('back to saga', client)
+        yield put ({type: 'SET_CLIENT', payload: client.data[0]});
+    } catch (error) {
+        console.log(error);
+        alert('Error fetching one client');
+    }
+    
+}
 
 
 function* clientSaga() {
@@ -74,6 +89,7 @@ function* clientSaga() {
     yield takeLatest('ADD_CLIENT', addClient);
     yield takeLatest('EDIT_CLIENT', editClient);
     yield takeLatest('ADD_NEW_DOG', addDog);
+    yield takeLatest('FETCH_ONE_CLIENT', fetchOneClient)
    
     
   }

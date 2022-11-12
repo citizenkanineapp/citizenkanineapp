@@ -123,7 +123,7 @@ console.log('client right now', client)
                   <CardMedia component="img"  
                     sx={{width: 1}}
                     alt="client dog photo"
-                    // image={dog.image}
+                    // src={dog.image}
                     />
               </Card>
                  ))}

@@ -13,7 +13,7 @@ import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
 function ClientDetails(){
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
-
+  
   const back = event => {
     dispatch({type: 'CLEAR_CLIENT'})
     dispatch({ type: 'SET_MODAL_STATUS' })
@@ -33,7 +33,7 @@ function ClientDetails(){
          
               {/*-------------------- TEXT FIELDS --------------------*/}
             <Grid sx={{display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', gap: 1}}>
-              <TextField 
+              {/* <TextField 
                 value={client.first_name} 
                 helperText="First Name"  
                 size="small" 
@@ -44,62 +44,62 @@ function ClientDetails(){
                 helperText="Last Name"  
                 size="small" 
                 sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
-                InputProps={{readOnly: true}}/> 
-              <TextField 
-                value={client.phone} 
-                helperText="Phone"  
+                InputProps={{readOnly: true}}/>  */}
+                  <TextField 
+                value={client.street} 
+                helperText="Street"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+              />
+              <TextField 
+                value={client.city} 
+                helperText="City"  
+                size="small" 
+                InputProps={{readOnly: true}}
+                />
+              <TextField 
+                value={client.zip} 
+                helperText="Zip"  
+                size="small" 
+                InputProps={{readOnly: true}}
+               />
+              
               <TextField 
                 value={client.email} 
                 helperText="Email"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
-              <TextField 
-                value={client.street} 
-                helperText="Address"  
+               />
+            <TextField 
+                value={client.phone} 
+                helperText="Phone"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
-              <TextField 
-                value={client.city} 
-                helperText="Address"  
-                size="small" 
-                InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
-              <TextField 
-                value={client.zip} 
-                helperText="Address"  
-                size="small" 
-                InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+                />
               <TextField 
                 value={client.notes || ''} 
                 helperText="Notes"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
-              <TextField 
-                value={client.route_name || ''} 
-                helperText="Default Route"  
-                size="small" 
-                InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+               />
               <TextField 
                 value={client.vet_name} 
                 helperText="Vet Name"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+            />
               <TextField 
                 value={client.vet_phone} 
                 helperText="Vet Phone"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
-              
+               />
+               <TextField 
+                value={client.route_name || ''} 
+                helperText="Default Route"  
+                size="small" 
+                InputProps={{readOnly: true}}
+                />
             </Grid> {/* value is what you see in the field, read only*/}
 
 
@@ -116,7 +116,8 @@ function ClientDetails(){
                     // sx={{width: 1}}
                     width="100%"
                     alt="client dog photo"
-                    // image={dog.image}
+                    src={dog.image}
+                    sx={{height: 175}}
                     />
               </Card>
                  ))}

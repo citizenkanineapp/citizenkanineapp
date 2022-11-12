@@ -76,7 +76,7 @@ pool.query(queryText)
 router.post('/', rejectUnauthenticated, async (req, res) => {
   // console.log(req.body);
   const client = await pool.connect();
-  const {first_name, last_name, street, city, zip_code, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone } = req.body
+  const {first_name, last_name, street, city, zip, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone } = req.body
   // const customer = {first_name, last_name, address, phone, email, route_id}
   const dogArray = dogs
   // const vet = {vet_name, vet_phone}
@@ -92,7 +92,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
                             VALUES
                             ($1, $2, $3, $4, $5, $6, $7, $8, $9)
                             RETURNING "id";
-  `, [first_name, last_name, street, city, zip_code, route_id, phone, email, notes])
+  `, [first_name, last_name, street, city, zip, route_id, phone, email, notes])
   const customerId = clientTxt.rows[0].id
 
   await Promise.all(dogArray.map(dog => { 
@@ -191,9 +191,8 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
 
 router.post('/dog', rejectUnauthenticated, (req, res) => {
   console.log(req.body)
-  const{vet_name, vet_phone, newDog, id} = req.body
-  console.log(newDog),
-  console.log(newDog.dog_name)
+  const{vet_name, vet_phone, dog_name, dog_notes, image, client_id} = req.body
+
   try{
   const dogTxt = `
             INSERT INTO dogs 
@@ -201,7 +200,7 @@ router.post('/dog', rejectUnauthenticated, (req, res) => {
               VALUES
               ($1, $2, $3, $4, $5, $6) ;
   `
-  const dogValues = [id, newDog[0].dog_name, newDog[0].image, vet_name, vet_phone, newDog[0].dog_notes]
+  const dogValues = [client_id, dog_name, image, vet_name, vet_phone, dog_notes]
   pool.query(dogTxt, dogValues)
   res.sendStatus(201);
   } catch (error) {
@@ -210,5 +209,74 @@ router.post('/dog', rejectUnauthenticated, (req, res) => {
   }
 });
 
+
+router.get('/:id', rejectUnauthenticated, (req, res) => {
+    console.log('arrived in server get one route', req.params.id)
+    let clientId = req.params.id
+    const queryText = `
+    SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
+    routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.vet_phone, 
+   clients_schedule."1", clients_schedule."2", clients_schedule."3", clients_schedule."4", clients_schedule."5"  
+    from clients
+            JOIN dogs
+            ON clients.id = dogs.client_id
+            JOIN routes
+            ON clients.route_id=routes.id
+            JOIN clients_schedule
+            ON clients.id = clients_schedule.client_id
+            WHERE clients.id = $1;
+ 
+  ;
+    `
+  const queryValues = [clientId]
+  pool.query(queryText, queryValues)
+      .then(result => {
+        console.log('how to target schedule?', result.rows[0])
+        console.log(result.rows[0][1])
+      
+          //all IDs from database
+          let idArray = [];
+              for(let object of result.rows){
+                  // console.log(object.id)
+                  idArray.push(object.id)
+              }
+        
+        //this filters out duplicate IDs
+        let uniqueIds = [...new Set(idArray)]
+  
+      //this groups result.rows by id
+        const group = result.rows.reduce((acc, item) => {
+          if (!acc[item.id]) {
+            acc[item.id] = [];
+          }
+          
+          acc[item.id].push(item);
+          return acc;
+        }, {})
+          // console.log(result.rows);
+          console.log(group)
+          let clients = [];
+  
+          
+          for (let i = 0; i<uniqueIds.length; i++){
+              let forDogMap = group[uniqueIds[i]]
+         
+              // const {first_name, last_name, address} = result.rows[0];
+              const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name } = forDogMap[0];
+              const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name}
+              client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id})})
+  
+              clients.push(client)
+  
+          }
+          res.send(clients);
+          // console.log('does it get one?', clients)
+      })
+      .catch(err => {
+          console.log('Error getting one client', err);
+          res.sendStatus(500);
+      })
+  });
+  
 
 module.exports = router;

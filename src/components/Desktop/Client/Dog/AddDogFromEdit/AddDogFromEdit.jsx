@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 //MUI
 import { Box } from "@mui/system";
-import { Button, TextField, Grid, Typography, Card, Switch, IconButton, Fab } from "@mui/material";
+import { Button, TextField, Grid, Typography, Card, Switch, IconButton, CardContent } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -9,15 +10,44 @@ import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
 
 function AddDogFromEdit(){
   const dispatch = useDispatch();
-  const dog = useSelector(store => store.dogReducer)
+
+  const newDog = useSelector(store => store.newDogReducer)
   const client = useSelector(store => store.clientReducer)
+  let [flag, setFlag] = useState(false)
+
+
   const index = 0;
+
+  useEffect(()=> {
+    dispatch({
+      type: 'ADD_CLIENT_ID_TO_DOG',
+      payload: client.id
+    })
+    dispatch({
+      type: 'ADD_VET_PHONE',
+      payload: client.vet_phone
+    })
+    dispatch({
+      type: 'ADD_VET_NAME',
+      payload: client.vet_name
+    })
+    
+  },[])
 
   const saveDog = event => {
 
-    dispatch({type: 'ADD_ONE_DOG', payload: dog})
-    dispatch({type: 'ADD_NEW_DOG', payload: client})
-    //add screen change
+    dispatch({type: 'ADD_NEW_DOG', payload: newDog})
+    dispatch({type: 'CLEAR_NEW_DOG'})
+    dispatch({type: 'CLEAR_DOGS'})
+    dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})
+   
+  }
+
+  const handleChange = event => {
+   
+    setFlag(current => !current)
+    dispatch({type: 'SET_FLAG', payload: !flag})
+  
   }
 
 //this form is only for adding dogs from the edit client path
@@ -25,9 +55,9 @@ function AddDogFromEdit(){
         <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%" }}>
 
           <Box display="flex" justifyContent="flex-end">
-            <IconButton width="5%"  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>
+            {/* <IconButton width="5%"  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>
               <ArrowBackIcon sx={{ fontSize: "2rem", fontWeight: "800"}}/>
-            </IconButton>
+            </IconButton> */}
           </Box>
 
           {/*-------------------- DETAILS --------------------*/}
@@ -47,38 +77,39 @@ function AddDogFromEdit(){
                   <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", alignItems: "center", gap: 1 }}>
 
                       {/* will need functionality to display correct status*/}
-                      <Switch disabled defaultChecked/>             
+                      <Switch
+                      onChange={(e) => handleChange()} />             
                       <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>   {/* could do conditional rendering for color here */}
 
                   </Box>
                 </Box> 
                 <TextField 
-                    value={dog.dog_name}
+                    value={newDog.dog_name || ''}
                     onChange={(e) => {
                       dispatch({
-                        type: 'ADD_DOG_NAME', 
-                        payload: { 
-                        dog_name: e.target.value,
-                        index: index
-                        }
+                        type: 'ADD_NEW_NAME', 
+                        payload: e.target.value
                       })
                     }}
                     helperText="Name" size="large" fullWidth />
                 <TextField 
-                    value={dog.dog_notes}
+                    value={newDog.dog_notes}
                     onChange={(e) => {
                       dispatch({
-                        type: 'ADD_DOG_NOTES',
-                        payload: {
-                          dog_notes: e.target.value,
-                          index: index
-                        }
+                        type: 'ADD_NEW_NOTES',
+                        payload: e.target.value,
                       })
                     }}
                   helperText="Notes" size="large" fullWidth  multiline rows={3}/>
               </Box> 
           </Box>
+       
+ 
 
+
+       
+  
+      
 
             {/*-------------------- BUTTONS --------------------*/}
             <Box display="flex" justifyContent="space-between">

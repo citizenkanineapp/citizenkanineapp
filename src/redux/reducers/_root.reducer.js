@@ -8,6 +8,7 @@ import employeesReducer from './employees.reducer';
 import clientsReducer from './clients.reducer';
 import dogReducer from './dog.reducer';
 import clientScheduleReducer from './clientSchedule.reducer';
+import newDogReducer from './newDog.reducer';
 
 import clientReducer from './client.reducer';
 
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   clientReducer,
   dogReducer,
   clientScheduleReducer,
+  newDogReducer
 });
 
 export default rootReducer;

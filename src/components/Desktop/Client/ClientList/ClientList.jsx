@@ -73,7 +73,7 @@ function ClientList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {clientList && clientList.map && clientList.map((client, ) => (
+                {clientList && clientList.map && clientList.map((client ) => (
                     <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
                       <TableCell>{client.first_name} {client.last_name}</TableCell>
                       <TableCell>{client.street} {client.city} {client.zip}</TableCell>

@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
-
+import { useEffect } from "react";
 //MUI
 import { Box } from "@mui/system";
 import { Button, TextField, Avatar, Typography, Card, CardActions, CardMedia, Select, MenuItem, FormControl, FormHelperText, Grid, IconButton } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import DeleteIcon from '@mui/icons-material/Delete';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
 
@@ -12,6 +13,13 @@ import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
 function ClientForm(){
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
+  useEffect(()=> {
+    dispatch({
+      type: 'FETCH_CLIENTS'
+    })
+   
+    
+  },[])
 
   //STYLING NOTES: still have to figure out picture size (so it's cropped or uniform)
 const saveChanges = event => {
@@ -22,9 +30,13 @@ const saveChanges = event => {
 }
 
 const back = event => {
-  dispatch({ type: 'SET_MODAL_STATUS' })
-  dispatch({type: 'CLEAR_CLIENT'})
-  dispatch({type: 'CLEAR_DOGS'})
+  dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientDetails'})
+  // dispatch({type: 'CLEAR_CLIENT'})
+  // dispatch({type: 'CLEAR_DOGS'})
+}
+
+const deleteClient = (id) => {
+  console.log('delete me', id)
 }
 
   return (
@@ -33,9 +45,14 @@ const back = event => {
               {/*----------------------- HEADER -----------------------*/}
               <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2 }}>  
                 <Typography variant="h3" >{client.first_name} {client.last_name}</Typography>
+                <Box sx={{justifyContent:'space-between'}}>
+                <IconButton onClick={() => deleteClient(client.id)}>
+                    <DeleteIcon sx={{ fontSize: 45, color: '#341341', mr: 3 }}/>
+                </IconButton>
                 <IconButton onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })}>
                     <CalendarMonthIcon sx={{ fontSize: 45, color: '#341341' }}/>
                 </IconButton>
+                </Box>
               </Grid>
 
 
@@ -133,7 +150,7 @@ const back = event => {
             {/*-------------------- BUTTONS --------------------*/}
             <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
               <Button variant="outlined" color="info"
-                onClick={back}>Back</Button>  {/*goes back to client list*/}
+                onClick={back}>Cancel</Button>  {/*goes back to client list*/}
               <Button variant="contained" color="secondary"
                 onClick={saveChanges}>Save</Button> 
             </Box>

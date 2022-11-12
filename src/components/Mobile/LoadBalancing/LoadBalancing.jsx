@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLongPress, LongPressDetectEvents } from "use-long-press";
+import { useLongPress } from 'use-long-press';
+import './LoadBalancing.css';
 //MUI
 import { Box, Typography, Grid, Button, Dialog, DialogContent, DialogContentText, DialogTitle, Chip, Avatar } from '@mui/material';
 import FlagIcon from '@mui/icons-material/Flag';
@@ -8,6 +9,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 
 function LoadBalancing(){
+
+    window.oncontextmenu = function() { return false; } //disables menu while testing
+
     ////////////////////////dummy data////////////////////////
     const dawgs = [
       {id: 1, name: 'Fido', route: 'tangletown', flagged: false, notes: 'This dog has special needs!'},
@@ -45,52 +49,25 @@ function LoadBalancing(){
   const dailyRoutes = useSelector(store => store.dnd.routes);
   const routes = Object.keys(dailyRoutes); //pulls route names out of route object
 
+  //VIBRATES PHONE WHEN DND UNLOCKED
   const onDragStart = () => {
-    // good times
+    console.log('dragracelol')
     if (window.navigator.vibrate) {
       window.navigator.vibrate(100);
     }
   };
 
+  const [draggingStatus, setDraggingStatus] = useState(true);
+  //TRIGGERS DND LOGIC IN REDUCER
   const onDragEnd = (result) => {
+    setDraggingStatus(!draggingStatus);
     if (!result.destination) return; //prevents being triggered if outside of lists
     dispatch({ type: 'MOVE_DOG', payload: result });
+   
   };
 
-  const queryAttr = "data-rbd-drag-handle-draggable-id";
-  const [placeholderProps, setPlaceholderProps] = useState({});
 
-  const onDragUpdate = update => {
-    if(!update.destination){
-      return;
-    }
-		const draggableId = update.draggableId;
-		const destinationIndex = update.destination.index;
-
-		const domQuery = `[${queryAttr}='${draggableId}']`;
-		const draggedDOM = document.querySelector(domQuery);
-
-		if (!draggedDOM) {
-			return;
-		}
-		const { clientHeight, clientWidth } = draggedDOM;
-
-		const clientY = parseFloat(window.getComputedStyle(draggedDOM.parentNode).paddingTop) + [...draggedDOM.parentNode.children]
-			.slice(0, destinationIndex)
-			.reduce((total, curr) => {
-				const style = curr.currentStyle || window.getComputedStyle(curr);
-				const marginBottom = parseFloat(style.marginBottom);
-				return total + curr.clientHeight + marginBottom;
-			}, 0);
-
-		setPlaceholderProps({
-			clientHeight,
-			clientWidth,
-      clientY,
-      clientX: parseFloat(window.getComputedStyle(draggedDOM.parentNode).paddingLeft)
-		});
-	};
-
+  //COLOR OF ROUTE HEADER
   const getRouteColor = (route) => {
     switch(route){
       case 'tangletown': return '#4a5061';
@@ -102,10 +79,9 @@ function LoadBalancing(){
     }
   }
 
+  //DIALOG
   const [showDetails, setShowDetails] = useState(false);
   const [doggo, setDoggo] = useState({})
-
-  //DIALOG
   const openDetailsDialog = (dog) => {
     if (dog.flagged === true){
       setDoggo(dog);
@@ -113,9 +89,31 @@ function LoadBalancing(){
     }
   }
 
+  const handleClick = (e) => {
+    console.log(e.detail);
+    switch (e.detail) {
+      case 1: {
+        console.log('single click');
+        break;
+      }
+      case 2: {
+        console.log('double click');
+        break;
+      }
+      case 3: {
+        console.log('triple click');
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  };
+
+
     return (
         <Grid container sx={{ height: '93%', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-          <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
+          <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
 
             {/* maps through all five routes and creates a card for each */}
             {routes.map((route, i) => (       
@@ -170,13 +168,13 @@ function LoadBalancing(){
                     {dailyRoutes && dailyRoutes[route].map((dog, index) => (dog.route === route &&  
                     
                       //*-------------CHIP-------------*//
-                      <Draggable key={dog.id} draggableId={`${dog.id}`} index={index} isDragDisabled={true}> 
+                      <Draggable key={dog.id} draggableId={`${dog.id}`} index={index} isDragDisabled={draggingStatus}> 
                         {(provided, snapshot) => (
 
                         <Box
                           key={dog.id} 
-                          onTouchStart={() => openDetailsDialog(dog)}
-                          // onDragStart={onDragStart}
+                          //{...bind()}
+                          onTouchEnd={() => openDetailsDialog(dog)} //opens dog details
                           //----dnd----//
                           {...provided.draggableProps} 
                           {...provided.dragHandleProps} 
@@ -184,6 +182,7 @@ function LoadBalancing(){
                           style={{ backgroundColor: snapshot.isDragging ? '#D3CDC9' : 'transparent', ...provided.draggableProps.style }}
                           /////////////////////////
                           variant = 'outlined'
+                          // className={snapshot.isDragging && "dog_chip"}
                           sx={{ 
                                 width: '80%', 
                                 display: 'flex', 
@@ -192,6 +191,7 @@ function LoadBalancing(){
                                 justifyContent: 'space-between',
                                 borderRadius: 2,
                                 border: '1px solid grey',
+                              
                                 px: 1, my: 0.5 
                                 }}
                         >
@@ -233,3 +233,24 @@ function LoadBalancing(){
 }
 
 export default LoadBalancing;
+
+
+
+  //LONG PRESS EVENT
+  // const [enabled, setEnabled] = useState(true);
+
+  // const callback = useCallback(event => {
+  //   setDraggingStatus(!draggingStatus);
+  //   console.log('inhere')
+  // }, []);
+
+  // const bind = useLongPress(enabled ? callback : null, {
+  //   onStart: event =>  setDraggingStatus(!draggingStatus),
+  //   onFinish: event => console.log('Press finished'),
+  //   onCancel: event => console.log('Press canceled'),
+  //   filterEvents: event => true, // All events can potentially trigger long press
+  //   threshold: 1000,
+  //   captureEvent: true,
+  //   cancelOnMovement: false,
+  //   detect: 'both',
+  // });

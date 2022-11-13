@@ -119,8 +119,6 @@ VALUES
 	(10,1),
 	(10,2);
 	
-
-
 CREATE TABLE routes (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(150)

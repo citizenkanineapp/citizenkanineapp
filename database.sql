@@ -256,7 +256,7 @@ CREATE TABLE dogs_schedule_changes (
 	
 CREATE TABLE daily_dogs (
 	"id" SERIAL PRIMARY KEY,
-	"name" NOT NULL VARCHAR(150),
+	"name" VARCHAR(150) NOT NULL,
 	"date" DATE DEFAULT CURRENT_DATE,
 	"dog_id" INT NOT NULL REFERENCES dogs(id),
 	"route_id" INT NOT NULL REFERENCES routes(id),

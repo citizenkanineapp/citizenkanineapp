@@ -119,6 +119,22 @@ function* updateEmpSchedule(action){
     }
 }
 
+function* addEmployee(action){
+    const newEmployee = action.payload;
+    try{
+        const employeeAdded = yield axios({
+            method: 'PUT',
+            url: '/api/employees',
+            data: newEmployee
+        })
+        yield put({
+            type: 'SAGA_FETCH_EMPLOYEES'
+        })
+    }
+    catch {
+        console.log('error in addEmployee');
+    }
+}
 
 
 function* employeesSaga(){
@@ -127,7 +143,8 @@ function* employeesSaga(){
     yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_EVEN', fetchEvenEmpSchedules),
     yield takeLatest('SAGA_FETCH_EMP_SCHEDULE', fetchEmpSchedule),
     yield takeLatest('SAGA_UPDATE_EMP_DETAILS', updateEmpDetails),
-    yield takeLatest('SAGA_UPDATE_EMP_SCHEDULE', updateEmpSchedule)
+    yield takeLatest('SAGA_UPDATE_EMP_SCHEDULE', updateEmpSchedule),
+    yield takeLatest('SAGA_ADD_EMPLOYEE', addEmployee)
 }
 
 export default employeesSaga;

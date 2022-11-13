@@ -104,7 +104,6 @@ router.get('/schedule/:id', (req, res)=> {
 })
 
 // Update Employee details:
-
 router.put('/details', (req, res)=>{
     const updatedEmp = req.body;
     // console.log(updatedEmp);
@@ -141,37 +140,6 @@ router.put('/details', (req, res)=>{
         })
 })
 
-// Update selected employee schedule:
-// router.put('/schedules', (req, res)=>{
-//     const week1 = req.body[0];
-//     console.log(week1)
-
-//     const sqlQuery = 
-//     `
-//     UPDATE 
-//         employees_schedule
-//     SET
-//         "1" = $1,
-//         "2" = $2,
-//         "3" = $3,
-//         "4" = $4,
-//         "5" = $5
-//     WHERE id = $6;
-//     `
-
-//     const sqlValues = [ week1[1], week1[2], week1[3], week1[4], week1[5], week1['id']];
-
-//     pool.query(sqlQuery, sqlValues)
-//         .then(dbRes=> {
-//             res.sendStatus(201);
-            
-//         })
-//         .catch(error=> {
-//             res.sendStatus(500);
-//             console.log('error with PUT /employees/schedules:', error);
-//         })
-// })
-
 // Update selected employee schedules simultaneously:
 router.put('/schedules', async (req, res)=>{
     const schedules = req.body;
@@ -200,8 +168,47 @@ router.put('/schedules', async (req, res)=>{
             res.sendStatus(500);
             console.log('error in PUT /employees/schedules', error)
         }
-    
+})
 
+// POST new employee
+router.put('/', async (req, res)=> {
+    const client = await pool.connect();
+    const empDetails = req.body[0];
+    const schedule = [req.body[1], req.body[2]];
+
+    try{
+        const {first_name, last_name, zip, city, phone, street, email} = empDetails;
+        await client.query('BEGIN');
+        const addEmployee = await client.query(
+            `
+            INSERT INTO employees
+                (first_name, last_name, zip, city, phone, street, email)
+            VALUES
+                ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING id`, [first_name, last_name, zip, city, phone, street, email]);
+
+            const empId = addEmployee.rows[0].id;
+
+        await Promise.all(schedule.map(week => {
+            const sqlQuery = 
+            `
+            INSERT INTO employees_schedule
+                (emp_id, week, "1", "2", "3", "4", "5")
+            VALUES
+                ($1, $2, $3, $4, $5, $6, $7);
+            `
+
+            const sqlValues = [empId, week['week'], week[1], week[2], week[3], week[4], week[5]]
+
+            return client.query(sqlQuery, sqlValues);
+        }));
+        await client.query('COMMIT')
+        res.sendStatus(201);
+    }
+    catch(error) {
+        res.sendStatus(500);
+        console.log('error in POST /employees', error)
+    }
 })
 
 

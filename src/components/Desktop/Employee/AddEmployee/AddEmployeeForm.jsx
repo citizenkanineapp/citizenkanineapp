@@ -10,7 +10,7 @@ function AddEmployee(){
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const [week1, setWeek1]= useState({week: 1, 1: false, 2: false, 3: false, 4: false, 5: false});
 
-  const [week2, setWeek2]= useState({week:2, 2: false, 2: false, 3: false, 4: false, 5: false});
+  const [week2, setWeek2]= useState({week: 2, 1: false, 2: false, 3: false, 4: false, 5: false});
 
   return (
     <Grid className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>

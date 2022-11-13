@@ -196,16 +196,6 @@ function LoadBalancing() {
         {/*------------------------------*/}
 
           </DragDropContext>
-
-        {showDetails === true &&
-                        <Dialog
-                            open={showDetails}
-                            onClose={() => setShowDetails(!showDetails)}>
-                            <DialogTitle>{doggo.name}</DialogTitle>
-                            <DialogContent>
-                              <DialogContentText>{doggo.notes}</DialogContentText>
-                            </DialogContent>
-                        </Dialog>}
         </Grid>
       );
 }

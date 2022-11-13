@@ -63,7 +63,7 @@ function* fetchEmpSchedule(action){
             method: 'GET',
             url: `/api/employees/schedule/${empID}`
         })
-        // yield console.log(empSchedule.data);
+        yield console.log(empSchedule.data);
         yield put({
             type: 'SET_EMPLOYEE_SCHEDULE',
             payload: empSchedule.data
@@ -80,16 +80,59 @@ function* fetchEmpSchedule(action){
     catch {
         console.log('error in fetchEmpSchedules');
     }
-
-
-
 }
+
+function* updateEmpDetails(action){
+    const updatedEmp = action.payload;
+    try{
+        const empDetails = yield axios({
+            method: 'PUT',
+            url: '/api/employees/details',
+            data: updatedEmp
+        })
+        // updates the selectedEmployee reducer so that the details page will render the updated employee details
+        yield put({
+            type: 'SET_EMPLOYEE',
+            payload: updatedEmp
+        })
+        yield put({
+            type: 'SAGA_FETCH_EMPLOYEES'
+        })
+    }
+    catch {
+        console.log('error in updateEmpDetails');
+    }
+}
+
+function* updateEmpSchedule(action){
+    const updatedEmpSchedules = action.payload;
+    // [{week1 schedule}, {week2 schedule}]
+    try{
+        const empSchedule = yield axios({
+            method: 'PUT',
+            url: '/api/employees/schedules',
+            data: updatedEmpSchedules
+        })
+        // These update the selectedEmployee reducer so that the details page will render the updated employee details
+        yield put({
+            type: 'SET_EMPLOYEE_SCHEDULE',
+            payload: updatedEmpSchedules
+        })
+    }
+    catch {
+        console.log('error in updateEmpSchedule');
+    }
+}
+
+
 
 function* employeesSaga(){
     yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees),
     yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_ODD', fetchOddEmpSchedules),
     yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_EVEN', fetchEvenEmpSchedules),
-    yield takeLatest('FETCH_EMP_SCHEDULE', fetchEmpSchedule)
+    yield takeLatest('SAGA_FETCH_EMP_SCHEDULE', fetchEmpSchedule),
+    yield takeLatest('SAGA_UPDATE_EMP_DETAILS', updateEmpDetails),
+    yield takeLatest('SAGA_UPDATE_EMP_SCHEDULE', updateEmpSchedule)
 }
 
 export default employeesSaga;

@@ -48,7 +48,7 @@ function EmployeeList() {
       payload: employee
     })
     dispatch({
-      type: 'FETCH_EMP_SCHEDULE',
+      type: 'SAGA_FETCH_EMP_SCHEDULE',
       payload: employee.id
     })
   }

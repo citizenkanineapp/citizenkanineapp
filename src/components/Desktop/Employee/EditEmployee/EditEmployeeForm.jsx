@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
 //MUI
-import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea } from "@mui/material";
+import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea, InputAdornment } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function EmployeeForm(){
@@ -19,12 +19,7 @@ function EmployeeForm(){
   const week1 = employeeSchedule1;
   const week2 = employeeSchedule2;
 
-  // This object 
-
-
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-
-  const [daySelected, setDaySelected] = useState(false);
 
   return (
       <Grid className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>
@@ -115,7 +110,8 @@ function EmployeeForm(){
               <Card>
                 <CardActionArea component={Button}
                   onClick={()=>{
-                    if (!week2[index+1]){
+                    
+                    if (!week1[index+1]){
                       dispatch({ 
                         type:'UPDATE_EMP_SCHEDULE1',
                         payload: {day: index+1, change: true}
@@ -195,7 +191,20 @@ function EmployeeForm(){
             <Button 
                 variant="contained"        
                 color="secondary"
-                onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})}>Save</Button> 
+                onClick={() => {
+                  dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})
+                  // send updated form data to server to update the database:
+                  dispatch({
+                    type: 'SAGA_UPDATE_EMP_DETAILS',
+                    payload: employee
+                  })
+                // sends updated schedule data to server to update the database:
+                dispatch({
+                  type: 'SAGA_UPDATE_EMP_SCHEDULE',
+                  payload: [week1, week2]
+                })
+                
+                }}>Save</Button> 
           </Box>
       </Grid>
     );

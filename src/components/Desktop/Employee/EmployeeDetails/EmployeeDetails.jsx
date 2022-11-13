@@ -13,7 +13,6 @@ function EmployeeDetails() {
   const week1 = employeeSchedule[0];
   const week2 = employeeSchedule[1];
 
-  const initials = employee.first_name[0]+employee.last_name[0];
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
@@ -88,10 +87,6 @@ function EmployeeDetails() {
           variant="outlined" color="info"
           onClick={() => {
             dispatch({ type: 'SET_MODAL_STATUS' })
-            dispatch({ 
-              type: 'SET_EDIT_EMP_DETAILS',
-              payload: employee
-          })
           }}>
           Back
         </Button>  {/*goes back to Employee list*/}

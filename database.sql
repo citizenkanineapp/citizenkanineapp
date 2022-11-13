@@ -16,8 +16,7 @@ DROP TABLE IF EXISTS employees_schedule;
 DROP TABLE IF EXISTS admin_notes;
 DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS employees;
-
-
+DROP TABLE IF EXISTS services;
 
 CREATE TABLE employees (
 	"id" SERIAL PRIMARY KEY,
@@ -135,7 +134,25 @@ VALUES
 	('far'),
 	('misfits'),
 	('unassigned');
-	
+
+CREATE TABLE services (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR (150),
+	"price" INT
+);
+
+INSERT INTO services
+	("name", "price")
+VALUES
+	('Friends and Family', '20'),
+	('1 Dog - Ad Hoc', '35'),
+	('1 Dog - 2-4x / week', '30'),
+	('1 Dog - 5x / week', '26'),
+	('2 Dogs - Ad Hoc', '45'),
+	('2 Dogs - 2-4x / week', '42'),
+	('2 Dogs - 5x / week', '37'),
+	('3 Dogs',  '54');
+
 CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,
 	"first_name" VARCHAR(150) NOT NULL,
@@ -170,7 +187,6 @@ values
 	('Sunny', 'Mateiko', '4100 Lyndale Ave S', 'Minneapolis', 55409, 1, '(838)150-5160', 'smateikoc@illinois.edu'),
 	('Noelyn', 'Rowden', '813 W 50th St', 'Minneapolis', 55419, 2, '(976)109-9306', 'nrowdend@uiuc.edu'),
 	('Madelina', 'Becerro', '1601 W 50th St', 'Minneapolis', 55419, 1, '(849)163-0399', 'mbecerroe@msu.edu');
-
 
 
 CREATE TABLE dogs (
@@ -216,6 +232,7 @@ values
 CREATE TABLE clients_schedule (
 	"id" SERIAL PRIMARY KEY,
 	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+	"product_id" INT NULL REFERENCES services(id) ON DELETE CASCADE, -- ** trying this out
 	"1" BOOLEAN DEFAULT FALSE,
 	"2" BOOLEAN DEFAULT FALSE,
 	"3" BOOLEAN DEFAULT FALSE,
@@ -267,4 +284,4 @@ CREATE TABLE admin_notes (
 	"id" SERIAL PRIMARY KEY,
 	"user_id" INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
 	"notes" VARCHAR
-	);	
+	);

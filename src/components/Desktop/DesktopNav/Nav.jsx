@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import LogOutButton from '../../AllPages/LogOutButton/LogOutButton';
-import './Nav.css';
 
 // MUI IMPORTS
 import Box from '@mui/material/Box';
@@ -78,11 +77,11 @@ function Nav(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <AppBar component="nav" position='sticky' sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
 
         {user.id && (
-          <Toolbar variant="dense">
+          <Toolbar variant="dense" sx={{ boxShadow: '0px 5px 5px #6e361c89'}}>
             {/* <Button onClick={handleDrawerToggle} color='secondary'></Button> */}
             <IconButton
               color="inherit"
@@ -91,7 +90,7 @@ function Nav(props) {
               onClick={handleDrawerToggle}
               sx={{ mx: 4, py: 1, display: { sm: 'block' } }}
             >
-              <MenuIcon sx={{ fontSize: "3rem", color: '#7BCEC8', p: 0, }} />
+              <MenuIcon sx={{ fontSize: "3rem", color: 'whitesmoke', p: 0, }} />
             </IconButton>
             <Typography
               variant="h4"
@@ -120,7 +119,13 @@ function Nav(props) {
             </Box>
           </Toolbar>
         )}
+      {/*----------NAV TRANSITION----------*/}
+      <Box sx={{ height: '5%', width: '100%',  bgcolor: '#e0923f' }}>
+        <Typography sx={{ color: 'transparent' }}>PACK CENTRAL</Typography>
+      </Box>
       </AppBar>
+
+      {/*----------SIDE MENU----------*/}
       <Box>
         <Drawer
           container={container}

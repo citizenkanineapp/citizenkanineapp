@@ -10,7 +10,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 function LoadBalancing(){
 
-    window.oncontextmenu = function() { return false; } //disables menu while testing
+    //window.oncontextmenu = function() { return false; } //disables menu while testing
 
     ////////////////////////dummy data////////////////////////
     const dawgs = [

@@ -116,7 +116,7 @@ function EmployeeSchedule(){
                               <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '1'}}>
                                 <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>
                               </Box>
-                              
+
                               {/* CONDITIONAL RENDERING FOR EMPLOYEE EVEN/ODD WEEKS */}
                               {/* is the day within the current month and is this week even(2)? */}
                               {!DayComponentProps.outsideCurrentMonth?
@@ -128,7 +128,7 @@ function EmployeeSchedule(){
                                         const bgColor = avatarColors[index];
                                         return <Avatar key={employee.emp_id} sx={{ bgcolor: bgColor, height: 18 , width: 18, fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                       }
-                                      
+
                                     })}
                                     </Box>
                                     :
@@ -153,18 +153,18 @@ function EmployeeSchedule(){
         </Card>
 
         {/* <div className="display_calendar">
-          <p onClick={() => openModal('EmployeeDetails')}>Dolly Parton - Click me</p> 
-          <Button onClick={() => history.push('/employees')}>Back</Button>
-          <Button onClick={() => setShowEditCalendar(!showEditCalendar)}>Edit</Button> 
-        </div>
+        <p onClick={() => openModal('EmployeeDetails')}>Dolly Parton - Click me</p> 
+        <Button onClick={() => history.push('/employees')}>Back</Button>
+        <Button onClick={() => setShowEditCalendar(!showEditCalendar)}>Edit</Button> 
+      </div>
 
-        : //toggles between edit mode and viewing mode
+      : //toggles between edit mode and viewing mode
 
-        <div className="edit_calendar">
-          <h2>Edit Calendar</h2>
-          <p onClick={() => openModal('EmployeeDetails')}>Dolly Parton WANTS TO WORK</p> 
-          <Button onClick={() => setShowEditCalendar(!showEditCalendar)}>Cancel</Button>
-          <Button onClick={() => setShowEditCalendar(!showEditCalendar)}>Submit</Button> 
+      <div className="edit_calendar">
+        <h2>Edit Calendar</h2>
+        <p onClick={() => openModal('EmployeeDetails')}>Dolly Parton WANTS TO WORK</p> 
+        <Button onClick={() => setShowEditCalendar(!showEditCalendar)}>Cancel</Button>
+        <Button onClick={() => setShowEditCalendar(!showEditCalendar)}>Submit</Button> 
         </div> */}
 
       <EmployeeModal/> 
@@ -184,7 +184,7 @@ function EmployeeSchedule(){
         ))}
     </Box>
     </Box>
-  )    
+  )      
 }
 
 export default EmployeeSchedule;

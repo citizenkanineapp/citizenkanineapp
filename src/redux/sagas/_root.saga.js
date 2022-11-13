@@ -6,6 +6,7 @@ import imageSaga from './image.saga';
 import resetPassSaga from './passreset.saga';
 import employeesSaga from './employees.saga.js';
 import clientSaga from './clients.saga';
+import RouteSaga from './routes.saga';
 
 
 // rootSaga is the primary saga.
@@ -23,6 +24,8 @@ export default function* rootSaga() {
     imageSaga(),
     resetPassSaga(),
     employeesSaga(),
+    clientSaga(),
+    RouteSaga(),
     clientSaga(),
   ]);
 }

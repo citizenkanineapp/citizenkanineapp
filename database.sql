@@ -247,6 +247,7 @@ values
 CREATE TABLE dogs_schedule_changes (
 	"id" SERIAL PRIMARY KEY,
 	"dog_id" INT NOT NULL REFERENCES dogs(id) ON DELETE CASCADE,
+	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
 	"date_to_change" DATE NOT NULL,
 	"is_scheduled" BOOLEAN DEFAULT NULL,
 	"date" DATE DEFAULT CURRENT_DATE
@@ -255,12 +256,15 @@ CREATE TABLE dogs_schedule_changes (
 	
 CREATE TABLE daily_dogs (
 	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR(150) NOT NULL,
 	"date" DATE DEFAULT CURRENT_DATE,
 	"dog_id" INT NOT NULL REFERENCES dogs(id),
 	"route_id" INT NOT NULL REFERENCES routes(id),
+	"client_id" INT NOT NULL REFERENCES clients(id),
 	"checked_in" BOOLEAN DEFAULT NULL,
 	"no_show" BOOLEAN DEFAULT NULL,
-	"cancelled" BOOLEAN DEFAULT NULL
+	"cancelled" BOOLEAN DEFAULT NULL,
+	UNIQUE ("dog_id", "date")
 	);
 	
 CREATE TABLE admin_notes (

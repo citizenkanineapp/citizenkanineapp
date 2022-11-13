@@ -8,7 +8,6 @@ import { ThemeProvider } from '@mui/material/styles';
 
 //DESKTOP COMPONENTS
 import Nav from '../Desktop/DesktopNav/Nav';
-import NavTransition from '../Desktop/DesktopNav/NavTransition';
 import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
 import LoginPage from '../AllPages/Login/Login/LoginPage';
@@ -49,7 +48,6 @@ function App() {
         <div className="app_body">
 
           <Nav />
-          <NavTransition />
           <Switch>
 
             {/* --------------------- REDIRECTIONS -------------------- */}

@@ -9,14 +9,7 @@ const employees = (state=[], action)=> {
             return state;
     }
 }
-const selectedEmployee = (state={}, action)=> {
-    switch (action.type){
-        case 'SET_EMPLOYEE':
-            return action.payload
-        default:
-            return state;
-    }
-}
+
 
 const oddEmpSchedules = (state=[], action)=> {
     switch (action.type){
@@ -36,11 +29,14 @@ const evenEmpSchedules = (state=[], action)=> {
     }
 }
 
-const employeesReducer = combineReducers({
+
+
+
+
+const allEmployeesReducer = combineReducers({
     employees,
-    selectedEmployee,
     oddEmpSchedules,
     evenEmpSchedules,
 })
 
-export default employeesReducer;
+export default allEmployeesReducer;

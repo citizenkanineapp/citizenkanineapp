@@ -34,14 +34,22 @@ function EmployeeList() {
       type: 'SAGA_FETCH_EMPLOYEES'
     })
   },[])
+  
 
-  const allEmployees = useSelector(store=> store.employeesReducer.employees);
+  const allEmployees = useSelector(store=> store.allEmployeesReducer.employees);
+
+  // const modalStatus = useSelector(store=> store.modal.status);
   
   const handleClick = (employee)=> {
     openModal('EmployeeDetails');
+    // Need to send dispatch to fetch employee and their schedule
     dispatch({
       type: 'SET_EMPLOYEE',
       payload: employee
+    })
+    dispatch({
+      type: 'SAGA_FETCH_EMP_SCHEDULE',
+      payload: employee.id
     })
   }
 
@@ -49,6 +57,10 @@ function EmployeeList() {
     <Box className="desktop_container">
       <Typography variant="h4">Employees</Typography>
       <Grid container spacing={2}>
+        <Grid item xs={12} sx={{ mr: 5, display: 'flex', justifyContent: 'flex-end' }}>
+          <Button onClick={() => history.push('/schedule')} variant='contained' color='info' sx={{ mr: 2 }}>Schedule</Button>
+          <Button onClick={() => openModal('AddEmployee')} variant='contained' color='secondary'  >Add Employee</Button>
+        </Grid>
         <Grid item xs={12} sx={{ mx: 5 }}>
 
           {/* TABLE OPTION */}
@@ -79,10 +91,6 @@ function EmployeeList() {
               </TableBody>
             </Table>
           </TableContainer>
-        </Grid>
-        <Grid item xs={12} sx={{ mr: 5, display: 'flex', justifyContent: 'flex-end' }}>
-          <Button onClick={() => history.push('/schedule')} variant='contained' color='info' sx={{ mr: 2 }}>Schedule</Button>
-          <Button onClick={() => openModal('AddEmployee')} variant='contained' color='secondary'  >Add Employee</Button>
         </Grid>
       </Grid>
       <EmployeeModal /> {/* only open when button is pressed */}

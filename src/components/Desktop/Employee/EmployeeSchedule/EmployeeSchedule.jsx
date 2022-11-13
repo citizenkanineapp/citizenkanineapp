@@ -63,7 +63,7 @@ function EmployeeSchedule(){
   // console.log('first week of year',dayjs('2023-01-01').week())
   // console.log('last week of year',dayjs('2022-12-30').week())
 
-  const allEmployees = useSelector(store=> store.employeesReducer.employees);
+  const allEmployees = useSelector(store=> store.allEmployeesReducer.employees);
 
   const openModal = (view) => {
     dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: view }); //assures the view to be the right component
@@ -79,8 +79,8 @@ function EmployeeSchedule(){
   // {$L: 'en', $u: undefined, $d: Sat Nov 05 2022 14:37:11 GMT-0500 (Central Daylight Time), $x: {…}, $y: 2022}
   // console.log(value);
 
-  const oddEmpSchedules = useSelector(store=> store.employeesReducer.oddEmpSchedules);
-  const evenEmpSchedules = useSelector(store=> store.employeesReducer.evenEmpSchedules);
+  const oddEmpSchedules = useSelector(store=> store.allEmployeesReducer.oddEmpSchedules);
+  const evenEmpSchedules = useSelector(store=> store.allEmployeesReducer.evenEmpSchedules);
   // console.log(evenEmpSchedules);
   // {1: true, 2: true, 3: false, 4: true, 5: true, id: 1, week: 2, first_name: 'Den', last_name: 'Paolini', email: 'dpaolini0@paypal.com', phone: '(840)6732127', …}
 
@@ -112,7 +112,7 @@ function EmployeeSchedule(){
                         // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
                         const weekInYear = day.diff(`${currentYear}-01-01`, 'week', false)
                         return (
-                            <Box key={day.$d} className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '8vw', height: '13vh', justifyContent: 'flex-start'}}>
+                            <Box key={day.$d} className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: 90, height: 90, justifyContent: 'center'}}>
                               <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '1'}}>
                                 <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>
                               </Box>
@@ -126,17 +126,17 @@ function EmployeeSchedule(){
                                     {oddEmpSchedules.map((employee, index) => {
                                       if (employee[day.$W]){
                                         const bgColor = avatarColors[index];
-                                        return <Avatar key={employee.emp_id} sx={{ bgcolor: bgColor, height: '3vh' , width: '1.5vw', fontSize: 10, mx: .25 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                                        return <Avatar key={employee.emp_id} sx={{ bgcolor: bgColor, height: 18 , width: 18, fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                       }
 
                                     })}
                                     </Box>
                                     :
-                                    <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', justifyContent: 'center', alignContent: 'flex-start', flexWrap: 'wrap'}}>
+                                    <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', justifyContent: 'top', alignContent: 'flex-start', flexWrap: 'wrap'}}>
                                     {evenEmpSchedules.map((employee, index) => {
                                     if (employee[day.$W]){
                                       const bgColor = avatarColors[index];
-                                      return <Avatar key={employee.emp_id} sx={{ bgcolor: bgColor, height: '3vh' , width: '1.5vw', fontSize: 10, mx: .25 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                                      return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: 18 , width: 18, fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                     }
                                     console.log('end of render')
                                   })}
@@ -175,7 +175,7 @@ function EmployeeSchedule(){
         {evenEmpSchedules.map( (employee, index)=> (
           <Card sx={{display: 'flex', flexDirection: 'row', mt: 1}}>
             <CardContent sx={{display: 'flex', flexDirection: 'row'}}>
-              <Avatar key={employee.emp_id} sx={{ bgcolor: avatarColors[index], height: '10vh' , width: '5vw', fontSize: 10, mr: 1, alignSelf: 'center' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+              <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: avatarColors[index], height: 50 , width: 50, fontSize: 10, mr: 1, alignSelf: 'center' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
               <Typography sx={{display: 'flex', alignSelf: 'center'}}>
                 {employee.first_name} {employee.last_name}
               </Typography>

@@ -192,17 +192,21 @@ function EmployeeForm(){
                 variant="contained"        
                 color="secondary"
                 onClick={() => {
-                  dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})
                   // send updated form data to server to update the database:
                   dispatch({
                     type: 'SAGA_UPDATE_EMP_DETAILS',
                     payload: employee
                   })
-                // sends updated schedule data to server to update the database:
-                dispatch({
-                  type: 'SAGA_UPDATE_EMP_SCHEDULE',
-                  payload: [week1, week2]
-                })
+                  // sends updated schedule data to server to update the database:
+                  dispatch({
+                    type: 'SAGA_UPDATE_EMP_SCHEDULE',
+                    payload: [week1, week2]
+                  })
+                  dispatch({
+                    type: 'SET_EMPLOYEE_SCHEDULE',
+                    payload: [week1, week2]
+                  })
+                  dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})
                 
                 }}>Save</Button> 
           </Box>

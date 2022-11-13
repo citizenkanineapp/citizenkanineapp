@@ -142,36 +142,68 @@ router.put('/details', (req, res)=>{
 })
 
 // Update selected employee schedule:
+// router.put('/schedules', (req, res)=>{
+//     const week1 = req.body[0];
+//     console.log(week1)
 
-router.put('/schedules', (req, res)=>{
-    const week1 = req.body[0];
-    console.log(week1)
+//     const sqlQuery = 
+//     `
+//     UPDATE 
+//         employees_schedule
+//     SET
+//         "1" = $1,
+//         "2" = $2,
+//         "3" = $3,
+//         "4" = $4,
+//         "5" = $5
+//     WHERE id = $6;
+//     `
 
-    const sqlQuery = 
-    `
-    UPDATE 
-        employees_schedule
-    SET
-        "1" = $1,
-        "2" = $2,
-        "3" = $3,
-        "4" = $4,
-        "5" = $5
-    WHERE id = $6;
-    `
+//     const sqlValues = [ week1[1], week1[2], week1[3], week1[4], week1[5], week1['id']];
 
-    const sqlValues = [ week1[1], week1[2], week1[3], week1[4], week1[5], week1['id']];
-
-    pool.query(sqlQuery, sqlValues)
-        .then(dbRes=> {
-            res.sendStatus(201);
+//     pool.query(sqlQuery, sqlValues)
+//         .then(dbRes=> {
+//             res.sendStatus(201);
             
-        })
-        .catch(error=> {
+//         })
+//         .catch(error=> {
+//             res.sendStatus(500);
+//             console.log('error with PUT /employees/schedules:', error);
+//         })
+// })
+
+// Update selected employee schedules simultaneously:
+router.put('/schedules', async (req, res)=>{
+    const schedules = req.body;
+
+    const client = await pool.connect();
+
+    try{
+        await Promise.all(schedules.map(schedule=>{
+            const sqlQuery = 
+            `
+            UPDATE 
+                employees_schedule
+            SET
+                "1" = $1,
+                "2" = $2,
+                "3" = $3,
+                "4" = $4,
+                "5" = $5
+            WHERE id = $6`;
+
+            const sqlValues = [ schedule[1], schedule[2], schedule[3], schedule[4], schedule[5], schedule['id']];
+            return client.query(sqlQuery, sqlValues);
+        }))
+    }
+        catch(error) {
             res.sendStatus(500);
-            console.log('error with PUT /employees/schedules:', error);
-        })
+            console.log('error in PUT /employees/schedules', error)
+        }
+    
+
 })
+
 
 
 module.exports = router;

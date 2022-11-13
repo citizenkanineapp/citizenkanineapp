@@ -114,10 +114,10 @@ function* updateEmpSchedule(action){
             data: updatedEmpSchedules
         })
         // These update the selectedEmployee reducer so that the details page will render the updated employee details
-        yield put({
-            type: 'SET_EMPLOYEE_SCHEDULE',
-            payload: updatedEmpSchedules
-        })
+        // yield put({
+        //     type: 'SET_EMPLOYEE_SCHEDULE',
+        //     payload: updatedEmpSchedules
+        // })
     }
     catch {
         console.log('error in updateEmpSchedule');

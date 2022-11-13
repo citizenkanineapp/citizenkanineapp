@@ -21,6 +21,8 @@ function ClientForm(){
     
   },[])
 
+
+
   //STYLING NOTES: still have to figure out picture size (so it's cropped or uniform)
 const saveChanges = event => {
   dispatch({type: 'EDIT_CLIENT', payload: client})
@@ -37,6 +39,26 @@ const back = event => {
 
 const deleteClient = (id) => {
   console.log('delete me', id)
+  dispatch({type: 'DELETE_CLIENT', payload: id})
+  dispatch({type: 'SET_MODAL_STATUS'})
+}
+
+const openModal = (view) => {
+  dispatch({ type: 'SET_CLIENT_MODAL', payload: view }); //opens dog edit form
+  
+}
+
+const fetchOneDog = (dog) =>{
+  const clientDogObj = {
+    client_id: client.id,
+    dog_name: dog.dog_name,
+    image: dog.image,
+    dog_id: dog.dog_id,
+    // dog_notes: dog.dog_notes
+
+  }
+  dispatch({type: 'SET_DOG', payload: clientDogObj})
+  openModal('EditDogForm')
 }
 
   return (
@@ -123,7 +145,7 @@ const deleteClient = (id) => {
             <Grid sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
               {client.dogs.map((dog, index) => (
               <Card key={index} sx={{width: '100%', m: 1}}
-                    onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
+                    onClick={() => fetchOneDog(dog)}>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button size="small" variant="outlined">
                               {dog.dog_name}

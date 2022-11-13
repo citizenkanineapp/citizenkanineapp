@@ -33,18 +33,7 @@ function ClientDetails(){
          
               {/*-------------------- TEXT FIELDS --------------------*/}
             <Grid sx={{display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', gap: 1}}>
-              {/* <TextField 
-                value={client.first_name} 
-                helperText="First Name"  
-                size="small" 
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
-                InputProps={{readOnly: true}}/> 
-              <TextField 
-                value={client.last_name} 
-                helperText="Last Name"  
-                size="small" 
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
-                InputProps={{readOnly: true}}/>  */}
+          
                   <TextField 
                 value={client.street} 
                 helperText="Street"  

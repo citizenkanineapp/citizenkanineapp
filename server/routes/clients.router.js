@@ -277,6 +277,32 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
           res.sendStatus(500);
       })
   });
+
+  router.delete('/:id', rejectUnauthenticated, (req, res) => {
+    console.log(req.params.id)
+    
+    const queryText = 'DELETE FROM clients WHERE id=$1';
+    pool.query(queryText, [req.params.id])
+      .then(() => { res.sendStatus(200); })
+      .catch((err) => {
+        console.log('Error completing delete client query', err);
+        res.sendStatus(500);
+      });
+  });
+
+  router.delete('/dogs/:id', rejectUnauthenticated, (req, res) => {
+    console.log(req.params.id)
+    
+    const queryText = 'DELETE FROM dogs WHERE id=$1';
+    pool.query(queryText, [req.params.id])
+      .then(() => { res.sendStatus(200); })
+      .catch((err) => {
+        console.log('Error completing delete dog query', err);
+        res.sendStatus(500);
+      });
+  });
+  
+  
   
 
 module.exports = router;

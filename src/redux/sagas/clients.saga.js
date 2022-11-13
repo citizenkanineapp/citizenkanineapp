@@ -74,7 +74,7 @@ function* fetchOneClient(action){
     let clientId = action.payload
     try {
         const client = yield axios.get(`/api/clients/${clientId}`);
-        console.log('back to saga', client)
+        // console.log('back to saga', client)
         yield put ({type: 'SET_CLIENT', payload: client.data[0]});
     } catch (error) {
         console.log(error);
@@ -83,13 +83,38 @@ function* fetchOneClient(action){
     
 }
 
+function* deleteClient(action) {
+    const clientId = action.payload
+    console.log(clientId)
+    try{
+        const client = yield axios.delete(`/api/clients/${clientId}`);
+        yield put ({type: 'FETCH_CLIENTS'});
+    } catch (error){
+        console.log('error deleting client', error)
+    }
+}
+
+function* deleteDog(action) {
+    const dogId = action.payload.dog_id
+    console.log(dogId)
+    try{
+        const dog = yield axios.delete(`/api/clients/dogs/${dogId}`);
+        yield put ({type: 'FETCH_ONE_CLIENT', payload: action.payload.client_id});
+    } catch (error){
+        console.log('error deleting dog', error)
+    }
+}
+
+
 
 function* clientSaga() {
     yield takeLatest('FETCH_CLIENTS', getALlClients);
     yield takeLatest('ADD_CLIENT', addClient);
     yield takeLatest('EDIT_CLIENT', editClient);
     yield takeLatest('ADD_NEW_DOG', addDog);
-    yield takeLatest('FETCH_ONE_CLIENT', fetchOneClient)
+    yield takeLatest('FETCH_ONE_CLIENT', fetchOneClient);
+    yield takeLatest('DELETE_CLIENT', deleteClient);
+    yield takeLatest('DELETE_DOG', deleteDog);
    
     
   }

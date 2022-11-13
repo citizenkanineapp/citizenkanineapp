@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
 //MUI
-import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea, InputAdornment } from "@mui/material";
+import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea} from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function EmployeeForm(){
@@ -173,42 +173,43 @@ function EmployeeForm(){
 
           
           <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "5%", mt: 3 }}>
-              <Box sx={{ width:"24%", display:"flex", justifyContent:"space-between" }}>
-                {/* CANCEL BUTTON */}
-                <Button variant="outlined" color="info"
-                    onClick={() => {
-                      dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})
-                      // Need to reset these reducers in case the user hits cancel and then edit again.
-                      dispatch({ type: 'SET_EDIT_EMP_DETAILS', payload: selectedEmployee})
-                      dispatch({ type: 'SET_EDIT_EMP_SCHEDULE1', payload: selectedEmpSchedule[0]})
-                      dispatch({ type: 'SET_EDIT_EMP_SCHEDULE2', payload: selectedEmpSchedule[1]})
-                    }}>Cancel</Button> 
+              
                 {/* DELETE BUTTON */}
                 <Button variant="contained" sx={{ml: 2}}
                     onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})}>Delete</Button> 
-              </Box>
-            {/* SAVE BUTTON */}
-            <Button 
-                variant="contained"        
-                color="secondary"
+              
+            {/* CANCEL BUTTON */}  
+            <Box sx={{ width:"24%", display:"flex", justifyContent:"space-between" }}>
+              <Button
+                variant="outlined" color="info"
                 onClick={() => {
-                  // send updated form data to server to update the database:
-                  dispatch({
-                    type: 'SAGA_UPDATE_EMP_DETAILS',
-                    payload: employee
-                  })
-                  // sends updated schedule data to server to update the database:
-                  dispatch({
-                    type: 'SAGA_UPDATE_EMP_SCHEDULE',
-                    payload: [week1, week2]
-                  })
-                  dispatch({
-                    type: 'SET_EMPLOYEE_SCHEDULE',
-                    payload: [week1, week2]
-                  })
-                  dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})
-                
-                }}>Save</Button> 
+                  dispatch({ type: 'SET_MODAL_STATUS' })
+                }}>
+                Cancel
+              </Button>  {/*goes back to Employee list*/}
+              {/* SAVE BUTTON */}
+              <Button 
+                  variant="contained"        
+                  color="secondary"
+                  onClick={() => {
+                    // send updated form data to server to update the database:
+                    dispatch({
+                      type: 'SAGA_UPDATE_EMP_DETAILS',
+                      payload: employee
+                    })
+                    // sends updated schedule data to server to update the database:
+                    dispatch({
+                      type: 'SAGA_UPDATE_EMP_SCHEDULE',
+                      payload: [week1, week2]
+                    })
+                    // This updates the selectedEmpSchedule reducer so that the details page will render the updated employee schedule
+                    dispatch({
+                      type: 'SET_EMPLOYEE_SCHEDULE',
+                      payload: [week1, week2]
+                    })
+                    dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})
+                  }}>Save</Button> 
+                </Box>
           </Box>
       </Grid>
     );

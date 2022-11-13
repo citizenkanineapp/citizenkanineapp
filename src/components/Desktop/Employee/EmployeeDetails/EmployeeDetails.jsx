@@ -7,8 +7,8 @@ import { Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardAct
 
 function EmployeeDetails() {
   const dispatch = useDispatch();
-  const employee = useSelector(store=> store.employeesReducer.selectedEmployee);
-  const employeeSchedule = useSelector(store=> store.employeesReducer.selectedEmpSchedule);
+  const employee = useSelector(store=> store.selectedEmployeeReducer.selectedEmployee);
+  const employeeSchedule = useSelector(store=> store.selectedEmployeeReducer.selectedEmpSchedule);
   console.log(employeeSchedule);
   const week1 = employeeSchedule[0];
   const week2 = employeeSchedule[1];

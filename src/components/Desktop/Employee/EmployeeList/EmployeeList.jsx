@@ -36,7 +36,7 @@ function EmployeeList() {
   },[])
   
 
-  const allEmployees = useSelector(store=> store.employeesReducer.employees);
+  const allEmployees = useSelector(store=> store.allEmployeesReducer.employees);
 
   // const modalStatus = useSelector(store=> store.modal.status);
   

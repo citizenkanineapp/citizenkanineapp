@@ -63,7 +63,7 @@ function EmployeeSchedule(){
   // console.log('first week of year',dayjs('2023-01-01').week())
   // console.log('last week of year',dayjs('2022-12-30').week())
 
-  const allEmployees = useSelector(store=> store.employeesReducer.employees);
+  const allEmployees = useSelector(store=> store.allEmployeesReducer.employees);
 
   const openModal = (view) => {
     dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: view }); //assures the view to be the right component
@@ -79,8 +79,8 @@ function EmployeeSchedule(){
   // {$L: 'en', $u: undefined, $d: Sat Nov 05 2022 14:37:11 GMT-0500 (Central Daylight Time), $x: {…}, $y: 2022}
   // console.log(value);
 
-  const oddEmpSchedules = useSelector(store=> store.employeesReducer.oddEmpSchedules);
-  const evenEmpSchedules = useSelector(store=> store.employeesReducer.evenEmpSchedules);
+  const oddEmpSchedules = useSelector(store=> store.allEmployeesReducer.oddEmpSchedules);
+  const evenEmpSchedules = useSelector(store=> store.allEmployeesReducer.evenEmpSchedules);
   // console.log(evenEmpSchedules);
   // {1: true, 2: true, 3: false, 4: true, 5: true, id: 1, week: 2, first_name: 'Den', last_name: 'Paolini', email: 'dpaolini0@paypal.com', phone: '(840)6732127', …}
 

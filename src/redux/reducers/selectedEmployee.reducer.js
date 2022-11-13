@@ -1,35 +1,8 @@
 import { combineReducers } from 'redux';
 
-
-const employees = (state=[], action)=> {
-    switch (action.type){
-        case 'SET_EMPLOYEES':
-            return action.payload;
-        default:
-            return state;
-    }
-}
 const selectedEmployee = (state={}, action)=> {
     switch (action.type){
         case 'SET_EMPLOYEE':
-            return action.payload;
-        default:
-            return state;
-    }
-}
-
-const oddEmpSchedules = (state=[], action)=> {
-    switch (action.type){
-        case 'SET_EMP_SCHEDULE_ODD':
-            return action.payload;
-        default:
-            return state;
-    }
-}
-
-const evenEmpSchedules = (state=[], action)=> {
-    switch (action.type){
-        case 'SET_EMP_SCHEDULE_EVEN':
             return action.payload;
         default:
             return state;
@@ -40,8 +13,6 @@ const selectedEmpSchedule = (state=[], action)=>{
     switch (action.type){
         case 'SET_EMPLOYEE_SCHEDULE':
             return action.payload;
-        case 'UPDATE_EMP_FIRST_NAME':
-            return {...state, first_name: action.payload};
         default: 
             return state;
     }
@@ -96,15 +67,12 @@ const editEmpSchedule2 = (state={}, action)=>{
     }
 }
 
-const employeesReducer = combineReducers({
-    employees,
+const selectedEmployeeReducer = combineReducers({
     selectedEmployee,
-    oddEmpSchedules,
-    evenEmpSchedules,
     selectedEmpSchedule,
     editEmpDetails,
     editEmpSchedule1,
     editEmpSchedule2,
 })
 
-export default employeesReducer;
+export default selectedEmployeeReducer;

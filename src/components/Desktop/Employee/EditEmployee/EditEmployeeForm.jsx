@@ -7,14 +7,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function EmployeeForm(){
   const dispatch = useDispatch();
-  const selectedEmployee = useSelector(store => store.employeesReducer.selectedEmployee);
-  const employee = useSelector(store=> store.employeesReducer.editEmpDetails);
+  const selectedEmployee = useSelector(store => store.selectedEmployeeReducer.selectedEmployee);
+  const employee = useSelector(store=> store.selectedEmployeeReducer.editEmpDetails);
   // console.log(employee);
-  const selectedEmpSchedule = useSelector(store=> store.employeesReducer.selectedEmpSchedule);
+  const selectedEmpSchedule = useSelector(store=> store.selectedEmployeeReducer.selectedEmpSchedule);
 
-  const employeeSchedule1 = useSelector(store=> store.employeesReducer.editEmpSchedule1);
+  const employeeSchedule1 = useSelector(store=> store.selectedEmployeeReducer.editEmpSchedule1);
 
-  const employeeSchedule2 = useSelector(store=> store.employeesReducer.editEmpSchedule2);
+  const employeeSchedule2 = useSelector(store=> store.selectedEmployeeReducer.editEmpSchedule2);
   // console.log(employeeSchedule);
   const week1 = employeeSchedule1;
   const week2 = employeeSchedule2;

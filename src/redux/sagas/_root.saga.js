@@ -23,6 +23,6 @@ export default function* rootSaga() {
     imageSaga(),
     resetPassSaga(),
     employeesSaga(),
-    clientSaga()
+    clientSaga(),
   ]);
 }

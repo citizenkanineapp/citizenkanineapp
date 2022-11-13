@@ -19,6 +19,7 @@ function* fetchAllEmployees(){
     }
 }
 
+// This function gets all the employee schedule data for week1 to autofill the employee schedule calendar. 
 function* fetchOddEmpSchedules (){
     try{
         const empSchedule = yield axios({
@@ -36,6 +37,7 @@ function* fetchOddEmpSchedules (){
     }
 }
 
+// This function gets all the employee schedule data for week2 to autofill the employee schedule calendar. 
 function* fetchEvenEmpSchedules (){
     try{
         const empSchedule = yield axios({
@@ -53,12 +55,13 @@ function* fetchEvenEmpSchedules (){
     }
 }
 
+// This function gets the selected employee schedule details for both week1 and week2.
 function* fetchEmpSchedule(action){
     const empID = action.payload
     try{
         const empSchedule = yield axios({
             method: 'GET',
-            url: `/api/employees/details/${empID}`
+            url: `/api/employees/schedule/${empID}`
         })
         // yield console.log(empSchedule.data);
         yield put({
@@ -68,6 +71,10 @@ function* fetchEmpSchedule(action){
         yield put({
             type: 'SET_EDIT_EMP_SCHEDULE1',
             payload: empSchedule.data[0]
+        })
+        yield put({
+            type: 'SET_EDIT_EMP_SCHEDULE2',
+            payload: empSchedule.data[1]
         })
     }
     catch {

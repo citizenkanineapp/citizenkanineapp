@@ -61,14 +61,16 @@ router.get('/schedules/even', (req, res)=>{
         })
 })
 
-// GET individual employee and their schedules:
-router.get('/details/:id', (req, res)=> {
+// GET individual employee schedules:
+router.get('/schedule/:id', (req, res)=> {
     const empID = req.params.id;
     console.log(empID);
+    // the order by is to ensure the correct week is being targeted when setting the reducers for each week.
     const sqlQuery = `
     SELECT * FROM 
         employees_schedule
-    WHERE emp_id = $1;
+    WHERE emp_id = $1
+    ORDER BY week;
     `
 
     pool.query(sqlQuery, [empID] )

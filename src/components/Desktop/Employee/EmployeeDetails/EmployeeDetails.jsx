@@ -57,7 +57,7 @@ function EmployeeDetails() {
             {daysOfWeek.map((day, index) => (
               <Grid key={index + 1} item xs={2}>
               <Card >
-                  <CardContent sx={{ display:'flex', justifyContent: 'center', backgroundColor: week1[index+1]? '#7BCEC8' : 'none'}}>
+                  <CardContent sx={{ display:'flex', justifyContent: 'center', backgroundColor: week1[index+1]? '#7BCEC8' : null}}>
                       <Typography variant="h7"sx={{textTransform: 'capitalize'}}>{day}</Typography>
                   </CardContent>
               </Card> 
@@ -97,7 +97,13 @@ function EmployeeDetails() {
         </Button>  {/*goes back to Employee list*/}
         <Button
           variant="contained" color="success"
-          onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EditEmployeeForm' })}>
+          onClick={() => {
+            dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EditEmployeeForm' })
+            dispatch({ 
+              type: 'SET_EDIT_EMP_DETAILS',
+              payload: employee
+            })
+          }}>
           Edit
         </Button>
       </Grid>

@@ -10,12 +10,11 @@ function EmployeeForm(){
   const selectedEmployee = useSelector(store => store.employeesReducer.selectedEmployee);
   const employee = useSelector(store=> store.employeesReducer.editEmpDetails);
   // console.log(employee);
-  
-  const initials = employee.first_name[0]+employee.last_name[0];
+  const selectedEmpSchedule = useSelector(store=> store.employeesReducer.selectedEmpSchedule);
 
   const employeeSchedule1 = useSelector(store=> store.employeesReducer.editEmpSchedule1);
 
-  const employeeSchedule2 = useSelector(store=> store.employeesReducer.editEmpSchedule1);
+  const employeeSchedule2 = useSelector(store=> store.employeesReducer.editEmpSchedule2);
   // console.log(employeeSchedule);
   const week1 = employeeSchedule1;
   const week2 = employeeSchedule2;
@@ -154,15 +153,15 @@ function EmployeeForm(){
                   onClick={()=>{
                     if (!week2[index+1]){
                       dispatch({ 
-                        type:'UPDATE_EMP_SCHEDULE1',
+                        type:'UPDATE_EMP_SCHEDULE2',
                         payload: {day: index+1, change: true}
                       
                     })
                     }
                     else {
                       dispatch({ 
-                        type:'UPDATE_EMP_SCHEDULE1',
-                        payload: {day: index+1, change: true}
+                        type:'UPDATE_EMP_SCHEDULE2',
+                        payload: {day: index+1, change: false}
                       
                     })
                     }}}
@@ -176,18 +175,23 @@ function EmployeeForm(){
             ))}
           </Grid> 
 
-
-          <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "5%", mx: 5, mt: 3 }}>
+          
+          <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "5%", mt: 3 }}>
               <Box sx={{ width:"24%", display:"flex", justifyContent:"space-between" }}>
+                {/* CANCEL BUTTON */}
                 <Button variant="outlined" color="info"
                     onClick={() => {
                       dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})
-                      // Need to reset the reducer in case the user hits cancel and then edit again.
+                      // Need to reset these reducers in case the user hits cancel and then edit again.
                       dispatch({ type: 'SET_EDIT_EMP_DETAILS', payload: selectedEmployee})
+                      dispatch({ type: 'SET_EDIT_EMP_SCHEDULE1', payload: selectedEmpSchedule[0]})
+                      dispatch({ type: 'SET_EDIT_EMP_SCHEDULE2', payload: selectedEmpSchedule[1]})
                     }}>Cancel</Button> 
-                <Button variant="contained"
+                {/* DELETE BUTTON */}
+                <Button variant="contained" sx={{ml: 2}}
                     onClick={() => dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})}>Delete</Button> 
               </Box>
+            {/* SAVE BUTTON */}
             <Button 
                 variant="contained"        
                 color="secondary"

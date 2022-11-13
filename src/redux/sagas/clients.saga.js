@@ -105,6 +105,24 @@ function* deleteDog(action) {
     }
 }
 
+function* updateDog(action){
+    console.log('arrived in edit dog route', action.payload);
+
+    try {
+        const dog = yield axios({
+            method: 'PUT',
+            url: '/api/clients/dogs',
+            data: action.payload
+        })
+        yield put ({type: 'FETCH_ONE_CLIENT', payload: action.payload.client_id});
+        //probably need to fetch specific client?
+    } catch (error) {
+        console.log(error);
+        alert('Error editing dog');
+    }
+    
+}
+
 
 
 function* clientSaga() {
@@ -115,6 +133,7 @@ function* clientSaga() {
     yield takeLatest('FETCH_ONE_CLIENT', fetchOneClient);
     yield takeLatest('DELETE_CLIENT', deleteClient);
     yield takeLatest('DELETE_DOG', deleteDog);
+    yield takeLatest('UPDATE_DOG', updateDog);
    
     
   }

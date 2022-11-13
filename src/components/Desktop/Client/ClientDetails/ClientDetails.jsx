@@ -19,6 +19,25 @@ function ClientDetails(){
     dispatch({ type: 'SET_MODAL_STATUS' })
   }
 
+  const fetchOneDog = (dog) =>{
+    const clientDogObj = {
+      client_id: client.id,
+      dog_name: dog.dog_name,
+      image: dog.image,
+      dog_id: dog.dog_id,
+      dog_notes: dog.dog_notes
+  
+    }
+    dispatch({type: 'SET_DOG', payload: clientDogObj})
+    openModal('DogDetails')
+  }
+
+  const openModal = (view) => {
+    dispatch({ type: 'SET_CLIENT_MODAL', payload: view }); //opens dog edit form
+    
+  }
+  
+
   return (
       <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
 
@@ -95,7 +114,7 @@ function ClientDetails(){
           {/*-------------------- DOG PICTURES --------------------*/}
           <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
           {client.dogs && client.dogs.map && client.dogs.map((dog, index) => (
-              <Card key={index} sx={{width: '35%', m: 1}}>
+              <Card key={index} sx={{width: '35%', m: 1}} onClick={() => fetchOneDog(dog)}>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button size="small" variant="outlined" disabled>
                               {dog.dog_name}

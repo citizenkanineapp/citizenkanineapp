@@ -14,7 +14,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 //   console.log('arrived in server get all route')
   const queryText = `
                     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
-                    routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.vet_phone from clients
+                    routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, dogs.vet_phone, dogs.flag from clients
                             JOIN dogs
                             ON clients.id = dogs.client_id
                             JOIN routes
@@ -56,7 +56,7 @@ pool.query(queryText)
             // const {first_name, last_name, address} = result.rows[0];
             const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name} = forDogMap[0];
             const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name}
-            client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id})})
+            client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag})})
 
             clients.push(client)
 
@@ -185,6 +185,31 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
   } catch (dbErr){
     console.log('Error in PUT route', dbErr)
     await connection.query('ROLLBACK');
+    res.sendStatus(500);
+  }
+});
+
+router.put('/dogs', rejectUnauthenticated, async (req, res) => {
+  console.log('dogs have id?', req.body)
+  const {dog_name, dog_notes, flag, dog_id} = req.body
+  
+  const dogTxt = `
+            UPDATE dogs
+                SET
+                  name = $1, 
+                  notes = $2,
+                  flag = $3
+              
+                WHERE
+                  id = $4;
+
+  `
+  const dogValues = [dog_name, dog_notes, flag, dog_id]
+ try{
+    pool.query(dogTxt, dogValues)
+    res.sendStatus(201);
+  } catch (dbErr){
+    console.log('Error in PUT route for one dog', dbErr)
     res.sendStatus(500);
   }
 });

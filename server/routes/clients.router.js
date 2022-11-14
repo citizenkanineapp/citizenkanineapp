@@ -21,8 +21,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
                             ON clients.route_id=routes.id
                             ORDER BY clients.last_name ASC
 ;
-;
-  `
+  `;
 pool.query(queryText)
     .then(result => {
     

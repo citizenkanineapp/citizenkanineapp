@@ -13,8 +13,7 @@ const imageRouter = require('./routes/image.router');
 const employeesRouter = require('./routes/employees.router');
 const clientsRouter = require('./routes/clients.router');
 const mobileRouter = require('./routes/mobile.router');
-
-
+const invoiceRouter = require('./routes/invoice.router');
 
 // Body parser middleware
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -39,6 +38,8 @@ app.use('/api/employees', employeesRouter);
 
 app.use('/api/clients', clientsRouter);
 app.use('/api/mobile', mobileRouter);
+
+app.use('/api/invoice', invoiceRouter);
 
 
 // Serve static files

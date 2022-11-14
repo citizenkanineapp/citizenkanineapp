@@ -181,7 +181,7 @@ CREATE TABLE dogs (
 	"vet_name" VARCHAR(150),
 	"vet_phone" VARCHAR(13), -- changed to string input
 	"notes" VARCHAR,
-	"flag" BOOLEAN DEFAULT NULL,
+	"flag" BOOLEAN DEFAULT FALSE,
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 

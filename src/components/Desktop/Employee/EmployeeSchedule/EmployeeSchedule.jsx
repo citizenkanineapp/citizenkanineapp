@@ -41,7 +41,7 @@ const isWeekend = (date) => {
 };
 
 const weeksInYear = Array.from({length: 53}, (_, i) => i + 1)
-console.log('array of weeks',weeksInYear.length)
+// console.log('array of weeks',weeksInYear.length)
 
 function EmployeeSchedule(){
   const dispatch = useDispatch();
@@ -107,7 +107,7 @@ function EmployeeSchedule(){
                     }}
                     // render day loops through the days in the month and performs the given function. 
                     renderDay={(day, _value, DayComponentProps) => {
-                        console.log(DayComponentProps );
+                        // console.log(DayComponentProps );
                         const currentYear = DayComponentProps.day.$y;
                         // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
                         const weekInYear = day.diff(`${currentYear}-01-01`, 'week', false)
@@ -128,7 +128,6 @@ function EmployeeSchedule(){
                                         const bgColor = avatarColors[index];
                                         return <Avatar key={employee.emp_id} sx={{ bgcolor: bgColor, height: 18 , width: 18, fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                       }
-
                                     })}
                                     </Box>
                                     :
@@ -138,7 +137,7 @@ function EmployeeSchedule(){
                                       const bgColor = avatarColors[index];
                                       return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: 18 , width: 18, fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                     }
-                                    console.log('end of render')
+                                    // console.log('end of render')
                                   })}
                                   </Box>
                                   }
@@ -173,7 +172,7 @@ function EmployeeSchedule(){
     {/* employee cards */}
     <Box sx={{display: 'flex', flexDirection: 'column', ml: 2, width: '30vw'}}>
         {evenEmpSchedules.map( (employee, index)=> (
-          <Card sx={{display: 'flex', flexDirection: 'row', mt: 1}}>
+          <Card key={employee.id} sx={{display: 'flex', flexDirection: 'row', mt: 1}}>
             <CardContent sx={{display: 'flex', flexDirection: 'row'}}>
               <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: avatarColors[index], height: 50 , width: 50, fontSize: 10, mr: 1, alignSelf: 'center' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
               <Typography sx={{display: 'flex', alignSelf: 'center'}}>

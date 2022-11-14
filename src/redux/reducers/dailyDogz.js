@@ -1,7 +1,5 @@
-import { combineReducers } from 'redux';
 
-
-const routes = (state = {}, action) => {
+const dailyDogz = (state = {}, action) => {
 
     switch (action.type) {
         case 'SET_DAILY_ROUTES':
@@ -49,8 +47,4 @@ const routes = (state = {}, action) => {
     }
 }
 
-const dndReducer = combineReducers({
-    routes,
-});
-
-export default dndReducer;
+export default dailyDogz;

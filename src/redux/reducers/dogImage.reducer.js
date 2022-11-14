@@ -10,3 +10,5 @@ const dogPhotoReducer = (state = {}, action) => {
 }
 
 export default dogPhotoReducer;
+
+//maybe don't need this reducer if it sends directly to the dog reducer now

@@ -90,6 +90,12 @@ function* updateEmpDetails(action){
             url: '/api/employees/details',
             data: updatedEmp
         })
+        // updates the user's admin status after employee details are updated.
+        yield axios({
+            method: 'PUT',
+            url: '/api/user/admin',
+            data: {admin: updatedEmp.admin, emp_id: updatedEmp.id}
+        })
         // updates the selectedEmployee reducer so that the details page will render the updated employee details
         yield put({
             type: 'SET_EMPLOYEE',
@@ -121,11 +127,24 @@ function* updateEmpSchedule(action){
 
 function* addEmployee(action){
     const newEmployee = action.payload;
+    const email = newEmployee[0].email;
+    const admin = newEmployee[0].admin;
+    
     try{
         const employeeAdded = yield axios({
             method: 'PUT',
             url: '/api/employees',
             data: newEmployee
+        })
+        const emp_id = employeeAdded.data.emp_id;
+        const newUser = {emp_id: emp_id, username: email, email: email, admin: admin}
+        // yield console.log(emp_id);
+        // {emp_id: #}
+        // ADDING USER:
+        yield console.log('newUser:', newUser)
+        yield put({
+            type: 'REGISTER',
+            payload: newUser
         })
         yield put({
             type: 'SAGA_FETCH_EMPLOYEES'

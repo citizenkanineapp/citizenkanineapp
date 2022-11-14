@@ -15,7 +15,7 @@ function RouteSelect() {
     }, []);
 
     // reducer getting filled with a specific routes dogs
-    const dailyRoutes = useSelector(store => store.dnd.routes);
+    const dailyRoutes = useSelector(store => store.dailyDogz);
     const allroutes = Object.keys(dailyRoutes); //pulls route names out of route object
     const routes = allroutes.slice(0, 4);
 

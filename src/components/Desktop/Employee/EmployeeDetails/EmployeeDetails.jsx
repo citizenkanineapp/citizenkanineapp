@@ -60,7 +60,7 @@ function EmployeeDetails() {
             </Grid>
 
             {/* Mapping through days of the week array to render buttons for week1 */}
-            {daysOfWeek.map((day, index) => (
+            {week1 && daysOfWeek.map((day, index) => (
               <Grid key={index + 1} item xs={2}>
               <Card >
                   <CardContent sx={{ display:'flex', justifyContent: 'center', backgroundColor: week1[index+1]? '#7BCEC8' : null}}>
@@ -77,7 +77,7 @@ function EmployeeDetails() {
             </Grid>
 
             {/* Mapping through days of the week array to render buttons for week2 */}
-            {daysOfWeek.map((day, index) => (
+            {week2 && daysOfWeek.map((day, index) => (
             <Grid key={index + 1} item xs={2}>
               <Card>
                   <CardContent sx={{ display:'flex', justifyContent: 'center', backgroundColor: week2[index+1]? '#7BCEC8' : 'none' }}>

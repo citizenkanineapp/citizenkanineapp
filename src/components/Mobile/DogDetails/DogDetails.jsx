@@ -21,6 +21,12 @@ function DogDetails() {
 
   return (
     <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+      
+       {/* HEADER */}
+       <Grid item sx={{ height: '5%', width: '100%',  bgcolor: '#e0923f' }}>
+        <Typography sx={{ color: 'transparent' }}>PACK CENTRAL</Typography>
+      </Grid>
+
       {/* NAV BACK TO LIST */}
       <Grid item xs={12}>
         <Button>BACK</Button>

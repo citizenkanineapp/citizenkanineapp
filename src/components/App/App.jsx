@@ -123,7 +123,7 @@ function App() {
               <Map />
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/m/employees">
+            <ProtectedRoute exact path="/m/schedule">
               <WalkerSchedule />
             </ProtectedRoute>
 
@@ -131,7 +131,7 @@ function App() {
               <Routes />
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/m/dogs/">
+            <ProtectedRoute exact path="/m/dog/"> {/* should we use params here? - sarah */}
               <DogDetails />
             </ProtectedRoute>
 
@@ -152,7 +152,7 @@ function App() {
             </Route>
 
           </Switch>
-          {/* mobile nav currently displays in desktop */}
+
           <MobileNav /> 
         </div>
       </ThemeProvider>

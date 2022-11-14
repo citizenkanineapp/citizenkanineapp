@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
+import MobileTopNav from '../MobileNav/MobileTopNav';
 
 //CALENDAR 
 import Calendar from 'react-calendar';
@@ -14,26 +15,11 @@ function EmployeeSchedule() {
 
 
   return (
-    <Grid container sx={{ height: '95vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-       {/*----PORTRAIT HEADER----*/}
-      <Grid item sx={{  display: {xs: 'flex', sm: 'none'}, height: '5%', width: '100%',  bgcolor: '#e0923f' }}>
-        <Typography sx={{ color: 'transparent' }}>PACK CENTRAL</Typography>
-      </Grid>
+    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+    
+      <MobileTopNav/>
 
-      {/*----LANDSCAPE HEADER----*/}
-      <Grid item sx={{ height: '7%',
-            width: '100%',  
-            display: {xs: 'none', sm: 'flex'},
-            flexDirection: 'row', 
-            bgcolor: '#e0923f' }}>
-
-        <Button onClick={() => history.push('/m/user')} sx={{color: 'whitesmoke', width: '15%'}}>Home</Button>
-        <Button onClick={() => history.push('/m/routes')} sx={{color: 'whitesmoke', width: '15%'}}>Routes</Button>
-        <Button onClick={() => history.push('/m/map')} sx={{color: 'whitesmoke', width: '15%'}}>Map</Button>
-        <Button onClick={() => history.push('/m/employees')} sx={{color: 'whitesmoke', width: '15%'}}>Schedule</Button>
-      </Grid>
-      
-      <Grid item sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '95%', justifyContent: 'flex-start', alignItems: 'center', gap: '3vh', mt: '5vh' }}>
+      <Grid item sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '91%', justifyContent: 'flex-start', alignItems: 'center', gap: '3vh', mt: '5vh' }}>
         <Typography variant="h7">Employee Schedule</Typography>
         <Calendar onChange={onChange} value={value} />
       </Grid>

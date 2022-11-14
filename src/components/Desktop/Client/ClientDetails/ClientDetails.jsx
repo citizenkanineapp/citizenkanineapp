@@ -30,7 +30,7 @@ function ClientDetails(){
   
     }
     dispatch({type: 'SET_DOG', payload: clientDogObj})
-    console.log(clientDogObj)
+    console.log(' does it pass dog?' ,clientDogObj)
     openModal('DogDetails')
   }
 
@@ -46,8 +46,8 @@ function ClientDetails(){
             {/*----------------------- HEADER -----------------------*/}
             <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2}}>  
               <Typography variant="h3" >{client.first_name} {client.last_name}</Typography>
-              <IconButton disabled>
-                <CalendarMonthIcon sx={{ fontSize: 45, color: 'rgb(163, 147, 142)' }}/> 
+              <IconButton onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })}>
+                <CalendarMonthIcon sx={{ fontSize: 45, color: '#341341' }}/> 
               </IconButton>
             </Grid> {/* display only */}
 

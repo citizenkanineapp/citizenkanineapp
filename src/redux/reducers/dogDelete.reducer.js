@@ -1,4 +1,4 @@
-const dogDelete = (state = {}, action) => {
+const dogDelete = (state = {dog_name: '', dog_notes: '', flag: false}, action) => {
     // console.log ('in dog reducer', action.payload)
     switch (action.type) {
         case 'SET_DOG_DELETE':
@@ -12,7 +12,7 @@ const dogDelete = (state = {}, action) => {
         case 'SET_EDIT_FLAG':
                 return{...state, flag: action.payload}
         case 'CLEAR_DELETE_DOG':
-            return {}
+            return {dog_name: '', dog_notes: '', flag: false}
         default:
             return state;
     }

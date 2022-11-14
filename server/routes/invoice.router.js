@@ -13,22 +13,32 @@ router.get('/', async (req, res) => {
     const searchClientId = req.query.clientId;
     const searchMonth = req.query.month;
     const searchYear = req.query.year;
-    const searchTerms = [ searchClientId, searchMonth, searchYear ];
-    console.log(searchTerms)
-    const client = await pool.connect(); //used for batch queries?
-
+    let searchTerms ;
 
     // use in case of client ALL
-    // switch (weekday.number) {
-    //     case 1:
-    //         console.log('Monday');
-    //         searchQuery += 'WHERE "1" = TRUE ORDER BY route_id;';
-    //         break;
-    // }
+    if (searchClientId) {
+        searchQuery = `
+            WHERE
+                clients.id = $1 AND
+                EXTRACT (MONTH FROM daily_dogs.date) = $2 AND
+                EXTRACT (YEAR FROM daily_dogs.date) = $3
+            `;
+        searchTerms = [ searchClientId, searchMonth, searchYear ];
+    } else {
+        searchQuery = `
+            WHERE
+                EXTRACT (MONTH FROM daily_dogs.date) = $1 AND
+                EXTRACT (YEAR FROM daily_dogs.date) = $2
+            `;
+        searchTerms = [ searchMonth, searchYear ];
+    }
+
+    console.log(searchQuery);
 
     // query returns data object of each walk instance by customer-date
     // AND walks-per week
-    // will need to include search terms - invoice period date (month) and possibly client
+    // 
+    // query needs adjustment so that walks/per week is derived from client_schedule data, not actual walks per week.
 
     const queryWalkDetails = `
     SELECT
@@ -74,11 +84,9 @@ router.get('/', async (req, res) => {
             ON (
                 results2.week_of_year = daily_dogs.week_of_year
                 AND dogs.client_id = results2.client_id
-            )
-    WHERE
-        clients.id = $1 AND
-        EXTRACT (MONTH FROM daily_dogs.date) = $2 AND
-        EXTRACT (YEAR FROM daily_dogs.date) = $3 
+            )`
+    + searchQuery +
+    `
     GROUP BY
         daily_dogs.date,
         results2.walks_per_week,

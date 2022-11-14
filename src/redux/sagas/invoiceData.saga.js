@@ -13,8 +13,6 @@ function* fetchServices() {
 function* fetchInvoiceData(action) {
     try {
         console.log(action.payload);
-        //payload is search criteria: clientId, month, year.
-        // const clients = yield axios.get(`/api/invoice?search=${action.payload}`);
         const clients = yield axios.get(`/api/invoice`, {
             params: {
                 clientId: action.payload.clientId,

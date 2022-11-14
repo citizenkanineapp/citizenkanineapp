@@ -10,7 +10,7 @@ function LandscapeNav(){
         <Button onClick={() => history.push('/m/user')} sx={{color: 'whitesmoke', width: '15%'}}>Home</Button>
         <Button onClick={() => history.push('/m/routes')} sx={{color: 'whitesmoke', width: '15%'}}>Routes</Button>
         <Button onClick={() => history.push('/m/map')} sx={{color: 'whitesmoke', width: '15%'}}>Map</Button>
-        <Button onClick={() => history.push('/m/employees')} sx={{color: 'whitesmoke', width: '15%'}}>Schedule</Button>
+        <Button onClick={() => history.push('/m/schedule')} sx={{color: 'whitesmoke', width: '15%'}}>Schedule</Button>
       </Grid> 
     )
 }

@@ -18,7 +18,7 @@ function LoadBalancing() {
   }, []);
   
   // pulling daily routes from the reducer 
-  const dailyRoutes = useSelector(store => store.dnd.routes);
+  const dailyRoutes = useSelector(store => store.dailyDogz);
   // pulling route names out of dailyRoutes object
   const routes = Object.keys(dailyRoutes); 
   // disables/enables dragging
@@ -96,7 +96,7 @@ function LoadBalancing() {
           <Button onClick={() => history.push('/m/user')} sx={{color: 'whitesmoke', width: '15%', p: 0 }}>Home</Button>
           <Button onClick={() => history.push('/m/routes')} sx={{color: 'whitesmoke', width: '15%', p: 0 }}>Routes</Button>
           <Button onClick={() => history.push('/m/map')} sx={{color: 'whitesmoke', width: '15%', p: 0 }}>Map</Button>
-          <Button onClick={() => history.push('/m/employees')} sx={{color: 'whitesmoke', width: '15%', p: 0 }}>Schedule</Button>
+          <Button onClick={() => history.push('/m/schedule')} sx={{color: 'whitesmoke', width: '15%', p: 0 }}>Schedule</Button>
         </Box>
 
         <Box sx={{ justifyContent: 'center'}}>  {/* conditional rendering to enable drag */}
@@ -168,22 +168,10 @@ function LoadBalancing() {
                     overflowY: 'scroll', pt: 1
                   }}>
                   {/* maps through each dog in route list and creates a chip */}
-                  {dailyRoutes && dailyRoutes[route].map((dog, index) => 
-                  <div key={dog.id}>
-                  {/*-----------DOG NOTES----------*/}         
-                    <Popover
-                          open={showDetails}
-                          onClose={() => setShowDetails(!showDetails)}
-                          anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                          }}
-                          transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                          }}>
-                        <Typography sx={{ p: 2 }}>{dog.notes}</Typography>
-                    </Popover>
+                  {dailyRoutes && dailyRoutes[route].map((dog, index) => {
+                 
+
+
 
                     {/*-------------CHIP-------------*/}                             {/*where drag is disabled*/}
                     <Draggable draggableId={`${dog.dog_id}`} index={index} isDragDisabled={draggingStatus}>
@@ -219,9 +207,9 @@ function LoadBalancing() {
                       )}
 
                     </Draggable>
-                  </div>
-                  )}
-                  {/*------------------------------*/}
+                  })}
+       
+
 
                   {/* creates space for possible new chip */}
                   {provided.placeholder}

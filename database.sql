@@ -256,13 +256,14 @@ CREATE TABLE dogs_schedule_changes (
 	
 CREATE TABLE daily_dogs (
 	"id" SERIAL PRIMARY KEY,
+	"name" NOT NULL VARCHAR(150),
 	"date" DATE DEFAULT CURRENT_DATE,
 	"dog_id" INT NOT NULL REFERENCES dogs(id),
 	"route_id" INT NOT NULL REFERENCES routes(id),
 	"client_id" INT NOT NULL REFERENCES clients(id),
 	"checked_in" BOOLEAN DEFAULT NULL,
 	"no_show" BOOLEAN DEFAULT NULL,
-	"cancelled" BOOLEAN DEFAULT NULL
+	"cancelled" BOOLEAN DEFAULT NULL,
 	UNIQUE ("dog_id", "date")
 	);
 	

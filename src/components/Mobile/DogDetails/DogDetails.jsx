@@ -21,6 +21,7 @@ function DogDetails() {
 
   return (
     <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+
       {/* NAV BACK TO LIST */}
       <Grid item xs={12}>
         <Button>BACK</Button>

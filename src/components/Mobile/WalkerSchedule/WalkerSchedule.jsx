@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
+import MobileTopNav from '../MobileNav/MobileTopNav';
 
 //CALENDAR 
 import Calendar from 'react-calendar';
@@ -8,19 +10,20 @@ import 'react-calendar/dist/Calendar.css';
 import { Chip, Card, CardContent, FormControl, InputLabel, MenuItem, Select, Paper, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 
 function EmployeeSchedule() {
-
+  const history = useHistory();
   const [value, onChange] = useState(new Date());
 
 
   return (
-    <Grid container sx={{ justifyContent: 'center', mt: 5 }}>
-      <Grid item xs={10}>
-        <h1>Employee Shedule</h1>
-      </Grid>
+    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+    
+      <MobileTopNav/>
 
-      <Grid item sx={10}>
+      <Grid item sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '91%', justifyContent: 'flex-start', alignItems: 'center', gap: '3vh', mt: '5vh' }}>
+        <Typography variant="h7">Employee Schedule</Typography>
         <Calendar onChange={onChange} value={value} />
       </Grid>
+
     </Grid>
 
 

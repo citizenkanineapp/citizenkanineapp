@@ -24,7 +24,7 @@
 /* changes the size of the calendar div */
 .css-epd502 {
     width: 60vw !important;
-    min-height: 80vh !important;
+    min-height: 90vh !important;
     /* border: 2px lightcoral dotted; */
     border-radius: 10px;
 }
@@ -59,28 +59,19 @@
     /* padding-top: 10px; */
 } 
 
-/* .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
-    color: black !important;
-} */
-
-/* current day button */
-/* .css-195y93z-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected) {
-    border: none !important;
-    width: .80rem !important;
-    height: .80rem !important;
-} */
-
-
 /* This resized the entire calendar container */
 .css-169iwlq-MuiCalendarPicker-root {
     width: 60vw !important;
-    height: 80vh !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+}
+
+.css-6t5f1e-MuiDayPicker-monthContainer {
     min-height: 80vh !important;
 }
 
-
 .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
-    min-height: 80vh !important;
+    min-height: 100vh !important;
 }
 
 
@@ -89,10 +80,6 @@
     display: none !important;
 }
 
-/* Entire div component */
-/* .css-1vcokmn-MuiCalendarOrClockPicker-root{
-    margin-top: 10px;
-} */
 
 /* this changes the today's date indicator circle */
 .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
@@ -100,4 +87,8 @@
     background-color: transparent !important;
     /* border: #7BCEC8 1px solid; */
 
+}
+
+.css-1lunv-MuiPaper-root-MuiCard-root {
+    height: 90vh !important;
 }

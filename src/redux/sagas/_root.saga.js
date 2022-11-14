@@ -25,6 +25,7 @@ export default function* rootSaga() {
     resetPassSaga(),
     employeesSaga(),
     clientSaga(),
-    RouteSaga()
+    RouteSaga(),
+    clientSaga(),
   ]);
 }

@@ -11,7 +11,7 @@ const {
  * GET route template
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
-//   console.log('arrived in server get all route')
+  console.log('arrived in server get all route')
   const queryText = `
                     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
                     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, dogs.vet_phone, dogs.flag from clients

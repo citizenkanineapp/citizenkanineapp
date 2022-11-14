@@ -37,14 +37,16 @@ const dogReducer = (state = [{dog_name: '', image: '', dog_notes: '', flag: fals
         case 'ADD_DOG_INPUT':
             return [...state, {dog_name: '', image: '', dog_notes: ''}]
         case 'SET_FIRST_FLAG':
+            console.log(action.payload)
             const flagState = state.map((flag , index) => {
                 if(index === action.payload.index) {
-                    flagState.flag = action.payload
-                    return flagState;
+                    flag.flag = action.payload.flag
+                    return flag;
                 } else {
-                    return flagState;
+                    return flag;
                 }
             })
+            return flagState;
         case 'CLEAR_DOGS':
             return [{dog_name: '', image: '', dog_notes: '', flag: false}];
         default:

@@ -31,6 +31,8 @@ function AddClient(){
 
   // }
 
+
+
   const clientSchedule = useSelector(store => store.clientScheduleReducer)
 
 
@@ -87,7 +89,7 @@ function AddClient(){
       console.log('phone number error')
     } else {
       dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})
-      dispatch({type: 'ADD_SCHEDULE', payload: schedule})
+      dispatch({type: 'ADD_SCHEDULE', payload: clientSchedule})
   }
 }
 

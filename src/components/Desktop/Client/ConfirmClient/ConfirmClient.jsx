@@ -30,7 +30,7 @@ function ConfirmClient(){
   }
 console.log('client right now', client)
   return (
-      <Box sx={{m:2, mt:0, p:2, pt: 0, display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{m:2, mt:2, p:2, pt: 0, display: 'flex', flexDirection: 'column' }}>
 
             {/*----------------------- HEADER -----------------------*/}
             {/* <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2}}>  
@@ -108,19 +108,19 @@ console.log('client right now', client)
 
 
           {/*-------------------- DOG PICTURES --------------------*/}
-          <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
+          <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1, mt: 4 }}>
           {dogs && dogs.map && dogs.map((dog, index) => (
-              <Card key={index} sx={{width: '35%', m: 1}}>
+              <Card key={index} sx={{width: '35%', m: 1}} >
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button size="small" variant="outlined" disabled>
                               {dog.dog_name}
                         </Button>
                   </CardActions>
-                  <CardMedia component="img"  
+                  {/* <CardMedia component="img"  
                     sx={{width: 1}}
                     alt="client dog photo"
                     // src={dog.image}
-                    />
+                    /> */}
               </Card>
                  ))}
             

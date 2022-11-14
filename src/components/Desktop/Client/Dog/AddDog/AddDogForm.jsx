@@ -31,15 +31,18 @@ function AddDogForm (){
       console.log('error in form')
     } else {
       // dispatch({ type: 'SET_CLIENT_MODAL', })
-      saveSchedule('ConfirmClient')
-  }
+      saveClient();
+    }  
 }
 }
 
-// const handleFlagChange = event => {
-//   // console.log(flag)
+// const handleFlagChange = (index) => {
+//   console.log('index?', index)
 //   setFlag(!flag)
-//   dispatch({type: 'SET_FIRST_FLAG', payload: !flag})
+//   dispatch({type: 'SET_FIRST_FLAG',  payload: {
+//     flag: flag,
+//     index: index
+// }})
 
 // }
 
@@ -55,8 +58,10 @@ function AddDogForm (){
      
  }
  const saveClient = event => {
-  dispatch({type: 'ADD_CLIENT', payload: client})
-  dispatch({type: 'SET_MODAL_STATUS', payload: 'ClientList'})
+
+  dispatch({type: 'ADD_DOGS', payload: dogs})
+  // dispatch({type: 'ADD_CLIENT', payload: client})
+  dispatch({type: 'SET_CLIENT_MODAL', payload: 'ConfirmClient'})
   // dispatch({type: 'CLEAR_SCHEDULE'})
   // dispatch({type: 'CLEAR_CLIENT'})
   // dispatch({type: 'CLEAR_DOGS'})
@@ -68,13 +73,13 @@ function AddDogForm (){
     return (
       <>
   <h1>Add Dog</h1>
-  <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', mb: 9, mt: 8, gap: 1}}>
+  <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', mb: 3, mt: 2, gap: 1}}>
 
       {dogs.map((singleDog, index)=> (
         // singleDog = {name:'', image:''}
       <Card key={index} sx={{width: '30%', m: 1, mt:0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
           {/* <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", alignItems: "center", gap: 1 }}>
-              <Switch checked={flag} onChange={handleFlagChange} />
+              <Switch checked={flag} onChange={() => handleFlagChange(index)} />
               <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>
             </Box> */}
               <ImageUpload index={index} />

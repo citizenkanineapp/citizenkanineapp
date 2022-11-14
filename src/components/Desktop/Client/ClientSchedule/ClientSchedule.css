@@ -1,0 +1,27 @@
+.MuiCalendarPicker-root {
+    width: 50vw !important;
+    height: 100vh !important;
+    max-height:100vh !important;
+}
+
+.MuiCalendarPicker-viewTransitionContainer{
+    width: 50vw !important;
+    height: 50vw !important;
+}
+
+.css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel{
+    width: 5vw !important;
+    height: 2vw !important;
+    border: black solid 1px;
+    margin: 0 0 0 0  !important;
+}
+
+.css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
+    width: 50vw !important;
+    height: 100vh !important;
+}
+
+.css-4muqlg-MuiGrid-root{
+    width: 100vw !important;
+    height: 100vh !important;
+}

@@ -18,7 +18,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 function AddClient(){
   const dispatch = useDispatch();
   const clientToAdd = useSelector(store => store.clientToAddReducer)
- 
+
 
   //use states for client information
 

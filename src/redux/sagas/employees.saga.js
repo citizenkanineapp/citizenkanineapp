@@ -121,11 +121,24 @@ function* updateEmpSchedule(action){
 
 function* addEmployee(action){
     const newEmployee = action.payload;
+    const email = newEmployee[0].email;
+    const admin = newEmployee[0].admin;
+    
     try{
         const employeeAdded = yield axios({
             method: 'PUT',
             url: '/api/employees',
             data: newEmployee
+        })
+        const emp_id = employeeAdded.data.emp_id;
+        const newUser = {emp_id: emp_id, username: email, email: email, admin: admin}
+        // yield console.log(emp_id);
+        // {emp_id: #}
+        // ADDING USER:
+        yield console.log('newUser:', newUser)
+        yield put({
+            type: 'REGISTER',
+            payload: newUser
         })
         yield put({
             type: 'SAGA_FETCH_EMPLOYEES'

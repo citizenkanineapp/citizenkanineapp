@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 //MUI
-import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea} from "@mui/material";
+import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea, Switch} from "@mui/material";
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 function AddEmployee(){
   const dispatch = useDispatch();
@@ -12,9 +13,23 @@ function AddEmployee(){
 
   const [week2, setWeek2]= useState({week: 2, 1: false, 2: false, 3: false, 4: false, 5: false});
 
+  const [admin, setAdmin] = useState(false);
+
+  const handleSwitch = ()=>{
+    setAdmin(!admin)
+  }
+  // console.log(admin);
+
+
   return (
     <Grid className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>
-
+          <Grid sx={{display: 'flex', justifyContent: 'right', mb: 1}}>
+                <SupervisorAccountIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
+                <Switch
+                  checked={admin}
+                  onChange={handleSwitch}
+                  />             
+          </Grid>
           {/*-------------------- TEXT FIELDS --------------------*/}
           <Grid sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%"}}>
               <TextField 
@@ -130,7 +145,7 @@ function AddEmployee(){
                 <Button onClick={() => {
                   dispatch({
                     type: 'SAGA_ADD_EMPLOYEE',
-                    payload: [employee, week1, week2]
+                    payload: [{...employee, admin: admin}, week1, week2, {admin: admin}]
                   })
                   dispatch({ type: 'SET_MODAL_STATUS'})
                   }}>Submit</Button> 

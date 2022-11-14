@@ -175,6 +175,7 @@ router.put('/', async (req, res)=> {
     const client = await pool.connect();
     const empDetails = req.body[0];
     const schedule = [req.body[1], req.body[2]];
+    // let emp_id = 0;
 
     try{
         const {first_name, last_name, zip, city, phone, street, email} = empDetails;
@@ -187,7 +188,7 @@ router.put('/', async (req, res)=> {
                 ($1, $2, $3, $4, $5, $6, $7)
             RETURNING id`, [first_name, last_name, zip, city, phone, street, email]);
 
-            const empId = addEmployee.rows[0].id;
+            const emp_id = addEmployee.rows[0].id;
 
         await Promise.all(schedule.map(week => {
             const sqlQuery = 
@@ -198,17 +199,20 @@ router.put('/', async (req, res)=> {
                 ($1, $2, $3, $4, $5, $6, $7);
             `
 
-            const sqlValues = [empId, week['week'], week[1], week[2], week[3], week[4], week[5]]
+            const sqlValues = [emp_id, week['week'], week[1], week[2], week[3], week[4], week[5]]
 
             return client.query(sqlQuery, sqlValues);
         }));
         await client.query('COMMIT')
-        res.sendStatus(201);
+        res.send({emp_id});
     }
     catch(error) {
         res.sendStatus(500);
         console.log('error in POST /employees', error)
     }
+    // finally {
+    //     res.send(emp_id);
+    // }
 })
 
 

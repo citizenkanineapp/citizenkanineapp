@@ -3,7 +3,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from "react";
 
 //MUI
-import { Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea } from "@mui/material";
+import { Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea, Switch, Box } from "@mui/material";
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 function EmployeeDetails() {
   const dispatch = useDispatch();
@@ -18,13 +19,19 @@ function EmployeeDetails() {
 
 
   return (
-      <Grid className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', width: '75vw', pr: 2, height: '80vh', justifyContent: 'center' }}>
+      <Grid className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', width: '75vw', height: '80vh', justifyContent: 'center'}}>
         {/*----------------------- HEADER -----------------------*/}
-          <Grid sx={{display: 'flex', flexDirection: 'row', height: "10%", mt: 2, mb: 8}}>  
+          <Grid sx={{display: 'grid', flexDirection: 'row', height: "10%", mt: 2, mb: 8, gridTemplateColumns: '1fr 0.5fr', justifyContent: 'center' }}>  
             {/* <Avatar sx={{ bgcolor: '#F5A572', height: 115 , width: 115 }}>{initials}</Avatar> */}
             <Typography variant="h3" sx={{ pt: 3, ml: 1}}>{employee.first_name} {employee.last_name}</Typography>
+            <Box sx={{display: 'flex', justifyContent: 'right', alignItems: 'center', mt: 2}}>
+              <Switch
+                disabled
+                checked={employee.admin}
+              />             
+              <SupervisorAccountIcon style={{ fontSize: 36, color:  '#e0603f' }}/>   
+            </Box>
           </Grid> 
-
           {/*-------------------- TEXT FIELDS --------------------*/}
           <Grid sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%"}}>
               <TextField

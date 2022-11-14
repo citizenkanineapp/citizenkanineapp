@@ -232,7 +232,6 @@ values
 CREATE TABLE clients_schedule (
 	"id" SERIAL PRIMARY KEY,
 	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
-	"product_id" INT NULL REFERENCES services(id) ON DELETE CASCADE, -- ** trying this out
 	"1" BOOLEAN DEFAULT FALSE,
 	"2" BOOLEAN DEFAULT FALSE,
 	"3" BOOLEAN DEFAULT FALSE,
@@ -276,7 +275,7 @@ CREATE TABLE daily_dogs (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(150) NOT NULL,
 	"date" DATE DEFAULT CURRENT_DATE,
-	"week_of_year" INT DEFAULT NULL,
+	"week_of_year" INT DEFAULT NULL, -- ** This is useful for RESPONSE invoicing. subject to deletion if redundant with data in "clients_schedule"
 	"dog_id" INT NOT NULL REFERENCES dogs(id),
 	"route_id" INT NOT NULL REFERENCES routes(id),
 	"client_id" INT NOT NULL REFERENCES clients(id),

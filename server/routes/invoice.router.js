@@ -9,7 +9,7 @@ dayjs.extend(weekOfYear)
 
 router.get('/', async (req, res) => {
     console.log('in /api/invoice');
-    console.log(req.query)
+    // console.log(req.query)
     const searchClientId = req.query.clientId;
     const searchMonth = req.query.month;
     const searchYear = req.query.year;
@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
         searchTerms = [ searchMonth, searchYear ];
     }
 
-    console.log(searchQuery);
+    // console.log(searchQuery);
 
     // query returns data object of each walk instance by customer-date
     // 
@@ -91,12 +91,32 @@ router.get('/', async (req, res) => {
         checked_in,
         no_show;
     `;
-
+    const querySchedule = `SELECT * FROM clients_schedule`;
     try {
         const resDetails = await pool.query(queryWalkDetails,searchTerms);
         const invoiceData = resDetails.rows;
+        // console.log(invoiceData);
+
+        const resSchedule = await pool.query(querySchedule);
+        const schedules = resSchedule.rows;
+        
+        // adds walks per week to invoice data object. should be done in SQL!
+        for ( let item of invoiceData ) {
+            for ( let client of schedules) {
+                if (client.id === item.clientid) {
+                    const values = Object.values(client);
+                    const walks = values.filter( i => i === true).length;
+                    item.walks_per_week = walks;
+                }
+            }
+        }
+        
+        // console.log(walksPerWeek);
         console.log(invoiceData);
-        res.send(invoiceData);
+
+
+
+        res.send(invoiceData); 
     } catch (error) {
         console.log('Error GET /api/invoice', error);
         res.sendStatus(500);

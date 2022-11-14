@@ -17,7 +17,7 @@ function AddDogForm (){
   const dogs = useSelector(store => store.dogReducer)
   
 
-  const [flag, setFlag] = useState(false)
+  // const [flag, setFlag] = useState(false)
  
 
   const back = event => {
@@ -36,12 +36,12 @@ function AddDogForm (){
 }
 }
 
-const handleFlagChange = event => {
-  console.log(flag)
-  setFlag(current => !current)
-  dispatch({type: 'SET_FIRST_FLAG', payload: !flag})
+// const handleFlagChange = event => {
+//   // console.log(flag)
+//   setFlag(!flag)
+//   dispatch({type: 'SET_FIRST_FLAG', payload: !flag})
 
-}
+// }
 
 
   
@@ -51,26 +51,36 @@ const handleFlagChange = event => {
     dispatch({type: 'ADD_DOGS', payload: dogs})
     dispatch({ type: 'SET_CLIENT_MODAL', payload: view})
     // dispatch({type: 'CLEAR_SCHEDULE'})
+    saveClient();
      
  }
+ const saveClient = event => {
+  dispatch({type: 'ADD_CLIENT', payload: client})
+  dispatch({type: 'SET_MODAL_STATUS', payload: 'ClientList'})
+  // dispatch({type: 'CLEAR_SCHEDULE'})
+  // dispatch({type: 'CLEAR_CLIENT'})
+  // dispatch({type: 'CLEAR_DOGS'})
+
+  //need to add clear client?
+}
 
 
     return (
       <>
   <h1>Add Dog</h1>
-  <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', mb: 9, gap: 1}}>
+  <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', mb: 9, mt: 8, gap: 1}}>
 
       {dogs.map((singleDog, index)=> (
         // singleDog = {name:'', image:''}
       <Card key={index} sx={{width: '30%', m: 1, mt:0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
-          <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", alignItems: "center", gap: 1 }}>
-              <Switch onChange={() => handleFlagChange()} />
+          {/* <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", alignItems: "center", gap: 1 }}>
+              <Switch checked={flag} onChange={handleFlagChange} />
               <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>
-            </Box>
+            </Box> */}
               <ImageUpload index={index} />
               <TextField 
                 value={singleDog.dog_name} 
-                sx={{width: 150}} 
+                sx={{width: 175}} 
                 onChange={(e) => {
                   dispatch({
                     type: 'ADD_DOG_NAME',
@@ -85,7 +95,7 @@ const handleFlagChange = event => {
               /> 
               <TextField 
                 value={singleDog.dog_notes}
-                sx={{width: 150}} 
+                sx={{width: 175}} 
                 onChange={(e) => {
                   dispatch({
                     type: 'ADD_DOG_NOTES',
@@ -97,6 +107,7 @@ const handleFlagChange = event => {
                 }}
                 helperText="Notes"  
                 size="small" 
+                multiline rows={3}
                 /> 
 
 
@@ -119,7 +130,7 @@ const handleFlagChange = event => {
           {/* need to make the bottom save data */}
           {/* <Button onClick={() => saveDogs('AddClient')}>Save</Button>  */}
           <Button variant="contained" color="success"
-            onClick={checkInputs}>Next</Button> 
+            onClick={checkInputs}>Add Client</Button> 
         </Box>
    
       </>

@@ -31,8 +31,6 @@ function AddClient(){
 
   // }
 
-<<<<<<< HEAD
-
   const clientSchedule = useSelector(store => store.clientScheduleReducer)
 
 

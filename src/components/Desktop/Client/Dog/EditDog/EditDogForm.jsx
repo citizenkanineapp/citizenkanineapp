@@ -40,6 +40,8 @@ function EditDogForm(){
     dispatch({type: 'UPDATE_DOG', payload: dog})
     // dispatch({type: 'CLEAR_DELETE_DOG'})
     dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})
+    // dispatch({ type: 'BACK_TO_VIEW'})
+
   }
   
   const back = event => {
@@ -51,14 +53,14 @@ function EditDogForm(){
     return (
         <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%" }}>
           <Box display="flex" justifyContent="flex-end">
-            <IconButton width="5%"  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
+            {/* <IconButton width="5%"  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
               <ArrowBackIcon sx={{ fontSize: "2rem", fontWeight: "800"}}/>
-            </IconButton>
+            </IconButton> */}
           </Box>
 
           {/*-------------------- DETAILS --------------------*/}
         
-          <Box sx={{ display: "flex", flexDirection: "row", height: "100%", width: "100%", justifyContent: "center", alignItems: "center", gap: 5 }}>
+          <Box sx={{ display: "flex", flexDirection: "row", height: "80%", width: "100%", justifyContent: "center", alignItems: "center", gap: 5 }}>
             <Card sx={{ width: "40%", height: "50%" }}>  {/*need to figure out aspect ratio and conditional rendering to change into image upload for editing image*/}
             <img src={dog.image}/>
             </Card>

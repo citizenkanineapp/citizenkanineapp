@@ -21,7 +21,7 @@ function ConfirmClient(){
 
   const saveClient = event => {
     dispatch({type: 'ADD_CLIENT', payload: client})
-    dispatch({type: 'SET_MODAL_STATUS'})
+    dispatch({type: 'SET_MODAL_STATUS', payload: 'ClientList'})
     dispatch({type: 'CLEAR_SCHEDULE'})
     dispatch({type: 'CLEAR_CLIENT'})
     dispatch({type: 'CLEAR_DOGS'})

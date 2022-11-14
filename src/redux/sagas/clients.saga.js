@@ -3,7 +3,7 @@ import { put, takeLatest, all } from 'redux-saga/effects';
 
 
 
-function* getALlClients(action){
+function* getAllClients(action){
     console.log('arrived in get clients route');
     try {
         const clients = yield axios.get('/api/clients');
@@ -26,6 +26,9 @@ function* addClient(action){
             data: action.payload
         })
         yield put ({type: 'FETCH_CLIENTS'});
+        yield put ({type: 'CLEAR_SCHEDULE'})
+        yield put ({type: 'CLEAR_CLIENT'})
+        yield put ({type: 'CLEAR_DOGS'})
     } catch (error) {
         console.log(error);
         alert('Error adding clients');
@@ -125,7 +128,7 @@ function* updateDog(action){
 
 
 function* clientSaga() {
-    yield takeLatest('FETCH_CLIENTS', getALlClients);
+    yield takeLatest('FETCH_CLIENTS', getAllClients);
     yield takeLatest('ADD_CLIENT', addClient);
     yield takeLatest('EDIT_CLIENT', editClient);
     yield takeLatest('ADD_NEW_DOG', addDog);

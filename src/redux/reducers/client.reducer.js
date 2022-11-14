@@ -34,7 +34,8 @@ city: '', zip: '', notes: '', vet_name: '', vet_phone: '', route_id: ''}, action
         case 'ADD_SCHEDULE':
             return {...state, schedule: action.payload}
         case 'CLEAR_CLIENT':
-            return state;
+            return {first_name: '', last_name:'', email: '', phone: '', street: '', 
+            city: '', zip: '', notes: '', vet_name: '', vet_phone: '', route_id: ''};
         default:
             return state;
     }

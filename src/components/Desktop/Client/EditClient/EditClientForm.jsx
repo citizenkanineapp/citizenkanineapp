@@ -41,6 +41,7 @@ const back = event => {
 const deleteClient = (id) => {
   console.log('delete me', id)
   dispatch({type: 'DELETE_CLIENT', payload: id})
+  dispatch({type: 'CLEAR_CLIENT'})
   dispatch({type: 'SET_MODAL_STATUS'})
 }
 
@@ -70,9 +71,9 @@ const fetchOneDog = (dog) =>{
               <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2 }}>  
                 <Typography variant="h3" >{client.first_name} {client.last_name}</Typography>
                 <Box sx={{justifyContent:'space-between'}}>
-                <IconButton onClick={() => deleteClient(client.id)}>
+                {/* <IconButton onClick={() => deleteClient(client.id)}>
                     <DeleteIcon sx={{ fontSize: 45, color: '#341341', mr: 3 }}/>
-                </IconButton>
+                </IconButton> */}
                 <IconButton onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })}>
                     <CalendarMonthIcon sx={{ fontSize: 45, color: '#341341' }}/>
                 </IconButton>
@@ -172,11 +173,15 @@ const fetchOneDog = (dog) =>{
 
 
             {/*-------------------- BUTTONS --------------------*/}
-            <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
-              <Button variant="outlined" color="info"
-                onClick={back}>Cancel</Button>  {/*goes back to client list*/}
-              <Button variant="contained" color="secondary"
-                onClick={saveChanges}>Save</Button> 
+            <Box sx={{mt: 2 }} display="flex" justifyContent="space-between">
+              <Box width="28%" display="flex" justifyContent="space-between">
+                <Button variant="outlined" color="info" onClick={back}>Cancel</Button>  {/*goes back to client list*/}
+                    <Button variant="contained"
+                      onClick={() => deleteClient(client.id)}>Delete</Button> 
+              </Box>
+                <Button variant="contained" color="secondary"
+                  onClick={saveChanges}>Save</Button> 
+
             </Box>
       </Box>
     );

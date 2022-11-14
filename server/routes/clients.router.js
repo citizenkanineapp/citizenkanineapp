@@ -76,7 +76,7 @@ pool.query(queryText)
 router.post('/', rejectUnauthenticated, async (req, res) => {
   console.log(req.body);
   const client = await pool.connect();
-  const {first_name, last_name, street, city, zip, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone } = req.body
+  const {first_name, last_name, street, city, zip, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone, flag } = req.body
   // const customer = {first_name, last_name, address, phone, email, route_id}
   const dogArray = dogs
   // const vet = {vet_name, vet_phone}
@@ -98,12 +98,12 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   await Promise.all(dogArray.map(dog => { 
       const dogTxt = `
                           INSERT INTO dogs 
-                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes") 
+                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag") 
                             VALUES
-                              ($1, $2, $3, $4, $5, $6)
+                              ($1, $2, $3, $4, $5, $6, $7)
 
       `
-      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog.dog_notes]
+      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog.dog_notes, dog.flag]
       return client.query(dogTxt, dogValues)
   }));
     const scheduleTxt = `

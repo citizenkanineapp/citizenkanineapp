@@ -108,7 +108,7 @@ router.put('/details', (req, res)=>{
     const updatedEmp = req.body;
     // console.log(updatedEmp);
     // {id: 1, first_name: 'Den', last_name: 'P', email: 'dpaolini0@paypal.com', phone: '(840)6732127', image: null, street: '2900 W 43rd St', city: 'Minneapolis', zip: 55410, date: '2022-11-11T06:00:00.000Z'}
-    const {id, first_name, last_name, email, phone, street, city, zip} = updatedEmp;
+    const {id, first_name, last_name, email, phone, street, city, zip, admin} = updatedEmp;
 
     const sqlQuery=
     `
@@ -121,12 +121,13 @@ router.put('/details', (req, res)=>{
         phone = $4, 
         street = $5, 
         city = $6, 
-        zip = $7
+        zip = $7,
+        admin = $8
     WHERE
-        id = $8
+        id = $9
     `
 
-    const sqlValues = [first_name, last_name, email, phone, street, city, zip, id];
+    const sqlValues = [first_name, last_name, email, phone, street, city, zip, admin, id];
 
 
     pool.query(sqlQuery, sqlValues)
@@ -178,15 +179,15 @@ router.put('/', async (req, res)=> {
     // let emp_id = 0;
 
     try{
-        const {first_name, last_name, zip, city, phone, street, email} = empDetails;
+        const {first_name, last_name, zip, city, phone, street, email, admin} = empDetails;
         await client.query('BEGIN');
         const addEmployee = await client.query(
             `
             INSERT INTO employees
-                (first_name, last_name, zip, city, phone, street, email)
+                (first_name, last_name, zip, city, phone, street, email, admin)
             VALUES
-                ($1, $2, $3, $4, $5, $6, $7)
-            RETURNING id`, [first_name, last_name, zip, city, phone, street, email]);
+                ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING id`, [first_name, last_name, zip, city, phone, street, email, admin]);
 
             const emp_id = addEmployee.rows[0].id;
 

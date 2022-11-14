@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
 //MUI
-import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea} from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea, Switch} from "@mui/material";
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 function EmployeeForm(){
   const dispatch = useDispatch();
@@ -23,7 +23,25 @@ function EmployeeForm(){
 
   return (
       <Grid className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>
-
+          <Grid sx={{display: 'flex', justifyContent: 'right', mb: 1}}>
+                <SupervisorAccountIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
+                <Switch
+                  checked={employee.admin}
+                  onChange={()=> {
+                    if (!employee.admin){
+                      dispatch({ 
+                        type:'UPDATE_EMP_ADMIN',
+                        payload: true
+                    })
+                    }
+                    else {
+                      dispatch({ 
+                        type:'UPDATE_EMP_ADMIN',
+                        payload: false
+                    })
+                    }}}
+                  />             
+          </Grid>
           {/*-------------------- TEXT FIELDS --------------------*/}
           <Grid sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%"}}>
               <TextField 

@@ -25,10 +25,12 @@ function ClientDetails(){
       dog_name: dog.dog_name,
       image: dog.image,
       dog_id: dog.dog_id,
-      dog_notes: dog.dog_notes
+      dog_notes: dog.dog_notes,
+      flag: dog.flag
   
     }
     dispatch({type: 'SET_DOG', payload: clientDogObj})
+    console.log(clientDogObj)
     openModal('DogDetails')
   }
 

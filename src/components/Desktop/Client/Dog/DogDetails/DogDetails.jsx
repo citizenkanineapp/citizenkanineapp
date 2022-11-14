@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 //MUI
 import { Box } from "@mui/system";
 import { Button, TextField, Typography, Card, Switch, IconButton } from "@mui/material";
@@ -9,9 +10,11 @@ function DogDetails(){
   const dispatch = useDispatch();
   const dog = useSelector(store => store.dogDelete)
 
+console.log(dog)
+
   const back = event => {
     dispatch({type: 'CLEAR_DELETE_DOG'})
-    dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})
+    dispatch({ type: 'BACK_TO_VIEW'})
   }
 
     return (
@@ -32,16 +35,24 @@ function DogDetails(){
               <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "60%", gap: 3}}>
                 <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", gap: 1 }}>
                   <Typography variant="h3" sx={{ pl: "10" }}>{dog.dog_name}</Typography>
+                  
+                  {dog.flag ?
                   <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", alignItems: "center", gap: 1 }}>
 
                       {/* will need functionality to display correct status*/}
-                      <Switch disabled defaultChecked/>             
+                   
+                      {/* <Switch disbaled defaultChecked />              */}
                       <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>   {/* could do conditional rendering for color here */}
-
                   </Box>
+                : <span></span>
+
+                   }
                 </Box> 
                 <TextField value= {dog.dog_notes || ''}
-                  helperText="Notes" size="large" fullWidth disabled  multiline rows={4}/>
+                  helperText="Notes" size="large" 
+                  fullWidth disabled 
+                  InputProps={{readOnly: true}} 
+                  multiline rows={4}/>
               </Box> 
           </Box>
 

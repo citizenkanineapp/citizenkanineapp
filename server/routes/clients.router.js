@@ -189,6 +189,7 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+//route to edit dog
 router.put('/dogs', rejectUnauthenticated, async (req, res) => {
   console.log('dogs have id?', req.body)
   const {dog_name, dog_notes, flag, dog_id} = req.body
@@ -240,7 +241,8 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     let clientId = req.params.id
     const queryText = `
     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
-    routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.vet_phone, 
+    routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, 
+    dogs.vet_phone, dogs.notes as dog_notes, dogs.flag,
    clients_schedule."1", clients_schedule."2", clients_schedule."3", clients_schedule."4", clients_schedule."5"  
     from clients
             JOIN dogs
@@ -289,7 +291,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
               // const {first_name, last_name, address} = result.rows[0];
               const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name } = forDogMap[0];
               const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name}
-              client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id})})
+              client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag})})
   
               clients.push(client)
   

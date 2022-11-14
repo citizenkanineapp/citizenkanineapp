@@ -14,7 +14,7 @@ function EditDogForm(){
 
   const dispatch = useDispatch();
   const dog = useSelector (store => store.dogDelete)
-  let [flag, setFlag] = useState(false)
+  let [flag, setFlag] = useState(dog.flag)
 
   const handleFlagChange = event => {
     console.log(flag)
@@ -36,15 +36,15 @@ function EditDogForm(){
   }
 
   const saveDogDetails = (event) =>{
-    console.log('yeah boy')
+   
     dispatch({type: 'UPDATE_DOG', payload: dog})
-    dispatch({type: 'CLEAR_DELETE_DOG'})
+    // dispatch({type: 'CLEAR_DELETE_DOG'})
     dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})
   }
   
   const back = event => {
     dispatch({type: 'CLEAR_NEW_DOG'})
-    dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})
+    dispatch({ type: 'BACK_TO_VIEW'})
 
   }
  
@@ -72,14 +72,28 @@ function EditDogForm(){
           
                 </TextField>
               }
-                <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", alignItems: "center", gap: 1 }}>
-
-                    {/* will need functionality to display correct status*/}
-                    <Switch 
-                    onChange={(e) => handleFlagChange()}/>                
-                    <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>    {/* could do conditional rendering for color here */}
-
-                </Box>
+              
+      
+                  <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", alignItems: "center", gap: 1 }}>
+                     <Switch checked={dog.flag}
+                  onChange={()=> {
+                    if (!dog.flag){
+                      dispatch({ 
+                        type:'SET_EDIT_FLAG',
+                        payload: true
+                    })
+                    }
+                    else {
+                      dispatch({ 
+                        type:'SET_EDIT_FLAG',
+                        payload: false
+                    })
+                    }}}/>
+                      {dog. flag? <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
+                      :
+                       <FlagCircleIcon style={{ fontSize: 36, color: '#808080' }}/> 
+                  }
+                  </Box>
               </Box> 
               <TextField 
                 value={dog.dog_notes || ''}

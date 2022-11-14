@@ -263,6 +263,7 @@ CREATE TABLE daily_dogs (
 	"checked_in" BOOLEAN DEFAULT NULL,
 	"no_show" BOOLEAN DEFAULT NULL,
 	"cancelled" BOOLEAN DEFAULT NULL
+	UNIQUE ("dog_id", "date")
 	);
 	
 CREATE TABLE admin_notes (

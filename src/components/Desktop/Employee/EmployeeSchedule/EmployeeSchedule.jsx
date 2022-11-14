@@ -93,6 +93,7 @@ function EmployeeSchedule(){
       <Card variant="outlined" sx={{bgcolor: '#FCF4EB'}}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <StaticDatePicker
+                    className='empCalendar'
                     disableHighlightToday={false}
                     orientation="portrait"
                     openTo="day"
@@ -112,7 +113,7 @@ function EmployeeSchedule(){
                         // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
                         const weekInYear = day.diff(`${currentYear}-01-01`, 'week', false)
                         return (
-                            <Box key={day.$d} className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: 90, height: 90, justifyContent: 'center'}}>
+                            <Box key={day.$d} className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '8vw', height: '12vh', justifyContent: 'center'}}>
                               <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '1'}}>
                                 <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>
                               </Box>

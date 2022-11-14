@@ -1,14 +1,14 @@
 /* This gets rid of the date selected that normally displays on top of the StaticDayPicker */
-.css-j88s13-MuiPickersToolbar-root-MuiDatePickerToolbar-root.css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root {
+.empCalendar .css-j88s13-MuiPickersToolbar-root-MuiDatePickerToolbar-root.css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root {
     display: none !important;
 }
 
-.css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root{
+.empCalendar .css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root{
     display: none !important;
 }
 
 /* This gets rid of the button that normally display on the bottom of the StaticDayPicker */
-.css-hlj6pa-MuiDialogActions-root {
+.empCalendar css-hlj6pa-MuiDialogActions-root {
     display: none !important;
 }
 
@@ -22,7 +22,7 @@
 
 
 /* changes the size of the calendar div */
-.css-epd502 {
+.empCalendar .css-epd502 {
     width: 60vw !important;
     min-height: 90vh !important;
     /* border: 2px lightcoral dotted; */
@@ -30,7 +30,7 @@
 }
 
 /*  This customized the weekday label */
-.css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel {
+.empCalendar .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel {
     width: 8vw !important;
     height: 5vh !important;
     /* outline: 1px black solid; */
@@ -51,44 +51,46 @@
 } */
 
 /* individual day buttons (circle) */
-.css-bkrceb-MuiButtonBase-root-MuiPickersDay-root, .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
-    width: 90px !important;
-    height: 90px !important;
+.empCalendar css-bkrceb-MuiButtonBase-root-MuiPickersDay-root, .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+    width: 8vw !important;
+    height: 12vh !important;
     justify-content: right !important;
     align-items: flex-start !important;
     /* padding-top: 10px; */
 } 
 
 /* This resized the entire calendar container */
-.css-169iwlq-MuiCalendarPicker-root {
+.empCalendar .css-169iwlq-MuiCalendarPicker-root {
     width: 60vw !important;
     height: 100vh !important;
     min-height: 100vh !important;
 }
 
-.css-6t5f1e-MuiDayPicker-monthContainer {
+.empCalendar .css-6t5f1e-MuiDayPicker-monthContainer {
     min-height: 80vh !important;
 }
 
-.css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
+.empCalendar .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
     min-height: 100vh !important;
 }
 
 
 /* removes the option to select the year */
-.css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon{
+.empCalendar .css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon{
     display: none !important;
 }
 
 
 /* this changes the today's date indicator circle */
-.css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+.empCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
     color: black !important;
     background-color: transparent !important;
     /* border: #7BCEC8 1px solid; */
 
 }
 
-.css-1lunv-MuiPaper-root-MuiCard-root {
+.empCalendar .css-1lunv-MuiPaper-root-MuiCard-root {
     height: 90vh !important;
 }
+
+

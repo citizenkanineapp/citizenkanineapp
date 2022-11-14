@@ -60,6 +60,17 @@ function AddDogForm (){
     dispatch({type: 'CLEAR_DOGS'});
   }
 
+  const checkInputs = (event) => {
+   for(let dog of dogs){
+    if(dog.dog_name ===  undefined || dog.dog_name ===  '') {
+      console.log('error in form')
+    } else {
+      // dispatch({ type: 'SET_CLIENT_MODAL', })
+      saveSchedule('ConfirmClient')
+  }
+}
+}
+
 
   
  const saveSchedule = (view) => {
@@ -93,7 +104,7 @@ function AddDogForm (){
                   }
                 })
               }}
-              helperText="Dog Name"  
+              helperText="* Dog Name"  
               size="small" 
               /> 
               <TextField 
@@ -120,8 +131,6 @@ function AddDogForm (){
           <Fab color="primary" aria-label="add">
             <AddIcon onClick={()=> {
                 dispatch({type: 'ADD_DOG_INPUT'})
-              // This is adding another dog object to dog.
-              // setDog([...dog, {dogName:'sam', image:''}]);
             }}/>
           </Fab>
     
@@ -176,7 +185,7 @@ function AddDogForm (){
           <Button onClick={back}>Back</Button> 
           {/* need to make the bottom save data */}
           {/* <Button onClick={() => saveDogs('AddClient')}>Save</Button>  */}
-          <Button onClick={() => saveSchedule('ConfirmClient')}>Next</Button> 
+          <Button onClick={checkInputs}>Next</Button> 
         </Box>
       </div>
       </>

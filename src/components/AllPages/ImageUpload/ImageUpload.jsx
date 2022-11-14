@@ -2,7 +2,7 @@
 //component
 
 import { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 //MUI components
 import Avatar from '@mui/material/Avatar';
@@ -14,6 +14,8 @@ function ImageUpload ({index}) {
     //useStates needed for image upload and image preview 
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
+    const client = useSelector(store => store.clientReducer)
+
     const fileInputRef = useRef();
 
     const handleFileInputChange = (e) => {
@@ -60,7 +62,7 @@ function ImageUpload ({index}) {
                     >
                     { previewSource ?
                                 <Avatar 
-                                    src={previewSource}
+                                    src={previewSource || client.dogs[index][image]}
                                     sx={{ width: 150, height: 150 }} />
                             :
                                 <AddAPhotoIcon />

@@ -45,68 +45,64 @@ console.log('client right now', client)
                 value={client.first_name} 
                 helperText="First Name"  
                 size="small" 
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
                 InputProps={{readOnly: true}}/> 
               <TextField 
                 value={client.last_name} 
                 helperText="Last Name"  
                 size="small" 
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
                 InputProps={{readOnly: true}}/> 
               <TextField 
                 value={client.phone} 
                 helperText="Phone"  
                 size="small" 
-                InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+                InputProps={{readOnly: true}}/>
               <TextField 
                 value={client.email} 
                 helperText="Email"  
                 size="small" 
-                InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+                InputProps={{readOnly: true}}/>
               <TextField 
                 value={client.street} 
                 helperText="Address"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+              />
               <TextField 
                 value={client.city} 
                 helperText="City"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+                />
               <TextField 
                 value={client.zip} 
                 helperText="Zip"  
                 size="small" 
                 InputProps={{readOnly: true}}
-              sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+           />
               <TextField 
                 value={client.notes || ''} 
                 helperText="Notes"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+                />
               <TextField 
                 value={client.route_id || ''} 
                 helperText="Default Route"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+                />
               <TextField 
                 value={client.vet_name} 
                 helperText="Vet Name"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+                />
               <TextField 
                 value={client.vet_phone} 
                 helperText="Vet Phone"  
                 size="small" 
                 InputProps={{readOnly: true}}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' }}}/>
+                />
               
             </Grid> {/* value is what you see in the field, read only*/}
 

@@ -20,6 +20,7 @@
 33. client schedule changes form 
 34. conditional rendering for flag?
 35. still having funky stuff happen moving through client views
+36. add form remove extra dog added accidnetally?
 
 22. client search 
 23. admin note

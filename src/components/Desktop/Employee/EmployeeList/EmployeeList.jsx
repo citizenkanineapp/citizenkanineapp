@@ -55,7 +55,7 @@ function EmployeeList() {
 
   return (
     <Box className="desktop_container">
-      <Typography variant="h4">Employees</Typography>
+      <Typography variant="h4" sx={{display: 'flex', justifyContent: 'center', pt: 3}}>Employees</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sx={{ mr: 5, display: 'flex', justifyContent: 'flex-end' }}>
           <Button onClick={() => history.push('/schedule')} variant='contained' color='info' sx={{ mr: 2 }}>Schedule</Button>

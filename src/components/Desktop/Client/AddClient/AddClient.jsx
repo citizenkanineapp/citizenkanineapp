@@ -17,18 +17,21 @@ import FormHelperText from '@mui/material/FormHelperText';
 
 function AddClient(){
   const dispatch = useDispatch();
+
   const clientToAdd = useSelector(store => store.clientReducer)
   const schedule = useSelector(store => store.clientScheduleReducer)
 
   // const addClient = event => {
+
   //   event.preventDefault();
- 
+
   //   dispatch({type: 'CLEAR_CLIENT'});
   //   dispatch({ type: 'SET_MODAL_STATUS' });
 
 
   // }
 
+<<<<<<< HEAD
 
   const clientSchedule = useSelector(store => store.clientScheduleReducer)
 

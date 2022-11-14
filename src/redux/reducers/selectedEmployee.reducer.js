@@ -36,6 +36,8 @@ const editEmpDetails=(state={}, action)=>{
             return {...state, email: action.payload};
         case 'UPDATE_EMP_PHONE':
             return {...state, phone: action.payload};
+        case 'UPDATE_EMP_ADMIN':
+            return {...state, admin: action.payload}
         default:
             return state;
     }

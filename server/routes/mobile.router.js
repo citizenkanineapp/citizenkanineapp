@@ -162,7 +162,7 @@ router.get('/route/:route_id', async (req, res) => {
     // routes need to be arrays of dog objects ...
     // do we want separate arrays per route?
     const routeQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes, routes.name AS route from daily_dogs
+    SELECT daily_dogs.*, dogs.flag, dogs.notes, dogs.image, routes.name AS route from daily_dogs
 	JOIN dogs
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes
@@ -182,7 +182,7 @@ router.get('/route/:route_id', async (req, res) => {
 
 router.get('/routes', async (req, res) => {
     const routesQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes, routes.name AS route from daily_dogs
+    SELECT daily_dogs.*, dogs.flag, dogs.notes, dogs.image, routes.name AS route from daily_dogs
 	JOIN dogs
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes

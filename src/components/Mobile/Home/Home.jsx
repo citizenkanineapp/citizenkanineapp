@@ -6,6 +6,13 @@ import LogOutButton from '../../AllPages/LogOutButton/LogOutButton';
 function Home() {
   const history = useHistory();
   const user = useSelector(store => store.user);
+  const dispatch = useDispatch();
+
+  const adminTime = () => {
+    dispatch({ type: 'POPULATE_DAILY_DOGS' });
+    alert("Don't forget to turn your phone sideways!");
+    history.push('/m/routes/admin');
+  }
 
   return (
     <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
@@ -41,6 +48,11 @@ function Home() {
           <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/routes')}>ROUTES</Button>
           <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/employees')}>Schedule</Button>
           <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/resetpass')}>Account</Button>
+          {user.admin ?
+            <Button color='secondary' variant='outlined' onClick={(event) => adminTime()}>Load Balancing</Button>
+            :
+            null
+          }
           <LogOutButton />
         </Stack>
 

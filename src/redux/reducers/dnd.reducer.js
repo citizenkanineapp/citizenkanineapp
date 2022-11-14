@@ -40,6 +40,10 @@ const routes = (state = {}, action) => {
                 return { ...state, [oldRouteName]: sourceRoute, [newRouteName]: destinationRoute };
             }
 
+        case 'CLEAR_DAILY_ROUTES':
+            return state;
+
+
         default:
             return state;
     }

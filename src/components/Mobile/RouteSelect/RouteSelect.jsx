@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AvatarGroup, ListItemAvatar, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { AvatarGroup, Card, CardContent, Avatar, Typography, Grid} from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import FlagIcon from '@mui/icons-material/Flag';
@@ -38,6 +38,7 @@ function RouteSelect() {
 
     return (
         <Grid container spacing={2} sx={{ height: '85%', alignItems: 'center', justifyContent: 'center' }}>
+
             {/* route is the name of each route */}
             {routes.map((route, i) => (
                 <Grid item xs={11} sx={{ height: '20%' }}>

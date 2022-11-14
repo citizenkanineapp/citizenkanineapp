@@ -7,7 +7,11 @@ import dnd from './dnd.reducer';
 import allEmployeesReducer from './allEmployees.reducer';
 import selectedEmployeeReducer from './selectedEmployee.reducer';
 import clientsReducer from './clients.reducer';
-import clientToAddReducer from './clientToAdd.reducer';
+import dogReducer from './dog.reducer';
+import clientScheduleReducer from './clientSchedule.reducer';
+import newDogReducer from './newDog.reducer';
+import dogDelete from './dogDelete.reducer';
+
 import clientReducer from './client.reducer';
 import routeReducer from './route.reducer';
 
@@ -20,8 +24,11 @@ const rootReducer = combineReducers({
   dnd,
   allEmployeesReducer,
   clientsReducer,
-  clientToAddReducer,
   clientReducer,
+  dogReducer,
+  clientScheduleReducer,
+  newDogReducer,
+  dogDelete,
   selectedEmployeeReducer,
   routeReducer,
 });

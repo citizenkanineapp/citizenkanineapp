@@ -3,7 +3,7 @@ import { useState } from "react";
 
 //MUI
 import { Box } from "@mui/system";
-import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, IconButton } from "@mui/material";
+import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, IconButton, CardContent } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PetsIcon from '@mui/icons-material/Pets';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
@@ -18,41 +18,34 @@ import FormHelperText from '@mui/material/FormHelperText';
 function AddClient(){
   const dispatch = useDispatch();
   const clientToAdd = useSelector(store => store.clientToAddReducer)
+   // const addClient = event => {
+  //   event.preventDefault();
 
+  //   dispatch({type: 'CLEAR_CLIENT'});
+  //   dispatch({ type: 'SET_MODAL_STATUS' });
+  // }
 
   //use states for client information
 
-  let [firstName, setFirstName] = useState('');
-  let [lastName, setLastName] = useState('');
-  let [email, setEmail] = useState('');
-  let [phoneNumber, setPhoneNumber] = useState('');
-  let [address, setAddress] = useState('');
-  let [notes, setNotes] = useState('');
-  let [route, setRoute] = useState('');
-  let [vetName, setVetName] = useState('');
-  // let [vetClinic, setVetClinic] = useState('');
-  let [vetPhone, setVetPhone] = useState('');
-  // let [qbId, setQbId] = useState('');
-
-  const addClient = event => {
-    event.preventDefault();
-    const action ={
-      type: 'ADD_CLIENT',
-      payload: {
-        first_name: firstName,
-        last_name: lastName,
-        address: address,
-        route: route,
-        phone: phoneNumber,
-        notes: notes,
-        //including dog info in object
-        vet_name: vetName,
-        vet_phone: vetPhone,
-      }
-    }
-    dispatch(action);
-    dispatch({ type: 'SET_MODAL_STATUS' });
+  const back = event => {
+    dispatch({type: 'CLEAR_CLIENT'});
+    dispatch({ type: 'SET_MODAL_STATUS' })
   }
+
+  const checkInputs = (event) => {
+    if(clientToAdd.first_name === undefined || clientToAdd.first_name === '' ||  clientToAdd.last_name === undefined || clientToAdd.last_name === '' || clientToAdd.phone === undefined ||
+    clientToAdd.phone === '' || clientToAdd.street === undefined || clientToAdd.street === '' || clientToAdd.city === undefined || clientToAdd.city === '' || clientToAdd.zip === undefined || clientToAdd.zip === '' ||
+    clientToAdd.email === undefined || clientToAdd.email === '' || clientToAdd.route_id === undefined || clientToAdd.route_id === '') {
+      console.log('error in form')
+    } else if(clientToAdd.phone.length > 13){
+      console.log('phone number error')
+    } else {
+      dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})
+  }
+}
+
+
+  
 
   return (
       <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
@@ -68,106 +61,93 @@ function AddClient(){
          
               {/*-------------------- TEXT FIELDS --------------------*/}
          
-            <Grid sx={{display: 'grid', gridTemplateColumns: '1.5fr 2fr 1fr', gap: 1}}>
+            <Grid sx={{display: 'grid', gridTemplateColumns: '1.5fr 1.5fr 1fr', gap: 1}}>
              
                 {clientToAdd &&
                 <TextField 
                   value={clientToAdd.first_name} 
-                  onChange={(event) => setFirstName(event.target.value)}
-                  helperText="First Name"  
+                  onChange={(event) => dispatch({type: 'ADD_FIRST_NAME', payload: event.target.value})}
+                  helperText="* First Name"  
+                  // error={clientToAdd.first_name === ""}
+                  // helperText={clientToAdd.first_name === "" ? 'Empty field!' : 'First Name'}
                   size="small" />
                 }
                 <TextField 
-                  value={lastName} 
-                  onChange={(event) => setLastName(event.target.value)}
-                  helperText="Last Name"  
+                  value={clientToAdd.last_name} 
+                  onChange={(event) => dispatch({type: 'ADD_LAST_NAME', payload: event.target.value})}
+                  helperText="* Last Name"  
                   size="small" /> 
                 <TextField 
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)} 
-                  helperText="Email"  
+              value={clientToAdd.phone} 
+              onChange={(event) => dispatch({type: 'ADD_PHONE', payload: event.target.value})}
+              helperText="* Phone"  
+              size="small" />
+                <TextField 
+                  value={clientToAdd.street} 
+                  onChange={(event) => dispatch({type: 'ADD_STREET', payload: event.target.value})}
+                  helperText="* Address"  
                   size="small" />
                 <TextField 
-                  value={phoneNumber} 
-                  onChange={(event) => setPhoneNumber(event.target.value)}
-                  helperText="Phone"  
+                  value={clientToAdd.city} 
+                  onChange={(event) => dispatch({type: 'ADD_CITY', payload: event.target.value})}
+                  helperText="* City"  
                   size="small" />
                 <TextField 
-                  value={address}
-                  onChange={(event) => setAddress(event.target.value)}
-                  helperText="Address"  
+                  value={clientToAdd.zip} 
+                  onChange={(event) => dispatch({type: 'ADD_ZIPCODE', payload: event.target.value})}
+                  helperText="* Zip Code"  
                   size="small" />
+
                 <TextField 
-                  value={notes}
-                  onChange={(event) => setNotes(event.target.value)}
-                  helperText="Notes"  
+                  value={clientToAdd.email} 
+                  onChange={(event) => dispatch({type: 'ADD_EMAIL', payload: event.target.value})}
+                  helperText="* Email"  
                   size="small" />
-                <TextField 
-                  value={vetName}
-                  onChange={(event) => setVetName(event.target.value)} 
-                  helperText="Vet"  
-                  size="small" />
-                {/* <TextField 
-                  value={vetClinic} 
-                  onChange={(event) => setVetClinic(event.target.value)}
-                  helperText="Clinic"  
-                  size="small" /> */}
-                <TextField 
-                  value={vetPhone}
-                  onChange={(event) => setVetPhone(event.target.value)}
-                  helperText="Vet Phone"  
-                  size="small" />
-                    <FormControl>
+              <TextField 
+                value={clientToAdd.notes} 
+                onChange={(event) => dispatch({type: 'ADD_NOTES', payload: event.target.value})}
+                helperText="Notes"  
+                size="small" />
+              <TextField 
+                value={clientToAdd.vet_name || ''} 
+                onChange={(event) => dispatch({type: 'ADD_VET_NAME', payload: event.target.value})}
+                helperText="Vet"  
+                size="small" />
+              <TextField 
+                value={clientToAdd.vet_phone || ''} 
+                onChange={(event) => dispatch({type: 'ADD_VET_PHONE', payload: event.target.value})}
+                helperText="Vet Phone"  
+                size="small" />
+            <FormControl>
                 <Select
                   labelId="route"
+                  size="small"
                   id="route"
-                  value={route}
+                  value={clientToAdd.route_id || ''}
                   onChange={(event) => {
                     
-                    setRoute(event.target.value);
+                    dispatch({type: 'ADD_ROUTE', payload: event.target.value})
         
                   }}
                 >
-                  <MenuItem value={'tangletown'}>Tangletown</MenuItem>
-                  <MenuItem value={'emerson'}>Emerson</MenuItem>
-                  <MenuItem value={'far'}>Far</MenuItem>
-                  <MenuItem value={'misfits'}>Misfits</MenuItem>
-                  <MenuItem value={'unassigned'}>Unassigned</MenuItem>
+                  <MenuItem value={1}>Tangletown</MenuItem>
+                  <MenuItem value={2}>Emerson</MenuItem>
+                  <MenuItem value={3}>Far</MenuItem>
+                  <MenuItem value={4}>Misfits</MenuItem>
+                  <MenuItem value={5}>Unassigned</MenuItem>
                 </Select>
-                <FormHelperText>Default Route</FormHelperText>
-              </FormControl>
-                {/* <TextField 
-                  value={qbId}
-                  onChange={(event) => setQbId(event.target.value)}
-                  helperText="Quickbooks ID"  
-                  size="small" />  */}
-             
-            
+                <FormHelperText>* Default Route</FormHelperText>
+              </FormControl>          
             </Grid> 
         
 
-
-          {/*-------------------- DOG PICTURES --------------------*/}
-          <Grid sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-          
-            
-
-         {/*------------------ ADD DOG EXAMPLE ------------------*/}
-              <Card sx={{ width: '100%', m: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                  <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "rgb(227, 218, 216, 0.5)", width: "89%", height: "90%", borderRadius: "0.5rem" }} alt="add dog button" 
-                     onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})}
-                     >
-                      <LibraryAddIcon  sx={{ height: "100%", color: "rgb(171, 164, 162)" }}/>
-                  </Box>
-              </Card>
-          </Grid>
-
+                       
 
           {/*-------------------- BUTTONS --------------------*/}
           <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
             <Button variant="outlined" color="info"
-              onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Back</Button>  {/*goes back to client list*/}
-            <Button variant="contained" color="success" onClick={addClient}>Save</Button> 
+              onClick={back}>Back</Button>  {/*goes back to client list*/}
+            <Button variant="contained" color="success" onClick={checkInputs}>Next</Button> 
           </Box>
       </Box>
     );

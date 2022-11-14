@@ -1,8 +1,11 @@
+import { Typography, Grid } from '@mui/material';
+
+
 function MapView(){
     return (
-        <div className="container">
+        <Grid container>
           <h1>MapView</h1>
-        </div>
+        </Grid>
       );
 }
 

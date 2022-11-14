@@ -1,5 +1,5 @@
 const dogReducer = (state = [{dog_name: '', image: '', dog_notes: '', flag: false}], action) => {
-    // console.log ('in dog reducer', action.payload)
+    console.log ('in dog reducer', action.payload)
     switch (action.type) {
         case 'ADD_DOG_NAME':
             // change the dog_name value for a given dog object (based on index)
@@ -35,7 +35,7 @@ const dogReducer = (state = [{dog_name: '', image: '', dog_notes: '', flag: fals
             })
             return photoState;
         case 'ADD_DOG_INPUT':
-            return [...state, {dog_name: '', image: '', dog_notes: ''}]
+            return [...state, {dog_name: '', image: '', dog_notes: '', flag: false}]
         case 'SET_FIRST_FLAG':
             console.log(action.payload)
             const flagState = state.map((flag , index) => {

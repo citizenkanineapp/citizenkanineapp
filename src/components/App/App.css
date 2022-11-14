@@ -6,19 +6,17 @@
 html,
 body,
 #react-root {
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
 }
 
 body {
   margin: 0px;
+  padding: 0px;
   font-family: 'Noto Sans', sans-serif;
 }
 
-img {
-  display: inline-block;
-  max-width: 100%;
-}
-
 .app_body{
-  height: 100vh;
+  height: 100%;
+  width: 100%;
 }

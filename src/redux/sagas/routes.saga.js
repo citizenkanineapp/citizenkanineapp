@@ -21,6 +21,24 @@ function* getRoutes() {
     }
 }
 
+function* getRouteDetails(action) {
+    console.log('GETTING ROUTE:', action.payload);
+    const routeID = Number(action.payload);
+
+    try {
+        const routeResult = yield axios({
+            method: 'GET',
+            url: `/api/mobile/route/${routeID}`
+        })
+        console.log(routeResult);
+
+        yield put({ type: 'SET_ROUTE', payload: routeResult.data })
+    } catch (error) {
+        console.log('ERROR GETTING ROUTE', error);
+    }
+
+}
+
 
 function* updateRoute(action) {
     console.log('UPDATING ROUTE', action.payload)
@@ -64,9 +82,22 @@ function* updateRoute(action) {
     }
 }
 
+function* populateDailyDogs(action) {
+    console.log('Populating Todays Dogs');
+
+    try {
+        const populatedDogs = yield axios.get('/api/mobile/daily');
+    } catch (error) {
+        console.log('Duplicate Dogs Detected - Press OK to continue', error);
+    }
+}
+
+
 function* RouteSaga() {
     yield takeLatest('GET_DAILY_ROUTES', getRoutes);
     yield takeLatest('UPDATE_ROUTE', updateRoute);
+    yield takeLatest('GET_ROUTE_DETAILS', getRouteDetails);
+    yield takeLatest('POPULATE_DAILY_DOGS', populateDailyDogs);
 }
 
 export default RouteSaga;

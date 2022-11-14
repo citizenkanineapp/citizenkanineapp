@@ -8,7 +8,6 @@ import { ThemeProvider } from '@mui/material/styles';
 
 //DESKTOP COMPONENTS
 import Nav from '../Desktop/DesktopNav/Nav';
-import NavTransition from '../Desktop/DesktopNav/NavTransition';
 import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
 import LoginPage from '../AllPages/Login/Login/LoginPage';
@@ -49,7 +48,6 @@ function App() {
         <div className="app_body">
 
           <Nav />
-          <NavTransition />
           <Switch>
 
             {/* --------------------- REDIRECTIONS -------------------- */}
@@ -125,7 +123,7 @@ function App() {
               <Map />
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/m/employees">
+            <ProtectedRoute exact path="/m/schedule">
               <WalkerSchedule />
             </ProtectedRoute>
 
@@ -133,7 +131,7 @@ function App() {
               <Routes />
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/m/dogs/">
+            <ProtectedRoute exact path="/m/dog/"> {/* should we use params here? - sarah */}
               <DogDetails />
             </ProtectedRoute>
 
@@ -154,7 +152,7 @@ function App() {
             </Route>
 
           </Switch>
-          {/* mobile nav currently displays in desktop */}
+
           <MobileNav /> 
         </div>
       </ThemeProvider>

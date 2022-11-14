@@ -27,7 +27,7 @@ function Invoicing(){
   const dispatch = useDispatch();
   //this route gets all clients to populate client list //
   useEffect(() => {
-    dispatch({ type: 'FETCH_CLIENTS' });
+    // dispatch({ type: 'FETCH_CLIENTS' });
     dispatch({ type: 'FETCH_INVOICE_DATA'});
     console.log(dayjs('2022-11-13').week(),dayjs('2022-11-01').week()) // 26
     

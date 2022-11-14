@@ -268,11 +268,13 @@ CREATE TABLE dogs_schedule_changes (
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	
-	
+-- ** added "week_of_year" to daily_dogs for purposes of invoice query.
+-- ** week_of_year added to each data row in mobile.router PUT request	
 CREATE TABLE daily_dogs (
 	"id" SERIAL PRIMARY KEY,
-	"name" NOT NULL VARCHAR(150),
+	"name" VARCHAR(150) NOT NULL,
 	"date" DATE DEFAULT CURRENT_DATE,
+	"week_of_year" INT DEFAULT NULL,
 	"dog_id" INT NOT NULL REFERENCES dogs(id),
 	"route_id" INT NOT NULL REFERENCES routes(id),
 	"client_id" INT NOT NULL REFERENCES clients(id),
@@ -281,7 +283,30 @@ CREATE TABLE daily_dogs (
 	"cancelled" BOOLEAN DEFAULT NULL,
 	UNIQUE ("dog_id", "date")
 	);
-	
+-- ** daily_dogs MOCK DATA
+insert into daily_dogs
+	("date", "dog_id","checked_in","no_show","cancelled","route_id","week_of_year")
+values
+	('2022-10-31','3','true','false','false','1','45'),
+	('2022-10-31','5','true','false','false','1','45'),
+	('2022-11-02','3','true','false','false','1','45'),
+	('2022-11-02','5','true','false','false','1','45'),
+	('2022-11-04','3','true','false','false','1','45'),
+	('2022-11-04','5','true','false','false','1','45'),
+	('2022-11-07','3','true','false','false','1','46'),
+	('2022-11-07','5','true','false','false','1','46'),
+	('2022-11-09','3','true','false','false','1','46'),
+	('2022-11-11','3','false','true','false','1','46'),
+	('2022-11-11','5','false','true','false','1','46'),
+	('2022-10-31','6','true','false','false','1','45'),
+	('2022-11-01','6','true','false','false','1','45'),
+	('2022-11-02','6','true','false','false','1','45'),
+	('2022-11-03','6','false','true','false','1','45'),
+	('2022-11-04','6','true','false','false','1','45'),
+	('2022-11-07','6','true','false','false','1','46'),
+	('2022-11-08','6','true','false','false','1','46'),
+	('2022-11-09','6','true','false','false','1','46');
+
 CREATE TABLE admin_notes (
 	"id" SERIAL PRIMARY KEY,
 	"user_id" INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,

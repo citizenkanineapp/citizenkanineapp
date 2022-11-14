@@ -11,7 +11,7 @@ function* getALlClients(action){
         yield put ({type: 'SET_CLIENTS', payload: clients.data});
     } catch (error) {
         console.log(error);
-        alert('Error fetching clients');
+        // alert('Error fetching clients');
     }
     
 }

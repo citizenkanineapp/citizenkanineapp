@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import {autoRehydrate} from 'redux-persist'
+import { autoRehydrate } from 'redux-persist'
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -14,11 +14,11 @@ const middlewareList = process.env.NODE_ENV === 'development' ?
   [sagaMiddleware, logger] :
   [sagaMiddleware];
 
-  const persistConfig = {
-    key: 'root',
-    storage,
-    blacklist: ['modal'],
-  }
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ['modal', 'dnd'],
+}
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

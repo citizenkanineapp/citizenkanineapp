@@ -40,12 +40,13 @@ function AddDogForm (){
 //   console.log('index?', index)
 //   setFlag(!flag)
 //   dispatch({type: 'SET_FIRST_FLAG',  payload: {
-//     flag: flag,
+//     flag: !flag,
 //     index: index
 // }})
 
 // }
 
+//dispatch payload of true 
 
   
  const saveSchedule = (view) => {
@@ -78,10 +79,29 @@ function AddDogForm (){
       {dogs.map((singleDog, index)=> (
         // singleDog = {name:'', image:''}
       <Card key={index} sx={{width: '30%', m: 1, mt:0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
-          {/* <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", alignItems: "center", gap: 1 }}>
-              <Switch checked={flag} onChange={() => handleFlagChange(index)} />
+          <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", alignItems: "center", gap: 1 }}>
+              <Switch checked={dogs[index].flag} 
+                  onChange={()=> {
+                    if (!dogs[index].flag){
+                      dispatch({ 
+                        type:'SET_FIRST_FLAG',
+                        payload: {
+                          flag: true,
+                          index: index
+                        }
+                    })
+                    }
+                    else {
+                      dispatch({ 
+                        type:'SET_FIRST_FLAG',
+                        payload: {
+                          flag: false,
+                          index: index
+                        }
+                    })
+                    }}}/>
               <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>
-            </Box> */}
+            </Box>
               <ImageUpload index={index} />
               <TextField 
                 value={singleDog.dog_name} 
@@ -135,7 +155,7 @@ function AddDogForm (){
           {/* need to make the bottom save data */}
           {/* <Button onClick={() => saveDogs('AddClient')}>Save</Button>  */}
           <Button variant="contained" color="success"
-            onClick={checkInputs}>Add Client</Button> 
+            onClick={checkInputs}>Next</Button> 
         </Box>
    
       </>

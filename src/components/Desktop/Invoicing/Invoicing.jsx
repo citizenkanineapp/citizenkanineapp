@@ -7,11 +7,6 @@ import '../Desktop.css';
 import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import dayjs from 'dayjs';
-// This plugin is needed to get the week number in year:
-var weekOfYear = require('dayjs/plugin/weekOfYear')
-dayjs.extend(weekOfYear)
-
 // NO THESE COLORS AREN'T FINAL BUT WE DEF SHOULD HAVE SOME VISUAL CHANGE
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
@@ -28,8 +23,7 @@ function Invoicing(){
   //this route gets all clients to populate client list //
   useEffect(() => {
     // dispatch({ type: 'FETCH_CLIENTS' });
-    dispatch({ type: 'FETCH_INVOICE_DATA'});
-    console.log(dayjs('2022-11-13').week(),dayjs('2022-11-01').week()) // 26
+    dispatch({ type: 'FETCH_INVOICE_DATA', payload: {clientId: 1, month: 11, year:2022}});
     
   }, []);
 

@@ -7,14 +7,29 @@ const dayjs =require('dayjs');
 const weekOfYear = require('dayjs/plugin/weekOfYear')
 dayjs.extend(weekOfYear)
 
-
-
 router.get('/', async (req, res) => {
     console.log('in /api/invoice');
-    // const client = await pool.connect(); //used for batch queries?
+    console.log(req.query)
+    const searchClientId = req.query.clientId;
+    const searchMonth = req.query.month;
+    const searchYear = req.query.year;
+    const searchTerms = [ searchClientId, searchMonth, searchYear ];
+    console.log(searchTerms)
+    const client = await pool.connect(); //used for batch queries?
+
+
+    // use in case of client ALL
+    // switch (weekday.number) {
+    //     case 1:
+    //         console.log('Monday');
+    //         searchQuery += 'WHERE "1" = TRUE ORDER BY route_id;';
+    //         break;
+    // }
 
     // query returns data object of each walk instance by customer-date
+    // AND walks-per week
     // will need to include search terms - invoice period date (month) and possibly client
+
     const queryWalkDetails = `
     SELECT
         clients.id AS clientid,
@@ -60,8 +75,10 @@ router.get('/', async (req, res) => {
                 results2.week_of_year = daily_dogs.week_of_year
                 AND dogs.client_id = results2.client_id
             )
-   
-
+    WHERE
+        clients.id = $1 AND
+        EXTRACT (MONTH FROM daily_dogs.date) = $2 AND
+        EXTRACT (YEAR FROM daily_dogs.date) = $3 
     GROUP BY
         daily_dogs.date,
         results2.walks_per_week,
@@ -74,25 +91,17 @@ router.get('/', async (req, res) => {
         clientid,
         date;
 `;
-// WHERE
-// clients.id = $1
-// EXTRACT (MONTH FROM daily_dogs.date) = $2 AND
-// EXTRACT (YEAR FROM daily_dogs.date) = $3 AND
-    try {
 
-        const resDetails = await pool.query(queryWalkDetails);
+
+    try {
+        const resDetails = await pool.query(queryWalkDetails,searchTerms);
         const invoiceData = resDetails.rows;
         console.log(invoiceData);
-
-        // for (let serviceItem of invoiceData) {
-        //     serviceItem.week = dayjs(serviceItem.date).week();
-        // }
-        // console.log(invoiceData);
-
-    } catch {
-
+        res.send(invoiceData);
+    } catch (error) {
+        console.log('Error GET /api/invoice', error);
+        res.sendStatus(500);
     }
 });
-
 
 module.exports = router;

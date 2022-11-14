@@ -149,7 +149,8 @@ VALUES
 	('2 Dogs - Ad Hoc', '45'),
 	('2 Dogs - 2-4x / week', '42'),
 	('2 Dogs - 5x / week', '37'),
-	('3 Dogs',  '54');
+	('3 Dogs',  '54'),
+	('Other', '0');
 
 CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,
@@ -158,6 +159,7 @@ CREATE TABLE clients (
 	"street" VARCHAR(150),
 	"city" VARCHAR(150),
 	"zip" INT,
+--	"service_id" INT NOT NULL REFERENCES,
 	"route_id" INT NOT NULL REFERENCES routes(id),
 	"phone" VARCHAR(13),
 	"email" VARCHAR(150) NOT NULL,

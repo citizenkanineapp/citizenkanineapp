@@ -13,6 +13,7 @@ import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
 function ClientForm(){
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
+  
   useEffect(()=> {
     dispatch({
       type: 'FETCH_CLIENTS'
@@ -112,12 +113,12 @@ const fetchOneDog = (dog) =>{
                   helperText="Notes"  
                   size="small"/>
                 <TextField 
-                  value={client.vet_name} 
+                  value={client.vet_name || ''} 
                   onChange={(e) => dispatch({type: 'ADD_VET_NAME', payload: e.target.value})}
                   helperText="Vet"  
                   size="small"/>
                 <TextField 
-                  value={client.vet_phone}
+                  value={client.vet_phone || ''}
                   onChange={(e) => dispatch({type: 'ADD_VET_PHONE', payload: e.target.value})}
                   helperText="Vet Contact"  
                   size="small"/>

@@ -2,9 +2,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
 //MUI
-import { Button, TextField, Typography, Card, CardActions, Box, CardContent, CardMedia, Grid, IconButton } from "@mui/material";
+import { Button, TextField, Typography, Card, CardActions, Box, CardContent, Switch, CardMedia, Grid, IconButton } from "@mui/material";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 
 import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
 
@@ -91,16 +92,20 @@ function AddDogForm (){
       {dogs.map((singleDog, index)=> (
         // singleDog = {name:'', image:''}
       <Card key={index} sx={{width: '30%', m: 1, mt:0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
-            <ImageUpload index={index} />
-            <TextField 
-              value={singleDog.dog_name} 
-              sx={{width: 150}} 
-              onChange={(e) => {
-                dispatch({
-                  type: 'ADD_DOG_NAME',
-                  payload: {
-                    dog_name: e.target.value,
-                    index: index
+          {/* <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", alignItems: "center", gap: 1 }}>
+              <Switch />
+              <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>
+            </Box> */}
+              <ImageUpload index={index} />
+              <TextField 
+                value={singleDog.dog_name} 
+                sx={{width: 150}} 
+                onChange={(e) => {
+                  dispatch({
+                    type: 'ADD_DOG_NAME',
+                    payload: {
+                      dog_name: e.target.value,
+                      index: index
                   }
                 })
               }}

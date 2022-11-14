@@ -46,7 +46,7 @@ const dogReducer = (state = [{dog_name: '', image: '', dog_notes: ''}], action) 
 export default dogReducer;
 
 
-//can't map through object
+
 
 // const dogReducer = (state = {}, action) => {
 //     switch (action.type) {

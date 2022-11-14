@@ -93,13 +93,13 @@ function ClientDetails(){
                 InputProps={{readOnly: true}}
                />
               <TextField 
-                value={client.vet_name} 
+                value={client.vet_name || ''} 
                 helperText="Vet Name"  
                 size="small" 
                 InputProps={{readOnly: true}}
             />
               <TextField 
-                value={client.vet_phone} 
+                value={client.vet_phone || ''} 
                 helperText="Vet Phone"  
                 size="small" 
                 InputProps={{readOnly: true}}

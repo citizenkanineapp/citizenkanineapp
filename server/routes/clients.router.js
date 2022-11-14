@@ -217,16 +217,16 @@ router.put('/dogs', rejectUnauthenticated, async (req, res) => {
 
 router.post('/dog', rejectUnauthenticated, (req, res) => {
   console.log(req.body)
-  const{vet_name, vet_phone, dog_name, dog_notes, image, client_id} = req.body
+  const{vet_name, vet_phone, dog_name, dog_notes, image, client_id, flag} = req.body
 
   try{
   const dogTxt = `
             INSERT INTO dogs 
-              ("client_id", "name", "image", "vet_name", "vet_phone", "notes") 
+              ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag") 
               VALUES
-              ($1, $2, $3, $4, $5, $6) ;
+              ($1, $2, $3, $4, $5, $6, $7) ;
   `
-  const dogValues = [client_id, dog_name, image, vet_name, vet_phone, dog_notes]
+  const dogValues = [client_id, dog_name, image, vet_name, vet_phone, dog_notes, flag]
   pool.query(dogTxt, dogValues)
   res.sendStatus(201);
   } catch (error) {

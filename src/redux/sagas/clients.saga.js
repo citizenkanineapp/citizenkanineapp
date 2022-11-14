@@ -4,7 +4,7 @@ import { put, takeLatest, all } from 'redux-saga/effects';
 
 
 function* getALlClients(action){
-    // console.log('arrived in get client route');
+    console.log('arrived in get clients route');
     try {
         const clients = yield axios.get('/api/clients');
         // console.log(clients.data)

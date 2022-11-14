@@ -30,8 +30,8 @@ function ClientDetails(){
   
     }
     dispatch({type: 'SET_DOG', payload: clientDogObj})
-    console.log(clientDogObj)
-    openModal('DogDetails')
+    console.log(' does it pass dog?' ,clientDogObj)
+    // openModal('DogDetails')
   }
 
   const openModal = (view) => {

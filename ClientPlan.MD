@@ -19,6 +19,7 @@
 33. client schedule changes form 
 35. still having funky stuff happen moving through client views
 36. add form remove extra dog added accidnetally?
+37. need to fix flag on initial add <----------
 
 22. client search 
 23. admin note

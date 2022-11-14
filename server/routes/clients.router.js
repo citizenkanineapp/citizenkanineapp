@@ -237,7 +237,7 @@ router.post('/dog', rejectUnauthenticated, (req, res) => {
 
 
 router.get('/:id', rejectUnauthenticated, (req, res) => {
-    console.log('arrived in server get one route', req.params.id)
+    // console.log('arrived in server get one route', req.params.id)
     let clientId = req.params.id
     const queryText = `
     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
@@ -258,8 +258,8 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
   const queryValues = [clientId]
   pool.query(queryText, queryValues)
       .then(result => {
-        console.log('how to target schedule?', result.rows[0])
-        console.log(result.rows[0][1])
+        // console.log('how to target schedule?', result.rows[0])
+        // console.log(result.rows[0][1])
       
           //all IDs from database
           let idArray = [];

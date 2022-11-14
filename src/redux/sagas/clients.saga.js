@@ -59,9 +59,8 @@ function* addDog(action){
             url: '/api/clients/dog',
             data: action.payload
         })
-        yield all([
-            put ({type: 'FETCH_ONE_CLIENT', payload: action.payload.client_id}),
-        ])
+        yield put({type: 'FETCH_ONE_CLIENT', payload: action.payload.client_id})
+        
     } catch (error) {
         console.log(error);
         alert('Error adding dog');

@@ -1,4 +1,5 @@
-const clientReducer = (state = {}, action) => {
+const clientReducer = (state = {first_name: '', last_name:'', email: '', phone: '', street: '', 
+city: '', zip: '', notes: '', vet_name: '', vet_phone: '', route_id: ''}, action) => {
     switch (action.type) {
         case 'SET_CLIENT': // switch to client to add later?
             return action.payload;
@@ -33,7 +34,7 @@ const clientReducer = (state = {}, action) => {
         case 'ADD_SCHEDULE':
             return {...state, schedule: action.payload}
         case 'CLEAR_CLIENT':
-            return {};
+            return state;
         default:
             return state;
     }

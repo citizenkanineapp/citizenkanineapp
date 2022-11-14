@@ -24,7 +24,6 @@ function EmployeeForm(){
   return (
       <Grid className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>
           <Grid sx={{display: 'flex', justifyContent: 'right', mb: 1}}>
-                <SupervisorAccountIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
                 <Switch
                   checked={employee.admin}
                   onChange={()=> {
@@ -32,15 +31,16 @@ function EmployeeForm(){
                       dispatch({ 
                         type:'UPDATE_EMP_ADMIN',
                         payload: true
-                    })
+                      })
                     }
                     else {
                       dispatch({ 
                         type:'UPDATE_EMP_ADMIN',
                         payload: false
-                    })
+                      })
                     }}}
                   />             
+                  <SupervisorAccountIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
           </Grid>
           {/*-------------------- TEXT FIELDS --------------------*/}
           <Grid sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%"}}>
@@ -201,7 +201,7 @@ function EmployeeForm(){
               <Button
                 variant="outlined" color="info"
                 onClick={() => {
-                  dispatch({ type: 'SET_MODAL_STATUS' })
+                  dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails'})
                 }}>
                 Cancel
               </Button>  {/*goes back to Employee list*/}

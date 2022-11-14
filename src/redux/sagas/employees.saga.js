@@ -90,6 +90,12 @@ function* updateEmpDetails(action){
             url: '/api/employees/details',
             data: updatedEmp
         })
+        // updates the user's admin status after employee details are updated.
+        yield axios({
+            method: 'PUT',
+            url: '/api/user/admin',
+            data: {admin: updatedEmp.admin, emp_id: updatedEmp.id}
+        })
         // updates the selectedEmployee reducer so that the details page will render the updated employee details
         yield put({
             type: 'SET_EMPLOYEE',

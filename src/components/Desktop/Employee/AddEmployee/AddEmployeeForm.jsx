@@ -24,11 +24,11 @@ function AddEmployee(){
   return (
     <Grid className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>
           <Grid sx={{display: 'flex', justifyContent: 'right', mb: 1}}>
-                <SupervisorAccountIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
                 <Switch
                   checked={admin}
                   onChange={handleSwitch}
                   />             
+                <SupervisorAccountIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
           </Grid>
           {/*-------------------- TEXT FIELDS --------------------*/}
           <Grid sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%"}}>

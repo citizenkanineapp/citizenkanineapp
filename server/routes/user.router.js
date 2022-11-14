@@ -57,6 +57,33 @@ router.put('/passreset/:id', (req, res) => {
     })
 })
 
+// PUT route to update the admin status when an employee's details are changed. 
+
+router.put('/admin', (req, res)=> {
+  const { admin, emp_id} = req.body;
+  // console.log(admin);
+  const sqlQuery = 
+    `
+    UPDATE 
+      "user"
+    SET
+      admin = $1
+    WHERE 
+      emp_id = $2;
+    `
+  const sqlValues = [admin, emp_id]
+
+  pool.query(sqlQuery, sqlValues)
+    .then(dbRes => {
+      res.sendStatus(201)
+    })
+    .catch((err) => {
+      console.log('User registration failed: ', err);
+      res.sendStatus(500);
+    });
+
+})
+
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
 // this middleware will run our POST if successful

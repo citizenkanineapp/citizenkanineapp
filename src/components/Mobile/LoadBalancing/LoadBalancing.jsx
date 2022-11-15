@@ -114,6 +114,7 @@ function LoadBalancing() {
         {routes.map((route, i) => (
         //*------ROUTES-----*//
           <Box
+            key={i}
             sx={{
               height: '90%',
               width: '18%',
@@ -154,7 +155,7 @@ function LoadBalancing() {
               }}
               >{dailyRoutes[route].length}</Avatar>
             </Box>
-            <Droppable droppableId={route} key={i}>
+            <Droppable droppableId={route}>
               {(provided, snapshot) => (
                 <Box  {...provided.droppableProps} ref={provided.innerRef}
                   sx={{
@@ -168,20 +169,24 @@ function LoadBalancing() {
                   }}>
                   {/* maps through each dog in route list and creates a chip */}
                   {dailyRoutes && dailyRoutes[route].map((dog, index) => 
-                  <>
+                  <div key={dog.id}>
                   {/*-----------DOG NOTES----------*/}         
                     <Popover
                           open={showDetails}
                           onClose={() => setShowDetails(!showDetails)}
                           anchorOrigin={{
                             vertical: 'top',
-                            horizontal: 'center',
+                            horizontal: 'left',
+                          }}
+                          transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
                           }}>
                         <Typography sx={{ p: 2 }}>{dog.notes}</Typography>
                     </Popover>
 
                     {/*-------------CHIP-------------*/}                             {/*where drag is disabled*/}
-                    <Draggable key={dog.id} draggableId={`${dog.dog_id}`} index={index} isDragDisabled={draggingStatus}>
+                    <Draggable draggableId={`${dog.dog_id}`} index={index} isDragDisabled={draggingStatus}>
                       {(provided, snapshot) => (
 
                         <Box
@@ -214,7 +219,7 @@ function LoadBalancing() {
                       )}
 
                     </Draggable>
-                  </>
+                  </div>
                   )}
                   {/*------------------------------*/}
 

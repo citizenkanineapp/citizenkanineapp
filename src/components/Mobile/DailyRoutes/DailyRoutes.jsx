@@ -5,15 +5,19 @@ import { ListItemAvatar, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import FlagIcon from '@mui/icons-material/Flag';
+import RouteSelect from '../RouteSelect/RouteSelect';
 
 function DailyRoutes() {
   const dispatch = useDispatch();
 
   // reducer getting filled with a specific routes dogs
   const route = useSelector(store => store.routeReducer);
-  const routeName = route[0].route;
+  // const routeName = route[0].route;
   useEffect(() => {
-    dispatch({ type: 'GET_ROUTE_DETAILS', payload: 1 })
+    dispatch({ type: 'CLEAR_ROUTE' })
+    dispatch({ type: 'GET_DAILY_ROUTES' });
+
+    // dispatch({ type: 'GET_ROUTE_DETAILS', payload: 1 })
   }, []);
 
   const getRouteColor = (route) => {
@@ -54,9 +58,14 @@ function DailyRoutes() {
                 }
                 >
                   <ListItemAvatar>
-                    <Avatar>
-                      {dog.name[0]}
-                    </Avatar>
+                    {dog.image ?
+                      <Avatar src={dog.image} />
+                      :
+                      <Avatar>
+                        {dog.name[0]}
+                      </Avatar>
+
+                    }
                   </ListItemAvatar>
                   <ListItemText
                     primary={dog.name}
@@ -74,14 +83,7 @@ function DailyRoutes() {
 
         :
 
-        <>
-          <Grid item xs={12}>
-            CHOOSE YOUR ROUTE
-          </Grid>
-          <Button>
-            SELECT
-          </Button>
-        </>
+        <RouteSelect />
       }
 
     </>

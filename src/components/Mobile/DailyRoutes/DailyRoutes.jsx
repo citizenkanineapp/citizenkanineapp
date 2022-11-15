@@ -9,6 +9,7 @@ import RouteSelect from '../RouteSelect/RouteSelect';
 
 function DailyRoutes() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // reducer getting filled with a specific routes dogs
   const route = useSelector(store => store.routeReducer);
@@ -31,6 +32,30 @@ function DailyRoutes() {
     }
   }
 
+  const determineStatus = (dog) => {
+    if (dog.checked_in) {
+      return '#7BCEC8';
+    }
+    else if (dog.no_show) {
+      return '#F8614D';
+    }
+  }
+
+  const getDogDetails = (dogID) => {
+    console.log(dogID);
+    dispatch({ type: 'FETCH_DOG_DETAILS', payload: dogID })
+    history.push('/m/dog/')
+  }
+
+  const checkIn = (clientID) => {
+    console.log('CHECKING IN CLIENT #:', clientID);
+
+  }
+
+  const noShow = (clientID) => {
+    console.log('Client # ____ is a No Show:', clientID);
+  }
+
   return (
     <>
       {route[0] ?
@@ -49,16 +74,17 @@ function DailyRoutes() {
               <List>
                 <ListItem secondaryAction={
                   <>
-                    <IconButton edge="end" >
+                    <IconButton edge="end" onClick={(event) => checkIn(dog.client_id)}>
                       <CheckBoxIcon sx={{ fill: '#7BCEC8' }} />
                     </IconButton>
-                    <IconButton edge="end" >
+                    <IconButton edge="end" onClick={(event) => noShow(dog.client_id)} >
                       <EventBusyIcon sx={{ fill: '#F8614D' }} />
                     </IconButton>
                   </>
                 }
+                  sx={{ backgroundColor: () => determineStatus(dog), }}
                 >
-                  <ListItemAvatar>
+                  <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >
                     {dog.image ?
                       <Avatar src={dog.image} />
                       :
@@ -70,6 +96,8 @@ function DailyRoutes() {
                   </ListItemAvatar>
                   <ListItemText
                     primary={dog.name}
+                    secondary={dog.client_name}
+
 
                   />
                 </ListItem>

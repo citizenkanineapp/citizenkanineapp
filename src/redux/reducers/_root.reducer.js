@@ -8,6 +8,7 @@ import employeesReducer from './employees.reducer';
 import clientsReducer from './clients.reducer';
 import clientToAddReducer from './clientToAdd.reducer';
 import clientReducer from './client.reducer';
+import routeReducer from './route.reducer';
 
 
 const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   clientsReducer,
   clientToAddReducer,
   clientReducer,
+  routeReducer,
 });
 
 export default rootReducer;

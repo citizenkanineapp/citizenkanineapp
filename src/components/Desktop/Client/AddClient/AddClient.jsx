@@ -20,18 +20,20 @@ function AddClient(){
 
   const clientToAdd = useSelector(store => store.clientReducer)
   const schedule = useSelector(store => store.clientScheduleReducer)
+  const errors = useSelector(store => store.errors)
 
-  // const addClient = event => {
-
-  //   event.preventDefault();
-
-  //   dispatch({type: 'CLEAR_CLIENT'});
-  //   dispatch({ type: 'SET_MODAL_STATUS' });
+  // const [error, setError] = useState(false);
+  // const [phoneError, setPhoneError] = useState(false)
 
 
-  // }
-
-
+  const [errorFirst, setErrorFirst] = useState(false);
+  const [errorLast, setErrorLast] = useState(false)
+  const [errorPhone, setErrorPhone] = useState(false)
+  const [errorStreet, setErrorStreet] = useState(false)
+  const [errorZip, setErrorZip] = useState(false)
+  const [errorCity, setErrorCity] = useState(false)
+  const [errorEmail, setErrorEmail] = useState(false)
+  const [errorRoute, setErrorRoute] = useState(false)
 
   const clientSchedule = useSelector(store => store.clientScheduleReducer)
 
@@ -81,21 +83,47 @@ function AddClient(){
   }
 
   const checkInputs = (event) => {
-    if(clientToAdd.first_name === undefined || clientToAdd.first_name === '' ||  clientToAdd.last_name === undefined || clientToAdd.last_name === '' || clientToAdd.phone === undefined ||
-    clientToAdd.phone === '' || clientToAdd.street === undefined || clientToAdd.street === '' || clientToAdd.city === undefined || clientToAdd.city === '' || clientToAdd.zip === undefined || clientToAdd.zip === '' ||
-    clientToAdd.email === undefined || clientToAdd.email === '' || clientToAdd.route_id === undefined || clientToAdd.route_id === '') {
-      console.log('error in form')
-    } else if(clientToAdd.phone.length > 13){
-      console.log('phone number error')
-    } else {
+    setErrorFirst(false)
+    setErrorLast(false)
+    setErrorPhone(false)
+    setErrorStreet(false)
+    setErrorCity(false)
+    setErrorZip(false)
+    setErrorEmail(false)
+    setErrorRoute(false)
+
+    if(clientToAdd.first_name === undefined || clientToAdd.first_name === ''){
+      setErrorFirst(true)
+    } 
+    if(clientToAdd.last_name === undefined || clientToAdd.last_name === ''){
+      setErrorLast(true)
+    }
+    if(clientToAdd.phone === undefined || clientToAdd.phone === ''){
+      setErrorPhone(true)
+    }
+    if(clientToAdd.street === undefined || clientToAdd.street === ''){
+      setErrorStreet(true)
+    }
+    if(clientToAdd.city === undefined || clientToAdd.city === ''){
+      setErrorCity(true)
+    }
+    if(clientToAdd.zip === undefined || clientToAdd.zip === ''){
+      setErrorZip(true)
+    }
+    if(clientToAdd.email === undefined || clientToAdd.email === ''){
+      setErrorEmail(true)
+    }
+    if(clientToAdd.route === undefined || clientToAdd.route === ''){
+      setErrorRoute(true)
+    }
+      if(clientToAdd.phone.length > 13){
+      setErrorPhone(true)
+    } else if (errorFirst === false && errorLast === false && errorPhone === false && errorStreet === false
+    && errorZip === false && errorCity === false && errorEmail === false && errorRoute === false) {
       dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})
       dispatch({type: 'ADD_SCHEDULE', payload: clientSchedule})
   }
 }
-
-
-  
-
   return (
  
       <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
@@ -116,79 +144,87 @@ function AddClient(){
              
                 {clientToAdd &&
                 <TextField 
+                  required
                   value={clientToAdd.first_name} 
                   onChange={(event) => dispatch({type: 'ADD_FIRST_NAME', payload: event.target.value})}
-                  helperText="* First Name"  
-                  // error={clientToAdd.first_name === ""}
-                  // helperText={clientToAdd.first_name === "" ? 'Empty field!' : 'First Name'}
+                  error={errorFirst}
+                  helperText={errorFirst ? errorFirst && "* First Name" : "* First Name"}
+                  // helperText="* First Name"  
                   size="small" />
                 }
                 <TextField 
                   value={clientToAdd.last_name} 
                   onChange={(event) => dispatch({type: 'ADD_LAST_NAME', payload: event.target.value})}
-                  helperText="* Last Name"  
+                  // helperText="* Last Name"  
+                  error={errorLast}
+                  helperText={errorLast ? errorLast && "* Last Name" : "* Last Name"}
                   size="small" /> 
-                <TextField 
-              value={clientToAdd.phone} 
-              onChange={(event) => dispatch({type: 'ADD_PHONE', payload: event.target.value})}
-              helperText="* Phone"  
-              size="small" />
-                <TextField 
-                  value={clientToAdd.street} 
-                  onChange={(event) => dispatch({type: 'ADD_STREET', payload: event.target.value})}
-                  helperText="* Address"  
-                  size="small" />
-                <TextField 
-                  value={clientToAdd.city} 
-                  onChange={(event) => dispatch({type: 'ADD_CITY', payload: event.target.value})}
-                  helperText="* City"  
-                  size="small" />
-                <TextField 
-                  value={clientToAdd.zip} 
-                  onChange={(event) => dispatch({type: 'ADD_ZIPCODE', payload: event.target.value})}
-                  helperText="* Zip Code"  
-                  size="small" />
-
-                <TextField 
-                  value={clientToAdd.email} 
-                  onChange={(event) => dispatch({type: 'ADD_EMAIL', payload: event.target.value})}
-                  helperText="* Email"  
-                  size="small" />
-              <TextField 
-                value={clientToAdd.notes} 
-                onChange={(event) => dispatch({type: 'ADD_NOTES', payload: event.target.value})}
-                helperText="Notes"  
-                size="small" />
-              <TextField 
-                value={clientToAdd.vet_name || ''} 
-                onChange={(event) => dispatch({type: 'ADD_VET_NAME', payload: event.target.value})}
-                helperText="Vet"  
-                size="small" />
-              <TextField 
-                value={clientToAdd.vet_phone || ''} 
-                onChange={(event) => dispatch({type: 'ADD_VET_PHONE', payload: event.target.value})}
-                helperText="Vet Phone"  
-                size="small" />
-            <FormControl>
-                <Select
-                  labelId="route"
-                  size="small"
-                  id="route"
-                  value={clientToAdd.route_id || ''}
-                  onChange={(event) => {
-                    
-                    dispatch({type: 'ADD_ROUTE', payload: event.target.value})
-        
-                  }}
-                >
-                  <MenuItem value={1}>Tangletown</MenuItem>
-                  <MenuItem value={2}>Emerson</MenuItem>
-                  <MenuItem value={3}>Far</MenuItem>
-                  <MenuItem value={4}>Misfits</MenuItem>
-                  <MenuItem value={5}>Unassigned</MenuItem>
-                </Select>
-                <FormHelperText>* Default Route</FormHelperText>
-              </FormControl>          
+                  <TextField 
+                    value={clientToAdd.phone} 
+                    onChange={(event) => dispatch({type: 'ADD_PHONE', payload: event.target.value})}
+                    error={errorPhone}
+                    helperText={errorPhone ? errorPhone && "* Phone (xxx)xxx-xxxx" : "* Phone"}  
+                    size="small" />
+                  <TextField 
+                    value={clientToAdd.street} 
+                    onChange={(event) => dispatch({type: 'ADD_STREET', payload: event.target.value})}
+                    error={errorStreet}
+                    helperText={errorStreet ? errorStreet && "* Street" : "* Street"}
+                    size="small" />
+                  <TextField 
+                    value={clientToAdd.city} 
+                    onChange={(event) => dispatch({type: 'ADD_CITY', payload: event.target.value})}
+                    error={errorCity}
+                    helperText={errorCity ? errorCity && "* City" : "* City"} 
+                    size="small" />
+                  <TextField 
+                    value={clientToAdd.zip} 
+                    onChange={(event) => dispatch({type: 'ADD_ZIPCODE', payload: event.target.value})}
+                    error={errorZip}
+                    helperText={errorZip ? errorZip && "* Zip Code" : "* Zip Code"}
+                    size="small" />
+                  <TextField 
+                    value={clientToAdd.email} 
+                    onChange={(event) => dispatch({type: 'ADD_EMAIL', payload: event.target.value})}
+                    error={errorEmail}
+                    helperText={errorEmail ? errorEmail && "* Email" : "* Email"}
+                    size="small" />
+                  <TextField 
+                    value={clientToAdd.notes} 
+                    onChange={(event) => dispatch({type: 'ADD_NOTES', payload: event.target.value})}
+                    helperText="Notes"  
+                    size="small" />
+                  <TextField 
+                    value={clientToAdd.vet_name || ''} 
+                    onChange={(event) => dispatch({type: 'ADD_VET_NAME', payload: event.target.value})}
+                    helperText="Vet"  
+                    size="small" />
+                  <TextField 
+                    value={clientToAdd.vet_phone || ''} 
+                    onChange={(event) => dispatch({type: 'ADD_VET_PHONE', payload: event.target.value})}
+                    helperText="Vet Phone"  
+                    size="small" />
+              <FormControl>
+                  <Select
+                    labelId="route"
+                    size="small"
+                    id="route"
+                    // error={errorRoute}
+                    value={clientToAdd.route_id || ''}
+                    onChange={(event) => {
+                      
+                      dispatch({type: 'ADD_ROUTE', payload: event.target.value})
+          
+                    }}
+                  >
+                    <MenuItem value={1}>Tangletown</MenuItem>
+                    <MenuItem value={2}>Emerson</MenuItem>
+                    <MenuItem value={3}>Far</MenuItem>
+                    <MenuItem value={4}>Misfits</MenuItem>
+                    <MenuItem value={5}>Unassigned</MenuItem>
+                  </Select>
+                  <FormHelperText>* Default Route</FormHelperText>
+                </FormControl>          
             </Grid> 
 
 

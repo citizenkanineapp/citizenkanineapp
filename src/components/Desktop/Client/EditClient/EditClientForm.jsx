@@ -7,6 +7,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
+import swal from '@sweetalert/with-react'
 
 
 
@@ -39,10 +40,30 @@ const back = event => {
 }
 
 const deleteClient = (id) => {
-  console.log('delete me', id)
-  dispatch({type: 'DELETE_CLIENT', payload: id})
-  dispatch({type: 'CLEAR_CLIENT'})
-  dispatch({type: 'SET_MODAL_STATUS'})
+
+  swal({
+    title: "Are you sure?",
+    text: "This will permanently delete this client",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+      dispatch({type: 'SET_MODAL_STATUS'})
+      dispatch({type: 'DELETE_CLIENT', payload: id})
+      dispatch({type: 'CLEAR_CLIENT'})
+      
+      swal("Success!", {
+        icon: "success",
+
+      });
+    } else {
+      swal("The client is safe!");
+    }
+  });
+
+
 }
 
 const openModal = (view) => {

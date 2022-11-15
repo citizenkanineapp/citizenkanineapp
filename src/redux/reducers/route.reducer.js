@@ -3,7 +3,7 @@ const routeReducer = (state = [], action) => {
         case 'SET_ROUTE':
             return action.payload;
         case 'CLEAR_ROUTE':
-            return state;
+            return [];
         default:
             return state;
     }

@@ -41,10 +41,9 @@ function RouteSelect() {
             {/* route is the name of each route */}
             {routes.map((route, i) => (
                 <Grid item xs={11} sx={{ height: '20%' }}>
-                    {/* TANGLETOWN */}
                     <Card raised sx={{ background: () => getRouteColor(route) }} onClick={(event) => checkoutRoute((i + 1))}>
                         <Typography sx={{ color: 'white', textTransform: 'uppercase', textAlign: 'center' }}>
-                            {route}
+                            {route} {route.length}
                         </Typography>
                         <CardContent>
                             <AvatarGroup>

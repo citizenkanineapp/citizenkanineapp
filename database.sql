@@ -4,7 +4,6 @@
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
 
-
 -- ORDERING BASED ON DEPENDENT COLUMNS/SECTIONS:
 DROP TABLE IF EXISTS daily_dogs;
 DROP TABLE IF EXISTS dogs_schedule_changes;

@@ -64,9 +64,9 @@ function DogDetails() {
 
 
   return (
-    <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+    <Grid container spacing={2} sx={{ justifyContent: 'center', height: '100%' }}>
 
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Item One" />
           <Tab label="Item Two" />
@@ -93,7 +93,7 @@ function DogDetails() {
         <TabPanel value={value} index={2}>
 
         </TabPanel>
-      </Grid>
+      </Grid> */}
       {/* DOG PHOTO */}
 
       {/* DOG NAME */}

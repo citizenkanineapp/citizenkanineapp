@@ -50,7 +50,6 @@ function ClientSchedule() {
     const [date, setDate] = useState(dayjs());
     
     // console.log(dayjs())
-    const [highlightedDays, setHighlightedDays] = useState([1,2,4]);
     const [value, setValue] = useState(dayjs());
     // console.log(value)
     
@@ -66,11 +65,14 @@ function ClientSchedule() {
     // Testing to add a dog:
     const mockChanges =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
 
+    console.log(dayjs('2022-11-22').$W); // returns 2 for Tuesday
+    console.log(dayjs('2022-11-22').$d); // returns Tue Nov 22 2022 00:00:00 GMT-0600
+
 
 
   return (
     <>
-    <Box className="container" sx={{height: '55vh', width: '38vw', border: 1, borderColor: 'black', display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+    <Box className="clientSchedule" sx={{height: '55vh', width: '38vw', border: 1, borderColor: 'black', display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
       {/* <h1>Client Name</h1> */}
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <CalendarPicker 
@@ -94,7 +96,7 @@ function ClientSchedule() {
 
                 return (
                     <Box
-                    className="calendarBox"
+                    className="clientSchedule"
                     sx={{width: '5vw', height: '5vw', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'flex-start', justifyContent: 'center', border: 1, borderColor: '#7BCEC8', mt: 0}}>
                       {/* This box is just for the date number */}
                       <Box key={day.$d} sx={{display: 'flex', justifyContent: 'center', flexGrow: '1', mb: 1}}>
@@ -103,29 +105,63 @@ function ClientSchedule() {
                         {...DayComponentProps} />
                       </Box>
                       {/* Adding dog avatars to client scheduled weekdays */}
-                      {!DayComponentProps.outsideCurrentMonth && clientSchedule[day.$W]?
-                      <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '5', flexWrap: 'wrap', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
-                          {dogs && dogs.map(dog=> {
-                            dog.image = "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg"
-                            // console.log(dog)
-                            if (dog.image){
-                              return (<Avatar
-                              sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
-                              alt={dog.dog_name[0]}
-                              src={dog.image}
-                              >
-                              </Avatar>)
+                      {/* Is this date in the current month ?*/}
+                      {!DayComponentProps.outsideCurrentMonth ?
+                        // Is there a change on today's date?
+                        // mockChanges =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
+                        <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '5', flexWrap: 'wrap', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                        {/* Map through mockChanges and see if the today's date matches the date_to_change: */}
+                          {mockChanges.map(change=> {
+                            // does today's date match the date_to_change?
+                            if (day.$d === dayjs(change.date_to_change).$d){
+                              // is this day also on the normal client schedule and !is_scheduled? (cancelation)
+                                const dayOfWeek = dayjs(change.date_to_change).$W;
+                                if( clientSchedule[dayOfWeek] && !change.is_scheduled){
+                                  // render all but the dog that was changed:
+                                  dogs.map(dog=> {
+                                    if (dog.dog_id !== change.dog_id){
+                                      return (
+                                        <Avatar
+                                            sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
+                                            alt={dog.dog_name[0]}
+                                            src={dog.image ? dog.image : null}
+                                        >
+                                        </Avatar>)
+                                    }
+                                  })
+                                }
+                                // if the day to change is not on the schedule, map through dogs and add dog:
+                                else if (!clientSchedule[dayOfWeek] && change.is_scheduled){
+                                  dogs.map(dog=> {
+                                    if (dog.dog_id === change.dog_id){
+                                      return (
+                                        <Avatar
+                                            sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
+                                            alt={dog.dog_name[0]}
+                                            src={dog.image ? dog.image : null}
+                                        >
+                                        </Avatar>)
+                                    }
+                                })
+                              }
                             }
-                            else {
-                              return (
-                                <Avatar
-                                sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: '1vw'}}>
-                                  {dog.dog_name[0]}
-                                </Avatar>
-                              )
+                            else{
+                              // is todays day of week part of the clients schedule?
+                              if (day.$W === clientSchedule[day.$W]){
+                                dogs.map(dog=> {
+                                  return (
+                                    <Avatar
+                                        sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
+                                        alt={dog.dog_name[0]}
+                                        src={dog.image ? dog.image : null}
+                                    >
+                                    </Avatar>)
+                                })
+                              }
                             }
-                          })}
-                      </Box>
+                            }
+                        )}
+                        </Box>
                       : 
                       null
                       }

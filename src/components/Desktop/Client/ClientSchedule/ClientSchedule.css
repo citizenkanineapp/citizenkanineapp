@@ -55,8 +55,18 @@
     max-height: 80vh !important;
 }
 
-.css-169iwlq-MuiCalendarPicker-root{
-    width: 50vw !important;
+.clientSchedule .css-169iwlq-MuiCalendarPicker-root{
+    width: 100vw !important;
+    max-height: 90vh !important;
+    margin: 0 0 0 0 !important;
+    overflow-x: visible !important;
+    display: flex;
+    /* center calendar in box */
+    align-items: center;
+} 
+
+.clientSchedule .css-169iwlq-MuiCalendarPicker-root{
+    width: 100vw !important;
     max-height: 90vh !important;
     margin: 0 0 0 0 !important;
     overflow-x: visible !important;
@@ -82,7 +92,7 @@
     margin-top: 5px !important;
 }
 
-.clientBox {
+.clientSchedule  {
     outline: black 1px;
 }
 
@@ -90,7 +100,7 @@
     border: black 1px !important;
 }
 
-.css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
+.clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
     color: orange !important;
     width: 1vw !important;
     height: 1vw !important;

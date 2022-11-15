@@ -37,7 +37,7 @@ function RouteSelect() {
 
 
     return (
-        <Grid container spacing={2} sx={{ height: '85%', alignItems: 'center', justifyContent: 'center' }}>
+        <Grid container spacing={2} sx={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
 
             {/* route is the name of each route */}
             {routes.map((route, i) => (

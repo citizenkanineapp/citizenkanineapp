@@ -9,6 +9,7 @@ import RouteSelect from '../RouteSelect/RouteSelect';
 
 function DailyRoutes() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // reducer getting filled with a specific routes dogs
   const route = useSelector(store => store.routeReducer);
@@ -34,6 +35,7 @@ function DailyRoutes() {
   const getDogDetails = (dogID) => {
     console.log(dogID);
     dispatch({ type: 'FETCH_DOG_DETAILS', payload: dogID })
+    history.push('/m/dog/')
   }
 
   const checkIn = (clientID) => {

@@ -1,5 +1,5 @@
-const dogReducer = (state = [{dog_name: '', image: '', dog_notes: ''}], action) => {
-    // console.log ('in dog reducer', action.payload)
+const dogReducer = (state = [{dog_name: '', image: '', dog_notes: '', flag: false}], action) => {
+    console.log ('in dog reducer', action.payload)
     switch (action.type) {
         case 'ADD_DOG_NAME':
             // change the dog_name value for a given dog object (based on index)
@@ -35,9 +35,20 @@ const dogReducer = (state = [{dog_name: '', image: '', dog_notes: ''}], action) 
             })
             return photoState;
         case 'ADD_DOG_INPUT':
-            return [...state, {dog_name: '', image: '', dog_notes: ''}]
+            return [...state, {dog_name: '', image: '', dog_notes: '', flag: false}]
+        case 'SET_FIRST_FLAG':
+            console.log(action.payload)
+            const flagState = state.map((flag , index) => {
+                if(index === action.payload.index) {
+                    flag.flag = action.payload.flag
+                    return flag;
+                } else {
+                    return flag;
+                }
+            })
+            return flagState;
         case 'CLEAR_DOGS':
-            return [{dog_name: '', image: '', dog_notes: ''}];
+            return [{dog_name: '', image: '', dog_notes: '', flag: false}];
         default:
             return state;
     }
@@ -46,22 +57,3 @@ const dogReducer = (state = [{dog_name: '', image: '', dog_notes: ''}], action) 
 export default dogReducer;
 
 
-
-
-// const dogReducer = (state = {}, action) => {
-//     switch (action.type) {
-//         case 'ADD_DOG_NAME':
-//             return {...state, dog_name: action.payload};
-//         case 'SET_DOG_PHOTO':
-//             return {...state, image: action.payload.data};
-//         case 'CLEAR_DOGS':
-//             return [];
-//         default:
-//             return state;
-//     }
-// }
-
-// export default dogReducer;
-
-// //should this be an object or an array?
-// //can't map through object

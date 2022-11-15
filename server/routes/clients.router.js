@@ -11,7 +11,7 @@ const {
  * GET route template
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
-//   console.log('arrived in server get all route')
+  // console.log('arrived in server get all route')
   const queryText = `
                     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
                     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, dogs.vet_phone, dogs.flag from clients
@@ -74,9 +74,9 @@ pool.query(queryText)
  * POST route template
  */
 router.post('/', rejectUnauthenticated, async (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
   const client = await pool.connect();
-  const {first_name, last_name, street, city, zip, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone } = req.body
+  const {first_name, last_name, street, city, zip, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone, flag } = req.body
   // const customer = {first_name, last_name, address, phone, email, route_id}
   const dogArray = dogs
   // const vet = {vet_name, vet_phone}
@@ -98,12 +98,12 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   await Promise.all(dogArray.map(dog => { 
       const dogTxt = `
                           INSERT INTO dogs 
-                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes") 
+                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag") 
                             VALUES
-                              ($1, $2, $3, $4, $5, $6)
+                              ($1, $2, $3, $4, $5, $6, $7)
 
       `
-      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog.dog_notes]
+      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog.dog_notes, dog.flag]
       return client.query(dogTxt, dogValues)
   }));
     const scheduleTxt = `
@@ -237,7 +237,7 @@ router.post('/dog', rejectUnauthenticated, (req, res) => {
 
 
 router.get('/:id', rejectUnauthenticated, (req, res) => {
-    console.log('arrived in server get one route', req.params.id)
+    // console.log('arrived in server get one route', req.params.id)
     let clientId = req.params.id
     const queryText = `
     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
@@ -258,8 +258,8 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
   const queryValues = [clientId]
   pool.query(queryText, queryValues)
       .then(result => {
-        console.log('how to target schedule?', result.rows[0])
-        console.log(result.rows[0][1])
+        // console.log('how to target schedule?', result.rows[0])
+        // console.log(result.rows[0][1])
       
           //all IDs from database
           let idArray = [];

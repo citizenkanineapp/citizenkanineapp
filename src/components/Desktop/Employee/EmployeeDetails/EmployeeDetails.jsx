@@ -10,7 +10,7 @@ function EmployeeDetails() {
   const dispatch = useDispatch();
   const employee = useSelector(store=> store.selectedEmployeeReducer.selectedEmployee);
   const employeeSchedule = useSelector(store=> store.selectedEmployeeReducer.selectedEmpSchedule);
-  console.log(employeeSchedule);
+  // console.log(employeeSchedule);
   const week1 = employeeSchedule[0];
   const week2 = employeeSchedule[1];
 
@@ -100,11 +100,19 @@ function EmployeeDetails() {
         <Button
           variant="contained" color="success"
           onClick={() => {
-            dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EditEmployeeForm' })
             dispatch({ 
               type: 'SET_EDIT_EMP_DETAILS',
               payload: employee
             })
+            dispatch({
+              type: 'SET_EDIT_EMP_SCHEDULE1',
+              payload: week1
+            })
+            dispatch({
+              type: 'SET_EDIT_EMP_SCHEDULE2',
+              payload: week2
+            })
+            dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EditEmployeeForm' })
           }}>
           Edit
         </Button>

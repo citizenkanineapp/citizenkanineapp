@@ -17,19 +17,67 @@ import FormHelperText from '@mui/material/FormHelperText';
 
 function AddClient(){
   const dispatch = useDispatch();
-  const clientToAdd = useSelector(store => store.clientToAddReducer)
-   // const addClient = event => {
+
+  const clientToAdd = useSelector(store => store.clientReducer)
+  const schedule = useSelector(store => store.clientScheduleReducer)
+
+  // const addClient = event => {
+
   //   event.preventDefault();
 
   //   dispatch({type: 'CLEAR_CLIENT'});
   //   dispatch({ type: 'SET_MODAL_STATUS' });
+
+
   // }
 
-  //use states for client information
+
+
+  const clientSchedule = useSelector(store => store.clientScheduleReducer)
+
+
+  const [monday, setMonday] = useState(false);
+  const [tuesday, setTuesday] = useState(false);
+  const [wednesday, setWednesday] = useState(false);
+  const [thursday, setThursday] = useState(false);
+  const [friday, setFriday] = useState(false);
+
+
+  // this should gather info on what days are clicked to adjust the weekly schedule...
+  // currently only works for one day
+  const handleClick = (event) => {
+    // toggle
+    switch (event){
+      case "Monday":
+        setMonday(current => !current);
+        dispatch({type: 'SET_MONDAY', payload: !monday})
+        break;
+      case "Tuesday":
+        setTuesday(current => !current);
+        dispatch({type: 'SET_TUESDAY', payload: !tuesday})
+        break;
+      case "Wednesday":
+        setWednesday(current => !current);
+        dispatch({type: 'SET_WEDNESDAY', payload: !wednesday})
+        break;
+      case "Thursday":
+        setThursday(current => !current);
+        dispatch({type: 'SET_THURSDAY', payload: !thursday})
+        break;
+      case "Friday":
+        setFriday(current => !current);
+        dispatch({type: 'SET_FRIDAY', payload: !friday})
+        break;
+    } 
+   
+    // console.log(event)
+   
+  };
 
   const back = event => {
     dispatch({type: 'CLEAR_CLIENT'});
     dispatch({ type: 'SET_MODAL_STATUS' })
+    dispatch({type: 'CLEAR_SCHEDULE'})
   }
 
   const checkInputs = (event) => {
@@ -41,6 +89,7 @@ function AddClient(){
       console.log('phone number error')
     } else {
       dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})
+      dispatch({type: 'ADD_SCHEDULE', payload: clientSchedule})
   }
 }
 
@@ -48,6 +97,7 @@ function AddClient(){
   
 
   return (
+ 
       <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
 
             {/*----------------------- HEADER -----------------------*/}
@@ -57,6 +107,7 @@ function AddClient(){
                 <CalendarMonthIcon sx={{ fontSize: 45, color: 'rgb(163, 147, 142)' }}/> 
               </IconButton> */}
             </Grid> {/* display only */}
+        
 
          
               {/*-------------------- TEXT FIELDS --------------------*/}
@@ -139,17 +190,60 @@ function AddClient(){
                 <FormHelperText>* Default Route</FormHelperText>
               </FormControl>          
             </Grid> 
-        
 
-                       
+
+
+    {/* <div> */}
+      <h2>Weekly Schedule</h2>
+      <Grid container spacing={2} sx={{ display: 'flex', mb: 2, flexDirection: 'row', justifyContent: 'center' }} >
+        <Grid item xs={2}>
+          <Card raised onClick={(event) => handleClick('Monday')} >
+            {/* try 1 instead of monday */}
+            <CardContent sx={{ backgroundColor: clientSchedule[1] ? '#7BCEC8' : null }}>
+              Monday
+            </CardContent>
+          </Card>
+        </Grid>
+       
+      <Grid item xs={2} >
+          <Card raised onClick={(event) => handleClick('Tuesday')} >
+            <CardContent sx={{ backgroundColor: clientSchedule[2] ? '#7BCEC8' : null }}>
+              Tuesday
+            </CardContent>
+          </Card>
+      </Grid>
+      <Grid item xs={2}>
+          <Card raised onClick={(event) => handleClick('Wednesday')}>
+            <CardContent sx={{ backgroundColor: clientSchedule[3] ? '#7BCEC8' : null }}>
+              Wednesday
+            </CardContent>
+          </Card>
+      </Grid>
+      <Grid item xs={2}>
+          <Card raised onClick={(event) => handleClick('Thursday')} >
+            <CardContent sx={{ backgroundColor: clientSchedule[4] ? '#7BCEC8' : null }}>
+              Thursday
+            </CardContent>
+          </Card>
+      </Grid>
+      <Grid item xs={2}>
+          <Card raised onClick={(event) => handleClick('Friday')}>
+            <CardContent sx={{ backgroundColor: clientSchedule[5] ? '#7BCEC8' : null }}>
+              Friday
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>          
 
           {/*-------------------- BUTTONS --------------------*/}
-          <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
             <Button variant="outlined" color="info"
               onClick={back}>Back</Button>  {/*goes back to client list*/}
             <Button variant="contained" color="success" onClick={checkInputs}>Next</Button> 
-          </Box>
+        </Box>
       </Box>
+    // </div>
+      
     );
 }
 

@@ -11,6 +11,7 @@ import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 const isWeekend = (date) => {
   const day = date.day();
@@ -18,41 +19,59 @@ const isWeekend = (date) => {
   return day === 0 || day === 6;
 };
 
+
 function ClientSchedule() {
   const dispatch = useDispatch();
-
+  
   // useEffect(()=> {
-  //   dispatch({
-  //     type: 'SAGA_FETCH_DOGS',
-  //     // this payload will have to be changed to the selected client_id
-  //     payload: 9
-  //   })
-  // },[])
+    //   dispatch({
+      //     type: 'SAGA_FETCH_DOGS',
+      //     // this payload will have to be changed to the selected client_id
+      //     payload: 9
+      //   })
+      // },[])
+      
+    // const clientSchedule= useSelector(store=> store.clientScheduleReducer);
+    const clientSchedule = {1: true, 2: false, 3: true, 4: true, 5: false}
+    const dogs = useSelector(store=> store.clientReducer.dogs)
+    
+    
+    // const [value, onChange] = useState(new Date());
+    const [dog, setDog] = useState('');
+    const [action, setAction] = useState('');
+    
+    const [walk, setWalk] = useState(false);
+    
+    
+    
+    const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
+    
+    // CALENDAR STUFF
+    const [date, setDate] = useState(dayjs());
+    
+    // console.log(dayjs())
+    const [highlightedDays, setHighlightedDays] = useState([1,2,4]);
+    const [value, setValue] = useState(dayjs());
+    // console.log(value)
+    
+    const handleChange = (newValue) => {
+      console.log(newValue)
+      console.log(newValue.$d)
+      // Fri Nov 18 2022 09:41:13 GMT-0600 (Central Standard Time)
+      console.log(newValue.$D)
+      // 18
+      setValue(newValue.$d);
+    };
+    
+    // Testing to add a dog:
+    const mockChanges =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
 
-  // const clientSchedule= useSelector(store=> store.clientScheduleReducer);
-  const clientSchedule = {1: true, 2: false, 3: true, 4: true, 5: false}
-  const dogs = useSelector(store=> store.clientReducer.dogs)
 
-
-  const [value, onChange] = useState(new Date());
-  const [dog, setDog] = useState('');
-  const [action, setAction] = useState('');
-
-  const [walk, setWalk] = useState(false);
-
-
-
-  const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
-
-  // CALENDAR STUFF
-  const [date, setDate] = useState(dayjs());
- 
-  // console.log(dayjs())
-  const [highlightedDays, setHighlightedDays] = useState([1,2,4]);
 
   return (
-    <Box className="container" sx={{height: '100vh'}}>
-      <h1>Client Name</h1>
+    <>
+    <Box className="container" sx={{height: '55vh', width: '38vw', border: 1, borderColor: 'black', display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+      {/* <h1>Client Name</h1> */}
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <CalendarPicker 
               sx={{height: '100vh', width: '100vw'}}
@@ -68,13 +87,15 @@ function ClientSchedule() {
                 // console.log('day is:', day.$W);
                 // day.$W returns returns an integer (1-5) representing the days of the week (M-F)
                 let selectedMUIClass='';
-                console.log(day)
+                // console.log(day)
                 if (day.$d === dayjs()){
                     selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
                 }
 
                 return (
-                    <Box sx={{width: '5vw', height: '5vw', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'flex-start'}}>
+                    <Box
+                    className="calendarBox"
+                    sx={{width: '5vw', height: '5vw', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'flex-start', justifyContent: 'center', border: 1, borderColor: '#7BCEC8', mt: 0}}>
                       {/* This box is just for the date number */}
                       <Box key={day.$d} sx={{display: 'flex', justifyContent: 'center', flexGrow: '1', mb: 1}}>
                         <PickersDay 
@@ -82,13 +103,14 @@ function ClientSchedule() {
                         {...DayComponentProps} />
                       </Box>
                       {/* Adding dog avatars to client scheduled weekdays */}
-                      {!DayComponentProps.outsideCurrentMonth &&clientSchedule[day.$W]?
-                      <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '5', flexWrap: 'wrap', alignContent: 'flex-start', justifyContent:'center'}}>
+                      {!DayComponentProps.outsideCurrentMonth && clientSchedule[day.$W]?
+                      <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '5', flexWrap: 'wrap', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
                           {dogs && dogs.map(dog=> {
+                            dog.image = "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg"
                             // console.log(dog)
                             if (dog.image){
                               return (<Avatar
-                              sx={{width: '1.5vw', height: '1.5vw', mx: .25}}
+                              sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
                               alt={dog.dog_name[0]}
                               src={dog.image}
                               >
@@ -97,7 +119,7 @@ function ClientSchedule() {
                             else {
                               return (
                                 <Avatar
-                                sx={{width: '1.5vw', height: '1.5vw', mx: .25, fontSize: '1vw'}}>
+                                sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: '1vw'}}>
                                   {dog.dog_name[0]}
                                 </Avatar>
                               )
@@ -112,9 +134,20 @@ function ClientSchedule() {
                 }}/>
           </LocalizationProvider>
 
+          
       {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
       <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button> */}
     </Box >
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DesktopDatePicker
+        label="Date desktop"
+        inputFormat="MM/DD/YYYY"
+        value={value}
+        onChange={ handleChange }
+        renderInput={(params) => <TextField {...params} />}
+      />
+    </LocalizationProvider>
+  </>
   )
 }
 

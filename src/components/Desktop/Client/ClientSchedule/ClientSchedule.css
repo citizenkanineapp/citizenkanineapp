@@ -8,7 +8,7 @@
 
 .clientSchedule .MuiCalendarPicker-viewTransitionContainer{
     width: 35vw !important;
-    height: 50vw !important;
+    height: 50vh !important;
 }
 
 .clientSchedule .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel{
@@ -20,7 +20,7 @@
 
 .clientSchedule .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
     /* width: 50vw !important; */
-    height: 100vh !important;
+    height: 50vh !important;
 }
 
 .clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
@@ -42,6 +42,7 @@
 /* rows */
 .clientSchedule .css-ghi3gg-MuiDayPicker-weekContainer {
     width: 35vw !important;
+    margin: 0 0 0 0 !important;
 }
 
 .clientSchedule .css-argrvh-MuiButtonBase-root-MuiPickersDay-root{
@@ -59,6 +60,9 @@
     max-height: 90vh !important;
     margin: 0 0 0 0 !important;
     overflow-x: visible !important;
+    display: flex;
+    /* center calendar in box */
+    align-items: center;
 }
 
 /* Header */
@@ -75,6 +79,7 @@
     align-items: flex-start !important;
     background-color: transparent !important;
     color: black !important;
+    margin-top: 5px !important;
 }
 
 .clientBox {
@@ -92,4 +97,5 @@
     justify-content: center !important;
     align-items: flex-start !important;
     background-color: transparent !important;
+    margin-top: 5px !important;
 }

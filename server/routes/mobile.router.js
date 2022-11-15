@@ -194,7 +194,8 @@ router.get('/routes', async (req, res) => {
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes
 		ON daily_dogs.route_id = routes.id
-	WHERE daily_dogs.date = CURRENT_DATE;
+	WHERE daily_dogs.date = CURRENT_DATE
+    ORDER BY dogs.client_id;
     `
 
     pool.query(routesQuery)

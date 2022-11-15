@@ -25,10 +25,19 @@ function LoadBalancing() {
   const [draggingStatus, setDraggingStatus] = useState(true);
   // dog notes for flagged dogs
   const [showDetails, setShowDetails] = useState(false);
-
+  
+  const [household, setHouseHold] = useState();
   //VIBRATES PHONE WHEN DND UNLOCKED
-  const onDragStart = () => {
-    console.log('dragracelol')
+  const onDragStart = (result) => {
+    const dogID = Number(result.draggableId);
+    const sourceRoute = result.source.droppableId;
+    const clientID = dailyRoutes[sourceRoute].find(dog => dog.dog_id === dogID).client_id;
+    setHouseHold({client: clientID, route: sourceRoute});
+    console.log('client id is', clientID);
+    const allDogsGoToHeaven = dailyRoutes[sourceRoute].filter(dog => dog.client_id === clientID);
+    console.log('alldogs', allDogsGoToHeaven);
+    
+    console.log('drag start', result)
     if (window.navigator.vibrate) {
       window.navigator.vibrate(100);
     }
@@ -36,8 +45,6 @@ function LoadBalancing() {
 
   //TRIGGERS DND LOGIC IN REDUCER
   const onDragEnd = (result) => {
-    console.log('RESULT IS', result);
-
     //prevents being triggered if outside of lists
     if (!result.destination) return; 
     
@@ -57,6 +64,32 @@ function LoadBalancing() {
     }
   }
 
+  //COLOR OF HOUSEHOLDS
+  // const getHouseholdColor = (dog) => {
+
+  //   var clients = [ ];
+  //   routes.forEach(route => dailyDogz[route]
+  //         .forEach(dog => !clients.find(ID => ID === dog.client_id) 
+  //         && clients.push(dog.client_id)));
+
+  //   console.log(clients);
+
+  //   const client = dog.client_id;
+  //   switch(client){
+  //     case clients[0]: return '#4a5061';
+  //     case clients[1]: return '#539bd1';
+  //     case clients[2]: return '#3DA49D';
+  //     case clients[3]: return '#f5a572';
+  //     case clients[4]: return '#f37e2d';
+  //     case clients[5]: return '#f8614d';
+  //     case clients[6]: return '#4a5061';
+  //     case clients[7]: return '#4a5061';
+  //     default: return 'transparent'
+
+  //   }
+
+
+  // }
 
   return (
     <Grid container sx={{ height: '95%', width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: 1 }}>
@@ -125,89 +158,94 @@ function LoadBalancing() {
               bgcolor: '#F0ECE9',
               overflowx: 'scroll',
               borderRadius: '0.5rem',
-            }}
-          >
-            <Box sx={{
-              background: () => getRouteColor(route),
-              width: '100%',
-              height: '10%',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderTopLeftRadius: '0.5rem',
-              borderTopRightRadius: '0.5rem'
-            }}>
-              <Typography sx={{
-                fontSize: '0.8rem',
-                fontStyle: 'italic',
-                pl: 1,
-                color: 'whitesmoke'
-              }}
-              >{route}</Typography>
-              <Avatar variant="outlined" sx={{
-                width: '17%',
-                height: '70%',
-                fontSize: '0.8rem',
-                mr: 0.5,
-                bgcolor: 'whitesmoke',
-                color: () => getRouteColor(route)
-              }}
-              >{dailyRoutes[route].length}</Avatar>
+              }}>
+            <Box 
+              sx={{
+                background: () => getRouteColor(route),
+                width: '100%',
+                height: '10%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderTopLeftRadius: '0.5rem',
+                borderTopRightRadius: '0.5rem'
+                }}>
+              <Typography 
+                sx={{
+                  fontSize: '0.8rem',
+                  fontStyle: 'italic',
+                  pl: 1,
+                  color: 'whitesmoke'
+                  }}>
+                {route}
+              </Typography>
+              <Avatar 
+                variant="outlined" 
+                sx={{
+                  width: '17%',
+                  height: '70%',
+                  fontSize: '0.8rem',
+                  mr: 0.5,
+                  bgcolor: 'whitesmoke',
+                  color: () => getRouteColor(route)
+                  }}>
+                {dailyRoutes[route].length}
+              </Avatar>
             </Box>
+
             <Droppable droppableId={route}>
               {(provided, snapshot) => (
                 <Box  {...provided.droppableProps} ref={provided.innerRef}
                   sx={{
-                    height: '85%',
-                    width: '75%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifySelf: 'flex-end',
-                    overflowY: 'scroll', pt: 1
-                  }}>
+                      height: '85%',
+                      width: '75%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifySelf: 'flex-end',
+                      overflowY: 'scroll', pt: 1
+                      }}>
                   {/* maps through each dog in route list and creates a chip */}
-                  {dailyRoutes && dailyRoutes[route].map((dog, index) => {
-                 
-
-
-
-                    {/*-------------CHIP-------------*/}                             {/*where drag is disabled*/}
-                    <Draggable draggableId={`${dog.dog_id}`} index={index} isDragDisabled={draggingStatus}>
+                  {dailyRoutes && dailyRoutes[route].map((dog, index) => 
+                
+                    //*-------------CHIP-------------*//                             //*where drag is disabled*//
+                    <Draggable draggableId={`${dog.dog_id}`} index={index} isDragDisabled={draggingStatus} key={dog.dog_id}>
                       {(provided, snapshot) => (
 
                         <Box
-                          key={dog.id}    //if dog has a flagged status and dragging is disabled, open details
+                         //if dog has a flagged status and dragging is disabled, open details
                           onTouchEnd={() => {(dog.flag === true && draggingStatus === true) && setShowDetails(!showDetails)}} 
                           //----DND----//
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          ref={provided.innerRef}                             //changes color when dragging
-                          style={{ backgroundColor: snapshot.isDragging ? '#D3CDC9' : 'transparent', ...provided.draggableProps.style }}
+                          ref={provided.innerRef}       
+                          style={{ backgroundColor: household && household.client === dog.client_id && '#f8614d', ...provided.draggableProps.style }}                                            //changes color when dragging
+                          //style={{ backgroundColor: household && (household.client === dog.client_id && household.route === dog.route) ? '#e0603f' : 'transparent', ...provided.draggableProps.style }}
                           //----MUI----//
                           variant='outlined'
                           sx={{ 
-                                width: '60%', 
-                                display: 'flex', 
-                                flexDirection: 'row', 
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                borderRadius: 3,
-                                border: '1px solid grey',
-                                px: 1, my: 0.3, mx: 1
-                                }}>
-                          <Typography sx={{ fontSize: '0.6rem', letterSpacing: '0.005rem' }}>
-                            {dog.name.length > 8 ? (dog.name.toUpperCase()).slice(0, 8) + "..." : dog.name.toUpperCase()}
-                          </Typography>
-                          {dog.flag === true &&  //conditionally rendering if dog has flag status
-                            <FlagIcon sx={{ fontSize: '1rem', fill: '#e0603f' }} />}
+                              width: '80%', 
+                              display: 'flex', 
+                              flexDirection: 'row', 
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              borderRadius: 2,
+                              border: '0.5px solid grey',
+                              px: 1, my: 0.3,
+                              }}>
+                            <Typography sx={{ fontSize: '0.6rem', letterSpacing: '0.005rem' }}>
+                              {dog.name.length > 8 ? (dog.name.toUpperCase()).slice(0, 8) + "..." : dog.name.toUpperCase()}
+                            </Typography>
+                            {dog.flag === true &&  //conditionally rendering if dog has flag status
+                              <FlagIcon sx={{ fontSize: '1rem', fill: '#e0603f' }} />}
+
                         </Box>
 
                       )}
 
                     </Draggable>
-                  })}
+                  )}
        
 
 

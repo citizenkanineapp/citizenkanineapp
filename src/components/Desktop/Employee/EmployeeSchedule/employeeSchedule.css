@@ -37,13 +37,7 @@
     margin-left: 0px !important;
     margin-right: 0px !important;
 }
-/* This sized up the empty days at the beginning and end of the month */
-/* .css-1c32n2y-MuiBadge-root{
-    width: 90px !important;
-    height: 90px !important;
-    display: flex;
-    justify-content: right;
-} */
+
 
 
 /* .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
@@ -84,13 +78,27 @@
 /* this changes the today's date indicator circle */
 .empCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
     color: black !important;
+    width: 5vw !important;
+    height: 5vw !important;
     background-color: transparent !important;
     /* border: #7BCEC8 1px solid; */
 
+}
+
+.empCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .css-argrvh-MuiButtonBase-root-MuiPickersDay-root{
+    width: 2vw !important;
+    height: 2vw !important;
+    margin: 0 0 0 0 !important;
 }
 
 .empCalendar .css-1lunv-MuiPaper-root-MuiCard-root {
     height: 90vh !important;
 }
 
+.dayBox {
+    outline: black 1px;
+}
 
+.css-ghi3gg-MuiDayPicker-weekContainer{
+    margin: 0 0 0 0 !important;
+}

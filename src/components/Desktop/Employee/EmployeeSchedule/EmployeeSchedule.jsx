@@ -85,7 +85,7 @@ function EmployeeSchedule(){
   // {1: true, 2: true, 3: false, 4: true, 5: true, id: 1, week: 2, first_name: 'Den', last_name: 'Paolini', email: 'dpaolini0@paypal.com', phone: '(840)6732127', …}
 
   const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
-  // console.log(dayjs());
+  console.log(dayjs());
   return (
   <Box sx={{display: 'flex', width: '100vw', justifyContent: 'center'}}>
     {/* // MUI DatePicker: */}
@@ -113,7 +113,8 @@ function EmployeeSchedule(){
                         // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
                         const weekInYear = day.diff(`${currentYear}-01-01`, 'week', false)
                         return (
-                            <Box key={day.$d} className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '8vw', height: '12vh', justifyContent: 'center'}}>
+                            <Box key={day.$d} className="dayBox"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '8vw', height: '8vw', justifyContent: 'center', border: 1, borderColor: '#7BCEC8'}}>
+                              {/* This box is just for the date number */}
                               <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '1'}}>
                                 <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>
                               </Box>

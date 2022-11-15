@@ -6,13 +6,6 @@ const {
 } = require('../modules/authentication-middleware');
 
 
-// This plugin is needed to get the week number in year:
-// week number of year is to be inserted into daily_dogs
-// for purposes of invoice query. see line 146!!
-const dayjs =require('dayjs');
-const weekOfYear = require('dayjs/plugin/weekOfYear')
-dayjs.extend(weekOfYear)
-
 // ADMIN ONLY:
 // /daily for generating daily dogs
 // /routes for GETTING all of the available dogs for the day in their default routes
@@ -144,10 +137,9 @@ router.get('/daily', async (req, res) => {
 
             console.log('Good to Go!');
             // insert into daily_dogs
-            // ADDED FIFTH TERM: thisWeek !!!! SEE LINE
             await Promise.all(adjustedDogs.map(dog => {
-                const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name", "week_of_year") VALUES ($1, $2, $3, $4, $5)`;
-                const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name, thisWeek];
+                const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4)`;
+                const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name];
                 return client.query(insertQuery, insertValues);
             }));
 

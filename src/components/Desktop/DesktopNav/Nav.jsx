@@ -70,7 +70,7 @@ function Nav(props) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem sx={{ mb: 20 }}>
+        <ListItem sx={{ mb: 10 }}>
           <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/resetpass')}>
             <SettingsIcon sx={{ textAlign: 'flex-end' }} />
             <ListItemText primary='account' />

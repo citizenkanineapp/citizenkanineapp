@@ -2,11 +2,6 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-const dayjs =require('dayjs');
-// This plugin is needed to get the week number in year:
-const weekOfYear = require('dayjs/plugin/weekOfYear')
-dayjs.extend(weekOfYear)
-
 router.get('/', async (req, res) => {
     console.log('in /api/invoice');
     // console.log(req.query)
@@ -46,7 +41,7 @@ router.get('/', async (req, res) => {
         last_name,
         num_dogs,
         ARRAY_AGG (
-            EXTRACT (MONTH FROM date)||'/' || EXTRACT (DAY FROM date)
+            EXTRACT (DAY FROM date)
             ORDER by date ASC
         ) dates,
         checked_in,
@@ -55,7 +50,6 @@ router.get('/', async (req, res) => {
         SELECT
             clients.id AS clientid,
             daily_dogs.date,
-            daily_dogs.week_of_year,
             COUNT(dogs.id) AS num_dogs,
             daily_dogs.checked_in AS checked_in,
             daily_dogs.no_show AS no_show,
@@ -74,8 +68,7 @@ router.get('/', async (req, res) => {
                 no_show,
                 last_name,
                 first_name,
-                clientid,
-                daily_dogs.week_of_year
+                clientid
             ORDER BY
                 clientid,
                 date
@@ -89,7 +82,6 @@ router.get('/', async (req, res) => {
         no_show;
     `;
 
-
     try {
         const resServices = await pool.query(queryServices)
         const services = resServices.rows;
@@ -101,74 +93,67 @@ router.get('/', async (req, res) => {
         const resSchedule = await pool.query(querySchedule);
         const schedules = resSchedule.rows;
         
-        // adds walks per week to invoice data object. should be done in SQL!
+        // adds service data to invoice data object. some of this should be done in SQL!
         for ( let item of invoiceData ) {
+            let serviceId
+
+            // adds walks per week to invoice item
             for ( let client of schedules) {
                 if (client.id === item.clientid) {
                     const values = Object.values(client);
                     const walks = values.filter( i => i === true).length;
-                    item.walks_per_week = walks;
-                }
-            }
-            // grabs services values...
-            let serviceId
-            if (item.num_dogs === "1") {
-                switch(item.walks_per_week) {
-                    case 1:
-                        serviceId = 2;
-                        break;
-                    case 2: case 3: case 4:
-                        serviceId = 3;
-                        break;
-                    case 5:
-                        serviceId = 4;
-                        break;
-                }
-            } else if (item.num_dogs === "2") {
-                switch(item.walks_per_week) {
-                    case 1:
-                        serviceId = 5;
-                        break;
-                    case 2: case 3: case 4:
-                        serviceId = 6;
-                        break;
-                    case 5:
-                        serviceId = 7;
-                        break;
-                }
-            }  else if (item.num_dogs === "3") {
-                serviceId = 8;
-            }   else {
-                serviceId = 9;
-            }
 
-            console.log('service Id', serviceId);
-            console.log('item', item);
-
-
-            for ( let service of services) {
-                if (service.id === serviceId) {
-                    if (item.no_show === true) {
-                        item.service = {
-                            service: service.name + ' ' + 'no-show',
-                            price: service.price
+                     // grabs services ID from services list
+                    if (item.num_dogs === "1") {
+                        switch(walks) {
+                            case 1:
+                                serviceId = 2;
+                                break;
+                            case 2: case 3: case 4:
+                                serviceId = 3;
+                                break;
+                            case 5:
+                                serviceId = 4;
+                                break;
                         }
-                    } else {
-                        item.service = {
-                            service: service.name,
-                            price: service.price
+                    } else if (item.num_dogs === "2") {
+                        switch(walks) {
+                            case 1:
+                                serviceId = 5;
+                                break;
+                            case 2: case 3: case 4:
+                                serviceId = 6;
+                                break;
+                            case 5:
+                                serviceId = 7;
+                                break;
                         }
+                    }  else if (item.num_dogs === "3") {
+                        serviceId = 8;
+                    }   else {
+                        serviceId = 9;
                     }
                 }
-            }  
-
-        }
-        
-        // console.log(walksPerWeek);
-        console.log(invoiceData);
-
-
-
+            }
+           
+            // adds service details to invoice item
+            for ( let service of services) {
+                if (service.id === serviceId) {
+                    item.month = searchMonth;
+                    item.year = searchYear;
+                    item.service = {
+                        price: service.price,
+                        service
+                    }
+                    if (item.no_show === true) {
+                        item.service.service = service.name + ' ' + 'no-show';           
+                    } else {
+                        item.service.service = service.name;
+                    }
+                    }
+                }
+        }     
+        // console.log(invoiceData);
         res.send(invoiceData); 
     } catch (error) {
         console.log('Error GET /api/invoice', error);

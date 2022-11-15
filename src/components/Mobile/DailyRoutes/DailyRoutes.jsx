@@ -36,6 +36,15 @@ function DailyRoutes() {
     dispatch({ type: 'FETCH_DOG_DETAILS', payload: dogID })
   }
 
+  const checkIn = (clientID) => {
+    console.log('CHECKING IN CLIENT #:', clientID);
+
+  }
+
+  const noShow = (clientID) => {
+    console.log('Client # ____ is a No Show:', clientID);
+  }
+
   return (
     <>
       {route[0] ?
@@ -52,18 +61,18 @@ function DailyRoutes() {
             {route && route.map && route.map((dog) => (
 
               <List>
-                <ListItem onClick={(event) => getDogDetails(dog.dog_id)} secondaryAction={
+                <ListItem secondaryAction={
                   <>
-                    <IconButton edge="end" >
+                    <IconButton edge="end" onClick={(event) => checkIn(dog.client_id)}>
                       <CheckBoxIcon sx={{ fill: '#7BCEC8' }} />
                     </IconButton>
-                    <IconButton edge="end" >
+                    <IconButton edge="end" onClick={(event) => noShow(dog.client_id)} >
                       <EventBusyIcon sx={{ fill: '#F8614D' }} />
                     </IconButton>
                   </>
                 }
                 >
-                  <ListItemAvatar>
+                  <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >
                     {dog.image ?
                       <Avatar src={dog.image} />
                       :
@@ -75,6 +84,8 @@ function DailyRoutes() {
                   </ListItemAvatar>
                   <ListItemText
                     primary={dog.name}
+                    secondary={dog.client_name}
+
 
                   />
                 </ListItem>

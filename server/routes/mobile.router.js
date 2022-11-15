@@ -162,7 +162,7 @@ router.get('/route/:route_id', async (req, res) => {
     // routes need to be arrays of dog objects ...
     // do we want separate arrays per route?
     const routeQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes, dogs.image, routes.name AS route, clients.id from daily_dogs
+    SELECT daily_dogs.*, dogs.flag, dogs.notes, dogs.image, routes.name AS route, clients.id, concat_ws(' ', clients.first_name, clients.last_name) AS client_name from daily_dogs
 	JOIN dogs
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes
@@ -177,6 +177,10 @@ router.get('/route/:route_id', async (req, res) => {
 
     pool.query(routeQuery, routeValue)
         .then(routeResponse => {
+            console.log(routeResponse.rows);
+            let routeArray = routeResponse.rows;
+
+
             res.send(routeResponse.rows);
         }).catch((error => {
             console.log('/route/:id GET error:', error);
@@ -234,6 +238,28 @@ router.put('/routes', async (req, res) => {
 
     const updateQuery = `UPDATE daily_dogs SET "route_id" = $1 WHERE "dog_id" = $2 AND daily_dogs.date = CURRENT_DATE`;
     const updateValues = [routeID, dogID];
+
+    pool.query(updateQuery, updateValues)
+        .then(changeResults => {
+            res.sendStatus(200);
+        }).catch((error => {
+            console.log('/dog/:id error getting dog details:', error);
+        }));
+
+})
+
+// UPDATE A DOG's STATUS
+router.put('/daily', async (req, res) => {
+    // expect an object being sent over for the put request?
+    // pull out relevant dog ID and route ID
+    const clientID = req.body.clientID;
+    const checkedIn = req.body.checkedIN;
+    const noShow = req.body.noShow;
+
+    console.log('Client ID - Updating all Dogs in Daily Dogs:', dogID, routeID);
+
+    const updateQuery = `UPDATE daily_dogs SET "checked_in" = $1, "no_show" = $2 WHERE "client_id" = $3 AND daily_dogs.date = CURRENT_DATE`;
+    const updateValues = [checkedIn, noShow, clientID];
 
     pool.query(updateQuery, updateValues)
         .then(changeResults => {

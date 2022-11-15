@@ -285,27 +285,27 @@ CREATE TABLE daily_dogs (
 	);
 -- ** daily_dogs MOCK DATA
 insert into daily_dogs
-	("date", "dog_id","checked_in","no_show","cancelled","route_id","week_of_year")
+	("date", "dog_id","checked_in","no_show","cancelled","route_id")
 values
-	('2022-10-31','3','true','false','false','1','45'),
-	('2022-10-31','5','true','false','false','1','45'),
-	('2022-11-02','3','true','false','false','1','45'),
-	('2022-11-02','5','true','false','false','1','45'),
-	('2022-11-04','3','true','false','false','1','45'),
-	('2022-11-04','5','true','false','false','1','45'),
-	('2022-11-07','3','true','false','false','1','46'),
-	('2022-11-07','5','true','false','false','1','46'),
-	('2022-11-09','3','true','false','false','1','46'),
-	('2022-11-11','3','false','true','false','1','46'),
-	('2022-11-11','5','false','true','false','1','46'),
-	('2022-10-31','6','true','false','false','1','45'),
-	('2022-11-01','6','true','false','false','1','45'),
-	('2022-11-02','6','true','false','false','1','45'),
-	('2022-11-03','6','false','true','false','1','45'),
-	('2022-11-04','6','true','false','false','1','45'),
-	('2022-11-07','6','true','false','false','1','46'),
-	('2022-11-08','6','true','false','false','1','46'),
-	('2022-11-09','6','true','false','false','1','46');
+	('2022-10-31','3','true','false','false','1'),
+	('2022-10-31','5','true','false','false','1'),
+	('2022-11-02','3','true','false','false','1'),
+	('2022-11-02','5','true','false','false','1'),
+	('2022-11-04','3','true','false','false','1'),
+	('2022-11-04','5','true','false','false','1'),
+	('2022-11-07','3','true','false','false','1'),
+	('2022-11-07','5','true','false','false','1'),
+	('2022-11-09','3','true','false','false','1'),
+	('2022-11-11','3','false','true','false','1'),
+	('2022-11-11','5','false','true','false','1'),
+	('2022-10-31','6','true','false','false','1'),
+	('2022-11-01','6','true','false','false','1'),
+	('2022-11-02','6','true','false','false','1'),
+	('2022-11-03','6','false','true','false','1'),
+	('2022-11-04','6','true','false','false','1'),
+	('2022-11-07','6','true','false','false','1'),
+	('2022-11-08','6','true','false','false','1'),
+	('2022-11-09','6','true','false','false','1');
 
 CREATE TABLE admin_notes (
 	"id" SERIAL PRIMARY KEY,

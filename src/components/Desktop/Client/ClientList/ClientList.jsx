@@ -43,51 +43,46 @@ function ClientList() {
 
 
   return (
-    <Box className="desktop_container">
-      <Typography variant="h4">ClientList</Typography> 
-      <Grid container spacing={2} sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-        <Grid item xs={10}>
+    <Box className="desktop_container" sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', my: 15}}>
+      <Grid container sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width:'80%', gap: 2 }}>
+       
           <TextField
             label="Search Clients & Dogs"
             variant="filled"
-            fullWidth
+            sx={{width: '60%'}}
           />
-        </Grid>
-        <Grid item xs={2}>
-          <Button size="large" variant="contained" color="secondary">
-            Search
-          </Button>
-        </Grid>
+       
+          <Button size="large" variant="contained" color="secondary">Search</Button>
+          <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary'>Add Client</Button>
+       
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={12} sx={{ mx: 5 }}>
+        <Grid item xs={12} sx={{ mx: 5, display:'flex', flexDirection: 'column', alignItems: 'center' }}>
           {/* TABLE OPTION */}
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{width: '70%'}}>
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell>Name:</TableCell>
-                  <TableCell>Address:</TableCell>
-                  <TableCell># Dogs</TableCell>
-                  <TableCell>Dogs:</TableCell>
+                  <TableCell sx={{fontWeight: '800'}}>Name:</TableCell>
+                  <TableCell sx={{fontWeight: '800'}}>Dogs:</TableCell>
+                  <TableCell sx={{fontWeight: '800'}}>Phone</TableCell>
+                  <TableCell sx={{fontWeight: '800'}}>Email</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {clientList && clientList.map && clientList.map((client) => (
+                {clientList && clientList.map && clientList.map((client ) => (
                     <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
                       <TableCell>{client.first_name} {client.last_name}</TableCell>
-                      <TableCell>{client.address}</TableCell>
-                      <TableCell>{client.dogs.length}</TableCell>
                       <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                      <TableCell>{client.phone}</TableCell>
+                      <TableCell>{client.email}</TableCell>
                     </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
         </Grid>
-        <Grid item xs={12} sx={{ mr: 5, display: 'flex', justifyContent: 'flex-end' }}>
-          <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary'>Add Client</Button>
-        </Grid>
+
       </Grid>
       {/* <Button onClick={() => openModal('ClientDetails')}>LISA FRANK - SPIKE, FIDO</Button>  opens client details */}
       <ClientModal /> {/* only open when button is pressed */}

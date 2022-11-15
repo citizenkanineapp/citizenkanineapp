@@ -30,7 +30,7 @@ function Home() {
 
         <Stack direction="column" divider={<Divider orientation="vertical" flexItem />} spacing={0.5}>
           <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/routes')}>ROUTES</Button>
-          <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/employees')}>Schedule</Button>
+          <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/schedule')}>Schedule</Button>
           <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/resetpass')}>Account</Button>
           {user.admin ?
             <Button color='secondary' variant='outlined' onClick={(event) => adminTime()}>Load Balancing</Button>

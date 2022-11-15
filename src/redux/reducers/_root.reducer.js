@@ -3,11 +3,15 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import modal from './modal.reducer'
 import dogPhotoReducer from './dogImage.reducer';
-import dnd from './dnd.reducer';
+import dailyDogz from './dailyDogz';
 import allEmployeesReducer from './allEmployees.reducer';
 import selectedEmployeeReducer from './selectedEmployee.reducer';
 import clientsReducer from './clients.reducer';
-import clientToAddReducer from './clientToAdd.reducer';
+import dogReducer from './dog.reducer';
+import clientScheduleReducer from './clientSchedule.reducer';
+import newDogReducer from './newDog.reducer';
+import dogDelete from './dogDelete.reducer';
+
 import clientReducer from './client.reducer';
 import routeReducer from './route.reducer';
 
@@ -17,11 +21,14 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   modal,
   dogPhotoReducer,
-  dnd,
+  dailyDogz,
   allEmployeesReducer,
   clientsReducer,
-  clientToAddReducer,
   clientReducer,
+  dogReducer,
+  clientScheduleReducer,
+  newDogReducer,
+  dogDelete,
   selectedEmployeeReducer,
   routeReducer,
 });

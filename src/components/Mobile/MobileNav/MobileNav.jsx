@@ -26,7 +26,7 @@ function MobileNav() {
       <BottomNavigationAction label="Home" icon={<HomeIcon />} onClick={(event) => { history.push('/m/user') }} />
       <BottomNavigationAction label="Routes" icon={<ListAltIcon />} onClick={(event) => { history.push('/m/routes') }} />
       <BottomNavigationAction label="Map" icon={<PinDropIcon />} onClick={(event) => { history.push('/m/map') }} />
-      <BottomNavigationAction label="Schedule" icon={<CalendarMonthIcon />} onClick={(event) => { history.push('/m/employees') }} />
+      <BottomNavigationAction label="Schedule" icon={<CalendarMonthIcon />} onClick={(event) => { history.push('/m/schedule') }} />
     </BottomNavigation>
   );
 }

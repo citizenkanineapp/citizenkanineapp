@@ -32,6 +32,15 @@ function DailyRoutes() {
     }
   }
 
+  const determineStatus = (dog) => {
+    if (dog.checked_in) {
+      return '#7BCEC8';
+    }
+    else if (dog.no_show) {
+      return '#F8614D';
+    }
+  }
+
   const getDogDetails = (dogID) => {
     console.log(dogID);
     dispatch({ type: 'FETCH_DOG_DETAILS', payload: dogID })
@@ -73,6 +82,7 @@ function DailyRoutes() {
                     </IconButton>
                   </>
                 }
+                  sx={{ backgroundColor: () => determineStatus(dog), }}
                 >
                   <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >
                     {dog.image ?

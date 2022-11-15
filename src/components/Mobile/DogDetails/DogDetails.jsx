@@ -1,145 +1,126 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Accordion, AccordionSummary, AccordionDetails, Tabs, Tab, Chip, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Fab, CardMedia, Card, CardActions, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import FlagIcon from '@mui/icons-material/Flag';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import DirectionsIcon from '@mui/icons-material/Directions';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
 function DogDetails() {
-  const dispatch = useDispatch();
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const dog = useSelector(store => store.details);
 
 
-  const dog = { flagged: true };
   const vetAddress = { address: '400 S 4th St', city: 'Minneapolis', zipCode: '55415', }
   const clientAddress = { address: '4145 Zarthan AVE S', city: 'St. Louis Park', zipCode: '55416', }
   const history = useHistory();
 
-  const openMap = async (clientAddress) => {
-    const destination = encodeURIComponent(`${clientAddress.address} ${clientAddress.zipCode}, ${clientAddress.city}`);
+  const openMap = async (dog) => {
+    const destination = encodeURIComponent(`${dog.street} ${dog.zipCode}`);
+    // , ${clientAddress.city}
     const link = `http://maps.google.com/?daddr=${destination}`;
     window.open(link);
   }
 
+  const clicktoCall = (number) => {
+    window.open(`tel:+${number}`);
+  }
 
   return (
-    <Grid container spacing={2} sx={{ justifyContent: 'center', height: '100%' }}>
-
-      {/* <Grid item xs={12}>
-        <Tabs value={value} onChange={handleChange}>
-          <Tab label="Item One" />
-          <Tab label="Item Two" />
-          <Tab label="Item Three" />
-        </Tabs>
-        <TabPanel value={value} index={0}>
-          <Grid item xs={10}>
-            <Card>
-              <Stack direction='row'>
-                <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>
-                  <EditIcon />
-                </Fab>
-                <CardMedia component="img" height='25%' image="https://www.rd.com/wp-content/uploads/2020/11/GettyImages-889552354-e1606774439626.jpg" />
-                <CardContent>
-                  <Typography align='center'>DOG NOTES</Typography>
-                </CardContent>
-              </Stack>
-            </Card>
-          </Grid>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-
-        </TabPanel>
-      </Grid> */}
+    <Grid container spacing={1} sx={{ justifyContent: 'center', height: '100%' }}>
+      {/* NAV BACK TO LIST */}
+      <Grid item xs={12}>
+        <Button onClick={(event) => history.push('/m/routes')}>BACK</Button>
+      </Grid>
       {/* DOG PHOTO */}
-
+      <Grid item xs={5}>
+        <Card>
+          <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>
+            <EditIcon />
+          </Fab>
+          <CardMedia component="img" height='70%' image={dog.image} />
+        </Card>
+      </Grid>
       {/* DOG NAME */}
-      <Grid item xs={10}>
-        <Stack direction='column'>
+      <Grid item xs={5} >
+        <Stack direction='column' sx={{ justifyContent: 'center' }}>
           <Card sx={{ mb: 1 }}>
-            <Typography variant='h4' align='center'>RUFUS</Typography>
+            <Typography variant='h4' align='center'>{dog.name}</Typography>
           </Card>
           {/* CLIENT ADDRESS INFORMATION */}
-          <Card onClick={(event) => openMap(clientAddress)}>
+          <Card>
             <Typography align='center' variant='caption'>
-              {clientAddress.address} {clientAddress.city} {clientAddress.zipCode}
+              {dog.street}
             </Typography>
+            <CardActions>
+              <Button variant='contained' endIcon={<DirectionsIcon />} size='small' onClick={(event) => openMap(dog)}>
+                Directions
+              </Button>
+            </CardActions>
           </Card>
         </Stack>
       </Grid>
-      {/* ACCESS INFORMATION */}
+      {/* DOG NOTES & CONDITIONAL FLAG */}
       <Grid item xs={10}>
         <Card>
-          <Typography align='center'>Side door - Access Code: 12543</Typography>
+          <Stack direction='row' alignItems='center'>
+            {dog.flagged ? <FlagIcon sx={{ fill: '#e0603f' }} /> : null}
+            <Typography variant='inherit'>
+              {/* {dog.notes} */}
+              {/* {dog.notes ? dog.notes : `Click to add a Note for ${dog.name}`} */}
+              Total Diva, needs her hair brushed at LEAST once every 4 minutes or she throws a FIT.
+            </Typography>
+          </Stack>
         </Card>
       </Grid>
-      {/* OWNER INFORMATION & CALL BUTTON */}
+      {/* ACCESS INFORMATION */}
       <Grid item xs={10}>
+        <Card sx={{ mb: 1 }}>
+          <Typography align='center'>Protocol: Side door - Access Code: 12543</Typography>
+        </Card>
+        {/* OWNER INFORMATION & CALL BUTTON */}
+
         <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Owner Details:</Typography>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            id="panel1a-header"
+          >
+            <Typography>Client Info:</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography variant='h6'>Owner Info:</Typography>
-            <Typography variant='body2'> Dolly Parton | <a href="tel:+17637447704">(763)-744-7704</a></Typography>
+            <Typography variant='body2'> {dog.first_name} {dog.last_name}</Typography>
+            <a href="tel:+16127159132">(612)-715-9132</a>
+            <Button endIcon={<LocalPhoneIcon fontSize='small' />}>
+              Call
+            </Button>
+
           </AccordionDetails>
         </Accordion>
-      </Grid>
-      <Grid item xs={10}>
+        {/* VET INFORMATION & CALL BUTTON */}
         <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Emergency Contact:</Typography>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Typography>Vet Info:</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography variant='h6'>Vet Info:</Typography>
-            <Typography variant='body2'>Dr. Terry | <a href="tel:+16127159132">(612)-715-9132</a> </Typography>
-            <Typography variant='caption'>{vetAddress.address} {vetAddress.city} {vetAddress.zipCode}</Typography>
+            <Typography variant='body2'>Dr. Terry</Typography>
+            <a href="tel:+16127159132"><LocalPhoneIcon fontSize='small' />(612)-715-9132</a>
+            <Button endIcon={<LocalPhoneIcon fontSize='small' />}>
+              Call
+            </Button>
           </AccordionDetails>
         </Accordion>
+
       </Grid>
+
+
+
     </Grid>
   );
 }

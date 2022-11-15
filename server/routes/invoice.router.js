@@ -15,6 +15,9 @@ router.get('/', async (req, res) => {
     const searchYear = req.query.year;
     let searchTerms ;
 
+    const querySchedule = `SELECT * FROM clients_schedule`;
+    const queryServices = `SELECT * FROM services`;
+
     // use in case of client ALL
     if (searchClientId) {
         searchQuery = `
@@ -36,12 +39,6 @@ router.get('/', async (req, res) => {
     // console.log(searchQuery);
 
     // query returns data object of each walk instance by customer-date
-    // 
-    // query needs adjustment so that walks/per week is derived from client_schedule data, not actual walks per week.
-
-
-    // DOES DAILYDOGS CURRENTLY TRACK NO_SHOWS??????
-
     const queryWalkDetails = `
     SELECT
         clientid,
@@ -91,8 +88,12 @@ router.get('/', async (req, res) => {
         checked_in,
         no_show;
     `;
-    const querySchedule = `SELECT * FROM clients_schedule`;
+
+
     try {
+        const resServices = await pool.query(queryServices)
+        const services = resServices.rows;
+        console.log(services);
         const resDetails = await pool.query(queryWalkDetails,searchTerms);
         const invoiceData = resDetails.rows;
         // console.log(invoiceData);
@@ -109,6 +110,58 @@ router.get('/', async (req, res) => {
                     item.walks_per_week = walks;
                 }
             }
+            // grabs services values...
+            let serviceId
+            if (item.num_dogs === "1") {
+                switch(item.walks_per_week) {
+                    case 1:
+                        serviceId = 2;
+                        break;
+                    case 2: case 3: case 4:
+                        serviceId = 3;
+                        break;
+                    case 5:
+                        serviceId = 4;
+                        break;
+                }
+            } else if (item.num_dogs === "2") {
+                switch(item.walks_per_week) {
+                    case 1:
+                        serviceId = 5;
+                        break;
+                    case 2: case 3: case 4:
+                        serviceId = 6;
+                        break;
+                    case 5:
+                        serviceId = 7;
+                        break;
+                }
+            }  else if (item.num_dogs === "3") {
+                serviceId = 8;
+            }   else {
+                serviceId = 9;
+            }
+
+            console.log('service Id', serviceId);
+            console.log('item', item);
+
+
+            for ( let service of services) {
+                if (service.id === serviceId) {
+                    if (item.no_show === true) {
+                        item.service = {
+                            service: service.name + ' ' + 'no-show',
+                            price: service.price
+                        }
+                    } else {
+                        item.service = {
+                            service: service.name,
+                            price: service.price
+                        }
+                    }
+                }
+            }  
+
         }
         
         // console.log(walksPerWeek);

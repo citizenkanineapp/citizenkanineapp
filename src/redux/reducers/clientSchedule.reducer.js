@@ -12,6 +12,8 @@ const clientScheduleReducer = (state = {1: false, 2: false, 3: false, 4: false, 
             return {...state, 4: action.payload};
         case 'SET_FRIDAY':
             return {...state, 5: action.payload};
+        case 'SET_SCHEDULE':
+            return action.payload;
         case 'CLEAR_SCHEDULE':
             return{1: false, 2: false, 3: false, 4: false, 5: false};
         default:

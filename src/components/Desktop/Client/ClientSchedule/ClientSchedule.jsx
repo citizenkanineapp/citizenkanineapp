@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
 //CALENDAR 
@@ -13,25 +13,25 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 
-
-//import Desktop Date Picker instead of calendar component
-//send entire string
-//'2022-11-18'
-//whether it is_scheduled  (true or false)
-//dog_id or multiple ids
-//need an array of objects 
-
 function ClientSchedule() {
+  useEffect(() => {
+    dispatch({ type: 'FETCH_SCHEDULE', payload: client.id })
+  }, []);
+
+
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
+  const schedule = useSelector(store => store.clientScheduleReducer)
 
-  // const [value, onChange] = useState(new Date());
+  console.log('schedule reducer', schedule)
+
+
   const [dog, setDog] = useState('');
   const [action, setAction] = useState('');
   const [scheduled, setScheduled] = useState('');
   // const [value, setValue] = React.useState(dayjs('2022-11-15T21:11:54'));
   const [value, setValue] = React.useState(dayjs());
-  //set current value to now?
+ 
 
   const [walk, setWalk] = useState(false);
 
@@ -49,7 +49,7 @@ function ClientSchedule() {
     
   };
 
-  console.log('what is value right now?', value)
+  // console.log('what is value right now?', value)
 
   // this should eventually dispatch to a saga with all of these values or whatever
   const handleSubmit = (event) => {
@@ -74,10 +74,11 @@ function ClientSchedule() {
     }
     scheduleChangeObject.push(dogObject)
   } 
-   dispatch({type: 'SET_SCHEDULE_CHANGE', payload: scheduleChangeObject})
+  //  dispatch({type: 'SET_SCHEDULE_CHANGE', payload: scheduleChangeObject})
+   dispatch({type: 'SEND_ONE_SCHEDULE_CHANGE', payload: scheduleChangeObject})
   }
 
-  // NEEDS LOGIC FOR WEEKLY SCHEDULE STUFF BUT I DIDN'T WANT TO START A REDUCER AND ALL THAT
+  // NEEDS LOGIC FOR WEEKLY SCHEDULE STUFF
 
   return (
     <div className="container">
@@ -87,14 +88,14 @@ function ClientSchedule() {
         <Grid item xs={2}>
           <Card raised >
           {/* onClick={(event) => handleClick('Monday') */}
-            <CardContent sx={{ backgroundColor:client.monday ? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor: schedule["1"] ? '#7BCEC8' : null }}>
               Monday
             </CardContent>
           </Card>
 
         </Grid>
         <Grid item xs={2} >
-          <Card raised sx={{ backgroundColor:client.tuesday ? '#7BCEC8' : null }}>
+          <Card raised sx={{ backgroundColor: schedule["2"] ? '#7BCEC8' : null }}>
             <CardContent>
               Tuesday
             </CardContent>
@@ -102,7 +103,7 @@ function ClientSchedule() {
 
         </Grid>
         <Grid item xs={2}>
-          <Card raised sx={{backgroundColor:client.wednesday ? '#7BCEC8' : null}}>
+          <Card raised sx={{backgroundColor: schedule["3"] ? '#7BCEC8' : null}}>
             <CardContent>
               Wednesday
             </CardContent>
@@ -110,7 +111,7 @@ function ClientSchedule() {
 
         </Grid>
         <Grid item xs={2}>
-          <Card raised sx={{backgroundColor:client.thursday? '#7BCEC8' : null}}>
+          <Card raised sx={{backgroundColor: schedule["4"] ? '#7BCEC8' : null}}>
             <CardContent>
               Thursday
             </CardContent>
@@ -118,7 +119,7 @@ function ClientSchedule() {
 
         </Grid>
         <Grid item xs={2}>
-          <Card raised sx={{backgroundColor:client.friday ? '#7BCEC8' : null}}>
+          <Card raised sx={{backgroundColor: schedule["5"] ? '#7BCEC8' : null}}>
             <CardContent>
               Friday
             </CardContent>

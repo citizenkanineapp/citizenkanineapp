@@ -27,7 +27,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   `
 pool.query(queryText)
     .then(result => {
-      console.log('what comes back from query?', result.rows)
+      // console.log('what comes back from query?', result.rows)
         //all IDs from database
         let idArray = [];
             for(let object of result.rows){
@@ -73,7 +73,7 @@ pool.query(queryText)
 });
 
 /**
- * POST route template
+ * POST route for initially adding a client
  */
 router.post('/', rejectUnauthenticated, async (req, res) => {
   console.log(req.body);
@@ -217,6 +217,7 @@ router.put('/dogs', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+//adding one dog
 router.post('/dog', rejectUnauthenticated, (req, res) => {
   console.log(req.body)
   const{vet_name, vet_phone, dog_name, dog_notes, image, client_id, flag} = req.body
@@ -307,7 +308,81 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
       })
   });
 
-  router.delete('/:id', rejectUnauthenticated, (req, res) => {
+
+router.get('/schedule/:id', rejectUnauthenticated, (req, res) => {
+  console.log('arrived in server get schedule route', req.params.id)
+  let clientId = req.params.id
+  const queryText = `
+            SELECT * FROM clients_schedule
+                WHERE client_id =$1;
+  `
+const queryValues = [clientId]
+pool.query(queryText, queryValues)
+    .then(result => {
+   
+    console.log('result from query?', result.rows)
+
+
+        res.send(result.rows);
+   
+    })
+    .catch(err => {
+        console.log('Error getting one client', err);
+        res.sendStatus(500);
+    })
+});
+
+//this is for one off schedule changes
+
+router.post('/schedule', rejectUnauthenticated, async (req, res) => {
+
+ console.log('one off change', req.body)
+  
+ const client = await pool.connect();
+  const {date, is_scheduled, dog_id } = req.body
+  try {
+  await client.query('BEGIN')
+  const clientTxt = await client.query(`
+                          INSERT INTO clients 
+                              ("first_name", "last_name", "street", "city", "zip", "route_id", "phone", "email", "notes") 
+                            VALUES
+                            ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                            RETURNING "id";
+  `, [first_name, last_name, street, city, zip, route_id, phone, email, notes])
+  const customerId = clientTxt.rows[0].id
+
+  await Promise.all(dogArray.map(dog => { 
+      const dogTxt = `
+                          INSERT INTO dogs 
+                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag") 
+                            VALUES
+                              ($1, $2, $3, $4, $5, $6, $7)
+
+      `
+      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog.dog_notes, dog.flag]
+      return client.query(dogTxt, dogValues)
+  }));
+    const scheduleTxt = `
+                            INSERT INTO clients_schedule
+                            ("client_id", "1", "2", "3", "4", "5")
+                            VALUES
+                            ($1, $2, $3, $4, $5, $6)
+    `
+      const dayValues = [customerId, schedule[1], schedule[2], schedule[3], schedule [4], schedule[5]]
+      await client.query(scheduleTxt, dayValues )
+      await client.query('COMMIT')
+      res.sendStatus(201);
+    } catch (error) {
+      await client.query('ROLLBACK')
+      console.log('Error in post route for add client', error);
+      res.sendStatus(500);
+    } finally {
+      client.release()
+    }
+});
+
+
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
     console.log(req.params.id)
     
     const queryText = 'DELETE FROM clients WHERE id=$1';
@@ -319,7 +394,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
       });
   });
 
-  router.delete('/dogs/:id', rejectUnauthenticated, (req, res) => {
+router.delete('/dogs/:id', rejectUnauthenticated, (req, res) => {
     console.log(req.params.id)
     
     const queryText = 'DELETE FROM dogs WHERE id=$1';

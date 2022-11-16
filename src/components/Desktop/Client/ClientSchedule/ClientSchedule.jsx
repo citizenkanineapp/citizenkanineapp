@@ -34,6 +34,7 @@ function ClientSchedule() {
     // const clientSchedule= useSelector(store=> store.clientScheduleReducer);
     const clientSchedule = {1: true, 2: false, 3: true, 4: true, 5: false}
     const dogs = useSelector(store=> store.clientReducer.dogs)
+// dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: true}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: false}]
     
     
     // const [value, onChange] = useState(new Date());
@@ -99,72 +100,15 @@ function ClientSchedule() {
                     className="clientSchedule"
                     sx={{width: '5vw', height: '5vw', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'flex-start', justifyContent: 'center', border: 1, borderColor: '#7BCEC8', mt: 0}}>
                       {/* This box is just for the date number */}
-                      <Box key={day.$d} sx={{display: 'flex', justifyContent: 'center', flexGrow: '1', mb: 1}}>
+                      <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '1', mb: 1}}>
                         <PickersDay 
+                        key={day.$D}
                         className={ selectedMUIClass }
                         {...DayComponentProps} />
                       </Box>
                       {/* Adding dog avatars to client scheduled weekdays */}
                       {/* Is this date in the current month ?*/}
-                      {!DayComponentProps.outsideCurrentMonth ?
-                        // Is there a change on today's date?
-                        // mockChanges =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
-                        <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '5', flexWrap: 'wrap', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
-                        {/* Map through mockChanges and see if the today's date matches the date_to_change: */}
-                          {mockChanges.map(change=> {
-                            // does today's date match the date_to_change?
-                            if (day.$d === dayjs(change.date_to_change).$d){
-                              // is this day also on the normal client schedule and !is_scheduled? (cancelation)
-                                const dayOfWeek = dayjs(change.date_to_change).$W;
-                                if( clientSchedule[dayOfWeek] && !change.is_scheduled){
-                                  // render all but the dog that was changed:
-                                  dogs.map(dog=> {
-                                    if (dog.dog_id !== change.dog_id){
-                                      return (
-                                        <Avatar
-                                            sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
-                                            alt={dog.dog_name[0]}
-                                            src={dog.image ? dog.image : null}
-                                        >
-                                        </Avatar>)
-                                    }
-                                  })
-                                }
-                                // if the day to change is not on the schedule, map through dogs and add dog:
-                                else if (!clientSchedule[dayOfWeek] && change.is_scheduled){
-                                  dogs.map(dog=> {
-                                    if (dog.dog_id === change.dog_id){
-                                      return (
-                                        <Avatar
-                                            sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
-                                            alt={dog.dog_name[0]}
-                                            src={dog.image ? dog.image : null}
-                                        >
-                                        </Avatar>)
-                                    }
-                                })
-                              }
-                            }
-                            else{
-                              // is todays day of week part of the clients schedule?
-                              if (day.$W === clientSchedule[day.$W]){
-                                dogs.map(dog=> {
-                                  return (
-                                    <Avatar
-                                        sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
-                                        alt={dog.dog_name[0]}
-                                        src={dog.image ? dog.image : null}
-                                    >
-                                    </Avatar>)
-                                })
-                              }
-                            }
-                            }
-                        )}
-                        </Box>
-                      : 
-                      null
-                      }
+                      
                     </Box>
                 );
                 }}/>

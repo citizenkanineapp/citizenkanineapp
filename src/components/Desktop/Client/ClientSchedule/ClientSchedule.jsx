@@ -32,18 +32,10 @@ function ClientSchedule() {
       // },[])
       
     // const clientSchedule= useSelector(store=> store.clientScheduleReducer);
-    const clientSchedule = {1: true, 2: false, 3: true, 4: true, 5: false}
-    const dogs = useSelector(store=> store.clientReducer.dogs)
-// dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: true}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: false}]
-    
-    
-    // const [value, onChange] = useState(new Date());
-    const [dog, setDog] = useState('');
-    const [action, setAction] = useState('');
-    
-    const [walk, setWalk] = useState(false);
-    
-    
+    const clientSchedule = {1: true, 2: true, 3: true, 4: true, 5: false}
+    // const dogs = useSelector(store=> store.clientReducer.dogs)
+    const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: true}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: false}]
+
     
     const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
     
@@ -54,20 +46,20 @@ function ClientSchedule() {
     const [value, setValue] = useState(dayjs());
     // console.log(value)
     
-    const handleChange = (newValue) => {
-      console.log(newValue)
-      console.log(newValue.$d)
-      // Fri Nov 18 2022 09:41:13 GMT-0600 (Central Standard Time)
-      console.log(newValue.$D)
-      // 18
-      setValue(newValue.$d);
-    };
+    // const handleChange = (newValue) => {
+    //   console.log(newValue)
+    //   console.log(newValue.$d)
+    //   // Fri Nov 18 2022 09:41:13 GMT-0600 (Central Standard Time)
+    //   console.log(newValue.$D)
+    //   // 18
+    //   setValue(newValue.$d);
+    // };
     
     // Testing to add a dog:
-    const mockChanges =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
+    const changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
 
-    console.log(dayjs('2022-11-22').$W); // returns 2 for Tuesday
-    console.log(dayjs('2022-11-22').$d); // returns Tue Nov 22 2022 00:00:00 GMT-0600
+    // console.log(dayjs('2022-11-22').$W); // returns 2 for Tuesday
+    // console.log(dayjs('2022-11-22').$d); // returns Tue Nov 22 2022 00:00:00 GMT-0600
 
 
 
@@ -86,6 +78,7 @@ function ClientSchedule() {
                     // console.log(dayjs());
                     <TextField key={day.$D} {...params} />
                     }}
+              // renderDay is essentially mapping through each day in the selected month.
               renderDay={(day, _value, DayComponentProps) => {
                 // console.log('day is:', day.$W);
                 // day.$W returns returns an integer (1-5) representing the days of the week (M-F)
@@ -95,19 +88,112 @@ function ClientSchedule() {
                     selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
                 }
 
+                // DATA BEING USED:
+
+                // const changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
+
+                // const clientSchedule = {1: true, 2: false, 3: true, 4: true, 5: false}
+
+                // const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: true}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: false}]
+
                 return (
                     <Box
+                    key={day.$D}
                     className="clientSchedule"
                     sx={{width: '5vw', height: '5vw', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'flex-start', justifyContent: 'center', border: 1, borderColor: '#7BCEC8', mt: 0}}>
                       {/* This box is just for the date number */}
-                      <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '1', mb: 1}}>
+                      <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '1', mb: 0}}>
                         <PickersDay 
                         key={day.$D}
                         className={ selectedMUIClass }
                         {...DayComponentProps} />
                       </Box>
-                      {/* Adding dog avatars to client scheduled weekdays */}
                       {/* Is this date in the current month ?*/}
+                      {!DayComponentProps.outsideCurrentMonth ?
+                      <Box className="avatarBox" sx={{display: 'flex', flexDirection: 'row', flexGrow: '10', flexWrap: 'wrap', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                        {/*  map through changes array: Is there a change for today? YES:, NO: check to see if it is a regularly scheduled day and render regularly scheduled dogs */}
+                        {/* changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}] */}
+                        {changes && changes.map(change => {
+                          // console.log('in changes. today is:',day.$D, 'the change is:',change)
+                          // does the change date match today's date?
+                          if (day.$D === dayjs(change.date_to_change).$D){
+                            // clientSchedule = {1: true, 2: false, 3: true, 4: true, 5: false}
+                            // is the change.is_scheduled === true and today lands on a regularly scheduled day? (dog being added)
+                            // console.log('change scheduled', change.is_scheduled, 'today regularly scheduled',clientSchedule[day.$W] )
+                            if( change.is_scheduled && clientSchedule[day.$W] ){
+                              console.log('on this day,', day.$D, 'the client is regularly scheduled',clientSchedule[day.$W])
+                              dogs.map(dog=> {
+                                console.log('this is the date of change',dayjs(change.date_to_change).$D,'this dog',dog.dog_id, 'is regularly scheduled,', dog.regular , 'and today is a regularly scheduled day', clientSchedule[day.$W] )
+                                // if the dog is regularly scheduled or the dog id for the change matches the dog_id => render the dog 
+                                if (dog.regular || change.dog_id === dog.dog_id){
+                                  console.log('this avatar should be rendering')
+                                  return (
+                                      <Avatar
+                                          key={dog.dog_id}
+                                          sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
+                                          alt={dog.dog_name[0]}
+                                          // src={dog.image ? dog.image : null}
+                                      >{dog.dog_name[0]}
+                                      </Avatar>
+                                      )
+                                }
+                              })
+                            }
+                            // ELSE IF today is not a regularly scheduled day and change.is_scheduled === true, render only the dog for today's change: 
+                            else if( change.is_scheduled && !clientSchedule[day.$W]){
+                              dogs.map(dog=> {
+                                if (dog.dog_id === change.dog_id){
+                                  return (
+                                    <Avatar
+                                        key={dog.dog_id}
+                                        sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
+                                        alt={dog.dog_name[0]}
+                                        src={dog.image ? dog.image : null}
+                                    >
+                                    </Avatar>
+                                    )
+                                }
+                              })
+                            }
+                            // ELSE IF change.is_scheduled === false and today is a regularly scheduled day, render all dogs with dog.regular === true and who's id does not match the one on the change
+                            else if( !change.is_scheduled && clientSchedule[day.$W]){
+                              dogs.map(dog=> {
+                                if ( dog.regular && dog,dog_id !== change.dog_id){
+                                  return (
+                                    <Avatar
+                                        key={dog.dog_id}
+                                        sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
+                                        alt={dog.dog_name[0]}
+                                        src={dog.image ? dog.image : null}
+                                    >
+                                    </Avatar>
+                                    )
+                                }
+                              })
+                            } // end of conditionals for days with changes. If a change with a is_scheduled === false and today is not a regularly scheduled day, nothing is rendered. 
+                          }
+                          // THIS ELSE is for when there is no change listed for today:
+                          else {
+                            // IF there is no change today and today is a regularly scheduled day, render all dogs that are regularly scheduled
+                            if (day.$W === clientSchedule[day.$W]){
+                              dogs.map(dog=> {
+                                return (
+                                  <Avatar
+                                      key={dog.dog_id}
+                                      sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
+                                      alt={dog.dog_name[0]}
+                                      src={dog.image ? dog.image : null}
+                                  >
+                                  </Avatar>
+                                  )
+                              })
+                            }
+                          }
+                        })}
+                        
+                      </Box>
+                      
+                      : null} {/* this null is for the day not being within the current month */}
                       
                     </Box>
                 );
@@ -118,15 +204,6 @@ function ClientSchedule() {
       {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
       <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button> */}
     </Box >
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DesktopDatePicker
-        label="Date desktop"
-        inputFormat="MM/DD/YYYY"
-        value={value}
-        onChange={ handleChange }
-        renderInput={(params) => <TextField {...params} />}
-      />
-    </LocalizationProvider>
   </>
   )
 }

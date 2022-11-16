@@ -34,7 +34,7 @@ function ClientSchedule() {
     // const clientSchedule= useSelector(store=> store.clientScheduleReducer);
     const clientSchedule = {1: true, 2: true, 3: true, 4: true, 5: false}
     // const dogs = useSelector(store=> store.clientReducer.dogs)
-    const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: true}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: false}]
+    const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: false}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: true}]
 
     
     const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
@@ -56,7 +56,7 @@ function ClientSchedule() {
     // };
     
     // Testing to add a dog:
-    const changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
+    const changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: false}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
 
     // console.log(dayjs('2022-11-22').$W); // returns 2 for Tuesday
     // console.log(dayjs('2022-11-22').$d); // returns Tue Nov 22 2022 00:00:00 GMT-0600
@@ -90,11 +90,11 @@ function ClientSchedule() {
 
                 // DATA BEING USED:
 
-                // const changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
+                // const changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: false}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
 
-                // const clientSchedule = {1: true, 2: false, 3: true, 4: true, 5: false}
+                // const clientSchedule = {1: true, 2: true, 3: true, 4: true, 5: false}
 
-                // const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: true}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: false}]
+                // const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: false}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: true}]
 
                 return (
                     <Box
@@ -109,39 +109,66 @@ function ClientSchedule() {
                         {...DayComponentProps} />
                       </Box>
                       {/* Is this date in the current month ?*/}
-                      {!DayComponentProps.outsideCurrentMonth ?
-                      <Box className="avatarBox" sx={{display: 'flex', flexDirection: 'row', flexGrow: '10', flexWrap: 'wrap', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                    {!DayComponentProps.outsideCurrentMonth ?
+                      <div>
                         {/*  map through changes array: Is there a change for today? YES:, NO: check to see if it is a regularly scheduled day and render regularly scheduled dogs */}
                         {/* changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}] */}
                         {changes && changes.map(change => {
                           // console.log('in changes. today is:',day.$D, 'the change is:',change)
                           // does the change date match today's date?
+                          // START OF FIRST CONDITIONAL:
+                          return(
+                          <div> 
+                            {day.$D === dayjs(change.date_to_change).$D ? 
+                              <div>
+                              {change.is_scheduled && clientSchedule[day.$W] ?
+                                <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                                  {dogs.map(dog=> {
+                                    return (
+                                    <>
+                                      {dog.regular || change.dog_id === dog.dog_id ? 
+                                        <Avatar
+                                            key={dog.dog_id}
+                                            sx={{width: '1vw', height: '1vw', mx: .25}}
+                                            alt={dog.dog_name[0]}
+                                            src={dog.image ? dog.image : null}
+                                        >
+                                        </Avatar>
+                                      : null}
+                                    </>)
+                                  })}
+                                </Box>
+                              : null}
+                              </div>
+                            :null
+                            }
+                          </div>)
+                          // END OF FIRST CONDITIONAL
                           if (day.$D === dayjs(change.date_to_change).$D){
                             // clientSchedule = {1: true, 2: false, 3: true, 4: true, 5: false}
                             // is the change.is_scheduled === true and today lands on a regularly scheduled day? (dog being added)
                             // console.log('change scheduled', change.is_scheduled, 'today regularly scheduled',clientSchedule[day.$W] )
-                            if( change.is_scheduled && clientSchedule[day.$W] ){
+                            if ( change.is_scheduled && clientSchedule[day.$W] ){
                               console.log('on this day,', day.$D, 'the client is regularly scheduled',clientSchedule[day.$W])
                               dogs.map(dog=> {
-                                console.log('this is the date of change',dayjs(change.date_to_change).$D,'this dog',dog.dog_id, 'is regularly scheduled,', dog.regular , 'and today is a regularly scheduled day', clientSchedule[day.$W] )
+                                // console.log('this is the date of change',dayjs(change.date_to_change).$D,'this dog',dog.dog_id, 'is regularly scheduled,', dog.regular , 'and today is a regularly scheduled day', clientSchedule[day.$W] )
                                 // if the dog is regularly scheduled or the dog id for the change matches the dog_id => render the dog 
-                                if (dog.regular || change.dog_id === dog.dog_id){
+                                {(dog.regular || change.dog_id === dog.dog_id)
                                   console.log('this avatar should be rendering')
-                                  return (
-                                      <Avatar
-                                          key={dog.dog_id}
-                                          sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
-                                          alt={dog.dog_name[0]}
-                                          // src={dog.image ? dog.image : null}
-                                      >{dog.dog_name[0]}
-                                      </Avatar>
-                                      )
-                                }
+                                  return <Avatar
+                                              key={dog.dog_id}
+                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
+                                              // alt={dog.dog_name[0]}
+                                              // src={dog.image ? dog.image : null}
+                                          >{dog.dog_name[0]}
+                                          </Avatar>
+                                    }
                               })
                             }
-                            // ELSE IF today is not a regularly scheduled day and change.is_scheduled === true, render only the dog for today's change: 
-                            else if( change.is_scheduled && !clientSchedule[day.$W]){
+                            //IF today is not a regularly scheduled day and change.is_scheduled === true, render only the dog for today's change: 
+                            if ( change.is_scheduled && !clientSchedule[day.$W]){
                               dogs.map(dog=> {
+
                                 if (dog.dog_id === change.dog_id){
                                   return (
                                     <Avatar
@@ -155,10 +182,10 @@ function ClientSchedule() {
                                 }
                               })
                             }
-                            // ELSE IF change.is_scheduled === false and today is a regularly scheduled day, render all dogs with dog.regular === true and who's id does not match the one on the change
-                            else if( !change.is_scheduled && clientSchedule[day.$W]){
+                            // IF change.is_scheduled === false and today is a regularly scheduled day, render all dogs with dog.regular === true and who's id does not match the one on the change
+                            if( !change.is_scheduled && clientSchedule[day.$W]){
                               dogs.map(dog=> {
-                                if ( dog.regular && dog,dog_id !== change.dog_id){
+                                if ( dog.regular && dog.dog_id !== change.dog_id){
                                   return (
                                     <Avatar
                                         key={dog.dog_id}
@@ -191,7 +218,7 @@ function ClientSchedule() {
                           }
                         })}
                         
-                      </Box>
+                      </div>
                       
                       : null} {/* this null is for the day not being within the current month */}
                       

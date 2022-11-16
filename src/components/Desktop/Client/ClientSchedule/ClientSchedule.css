@@ -92,8 +92,9 @@
     margin-top: 5px !important;
 }
 
-.clientSchedule  {
+.clientSchedule, .css-9yfzp7  {
     outline: black 1px;
+    width: 40vw !important;
 }
 
 .clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{

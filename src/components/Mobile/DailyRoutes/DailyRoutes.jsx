@@ -34,7 +34,7 @@ function DailyRoutes() {
 
   const determineStatus = (dog) => {
     if (dog.checked_in) {
-      return '#7BCEC8';
+      return '#3DA49D';
     }
     else if (dog.no_show) {
       return '#F8614D';

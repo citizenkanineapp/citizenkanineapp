@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AvatarGroup, Card, CardContent, Avatar, Typography, Grid } from '@mui/material';
+import { AvatarGroup, Card, CardContent, Avatar, Typography, Grid, Button } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import FlagIcon from '@mui/icons-material/Flag';
 
 function RouteSelect() {
+    const history = useHistory();
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({ type: 'GET_DAILY_ROUTES' });
@@ -15,9 +16,10 @@ function RouteSelect() {
     }, []);
 
     // reducer getting filled with a specific routes dogs
+    const user = useSelector(store => store.user);
     const dailyRoutes = useSelector(store => store.dailyDogz);
     const allroutes = Object.keys(dailyRoutes); //pulls route names out of route object
-    const routes = allroutes.slice(0, 4);
+    // const routes = allroutes.slice(0, 4);
 
     const getRouteColor = (route) => {
         switch (route) {
@@ -37,11 +39,11 @@ function RouteSelect() {
 
 
     return (
-        <Grid container spacing={2} sx={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+        <Grid container spacing={2} sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
             {/* route is the name of each route */}
-            {routes.map((route, i) => (
-                <Grid item xs={11} sx={{ height: '20%' }}>
+            {allroutes.map((route, i) => (
+                <Grid item xs={11} >
                     <Card raised sx={{ background: () => getRouteColor(route) }} onClick={(event) => checkoutRoute((i + 1))}>
                         <Typography sx={{ color: 'white', textTransform: 'uppercase', textAlign: 'center' }}>
                             {route} {dailyRoutes[route].length}
@@ -66,6 +68,12 @@ function RouteSelect() {
                     </Card>
                 </Grid>
             ))}
+            {user.admin ?
+
+                <Button variant='contained' onClick={() => history.push('/m/routes/admin')}>Load Balancing</Button>
+                :
+                null
+            }
         </Grid>
 
     );

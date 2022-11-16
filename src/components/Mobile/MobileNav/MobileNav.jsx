@@ -18,8 +18,8 @@ function MobileNav() {
   // history to navigate us to different pages
   const history = useHistory();
 
-  const adminTime = () => {
-    dispatch({ type: 'POPULATE_DAILY_DOGS' });
+  const adminTime = async () => {
+    await dispatch({ type: 'POPULATE_DAILY_DOGS' });
     history.push('/m/routes');
   }
 

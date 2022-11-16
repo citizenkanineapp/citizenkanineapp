@@ -59,7 +59,7 @@ function DogDetails() {
         {dog.image ?
           <Avatar src={dog.image} sx={{ height: '150px', width: '150px' }} />
           :
-          <Avatar>
+          <Avatar sx={{ height: '150px', width: '150px' }} >
             {dog.name}
           </Avatar>
         }
@@ -89,7 +89,7 @@ function DogDetails() {
           <Stack direction='row' alignItems='center'>
             {dog.flagged ? <FlagIcon sx={{ fill: '#e0603f' }} /> : null}
             <Typography variant='inherit' onClick={(event) => setEditStatus(true)}>
-              {dog.notes ? dog.notes : `Click to add a Note for ${dog.name}`}
+              {dog.dog_notes ? dog.dog_notes : `Click to add a Note for ${dog.name}`}
             </Typography>
           </Stack>
         </Card>
@@ -97,7 +97,7 @@ function DogDetails() {
       {/* ACCESS INFORMATION */}
       <Grid item xs={10}>
         <Card sx={{ mb: 1 }}>
-          <Typography align='center'>Protocol: Side door - Access Code: 12543</Typography>
+          <Typography align='center'>{dog.client_protocol || 'No protocol on File'}</Typography>
         </Card>
         {/* OWNER INFORMATION & CALL BUTTON */}
 

@@ -20,9 +20,11 @@ function CSVDateView() {
                 <TableRow>
                   <TableCell>Invoice Period:</TableCell>
                   <TableCell>Client:</TableCell>
-                  <TableCell>Date of Service:</TableCell>
-                  <TableCell>Dog:</TableCell>
                   <TableCell>Service:</TableCell>
+                  <TableCell>Dates of Service:</TableCell>
+                  <TableCell>Quantity:</TableCell>
+                  <TableCell>Service Cost:</TableCell>
+                  <TableCell>Total Cost:</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

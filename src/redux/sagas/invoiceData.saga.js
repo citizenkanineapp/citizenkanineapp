@@ -1,15 +1,6 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* fetchServices() {
-    try {
-        const services = yield axios.get('/api/invoice/services');
-        console.log(services.data);
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 function* fetchInvoiceData(action) {
     try {
         console.log(action.payload);
@@ -21,7 +12,7 @@ function* fetchInvoiceData(action) {
             }
         });
         console.log(clients.data)
-        // yield put ({type: 'SET_CLIENTS', payload: clients.data}); 
+        yield put ({type: 'SET_INVOICE_DATA', payload: clients.data}); 
     } catch (error) {
         console.log(error);
     }

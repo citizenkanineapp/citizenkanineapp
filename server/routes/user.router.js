@@ -42,7 +42,6 @@ router.post('/register', (req, res, next) => {
 router.put('/passreset/:id', (req, res) => {
   const userId = req.params.id;
   console.log(req.params.id)
-  console.log(req.body.password);
   const password = encryptLib.encryptPassword(req.body.password);
 
   const queryText = `UPDATE "user" 

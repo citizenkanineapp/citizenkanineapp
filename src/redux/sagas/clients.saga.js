@@ -13,7 +13,6 @@ function* getAllClients(action){
         console.log(error);
         alert('Error fetching clients');
     }
-    
 }
 
 function* addClient(action){
@@ -135,9 +134,7 @@ function* clientSaga() {
     yield takeLatest('FETCH_ONE_CLIENT', fetchOneClient);
     yield takeLatest('DELETE_CLIENT', deleteClient);
     yield takeLatest('DELETE_DOG', deleteDog);
-    yield takeLatest('UPDATE_DOG', updateDog);
-   
-    
+    yield takeLatest('UPDATE_DOG', updateDog);   
   }
 
   export default clientSaga;

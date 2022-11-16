@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     const queryServices = `SELECT * FROM services`;
 
     // use in case of client ALL
-    if (searchClientId) {
+    if (searchClientId!=0) {
         searchQuery = `
             WHERE
                 clients.id = $1 AND

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AvatarGroup, Card, CardContent, Avatar, Typography, Grid} from '@mui/material';
+import { AvatarGroup, Card, CardContent, Avatar, Typography, Grid } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import FlagIcon from '@mui/icons-material/Flag';
@@ -37,14 +37,14 @@ function RouteSelect() {
 
 
     return (
-        <Grid container spacing={2} sx={{ height: '85%', alignItems: 'center', justifyContent: 'center' }}>
+        <Grid container spacing={2} sx={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
 
             {/* route is the name of each route */}
             {routes.map((route, i) => (
                 <Grid item xs={11} sx={{ height: '20%' }}>
                     <Card raised sx={{ background: () => getRouteColor(route) }} onClick={(event) => checkoutRoute((i + 1))}>
                         <Typography sx={{ color: 'white', textTransform: 'uppercase', textAlign: 'center' }}>
-                            {route} {route.length}
+                            {route} {dailyRoutes[route].length}
                         </Typography>
                         <CardContent>
                             <AvatarGroup>

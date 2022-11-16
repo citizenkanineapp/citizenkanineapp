@@ -132,7 +132,7 @@ function* addEmployee(action){
     
     try{
         const employeeAdded = yield axios({
-            method: 'PUT',
+            method: 'POST',
             url: '/api/employees',
             data: newEmployee
         })
@@ -143,7 +143,7 @@ function* addEmployee(action){
         // ADDING USER:
         yield console.log('newUser:', newUser)
         yield put({
-            type: 'REGISTER',
+            type: 'REGISTER_EMP_USER',
             payload: newUser
         })
         yield put({

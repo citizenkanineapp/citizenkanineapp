@@ -50,11 +50,20 @@ function ClientModal(){
       default: return <ClientDetails/>
     };
   };
- 
+
   return (
       <div className="container">
-        <Modal open={status}>
-          <Box sx={{ ...style, width: 800, height: 600 }}>
+        <Modal 
+          open={status}
+          // This onClose function allows the user click on the backdrop to exit the modal view only if the modalView is set to ClientDetails. This prevents the user from closing out a form that has not been submitted yet. 
+          onClose={(_,reason) => {
+            reason === 'backdropClick';
+            if (modalView === "ClientDetails"){
+              dispatch({ type: 'SET_MODAL_STATUS' })
+            }
+            }} 
+          >
+          <Box sx={{ ...style, width: modalView === "ClientSchedule" ? '80vw' : '60vw', height: '80vh', outline: 'none', borderRadius: '5px', display: 'flex', alignContent: 'center', justifyContent: 'left' }}>
             {pickView()}
           </Box>
       </Modal>

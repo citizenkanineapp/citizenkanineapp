@@ -119,14 +119,108 @@ function ClientSchedule() {
                           // START OF FIRST CONDITIONAL:
                           return(
                           <div> 
+                            {/* is there a change scheduled today? */}
                             {day.$D === dayjs(change.date_to_change).$D ? 
                               <div>
-                              {change.is_scheduled && clientSchedule[day.$W] ?
+                              {/*  is this change to add a dog? */}
+                              {change.is_scheduled ?
+                                <>
+                                {/* Is this change happening on a regularly scheduled weekday? */}
+                                {clientSchedule[day.$W] ? 
+                                    <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                                    {dogs.map(dog=> {
+                                      return (
+                                      <>
+                                      {/* render all the regularly scheduled dogs AND the dog added */}
+                                        {dog.regular || change.dog_id === dog.dog_id ? 
+                                          <Avatar
+                                              key={dog.dog_id}
+                                              sx={{width: '1vw', height: '1vw', mx: .25}}
+                                              alt={dog.dog_name[0]}
+                                              src={dog.image ? dog.image : null}
+                                          >
+                                          </Avatar>
+                                        : null}
+                                      </>)
+                                      })}
+                                    </Box>
+                                  :
+                                  // Adding a dog on a non-regularly scheduled weekday:
+                                  <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                                    {dogs.map(dog=> {
+                                      return (
+                                      <>
+                                      {/* render the dog(s) added */}
+                                        {change.dog_id === dog.dog_id ? 
+                                          <Avatar
+                                              key={dog.dog_id}
+                                              sx={{width: '1vw', height: '1vw', mx: .25}}
+                                              alt={dog.dog_name[0]}
+                                              src={dog.image ? dog.image : null}
+                                          >
+                                          </Avatar>
+                                        : null}
+                                      </>)
+                                      })}
+                                    </Box>
+                                  }</>
+                                
+                              : 
+                              // The change is to delete a dog, change.is_scheduled === false:
+                              <>
+                                {/* Is this change happening on a regularly scheduled weekday? */}
+                                {clientSchedule[day.$W] ? 
+                                    <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                                    {dogs.map(dog=> {
+                                      return (
+                                      <>
+                                      {/* render all the regularly scheduled dogs EXCEPT the dog deleted */}
+                                        {dog.regular && change.dog_id !== dog.dog_id ? 
+                                          <Avatar
+                                              key={dog.dog_id}
+                                              sx={{width: '1vw', height: '1vw', mx: .25}}
+                                              alt={dog.dog_name[0]}
+                                              src={dog.image ? dog.image : null}
+                                          >
+                                          </Avatar>
+                                        : null}
+                                      </>)
+                                      })}
+                                    </Box>
+                                  :
+                                  // Adding a dog on a non-regularly scheduled weekday:
+                                  <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                                    {dogs.map(dog=> {
+                                      return (
+                                      <>
+                                      {/* render the dog(s) added */}
+                                        {change.dog_id === dog.dog_id ? 
+                                          <Avatar
+                                              key={dog.dog_id}
+                                              sx={{width: '1vw', height: '1vw', mx: .25}}
+                                              alt={dog.dog_name[0]}
+                                              src={dog.image ? dog.image : null}
+                                          >
+                                          </Avatar>
+                                        : null}
+                                      </>)
+                                      })}
+                                    </Box>
+                                  }</>
+                              }
+                              </div>
+                            :
+                            // There are no schedule changes for today:
+                            <>
+                              {/* is today a regularly scheduled weekday? */}
+                              {clientSchedule[day.$W] ? 
                                 <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
                                   {dogs.map(dog=> {
+                                    
                                     return (
                                     <>
-                                      {dog.regular || change.dog_id === dog.dog_id ? 
+                                    {/* render the dog(s) added */}
+                                      { dog.regular && day.$D !== dayjs(change.date_to_change).$D ? 
                                         <Avatar
                                             key={dog.dog_id}
                                             sx={{width: '1vw', height: '1vw', mx: .25}}
@@ -136,92 +230,18 @@ function ClientSchedule() {
                                         </Avatar>
                                       : null}
                                     </>)
-                                  })}
+                                    })}
                                 </Box>
-                              : null}
-                              </div>
-                            :null
+                              :
+                              // There are no changes today AND today is not a regularly scheduled day
+                              null
+                              }
+                            </>
                             }
                           </div>)
-                          // END OF FIRST CONDITIONAL
-                          if (day.$D === dayjs(change.date_to_change).$D){
-                            // clientSchedule = {1: true, 2: false, 3: true, 4: true, 5: false}
-                            // is the change.is_scheduled === true and today lands on a regularly scheduled day? (dog being added)
-                            // console.log('change scheduled', change.is_scheduled, 'today regularly scheduled',clientSchedule[day.$W] )
-                            if ( change.is_scheduled && clientSchedule[day.$W] ){
-                              console.log('on this day,', day.$D, 'the client is regularly scheduled',clientSchedule[day.$W])
-                              dogs.map(dog=> {
-                                // console.log('this is the date of change',dayjs(change.date_to_change).$D,'this dog',dog.dog_id, 'is regularly scheduled,', dog.regular , 'and today is a regularly scheduled day', clientSchedule[day.$W] )
-                                // if the dog is regularly scheduled or the dog id for the change matches the dog_id => render the dog 
-                                {(dog.regular || change.dog_id === dog.dog_id)
-                                  console.log('this avatar should be rendering')
-                                  return <Avatar
-                                              key={dog.dog_id}
-                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
-                                              // alt={dog.dog_name[0]}
-                                              // src={dog.image ? dog.image : null}
-                                          >{dog.dog_name[0]}
-                                          </Avatar>
-                                    }
-                              })
-                            }
-                            //IF today is not a regularly scheduled day and change.is_scheduled === true, render only the dog for today's change: 
-                            if ( change.is_scheduled && !clientSchedule[day.$W]){
-                              dogs.map(dog=> {
-
-                                if (dog.dog_id === change.dog_id){
-                                  return (
-                                    <Avatar
-                                        key={dog.dog_id}
-                                        sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
-                                        alt={dog.dog_name[0]}
-                                        src={dog.image ? dog.image : null}
-                                    >
-                                    </Avatar>
-                                    )
-                                }
-                              })
-                            }
-                            // IF change.is_scheduled === false and today is a regularly scheduled day, render all dogs with dog.regular === true and who's id does not match the one on the change
-                            if( !change.is_scheduled && clientSchedule[day.$W]){
-                              dogs.map(dog=> {
-                                if ( dog.regular && dog.dog_id !== change.dog_id){
-                                  return (
-                                    <Avatar
-                                        key={dog.dog_id}
-                                        sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
-                                        alt={dog.dog_name[0]}
-                                        src={dog.image ? dog.image : null}
-                                    >
-                                    </Avatar>
-                                    )
-                                }
-                              })
-                            } // end of conditionals for days with changes. If a change with a is_scheduled === false and today is not a regularly scheduled day, nothing is rendered. 
-                          }
-                          // THIS ELSE is for when there is no change listed for today:
-                          else {
-                            // IF there is no change today and today is a regularly scheduled day, render all dogs that are regularly scheduled
-                            if (day.$W === clientSchedule[day.$W]){
-                              dogs.map(dog=> {
-                                return (
-                                  <Avatar
-                                      key={dog.dog_id}
-                                      sx={{width: '1.25vw', height: '1.25vw', mx: .25}}
-                                      alt={dog.dog_name[0]}
-                                      src={dog.image ? dog.image : null}
-                                  >
-                                  </Avatar>
-                                  )
-                              })
-                            }
-                          }
                         })}
-                        
                       </div>
-                      
                       : null} {/* this null is for the day not being within the current month */}
-                      
                     </Box>
                 );
                 }}/>

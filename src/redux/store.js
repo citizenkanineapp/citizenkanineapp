@@ -17,7 +17,7 @@ const middlewareList = process.env.NODE_ENV === 'development' ?
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['modal', 'dnd'],
+  blacklist: ['modal', 'dailyDogz'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* fetchDetails(action) {
-    console.log('FETCHIND DOG DETAILS', action.payload);
+    console.log('FETCHING DOG DETAILS', action.payload);
     const dogID = action.payload;
     try {
         const dog = yield axios({

@@ -43,8 +43,7 @@ function DailyRoutes() {
 
   const getDogDetails = (dogID) => {
     console.log(dogID);
-    dispatch({ type: 'FETCH_DOG_DETAILS', payload: dogID })
-    history.push('/m/dog/')
+    history.push(`/m/dog/${dogID}`)
   }
 
   const checkIn = (clientID) => {
@@ -97,8 +96,6 @@ function DailyRoutes() {
                   <ListItemText
                     primary={dog.name}
                     secondary={dog.client_name}
-
-
                   />
                 </ListItem>
               </List>

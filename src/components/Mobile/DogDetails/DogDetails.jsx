@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Accordion, AccordionSummary, AccordionDetails, Fab, CardMedia, Card, CardActions, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,15 +11,28 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 function DogDetails() {
+  const params = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const dog = useSelector(store => store.details);
 
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_DOG_DETAILS',
+      payload: params.id
+    })
 
-  const vetAddress = { address: '400 S 4th St', city: 'Minneapolis', zipCode: '55415', }
-  const clientAddress = { address: '4145 Zarthan AVE S', city: 'St. Louis Park', zipCode: '55416', }
-  const history = useHistory();
+    return () => {
+      dispatch({
+        type: 'CLEAR_DETAILS'
+      })
+    }
+  }, [params.id])
+
 
   const openMap = async (dog) => {
-    const destination = encodeURIComponent(`${dog.street} ${dog.zipCode}`);
+    const destination = encodeURIComponent(`${dog.street} ${dog.zip}`);
     // , ${clientAddress.city}
     const link = `http://maps.google.com/?daddr=${destination}`;
     window.open(link);
@@ -41,7 +54,7 @@ function DogDetails() {
           <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>
             <EditIcon />
           </Fab>
-          <CardMedia component="img" height='70%' image={dog.image} />
+          <CardMedia component="img" sx={{ objectFit: 'contain' }} image={dog.image} />
         </Card>
       </Grid>
       {/* DOG NAME */}
@@ -69,9 +82,7 @@ function DogDetails() {
           <Stack direction='row' alignItems='center'>
             {dog.flagged ? <FlagIcon sx={{ fill: '#e0603f' }} /> : null}
             <Typography variant='inherit'>
-              {/* {dog.notes} */}
-              {/* {dog.notes ? dog.notes : `Click to add a Note for ${dog.name}`} */}
-              Total Diva, needs her hair brushed at LEAST once every 4 minutes or she throws a FIT.
+              {dog.notes ? dog.notes : `Click to add a Note for ${dog.name}`}
             </Typography>
           </Stack>
         </Card>
@@ -92,8 +103,8 @@ function DogDetails() {
           </AccordionSummary>
           <AccordionDetails>
             <Typography variant='body2'> {dog.first_name} {dog.last_name}</Typography>
-            <a href="tel:+16127159132">(612)-715-9132</a>
-            <Button endIcon={<LocalPhoneIcon fontSize='small' />}>
+            {/* <a href="tel:+16127159132">(612)-715-9132</a> */}
+            <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.phone)}>
               Call
             </Button>
 
@@ -110,8 +121,8 @@ function DogDetails() {
           </AccordionSummary>
           <AccordionDetails>
             <Typography variant='body2'>Dr. Terry</Typography>
-            <a href="tel:+16127159132"><LocalPhoneIcon fontSize='small' />(612)-715-9132</a>
-            <Button endIcon={<LocalPhoneIcon fontSize='small' />}>
+            {/* <a href="tel:+16127159132"><LocalPhoneIcon fontSize='small' />(612)-715-9132</a> */}
+            <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.vet_phone)} >
               Call
             </Button>
           </AccordionDetails>
@@ -121,7 +132,7 @@ function DogDetails() {
 
 
 
-    </Grid>
+    </Grid >
   );
 }
 

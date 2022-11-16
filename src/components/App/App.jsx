@@ -131,7 +131,7 @@ function App() {
               <Routes />
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/m/dog/"> {/* should we use params here? - sarah */}
+            <ProtectedRoute exact path="/m/dog/:id"> {/* should we use params here? - sarah */}
               <DogDetails />
             </ProtectedRoute>
 
@@ -153,7 +153,7 @@ function App() {
 
           </Switch>
 
-          <MobileNav /> 
+          <MobileNav />
         </div>
       </ThemeProvider>
     </Router>

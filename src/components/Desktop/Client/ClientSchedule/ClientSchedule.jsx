@@ -87,7 +87,7 @@ function ClientSchedule() {
                 if (day.$d === dayjs()){
                     selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
                 }
-
+                const renderOnce = true;
                 // DATA BEING USED:
 
                 // const changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: false}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
@@ -113,7 +113,8 @@ function ClientSchedule() {
                       <div>
                         {/*  map through changes array: Is there a change for today? YES:, NO: check to see if it is a regularly scheduled day and render regularly scheduled dogs */}
                         {/* changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: true}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}] */}
-                        {changes && changes.map(change => {
+
+                        {changes && changes.map((change, index) => {
                           // console.log('in changes. today is:',day.$D, 'the change is:',change)
                           // does the change date match today's date?
                           // START OF FIRST CONDITIONAL:
@@ -213,7 +214,8 @@ function ClientSchedule() {
                             // There are no schedule changes for today:
                             <>
                               {/* is today a regularly scheduled weekday? */}
-                              {clientSchedule[day.$W] ? 
+                              {/* the index === changes.length-1 part prevents the dogs from rendering multiple times */}
+                              {clientSchedule[day.$W] && index === changes.length-1 ? 
                                 <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
                                   {dogs.map(dog=> {
                                     
@@ -240,6 +242,7 @@ function ClientSchedule() {
                             }
                           </div>)
                         })}
+                        {/* this is the end of mapping through changes */}
                       </div>
                       : null} {/* this null is for the day not being within the current month */}
                     </Box>

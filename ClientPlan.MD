@@ -12,9 +12,10 @@
 35. still having funky stuff happen moving through client views
 36. add form remove extra dog added accidnetally?
 37. if no image for dog?
-40. client permanent schedule changes.  Just have questions on looks but can make functionality
+
 41. Need to add regular dog/update table
-42. need to make ongoing schedule changes route
+     * re write all routes
+
 
 
 

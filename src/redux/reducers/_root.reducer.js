@@ -11,7 +11,7 @@ import dogReducer from './dog.reducer';
 import clientScheduleReducer from './clientSchedule.reducer';
 import newDogReducer from './newDog.reducer';
 import dogDelete from './dogDelete.reducer';
-import scheduleChangeReducer from './scheduleChange.reducer';
+
 import clientReducer from './client.reducer';
 import routeReducer from './route.reducer';
 
@@ -31,7 +31,7 @@ const rootReducer = combineReducers({
   dogDelete,
   selectedEmployeeReducer,
   routeReducer,
-  scheduleChangeReducer
+ 
 });
 
 export default rootReducer;

@@ -89,10 +89,12 @@ function EmployeeSchedule(){
   return (
   <Box sx={{display: 'flex', width: '100vw', justifyContent: 'center'}}>
     {/* // MUI DatePicker: */}
-    <Box className="container" sx={{display: 'flex', flexDirection: 'row', mt: 1}}>
-      <Card variant="outlined" sx={{bgcolor: '#FCF4EB'}}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <Box className="container" sx={{display: 'flex', flexDirection: 'row', width: '70%', justifyContent: 'center'}}>
+      <Card variant="outlined" sx={{bgcolor: '#FCF4EB', width: '100%', height: '90vh'}}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} sx={{width: '100% !important'}}>
                 <StaticDatePicker
+
+         
                     disableHighlightToday={false}
                     orientation="portrait"
                     openTo="day"
@@ -103,7 +105,7 @@ function EmployeeSchedule(){
                     }}
                     renderInput={(params) => {
                     // console.log(dayjs());
-                    <TextField key={day.$D} {...params} sx={{height: '80vh'}} />
+                    <TextField key={day.$D} {...params}/>
                     }}
                     // render day loops through the days in the month and performs the given function. 
                     renderDay={(day, _value, DayComponentProps) => {
@@ -112,7 +114,7 @@ function EmployeeSchedule(){
                         // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
                         const weekInYear = day.diff(`${currentYear}-01-01`, 'week', false)
                         return (
-                            <Box key={day.$d} className="container"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: 90, height: 90, justifyContent: 'center'}}>
+                            <Box key={day.$d} sx={{display: 'flex', flexDirection: 'column', width: '100%', height: '100%', justifyContent: 'center'}}>
                               <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '1'}}>
                                 <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>
                               </Box>
@@ -122,7 +124,7 @@ function EmployeeSchedule(){
                               {!DayComponentProps.outsideCurrentMonth?
                                 <>
                                   {weekInYear % 2 !== 0  ?
-                                    <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', justifyContent: 'center', alignContent: 'flex-start', flexWrap: 'wrap'}}>
+                                    <Box sx={{display:'flex', flexDirection: 'row', width: '100%', height: '100%', justifyContent: 'center', alignContent: 'flex-start', flexWrap: 'wrap'}}>
                                     {oddEmpSchedules.map((employee, index) => {
                                       if (employee[day.$W]){
                                         const bgColor = avatarColors[index];
@@ -131,7 +133,7 @@ function EmployeeSchedule(){
                                     })}
                                     </Box>
                                     :
-                                    <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', justifyContent: 'top', alignContent: 'flex-start', flexWrap: 'wrap'}}>
+                                    <Box sx={{display:'flex', flexDirection: 'row', width: '100%', height: '100%', justifyContent: 'top', alignContent: 'flex-start', flexWrap: 'wrap'}}>
                                     {evenEmpSchedules.map((employee, index) => {
                                     if (employee[day.$W]){
                                       const bgColor = avatarColors[index];
@@ -187,3 +189,81 @@ function EmployeeSchedule(){
 }
 
 export default EmployeeSchedule;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// sx={{
+
+
+//   '& .css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root': 
+//     { display: 'none !important' },
+//   '& .css-hlj6pa-MuiDialogActions-root': 
+//     { display: 'none !important' },
+//   '& .css-bkrceb-MuiButtonBase-root-MuiPickersDay-root.Mui-selected': /* changes the size of the calendar div */
+//     { 
+//       color: 'black !important', 
+//       bgcolor: 'transparent !important'
+//     }, 
+//   '& .css-epd502': 
+//     { 
+//       width: '60vw !important', 
+//       minHeight: '90vh !important', 
+//       borderRadius: '10px !important'
+//     },
+//   '& .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel':  /* customizes the weekday label */
+//     { 
+//       width: '8vw !important', 
+//       height: '5vh !important', 
+//       mx: 0
+//     },
+//   '& .css-1c32n2y-MuiBadge-root': /* This sized up the empty days at the beginning and end of the month */
+//     { 
+//       width: '90px !important', 
+//       height: '90px !important', 
+//       display: 'flex !important', 
+//       justifyContent: 'flex-end !important'
+//     }, 
+//   '& .css-bkrceb-MuiButtonBase-root-MuiPickersDay-root': 
+//     { 
+//       width: '90px', 
+//       height: '90px', 
+//       justifyContent: 'flex-end', 
+//       alignItems: 'flex-start' 
+//     },
+//   '& .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected': /* individual day buttons (circle) */
+//     { 
+//       width: '90px', 
+//       height: '90px', 
+//       justifyContent: 'flex-end', 
+//       alignItems: 'flex-start' 
+//     }, 
+//   '& .css-169iwlq-MuiCalendarPicker-root':  /* This resized the entire calendar container */
+//     { 
+//       width: '60vw', 
+//       height: '100vh', 
+//       minHeight: '100vh'
+//     },
+//   '& .css-6t5f1e-MuiDayPicker-monthContainer': 
+//     { minHeight: '80vh !important' },
+//   '& .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition':
+//     { minHeight: '100vh !important' },
+//   '& .css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon': /* removes the option to select the year */
+//     { display: 'none !important' },
+//   '& .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected': /* this changes the today's date indicator circle */ 
+//     {
+//       color: 'black',
+//       backgroundColor: 'transparent'
+//     },
+//   '& .css-1lunv-MuiPaper-root-MuiCard-root': 
+//     { height:'90vh' }
+//       }}

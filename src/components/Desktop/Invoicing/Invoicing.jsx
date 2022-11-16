@@ -29,7 +29,7 @@ function Invoicing(){
   const dispatch = useDispatch();
   const [selectedId, setId] = useState(0); // defaults to 'all'
   const [selectedMonth, setMonth] = useState(months[dayjs().month()]); //defaults to curren month
-  const [shortMonth, setShort] = useState('')
+  const [shortMonth, setShort] = useState('') //passed to table as prop for invoice display
   const [selectedYear, setYear] = useState(dayjs().year());
 
   useEffect(() => {

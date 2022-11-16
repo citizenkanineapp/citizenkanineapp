@@ -59,7 +59,7 @@ function DailyRoutes() {
   return (
     <>
       {route[0] ?
-        <Grid container spacing={2} sx={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Grid container spacing={1} sx={{ justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
 
           <Grid item xs={8} sx={{ background: () => getRouteColor(route), color: 'white', mt: 3, textAlign: 'center', textTransform: 'uppercase', borderRadius: 2 }}>
             <Typography variant='h5' sx={{ textAlign: 'center' }}>

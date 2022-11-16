@@ -39,7 +39,7 @@ function RouteSelect() {
 
 
     return (
-        <Grid container spacing={2} sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Grid container spacing={2} sx={{ height: '100%', display: 'flex', alignItems: 'start', justifyContent: 'space-evenly' }}>
 
             {/* route is the name of each route */}
             {allroutes.map((route, i) => (
@@ -68,9 +68,11 @@ function RouteSelect() {
                     </Card>
                 </Grid>
             ))}
-            {user.admin ?
 
-                <Button variant='contained' onClick={() => history.push('/m/routes/admin')}>Load Balancing</Button>
+            {user.admin ?
+                <Grid item xs={12} sx={{ justifyContent: 'space-around', alignItems: 'center' }}>
+                    <Button variant='contained' color='secondary' onClick={() => history.push('/m/routes/admin')}>Load Balancing</Button>
+                </Grid>
                 :
                 null
             }

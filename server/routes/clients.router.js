@@ -339,42 +339,26 @@ router.post('/schedule', rejectUnauthenticated, async (req, res) => {
  console.log('one off change', req.body)
   
  const client = await pool.connect();
-  const {date, is_scheduled, dog_id } = req.body
+  // const {date, is_scheduled, dog_id, client_id } = req.body
+  // const schedule = req.body
   try {
   await client.query('BEGIN')
-  const clientTxt = await client.query(`
-                          INSERT INTO clients 
-                              ("first_name", "last_name", "street", "city", "zip", "route_id", "phone", "email", "notes") 
+  await Promise.all(req.body.map(scheduleChange => { 
+      const scheduleTxt = `
+                          INSERT INTO dogs_schedule_changes 
+                              ("dog_id", "client_id", "date_to_change", "is_scheduled") 
                             VALUES
-                            ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-                            RETURNING "id";
-  `, [first_name, last_name, street, city, zip, route_id, phone, email, notes])
-  const customerId = clientTxt.rows[0].id
-
-  await Promise.all(dogArray.map(dog => { 
-      const dogTxt = `
-                          INSERT INTO dogs 
-                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag") 
-                            VALUES
-                              ($1, $2, $3, $4, $5, $6, $7)
+                              ($1, $2, $3, $4)
 
       `
-      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog.dog_notes, dog.flag]
-      return client.query(dogTxt, dogValues)
+      const scheduleValues = [scheduleChange.dog_id, scheduleChange.client_id, scheduleChange.date, scheduleChange.is_scheduled]
+      return client.query(scheduleTxt, scheduleValues)
   }));
-    const scheduleTxt = `
-                            INSERT INTO clients_schedule
-                            ("client_id", "1", "2", "3", "4", "5")
-                            VALUES
-                            ($1, $2, $3, $4, $5, $6)
-    `
-      const dayValues = [customerId, schedule[1], schedule[2], schedule[3], schedule [4], schedule[5]]
-      await client.query(scheduleTxt, dayValues )
       await client.query('COMMIT')
       res.sendStatus(201);
     } catch (error) {
       await client.query('ROLLBACK')
-      console.log('Error in post route for add client', error);
+      console.log('Error in post route for schedule changes', error);
       res.sendStatus(500);
     } finally {
       client.release()
@@ -405,6 +389,34 @@ router.delete('/dogs/:id', rejectUnauthenticated, (req, res) => {
         res.sendStatus(500);
       });
   });
+
+  //route to edit regular schedule
+router.put('/schedule', rejectUnauthenticated, async (req, res) => {
+  console.log('schedule as it arrives in server: ', req.body["1"])
+
+  const scheduleTxt = `
+            UPDATE clients_schedule
+                SET
+                  "1" = $1, 
+                  "2" = $2,
+                  "3" = $3,
+                  "4" = $4,
+                  "5" = $5
+              
+                WHERE
+                  client_id = $6;
+
+  `
+  const scheduleValues = [req.body["1"], req.body["2"],req.body["3"],req.body["4"],req.body["5"],req.body.client_id, ]
+ try{
+    pool.query(scheduleTxt, scheduleValues)
+    res.sendStatus(201);
+  } catch (dbErr){
+    console.log('Error in PUT route for regular schedule', dbErr)
+    res.sendStatus(500);
+  }
+});
+
   
   
   

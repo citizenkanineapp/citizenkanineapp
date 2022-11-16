@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import CheckIcon from '@mui/icons-material/Check';
 
 
 function ClientSchedule() {
@@ -23,7 +24,7 @@ function ClientSchedule() {
   const client = useSelector(store => store.clientReducer)
   const schedule = useSelector(store => store.clientScheduleReducer)
 
-  console.log('schedule reducer', schedule)
+  
 
 
   const [dog, setDog] = useState('');
@@ -32,15 +33,41 @@ function ClientSchedule() {
   // const [value, setValue] = React.useState(dayjs('2022-11-15T21:11:54'));
   const [value, setValue] = React.useState(dayjs());
  
+  const [monday, setMonday] = useState(schedule["1"])
+  const [tuesday, setTuesday] = useState(schedule["2"]);
+  const [wednesday, setWednesday] = useState(schedule["3"]);
+  const [thursday, setThursday] = useState(schedule["4"]);
+  const [friday, setFriday] = useState(schedule["5"]);
 
-  const [walk, setWalk] = useState(false);
+
 
   // this should gather info on what days are clicked to adjust the weekly schedule...
   // currently only works for one day
   const handleClick = (event) => {
     // toggle
-    setWalk(current => !current);
-    console.log(event)
+    switch (event){
+      case "Monday":
+        setMonday(current => !current);
+        dispatch({type: 'SET_MONDAY_CHANGE', payload: !monday})
+        break;
+      case "Tuesday":
+        setTuesday(current => !current);
+        dispatch({type: 'SET_TUESDAY_CHANGE', payload: !tuesday})
+        break;
+      case "Wednesday":
+        setWednesday(current => !current);
+        dispatch({type: 'SET_WEDNESDAY_CHANGE', payload: !wednesday})
+        break;
+      case "Thursday":
+        setThursday(current => !current);
+        dispatch({type: 'SET_THURSDAY_CHANGE', payload: !thursday})
+        break;
+      case "Friday":
+        setFriday(current => !current);
+        dispatch({type: 'SET_FRIDAY_CHANGE', payload: !friday})
+        break;
+    } 
+  
   };
 
 
@@ -62,7 +89,8 @@ function ClientSchedule() {
       let dogObject ={
         date: `${value.$y}-${month}-${value.$D}`,
         is_scheduled: scheduled,
-        dog_id: oneDog.dog_id
+        dog_id: oneDog.dog_id,
+        client_id: client.id
       }
       scheduleChangeObject.push(dogObject)
     }
@@ -70,7 +98,8 @@ function ClientSchedule() {
     let dogObject ={
       date: `${value.$y}-${month}-${value.$D}`,
       is_scheduled: scheduled,
-      dog_id: dog
+      dog_id: dog,
+      client_id: client.id
     }
     scheduleChangeObject.push(dogObject)
   } 
@@ -78,16 +107,17 @@ function ClientSchedule() {
    dispatch({type: 'SEND_ONE_SCHEDULE_CHANGE', payload: scheduleChangeObject})
   }
 
-  // NEEDS LOGIC FOR WEEKLY SCHEDULE STUFF
+const regularScheduleChange = (event) =>{
+  dispatch({type: 'REGULAR_SCHEDULE_CHANGE', payload: schedule})
+}
 
   return (
     <div className="container">
       <h1>{client.first_name} {client.last_name}</h1>
-      <h2>Weekly Schedule</h2>
+      <h2>Weekly Schedule Change</h2>
       <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
         <Grid item xs={2}>
-          <Card raised >
-          {/* onClick={(event) => handleClick('Monday') */}
+          <Card raised onClick={(event) => handleClick('Monday')} >
             <CardContent sx={{ backgroundColor: schedule["1"] ? '#7BCEC8' : null }}>
               Monday
             </CardContent>
@@ -95,35 +125,36 @@ function ClientSchedule() {
 
         </Grid>
         <Grid item xs={2} >
-          <Card raised sx={{ backgroundColor: schedule["2"] ? '#7BCEC8' : null }}>
-            <CardContent>
+          <Card raised onClick={(event) => handleClick('Tuesday')}>
+            <CardContent  sx={{ backgroundColor: schedule["2"] ? '#7BCEC8' : null }}>
               Tuesday
             </CardContent>
           </Card>
 
         </Grid>
         <Grid item xs={2}>
-          <Card raised sx={{backgroundColor: schedule["3"] ? '#7BCEC8' : null}}>
-            <CardContent>
+          <Card raised onClick={(event) => handleClick('Wednesday')}>
+            <CardContent sx={{backgroundColor: schedule["3"] ? '#7BCEC8' : null}}>
               Wednesday
             </CardContent>
           </Card>
 
         </Grid>
         <Grid item xs={2}>
-          <Card raised sx={{backgroundColor: schedule["4"] ? '#7BCEC8' : null}}>
-            <CardContent>
+          <Card raised onClick={(event) => handleClick('Thursday')}>
+            <CardContent sx={{backgroundColor: schedule["4"] ? '#7BCEC8' : null}}>
               Thursday
             </CardContent>
           </Card>
 
         </Grid>
         <Grid item xs={2}>
-          <Card raised sx={{backgroundColor: schedule["5"] ? '#7BCEC8' : null}}>
-            <CardContent>
+          <Card raised onClick={(event) => handleClick('Friday')}>
+            <CardContent sx={{backgroundColor: schedule["5"] ? '#7BCEC8' : null}}>
               Friday
             </CardContent>
           </Card>
+          <Button variant='contained' color='secondary' sx={{mt: 3, ml: 6}} onClick={regularScheduleChange}>Submit</Button>
 
         </Grid>
 
@@ -174,7 +205,7 @@ function ClientSchedule() {
 
       </Grid>
       <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
-      <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button>
+      {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button> */}
     </div >
   )
 }

@@ -15,9 +15,9 @@ function EmployeeSchedule() {
 
 
   return (
-    <Grid container sx={{ height: '90%', width: '100%', display: 'flex', flexDirection: 'column' }}>
-    
-      <MobileTopNav/>
+    <Grid container sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+
+      <MobileTopNav />
 
       <Grid item sx={{ display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'flex-start', alignItems: 'center', gap: '3vh', mt: '5vh' }}>
         <Typography variant="h7">Employee Schedule</Typography>

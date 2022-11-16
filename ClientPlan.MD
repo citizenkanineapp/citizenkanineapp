@@ -7,15 +7,12 @@
     * need to add alert but functionality is done
 12. Need to figure out how to display route NAME on confirm page/details page
 15. Phone formatting <--------
+    * have some logic around if the number is too long
 17. Have image still be there on back from confirm page?
+   
+21. add photo? for what? for editing a dog?
 
-19.  Need real photos on edit page
-20. Add flag to form for new and actually add route for both
-21. add photo? for what?
-24. need to add clear client to client details
-27. back in add client form???
 28. font size titles add client form
-29. add sweet alerts for deletes
 33. client schedule changes form 
 35. still having funky stuff happen moving through client views
 36. add form remove extra dog added accidnetally?

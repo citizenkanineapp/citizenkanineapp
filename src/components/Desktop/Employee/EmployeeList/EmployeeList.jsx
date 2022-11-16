@@ -54,23 +54,23 @@ function EmployeeList() {
   }
 
   return (
-    <Box className="desktop_container">
-      <Typography variant="h4" sx={{display: 'flex', justifyContent: 'center', pt: 3}}>Employees</Typography>
+    <Box className="desktop_container"  sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      {/*<Typography variant="h4" sx={{display: 'flex', justifyContent: 'center', pt: 3}}>Employees</Typography>*/}
       <Grid container spacing={2}>
-        <Grid item xs={12} sx={{ mr: 5, display: 'flex', justifyContent: 'flex-end' }}>
+        <Grid item xs={12} sx={{ mr: 22, display: 'flex', justifyContent: 'flex-end' }}>
           <Button onClick={() => history.push('/schedule')} variant='contained' color='info' sx={{ mr: 2 }}>Schedule</Button>
           <Button onClick={() => openModal('AddEmployee')} variant='contained' color='secondary'  >Add Employee</Button>
         </Grid>
-        <Grid item xs={12} sx={{ mx: 5 }}>
+        <Grid item xs={12} sx={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 
           {/* TABLE OPTION */}
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{width: '70%'}}>
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Phone Number</TableCell>
-                  <TableCell>E-Mail</TableCell>
+                  <TableCell sx={{fontWeight: '800'}}>Name</TableCell>
+                  <TableCell sx={{fontWeight: '800'}}>Phone Number</TableCell>
+                  <TableCell sx={{fontWeight: '800'}}>E-Mail</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

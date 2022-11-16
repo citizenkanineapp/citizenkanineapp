@@ -6,6 +6,7 @@ import { Button, TextField, Typography, Card, Switch, IconButton } from "@mui/ma
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
+import swal from '@sweetalert/with-react'
 
 function EditDogForm(){
  
@@ -29,10 +30,28 @@ function EditDogForm(){
   }
   
   const deleteDog = (dog) => {
-    console.log(dog)
-    dispatch({ type: 'DELETE_DOG', payload: dog})
-    dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})
-    dispatch({type: 'CLEAR_DELETE_DOG'})
+    swal({
+      title: "Are you sure?",
+      text: "This will permanently delete this dog",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        console.log(dog)
+        dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})
+        dispatch({ type: 'DELETE_DOG', payload: dog})
+        dispatch({type: 'CLEAR_DELETE_DOG'})
+       
+        swal("Success!", {
+          icon: "success",
+  
+        });
+      } else {
+        swal("The dog is safe!");
+      }
+    });
   }
 
   const saveDogDetails = (event) =>{
@@ -40,6 +59,8 @@ function EditDogForm(){
     dispatch({type: 'UPDATE_DOG', payload: dog})
     // dispatch({type: 'CLEAR_DELETE_DOG'})
     dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})
+    // dispatch({ type: 'BACK_TO_VIEW'})
+
   }
   
   const back = event => {
@@ -51,14 +72,14 @@ function EditDogForm(){
     return (
         <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%" }}>
           <Box display="flex" justifyContent="flex-end">
-            <IconButton width="5%"  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
+            {/* <IconButton width="5%"  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'DogDetails'})}>
               <ArrowBackIcon sx={{ fontSize: "2rem", fontWeight: "800"}}/>
-            </IconButton>
+            </IconButton> */}
           </Box>
 
           {/*-------------------- DETAILS --------------------*/}
         
-          <Box sx={{ display: "flex", flexDirection: "row", height: "100%", width: "100%", justifyContent: "center", alignItems: "center", gap: 5 }}>
+          <Box sx={{ display: "flex", flexDirection: "row", height: "80%", width: "100%", justifyContent: "center", alignItems: "center", gap: 5 }}>
             <Card sx={{ width: "40%", height: "50%" }}>  {/*need to figure out aspect ratio and conditional rendering to change into image upload for editing image*/}
             <img src={dog.image}/>
             </Card>

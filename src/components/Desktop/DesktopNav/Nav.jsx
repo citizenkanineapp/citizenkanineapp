@@ -12,6 +12,7 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MenuIcon from '@mui/icons-material/Menu';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const drawerWidth = 350;
 const navItems = ['Home', 'Pack Leaders', 'Clients', 'Reports'];
@@ -49,6 +50,13 @@ function Nav(props) {
         </ListItem>
 
         <ListItem >
+          <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/schedule')}>
+            <CalendarMonthIcon />
+            <ListItemText primary='Employee Schedule' />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem >
           <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/clients')}>
             <PetsIcon />
             <ListItemText primary='clients' />
@@ -62,7 +70,7 @@ function Nav(props) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem sx={{ mb: 20 }}>
+        <ListItem sx={{ mb: 10 }}>
           <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/resetpass')}>
             <SettingsIcon sx={{ textAlign: 'flex-end' }} />
             <ListItemText primary='account' />
@@ -81,7 +89,7 @@ function Nav(props) {
       <AppBar component="nav" position='sticky' sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
 
         {user.id && (
-          <Toolbar variant="dense" sx={{ boxShadow: '0px 5px 5px #6e361c89'}}>
+          <Toolbar variant="dense" sx={{ boxShadow: '0px 5px 5px #6e361c89' }}>
             {/* <Button onClick={handleDrawerToggle} color='secondary'></Button> */}
             <IconButton
               color="inherit"
@@ -119,10 +127,10 @@ function Nav(props) {
             </Box>
           </Toolbar>
         )}
-      {/*----------NAV TRANSITION----------*/}
-      <Box sx={{ height: '5%', width: '100%',  bgcolor: '#e0923f' }}>
-        <Typography sx={{ color: 'transparent' }}>PACK CENTRAL</Typography>
-      </Box>
+        {/*----------NAV TRANSITION----------*/}
+        <Box sx={{ height: '5%', width: '100%', bgcolor: '#e0923f' }}>
+          <Typography sx={{ color: 'transparent' }}>PACK CENTRAL</Typography>
+        </Box>
       </AppBar>
 
       {/*----------SIDE MENU----------*/}

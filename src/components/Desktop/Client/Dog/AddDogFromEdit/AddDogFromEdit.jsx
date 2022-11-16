@@ -35,11 +35,12 @@ function AddDogFromEdit(){
   },[])
 
   const saveDog = event => {
-
+    console.log('BANANAPHONE****************************************')
     dispatch({type: 'ADD_NEW_DOG', payload: newDog})
     dispatch({type: 'CLEAR_NEW_DOG'})
     dispatch({type: 'CLEAR_DOGS'})
     dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})
+    // console.log(newDog)
    
   }
 
@@ -116,7 +117,7 @@ function AddDogFromEdit(){
               <Button variant="outlined" color="info"
                   onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Back</Button> 
               <Button variant="contained" color="success"
-                  onClick={saveDog}>Save</Button> 
+                  onClick={() => saveDog()}>Save</Button> 
             </Box>
 
         </Box>

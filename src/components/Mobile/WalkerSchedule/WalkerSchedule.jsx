@@ -15,11 +15,11 @@ function EmployeeSchedule() {
 
 
   return (
-    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
-    
-      <MobileTopNav/>
+    <Grid container sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
 
-      <Grid item sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '91%', justifyContent: 'flex-start', alignItems: 'center', gap: '3vh', mt: '5vh' }}>
+      <MobileTopNav />
+
+      <Grid item sx={{ display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'flex-start', alignItems: 'center', gap: '3vh', mt: '5vh' }}>
         <Typography variant="h7">Employee Schedule</Typography>
         <Calendar onChange={onChange} value={value} />
       </Grid>

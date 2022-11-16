@@ -8,14 +8,14 @@ const {
 
 
 /**
- * GET route template
+ * GET all clients and their dogs
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
   // console.log('arrived in server get all route')
   const queryText = `
                     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
                     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, 
-                    dogs.vet_phone, dogs.flag, clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
+                    dogs.vet_phone, dogs.flag, dogs.regular, clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
                             JOIN dogs
                             ON clients.id = dogs.client_id
                             JOIN routes
@@ -58,7 +58,7 @@ pool.query(queryText)
             // const {first_name, last_name, address} = result.rows[0];
             const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday} = forDogMap[0];
             const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday}
-            client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag})})
+            client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular})})
 
             clients.push(client)
 
@@ -100,12 +100,12 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   await Promise.all(dogArray.map(dog => { 
       const dogTxt = `
                           INSERT INTO dogs 
-                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag") 
+                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag", "regular") 
                             VALUES
-                              ($1, $2, $3, $4, $5, $6, $7)
+                              ($1, $2, $3, $4, $5, $6, $7, $8)
 
       `
-      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog.dog_notes, dog.flag]
+      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog.dog_notes, dog.flag, dog.regular]
       return client.query(dogTxt, dogValues)
   }));
     const scheduleTxt = `
@@ -245,7 +245,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     const queryText = `
     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, 
-    dogs.vet_phone, dogs.notes as dog_notes, dogs.flag,
+    dogs.vet_phone, dogs.notes as dog_notes, dogs.flag, dogs.regular,
    clients_schedule."1", clients_schedule."2", clients_schedule."3", clients_schedule."4", clients_schedule."5"  
     from clients
             JOIN dogs
@@ -294,7 +294,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
               // const {first_name, last_name, address} = result.rows[0];
               const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name } = forDogMap[0];
               const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name}
-              client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag})})
+              client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular})})
   
               clients.push(client)
   

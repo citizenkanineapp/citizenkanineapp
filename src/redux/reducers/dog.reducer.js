@@ -1,4 +1,4 @@
-const dogReducer = (state = [{dog_name: '', image: '', dog_notes: '', flag: false}], action) => {
+const dogReducer = (state = [{dog_name: '', image: '', dog_notes: '', flag: false, regular: true}], action) => {
     // console.log ('in dog reducer', action.payload)
     switch (action.type) {
         case 'ADD_DOG_NAME':
@@ -47,8 +47,19 @@ const dogReducer = (state = [{dog_name: '', image: '', dog_notes: '', flag: fals
                 }
             })
             return flagState;
+        case 'SET_REGULAR':
+            console.log(action.payload)
+            const regularState = state.map((regular , index) => {
+                if(index === action.payload.index) {
+                    regular.regular = action.payload.regular
+                    return regular;
+                } else {
+                    return regular;
+                }
+            })
+            return regularState;
         case 'CLEAR_DOGS':
-            return [{dog_name: '', image: '', dog_notes: '', flag: false}];
+            return [{dog_name: '', image: '', dog_notes: '', flag: false, regular: true}];
         default:
             return state;
     }

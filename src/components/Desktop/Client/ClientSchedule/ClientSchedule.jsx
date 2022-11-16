@@ -77,7 +77,8 @@ function ClientSchedule() {
         date: `${value.$y}-${month}-${value.$D}`,
         is_scheduled: scheduled,
         dog_id: oneDog.dog_id,
-        client_id: client.id
+        client_id: client.id,
+        regular: oneDog.regular
         }
         scheduleChangeObject.push(dogObject)
       }
@@ -86,7 +87,8 @@ function ClientSchedule() {
         date: `${value.$y}-${month}-${value.$D}`,
         is_scheduled: scheduled,
         dog_id: dog,
-        client_id: client.id
+        client_id: client.id,
+        regular: oneDog.regular
       }
         scheduleChangeObject.push(dogObject)
   } 

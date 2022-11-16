@@ -16,6 +16,10 @@
 41. Need to add regular dog/update table
      * re write all routes
 
+42. change FAB button and UNCONTROLLED CHECK box issue
+43.  route for dogs added from edit for regular status
+44. have an update for dog's regular status?
+
 
 
 

@@ -31,7 +31,6 @@ const rootReducer = combineReducers({
   dogDelete,
   selectedEmployeeReducer,
   routeReducer,
-  details,
 });
 
 export default rootReducer;

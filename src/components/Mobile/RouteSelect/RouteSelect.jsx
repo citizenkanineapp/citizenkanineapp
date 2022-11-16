@@ -33,7 +33,8 @@ function RouteSelect() {
     }
 
     const checkoutRoute = (routeID) => {
-        dispatch({ type: 'GET_ROUTE_DETAILS', payload: routeID })
+        // dispatch({ type: 'GET_ROUTE_DETAILS', payload: routeID })
+        history.push(`/m/routes/${routeID}`);
     }
 
 

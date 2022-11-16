@@ -23,6 +23,7 @@ import AdminSettings from '../Desktop/AdminSettings/AdminSettings';
 import Home from '../Mobile/Home/Home';
 import Map from '../Mobile/MapView/MapView';
 import WalkerSchedule from '../Mobile/WalkerSchedule/WalkerSchedule';
+import RouteSelect from '../Mobile/RouteSelect/RouteSelect';
 import Routes from '../Mobile/DailyRoutes/DailyRoutes';
 import LoadBalancing from '../Mobile/LoadBalancing/LoadBalancing';
 import MobileNav from '../Mobile/MobileNav/MobileNav';
@@ -128,6 +129,10 @@ function App() {
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/routes">
+              <RouteSelect />
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/m/routes/:id">
               <Routes />
             </ProtectedRoute>
 

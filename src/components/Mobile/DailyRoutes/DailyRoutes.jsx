@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItemAvatar, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -10,16 +10,23 @@ import RouteSelect from '../RouteSelect/RouteSelect';
 function DailyRoutes() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const params = useParams();
+
+  useEffect(() => {
+    dispatch({ type: 'GET_DAILY_ROUTES' });
+    dispatch({ type: 'GET_ROUTE_DETAILS', payload: params.id })
+
+
+    return () => {
+      dispatch({
+        type: 'CLEAR_ROUTE'
+      })
+    }
+  }, [params.id]);
 
   // reducer getting filled with a specific routes dogs
   const route = useSelector(store => store.routeReducer);
   // const routeName = route[0].route;
-  useEffect(() => {
-    dispatch({ type: 'CLEAR_ROUTE' })
-    dispatch({ type: 'GET_DAILY_ROUTES' });
-
-    // dispatch({ type: 'GET_ROUTE_DETAILS', payload: 1 })
-  }, []);
 
   const getRouteColor = (route) => {
     switch (route[0].route) {

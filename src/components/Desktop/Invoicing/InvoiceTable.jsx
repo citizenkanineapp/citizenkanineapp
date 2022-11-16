@@ -1,6 +1,9 @@
 import { useSelector } from 'react-redux'
-import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { Paper, Table, TableBody, TableContainer, TableHead, TableRow, TableCell, Button, Grid, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import dayjs from 'dayjs';
+let localeData = require('dayjs/plugin/localeData');
+dayjs.extend(localeData);
 
 // NO THESE COLORS AREN'T FINAL BUT WE DEF SHOULD HAVE SOME VISUAL CHANGE
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -13,10 +16,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function InvoiceTable({month}) {
+function InvoiceTable() {
   const invoiceItems = useSelector(store=>store.invoiceReducer);
-  console.log(invoiceItems);
-  console.log(month)
+  // grabs month MMM format for 'dates of service' column
+  let months;
+  let month;
+  if (invoiceItems.length>0) {
+    months = dayjs.monthsShort();
+    month = months[invoiceItems[0].month-1];
+  }
 
     return (
       <Grid container spacing={2}>
@@ -34,19 +42,16 @@ function InvoiceTable({month}) {
                     <TableCell sx={{fontWeight: '800'}}>Total Cost:</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
-                  {/* map over data object.*/}
-                  
+                <TableBody>                  
                   {invoiceItems && invoiceItems.map && invoiceItems.map((item) => (
                       <StyledTableRow key={item.id} >
-                        <TableCell>{item.month}/{item.year}</TableCell>
-                        <TableCell>{item.first_name} {item.last_name}</TableCell>
-                        <TableCell>{item.service.service}</TableCell>
-                        <TableCell>{month}: {item.dates.map(date => (date + ', '))}</TableCell>
-                        <TableCell>{item.dates.length}</TableCell>
-                        <TableCell>{item.service.price}</TableCell>
-                        <TableCell>{item.service.price*item.dates.length}</TableCell>
-
+                        <TableCell key={item.id} >{item.month}/{item.year}</TableCell>
+                        <TableCell key={item.id} >{item.first_name} {item.last_name}</TableCell>
+                        <TableCell key={item.id} >{item.service.service}</TableCell>
+                        <TableCell key={item.id} >{month}: {item.dates.map(date => (date + ', '))}</TableCell>
+                        <TableCell key={item.id} >{item.dates.length}</TableCell>
+                        <TableCell key={item.id} >{item.service.price}</TableCell>
+                        <TableCell key={item.id} >{item.service.price*item.dates.length}</TableCell>
                       </StyledTableRow>
                   ))}
                 </TableBody>

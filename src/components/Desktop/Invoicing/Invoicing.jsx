@@ -29,7 +29,6 @@ function Invoicing(){
   const dispatch = useDispatch();
   const [selectedId, setId] = useState(0); // defaults to 'all'
   const [selectedMonth, setMonth] = useState(months[dayjs().month()]); //defaults to curren month
-  const [shortMonth, setShort] = useState('') //passed to table as prop for invoice display
   const [selectedYear, setYear] = useState(dayjs().year());
 
   useEffect(() => {
@@ -39,7 +38,6 @@ function Invoicing(){
   const fetchInvoiceData = () => {
     //formats month for search query
     const month = months.indexOf(selectedMonth)+1;
-    setShort(monthsShort[month-1]);
 
     dispatch({
       type: 'FETCH_INVOICE_DATA',
@@ -122,7 +120,7 @@ function Invoicing(){
         </Grid>
       </Grid>
     
-      <InvoiceTable month={shortMonth} />
+      <InvoiceTable />
 
     </Box>
     );

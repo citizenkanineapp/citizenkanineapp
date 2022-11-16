@@ -1,11 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import CSVDateView from "./CSVDateView";
+import InvoiceTable from "./InvoiceTable";
 import dayjs from 'dayjs';
 let localeData = require('dayjs/plugin/localeData');
-let customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(localeData);
-dayjs.extend(customParseFormat);
 import '../Desktop.css';
 
 //MUI
@@ -13,22 +11,13 @@ import { Box, Typography, Button, Grid, FormControl, MenuItem, Select, InputLabe
 // import { styled } from '@mui/material/styles';
 
 function Invoicing(){
-  const clientList = useSelector(store => store.clientsReducer);
-  const dispatch = useDispatch();
-  const [selectedId, setId] = useState(0);
-  const [selectedMonth, setMonth] = useState ('');
-  const [selectedYear, setYear] = useState(dayjs().year());
-
-  //this route gets all clients to populate client list //
-  useEffect(() => {
-    dispatch({ type: 'FETCH_CLIENTS' });
-  }, []);
-
+  //set date/year arrays
   const months = dayjs.months();
+  const monthsShort = dayjs.monthsShort();
   const getYears = () => {
     let max = 2050;
-    let min = 2020
-    let yearsArr = []
+    let min = 2020;
+    let yearsArr = [];
     for (let i = min; i <= max; i++) {
       yearsArr.push(i)
     }
@@ -36,9 +25,22 @@ function Invoicing(){
   }
   const years = getYears();
 
+  const clientList = useSelector(store => store.clientsReducer);
+  const dispatch = useDispatch();
+  const [selectedId, setId] = useState(0); // defaults to 'all'
+  const [selectedMonth, setMonth] = useState(months[dayjs().month()]); //defaults to curren month
+  const [shortMonth, setShort] = useState('')
+  const [selectedYear, setYear] = useState(dayjs().year());
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_CLIENTS' });
+  }, []);
+
   const fetchInvoiceData = () => {
+    //formats month for search query
     const month = months.indexOf(selectedMonth)+1;
-    // console.log(selectedId,month,selectedYear);
+    setShort(monthsShort[month-1]);
+
     dispatch({
       type: 'FETCH_INVOICE_DATA',
       payload: {
@@ -46,6 +48,7 @@ function Invoicing(){
         month: month, 
         year: selectedYear
       }});
+
     setId(0);
   }
   
@@ -118,12 +121,9 @@ function Invoicing(){
           </Button>
         </Grid>
       </Grid>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sx={{ mx: 5, display:'flex', flexDirection: 'column', alignItems: 'center'}}>
-          {/* TABLE OPTION */}
-          <CSVDateView />
-        </Grid>
-      </Grid>
+    
+      <InvoiceTable month={shortMonth} />
+
     </Box>
     );
 }

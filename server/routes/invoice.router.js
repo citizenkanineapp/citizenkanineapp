@@ -85,7 +85,7 @@ router.get('/', async (req, res) => {
     try {
         const resServices = await pool.query(queryServices)
         const services = resServices.rows;
-        console.log(services);
+        // console.log(services);
         const resDetails = await pool.query(queryWalkDetails,searchTerms);
         const invoiceData = resDetails.rows;
         // console.log(invoiceData);
@@ -153,7 +153,7 @@ router.get('/', async (req, res) => {
                     }
                 }
         }     
-        // console.log(invoiceData);
+        console.log(invoiceData);
         res.send(invoiceData); 
     } catch (error) {
         console.log('Error GET /api/invoice', error);

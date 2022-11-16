@@ -1,6 +1,6 @@
 
 const clientScheduleReducer = (state = {1: false, 2: false, 3: false, 4: false, 5: false}, action) => {
-    console.log(action.payload)
+    // console.log(action.payload)
     switch (action.type) {
         case 'SET_MONDAY':
             return {...state, 1: action.payload};

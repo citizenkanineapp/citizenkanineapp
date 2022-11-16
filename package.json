@@ -17,6 +17,7 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.32.0",
     "cookie-session": "^2.0.0",
+    "cvs-writer": "^0.0.1",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.6",
     "dotenv": "^8.6.0",

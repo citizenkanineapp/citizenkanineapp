@@ -200,8 +200,9 @@ router.get('/routes', async (req, res) => {
 })
 
 
-router.get('/dog/:id', async (req, res) => {
-    const dogID = req.params.id;
+router.get('/dog/:dogID', async (req, res) => {
+    console.log('MADE IT TO DOG DETAILS ROUTE');
+    const dogID = req.params.dogID;
 
     const dogDetailsQuery = `
     SELECT dogs.*, clients.* from dogs

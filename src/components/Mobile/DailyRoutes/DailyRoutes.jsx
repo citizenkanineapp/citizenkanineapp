@@ -31,6 +31,11 @@ function DailyRoutes() {
     }
   }
 
+  const getDogDetails = (dogID) => {
+    console.log(dogID);
+    dispatch({ type: 'FETCH_DOG_DETAILS', payload: dogID })
+  }
+
   return (
     <>
       {route[0] ?
@@ -47,7 +52,7 @@ function DailyRoutes() {
             {route && route.map && route.map((dog) => (
 
               <List>
-                <ListItem secondaryAction={
+                <ListItem onClick={(event) => getDogDetails(dog.dog_id)} secondaryAction={
                   <>
                     <IconButton edge="end" >
                       <CheckBoxIcon sx={{ fill: '#7BCEC8' }} />

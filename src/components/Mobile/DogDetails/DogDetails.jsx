@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Chip, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,6 +7,7 @@ import FlagIcon from '@mui/icons-material/Flag';
 
 
 function DogDetails() {
+  const dispatch = useDispatch();
 
   const dog = { flagged: true };
   const vetAddress = { address: '400 S 4th St', city: 'Minneapolis', zipCode: '55415', }

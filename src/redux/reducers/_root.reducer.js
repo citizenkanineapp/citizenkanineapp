@@ -10,7 +10,7 @@ import clientsReducer from './clients.reducer';
 import clientToAddReducer from './clientToAdd.reducer';
 import clientReducer from './client.reducer';
 import routeReducer from './route.reducer';
-
+import details from './details.reducer';
 
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
@@ -24,6 +24,7 @@ const rootReducer = combineReducers({
   clientReducer,
   selectedEmployeeReducer,
   routeReducer,
+  details,
 });
 
 export default rootReducer;

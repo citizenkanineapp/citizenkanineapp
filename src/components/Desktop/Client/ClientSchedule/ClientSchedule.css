@@ -1,0 +1,111 @@
+.clientSchedule .MuiCalendarPicker-root {
+    width: 50vw !important;
+    height: 100vh !important;
+    max-height:100vh !important;
+}
+
+
+
+.clientSchedule .MuiCalendarPicker-viewTransitionContainer{
+    width: 35vw !important;
+    height: 50vh !important;
+}
+
+.clientSchedule .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel{
+    width: 5vw !important;
+    height: 2vw !important;
+    outline: black solid 1px;
+    margin: 0 0 0 0  !important;
+}
+
+.clientSchedule .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
+    /* width: 50vw !important; */
+    height: 50vh !important;
+}
+
+.clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
+    display: flex;
+    width: 35vw;
+    justify-content: center;
+}
+
+.clientSchedule .css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon{
+    display: none !important;
+    display: none;
+}
+
+.clientSchedule .MuiButtonBase-root .MuiPickersDay-root {
+    display: none !important;
+}
+
+
+/* rows */
+.clientSchedule .css-ghi3gg-MuiDayPicker-weekContainer {
+    width: 35vw !important;
+    margin: 0 0 0 0 !important;
+}
+
+.clientSchedule .css-argrvh-MuiButtonBase-root-MuiPickersDay-root{
+    margin: 0 0 0 0 !important;
+}
+
+.clientSchedule .css-6t5f1e-MuiDayPicker-monthContainer{
+    overflow-x: visible !important;
+    width: 50vw !important;
+    max-height: 80vh !important;
+}
+
+.clientSchedule .css-169iwlq-MuiCalendarPicker-root{
+    width: 100vw !important;
+    max-height: 90vh !important;
+    margin: 0 0 0 0 !important;
+    overflow-x: visible !important;
+    display: flex;
+    /* center calendar in box */
+    align-items: center;
+} 
+
+.clientSchedule .css-169iwlq-MuiCalendarPicker-root{
+    width: 100vw !important;
+    max-height: 90vh !important;
+    margin: 0 0 0 0 !important;
+    overflow-x: visible !important;
+    display: flex;
+    /* center calendar in box */
+    align-items: center;
+}
+
+/* Header */
+.clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
+    width: 35vw !important;
+    padding: 0 0 0 0 !important;
+}
+
+/* All of the day labels */
+.clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root  {
+    width: 1vw !important;
+    height: 1vw !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    background-color: transparent !important;
+    color: black !important;
+    margin-top: 5px !important;
+}
+
+.clientSchedule  {
+    outline: black 1px;
+}
+
+.clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
+    border: black 1px !important;
+}
+
+.clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
+    color: orange !important;
+    width: 1vw !important;
+    height: 1vw !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    background-color: transparent !important;
+    margin-top: 5px !important;
+}

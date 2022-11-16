@@ -93,10 +93,6 @@ function AddClient(){
     setErrorEmail(false)
     setErrorRoute(false)
 
-    //create error variable  let errorFree =false
-    //each condition changes it to true
-    //if no problem submit form
-    //or show errors
 
     if(clientToAdd.first_name === undefined || clientToAdd.first_name === ''){
       setErrorFirst(true)
@@ -150,7 +146,7 @@ function AddClient(){
 }
   return (
  
-      <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{m:2, mt: 1, p:2, display: 'flex', flexDirection: 'column' }}>
 
             {/*----------------------- HEADER -----------------------*/}
             <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2}}>  
@@ -233,7 +229,7 @@ function AddClient(){
                     labelId="route"
                     size="small"
                     id="route"
-                    // error={errorRoute}
+                    error={errorRoute}
                     value={clientToAdd.route_id || ''}
                     onChange={(event) => {
                       

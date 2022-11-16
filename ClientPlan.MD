@@ -1,10 +1,5 @@
 # Plan for Sam's Client Work
 
-
-5. Get client schedule (where is this needed?)
-    * can it be a different get route route for that view only
-10. Requiring inputs <--------------------
-    * need to add alert but functionality is done
 12. Need to figure out how to display route NAME on confirm page/details page
 15. Phone formatting <--------
     * have some logic around if the number is too long
@@ -17,7 +12,6 @@
 35. still having funky stuff happen moving through client views
 36. add form remove extra dog added accidnetally?
 37. if no image for dog?
-38. Protocol vs notes/flag
 
 
 

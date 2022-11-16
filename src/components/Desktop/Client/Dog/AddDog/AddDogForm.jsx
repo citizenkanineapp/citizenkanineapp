@@ -6,6 +6,7 @@ import { Button, TextField, Typography, Card, CardActions, Box, CardContent, Swi
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
 
@@ -35,19 +36,6 @@ function AddDogForm (){
     }  
 }
 }
-
-// const handleFlagChange = (index) => {
-//   console.log('index?', index)
-//   setFlag(!flag)
-//   dispatch({type: 'SET_FIRST_FLAG',  payload: {
-//     flag: !flag,
-//     index: index
-// }})
-
-// }
-
-//dispatch payload of true 
-
   
  const saveSchedule = (view) => {
 
@@ -100,7 +88,11 @@ function AddDogForm (){
                         }
                     })
                     }}}/>
-              <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>
+                     {singleDog.flag? <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
+                      :
+                       <FlagCircleIcon style={{ fontSize: 36, color: '#808080' }}/> 
+                  }
+              {/* <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/> */}
             </Box>
               <ImageUpload index={index} />
               <TextField 

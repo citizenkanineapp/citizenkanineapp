@@ -110,7 +110,7 @@ function EditDogForm(){
                         payload: false
                     })
                     }}}/>
-                      {dog. flag? <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
+                      {dog.flag? <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
                       :
                        <FlagCircleIcon style={{ fontSize: 36, color: '#808080' }}/> 
                   }

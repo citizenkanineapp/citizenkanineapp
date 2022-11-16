@@ -14,18 +14,20 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   // console.log('arrived in server get all route')
   const queryText = `
                     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
-                    routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, dogs.vet_phone, dogs.flag from clients
+                    routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, 
+                    dogs.vet_phone, dogs.flag, clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
                             JOIN dogs
                             ON clients.id = dogs.client_id
                             JOIN routes
                             ON clients.route_id=routes.id
+                            JOIN clients_schedule
+                            ON clients.id = clients_schedule.client_id
                             ORDER BY clients.last_name ASC
-;
 ;
   `
 pool.query(queryText)
     .then(result => {
-    
+      console.log('what comes back from query?', result.rows)
         //all IDs from database
         let idArray = [];
             for(let object of result.rows){
@@ -54,8 +56,8 @@ pool.query(queryText)
             let forDogMap = group[uniqueIds[i]]
        
             // const {first_name, last_name, address} = result.rows[0];
-            const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name} = forDogMap[0];
-            const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name}
+            const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday} = forDogMap[0];
+            const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday}
             client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag})})
 
             clients.push(client)

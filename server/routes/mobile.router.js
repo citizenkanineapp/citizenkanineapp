@@ -214,7 +214,7 @@ router.get('/dog/:dogID', async (req, res) => {
 
     pool.query(dogDetailsQuery, dogDetailsValue)
         .then(detailsResults => {
-            const dogDetails = detailsResults.rows;
+            const dogDetails = detailsResults.rows[0];
             res.send(dogDetails);
         }).catch((error => {
             console.log('/dog/:id error getting dog details:', error);

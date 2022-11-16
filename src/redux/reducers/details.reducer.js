@@ -1,6 +1,6 @@
 const detailsReducer = (state = {}, action) => {
     switch (action.type) {
-        case 'SET_DETAILS':
+        case 'SET_DOG_DETAILS':
             return action.payload;
         case 'CLEAR_DETAILS':
             return {};

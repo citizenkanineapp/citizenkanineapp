@@ -24,7 +24,7 @@ import Home from '../Mobile/Home/Home';
 import Map from '../Mobile/MapView/MapView';
 import WalkerSchedule from '../Mobile/WalkerSchedule/WalkerSchedule';
 import RouteSelect from '../Mobile/RouteSelect/RouteSelect';
-import Routes from '../Mobile/DailyRoutes/DailyRoutes';
+import Routes from '../Mobile/Route/Route';
 import LoadBalancing from '../Mobile/LoadBalancing/LoadBalancing';
 import MobileNav from '../Mobile/MobileNav/MobileNav';
 import DogDetails from '../Mobile/DogDetails/DogDetails';
@@ -132,7 +132,7 @@ function App() {
               <RouteSelect />
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/m/routes/:id">
+            <ProtectedRoute exact path="/m/route/:id">
               <Routes />
             </ProtectedRoute>
 

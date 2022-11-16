@@ -14,6 +14,7 @@ function DogDetails() {
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+  const [editStatus, setEditStatus] = useState(false);
 
   const dog = useSelector(store => store.details);
 
@@ -43,22 +44,28 @@ function DogDetails() {
   }
 
   return (
-    <Grid container spacing={1} sx={{ justifyContent: 'center', height: '100%' }}>
+    <Grid container spacing={1} sx={{ justifyContent: 'center' }}>
       {/* NAV BACK TO LIST */}
       <Grid item xs={12}>
-        <Button onClick={(event) => history.push('/m/routes')}>BACK</Button>
+        <Button onClick={(event) => history.push(`/m/routes/${dog.route}`)}>BACK</Button>
       </Grid>
-      {/* DOG PHOTO */}
-      <Grid item xs={5}>
-        <Card>
-          <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>
-            <EditIcon />
-          </Fab>
-          <CardMedia component="img" sx={{ objectFit: 'contain' }} image={dog.image} />
-        </Card>
+      <Grid item xs={5} sx={{ justifyContent: 'center' }}>
+        <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>
+          <EditIcon />
+        </Fab>
+        <Stack>
+
+        </Stack>
+        {dog.image ?
+          <Avatar src={dog.image} sx={{ height: '150px', width: '150px' }} />
+          :
+          <Avatar>
+            {dog.name}
+          </Avatar>
+        }
       </Grid>
       {/* DOG NAME */}
-      <Grid item xs={5} >
+      <Grid item xs={5}>
         <Stack direction='column' sx={{ justifyContent: 'center' }}>
           <Card sx={{ mb: 1 }}>
             <Typography variant='h4' align='center'>{dog.name}</Typography>
@@ -81,7 +88,7 @@ function DogDetails() {
         <Card>
           <Stack direction='row' alignItems='center'>
             {dog.flagged ? <FlagIcon sx={{ fill: '#e0603f' }} /> : null}
-            <Typography variant='inherit'>
+            <Typography variant='inherit' onClick={(event) => setEditStatus(true)}>
               {dog.notes ? dog.notes : `Click to add a Note for ${dog.name}`}
             </Typography>
           </Stack>

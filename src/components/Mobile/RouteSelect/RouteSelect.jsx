@@ -34,17 +34,17 @@ function RouteSelect() {
 
     const checkoutRoute = (routeID) => {
         // dispatch({ type: 'GET_ROUTE_DETAILS', payload: routeID })
-        history.push(`/m/routes/${routeID}`);
+        history.push(`/m/route/${routeID}`);
     }
 
 
 
     return (
-        <Grid container spacing={2} sx={{ height: '100%', display: 'flex', alignItems: 'start', justifyContent: 'space-evenly' }}>
+        <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'start', justifyContent: 'space-evenly', mt: 2, mb: 3 }}>
 
             {/* route is the name of each route */}
             {allroutes.map((route, i) => (
-                <Grid item xs={11} >
+                <Grid item xs={11} key={i} >
                     <Card raised sx={{ background: () => getRouteColor(route) }} onClick={(event) => checkoutRoute((i + 1))}>
                         <Typography sx={{ color: 'white', textTransform: 'uppercase', textAlign: 'center' }}>
                             {route} {dailyRoutes[route].length}
@@ -55,9 +55,9 @@ function RouteSelect() {
 
                                     <>
                                         {dog.image ?
-                                            <Avatar src={dog.image} />
+                                            <Avatar src={dog.image} key={index} />
                                             :
-                                            <Avatar>
+                                            <Avatar key={index}>
                                                 {dog.name[0]}
                                             </Avatar>
 

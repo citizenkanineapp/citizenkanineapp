@@ -172,7 +172,7 @@ router.put('/schedules', async (req, res)=>{
 })
 
 // POST new employee
-router.put('/', async (req, res)=> {
+router.post('/', async (req, res)=> {
     const client = await pool.connect();
     const empDetails = req.body[0];
     const schedule = [req.body[1], req.body[2]];

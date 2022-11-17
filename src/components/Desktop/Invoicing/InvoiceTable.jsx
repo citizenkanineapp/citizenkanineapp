@@ -16,14 +16,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function InvoiceTable() {
+function InvoiceTable({monthsShort}) {
   const invoiceItems = useSelector(store=>store.invoiceReducer);
   // grabs month MMM format for 'dates of service' column
-  let months;
+  // let months;
   let month;
   if (invoiceItems.length>0) {
-    months = dayjs.monthsShort();
-    month = months[invoiceItems[0].month-1];
+    // months = dayjs.monthsShort();
+    month = monthsShort[invoiceItems[0].month-1];
   }
 
     return (

@@ -19,7 +19,6 @@ function ClientForm(){
     dispatch({
       type: 'FETCH_CLIENTS'
     })
-   
     
   },[])
 

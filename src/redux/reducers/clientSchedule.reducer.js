@@ -1,5 +1,6 @@
+import { combineReducers } from 'redux';
 
-const clientScheduleReducer = (state = {1: false, 2: false, 3: false, 4: false, 5: false}, action) => {
+const clientSchedule = (state = {1: false, 2: false, 3: false, 4: false, 5: false}, action) => {
     // console.log(action.payload)
     switch (action.type) {
         case 'SET_MONDAY':
@@ -31,5 +32,18 @@ const clientScheduleReducer = (state = {1: false, 2: false, 3: false, 4: false, 
     }
 }
 
+function clientScheduleChanges (state = [], action){
+    switch (action.type){
+        case 'SET_CLIENT_SCHEDULE_CHANGES':
+            return action.payload;
+        default:
+            return state
+    }
+}
+
+const clientScheduleReducer= combineReducers({
+    clientSchedule,
+    clientScheduleChanges,
+})
 
 export default clientScheduleReducer;

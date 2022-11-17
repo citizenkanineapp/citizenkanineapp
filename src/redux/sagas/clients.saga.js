@@ -36,7 +36,7 @@ function* addClient(action){
 }
 
 function* editClient(action){
-    console.log('arrived in edit client route', action.payload);
+    // console.log('arrived in edit client route', action.payload);
 
     try {
         const client = yield axios({

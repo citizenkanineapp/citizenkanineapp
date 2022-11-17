@@ -3,7 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    console.log('in /api/invoice');
+    // console.log('in /api/invoice');
     // console.log(req.query)
     const searchClientId = req.query.clientId;
     const searchMonth = req.query.month;

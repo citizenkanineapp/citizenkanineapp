@@ -60,16 +60,17 @@ function ClientSchedule() {
 
     // console.log(dayjs('2022-11-22').$W); // returns 2 for Tuesday
     // console.log(dayjs('2022-11-22').$d); // returns Tue Nov 22 2022 00:00:00 GMT-0600
+  const boxStyling = {display: 'flex', flexDirection: 'row', height: '4vw', width: '4.5vw', alignItems: 'flex-start', justifyContent:'center', mb: 0}
+  const avatarStyling = {width: '1vw', height: '1vw', mx: .25}
 
-
+  // {display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}
 
   return (
     <>
-    <Box className="clientSchedule" sx={{height: '55vh', width: '38vw', border: 1, borderColor: 'black', display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+    <Box className="clientSchedule" sx={{display: 'flex', height: '55vh', width: '40vw', border: 1, borderColor: 'black', justifyContent: 'center', alignContent: 'center'}}>
       {/* <h1>Client Name</h1> */}
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <CalendarPicker 
-              sx={{height: '100vh', width: '100vw'}}
               className='clientSchedule'
               date={date} 
               onChange={(newDate) => setDate(newDate)} 
@@ -103,9 +104,9 @@ function ClientSchedule() {
                     <Box
                     key={day.$D}
                     className="clientSchedule"
-                    sx={{width: '5vw', height: '5vw', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'flex-start', justifyContent: 'center', border: 1, borderColor: '#7BCEC8', mt: 0}}>
+                    sx={{width: '6vw', height: '6vw', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'center', justifyContent: 'flex-start', border: 1, borderColor: '#7BCEC8', mt: 0}}>
                       {/* This box is just for the date number */}
-                      <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '1', mb: 0}}>
+                      <Box sx={{display: 'flex', justifyContent: 'center', mb: 0, heigh: '1vw', width: '4.5vw'}}>
                         <PickersDay 
                         key={day.$D}
                         className={ selectedMUIClass }
@@ -131,7 +132,7 @@ function ClientSchedule() {
                                 <>
                                 {/* Is this change happening on a regularly scheduled weekday? */}
                                 {clientSchedule[day.$W] ? 
-                                    <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                                    <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                                     {dogs.map(dog=> {
                                       return (
                                       <>
@@ -139,7 +140,7 @@ function ClientSchedule() {
                                         {dog.regular || change.dog_id === dog.dog_id ? 
                                           <Avatar
                                               key={dog.dog_id}
-                                              sx={{width: '1vw', height: '1vw', mx: .25}}
+                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13}}
                                               alt={dog.dog_name[0]}
                                               src={dog.image ? dog.image : null}
                                           >
@@ -150,7 +151,7 @@ function ClientSchedule() {
                                     </Box>
                                   :
                                   // Adding a dog on a non-regularly scheduled weekday:
-                                  <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                                  <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                                     {dogs.map(dog=> {
                                       return (
                                       <>
@@ -158,7 +159,7 @@ function ClientSchedule() {
                                         {change.dog_id === dog.dog_id ? 
                                           <Avatar
                                               key={dog.dog_id}
-                                              sx={{width: '1vw', height: '1vw', mx: .25}}
+                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13}}
                                               alt={dog.dog_name[0]}
                                               src={dog.image ? dog.image : null}
                                           >
@@ -174,7 +175,7 @@ function ClientSchedule() {
                               <>
                                 {/* Is this change happening on a regularly scheduled weekday? */}
                                 {clientSchedule[day.$W] ? 
-                                    <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                                    <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                                     {dogs.map(dog=> {
                                       return (
                                       <>
@@ -182,7 +183,7 @@ function ClientSchedule() {
                                         {dog.regular && change.dog_id !== dog.dog_id ? 
                                           <Avatar
                                               key={dog.dog_id}
-                                              sx={{width: '1vw', height: '1vw', mx: .25}}
+                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13}}
                                               alt={dog.dog_name[0]}
                                               src={dog.image ? dog.image : null}
                                           >
@@ -193,7 +194,7 @@ function ClientSchedule() {
                                     </Box>
                                   :
                                   // Adding a dog on a non-regularly scheduled weekday:
-                                  <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                                  <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                                     {dogs.map(dog=> {
                                       return (
                                       <>
@@ -201,7 +202,7 @@ function ClientSchedule() {
                                         {change.dog_id === dog.dog_id ? 
                                           <Avatar
                                               key={dog.dog_id}
-                                              sx={{width: '1vw', height: '1vw', mx: .25}}
+                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13}}
                                               alt={dog.dog_name[0]}
                                               src={dog.image ? dog.image : null}
                                           >
@@ -219,7 +220,7 @@ function ClientSchedule() {
                               {/* is today a regularly scheduled weekday? */}
                               {/* the index === changes.length-1 part prevents the dogs from rendering multiple times */}
                               {clientSchedule[day.$W] && index === changes.length-1 ? 
-                                <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0}}>
+                                <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.55vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                                   {dogs.map(dog=> {
                                     
                                     return (
@@ -228,7 +229,7 @@ function ClientSchedule() {
                                       { dog.regular && JSON.stringify(DayComponentProps.day.$d) !== JSON.stringify(dayjs('2022-11-22').$d) ? 
                                         <Avatar
                                             key={dog.dog_id}
-                                            sx={{width: '1vw', height: '1vw', mx: .25}}
+                                            sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13}}
                                             alt={dog.dog_name[0]}
                                             src={dog.image ? dog.image : null}
                                         >

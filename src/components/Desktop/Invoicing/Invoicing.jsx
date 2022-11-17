@@ -8,7 +8,7 @@ dayjs.extend(localeData);
 import '../Desktop.css';
 
 //MUI
-import { Box, Button, Grid, FormControl, MenuItem, Select, InputLabel} from '@mui/material';
+import { Box, Button, Grid, FormControl, MenuItem, Select, InputLabel, Container } from '@mui/material';
 // import { styled } from '@mui/material/styles';
 
 function Invoicing(){
@@ -118,9 +118,9 @@ function Invoicing(){
             Search
           </Button>
 
-          <Button size="large" variant="contained" color="secondary" sx={{mx: 1}}>
+          <Box component="span">
             <ExportCSV />
-          </Button>
+          </Box>
 
         </Grid>
       </Grid>

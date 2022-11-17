@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
+import { Button, Box } from "@mui/material";
 
 const ExportCSV = () => {
     const invoiceItems = useSelector(store=>store.invoiceReducer);
@@ -38,17 +39,19 @@ const ExportCSV = () => {
     };
 
     return (
-        <div>
+        <Box component="span">
             { invoiceItems && invoiceItems.map &&
-                <CSVLink
-                    headers={headers}
-                    data={data}
-                    filename={`invoice_${data[0].InvoiceDate}.csv`}
-                >
-                    EXPORT
-                </CSVLink>
+                <Button size="large" variant="contained" color="secondary" sx={{mx: 1}}>
+                    <CSVLink
+                        headers={headers}
+                        data={data}
+                        filename={`invoice_${data[0].InvoiceDate}.csv`}
+                    >
+                        EXPORT
+                    </CSVLink>
+                </Button>
             }
-        </div>
+        </Box>
                
             
     )

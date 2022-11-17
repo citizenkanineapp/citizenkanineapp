@@ -126,7 +126,8 @@ function ClientDetails(){
                     // sx={{width: 1}}
                     width="100%"
                     alt="client dog photo"
-                    src={dog.image}
+                    src={dog.image ? dog.image : 'images/dogfiller.jpeg'}
+                    // src={'images/dogfiller.jpeg'}
                     sx={{height: 175}}
                     />
               </Card>

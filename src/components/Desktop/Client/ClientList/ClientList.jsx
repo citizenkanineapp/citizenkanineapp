@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import '../../Desktop.css';
 
 //COMPONENTS
@@ -24,6 +24,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function ClientList() {
   const clientList = useSelector(store => store.clientsReducer);
   const dispatch = useDispatch();
+
+  const [search, setSearch] = useState('')
+
   //this route gets all clients to populate client list //
   useEffect(() => {
     dispatch({ type: 'FETCH_CLIENTS' })
@@ -35,11 +38,16 @@ function ClientList() {
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
   }
 
-  const fetchOneClient = (client) =>{
+  const fetchOneClient = (client) => {
     console.log(client)
     dispatch({type: 'SET_CLIENT', payload: client })
     openModal('ClientDetails')
   }
+
+  // const searchFunction = (event) => {
+  //   dispatch({type: 'SEARCH_CLIENTS', payload: search})
+  // }
+
 
 
   return (
@@ -47,12 +55,14 @@ function ClientList() {
       <Grid container sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width:'80%', gap: 2 }}>
        
           <TextField
+            value={search || ''}
+            onChange={(e) => setSearch(e.target.value)}
             label="Search Clients & Dogs"
             variant="filled"
             sx={{width: '60%'}}
           />
        
-          <Button size="large" variant="contained" color="secondary">Search</Button>
+          <Button size="large" variant="contained" color="secondary" onClick={() => searchFunction()}>Search</Button>
           <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary'>Add Client</Button>
        
       </Grid>

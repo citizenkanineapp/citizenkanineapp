@@ -417,8 +417,28 @@ router.put('/schedule', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-  
-  
+ //get search results 
+router.get('/matches', rejectUnauthenticated, async (req, res) => {
+  console.log('arrived in server search', req.query.search)
+ 
+  const queryText = `
+
+
+;
+  `
+const queryValues = [clientId]
+// pool.query(queryText, queryValues)
+//     .then(result => {
+      
+//         // res.send(clients);
+//         // console.log('does it get one?', clients)
+//     })
+//     .catch(err => {
+//         console.log('Error getting search results', err);
+//         res.sendStatus(500);
+//     })
+});
+
   
 
 module.exports = router;

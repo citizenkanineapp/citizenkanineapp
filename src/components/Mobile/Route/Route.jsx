@@ -104,33 +104,34 @@ function DailyRoutes() {
             {route && route.map && route.map((dog) => (
 
               <List>
-                <ListItem secondaryAction={
-                  <>
-                    {dog.cancelled ?
+                <ListItem sx={{ backgroundColor: dog.cancelled ? '#7BCEC8' : null }}
+                  secondaryAction={
+                    <>
+                      {dog.cancelled ?
 
-                      <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
-                        <AddCircleIcon sx={{ fill: '#3DA49D' }} />
-                      </IconButton>
+                        <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
+                          <AddCircleIcon sx={{ fill: '#3DA49D' }} />
+                        </IconButton>
 
-                      :
-                      <>
-                        <IconButton edge="end" onClick={(event) => checkIn(dog)}>
-                          <CheckBoxIcon sx={{ fill: '#7BCEC8', mr: 2 }} />
-                        </IconButton>
-                        <IconButton edge="end" onClick={(event) => noShow(dog)} >
-                          <EventBusyIcon sx={{ fill: '#F8614D' }} />
-                        </IconButton>
-                        {user.admin ?
-                          <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
-                            <CancelIcon sx={{ fill: '#F8614D' }} />
+                        :
+                        <>
+                          <IconButton edge="end" onClick={(event) => checkIn(dog)}>
+                            <CheckBoxIcon sx={{ fill: '#7BCEC8', mr: 2 }} />
                           </IconButton>
-                          :
-                          null
-                        }
-                      </>
-                    }
-                  </>
-                }
+                          <IconButton edge="end" onClick={(event) => noShow(dog)} >
+                            <EventBusyIcon sx={{ fill: '#F8614D' }} />
+                          </IconButton>
+                          {user.admin ?
+                            <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
+                              <CancelIcon sx={{ fill: '#F8614D' }} />
+                            </IconButton>
+                            :
+                            null
+                          }
+                        </>
+                      }
+                    </>
+                  }
                   sx={{ backgroundColor: () => determineStatus(dog), }}
                 >
                   <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >

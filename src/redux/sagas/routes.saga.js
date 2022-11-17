@@ -6,7 +6,7 @@ function* getRoutes() {
 
     try {
         const routes = yield axios.get('/api/mobile/routes');
-        console.log(routes);
+        console.log('routes:', routes);
         
         //assigns color to dog for grouping purposes
         const colors = (dog) => {

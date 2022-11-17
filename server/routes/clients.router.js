@@ -63,8 +63,8 @@ pool.query(queryText)
             let forDogMap = group[uniqueIds[i]]
        
             // const {first_name, last_name, address} = result.rows[0];
-            const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday} = forDogMap[0];
-            const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday}
+            const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday, lat, long} = forDogMap[0];
+            const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday, lat, long}
             client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular})})
 
             clients.push(client)

@@ -31,7 +31,7 @@ router.get('/daily', async (req, res) => {
     // the switch below this adds the necessary last two lines of the SQL Query to be Run
     // thus only grabbing dogs with the given day status 
     let searchQuery = `
-    SELECT clients_schedule.id, clients_schedule."1" AS Monday,  clients_schedule."2" AS Tuesday,  clients_schedule."3" AS Wednesday,  clients_schedule."4" AS Thursday,  clients_schedule."5" AS Friday, dogs.client_id, clients.route_id, dogs.name, clients.lat, clients.long, dogs.id AS dog_id from clients_schedule
+    SELECT clients_schedule.id, clients_schedule."1" AS Monday,  clients_schedule."2" AS Tuesday,  clients_schedule."3" AS Wednesday,  clients_schedule."4" AS Thursday,  clients_schedule."5" AS Friday, dogs.client_id, clients.route_id, dogs.name, dogs.id AS dog_id from clients_schedule
         JOIN "dogs" ON clients_schedule.client_id = dogs.client_id
         JOIN "clients" ON clients_schedule.client_id = clients.id
     `

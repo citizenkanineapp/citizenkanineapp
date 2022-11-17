@@ -23,7 +23,8 @@ import AdminSettings from '../Desktop/AdminSettings/AdminSettings';
 import Home from '../Mobile/Home/Home';
 import Map from '../Mobile/MapView/MapView';
 import WalkerSchedule from '../Mobile/WalkerSchedule/WalkerSchedule';
-import Routes from '../Mobile/DailyRoutes/DailyRoutes';
+import RouteSelect from '../Mobile/RouteSelect/RouteSelect';
+import Routes from '../Mobile/Route/Route';
 import LoadBalancing from '../Mobile/LoadBalancing/LoadBalancing';
 import MobileNav from '../Mobile/MobileNav/MobileNav';
 import DogDetails from '../Mobile/DogDetails/DogDetails';
@@ -128,10 +129,14 @@ function App() {
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/routes">
+              <RouteSelect />
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/m/route/:id">
               <Routes />
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/m/dog/"> {/* should we use params here? - sarah */}
+            <ProtectedRoute exact path="/m/dog/:id"> {/* should we use params here? - sarah */}
               <DogDetails />
             </ProtectedRoute>
 
@@ -153,7 +158,7 @@ function App() {
 
           </Switch>
 
-          <MobileNav /> 
+          <MobileNav />
         </div>
       </ThemeProvider>
     </Router>

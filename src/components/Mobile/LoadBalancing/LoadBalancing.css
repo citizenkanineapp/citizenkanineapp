@@ -1,7 +1,7 @@
 .dog_chip {
     /* Start the shake animation and make the animation last for 0.5 seconds */
     animation: shake 1s;
-  
+    color: #4c4b49;
     /* When the animation is finished, start again */
     animation-iteration-count: infinite;
   }
@@ -18,4 +18,6 @@
     80% { transform: rotate(0.5deg); }
     90% { transform: rotate(0deg); }
     100% { transform: rotate(-0.5deg); }
+
   }
+

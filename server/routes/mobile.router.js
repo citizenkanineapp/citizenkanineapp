@@ -5,6 +5,7 @@ const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
+
 // ADMIN ONLY:
 // /daily for generating daily dogs
 // /routes for GETTING all of the available dogs for the day in their default routes
@@ -74,6 +75,7 @@ router.get('/daily', async (req, res) => {
 
     try {
         await client.query('BEGIN');
+        thisWeek = dayjs().week();
 
         // const dailyDogs = adjustedDogs.map(dog => {
         //     final = {

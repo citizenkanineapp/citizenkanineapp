@@ -95,7 +95,7 @@
     border: black 1px !important;
 }
 
-.clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
+.clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected){
     color: orange !important;
     width: 1vw !important;
     height: 1vw !important;
@@ -103,6 +103,7 @@
     align-items: flex-start !important;
     background-color: transparent !important;
     margin-top: 5px !important;
+    border: none !important
 }
 
 /* month & year label */

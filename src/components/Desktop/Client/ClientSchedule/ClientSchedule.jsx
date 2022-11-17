@@ -23,13 +23,7 @@ const isWeekend = (date) => {
 function ClientSchedule() {
   const dispatch = useDispatch();
   
-  // useEffect(()=> {
-    //   dispatch({
-      //     type: 'SAGA_FETCH_DOGS',
-      //     // this payload will have to be changed to the selected client_id
-      //     payload: 9
-      //   })
-      // },[])
+
       
     // const clientSchedule= useSelector(store=> store.clientScheduleReducer);
     const clientSchedule = {1: true, 2: true, 3: true, 4: true, 5: false}
@@ -37,24 +31,9 @@ function ClientSchedule() {
     const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: false}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: true}]
 
     
-    const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
+    const avatarColors = ['#4A5061', '#F5A572', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
     
     // CALENDAR STUFF
-    const [date, setDate] = useState(dayjs());
-    console.log(date);
-    // console.log(dayjs())
-    const [value, setValue] = useState(dayjs());
-    // console.log(value)
-    
-    // const handleChange = (newValue) => {
-    //   console.log(newValue)
-    //   console.log(newValue.$d)
-    //   // Fri Nov 18 2022 09:41:13 GMT-0600 (Central Standard Time)
-    //   console.log(newValue.$D)
-    //   // 18
-    //   setValue(newValue.$d);
-    // };
-    
     // Testing to add a dog:
     const changes =[{dog_id: 1, date_to_change: '2022-11-18', is_scheduled: false}, {dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
 
@@ -72,8 +51,6 @@ function ClientSchedule() {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <CalendarPicker 
               className='clientSchedule'
-              date={date} 
-              onChange={(newDate) => setDate(newDate)} 
               shouldDisableDate={isWeekend}
               renderInput={(params) => {
                     // console.log(dayjs());
@@ -133,14 +110,14 @@ function ClientSchedule() {
                                 {/* Is this change happening on a regularly scheduled weekday? */}
                                 {clientSchedule[day.$W] ? 
                                     <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
-                                    {dogs.map(dog=> {
+                                    {dogs.map((dog, index)=> {
                                       return (
                                       <>
                                       {/* render all the regularly scheduled dogs AND the dog added */}
                                         {dog.regular || change.dog_id === dog.dog_id ? 
                                           <Avatar
                                               key={dog.dog_id}
-                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13}}
+                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
                                               alt={dog.dog_name[0]}
                                               src={dog.image ? dog.image : null}
                                           >
@@ -152,14 +129,14 @@ function ClientSchedule() {
                                   :
                                   // Adding a dog on a non-regularly scheduled weekday:
                                   <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
-                                    {dogs.map(dog=> {
+                                    {dogs.map((dog, index)=> {
                                       return (
                                       <>
                                       {/* render the dog(s) added */}
                                         {change.dog_id === dog.dog_id ? 
                                           <Avatar
                                               key={dog.dog_id}
-                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13}}
+                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
                                               alt={dog.dog_name[0]}
                                               src={dog.image ? dog.image : null}
                                           >
@@ -176,14 +153,14 @@ function ClientSchedule() {
                                 {/* Is this change happening on a regularly scheduled weekday? */}
                                 {clientSchedule[day.$W] ? 
                                     <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
-                                    {dogs.map(dog=> {
+                                    {dogs.map((dog, index)=> {
                                       return (
                                       <>
                                       {/* render all the regularly scheduled dogs EXCEPT the dog deleted */}
                                         {dog.regular && change.dog_id !== dog.dog_id ? 
                                           <Avatar
                                               key={dog.dog_id}
-                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13}}
+                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
                                               alt={dog.dog_name[0]}
                                               src={dog.image ? dog.image : null}
                                           >
@@ -195,14 +172,14 @@ function ClientSchedule() {
                                   :
                                   // Adding a dog on a non-regularly scheduled weekday:
                                   <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
-                                    {dogs.map(dog=> {
+                                    {dogs.map((dog, index)=> {
                                       return (
                                       <>
                                       {/* render the dog(s) added */}
                                         {change.dog_id === dog.dog_id ? 
                                           <Avatar
                                               key={dog.dog_id}
-                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13}}
+                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
                                               alt={dog.dog_name[0]}
                                               src={dog.image ? dog.image : null}
                                           >
@@ -221,7 +198,7 @@ function ClientSchedule() {
                               {/* the index === changes.length-1 part prevents the dogs from rendering multiple times */}
                               {clientSchedule[day.$W] && index === changes.length-1 ? 
                                 <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.55vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
-                                  {dogs.map(dog=> {
+                                  {dogs.map((dog, index)=> {
                                     
                                     return (
                                     <>
@@ -229,7 +206,7 @@ function ClientSchedule() {
                                       { dog.regular && JSON.stringify(DayComponentProps.day.$d) !== JSON.stringify(dayjs('2022-11-22').$d) ? 
                                         <Avatar
                                             key={dog.dog_id}
-                                            sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13}}
+                                            sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
                                             alt={dog.dog_name[0]}
                                             src={dog.image ? dog.image : null}
                                         >
@@ -265,66 +242,3 @@ function ClientSchedule() {
 export default ClientSchedule;
 
 
-{/* <Grid item xs={6}>
-          <FormControl fullWidth sx={{ mr: 4, pb: 1 }}>
-            <InputLabel>Dog</InputLabel>
-            <Select value={dog} onChange={(event) => setDog(event.target.value)}>
-              <MenuItem value={'Spike'}>Spike</MenuItem>
-              <MenuItem value={'Fido'}>Fido</MenuItem>
-            </Select>
-          </FormControl>
-
-
-          <FormControl fullWidth sx={{ mr: 4, pb: 1 }}>
-            <InputLabel>Action</InputLabel>
-            <Select value={action} onChange={(event) => setAction(event.target.value)}>
-              <MenuItem value={'Add'}>Add Walk</MenuItem>
-              <MenuItem value={'Remove'}>Cancel Walk</MenuItem>
-            </Select>
-          </FormControl>
-          <TextField value={value} fullWidth sx={{ mr: 4, pb: 1 }}></TextField>
-          <Button variant='contained' color='secondary' onClick={handleSubmit}>Submit</Button>
-        </Grid> */}
-
-      //   <h2>Weekly Schedule</h2>
-      // <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
-      //   <Grid item xs={2}>
-      //     <Card raised onClick={(event) => handleClick('Monday')} >
-      //       <CardContent sx={{ backgroundColor: walk ? '#7BCEC8' : null }}>
-      //         Monday
-      //       </CardContent>
-      //     </Card>
-
-      //   </Grid>
-      //   <Grid item xs={2} >
-      //     <Card raised sx={{ backgroundColor: '#7BCEC8' }}>
-      //       <CardContent>
-      //         Tuesday
-      //       </CardContent>
-      //     </Card>
-
-      //   </Grid>
-      //   <Grid item xs={2}>
-      //     <Card raised>
-      //       <CardContent>
-      //         Wednesday
-      //       </CardContent>
-      //     </Card>
-
-      //   </Grid>
-      //   <Grid item xs={2}>
-      //     <Card raised sx={{ backgroundColor: '#7BCEC8' }}>
-      //       <CardContent>
-      //         Thursday
-      //       </CardContent>
-      //     </Card>
-
-      //   </Grid>
-      //   <Grid item xs={2}>
-      //     <Card raised>
-      //       <CardContent>
-      //         Friday
-      //       </CardContent>
-      //     </Card>
-
-      //   </Grid>

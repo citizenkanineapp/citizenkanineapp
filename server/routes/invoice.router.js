@@ -2,7 +2,15 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+const {
+    rejectUnauthenticated,
+  } = require('../modules/authentication-middleware');
+
+const {
+    rejectUnauthorized,
+  } = require('../modules/authorization-middleware');
+
+router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     // console.log('in /api/invoice');
     // console.log(req.query)
     const searchClientId = req.query.clientId;
@@ -103,7 +111,8 @@ router.get('/', async (req, res) => {
                     const values = Object.values(client);
                     const walks = values.filter( i => i === true).length;
 
-                     // grabs services ID from services list
+                     // grabs services ID from services list.
+                    // THIS WILL NEED WORK IF QUICKBOOKS API SYNC IS IMPLEMENTED. will 'sync' be able to preserve serivceId? will there need to be another function to grab serviceId by service type?
                     if (item.num_dogs === "1") {
                         switch(walks) {
                             case 1:

@@ -1,12 +1,24 @@
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Paper, Stack, Avatar, Box, Divider, Typography, Button, Grid } from '@mui/material';
 import LogOutButton from '../../AllPages/LogOutButton/LogOutButton';
+import MobileNav from '../MobileNav/MobileNav';
 
 function Home() {
   const history = useHistory();
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user.admin) {
+      dispatch({
+        type: 'POPULATE_DAILY_DOGS'
+      })
+    }
+
+
+  }, [])
 
   const adminTime = () => {
     dispatch({ type: 'POPULATE_DAILY_DOGS' });
@@ -16,7 +28,7 @@ function Home() {
   return (
     <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', width: '100%' }}>
 
-      <MobileTopNav />
+      <MobileNav />
 
       <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifySelf: 'center', gap: 1, m: 3 }}>
 

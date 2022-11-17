@@ -32,6 +32,7 @@ const rootReducer = combineReducers({
   dogDelete,
   selectedEmployeeReducer,
   routeReducer,
+  details,
   invoiceReducer
 });
 

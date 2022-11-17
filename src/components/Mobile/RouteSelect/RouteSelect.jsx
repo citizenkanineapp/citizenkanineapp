@@ -71,7 +71,7 @@ function RouteSelect() {
             ))}
 
             {user.admin ?
-                <Grid item xs={12} sx={{ justifyContent: 'space-around', alignItems: 'center' }}>
+                <Grid item xs={12} sx={{ justifyContent: 'space-around', alignItems: 'center', mb: 15 }}>
                     <Button variant='contained' color='info' onClick={() => history.push('/m/routes/admin')} sx={{ position: 'absolute', left: '31%' }}>Load Balancing</Button>
                 </Grid>
                 :

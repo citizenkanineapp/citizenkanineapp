@@ -73,7 +73,7 @@ function DogDetails() {
 
         </Stack>
         {dog.image ?
-          <Avatar src={dog.image} sx={{ height: '150px', width: '150px' }} />
+          <Avatar src={dog.image || ''} sx={{ height: '150px', width: '150px' }} />
           :
           <Avatar sx={{ height: '150px', width: '150px' }} >
             {dog.name}

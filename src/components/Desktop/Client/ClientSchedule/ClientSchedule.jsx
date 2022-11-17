@@ -41,7 +41,7 @@ function ClientSchedule() {
     
     // CALENDAR STUFF
     const [date, setDate] = useState(dayjs());
-    
+    console.log(date);
     // console.log(dayjs())
     const [value, setValue] = useState(dayjs());
     // console.log(value)
@@ -80,6 +80,9 @@ function ClientSchedule() {
                     }}
               // renderDay is essentially mapping through each day in the selected month.
               renderDay={(day, _value, DayComponentProps) => {
+                console.log(JSON.stringify(DayComponentProps.day.$d));
+                console.log(JSON.stringify(dayjs('2022-11-22').$d))
+                console.log(JSON.stringify(DayComponentProps.day.$d) === JSON.stringify(dayjs('2022-11-22').$d));
                 // console.log('day is:', day.$W);
                 // day.$W returns returns an integer (1-5) representing the days of the week (M-F)
                 let selectedMUIClass='';
@@ -120,8 +123,8 @@ function ClientSchedule() {
                           // START OF FIRST CONDITIONAL:
                           return(
                           <div> 
-                            {/* is there a change scheduled today? */}
-                            {day.$D === dayjs(change.date_to_change).$D ? 
+                            {/* is there a change scheduled today (month, day & year? */}
+                            { JSON.stringify(DayComponentProps.day.$d) === JSON.stringify(dayjs(change.date_to_change).$d) ? 
                               <div>
                               {/*  is this change to add a dog? */}
                               {change.is_scheduled ?
@@ -222,7 +225,7 @@ function ClientSchedule() {
                                     return (
                                     <>
                                     {/* render the dog(s) added */}
-                                      { dog.regular && day.$D !== dayjs(change.date_to_change).$D ? 
+                                      { dog.regular && JSON.stringify(DayComponentProps.day.$d) !== JSON.stringify(dayjs('2022-11-22').$d) ? 
                                         <Avatar
                                             key={dog.dog_id}
                                             sx={{width: '1vw', height: '1vw', mx: .25}}

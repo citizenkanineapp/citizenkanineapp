@@ -23,6 +23,7 @@ function ClientSchedule() {
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
   const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
+  const dogs = client.dogs;
 
   
   useEffect(() => {
@@ -143,40 +144,9 @@ function ClientSchedule() {
       }
       console.log(updatedChanges);
       console.log(addChanges);    
-  
+      // dispatch updatedChanges an addChanges to add/update changes. 
     }
     }
-
-
-    // Now we can send this array to the server to add to the database
-    // console.log(newChanges);
-
-  //   let scheduleChangeObject = []
-  //   let month = (value.$M +1)
-
-  //   //different logic based on whether one dog or "all dogs is selected" to create one-off schedule change object
-  //   if(dog.length > 1 ){
-  //   for(let oneDog of dog){
-  //     let dogObject ={
-  //       date: `${value.$y}-${month}-${value.$D}`,
-  //       is_scheduled: scheduled,
-  //       dog_id: oneDog.dog_id,
-  //       client_id: client.id,
-  //       regular: oneDog.regular
-  //       }
-  //       scheduleChangeObject.push(dogObject)
-  //     }
-  //   } else {
-  //     let dogObject ={
-  //       date: `${value.$y}-${month}-${value.$D}`,
-  //       is_scheduled: scheduled,
-  //       dog_id: dog,
-  //       client_id: client.id,
-  //       regular: oneDog.regular
-  //     }
-  //       scheduleChangeObject.push(dogObject)
-  // } 
-    // dispatch({type: 'SEND_ONE_SCHEDULE_CHANGE', payload: scheduleChangeObject})
 
 
 //this function changes a client's regular schedule
@@ -186,8 +156,9 @@ const regularScheduleChange = (event) =>{
 
   // CALENDAR STUFF
   const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
+  console.log(clientSchedule)
 
-  const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: false}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: true}]
+  // const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: false}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: true}]
 
   // const changes =[{id: 1, dog_id: 1, date_to_change: '2022-11-18', is_scheduled: false}, {id: 2, dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
 
@@ -212,14 +183,11 @@ const regularScheduleChange = (event) =>{
                     }}
               // renderDay is essentially mapping through each day in the selected month.
               renderDay={(day, _value, DayComponentProps) => {
-                // console.log(JSON.stringify(DayComponentProps.day.$d))
-                // console.log(JSON.stringify(dayjs('2022-11-23T06:00:00.000Z').$d))
-                // console.log(JSON.stringify(DayComponentProps.day.$d) === JSON.stringify(dayjs('2022-11-23T06:00:00.000Z').$d))
+                // console.log(clientSchedule)
                 let selectedMUIClass='';
                 if (day.$d === dayjs()){
                     selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
                   }
-                
 
                 return (
                     <Box
@@ -238,6 +206,8 @@ const regularScheduleChange = (event) =>{
                       <Box key={day.$D} sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                         {/*  map through changes array: Is there a change for today? YES:, NO: check to see if it is a regularly scheduled day and render regularly scheduled dogs */}
 
+                      {changes.length !== 0 ? 
+                        <>
                         {changes && changes.map((change, index) => {
                           // does the change date match today's date?
                           return(
@@ -249,7 +219,7 @@ const regularScheduleChange = (event) =>{
                               {change.is_scheduled ?
                                 <>
                                 {/* Is this change happening on a regularly scheduled weekday? */}
-                                {clientSchedule[day.$W] ? 
+                                { clientSchedule && clientSchedule[day.$W] ? 
                                     <>
                                     {dogs.map((dog, index)=> {
                                       return (
@@ -346,14 +316,36 @@ const regularScheduleChange = (event) =>{
                             </>
                             }
                           </div>)
-                        })}
-                        {/* this is the end of mapping through changes */}
+                        })} {/* this is the end of mapping through changes */}
+                        </>
+                        :
+                          <>
+                          {clientSchedule[day.$W] ? 
+                            <>
+                              {dogs.map((dog, index)=>(
+                                <Avatar
+                                key={dog.dog_id}
+                                sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
+                                alt={dog.dog_name[0]}
+                                src={dog.image ? dog.image : null}
+                            >
+                            </Avatar>
+                              ))}
+                            </>
+                            :
+                            null
+                            }
+                          </>
+                        
+                        } {/* No changes go here */}
+                        
                       </Box>
                       : null} {/* this null is for the day not being within the current month */}
                     </Box>
                 );
                 }}/>
           </LocalizationProvider>
+          {/* END of CALENDAR */}
 
           
       {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>

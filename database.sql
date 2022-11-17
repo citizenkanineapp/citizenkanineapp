@@ -27,31 +27,30 @@ CREATE TABLE employees (
 	"street" VARCHAR(150),
 	"city" VARCHAR(150),
 	"zip" INT,
-	"date" DATE DEFAULT CURRENT_DATE
+	"date" DATE DEFAULT CURRENT_DATE,
+	"admin" BOOLEAN DEFAULT FALSE
 	);
 
 --** Employees MOCK DATA **--
 insert into employees 
-	(first_name, last_name, email, phone, street, city, "zip") 
+	(first_name, last_name, email, phone, street, city, "zip", admin) 
 values 
-	('Den', 'Paolini', 'dpaolini0@paypal.com', '(840)6732127', '2900 W 43rd St', 'Minneapolis',  55410),
-	('Grantley', 'Abels', 'gabels1@weather.com', '(885)7477091', '2900 W 43rd St', 'Minneapolis',  55410),
-	('Say', 'O''Hickey', 'sohickey2@google.ru', '(915)6380768', '2900 W 43rd St', 'Minneapolis',  55410),
-	('Reeba', 'Pretswell', 'rpretswell3@feedburner.com', '(964)6881625', '2900 W 43rd St', 'Minneapolis',  55410),
-	('Fiorenze', 'Mary', 'fmary4@unesco.org', '(697)2096190', '2900 W 43rd St', 'Minneapolis',  55410),
-	('Osborne', 'Barrand', 'obarrand5@wufoo.com', '(537)1594107', '2900 W 43rd St', 'Minneapolis',  55410),
-	('Lidia', 'Nichols', 'lnichols6@virginia.edu', '(802)5280961', '2900 W 43rd St', 'Minneapolis',  55410),
-	('Stephanie', 'Rimbault', 'srimbault7@state.tx.us', '(609)6392085', '2900 W 43rd St', 'Minneapolis',  55410),
-	('Andris', 'Batram', 'abatram8@vinaora.com', '(395)7396444', '2900 W 43rd St', 'Minneapolis',  55410),
-	('Renae', 'Pettwood', 'rpettwood9@printfriendly.com', '(418)8794563', '2900 W 43rd St', 'Minneapolis',  55410);
+	('Den', 'Paolini', 'dpaolini0@paypal.com', '(840)6732127', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Grantley', 'Abels', 'gabels1@weather.com', '(885)7477091', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Say', 'O''Hickey', 'sohickey2@google.ru', '(915)6380768', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Reeba', 'Pretswell', 'rpretswell3@feedburner.com', '(964)6881625', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Fiorenze', 'Mary', 'fmary4@unesco.org', '(697)2096190', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Osborne', 'Barrand', 'obarrand5@wufoo.com', '(537)1594107', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Lidia', 'Nichols', 'lnichols6@virginia.edu', '(802)5280961', '2900 W 43rd St', 'Minneapolis',  55410, false);
 
+
+-- removed email from user since we no longer need it for password retrieval.
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
 	"emp_id" INT REFERENCES employees(id) ON DELETE CASCADE,
-	"username" VARCHAR(150) NOT NULL,
+	"username" VARCHAR(150),
 	"password" VARCHAR(150) NOT NULL,
-	"email" VARCHAR(300), -- LATER CHANGE TO NOT NULL
-	"admin" BOOLEAN DEFAULT NULL,
+	"admin" BOOLEAN DEFAULT FALSE,
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	
@@ -85,39 +84,9 @@ values
 	(6, 1, false, true, true, true, false),
 	(6, 2, false, true, true, true, false),
 	(7, 1, true, true, true, true, false),
-	(7, 2, true, true, true, true, false),
-	(8, 1, true, true, true, false, true),
-	(8, 2, true, false, false, false, true),
-	(9, 1, false, true, false, false, false),
-	(9, 2, false, true, false, false, false),
-	(10, 1, false, false, false, true, true),
-	(10, 2, false, false, false, true, true);
+	(7, 2, true, true, true, true, false);
 
 
-INSERT INTO employees_schedule
-	("emp_id", "week")
-VALUES	
-	(1,1),
-	(1,2),
-	(2,1),
-	(2,2),
-	(3,1),
-	(3,2),
-	(4,1),
-	(4,2),
-	(5,1),
-	(5,2),
-	(6,1),
-	(6,2),
-	(7,1),
-	(7,2),
-	(8,1),
-	(8,2),
-	(9,1),
-	(9,2),
-	(10,1),
-	(10,2);
-	
 CREATE TABLE routes (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(150)
@@ -196,8 +165,9 @@ CREATE TABLE dogs (
 	"vet_name" VARCHAR(150),
 	"vet_phone" VARCHAR(13), -- changed to string input
 	"notes" VARCHAR,
-	"flag" BOOLEAN DEFAULT NULL,
-	"date" DATE DEFAULT CURRENT_DATE
+	"flag" BOOLEAN DEFAULT FALSE,
+	"date" DATE DEFAULT CURRENT_DATE,
+	"regular" BOOLEAN DEFAULT TRUE -- added this so that if a guest dog (client's daughter) is also being walked, they can be added add-hoc
 	);
 
 --** Dogs MOCK DATA **--
@@ -284,27 +254,27 @@ CREATE TABLE daily_dogs (
 	);
 -- ** daily_dogs MOCK DATA
 insert into daily_dogs
-	("date", "dog_id","checked_in","no_show","cancelled","route_id")
+	("date","name", "dog_id","checked_in","no_show","cancelled","route_id","client_id")
 values
-	('2022-10-31','3','true','false','false','1'),
-	('2022-10-31','5','true','false','false','1'),
-	('2022-11-02','3','true','false','false','1'),
-	('2022-11-02','5','true','false','false','1'),
-	('2022-11-04','3','true','false','false','1'),
-	('2022-11-04','5','true','false','false','1'),
-	('2022-11-07','3','true','false','false','1'),
-	('2022-11-07','5','true','false','false','1'),
-	('2022-11-09','3','true','false','false','1'),
-	('2022-11-11','3','false','true','false','1'),
-	('2022-11-11','5','false','true','false','1'),
-	('2022-10-31','6','true','false','false','1'),
-	('2022-11-01','6','true','false','false','1'),
-	('2022-11-02','6','true','false','false','1'),
-	('2022-11-03','6','false','true','false','1'),
-	('2022-11-04','6','true','false','false','1'),
-	('2022-11-07','6','true','false','false','1'),
-	('2022-11-08','6','true','false','false','1'),
-	('2022-11-09','6','true','false','false','1');
+	('2022-10-31','Michael','3','true','false','false','1','1'),
+	('2022-10-31','Darya','5','true','false','false','1','1'),
+	('2022-11-02','Michael','3','true','false','false','1','1'),
+	('2022-11-02','Darya','5','true','false','false','1','1'),
+	('2022-11-04','Michael','3','true','false','false','1','1'),
+	('2022-11-04','Darya','5','true','false','false','1','1'),
+	('2022-11-07','Michael','3','true','false','false','1','1'),
+	('2022-11-07','Darya','5','true','false','false','1','1'),
+	('2022-11-09','Michael','3','true','false','false','1','1'),
+	('2022-11-11','Michael','3','false','true','false','1','1'),
+	('2022-11-11','Darya','5','false','true','false','1','1'),
+	('2022-10-31','Gunner','6','true','false','false','1','13'),
+	('2022-11-01','Gunner','6','true','false','false','1','13'),
+	('2022-11-02','Gunner','6','true','false','false','1','13'),
+	('2022-11-03','Gunner','6','false','true','false','1','13'),
+	('2022-11-04','Gunner','6','true','false','false','1','13'),
+	('2022-11-07','Gunner','6','true','false','false','1','13'),
+	('2022-11-08','Gunner','6','true','false','false','1','13'),
+	('2022-11-09','Gunner','6','true','false','false','1','13');
 
 CREATE TABLE admin_notes (
 	"id" SERIAL PRIMARY KEY,

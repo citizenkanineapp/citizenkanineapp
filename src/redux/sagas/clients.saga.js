@@ -124,6 +124,60 @@ function* updateDog(action){
     
 }
 
+function* fetchSchedule(action){
+    console.log('arrived in get one client route', action.payload);
+    let clientId = action.payload
+    try {
+        const schedule = yield axios.get(`/api/clients/schedule/${clientId}`);
+        console.log('back to saga', schedule)
+        yield put ({type: 'SET_SCHEDULE', payload: schedule.data[0]});
+    } catch (error) {
+        console.log(error);
+        alert('Error fetching one client schedule');
+    }
+    
+}
+
+function* oneOffScheduleChange(action){
+    console.log('arrived in edit one off schedule route', action.payload);
+    const scheduleChange = action.payload
+
+    try {
+        const schedule = yield axios({
+            method: 'POST',
+            url: '/api/clients/schedule',
+            data: action.payload
+        })
+        console.log(scheduleChange[0].client_id)
+        yield put ({type: 'FETCH_ONE_CLIENT', payload: scheduleChange[0].client_id});
+  
+    } catch (error) {
+        console.log(error);
+        alert('Error editing one off schedule');
+    }
+    
+}
+
+
+function* regularScheduleChange(action){
+    console.log('arrived in edit regular schedule', action.payload);
+
+    try {
+        const schedule = yield axios({
+            method: 'PUT',
+            url: '/api/clients/schedule',
+            data: action.payload
+        })
+        yield put ({type: 'FETCH_SCHEDULE', payload: action.payload.client_id});
+        //probably need to fetch specific client?
+    } catch (error) {
+        console.log(error);
+        alert('Error editing regular schedule');
+    }
+    
+}
+
+
 
 
 function* clientSaga() {
@@ -134,7 +188,11 @@ function* clientSaga() {
     yield takeLatest('FETCH_ONE_CLIENT', fetchOneClient);
     yield takeLatest('DELETE_CLIENT', deleteClient);
     yield takeLatest('DELETE_DOG', deleteDog);
-    yield takeLatest('UPDATE_DOG', updateDog);   
+    yield takeLatest('UPDATE_DOG', updateDog);
+    yield takeLatest('FETCH_SCHEDULE', fetchSchedule);
+    yield takeLatest('SEND_ONE_SCHEDULE_CHANGE', oneOffScheduleChange);
+    yield takeLatest('REGULAR_SCHEDULE_CHANGE', regularScheduleChange);
+    
   }
 
   export default clientSaga;

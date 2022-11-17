@@ -164,18 +164,25 @@ router.get('/route/:route_id', async (req, res) => {
     // routes need to be arrays of dog objects ...
     // do we want separate arrays per route?
     const routeQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes, dogs.image, routes.name AS route from daily_dogs
+    SELECT daily_dogs.*, dogs.flag, dogs.notes AS dog_notes, dogs.image, routes.name AS route, clients.id, concat_ws(' ', clients.first_name, clients.last_name) AS client_name, clients.notes AS client_protocol from daily_dogs
 	JOIN dogs
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes
 		ON daily_dogs.route_id = routes.id
-	    WHERE daily_dogs.date = CURRENT_DATE AND route_id = $1;
+	JOIN clients
+		ON daily_dogs.client_id = clients.id
+	    WHERE daily_dogs.date = CURRENT_DATE AND daily_dogs.route_id = $1
+	ORDER BY clients.id;
     `
 
     const routeValue = [route];
 
     pool.query(routeQuery, routeValue)
         .then(routeResponse => {
+            console.log(routeResponse.rows);
+            let routeArray = routeResponse.rows;
+
+
             res.send(routeResponse.rows);
         }).catch((error => {
             console.log('/route/:id GET error:', error);
@@ -203,11 +210,12 @@ router.get('/routes', async (req, res) => {
 })
 
 
-router.get('/dog/:id', async (req, res) => {
-    const dogID = req.params.id;
+router.get('/dog/:dogID', async (req, res) => {
+    console.log('MADE IT TO DOG DETAILS ROUTE');
+    const dogID = req.params.dogID;
 
     const dogDetailsQuery = `
-    SELECT dogs.*, clients.* from dogs
+    SELECT dogs.*, dogs.notes AS dog_notes, dogs.id AS dog_id, clients.*, clients.notes AS client_protocol from dogs
 	    JOIN clients
 		    ON dogs.client_id = clients.id
 	    WHERE dogs.id = $1;
@@ -216,12 +224,13 @@ router.get('/dog/:id', async (req, res) => {
 
     pool.query(dogDetailsQuery, dogDetailsValue)
         .then(detailsResults => {
-            const dogDetails = detailsResults.rows;
+            const dogDetails = detailsResults.rows[0];
             res.send(dogDetails);
         }).catch((error => {
             console.log('/dog/:id error getting dog details:', error);
         }));
 })
+
 
 router.put('/routes', async (req, res) => {
     // expect an object being sent over for the put request?
@@ -243,10 +252,52 @@ router.put('/routes', async (req, res) => {
 
 })
 
-// POST ROUTE FOR ADDING A DOG ON THE SPOT!?
-router.post('/', rejectUnauthenticated, (req, res) => {
+// UPDATE A DOG's STATUS
+router.put('/daily', async (req, res) => {
+    // expect an object being sent over for the put request?
+    // pull out relevant dog ID and route ID
+    const dogID = req.body.id;
+    const checkedIn = req.body.checked_in;
+    const noShow = req.body.no_show;
+    const cancelled = req.body.cancelled;
 
-});
+
+    console.log('UPDATED DOG', dogID, checkedIn, noShow, cancelled);
+
+    const updateQuery = `UPDATE daily_dogs SET "checked_in" = $1, "no_show" = $2, "cancelled" = $3 WHERE "dog_id" = $4 AND daily_dogs.date = CURRENT_DATE`;
+    const updateValues = [checkedIn, noShow, cancelled, dogID];
+
+    pool.query(updateQuery, updateValues)
+        .then(changeResults => {
+            res.sendStatus(200);
+        }).catch((error => {
+            console.log('/dog/:id error getting dog details:', error);
+        }));
+
+})
+
+// UPDATE A DOG's NOTE
+router.put('/notes', async (req, res) => {
+    // expect an object being sent over for the put request?
+    // pull out relevant dog ID and note
+    const dogID = req.body.id;
+    const note = req.body.note;
+
+    console.log('UPDATED DOG', dogID, note);
+
+    const updateQuery = `UPDATE dogs SET "notes" = $2 WHERE "id" = $1`;
+    const updateValues = [dogID, note];
+
+    pool.query(updateQuery, updateValues)
+        .then(changeResults => {
+            res.sendStatus(200);
+        }).catch((error => {
+            console.log('/dog/:id error getting dog details:', error);
+        }));
+
+})
+
+
 
 
 

@@ -15,7 +15,7 @@ import invoiceReducer from './invoiceData.reducer'
 
 import clientReducer from './client.reducer';
 import routeReducer from './route.reducer';
-
+import details from './details.reducer';
 
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage

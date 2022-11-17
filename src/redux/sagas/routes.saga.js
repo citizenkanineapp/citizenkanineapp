@@ -92,12 +92,39 @@ function* populateDailyDogs(action) {
     }
 }
 
+function* updateStatus(action) {
+    // single dog
+    let dog = action.payload;
+    let routeID = action.payload.routeID;
+    console.log('DOG TO UPDATE IS:', dog, routeID);
+
+    try {
+        yield axios({
+            method: 'PUT',
+            url: `/api/mobile/daily`,
+            data: dog
+        })
+        yield put({ type: 'GET_ROUTE_DETAILS', payload: routeID })
+
+        console.log('CHANGED');
+
+    } catch (error) {
+        console.log('ERROR UPDATING DOG STATUS', error);
+    }
+
+}
+
+
+
 
 function* RouteSaga() {
     yield takeLatest('GET_DAILY_ROUTES', getRoutes);
     yield takeLatest('UPDATE_ROUTE', updateRoute);
     yield takeLatest('GET_ROUTE_DETAILS', getRouteDetails);
     yield takeLatest('POPULATE_DAILY_DOGS', populateDailyDogs);
+    yield takeLatest('NO_SHOW', updateStatus);
+    yield takeLatest('CHECK_IN', updateStatus);
+    yield takeLatest('CANCEL_WALK', updateStatus);
 }
 
 export default RouteSaga;

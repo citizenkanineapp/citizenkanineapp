@@ -8,6 +8,8 @@ import employeesSaga from './employees.saga.js';
 import clientSaga from './clients.saga';
 import RouteSaga from './routes.saga';
 import InvoiceDataSaga from './invoiceData.saga';
+import clientScheduleSaga from './clientSchedule.saga';
+import detailsSaga from './details.saga';
 
 
 // rootSaga is the primary saga.
@@ -27,6 +29,8 @@ export default function* rootSaga() {
     employeesSaga(),
     clientSaga(),
     RouteSaga(),
-    InvoiceDataSaga()
+    InvoiceDataSaga(),
+    clientScheduleSaga(),
+    detailsSaga(),
   ]);
 }

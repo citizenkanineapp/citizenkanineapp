@@ -1,92 +1,185 @@
 import { useEffect, useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Chip, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Fab, CardMedia, Card, CardActions, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import FlagIcon from '@mui/icons-material/Flag';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import DirectionsIcon from '@mui/icons-material/Directions';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 
 function DogDetails() {
-
-  const dog = { flagged: true };
-  const vetAddress = { address: '400 S 4th St', city: 'Minneapolis', zipCode: '55415', }
-  const clientAddress = { address: '4145 Zarthan AVE S', city: 'St. Louis Park', zipCode: '55416', }
+  const params = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
+  // local state to manage dog note editing ability
+  const [editStatus, setEditStatus] = useState(false);
 
-  const openMap = async (clientAddress) => {
-    const destination = encodeURIComponent(`${clientAddress.address} ${clientAddress.zipCode}, ${clientAddress.city}`);
+  // specific dog details - fetched by the useEffect
+  const dog = useSelector(store => store.details);
+
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_DOG_DETAILS',
+      payload: params.id
+    })
+
+    return () => {
+      dispatch({
+        type: 'CLEAR_DETAILS'
+      })
+    }
+  }, [params.id])
+
+
+  const openMap = async (dog) => {
+    // takes in address details and encodes them into URI 
+    const destination = encodeURIComponent(`${dog.street} ${dog.zip}`);
+    // based off of street address and city it pulls up a google map page
     const link = `http://maps.google.com/?daddr=${destination}`;
     window.open(link);
   }
 
-  return (
-    <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
 
+  const clicktoCall = (number) => {
+    // removes any symbols from the phone number
+    let nosymbols = number.replace(/[^a-zA-Z0-9 ]/g, '');
+    // removes white space from number
+    let readyNumber = nosymbols.trim();
+    // sends prompt to call number
+    window.open(`tel:+1${readyNumber}`);
+  }
+
+  const submitNote = (action) => {
+    console.log(dog.dog_notes, dog.dog_id);
+    let updatedDog = { id: dog.dog_id, note: dog.dog_notes };
+    dispatch({ type: 'UPDATE_DOG_NOTE', payload: updatedDog });
+    setEditStatus(false);
+  }
+
+  return (
+    <Grid container spacing={1} sx={{ justifyContent: 'center' }}>
       {/* NAV BACK TO LIST */}
       <Grid item xs={12}>
-        <Button>BACK</Button>
+        <Button onClick={(event) => history.push(`/m/route/${dog.route_id}`)}>BACK</Button>
       </Grid>
-      {/* DOG PHOTO */}
-      <Grid item xs={5}>
-        <Card>
-          <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>
-            <EditIcon />
-          </Fab>
-          <CardMedia component="img" height='70%' image="https://www.rd.com/wp-content/uploads/2020/11/GettyImages-889552354-e1606774439626.jpg" />
-        </Card>
+      <Grid item xs={5} sx={{ justifyContent: 'center' }}>
+        <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>
+          <EditIcon />
+        </Fab>
+        <Stack>
+
+        </Stack>
+        {dog.image ?
+          <Avatar src={dog.image} sx={{ height: '150px', width: '150px' }} />
+          :
+          <Avatar sx={{ height: '150px', width: '150px' }} >
+            {dog.name}
+          </Avatar>
+        }
       </Grid>
       {/* DOG NAME */}
       <Grid item xs={5}>
-        <Stack direction='column'>
+        <Stack direction='column' sx={{ justifyContent: 'center', textAlign: 'center' }}>
           <Card sx={{ mb: 1 }}>
-            <Typography variant='h4' align='center'>RUFUS</Typography>
+            <Typography variant='h5' align='center' sx={{ pt: 2 }}>{dog.name}</Typography>
           </Card>
           {/* CLIENT ADDRESS INFORMATION */}
-          <Card onClick={(event) => openMap(clientAddress)}>
-            <Typography align='center' variant='caption'>
-              {clientAddress.address} {clientAddress.city} {clientAddress.zipCode}
+          <Card>
+            <Typography variant='caption'>
+              {dog.street}
             </Typography>
+            <CardActions sx={{ justifyContent: 'center' }} >
+              <Button variant='contained' endIcon={<DirectionsIcon />} size='small' onClick={(event) => openMap(dog)}>
+                Directions
+              </Button>
+            </CardActions>
           </Card>
         </Stack>
-      </Grid>
-      {/* ACCESS INFORMATION */}
-      <Grid item xs={10}>
-        <Card>
-          <Typography align='center'>Side door - Access Code: 12543</Typography>
-        </Card>
-      </Grid>
-      {/* OWNER INFORMATION & CALL BUTTON */}
-      <Grid item xs={10}>
-        <Card>
-          <CardContent>
-            <Typography variant='h6'>Owner Info:</Typography>
-            <Typography variant='body2'> Dolly Parton | <a href="tel:+17637447704">(763)-744-7704</a></Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-      {/* VET INFORMATION & CALL BUTTON */}
-      <Grid item xs={10}>
-        {/* <Card onClick={(event) => openMap(vetAddress)}> */}
-        <Card>
-          <CardContent>
-            <Typography variant='h6'>Vet Info:</Typography>
-            <Typography variant='body2'>Dr. Terry | <a href="tel:+16127159132">(612)-715-9132</a> </Typography>
-            <Typography variant='caption'>{vetAddress.address} {vetAddress.city} {vetAddress.zipCode}</Typography>
-          </CardContent>
-        </Card>
       </Grid>
       {/* DOG NOTES & CONDITIONAL FLAG */}
       <Grid item xs={10}>
         <Card>
-          <Stack direction='row' alignItems='center'>
-            {dog.flagged ? <FlagIcon sx={{ fill: '#e0603f' }} /> : null}
-            <Typography variant='inherit'>
-              Rufus need time to warm up to new friends
-            </Typography>
+          <Stack direction='row' alignItems='center' sx={{ mt: 1, p: 2 }}>
+            {dog.flag ? <FlagIcon sx={{ fill: '#e0603f' }} /> : null}
+            {editStatus ?
+              <>
+                <TextField
+                  value={dog.dog_notes}
+                  onChange={(event) => dispatch({ type: 'EDIT_DOG_NOTE', payload: event.target.value })}
+                  label='Dog Notes'
+                  fullWidth
+                  multiline
+                  Rows={5}
+                  InputProps={{ margin: 'dense' }}
+
+                  helperText="click to edit notes"
+                />
+                <Button onClick={(event) => submitNote()}>Submit</Button>
+
+              </>
+              :
+              <TextField value={dog.dog_notes || ''}
+                label='Dog Notes'
+                fullWidth
+                multiline
+                Rows={5}
+                helperText="click to edit notes"
+                InputProps={{ readOnly: true }}
+                sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
+                onClick={(event) => setEditStatus(true)} />
+            }
           </Stack>
         </Card>
       </Grid>
-    </Grid>
+      {/* ACCESS INFORMATION */}
+      <Grid item xs={10}>
+        <Card sx={{ mb: 1 }}>
+          <Typography align='center'>{dog.client_protocol || 'No protocol on File'}</Typography>
+        </Card>
+        {/* OWNER INFORMATION & CALL BUTTON */}
+
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            id="panel1a-header"
+          >
+            <Typography>Client Info:</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography variant='body2'> {dog.first_name} {dog.last_name}</Typography>
+            {/* <a href="tel:+16127159132">(612)-715-9132</a> */}
+            <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.phone)}>
+              Call
+            </Button>
+
+          </AccordionDetails>
+        </Accordion>
+        {/* VET INFORMATION & CALL BUTTON */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Typography>Vet Info:</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography variant='body2'>Dr. Terry</Typography>
+            {/* <a href="tel:+16127159132"><LocalPhoneIcon fontSize='small' />(612)-715-9132</a> */}
+            <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.vet_phone)} >
+              Call
+            </Button>
+          </AccordionDetails>
+        </Accordion>
+
+      </Grid>
+
+
+
+    </Grid >
   );
 }
 

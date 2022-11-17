@@ -14,8 +14,10 @@ function DogDetails() {
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+  // local state to manage dog note editing ability
   const [editStatus, setEditStatus] = useState(false);
 
+  // specific dog details - fetched by the useEffect
   const dog = useSelector(store => store.details);
 
   useEffect(() => {
@@ -33,14 +35,21 @@ function DogDetails() {
 
 
   const openMap = async (dog) => {
+    // takes in address details and encodes them into URI 
     const destination = encodeURIComponent(`${dog.street} ${dog.zip}`);
-    // , ${clientAddress.city}
+    // based off of street address and city it pulls up a google map page
     const link = `http://maps.google.com/?daddr=${destination}`;
     window.open(link);
   }
 
+
   const clicktoCall = (number) => {
-    window.open(`tel:+${number}`);
+    // removes any symbols from the phone number
+    let nosymbols = number.replace(/[^a-zA-Z0-9 ]/g, '');
+    // removes white space from number
+    let readyNumber = nosymbols.trim();
+    // sends prompt to call number
+    window.open(`tel:+1${readyNumber}`);
   }
 
   return (
@@ -66,16 +75,16 @@ function DogDetails() {
       </Grid>
       {/* DOG NAME */}
       <Grid item xs={5}>
-        <Stack direction='column' sx={{ justifyContent: 'center' }}>
+        <Stack direction='column' sx={{ justifyContent: 'center', textAlign: 'center' }}>
           <Card sx={{ mb: 1 }}>
-            <Typography variant='h4' align='center'>{dog.name}</Typography>
+            <Typography variant='h4' align='center' sx={{ pt: 2 }}>{dog.name}</Typography>
           </Card>
           {/* CLIENT ADDRESS INFORMATION */}
           <Card>
-            <Typography align='center' variant='caption'>
+            <Typography variant='caption'>
               {dog.street}
             </Typography>
-            <CardActions>
+            <CardActions sx={{ justifyContent: 'center' }} >
               <Button variant='contained' endIcon={<DirectionsIcon />} size='small' onClick={(event) => openMap(dog)}>
                 Directions
               </Button>
@@ -86,11 +95,31 @@ function DogDetails() {
       {/* DOG NOTES & CONDITIONAL FLAG */}
       <Grid item xs={10}>
         <Card>
-          <Stack direction='row' alignItems='center'>
+          <Stack direction='row' alignItems='center' sx={{ mt: 1, p: 2 }}>
             {dog.flagged ? <FlagIcon sx={{ fill: '#e0603f' }} /> : null}
-            <Typography variant='inherit' onClick={(event) => setEditStatus(true)}>
-              {dog.dog_notes ? dog.dog_notes : `Click to add a Note for ${dog.name}`}
-            </Typography>
+            {editStatus ?
+              <>
+                <TextField value={dog.dog_notes}
+                  label='Dog Notes'
+                  fullWidth
+                  multiline
+                  Rows={5}
+                  helperText="click to edit notes"
+                />
+                <Button onClick={(event) => setEditStatus(false)}>Submit</Button>
+
+              </>
+              :
+              <TextField value={dog.dog_notes}
+                label='Dog Notes'
+                fullWidth
+                multiline
+                Rows={5}
+                helperText="click to edit notes"
+                InputProps={{ readOnly: true }}
+                sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
+                onClick={(event) => setEditStatus(true)} />
+            }
           </Stack>
         </Card>
       </Grid>

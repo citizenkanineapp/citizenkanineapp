@@ -14,13 +14,13 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
-// THIS POST if for adding a new user from the registration page only:
+// THIS POST is for adding a new user from the registration page only:
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
 
-  const queryText = `INSERT INTO "user" (username, password)
-    VALUES ($1, $2) RETURNING id`;
+  const queryText = `INSERT INTO "user" (username, password, admin)
+    VALUES ($1, $2,true) RETURNING id`;
   pool
     .query(queryText, [username, password])
     .then(() => res.sendStatus(201))

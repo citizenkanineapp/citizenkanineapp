@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Accordion, AccordionSummary, AccordionDetails, Fab, CardMedia, Card, CardActions, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { Modal, Accordion, AccordionSummary, AccordionDetails, Fab, CardMedia, Card, CardActions, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import FlagIcon from '@mui/icons-material/Flag';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ImageUpload from '../../AllPages/ImageUpload/ImageUpload';
 
 
 
@@ -16,7 +17,9 @@ function DogDetails() {
   const dispatch = useDispatch();
   // local state to manage dog note editing ability
   const [editStatus, setEditStatus] = useState(false);
-
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   // specific dog details - fetched by the useEffect
   const dog = useSelector(store => store.details);
 
@@ -67,7 +70,7 @@ function DogDetails() {
       </Grid>
       <Grid item xs={5} sx={{ justifyContent: 'center' }}>
         <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>
-          <EditIcon />
+          <EditIcon onClick={handleOpen} />
         </Fab>
         <Stack>
 
@@ -177,7 +180,12 @@ function DogDetails() {
 
       </Grid>
 
+      <Grid item xs={12}>
+        <Modal open={open} onClose={handleClose} >
+          <ImageUpload sx={{ mt: 1 }} />
 
+        </Modal>
+      </Grid>
 
     </Grid >
   );

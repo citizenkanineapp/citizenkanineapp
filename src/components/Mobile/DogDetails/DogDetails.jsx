@@ -103,7 +103,7 @@ function DogDetails() {
       <Grid item xs={10}>
         <Card>
           <Stack direction='row' alignItems='center' sx={{ mt: 1, p: 2 }}>
-            {dog.flagged ? <FlagIcon sx={{ fill: '#e0603f' }} /> : null}
+            {dog.flag ? <FlagIcon sx={{ fill: '#e0603f' }} /> : null}
             {editStatus ?
               <>
                 <TextField
@@ -113,13 +113,15 @@ function DogDetails() {
                   fullWidth
                   multiline
                   Rows={5}
+                  InputProps={{ margin: 'dense' }}
+
                   helperText="click to edit notes"
                 />
                 <Button onClick={(event) => submitNote()}>Submit</Button>
 
               </>
               :
-              <TextField value={dog.dog_notes}
+              <TextField value={dog.dog_notes || ''}
                 label='Dog Notes'
                 fullWidth
                 multiline

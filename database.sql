@@ -239,7 +239,7 @@ CREATE TABLE dogs_schedule_changes (
 	"dog_id" INT NOT NULL REFERENCES dogs(id) ON DELETE CASCADE,
 	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
 	"date_to_change" DATE NOT NULL,
-	"is_scheduled" BOOLEAN DEFAULT NULL,
+	"is_scheduled" BOOLEAN DEFAULT FALSE,
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	

@@ -14,21 +14,21 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
-// THIS POST is for adding a new user from the registration page only:
-router.post('/register', (req, res, next) => {
-  const username = req.body.username;
-  const password = encryptLib.encryptPassword(req.body.password);
+// // THIS POST is for adding a new user from the registration page only:
+// router.post('/register', (req, res, next) => {
+//   const username = req.body.username;
+//   const password = encryptLib.encryptPassword(req.body.password);
 
-  const queryText = `INSERT INTO "user" (username, password, admin)
-    VALUES ($1, $2,true) RETURNING id`;
-  pool
-    .query(queryText, [username, password])
-    .then(() => res.sendStatus(201))
-    .catch((err) => {
-      console.log('User registration failed: ', err);
-      res.sendStatus(500);
-    });
-});
+//   const queryText = `INSERT INTO "user" (username, password, admin)
+//     VALUES ($1, $2,true) RETURNING id`;
+//   pool
+//     .query(queryText, [username, password])
+//     .then(() => res.sendStatus(201))
+//     .catch((err) => {
+//       console.log('User registration failed: ', err);
+//       res.sendStatus(500);
+//     });
+// });
 
 // POST request with new user data
 // The only thing different from this and every other post we've seen

@@ -229,6 +229,7 @@ router.get('/dog/:dogID', async (req, res) => {
         }));
 })
 
+
 router.put('/routes', async (req, res) => {
     // expect an object being sent over for the put request?
     // pull out relevant dog ID and route ID
@@ -253,14 +254,16 @@ router.put('/routes', async (req, res) => {
 router.put('/daily', async (req, res) => {
     // expect an object being sent over for the put request?
     // pull out relevant dog ID and route ID
-    const clientID = req.body.clientID;
-    const checkedIn = req.body.checkedIN;
-    const noShow = req.body.noShow;
+    const dogID = req.body.id;
+    const checkedIn = req.body.checked_in;
+    const noShow = req.body.no_show;
+    const cancelled = req.body.cancelled;
 
-    console.log('Client ID - Updating all Dogs in Daily Dogs:', dogID, routeID);
 
-    const updateQuery = `UPDATE daily_dogs SET "checked_in" = $1, "no_show" = $2 WHERE "client_id" = $3 AND daily_dogs.date = CURRENT_DATE`;
-    const updateValues = [checkedIn, noShow, clientID];
+    console.log('UPDATED DOG', dogID, checkedIn, noShow, cancelled);
+
+    const updateQuery = `UPDATE daily_dogs SET "checked_in" = $1, "no_show" = $2, "cancelled" = $3 WHERE "dog_id" = $4 AND daily_dogs.date = CURRENT_DATE`;
+    const updateValues = [checkedIn, noShow, cancelled, dogID];
 
     pool.query(updateQuery, updateValues)
         .then(changeResults => {

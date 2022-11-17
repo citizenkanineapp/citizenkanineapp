@@ -53,13 +53,20 @@ function DailyRoutes() {
     history.push(`/m/dog/${dogID}`)
   }
 
-  const checkIn = (clientID) => {
-    console.log('CHECKING IN CLIENT #:', clientID);
+  const checkIn = (dog) => {
+    console.log('CHECKING IN CLIENT #:', dog.client_id);
+    const dogID = dog.dog_id;
+    const routeID = dog.route_id;
+    const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
+    dispatch({ type: 'CHECK_IN', payload: updatedDog });
 
   }
 
-  const noShow = (clientID) => {
-    console.log('Client # ____ is a No Show:', clientID);
+  const noShow = (dog) => {
+    const dogID = dog.dog_id;
+    const routeID = dog.route_id;
+    const updatedDog = { id: dogID, checked_in: false, no_show: true, cancelled: false, routeID: routeID }
+    dispatch({ type: 'NO_SHOW', payload: updatedDog });
   }
 
   return (
@@ -80,10 +87,10 @@ function DailyRoutes() {
               <List>
                 <ListItem secondaryAction={
                   <>
-                    <IconButton edge="end" onClick={(event) => checkIn(dog.client_id)}>
-                      <CheckBoxIcon sx={{ fill: '#7BCEC8' }} />
+                    <IconButton edge="end" onClick={(event) => checkIn(dog)}>
+                      <CheckBoxIcon sx={{ fill: '#7BCEC8', mr: 2 }} />
                     </IconButton>
-                    <IconButton edge="end" onClick={(event) => noShow(dog.client_id)} >
+                    <IconButton edge="end" onClick={(event) => noShow(dog)} >
                       <EventBusyIcon sx={{ fill: '#F8614D' }} />
                     </IconButton>
                   </>

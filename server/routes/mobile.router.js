@@ -213,7 +213,7 @@ router.get('/dog/:dogID', async (req, res) => {
     const dogID = req.params.dogID;
 
     const dogDetailsQuery = `
-    SELECT dogs.*, dogs.notes AS dog_notes, clients.*, clients.notes AS client_protocol from dogs
+    SELECT dogs.*, dogs.notes AS dog_notes, dogs.id AS dog_id, clients.*, clients.notes AS client_protocol from dogs
 	    JOIN clients
 		    ON dogs.client_id = clients.id
 	    WHERE dogs.id = $1;
@@ -274,10 +274,28 @@ router.put('/daily', async (req, res) => {
 
 })
 
-// POST ROUTE FOR ADDING A DOG ON THE SPOT!?
-router.post('/', rejectUnauthenticated, (req, res) => {
+// UPDATE A DOG's NOTE
+router.put('/notes', async (req, res) => {
+    // expect an object being sent over for the put request?
+    // pull out relevant dog ID and note
+    const dogID = req.body.id;
+    const note = req.body.note;
 
-});
+    console.log('UPDATED DOG', dogID, note);
+
+    const updateQuery = `UPDATE dogs SET "notes" = $2 WHERE "id" = $1`;
+    const updateValues = [dogID, note];
+
+    pool.query(updateQuery, updateValues)
+        .then(changeResults => {
+            res.sendStatus(200);
+        }).catch((error => {
+            console.log('/dog/:id error getting dog details:', error);
+        }));
+
+})
+
+
 
 
 

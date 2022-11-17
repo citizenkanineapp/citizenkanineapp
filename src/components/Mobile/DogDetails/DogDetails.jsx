@@ -52,6 +52,13 @@ function DogDetails() {
     window.open(`tel:+1${readyNumber}`);
   }
 
+  const submitNote = (action) => {
+    console.log(dog.dog_notes, dog.dog_id);
+    let updatedDog = { id: dog.dog_id, note: dog.dog_notes };
+    dispatch({ type: 'UPDATE_DOG_NOTE', payload: updatedDog });
+    setEditStatus(false);
+  }
+
   return (
     <Grid container spacing={1} sx={{ justifyContent: 'center' }}>
       {/* NAV BACK TO LIST */}
@@ -99,14 +106,16 @@ function DogDetails() {
             {dog.flagged ? <FlagIcon sx={{ fill: '#e0603f' }} /> : null}
             {editStatus ?
               <>
-                <TextField value={dog.dog_notes}
+                <TextField
+                  value={dog.dog_notes}
+                  onChange={(event) => dispatch({ type: 'EDIT_DOG_NOTE', payload: event.target.value })}
                   label='Dog Notes'
                   fullWidth
                   multiline
                   Rows={5}
                   helperText="click to edit notes"
                 />
-                <Button onClick={(event) => setEditStatus(false)}>Submit</Button>
+                <Button onClick={(event) => submitNote()}>Submit</Button>
 
               </>
               :

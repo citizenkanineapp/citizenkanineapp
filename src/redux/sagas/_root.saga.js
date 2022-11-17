@@ -28,7 +28,6 @@ export default function* rootSaga() {
     employeesSaga(),
     clientSaga(),
     RouteSaga(),
-    clientSaga(),
     clientScheduleSaga(),
     detailsSaga(),
   ]);

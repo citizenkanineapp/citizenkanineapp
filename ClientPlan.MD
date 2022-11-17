@@ -1,10 +1,5 @@
 # Plan for Sam's Client Work
 
-
-5. Get client schedule (where is this needed?)
-    * can it be a different get route route for that view only
-10. Requiring inputs <--------------------
-    * need to add alert but functionality is done
 12. Need to figure out how to display route NAME on confirm page/details page
 15. Phone formatting <--------
     * have some logic around if the number is too long
@@ -16,11 +11,23 @@
 33. client schedule changes form 
 35. still having funky stuff happen moving through client views
 36. add form remove extra dog added accidnetally?
+37. if no image for dog?
+
+41. Need to add regular dog/update table
+     * re write all routes
+
+42. change FAB button and UNCONTROLLED CHECK box issue
+43.  route for dogs added from edit for regular status
+44. have an update for dog's regular status?
+
+
+
 
 22. client search 
 23. admin note
 11. Fix image sizing issue
 18. Where dpes schedule changes go? <---- yani?
+39. give her the api key
 
 
 

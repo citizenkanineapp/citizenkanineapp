@@ -8,24 +8,26 @@ const {
 
 
 /**
- * GET route template
+ * GET all clients and their dogs
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
   // console.log('arrived in server get all route')
   const queryText = `
                     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
-                    routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, dogs.vet_phone, dogs.flag from clients
+                    routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, 
+                    dogs.vet_phone, dogs.flag, dogs.regular, clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
                             JOIN dogs
                             ON clients.id = dogs.client_id
                             JOIN routes
                             ON clients.route_id=routes.id
+                            JOIN clients_schedule
+                            ON clients.id = clients_schedule.client_id
                             ORDER BY clients.last_name ASC
-;
 ;
   `
 pool.query(queryText)
     .then(result => {
-    
+      // console.log('what comes back from query?', result.rows)
         //all IDs from database
         let idArray = [];
             for(let object of result.rows){
@@ -54,9 +56,9 @@ pool.query(queryText)
             let forDogMap = group[uniqueIds[i]]
        
             // const {first_name, last_name, address} = result.rows[0];
-            const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name} = forDogMap[0];
-            const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name}
-            client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag})})
+            const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday} = forDogMap[0];
+            const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday}
+            client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular})})
 
             clients.push(client)
 
@@ -71,7 +73,7 @@ pool.query(queryText)
 });
 
 /**
- * POST route template
+ * POST route for initially adding a client
  */
 router.post('/', rejectUnauthenticated, async (req, res) => {
   console.log(req.body);
@@ -98,12 +100,12 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   await Promise.all(dogArray.map(dog => { 
       const dogTxt = `
                           INSERT INTO dogs 
-                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag") 
+                              ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag", "regular") 
                             VALUES
-                              ($1, $2, $3, $4, $5, $6, $7)
+                              ($1, $2, $3, $4, $5, $6, $7, $8)
 
       `
-      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog.dog_notes, dog.flag]
+      const dogValues = [customerId, dog.dog_name, dog.image, vet_name, vet_phone, dog.dog_notes, dog.flag, dog.regular]
       return client.query(dogTxt, dogValues)
   }));
     const scheduleTxt = `
@@ -215,6 +217,7 @@ router.put('/dogs', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+//adding one dog
 router.post('/dog', rejectUnauthenticated, (req, res) => {
   console.log(req.body)
   const{vet_name, vet_phone, dog_name, dog_notes, image, client_id, flag} = req.body
@@ -242,7 +245,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     const queryText = `
     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, 
-    dogs.vet_phone, dogs.notes as dog_notes, dogs.flag,
+    dogs.vet_phone, dogs.notes as dog_notes, dogs.flag, dogs.regular,
    clients_schedule."1", clients_schedule."2", clients_schedule."3", clients_schedule."4", clients_schedule."5"  
     from clients
             JOIN dogs
@@ -291,7 +294,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
               // const {first_name, last_name, address} = result.rows[0];
               const {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name } = forDogMap[0];
               const client = {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name}
-              client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag})})
+              client.dogs = forDogMap.map(dog => {return({dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular})})
   
               clients.push(client)
   
@@ -305,7 +308,65 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
       })
   });
 
-  router.delete('/:id', rejectUnauthenticated, (req, res) => {
+
+router.get('/schedule/:id', rejectUnauthenticated, (req, res) => {
+  console.log('arrived in server get schedule route', req.params.id)
+  let clientId = req.params.id
+  const queryText = `
+            SELECT * FROM clients_schedule
+                WHERE client_id =$1;
+  `
+const queryValues = [clientId]
+pool.query(queryText, queryValues)
+    .then(result => {
+   
+    console.log('result from query?', result.rows)
+
+
+        res.send(result.rows);
+   
+    })
+    .catch(err => {
+        console.log('Error getting one client', err);
+        res.sendStatus(500);
+    })
+});
+
+//this is for one off schedule changes
+
+router.post('/schedule', rejectUnauthenticated, async (req, res) => {
+
+ console.log('one off change', req.body)
+  
+ const client = await pool.connect();
+  // const {date, is_scheduled, dog_id, client_id } = req.body
+  // const schedule = req.body
+  try {
+  await client.query('BEGIN')
+  await Promise.all(req.body.map(scheduleChange => { 
+      const scheduleTxt = `
+                          INSERT INTO dogs_schedule_changes 
+                              ("dog_id", "client_id", "date_to_change", "is_scheduled") 
+                            VALUES
+                              ($1, $2, $3, $4)
+
+      `
+      const scheduleValues = [scheduleChange.dog_id, scheduleChange.client_id, scheduleChange.date, scheduleChange.is_scheduled]
+      return client.query(scheduleTxt, scheduleValues)
+  }));
+      await client.query('COMMIT')
+      res.sendStatus(201);
+    } catch (error) {
+      await client.query('ROLLBACK')
+      console.log('Error in post route for schedule changes', error);
+      res.sendStatus(500);
+    } finally {
+      client.release()
+    }
+});
+
+
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
     console.log(req.params.id)
     
     const queryText = 'DELETE FROM clients WHERE id=$1';
@@ -317,7 +378,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
       });
   });
 
-  router.delete('/dogs/:id', rejectUnauthenticated, (req, res) => {
+router.delete('/dogs/:id', rejectUnauthenticated, (req, res) => {
     console.log(req.params.id)
     
     const queryText = 'DELETE FROM dogs WHERE id=$1';
@@ -328,6 +389,34 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         res.sendStatus(500);
       });
   });
+
+  //route to edit regular schedule
+router.put('/schedule', rejectUnauthenticated, async (req, res) => {
+  console.log('schedule as it arrives in server: ', req.body["1"])
+
+  const scheduleTxt = `
+            UPDATE clients_schedule
+                SET
+                  "1" = $1, 
+                  "2" = $2,
+                  "3" = $3,
+                  "4" = $4,
+                  "5" = $5
+              
+                WHERE
+                  client_id = $6;
+
+  `
+  const scheduleValues = [req.body["1"], req.body["2"],req.body["3"],req.body["4"],req.body["5"],req.body.client_id, ]
+ try{
+    pool.query(scheduleTxt, scheduleValues)
+    res.sendStatus(201);
+  } catch (dbErr){
+    console.log('Error in PUT route for regular schedule', dbErr)
+    res.sendStatus(500);
+  }
+});
+
   
   
   

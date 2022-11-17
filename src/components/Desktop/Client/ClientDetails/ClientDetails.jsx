@@ -88,7 +88,7 @@ function ClientDetails(){
                 />
               <TextField 
                 value={client.notes || ''} 
-                helperText="Notes"  
+                helperText="Protocols"  
                 size="small" 
                 InputProps={{readOnly: true}}
                />

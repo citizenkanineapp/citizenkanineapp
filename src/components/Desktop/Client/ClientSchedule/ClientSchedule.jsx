@@ -33,7 +33,7 @@ function ClientSchedule() {
   }, []);
 
   //local useState state I am using for this functionality
-  const [dog, setDog] = useState(client.dogs);
+  const [dog, setDog] = useState('');
   console.log(dog);
   const [dogChanges, setDogChanges]= useState('');
   const [action, setAction] = useState('');
@@ -81,14 +81,16 @@ function ClientSchedule() {
   const handleSubmit = (event) => {
     // need to add date_to_change and is_selected to each one
     let newChanges = [];
-    dog.map(singleDog=> {
-      // console.log(dog);
-      //create the object for change
-      let singleChange = {dog_id: singleDog.dog_id, client_id: client.id, date_to_change: value, is_scheduled: scheduled}
-      // add object to newChanges array;
-      newChanges.push(singleChange);
-    }) 
-    setDog([client.dogs])
+    if (dog === "all"){
+      client.dogs.map(singleDog => {
+        let thisChange = {dog_id: singleDog.dog_id, client_id: client.id, date_to_change: value, is_scheduled: scheduled}
+        newChanges.push(thisChange)
+      })
+    }
+    else {
+      let thisChange = {dog_id: dog, client_id: client.id, date_to_change: value, is_scheduled: scheduled}
+      newChanges.push(thisChange)
+    }
     // Now we can send this array to the server to add to the database
     // *** Need to map through these changes and see if the change already exists
     console.log(newChanges);
@@ -176,7 +178,7 @@ const regularScheduleChange = (event) =>{
                       </Box>
                     {/* Is this date in the current month ?*/}
                     {!DayComponentProps.outsideCurrentMonth ?
-                      <div>
+                      <Box key={day.$D} sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                         {/*  map through changes array: Is there a change for today? YES:, NO: check to see if it is a regularly scheduled day and render regularly scheduled dogs */}
 
                         {changes && changes.map((change, index) => {
@@ -191,7 +193,7 @@ const regularScheduleChange = (event) =>{
                                 <>
                                 {/* Is this change happening on a regularly scheduled weekday? */}
                                 {clientSchedule[day.$W] ? 
-                                    <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
+                                    <>
                                     {dogs.map((dog, index)=> {
                                       return (
                                       <div key={dog.dog_id}>
@@ -207,10 +209,10 @@ const regularScheduleChange = (event) =>{
                                         : null}
                                       </div>)
                                       })}
-                                    </Box>
+                                    </>
                                   :
                                   // Adding a dog on a non-regularly scheduled weekday:
-                                  <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
+                                  <>
                                     {dogs.map((dog, index)=> {
                                       return (
                                       <div key={dog.dog_id}>
@@ -226,7 +228,7 @@ const regularScheduleChange = (event) =>{
                                         : null}
                                       </div>)
                                       })}
-                                    </Box>
+                                    </>
                                   }</>
                                 
                               : 
@@ -234,7 +236,7 @@ const regularScheduleChange = (event) =>{
                               <>
                                 {/* Is this change happening on a regularly scheduled weekday? */}
                                 {clientSchedule[day.$W] ? 
-                                    <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
+                                    <>
                                     {dogs.map((dog, index)=> {
                                       return (
                                       <div key={dog.dog_id}>
@@ -250,26 +252,9 @@ const regularScheduleChange = (event) =>{
                                         : null}
                                       </div>)
                                       })}
-                                    </Box>
+                                    </>
                                   :
-                                  // Adding a dog on a non-regularly scheduled weekday: (in case they added a dog but then cancel it)
-                                  <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '.25vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
-                                    {dogs.map((dog, index)=> {
-                                      return (
-                                      <div key={dog.dog_id}>
-                                      {/* render the dog(s) added */}
-                                        {change.dog_id === dog.dog_id ? 
-                                          <Avatar
-                                              key={dog.dog_id}
-                                              sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
-                                              alt={dog.dog_name[0]}
-                                              src={dog.image ? dog.image : null}
-                                          >
-                                          </Avatar>
-                                        : null}
-                                      </div>)
-                                      })}
-                                    </Box>
+                                  null
                                   }</>
                               }
                               </div>
@@ -279,7 +264,7 @@ const regularScheduleChange = (event) =>{
                               {/* is today a regularly scheduled weekday? */}
                               {/* the index === changes.length-1 part prevents the dogs from rendering multiple times */}
                               {clientSchedule[day.$W] && index === changes.length-1 ? 
-                                <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.55vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
+                                <>
                                   {dogs.map((dog, index)=> {
                                     
                                     return (
@@ -296,7 +281,7 @@ const regularScheduleChange = (event) =>{
                                       : null}
                                     </div>)
                                     })}
-                                </Box>
+                                </>
                               :
                               // There are no changes today AND today is not a regularly scheduled day
                               null
@@ -306,7 +291,7 @@ const regularScheduleChange = (event) =>{
                           </div>)
                         })}
                         {/* this is the end of mapping through changes */}
-                      </div>
+                      </Box>
                       : null} {/* this null is for the day not being within the current month */}
                     </Box>
                 );
@@ -366,16 +351,14 @@ const regularScheduleChange = (event) =>{
       <Grid item xs={6}>
         <FormControl fullWidth sx={{ mr: 4, pb: 1, mb:2 }}>
           <InputLabel>Dog</InputLabel>
-            <Select value={dog}  onChange={(event) => {
-              setDogChanges(event.target.value)
-              setDog([event.target.value])}}>
-            <MenuItem value={client.dogs}>All Dogs</MenuItem>
-              {client.dogs && client.dogs.map(singleDog => {
-                return (
-                    <MenuItem key={singleDog.dog_id} value={singleDog}>{singleDog.dog_name}</MenuItem>
-                    )
+          <Select value={dog} onChange={(event) => setDog(event.target.value)}>
+              <MenuItem value="all">All Dogs</MenuItem>
+                {client.dogs && client.dogs.map(singleDog => {
+                  return (
+                      <MenuItem key={singleDog.dog_id} value={singleDog.dog_id}>{singleDog.dog_name}</MenuItem>
+                      )
                 })}
-            </Select>
+          </Select>
         </FormControl>
         <FormControl fullWidth sx={{ mr: 4, pb: 1 }}>
           <InputLabel>Action</InputLabel>

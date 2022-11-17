@@ -180,12 +180,12 @@ function DogDetails() {
 
       </Grid>
 
-      <Grid item xs={12}>
-        <Modal open={open} onClose={handleClose} >
-          <ImageUpload sx={{ mt: 1 }} />
+      <Modal open={open} onClose={handleClose} sx={{ mt: 5.5, ml: 4 }} >
+        <Grid item xs={12}>
+          <ImageUpload />
+        </Grid>
+      </Modal>
 
-        </Modal>
-      </Grid>
 
     </Grid >
   );

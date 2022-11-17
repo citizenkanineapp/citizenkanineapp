@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
-function ImageUpload ({index}) {
+function ImageUpload({ index }) {
     const dispatch = useDispatch();
     console.log('does index get here?', index)
     //useStates needed for image upload and image preview 
@@ -18,18 +18,19 @@ function ImageUpload ({index}) {
 
     const fileInputRef = useRef();
 
-    const handleFileInputChange = (e) => {
+    const handleFileInputChange = (e, index) => {
         const file = e.target.files[0];
-        previewFile(file);
+        previewFile(file, index);
     }
     //This is a function to allow the user to see
     //a preview before it is uploaded to the app
-    const previewFile = (file) =>{
+    const previewFile = (file, index) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onloadend = () =>{
+        reader.onloadend = () => {
             setPreviewSource(reader.result);
         }
+        uploadImage(reader.result, index)
     }
 
     //to handle the form submitting and sending to Cloudinary
@@ -37,55 +38,55 @@ function ImageUpload ({index}) {
     const handleSubmitFile = (e, index) => {
         e.preventDefault();
         // console.log(index)
-       if(!previewSource) return;
-       uploadImage(previewSource, index);
+        if (!previewSource) return;
+        uploadImage(previewSource, index);
     }
-     
+
     const uploadImage = (base64EncodedImage, index) => {
-       console.log('index last step', index)
-        dispatch ({
+        console.log('index last step', index)
+        dispatch({
             type: 'ADD_IMAGE',
-            payload:{new_image_url:base64EncodedImage, index: index},
-            headers:{'Content-type': 'application/json'}
+            payload: { new_image_url: base64EncodedImage, index: index },
+            headers: { 'Content-type': 'application/json' }
         })
     }
 
-    return(
+    return (
         <div>
-                <form onSubmit={(e) => handleSubmitFile(e, index)}
-                    className="form">
-                    {/* avatar onclick calls that useRef variable */}
-                    <Avatar
-                        onClick={()=>fileInputRef.current.click()}
-                        alt="New Dog Avatar"
-                        sx={{ width: 150, height: 150 }}
-                    >
-                    { previewSource ?
-                                <Avatar 
-                                    src={previewSource || client.dogs[index][image]}
-                                    sx={{ width: 150, height: 150 }} />
-                            :
-                                <AddAPhotoIcon />
-                     }  
-                            </Avatar>
-                    {/* enable confirm photo button if there is an image preview, 
+            <form onSubmit={(e) => handleSubmitFile(e, index)}
+                className="form">
+                {/* avatar onclick calls that useRef variable */}
+                <Avatar
+                    onClick={() => fileInputRef.current.click()}
+                    alt="New Dog Avatar"
+                    sx={{ width: 150, height: 150 }}
+                >
+                    {previewSource ?
+                        <Avatar
+                            src={previewSource || client.dogs[index][image]}
+                            sx={{ width: 150, height: 150 }} />
+                        :
+                        <AddAPhotoIcon />
+                    }
+                </Avatar>
+                {/* enable confirm photo button if there is an image preview, 
                         otherwise button is disabled */}
 
-                        { previewSource ?
-                        <button type="submit" size="small" variant="outlined">Confirm</button>
-                        :
-                        <button disabled type="submit" size="small" variant="outlined">Confirm</button>
-                        }
-                    <input type="file" 
-                        hidden
-                        name="image" 
-                        onChange={handleFileInputChange} 
-                        value={fileInputState}
-                        ref={fileInputRef}
-                        className="form-input"/>
-                    {/* <button className="btn" type="submit">Submit</button> */}
-                </form>
-               
+                {previewSource ?
+                    <button type="submit" size="small" variant="outlined">Confirm</button>
+                    :
+                    <button disabled type="submit" size="small" variant="outlined">Confirm</button>
+                }
+                <input type="file"
+                    hidden
+                    name="image"
+                    onChange={(e) => handleFileInputChange(e, index)}
+                    value={fileInputState}
+                    ref={fileInputRef}
+                    className="form-input" />
+                {/* <button className="btn" type="submit">Submit</button> */}
+            </form>
+
         </div>
     )
 }

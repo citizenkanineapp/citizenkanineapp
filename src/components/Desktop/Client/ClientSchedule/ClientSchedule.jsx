@@ -33,7 +33,9 @@ function ClientSchedule() {
   }, []);
 
   //local useState state I am using for this functionality
-  const [dog, setDog] = useState('');
+  const [dog, setDog] = useState(client.dogs);
+  console.log(dog);
+  const [dogChanges, setDogChanges]= useState('');
   const [action, setAction] = useState('');
   const [scheduled, setScheduled] = useState('');
   const [value, setValue] = useState(dayjs());
@@ -74,34 +76,49 @@ function ClientSchedule() {
     setValue(newValue);
   };
 
+
   //this is for the submit button for the one off changes
   const handleSubmit = (event) => {
-    let scheduleChangeObject = []
-    let month = (value.$M +1)
+    // need to add date_to_change and is_selected to each one
+    let newChanges = [];
+    dog.map(singleDog=> {
+      // console.log(dog);
+      //create the object for change
+      let singleChange = {dog_id: singleDog.dog_id, client_id: client.id, date_to_change: value, is_scheduled: scheduled}
+      // add object to newChanges array;
+      newChanges.push(singleChange);
+    }) 
+    setDog([client.dogs])
+    // Now we can send this array to the server to add to the database
+    // *** Need to map through these changes and see if the change already exists
+    console.log(newChanges);
 
-    //different logic based on whether one dog or "all dogs is selected" to create one-off schedule change object
-    if(dog.length > 1 ){
-    for(let oneDog of dog){
-      let dogObject ={
-        date: `${value.$y}-${month}-${value.$D}`,
-        is_scheduled: scheduled,
-        dog_id: oneDog.dog_id,
-        client_id: client.id,
-        regular: oneDog.regular
-        }
-        scheduleChangeObject.push(dogObject)
-      }
-    } else {
-      let dogObject ={
-        date: `${value.$y}-${month}-${value.$D}`,
-        is_scheduled: scheduled,
-        dog_id: dog,
-        client_id: client.id,
-        regular: oneDog.regular
-      }
-        scheduleChangeObject.push(dogObject)
-  } 
-    dispatch({type: 'SEND_ONE_SCHEDULE_CHANGE', payload: scheduleChangeObject})
+  //   let scheduleChangeObject = []
+  //   let month = (value.$M +1)
+
+  //   //different logic based on whether one dog or "all dogs is selected" to create one-off schedule change object
+  //   if(dog.length > 1 ){
+  //   for(let oneDog of dog){
+  //     let dogObject ={
+  //       date: `${value.$y}-${month}-${value.$D}`,
+  //       is_scheduled: scheduled,
+  //       dog_id: oneDog.dog_id,
+  //       client_id: client.id,
+  //       regular: oneDog.regular
+  //       }
+  //       scheduleChangeObject.push(dogObject)
+  //     }
+  //   } else {
+  //     let dogObject ={
+  //       date: `${value.$y}-${month}-${value.$D}`,
+  //       is_scheduled: scheduled,
+  //       dog_id: dog,
+  //       client_id: client.id,
+  //       regular: oneDog.regular
+  //     }
+  //       scheduleChangeObject.push(dogObject)
+  // } 
+    // dispatch({type: 'SEND_ONE_SCHEDULE_CHANGE', payload: scheduleChangeObject})
 }
 
 //this function changes a client's regular schedule
@@ -121,7 +138,6 @@ const regularScheduleChange = (event) =>{
 
   const avatarColors = ['#4A5061', '#F5A572', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
 
-  const [updatedChanges, setUpdatedChanges] = useState([]);
 
   return (
     <>
@@ -138,9 +154,9 @@ const regularScheduleChange = (event) =>{
                     }}
               // renderDay is essentially mapping through each day in the selected month.
               renderDay={(day, _value, DayComponentProps) => {
-                console.log(JSON.stringify(DayComponentProps.day.$d))
-                console.log(JSON.stringify(dayjs('2022-11-23T06:00:00.000Z').$d))
-                console.log(JSON.stringify(DayComponentProps.day.$d) === JSON.stringify(dayjs('2022-11-23T06:00:00.000Z').$d))
+                // console.log(JSON.stringify(DayComponentProps.day.$d))
+                // console.log(JSON.stringify(dayjs('2022-11-23T06:00:00.000Z').$d))
+                // console.log(JSON.stringify(DayComponentProps.day.$d) === JSON.stringify(dayjs('2022-11-23T06:00:00.000Z').$d))
                 let selectedMUIClass='';
                 if (day.$d === dayjs()){
                     selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
@@ -350,11 +366,13 @@ const regularScheduleChange = (event) =>{
       <Grid item xs={6}>
         <FormControl fullWidth sx={{ mr: 4, pb: 1, mb:2 }}>
           <InputLabel>Dog</InputLabel>
-            <Select value={dog} onChange={(event) => setDog(event.target.value)}>
+            <Select value={dog}  onChange={(event) => {
+              setDogChanges(event.target.value)
+              setDog([event.target.value])}}>
             <MenuItem value={client.dogs}>All Dogs</MenuItem>
               {client.dogs && client.dogs.map(singleDog => {
                 return (
-                    <MenuItem key={singleDog.dog_id} value={singleDog.dog_id}>{singleDog.dog_name}</MenuItem>
+                    <MenuItem key={singleDog.dog_id} value={singleDog}>{singleDog.dog_name}</MenuItem>
                     )
                 })}
             </Select>

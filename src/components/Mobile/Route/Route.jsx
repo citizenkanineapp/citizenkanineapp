@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ListItemAvatar, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FlagIcon from '@mui/icons-material/Flag';
 import CancelIcon from '@mui/icons-material/Cancel';
 import RouteSelect from '../RouteSelect/RouteSelect';
@@ -75,7 +76,15 @@ function DailyRoutes() {
   const cancelWalk = (dog) => {
     const dogID = dog.dog_id;
     const routeID = dog.route_id;
-    const updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
+    let updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
+
+    if (dog.cancelled) {
+      updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: false, routeID: routeID }
+
+    } else {
+      updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
+
+    }
     dispatch({ type: 'CANCEL_WALK', payload: updatedDog });
   }
 
@@ -97,18 +106,29 @@ function DailyRoutes() {
               <List>
                 <ListItem secondaryAction={
                   <>
-                    <IconButton edge="end" onClick={(event) => checkIn(dog)}>
-                      <CheckBoxIcon sx={{ fill: '#7BCEC8', mr: 2 }} />
-                    </IconButton>
-                    <IconButton edge="end" onClick={(event) => noShow(dog)} >
-                      <EventBusyIcon sx={{ fill: '#F8614D' }} />
-                    </IconButton>
-                    {user.admin ?
+                    {dog.cancelled ?
+
                       <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
-                        <CancelIcon sx={{ fill: '#F8614D' }} />
+                        <AddCircleIcon sx={{ fill: '#3DA49D' }} />
                       </IconButton>
+
                       :
-                      null}
+                      <>
+                        <IconButton edge="end" onClick={(event) => checkIn(dog)}>
+                          <CheckBoxIcon sx={{ fill: '#7BCEC8', mr: 2 }} />
+                        </IconButton>
+                        <IconButton edge="end" onClick={(event) => noShow(dog)} >
+                          <EventBusyIcon sx={{ fill: '#F8614D' }} />
+                        </IconButton>
+                        {user.admin ?
+                          <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
+                            <CancelIcon sx={{ fill: '#F8614D' }} />
+                          </IconButton>
+                          :
+                          null
+                        }
+                      </>
+                    }
                   </>
                 }
                   sx={{ backgroundColor: () => determineStatus(dog), }}
@@ -126,6 +146,7 @@ function DailyRoutes() {
                   <ListItemText
                     primary={dog.name}
                     secondary={dog.client_name}
+                    sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
                   />
                 </ListItem>
               </List>

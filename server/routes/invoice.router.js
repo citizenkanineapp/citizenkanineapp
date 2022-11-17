@@ -146,7 +146,7 @@ router.get('/', async (req, res) => {
                         service
                     }
                     if (item.no_show === true) {
-                        item.service.service = service.name + ', ' + 'no-show';           
+                        item.service.service = 'Same Day Cancellation';           
                     } else {
                         item.service.service = service.name;
                     }

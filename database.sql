@@ -54,6 +54,11 @@ CREATE TABLE "user" (
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	
+--** user MOCK data **--
+insert into "user"
+	("username","password","admin")
+values
+	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true);
 
 CREATE TABLE employees_schedule (
 	"id" SERIAL PRIMARY KEY,

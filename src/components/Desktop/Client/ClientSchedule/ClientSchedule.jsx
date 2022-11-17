@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import './ClientSchedule.css';
@@ -33,7 +32,7 @@ function ClientSchedule() {
   const [dog, setDog] = useState('');
   const [action, setAction] = useState('');
   const [scheduled, setScheduled] = useState('');
-  const [value, setValue] = React.useState(dayjs());
+  const [value, setValue] = useState(dayjs());
   const [monday, setMonday] = useState(schedule["1"])
   const [tuesday, setTuesday] = useState(schedule["2"]);
   const [wednesday, setWednesday] = useState(schedule["3"]);
@@ -99,7 +98,7 @@ function ClientSchedule() {
       }
         scheduleChangeObject.push(dogObject)
   } 
-   dispatch({type: 'SEND_ONE_SCHEDULE_CHANGE', payload: scheduleChangeObject})
+    dispatch({type: 'SEND_ONE_SCHEDULE_CHANGE', payload: scheduleChangeObject})
 }
 
 //this function changes a client's regular schedule
@@ -107,12 +106,8 @@ const regularScheduleChange = (event) =>{
   dispatch({type: 'REGULAR_SCHEDULE_CHANGE', payload: schedule})
 }
 
-  
-
-      
-
   // CALENDAR STUFF
-  const clientSchedule = {1: true, 2: true, 3: true, 4: true, 5: false}
+  const [clientSchedule, setClientSchedule]= useState(schedule)
 
   const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: false}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: true}]
 

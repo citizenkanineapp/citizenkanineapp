@@ -13,7 +13,6 @@ function* getAllClients(action){
         console.log(error);
         alert('Error fetching clients');
     }
-    
 }
 
 function* addClient(action){

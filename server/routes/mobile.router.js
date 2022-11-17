@@ -5,6 +5,7 @@ const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
+
 // ADMIN ONLY:
 // /daily for generating daily dogs
 // /routes for GETTING all of the available dogs for the day in their default routes

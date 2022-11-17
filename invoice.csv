@@ -1,0 +1,138 @@
+InvoiceNo,Customer,InvoiceDate,DueDate,Item(Product/Service),ItemQuantity,ItemRate,ItemAmount,Taxable,TaxRate
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,1 Dog - 2-4x / week,1,30,30,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,"2 Dogs - 2-4x / week, no-show",1,42,42,true,8.03
+1,Adolphe Osipov,11/2022,11/2022,2 Dogs - 2-4x / week,3,42,126,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,"1 Dog - 2-4x / week, no-show",1,30,30,true,8.03
+1,Sunny Mateiko,11/2022,11/2022,1 Dog - 2-4x / week,6,30,180,true,8.03
+1,Adolphe Osipov,10/2022,10/2022,2 Dogs - 2-4x / week,1,42,42,true,8.03
+1,Sunny Mateiko,10/2022,10/2022,1 Dog - 2-4x / week,1,30,30,true,8.03

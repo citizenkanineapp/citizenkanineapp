@@ -150,10 +150,10 @@ router.get('/', async (req, res) => {
                     } else {
                         item.service.service = service.name;
                     }
-                    }
                 }
+            }
         }     
-        console.log(invoiceData);
+        // console.log(invoiceData);
         res.send(invoiceData); 
     } catch (error) {
         console.log('Error GET /api/invoice', error);

@@ -2,18 +2,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import InvoiceTable from "./InvoiceTable";
 import dayjs from 'dayjs';
+import ExportCSV from './ExportCSV'
 let localeData = require('dayjs/plugin/localeData');
 dayjs.extend(localeData);
 import '../Desktop.css';
 
 //MUI
-import { Box, Typography, Button, Grid, FormControl, MenuItem, Select, InputLabel, TextField } from '@mui/material';
+import { Box, Button, Grid, FormControl, MenuItem, Select, InputLabel} from '@mui/material';
 // import { styled } from '@mui/material/styles';
 
 function Invoicing(){
   //set date/year arrays
   const months = dayjs.months();
-  const monthsShort = dayjs.monthsShort();
   const getYears = () => {
     let max = 2050;
     let min = 2020;
@@ -28,7 +28,7 @@ function Invoicing(){
   const clientList = useSelector(store => store.clientsReducer);
   const dispatch = useDispatch();
   const [selectedId, setId] = useState(0); // defaults to 'all'
-  const [selectedMonth, setMonth] = useState(months[dayjs().month()]); //defaults to curren month
+  const [selectedMonth, setMonth] = useState(months[dayjs().month()]); //defaults to current month
   const [selectedYear, setYear] = useState(dayjs().year());
 
   useEffect(() => {
@@ -49,11 +49,11 @@ function Invoicing(){
 
     setId(0);
   }
-  
+
   return (
     <Box className="desktop_container" sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'top', alignItems: 'center'}}>
       <Grid container sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '80%'}}>
-        <Grid item xs={10}>
+        <Grid item xs={8}>
           <FormControl sx={{mx: 2,  width: 150 }}>
             <InputLabel>Select Client</InputLabel>
               <Select
@@ -111,12 +111,17 @@ function Invoicing(){
               </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={2}>
-          <Button size="large" variant="contained" color="secondary"
+        <Grid item xs={4}>
+          <Button size="large" variant="contained" color="secondary" sx={{mx: 1}}
             onClick={e=>fetchInvoiceData()}
           >
             Search
           </Button>
+
+          <Button size="large" variant="contained" color="secondary" sx={{mx: 1}}>
+            <ExportCSV />
+          </Button>
+
         </Grid>
       </Grid>
     

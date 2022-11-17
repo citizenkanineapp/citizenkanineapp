@@ -19,14 +19,18 @@ const isWeekend = (date) => {
 };
 
 function ClientSchedule() {
-  useEffect(() => {
-    dispatch({ type: 'FETCH_SCHEDULE', payload: client.id })
-  }, []);
-
   //use selectors and defining dispatch
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
-  const schedule = useSelector(store => store.clientScheduleReducer)
+  const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
+
+  const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_SCHEDULE', payload: client.id })
+    // Fetch client schedule changes
+    dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.id})
+  }, []);
 
   //local useState state I am using for this functionality
   const [dog, setDog] = useState('');
@@ -65,10 +69,9 @@ function ClientSchedule() {
     } 
   };
 
-//this handles the change of the date based on the date picker
+// this handles the change of the date based on the date picker
   const handleChange = (newValue) => {
     setValue(newValue);
-    
   };
 
   //this is for the submit button for the one off changes
@@ -107,17 +110,18 @@ const regularScheduleChange = (event) =>{
 }
 
   // CALENDAR STUFF
-  const [clientSchedule, setClientSchedule]= useState(schedule)
+  const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
 
   const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: false}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: true}]
 
-  const changes =[{id: 1, dog_id: 1, date_to_change: '2022-11-18', is_scheduled: false}, {id: 2, dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
+  // const changes =[{id: 1, dog_id: 1, date_to_change: '2022-11-18', is_scheduled: false}, {id: 2, dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
 
   const noChange = ()=> {// This is a blank function used as a placeholder for the onChange of the calendar picker. onChange is required but has no use in this case. 
   }
 
   const avatarColors = ['#4A5061', '#F5A572', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
 
+  const [updatedChanges, setUpdatedChanges] = useState([]);
 
   return (
     <>
@@ -134,6 +138,9 @@ const regularScheduleChange = (event) =>{
                     }}
               // renderDay is essentially mapping through each day in the selected month.
               renderDay={(day, _value, DayComponentProps) => {
+                console.log(JSON.stringify(DayComponentProps.day.$d))
+                console.log(JSON.stringify(dayjs('2022-11-23T06:00:00.000Z').$d))
+                console.log(JSON.stringify(DayComponentProps.day.$d) === JSON.stringify(dayjs('2022-11-23T06:00:00.000Z').$d))
                 let selectedMUIClass='';
                 if (day.$d === dayjs()){
                     selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
@@ -229,8 +236,8 @@ const regularScheduleChange = (event) =>{
                                       })}
                                     </Box>
                                   :
-                                  // Adding a dog on a non-regularly scheduled weekday:
-                                  <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
+                                  // Adding a dog on a non-regularly scheduled weekday: (in case they added a dog but then cancel it)
+                                  <Box sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '.25vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                                     {dogs.map((dog, index)=> {
                                       return (
                                       <div key={dog.dog_id}>
@@ -262,7 +269,7 @@ const regularScheduleChange = (event) =>{
                                     return (
                                     <div key={dog.dog_id}>
                                     {/* render the dog(s) added */}
-                                      { dog.regular && JSON.stringify(DayComponentProps.day.$d) !== JSON.stringify(dayjs('2022-11-22').$d) ? 
+                                      { dog.regular && JSON.stringify(DayComponentProps.day.$d) !== JSON.stringify(dayjs(change.date_to_change).$d) ? 
                                         <Avatar
                                             key={dog.dog_id}
                                             sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
@@ -359,7 +366,8 @@ const regularScheduleChange = (event) =>{
             <MenuItem value={false}>Cancel Walk</MenuItem>
           </Select>
         </FormControl>
-      <Button variant='contained' color='secondary' onClick={handleSubmit}>Submit</Button>
+      <Button variant='contained' color='secondary' onClick={handleSubmit}>
+        Submit</Button>
     </Grid>
       <Grid item xs={6}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>

@@ -125,8 +125,9 @@ function EmployeeForm(){
             {/* Mapping through days of the week array to render buttons for week1 */}
             {daysOfWeek.map((day, index) => (
               <Grid key={index + 1} item xs={2}>
-              <Card>
+              <Card raised xs={{height: '30vh'}}>
                 <CardActionArea component={Button}
+                  disabled={false}
                   onClick={()=>{
                     
                     if (!week1[index+1]){
@@ -145,7 +146,7 @@ function EmployeeForm(){
                     }}}
                   >
                       
-                  <CardContent sx={{ display:'flex', justifyContent: 'center', backgroundColor: week1[index+1]? '#7BCEC8' : 'none'}}>
+                  <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: week1[index+1]? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
                       <Typography variant="h7"sx={{textTransform: 'capitalize'}}>{day}</Typography>
                   </CardContent>
                 </CardActionArea>
@@ -162,7 +163,7 @@ function EmployeeForm(){
             {/* Mapping through days of the week array to render buttons for week2 */}
             {daysOfWeek.map((day, index) => (
             <Grid key={index + 1} item xs={2}>
-              <Card>
+              <Card raised xs={{height: '30vh'}}>
                 <CardActionArea component={Button}
                   onClick={()=>{
                     if (!week2[index+1]){
@@ -180,7 +181,7 @@ function EmployeeForm(){
                     })
                     }}}
                   >
-                  <CardContent sx={{ display:'flex', justifyContent: 'center',    backgroundColor: week2[index+1]? '#7BCEC8' : 'none' }}>
+                  <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: week2[index+1]? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
                       <Typography variant="h7" sx={{textTransform: 'capitalize'}}>{day}</Typography>
                   </CardContent>
                 </CardActionArea>

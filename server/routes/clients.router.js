@@ -310,7 +310,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
 
 router.get('/schedule/:id', rejectUnauthenticated, (req, res) => {
-  console.log('arrived in server get schedule route', req.params.id)
+  // console.log('arrived in server get schedule route', req.params.id)
   let clientId = req.params.id
   const queryText = `
             SELECT * FROM clients_schedule
@@ -320,7 +320,7 @@ const queryValues = [clientId]
 pool.query(queryText, queryValues)
     .then(result => {
    
-    console.log('result from query?', result.rows)
+    // console.log('result from query?', result.rows)
 
 
         res.send(result.rows);

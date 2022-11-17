@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, MouseEvent } from 'react';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ListItemAvatar, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Collapse, ListItemAvatar, ListItemIcon, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FlagIcon from '@mui/icons-material/Flag';
 import CancelIcon from '@mui/icons-material/Cancel';
 import RouteSelect from '../RouteSelect/RouteSelect';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 function DailyRoutes() {
   const dispatch = useDispatch();
@@ -25,6 +27,13 @@ function DailyRoutes() {
       })
     }
   }, [params.id]);
+
+  const [expanded, setExpanded] = useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
 
   const user = useSelector(store => store.user);
   // reducer getting filled with a specific routes dogs
@@ -106,53 +115,126 @@ function DailyRoutes() {
             <List sx={{ mb: 10 }}>
               {route && route.map && route.map((dog) => (
 
-                <ListItem sx={{ backgroundColor: () => determineStatus(dog) }}
+                // <ListItem sx={{ backgroundColor: () => determineStatus(dog) }}
+                // secondaryAction={
+                //   <>
+                //     {dog.cancelled ?
+
+                //       <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
+                //         <AddCircleIcon sx={{ fill: '#3DA49D' }} />
+                //       </IconButton>
+
+                //       :
+                //       <>
+                //         <IconButton edge="end" onClick={(event) => checkIn(dog)}>
+                //           <CheckBoxIcon sx={{ fill: '#7BCEC8', mr: 2 }} />
+                //         </IconButton>
+                //         <IconButton edge="end" onClick={(event) => noShow(dog)} >
+                //           <EventBusyIcon sx={{ fill: '#F8614D' }} />
+                //         </IconButton>
+                //         {user.admin ?
+                //           <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
+                //             <CancelIcon sx={{ fill: '#F8614D' }} />
+                //           </IconButton>
+                //           :
+                //           null
+                //         }
+                //       </>
+                //     }
+                //   </>
+                // }
+                // >
+
+                //   <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >
+                //     {dog.image ?
+                //       <Avatar src={dog.image} />
+                //       :
+                //       <Avatar>
+                //         {dog.name[0]}
+                //       </Avatar>
+
+                //     }
+                //   </ListItemAvatar>
+                //   <ListItemText
+                //     primary={dog.name}
+                //     secondary={dog.client_name}
+                //     sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
+                //   />
+                <Accordion expanded={expanded === dog.dog_id} onChange={handleChange(dog.dog_id)} sx={{ backgroundColor: () => determineStatus(dog), mb: 1 }}>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <List>
+                      <ListItem sx={{ backgroundColor: () => determineStatus(dog) }}>
+
+                        <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >
+                          {dog.image ?
+                            <Avatar src={dog.image} />
+                            :
+                            <Avatar>
+                              {dog.name[0]}
+                            </Avatar>
+
+                          }
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={dog.name}
+                          secondary={dog.client_name}
 
 
-                  secondaryAction={
-                    <>
+                          sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
+                        />
+                        {dog.flag ?
+                          <IconButton edge="end">
+                            <FlagIcon sx={{ fill: '#F8614D', ml: 6 }} />
+                          </IconButton>
+                          :
+                          null
+                        }
+                      </ListItem>
+                    </List>
+
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Stack direction='row' spacing={1}>
+
                       {dog.cancelled ?
-
-                        <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
-                          <AddCircleIcon sx={{ fill: '#3DA49D' }} />
-                        </IconButton>
-
-                        :
                         <>
-                          <IconButton edge="end" onClick={(event) => checkIn(dog)}>
-                            <CheckBoxIcon sx={{ fill: '#7BCEC8', mr: 2 }} />
-                          </IconButton>
-                          <IconButton edge="end" onClick={(event) => noShow(dog)} >
-                            <EventBusyIcon sx={{ fill: '#F8614D' }} />
-                          </IconButton>
+
                           {user.admin ?
-                            <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
-                              <CancelIcon sx={{ fill: '#F8614D' }} />
-                            </IconButton>
+                            <Button edge="end" variant='contained' onClick={(event) => cancelWalk(dog)} >
+                              <AddCircleIcon sx={{ mr: 2, p: 1 }} />
+                              ADD DOG
+                            </Button>
+
                             :
                             null
                           }
                         </>
-                      }
-                    </>
-                  }
-                >
-                  <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >
-                    {dog.image ?
-                      <Avatar src={dog.image} />
-                      :
-                      <Avatar>
-                        {dog.name[0]}
-                      </Avatar>
 
-                    }
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={dog.name}
-                    secondary={dog.client_name}
-                    sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
-                  />
-                </ListItem>
+                        :
+                        <>
+
+                          <Button edge="end" onClick={(event) => checkIn(dog)} variant='contained' color='success' sx={{ mr: 1 }} size='small'>
+                            <CheckBoxIcon sx={{ mr: 2 }} />
+                            CHECK IN
+                          </Button>
+                          <Button edge="end" onClick={(event) => noShow(dog)} variant='contained' color='error' size='small'>
+                            <EventBusyIcon sx={{ mr: 2 }} />
+                            NO SHOW
+                          </Button>
+                          {user.admin ?
+                            <Button edge="end" onClick={(event) => cancelWalk(dog)} variant='contained' color='info' sx={{ mr: 1 }} size='small'>
+                              <CancelIcon sx={{ mr: 2 }} />
+                              CANCEL WALK
+                            </Button>
+                            :
+                            null
+                          }
+                        </>}
+                    </Stack>
+
+                  </AccordionDetails>
+
+                </Accordion>
 
               ))}
             </List>

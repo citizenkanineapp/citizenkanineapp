@@ -7,13 +7,14 @@ router.get('/:id', (req, res)=> {
     const client_id = req.params.id;
     // console.log(client_id);
     const sqlQuery = `
-    SELECT id, dog_id, client_id, date_to_change::date, is_scheduled FROM dogs_schedule_changes
+    SELECT id, dog_id, client_id, date_to_change, is_scheduled FROM dogs_schedule_changes
     WHERE client_id = $1;
     `
 
     pool.query(sqlQuery, [client_id])
         .then(dbRes=> {
             res.send(dbRes.rows);
+            console.log(dbRes.rows[0]);
         })
         .catch(error=> {
             res.sendStatus(500);

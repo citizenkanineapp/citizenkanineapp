@@ -24,17 +24,18 @@ function ClientSchedule() {
   const client = useSelector(store => store.clientReducer)
   const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
 
-  const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
-
+  
   useEffect(() => {
     dispatch({ type: 'FETCH_SCHEDULE', payload: client.id })
     // Fetch client schedule changes
     dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.id})
   }, []);
-
+  
+  const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
   //local useState state I am using for this functionality
   const [dog, setDog] = useState('');
-  console.log(dog);
+  // console.log(dog);
+  const [changeDate, setChangeDate] = useState('');
   const [dogChanges, setDogChanges]= useState('');
   const [action, setAction] = useState('');
   const [scheduled, setScheduled] = useState('');
@@ -73,27 +74,82 @@ function ClientSchedule() {
 
 // this handles the change of the date based on the date picker
   const handleChange = (newValue) => {
-    setValue(newValue);
-  };
-
+    // setValue(dayjs(newValue.$d.slice(0,10)));
+    let changeDateFormatting = JSON.stringify(newValue).slice(1,11); //this gets back just the yyyy-mm-dd string value
+    setValue(newValue)
+    setChangeDate(dayjs(changeDateFormatting).$d)
+    // console.log(changeDate);
+  }
+  //NEED to get value and change.date_to_change to match
 
   //this is for the submit button for the one off changes
+  let updatedChanges = [];
+  let addChanges = [];
   const handleSubmit = (event) => {
     // need to add date_to_change and is_selected to each one
     let newChanges = [];
     if (dog === "all"){
       client.dogs.map(singleDog => {
-        let thisChange = {dog_id: singleDog.dog_id, client_id: client.id, date_to_change: value, is_scheduled: scheduled}
+        let thisChange = {dog_id: singleDog.dog_id, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled}
         newChanges.push(thisChange)
       })
     }
     else {
-      let thisChange = {dog_id: dog, client_id: client.id, date_to_change: value, is_scheduled: scheduled}
+      let thisChange = {dog_id: dog, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled}
       newChanges.push(thisChange)
     }
+     // need to reset local states:
+    setDog('');
+    setScheduled('');
+    setValue (dayjs());
+
+    if (changes.length === 0){
+      addChanges = newChanges;
+    }
+    else{
+      // mapping through newChanges
+    loop1:
+      for (let thisChange of newChanges){
+        console.log('in newChanges');
+          for (let change of changes) {
+            console.log('thisChange is:', thisChange);
+            console.log('change is:', change);
+            let existingChangeDate = JSON.stringify(dayjs(change.date_to_change.slice(0,10)).$d); // this formats the date to match that of the new change
+            let newChangeDate = JSON.stringify(thisChange.date_to_change)
+            // does the dog_id match?
+            if (thisChange.dog_id === change.dog_id){
+              console.log('ids match')
+              // does the date and is_scheduled match? 
+              if(existingChangeDate === newChangeDate && thisChange.is_scheduled === change.is_scheduled){
+                //  this change already exists, continue
+                console.log('this change already exists')
+                break loop1;
+              }
+              // does the date match and the is_scheduled does not?
+              else if (existingChangeDate === newChangeDate && thisChange.is_scheduled !== change.is_scheduled){
+                // this change already exists and needs to be updated
+                console.log('this change exists and needs to be updated')
+                updatedChanges.push(thisChange)
+                break loop1;
+              }
+            }
+            // the dog_id does not match
+            else{
+              addChanges.push(thisChange)
+              break;
+            }
+            
+          }
+      }
+      console.log(updatedChanges);
+      console.log(addChanges);    
+  
+    }
+    }
+
+
     // Now we can send this array to the server to add to the database
-    // *** Need to map through these changes and see if the change already exists
-    console.log(newChanges);
+    // console.log(newChanges);
 
   //   let scheduleChangeObject = []
   //   let month = (value.$M +1)
@@ -121,7 +177,7 @@ function ClientSchedule() {
   //       scheduleChangeObject.push(dogObject)
   // } 
     // dispatch({type: 'SEND_ONE_SCHEDULE_CHANGE', payload: scheduleChangeObject})
-}
+
 
 //this function changes a client's regular schedule
 const regularScheduleChange = (event) =>{
@@ -163,6 +219,7 @@ const regularScheduleChange = (event) =>{
                 if (day.$d === dayjs()){
                     selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
                   }
+                
 
                 return (
                     <Box

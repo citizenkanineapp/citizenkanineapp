@@ -73,6 +73,8 @@ function ClientSchedule() {
     } 
   };
 
+
+
 // this handles the change of the date based on the date picker
   const handleChange = (newValue) => {
     // setValue(dayjs(newValue.$d.slice(0,10)));
@@ -157,10 +159,8 @@ const regularScheduleChange = (event) =>{
   // CALENDAR STUFF
   const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
   console.log(clientSchedule)
-
-  // const dogs = [{dog_name: 'Cord', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 1, dog_notes: null, flag: null, regular: true}, {dog_name: 'Pamela', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg', dog_id: 7, dog_notes: null, flag: null, regular: false}, {dog_name: 'Tami', image: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jp', dog_id: 16, dog_notes: null, flag: null, regular: true}]
-
-  // const changes =[{id: 1, dog_id: 1, date_to_change: '2022-11-18', is_scheduled: false}, {id: 2, dog_id: 7, date_to_change: '2022-11-22', is_scheduled: true}]
+  const [updatedSchedule, setUpdatedSchedule] = useState(clientSchedule);
+  console.log(updatedSchedule)
 
   const noChange = ()=> {// This is a blank function used as a placeholder for the onChange of the calendar picker. onChange is required but has no use in this case. 
   }
@@ -169,7 +169,15 @@ const regularScheduleChange = (event) =>{
 
   // weekly schedule stuff:
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-  const [enabled, setEnabled] = useState(true);
+  const [disabled, setDisabled] = useState(true);
+
+  // This object will be dispatched when the weekly schedule has been updated;
+  
+
+  const handleWeekScheduleChange =()=>{
+    //dispatch updatedSchedule
+
+  }
 
   return (
     <>
@@ -180,18 +188,36 @@ const regularScheduleChange = (event) =>{
             <Grid key={index + 1} item xs={2} sx={{mt: 5}} >
               <Card raised>
                 <CardActionArea component={Button}
-                  disabled={enabled}
+                  disabled={disabled}
+                  onClick={()=>{
+                    if (updatedSchedule[index+1]){
+                      setUpdatedSchedule({...updatedSchedule, [index+1]: false})
+                    }
+                    
+                    else {
+                      setUpdatedSchedule({...updatedSchedule, [index+1]: true})
+                    }}}
                   >
-                  <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: schedule[index+1]? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
+                  <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: updatedSchedule[index+1]? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
                       <Typography variant="h7" sx={{textTransform: 'capitalize'}}>{day}</Typography>
                   </CardContent>
                 </CardActionArea>
               </Card> 
             </Grid>
             ))}
-            <Grid item xs={16} sx={{display: 'flex', justifyContent: 'right'}}>
-              <Button variant='contained' color='secondary' onClick={()=> setEnabled(!enabled)}>Edit Weekly Schedule</Button>
-            </Grid>
+            { !disabled ?
+              <Grid item xs={16} sx={{display: 'flex', justifyContent: 'right'}}>
+                <Button variant='contained' color='secondary' onClick={()=> {
+                  setUpdatedSchedule(schedule)
+                  setDisabled(!disabled)}}>Cancel</Button>
+                <Button variant='contained' color='secondary' onClick={handleWeekScheduleChange}>Submit</Button>
+              </Grid>
+            :
+              <Grid item xs={16} sx={{display: 'flex', justifyContent: 'right'}}>
+                <Button variant='contained' color='secondary' onClick={()=> setDisabled(!disabled)}>Edit Weekly Schedule</Button>
+              </Grid>
+            }
+            
         </Grid>
       {/* Grid containing calendar and form */}
           {/* Calendar */}

@@ -84,7 +84,7 @@ function DogDetails() {
       <Grid item xs={5}>
         <Stack direction='column' sx={{ justifyContent: 'center', textAlign: 'center' }}>
           <Card sx={{ mb: 1 }}>
-            <Typography variant='h4' align='center' sx={{ pt: 2 }}>{dog.name}</Typography>
+            <Typography variant='h5' align='center' sx={{ pt: 2 }}>{dog.name}</Typography>
           </Card>
           {/* CLIENT ADDRESS INFORMATION */}
           <Card>

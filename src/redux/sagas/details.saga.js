@@ -18,10 +18,32 @@ function* fetchDetails(action) {
     }
 }
 
+function* updateNote(action) {
+    // single dog
+    let dog = action.payload;
+    let note = action.payload.note;
+    console.log('DOG TO UPDATE IS:', dog, note);
+
+    try {
+        yield axios({
+            method: 'PUT',
+            url: `/api/mobile/notes`,
+            data: dog
+        })
+        yield put({ type: 'FETCH_DOG_DETAILS', payload: dog.id })
+
+        console.log('CHANGED');
+
+    } catch (error) {
+        console.log('ERROR UPDATING DOG STATUS', error);
+    }
+}
+
 
 
 function* detailsSaga() {
     yield takeLatest('FETCH_DOG_DETAILS', fetchDetails);
+    yield takeLatest('UPDATE_DOG_NOTE', updateNote);
 
 }
 

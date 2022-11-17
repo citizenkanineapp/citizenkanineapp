@@ -5,6 +5,7 @@ import { ListItemAvatar, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import FlagIcon from '@mui/icons-material/Flag';
+import CancelIcon from '@mui/icons-material/Cancel';
 import RouteSelect from '../RouteSelect/RouteSelect';
 
 function DailyRoutes() {
@@ -24,9 +25,11 @@ function DailyRoutes() {
     }
   }, [params.id]);
 
+  const user = useSelector(store => store.user);
   // reducer getting filled with a specific routes dogs
   const route = useSelector(store => store.routeReducer);
   // const routeName = route[0].route;
+
 
   const getRouteColor = (route) => {
     switch (route[0].route) {
@@ -69,6 +72,13 @@ function DailyRoutes() {
     dispatch({ type: 'NO_SHOW', payload: updatedDog });
   }
 
+  const cancelWalk = (dog) => {
+    const dogID = dog.dog_id;
+    const routeID = dog.route_id;
+    const updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
+    dispatch({ type: 'CANCEL_WALK', payload: updatedDog });
+  }
+
   return (
     <>
       {route[0] ?
@@ -93,6 +103,12 @@ function DailyRoutes() {
                     <IconButton edge="end" onClick={(event) => noShow(dog)} >
                       <EventBusyIcon sx={{ fill: '#F8614D' }} />
                     </IconButton>
+                    {user.admin ?
+                      <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
+                        <CancelIcon sx={{ fill: '#F8614D' }} />
+                      </IconButton>
+                      :
+                      null}
                   </>
                 }
                   sx={{ backgroundColor: () => determineStatus(dog), }}

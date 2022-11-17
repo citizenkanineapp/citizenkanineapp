@@ -47,7 +47,7 @@ function DogDetails() {
     <Grid container spacing={1} sx={{ justifyContent: 'center' }}>
       {/* NAV BACK TO LIST */}
       <Grid item xs={12}>
-        <Button onClick={(event) => history.push(`/m/routes/${dog.route}`)}>BACK</Button>
+        <Button onClick={(event) => history.push(`/m/route/${dog.route_id}`)}>BACK</Button>
       </Grid>
       <Grid item xs={5} sx={{ justifyContent: 'center' }}>
         <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>

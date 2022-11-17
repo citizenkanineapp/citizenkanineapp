@@ -35,7 +35,7 @@ const dogReducer = (state = [{dog_name: '', image: '', dog_notes: '', flag: fals
             })
             return photoState;
         case 'ADD_DOG_INPUT':
-            return [...state, {dog_name: '', image: '', dog_notes: '', flag: false}]
+            return [...state, {dog_name: '', image: '', dog_notes: '', flag: false, regular: true}]
         case 'SET_FIRST_FLAG':
             console.log(action.payload)
             const flagState = state.map((flag , index) => {

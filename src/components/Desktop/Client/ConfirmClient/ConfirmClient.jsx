@@ -13,7 +13,7 @@ function ConfirmClient(){
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
   const dogs = useSelector(store => store.dogReducer)
-  const clientSchedule = useSelector(store => store.clientScheduleReducer)
+  const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
 
   const back = event => {
     dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})

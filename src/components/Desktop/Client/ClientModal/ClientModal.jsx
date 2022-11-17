@@ -37,6 +37,7 @@ function ClientModal(){
 
   //chooses which component to view
   const pickView = () => {
+    console.log(modalView)
     switch(modalView){                 //conditionally renders components inside modal
       case "AddClient":  return <AddClient/>
       case "EditClientForm": return <EditClientForm/>
@@ -64,7 +65,7 @@ function ClientModal(){
             }
             }} 
           >
-          <Box sx={{ ...style, width: modalView === "ClientSchedule" ? '80vw' : '60vw', height: '80vh', outline: 'none', borderRadius: '5px', display: 'flex', alignContent: 'center', justifyContent: 'left' }}>
+          <Box sx={{ ...style, width: modalView === "ClientSchedule" ? '80vw' : '60vw', height: modalView === "ClientSchedule" ? '85vh' : '80vh', outline: 'none', borderRadius: '5px', display: 'flex', alignContent: 'center', justifyContent: 'left' }}>
             {pickView()}
           </Box>
       </Modal>

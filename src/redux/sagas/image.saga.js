@@ -27,6 +27,7 @@ function* uploadImage(action) {
 }
 
 function* updateDogPhoto(action) {
+
     // console.log('DOG ID IS:', action.payload);
     try {
         const image = yield axios({
@@ -49,6 +50,7 @@ function* updateDogPhoto(action) {
 
         //need to decide what type of state the reducer should be
         yield put({ type: 'FETCH_DOG_DETAILS', payload: action.payload.dogID })
+        yield put({ type: 'SET_MODAL_STATUS' });
     } catch {
         console.log('error updating dog photo');
     }

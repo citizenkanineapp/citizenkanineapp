@@ -16,11 +16,11 @@ function DogDetails() {
   const dispatch = useDispatch();
   // local state to manage dog note editing ability
   const [editStatus, setEditStatus] = useState(false);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
   // specific dog details - fetched by the useEffect
   const dog = useSelector(store => store.details);
+  const status = useSelector(store => store.modal.status);
+
 
   useEffect(() => {
     dispatch({
@@ -69,7 +69,7 @@ function DogDetails() {
       </Grid>
       <Grid item xs={5} sx={{ justifyContent: 'center' }}>
         <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>
-          <EditIcon onClick={handleOpen} />
+          <EditIcon onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })} />
         </Fab>
         <Stack>
 
@@ -176,12 +176,19 @@ function DogDetails() {
             </Button>
           </AccordionDetails>
         </Accordion>
-
+        <Card>
+          Hi
+          <CardMedia
+            component='img'
+            image={dog.image}
+          />
+        </Card>
       </Grid>
 
-      <Modal open={open} onClose={handleClose} sx={{ mt: 5.5, ml: 4 }} >
+      <Modal open={status} sx={{ mt: 5.5, ml: 4 }} >
         <Grid item xs={12}>
           <MobileImageUpload id={dog.dog_id} />
+
         </Grid>
       </Modal>
 

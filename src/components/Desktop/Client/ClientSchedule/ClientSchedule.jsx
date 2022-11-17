@@ -86,9 +86,9 @@ function ClientSchedule() {
       let dogObject ={
         date: `${value.$y}-${month}-${value.$D}`,
         is_scheduled: scheduled,
-        dog_id: dog,
+        dog_id: dog.dog_id,
         client_id: client.id,
-        regular: oneDog.regular
+        regular: dog.regular
       }
         scheduleChangeObject.push(dogObject)
   } 
@@ -153,7 +153,7 @@ const regularScheduleChange = (event) =>{
               <MenuItem value={client.dogs}>All Dogs</MenuItem>
                 {client.dogs && client.dogs.map(singleDog => {
                   return (
-                      <MenuItem key={singleDog.dog_id} value={singleDog.dog_id}>{singleDog.dog_name}</MenuItem>
+                      <MenuItem key={singleDog.dog_id} value={singleDog}>{singleDog.dog_name}</MenuItem>
                       )
                    })}
                </Select>

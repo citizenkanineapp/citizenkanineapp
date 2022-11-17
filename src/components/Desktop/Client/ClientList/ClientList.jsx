@@ -21,11 +21,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
+//if search results map through that list 
+//else map through clients 
+
+
 function ClientList() {
   const clientList = useSelector(store => store.clientsReducer);
+  const searchResults = useSelector(store => store.searchReducer)
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState('')
+  const [submittedSearch, setSubmittedSearch] = useState('')
 
   //this route gets all clients to populate client list //
   useEffect(() => {
@@ -44,9 +50,13 @@ function ClientList() {
     openModal('ClientDetails')
   }
 
-  // const searchFunction = (event) => {
-  //   dispatch({type: 'SEARCH_CLIENTS', payload: search})
-  // }
+  const searchFunction = (event) => {
+    setSubmittedSearch(search.toLowerCase())
+  }
+
+  const clearResults = (event) => {
+    setSubmittedSearch('')
+  }
 
 
 
@@ -61,8 +71,11 @@ function ClientList() {
             variant="filled"
             sx={{width: '60%'}}
           />
-       
+       {submittedSearch ?
+        <Button size="large" variant="contained" color="secondary" onClick={() => clearResults()}>Clear</Button> :
+
           <Button size="large" variant="contained" color="secondary" onClick={() => searchFunction()}>Search</Button>
+       }
           <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary'>Add Client</Button>
        
       </Grid>
@@ -79,16 +92,50 @@ function ClientList() {
                   <TableCell sx={{fontWeight: '800'}}>Email</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {clientList && clientList.map && clientList.map((client ) => (
-                    <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
-                      <TableCell>{client.first_name} {client.last_name}</TableCell>
-                      <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
-                      <TableCell>{client.phone}</TableCell>
-                      <TableCell>{client.email}</TableCell>
-                    </StyledTableRow>
-                ))}
-              </TableBody>
+              {submittedSearch ? 
+                <TableBody>   
+                    {clientList
+                      .filter((client) => {
+                        const firstName = client.first_name.toLowerCase()
+                        const lastName = client.last_name.toLowerCase()
+
+                        //loop through array of dog names and check those
+                        if (firstName.includes(submittedSearch)) {
+                          return true;
+                        }
+                        if (lastName.includes(submittedSearch)) {
+                          return true;
+                        }
+                        for(let dog of client.dogs){
+                          const dogName = dog.dog_name.toLowerCase()
+                          if(dogName.includes(submittedSearch)){
+                            return true;
+                          }
+                        }
+                      })
+                      .map((client ) => (
+                        <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
+                          <TableCell>{client.first_name} {client.last_name}</TableCell>
+                          <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                          <TableCell>{client.phone}</TableCell>
+                          <TableCell>{client.email}</TableCell>
+                        </StyledTableRow>
+                    ))}
+                  </TableBody>
+                :
+                  <TableBody>
+                    {clientList.map((client ) => (
+                        <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
+                          <TableCell>{client.first_name} {client.last_name}</TableCell>
+                          <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                          <TableCell>{client.phone}</TableCell>
+                          <TableCell>{client.email}</TableCell>
+                        </StyledTableRow>
+                    ))}
+                
+                </TableBody>
+
+            }
             </Table>
           </TableContainer>
         </Grid>

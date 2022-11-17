@@ -1,4 +1,4 @@
-const clientsReducer = (state = {}, action) => {
+const clientsReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_CLIENTS':
             return action.payload;

@@ -418,25 +418,60 @@ router.put('/schedule', rejectUnauthenticated, async (req, res) => {
 });
 
  //get search results 
-router.get('/matches', rejectUnauthenticated, async (req, res) => {
+router.get('/search/matches', rejectUnauthenticated, async (req, res) => {
   console.log('arrived in server search', req.query.search)
- 
-  const queryText = `
+  const client = await pool.connect();
+  let searchTerm = req.query.search
+  const results = []
+  const first_name = []
+  const last_name = [] 
+  const dog_name = []
+    try { 
 
+      await client.query('BEGIN')
+          const clientFirstText = await client.query(`
+                        SELECT clients.id as client_id, clients.first_name, clients.last_name, clients.city, clients.street, 
+                        clients.zip, clients.email, clients.notes, clients.route_id, clients.phone, dogs.vet_name, 
+                        dogs.vet_phone, dogs.id as dog_id, dogs.image, dogs.name as dog_name, dogs.flag, dogs.regular, dogs.notes as dog_notes from clients 
+                            JOIN dogs
+                            on clients.id = dogs.client_id
+                            WHERE first_name ilike $1 or last_name ilike $2 or name ilike $3
+                    ; `, [`${searchTerm}%`, `${searchTerm}%`, `${searchTerm}%`])
+        results.push(clientFirstText.rows)
 
-;
-  `
-const queryValues = [clientId]
-// pool.query(queryText, queryValues)
-//     .then(result => {
+      //   const clientLastText = await client.query(`
+      //                       SELECT * FROM clients
+      //                           WHERE last_name ilike $1; `, [`${searchTerm}%`])
+
+      //   last_name.push(clientLastText.rows)
+      // const dogText = await client.query( `
+      //                       SELECT * FROM dogs
+      //                           WHERE name ilike $1;`, [`${searchTerm}%`])
+      //   dog_name.push(dogText.rows)
+      //   results.first_name = first_name
+      //   results.last_name = last_name
+      //   results.dog_name = dog_name
+        console.log(results)
+  //   pool.query(clientLastText, [`${searchTerm}%`])
+  //   .then(result => {
       
-//         // res.send(clients);
-//         // console.log('does it get one?', clients)
-//     })
-//     .catch(err => {
-//         console.log('Error getting search results', err);
-//         res.sendStatus(500);
-//     })
+  //   console.log('result from  second query?', result.rows)
+  //   results.push(result.rows)
+      
+  //   })
+    
+
+
+              res.send(results);
+              await client.query('COMMIT')
+              // res.sendStatus(201)  
+    } catch(err) {
+      await client.query('ROLLBACK')
+    console.log('Error in post route for new recipe', err);
+    res.sendStatus(500);
+  } finally {
+    client.release()
+  }
 });
 
   

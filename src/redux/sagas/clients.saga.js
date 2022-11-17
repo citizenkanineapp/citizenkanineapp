@@ -182,11 +182,12 @@ function* regularScheduleChange(action){
 function* search(action){
     console.log('search term? ->>>>>>', action.payload)
     const searchText = action.payload
-    let urlQuery = `/api/clients/matches?search=${searchText}`
+    let urlQuery = `/api/clients/search/matches?search=${searchText}`
+    console.log('url queery?', urlQuery)
         try {
             const results = yield axios.get(`${urlQuery}`);
-            console.log(results.data)
-            yield put ({type: 'SET_SEARCH_RESULTS', payload: results.data});
+            console.log('results from server' ,results.data)
+            yield put ({type: 'SET_SEARCH_RESULTS', payload: results.data[0]});
         } catch (error) {
             console.log(error);
             alert('Error setting search results');

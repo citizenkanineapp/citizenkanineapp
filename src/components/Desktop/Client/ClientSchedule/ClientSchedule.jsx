@@ -40,7 +40,6 @@ function ClientSchedule() {
 ;  //local useState state I am using for this functionality
   const [dog, setDog] = useState('');
   // console.log(dog);
-  const [changeDate, setChangeDate] = useState('');
   const [scheduled, setScheduled] = useState('');
   const [value, setValue] = useState(dayjs());
 
@@ -49,31 +48,36 @@ function ClientSchedule() {
   const handleDateChange = (newValue) => {
     console.log(newValue);
     setValue(newValue);
-    let changeDateFormatting = dayjs(JSON.stringify(newValue).slice(1,11)).$d;
-    // this formats the selected date's hr:min:sec to 00:00:00 so that dates can be matched. ex) Sun Nov 27 2022 00:00:00 GMT-0600 (Central Standard Time)
-    // setChangeDate(changeDateFormatting)
-    // console.log(changeDate)
   }
-
+  
 
   //This is for the submit button for the one off changes
+  // NEED to not be able to add the dog if is is regularly scheduled
   const handleSubmit = () => {
     // need to add date_to_change and is_selected to each one
+    let changeDate = `${value.$y}-${value.$M + 1}-${value.$D}`;
+    console.log(changeDate)
+
     let newChanges = [];
     if (dog === "all"){
       client.dogs.map(singleDog => {
-        let thisChange = {dog_id: singleDog.dog_id, client_id: client.id, date_to_change: value.$d, is_scheduled: scheduled}
+        let thisChange = {dog_id: singleDog.dog_id, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled}
         newChanges.push(thisChange)
       })
     }
     else {
-      let thisChange = {dog_id: dog, client_id: client.id, date_to_change: value.$d, is_scheduled: scheduled}
+      let thisChange = {dog_id: dog, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled}
       newChanges.push(thisChange)
     }
-    dispatch({
-      type: 'SEND_ONE_SCHEDULE_CHANGE',
-      payload: newChanges
-    })
+
+    // if there are new changes, then post changes.
+    if (newChanges.length > 0){
+      dispatch({
+        type: 'SEND_ONE_SCHEDULE_CHANGE',
+        payload: newChanges
+      })
+    }
+
 
      // need to reset local states:
     setDog('');

@@ -89,6 +89,30 @@ function ClientSchedule() {
   let updatedChanges = [];
   let addChanges = [];
   const handleSubmit = (event) => {
+<<<<<<< HEAD
+    let scheduleChangeObject = []
+    let month = (value.$M +1)
+
+    //different logic based on whether one dog or "all dogs is selected" to create one-off schedule change object
+    if(dog.length > 1 ){
+    for(let oneDog of dog){
+      let dogObject ={
+        date: `${value.$y}-${month}-${value.$D}`,
+        is_scheduled: scheduled,
+        dog_id: oneDog.dog_id,
+        client_id: client.id,
+        regular: oneDog.regular
+        }
+        scheduleChangeObject.push(dogObject)
+      }
+    } else {
+      let dogObject ={
+        date: `${value.$y}-${month}-${value.$D}`,
+        is_scheduled: scheduled,
+        dog_id: dog.dog_id,
+        client_id: client.id,
+        regular: dog.regular
+=======
     // need to add date_to_change and is_selected to each one
     let newChanges = [];
     if (dog === "all"){
@@ -143,6 +167,7 @@ function ClientSchedule() {
             }
             
           }
+>>>>>>> 9a93bcdd94f39f559081bc7b4637e9875779f84d
       }
       console.log(updatedChanges);
       console.log(addChanges);    
@@ -444,6 +469,50 @@ const regularScheduleChange = (event) =>{
     
     
 
+<<<<<<< HEAD
+{/*-------- below here is for the one off changes------------ */}
+
+    <h2 >Month View / Adjust Schedule</h2>
+      <Grid container spacing={2} sx={{ mt: 2 }}>
+        <Grid item xs={6}>
+          <FormControl fullWidth sx={{ mr: 4, pb: 1, mb:2 }}>
+            <InputLabel>Dog</InputLabel>
+              <Select value={dog} onChange={(event) => setDog(event.target.value)}>
+              <MenuItem value={client.dogs}>All Dogs</MenuItem>
+                {client.dogs && client.dogs.map(singleDog => {
+                  return (
+                      <MenuItem key={singleDog.dog_id} value={singleDog}>{singleDog.dog_name}</MenuItem>
+                      )
+                   })}
+               </Select>
+          </FormControl>
+          <FormControl fullWidth sx={{ mr: 4, pb: 1 }}>
+            <InputLabel>Action</InputLabel>
+            <Select value={scheduled} onChange={(event) => setScheduled(event.target.value)}>
+              <MenuItem value={true}>Add Walk</MenuItem>
+              <MenuItem value={false}>Cancel Walk</MenuItem>
+            </Select>
+          </FormControl>
+        <Button variant='contained' color='secondary' onClick={handleSubmit}>Submit</Button>
+      </Grid>
+        <Grid item xs={6}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DesktopDatePicker
+                label="Date desktop"
+                inputFormat="MM/DD/YYYY"
+                value={value}
+                onChange={handleChange}
+                renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+        </Grid>
+      </Grid>
+    <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
+    {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button> */}
+      </Grid>
+    </div >
+   
+=======
     
   {/*-------- below here is for the one off changes------------ */}
 
@@ -452,6 +521,7 @@ const regularScheduleChange = (event) =>{
   
   {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button> */}
   </>
+>>>>>>> 9a93bcdd94f39f559081bc7b4637e9875779f84d
   )
 }
 

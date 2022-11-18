@@ -15,6 +15,7 @@ const clientsRouter = require('./routes/clients.router');
 const mobileRouter = require('./routes/mobile.router');
 const invoiceRouter = require('./routes/invoice.router');
 const clientScheduleRouter = require('./routes/clientSchedule.router');
+const adminRouter = require('./routes/admin.router');
 
 
 // Body parser middleware
@@ -43,6 +44,8 @@ app.use('/api/mobile', mobileRouter);
 
 app.use('/api/invoice', invoiceRouter);
 app.use('/api/clientSchedule', clientScheduleRouter);
+
+app.use('/api/admin', adminRouter);
 
 
 // Serve static files

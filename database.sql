@@ -54,10 +54,12 @@ CREATE TABLE "user" (
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	
---** user MOCK data **--
-insert into "user"
+--** USER INITIALIZATION DATA **--
+--** USERNAME: 'admin'
+--** PASSWORD: 'admin'
+INSERT INTO "user"
 	("username","password","admin")
-values
+VALUES
 	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true);
 
 CREATE TABLE employees_schedule (
@@ -115,15 +117,14 @@ CREATE TABLE services (
 INSERT INTO services
 	("name", "price")
 VALUES
-	('Friends and Family', '20'),
-	('1 Dog - Ad Hoc', '35'),
-	('1 Dog - 2-4x / week', '30'),
-	('1 Dog - 5x / week', '26'),
-	('2 Dogs - Ad Hoc', '45'),
-	('2 Dogs - 2-4x / week', '42'),
-	('2 Dogs - 5x / week', '37'),
-	('3 Dogs',  '54'),
-	('Other', '0');
+	('Group Dog Walking:Friends & Family', '20'),
+	('Group Dog Walking:Walk 1 dog - Ad hoc', '35'),
+	('Group Dog Walking:Walk 1 dog 2-4x / week', '30'),
+	('Group Dog Walking:Walk 1 dog 5 days / week', '26'),
+	('Group Dog Walking:Walk 2 dogs - Ad hoc', '45'),
+	('Group Dog Walking:Walk 2 Dogs 2-4x / week', '42'),
+	('Group Dog Walking:Walk 2 dogs 5 days / week', '37'),
+	('Group Dog Walking:Walk 3 dogs', '54');
 
 CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,

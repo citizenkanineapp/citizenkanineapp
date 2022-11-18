@@ -18,10 +18,10 @@
     margin: 0 0 0 0  !important;
 }
 
-/* .clientSchedule .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
-    width: 50vw !important;
-    height: 70vh !important;
-} */
+.clientSchedule .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
+    width: 100vw !important;
+    height: 100vh !important;
+}
 
 .clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
     display: flex;

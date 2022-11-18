@@ -87,7 +87,9 @@ function AdminNotes(){
                                 </button>
                     </div>
                     <div className="notes_body">
-                        <p className="notes">{adminNotes[0].notes}</p>
+                       {adminNotes.notes ? 
+                        <p className="notes">{adminNotes.notes || ''}</p>
+                        : null}
                     </div>
                 </div>
             </Grid>

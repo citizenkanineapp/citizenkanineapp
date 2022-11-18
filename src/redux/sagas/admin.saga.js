@@ -20,7 +20,8 @@ function* fetchAdminNotes(action) {
     console.log('Get Admin Notes', action.payload); 
     try {
         const notes = yield axios.get('/api/admin');
-        yield put ({type: 'SET_NOTES', payload: notes.data});
+        yield put ({type: 'SET_NOTES', payload: notes.data[0]});
+        console.log('notes structure', notes.data)
     } catch (error) {
         console.log(error);
         alert('Error fetching notes');

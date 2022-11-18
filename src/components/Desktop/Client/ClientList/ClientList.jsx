@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import '../../Desktop.css';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 //COMPONENTS
 import ClientModal from '../ClientModal/ClientModal';
@@ -119,6 +120,11 @@ function ClientList() {
                           <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
                           <TableCell>{client.phone}</TableCell>
                           <TableCell>{client.email}</TableCell>
+                          <TableCell>
+                            <IconButton onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })}>
+                              <CalendarMonthIcon sx={{ fontSize: 20, color: '#341341' }}/> 
+                            </IconButton>
+                          </TableCell>
                         </StyledTableRow>
                     ))}
                   </TableBody>
@@ -130,6 +136,11 @@ function ClientList() {
                           <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
                           <TableCell>{client.phone}</TableCell>
                           <TableCell>{client.email}</TableCell>
+                          <TableCell>
+                            <IconButton onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })}>
+                              <CalendarMonthIcon sx={{ fontSize: 20, color: '#341341' }}/> 
+                            </IconButton>
+                          </TableCell>
                         </StyledTableRow>
                     ))}
                 

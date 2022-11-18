@@ -54,10 +54,10 @@ function DailyRoutes() {
 
   const determineStatus = (dog) => {
     if (dog.checked_in) {
-      return '#3DA49D';
+      return '#B5E3E0';
     }
     else if (dog.no_show) {
-      return '#F8614D';
+      return '#FBA89D';
     } else if (dog.cancelled) {
       return 'lightgrey';
     }
@@ -200,7 +200,7 @@ function DailyRoutes() {
                         <>
 
                           {user.admin ?
-                            <Button edge="end" variant='contained' onClick={(event) => cancelWalk(dog)} >
+                            <Button edge="end" variant='contained' color='info' onClick={(event) => cancelWalk(dog)} >
                               <AddCircleIcon sx={{ mr: 2, p: 1 }} />
                               ADD DOG
                             </Button>

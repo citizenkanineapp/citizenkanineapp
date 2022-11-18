@@ -17,6 +17,7 @@ import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
 import ClientList from '../Desktop/Client/ClientList/ClientList';
 import EmployeeSchedule from '../Desktop/Employee/EmployeeSchedule/EmployeeSchedule';
 import AdminSettings from '../Desktop/AdminSettings/AdminSettings';
+import AdminNotes from '../Desktop/AdminNotes/AdminNotes';
 
 //MOBILE COMPONENTS
 import Home from '../Mobile/Home/Home';
@@ -104,6 +105,11 @@ function App() {
             <ProtectedRoute exact path="/resetpass">
               {user.admin ? <ResetPassPage /> : <Redirect to="/home" />}
             </ProtectedRoute>
+
+            <ProtectedRoute exact path="/adminnotes">
+              {user.admin ? <AdminNotes /> : <Redirect to="/home" />}
+            </ProtectedRoute>
+
 
             {/* ----------------------- MOBILE ----------------------- */}
 

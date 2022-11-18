@@ -10,6 +10,7 @@ import RouteSaga from './routes.saga';
 import InvoiceDataSaga from './invoiceData.saga';
 import clientScheduleSaga from './clientSchedule.saga';
 import detailsSaga from './details.saga';
+import adminSaga from './admin.saga';
 
 
 // rootSaga is the primary saga.
@@ -32,5 +33,6 @@ export default function* rootSaga() {
     InvoiceDataSaga(),
     clientScheduleSaga(),
     detailsSaga(),
+    adminSaga(),
   ]);
 }

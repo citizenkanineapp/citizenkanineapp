@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import '../../Desktop.css';
 
 //COMPONENTS
@@ -21,9 +21,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
+//if search results map through that list 
+//else map through clients 
+
+
 function ClientList() {
   const clientList = useSelector(store => store.clientsReducer);
+  const searchResults = useSelector(store => store.searchReducer)
   const dispatch = useDispatch();
+
+  const [search, setSearch] = useState('')
+  const [submittedSearch, setSubmittedSearch] = useState('')
+
   //this route gets all clients to populate client list //
   useEffect(() => {
     dispatch({ type: 'FETCH_CLIENTS' })
@@ -35,11 +44,20 @@ function ClientList() {
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
   }
 
-  const fetchOneClient = (client) =>{
+  const fetchOneClient = (client) => {
     console.log(client)
     dispatch({type: 'SET_CLIENT', payload: client })
     openModal('ClientDetails')
   }
+
+  const searchFunction = (event) => {
+    setSubmittedSearch(search.toLowerCase())
+  }
+
+  const clearResults = (event) => {
+    setSubmittedSearch('')
+  }
+
 
 
   return (
@@ -47,12 +65,17 @@ function ClientList() {
       <Grid container sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width:'80%', gap: 2 }}>
        
           <TextField
+            value={search || ''}
+            onChange={(e) => setSearch(e.target.value)}
             label="Search Clients & Dogs"
             variant="filled"
             sx={{width: '60%'}}
           />
-       
-          <Button size="large" variant="contained" color="secondary">Search</Button>
+       {submittedSearch ?
+        <Button size="large" variant="contained" color="secondary" onClick={() => clearResults()}>Clear</Button> :
+
+          <Button size="large" variant="contained" color="secondary" onClick={() => searchFunction()}>Search</Button>
+       }
           <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary'>Add Client</Button>
        
       </Grid>
@@ -69,16 +92,50 @@ function ClientList() {
                   <TableCell sx={{fontWeight: '800'}}>Email</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {clientList && clientList.map && clientList.map((client ) => (
-                    <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
-                      <TableCell>{client.first_name} {client.last_name}</TableCell>
-                      <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
-                      <TableCell>{client.phone}</TableCell>
-                      <TableCell>{client.email}</TableCell>
-                    </StyledTableRow>
-                ))}
-              </TableBody>
+              {submittedSearch ? 
+                <TableBody>   
+                    {clientList
+                      .filter((client) => {
+                        const firstName = client.first_name.toLowerCase()
+                        const lastName = client.last_name.toLowerCase()
+
+                        //loop through array of dog names and check those
+                        if (firstName.includes(submittedSearch)) {
+                          return true;
+                        }
+                        if (lastName.includes(submittedSearch)) {
+                          return true;
+                        }
+                        for(let dog of client.dogs){
+                          const dogName = dog.dog_name.toLowerCase()
+                          if(dogName.includes(submittedSearch)){
+                            return true;
+                          }
+                        }
+                      })
+                      .map((client ) => (
+                        <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
+                          <TableCell>{client.first_name} {client.last_name}</TableCell>
+                          <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                          <TableCell>{client.phone}</TableCell>
+                          <TableCell>{client.email}</TableCell>
+                        </StyledTableRow>
+                    ))}
+                  </TableBody>
+                :
+                  <TableBody>
+                    {clientList.map((client ) => (
+                        <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
+                          <TableCell>{client.first_name} {client.last_name}</TableCell>
+                          <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                          <TableCell>{client.phone}</TableCell>
+                          <TableCell>{client.email}</TableCell>
+                        </StyledTableRow>
+                    ))}
+                
+                </TableBody>
+
+            }
             </Table>
           </TableContainer>
         </Grid>

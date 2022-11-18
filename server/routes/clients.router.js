@@ -319,12 +319,12 @@ router.get('/schedule/:id', rejectUnauthenticated, (req, res) => {
 const queryValues = [clientId]
 pool.query(queryText, queryValues)
     .then(result => {
-   
+
     // console.log('result from query?', result.rows)
 
 
         res.send(result.rows);
-   
+
     })
     .catch(err => {
         console.log('Error getting one client', err);
@@ -333,12 +333,11 @@ pool.query(queryText, queryValues)
 });
 
 //this is for one off schedule changes
-
 router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 
- console.log('one off change', req.body)
-  
- const client = await pool.connect();
+console.log('one off change', req.body)
+
+const client = await pool.connect();
   // const {date, is_scheduled, dog_id, client_id } = req.body
   // const schedule = req.body
   try {
@@ -349,9 +348,41 @@ router.post('/schedule', rejectUnauthenticated, async (req, res) => {
                               ("dog_id", "client_id", "date_to_change", "is_scheduled") 
                             VALUES
                               ($1, $2, $3, $4)
+                            ON CONFLICT (dog_id, date_to_change)
+                            DO UPDATE SET "is_scheduled" = $4;
 
       `
-      const scheduleValues = [scheduleChange.dog_id, scheduleChange.client_id, scheduleChange.date, scheduleChange.is_scheduled]
+      const scheduleValues = [scheduleChange.dog_id, scheduleChange.client_id, scheduleChange.date_to_change, scheduleChange.is_scheduled]
+      return client.query(scheduleTxt, scheduleValues)
+  }));
+      await client.query('COMMIT')
+      res.sendStatus(201);
+    } catch (error) {
+      await client.query('ROLLBACK')
+      console.log('Error in post route for schedule changes', error);
+      res.sendStatus(500);
+    } finally {
+      client.release()
+    }
+});
+
+// Updating schedule changes
+router.put('/schedule/updated', rejectUnauthenticated, async (req, res) => {
+
+  // console.log('one off change', req.body)
+
+  const client = await pool.connect();
+   // const {date, is_scheduled, dog_id, client_id } = req.body
+   // const schedule = req.body
+  try {
+  await client.query('BEGIN')
+  await Promise.all(req.body.map(change => { 
+      const scheduleTxt = `
+                          UPDATE dogs_schedule_changes
+                          SET is_scheduled = $1
+                          WHERE dog_id = $2 AND date_to_change = $3;
+                          `
+      const scheduleValues = [change.is_scheduled, change.dog_id, change.date_to_Change]
       return client.query(scheduleTxt, scheduleValues)
   }));
       await client.query('COMMIT')
@@ -417,8 +448,5 @@ router.put('/schedule', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-  
-  
-  
 
 module.exports = router;

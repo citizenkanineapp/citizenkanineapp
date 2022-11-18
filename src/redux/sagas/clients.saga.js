@@ -16,7 +16,7 @@ function* getAllClients(action){
 }
 
 function* addClient(action){
-    console.log('arrived in add client route', action.payload);
+    // console.log('arrived in add client route', action.payload);
 
     try {
         const client = yield axios({
@@ -53,7 +53,7 @@ function* editClient(action){
 }
 
 function* addDog(action){
-    console.log('arrived in add dog route', action.payload);
+    // console.log('arrived in add dog route', action.payload);
 
     try {
         const dog = yield axios({
@@ -71,7 +71,7 @@ function* addDog(action){
 }
 
 function* fetchOneClient(action){
-    console.log('arrived in get one client route', action.payload);
+    // console.log('arrived in get one client route', action.payload);
     let clientId = action.payload
     try {
         const client = yield axios.get(`/api/clients/${clientId}`);
@@ -107,7 +107,7 @@ function* deleteDog(action) {
 }
 
 function* updateDog(action){
-    console.log('arrived in edit dog route', action.payload);
+    // console.log('arrived in edit dog route', action.payload);
 
     try {
         const dog = yield axios({
@@ -125,7 +125,7 @@ function* updateDog(action){
 }
 
 function* fetchSchedule(action){
-    console.log('arrived in get one client route', action.payload);
+    // console.log('arrived in get one client route', action.payload);
     let clientId = action.payload
     try {
         const schedule = yield axios.get(`/api/clients/schedule/${clientId}`);
@@ -139,7 +139,7 @@ function* fetchSchedule(action){
 }
 
 function* oneOffScheduleChange(action){
-    console.log('arrived in edit one off schedule route', action.payload);
+    // console.log('arrived in edit one off schedule route', action.payload);
     const scheduleChange = action.payload
 
     try {
@@ -149,8 +149,8 @@ function* oneOffScheduleChange(action){
             data: action.payload
         })
         console.log(scheduleChange[0].client_id)
-        yield put ({type: 'FETCH_ONE_CLIENT', payload: scheduleChange[0].client_id});
-  
+        yield put ({type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: scheduleChange[0].client_id});
+
     } catch (error) {
         console.log(error);
         alert('Error editing one off schedule');
@@ -161,7 +161,6 @@ function* oneOffScheduleChange(action){
 
 function* regularScheduleChange(action){
     console.log('arrived in edit regular schedule', action.payload);
-
     try {
         const schedule = yield axios({
             method: 'PUT',
@@ -177,6 +176,20 @@ function* regularScheduleChange(action){
     
 }
 
+function* updatedScheduleChange(action){
+    const updatedChanges = action.payload;
+    try {
+        const changes = yield axios({
+            method: 'PUT',
+            url: '/api/clients/schedule/updated',
+            data: updatedChanges
+        })
+        yield put ({type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: action.payload[0].client_id});
+        //probably need to fetch specific client?
+    } catch (error) {
+        console.log('error updating schedule changes',error);
+    }
+}
 
 
 
@@ -192,8 +205,7 @@ function* clientSaga() {
     yield takeLatest('FETCH_SCHEDULE', fetchSchedule);
     yield takeLatest('SEND_ONE_SCHEDULE_CHANGE', oneOffScheduleChange);
     yield takeLatest('REGULAR_SCHEDULE_CHANGE', regularScheduleChange);
-    
-  }
+    yield takeLatest('SEND_ONE_SCHEDULE_CHANGE', updatedScheduleChange)
+}
 
-  export default clientSaga;
-  
+export default clientSaga;

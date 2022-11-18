@@ -18,10 +18,10 @@
     margin: 0 0 0 0  !important;
 }
 
-.clientSchedule .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
-    /* width: 50vw !important; */
+/* .clientSchedule .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
+    width: 50vw !important;
     height: 70vh !important;
-}
+} */
 
 .clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
     display: flex;
@@ -68,13 +68,13 @@
 }
 
 /* Header */
-.clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
+/* .clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
     width: 36vw !important;
     padding: 0 0 0 0 !important;
-}
+} */
 
 /* All of the day labels */
-.clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root  {
+.clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root  {
     width: 1vw !important;
     height: 1vw !important;
     justify-content: center !important;
@@ -107,6 +107,6 @@
 }
 
 /* month & year label */
-.css-dplwbx-MuiPickersCalendarHeader-label{
+.clientSchedule .css-dplwbx-MuiPickersCalendarHeader-label{
     font-size: 1.5rem !important;
 }

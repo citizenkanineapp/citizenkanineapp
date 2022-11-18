@@ -71,7 +71,10 @@ function ClientList() {
               </TableHead>
               <TableBody>
                 {clientList && clientList.map && clientList.map((client ) => (
-                    <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
+                    <StyledTableRow key={client.id} hover onClick={() => {
+                      fetchOneClient(client)
+                      dispatch({ type: 'FETCH_SCHEDULE', payload: client.id })
+                      }}> 
                       <TableCell>{client.first_name} {client.last_name}</TableCell>
                       <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
                       <TableCell>{client.phone}</TableCell>

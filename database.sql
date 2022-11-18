@@ -235,7 +235,8 @@ CREATE TABLE dogs_schedule_changes (
 	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
 	"date_to_change" DATE NOT NULL,
 	"is_scheduled" BOOLEAN DEFAULT FALSE,
-	"date" DATE DEFAULT CURRENT_DATE
+	"date" DATE DEFAULT CURRENT_DATE,
+	UNIQUE("dog_id", "date_to_change")
 	);
 	
 -- ** added "week_of_year" to daily_dogs for purposes of invoice query.

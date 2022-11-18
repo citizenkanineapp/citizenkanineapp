@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import CheckIcon from '@mui/icons-material/Check';
 import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 
@@ -22,9 +21,13 @@ function ClientSchedule() {
   //use selectors and defining dispatch
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
-  const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
   const dogs = client.dogs;
-
+  const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
+  const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
+  // console.log(clientSchedule)
+  const [updatedSchedule, setUpdatedSchedule] = useState(schedule);
+  // console.log(updatedSchedule)
+  
   
   useEffect(() => {
     dispatch({ type: 'FETCH_SCHEDULE', payload: client.id })
@@ -33,135 +36,54 @@ function ClientSchedule() {
   }, []);
   
   const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
-  //local useState state I am using for this functionality
+  // console.log(dayjs(changes[0].date_to_change).$d)
+;  //local useState state I am using for this functionality
   const [dog, setDog] = useState('');
   // console.log(dog);
   const [changeDate, setChangeDate] = useState('');
-  const [dogChanges, setDogChanges]= useState('');
-  const [action, setAction] = useState('');
   const [scheduled, setScheduled] = useState('');
   const [value, setValue] = useState(dayjs());
-  const [monday, setMonday] = useState(schedule["1"])
-  const [tuesday, setTuesday] = useState(schedule["2"]);
-  const [wednesday, setWednesday] = useState(schedule["3"]);
-  const [thursday, setThursday] = useState(schedule["4"]);
-  const [friday, setFriday] = useState(schedule["5"]);
-
-//this function handles the change of regular schedule
-  const handleClick = (event) => {
-    switch (event){
-      case "Monday":
-        setMonday(current => !current);
-        dispatch({type: 'SET_MONDAY_CHANGE', payload: !monday})
-        break;
-      case "Tuesday":
-        setTuesday(current => !current);
-        dispatch({type: 'SET_TUESDAY_CHANGE', payload: !tuesday})
-        break;
-      case "Wednesday":
-        setWednesday(current => !current);
-        dispatch({type: 'SET_WEDNESDAY_CHANGE', payload: !wednesday})
-        break;
-      case "Thursday":
-        setThursday(current => !current);
-        dispatch({type: 'SET_THURSDAY_CHANGE', payload: !thursday})
-        break;
-      case "Friday":
-        setFriday(current => !current);
-        dispatch({type: 'SET_FRIDAY_CHANGE', payload: !friday})
-        break;
-    } 
-  };
 
 
-
-// this handles the change of the date based on the date picker
-  const handleChange = (newValue) => {
-    // setValue(dayjs(newValue.$d.slice(0,10)));
-    let changeDateFormatting = JSON.stringify(newValue).slice(1,11); //this gets back just the yyyy-mm-dd string value
-    setValue(newValue)
-    setChangeDate(dayjs(changeDateFormatting).$d)
-    // console.log(changeDate);
+// THIS handles the change of the date based on the date picker
+  const handleDateChange = (newValue) => {
+    console.log(newValue);
+    setValue(newValue);
+    let changeDateFormatting = dayjs(JSON.stringify(newValue).slice(1,11)).$d;
+    // this formats the selected date's hr:min:sec to 00:00:00 so that dates can be matched. ex) Sun Nov 27 2022 00:00:00 GMT-0600 (Central Standard Time)
+    // setChangeDate(changeDateFormatting)
+    // console.log(changeDate)
   }
-  //NEED to get value and change.date_to_change to match
 
-  //this is for the submit button for the one off changes
-  let updatedChanges = [];
-  let addChanges = [];
-  const handleSubmit = (event) => {
+
+  //This is for the submit button for the one off changes
+  const handleSubmit = () => {
     // need to add date_to_change and is_selected to each one
     let newChanges = [];
     if (dog === "all"){
       client.dogs.map(singleDog => {
-        let thisChange = {dog_id: singleDog.dog_id, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled}
+        let thisChange = {dog_id: singleDog.dog_id, client_id: client.id, date_to_change: value.$d, is_scheduled: scheduled}
         newChanges.push(thisChange)
       })
     }
     else {
-      let thisChange = {dog_id: dog, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled}
+      let thisChange = {dog_id: dog, client_id: client.id, date_to_change: value.$d, is_scheduled: scheduled}
       newChanges.push(thisChange)
     }
+    dispatch({
+      type: 'SEND_ONE_SCHEDULE_CHANGE',
+      payload: newChanges
+    })
+
      // need to reset local states:
     setDog('');
     setScheduled('');
     setValue (dayjs());
+    console.log('newChanges', newChanges)
 
-    if (changes.length === 0){
-      addChanges = newChanges;
-    }
-    else{
-      // mapping through newChanges
-    loop1:
-      for (let thisChange of newChanges){
-        console.log('in newChanges');
-          for (let change of changes) {
-            console.log('thisChange is:', thisChange);
-            console.log('change is:', change);
-            let existingChangeDate = JSON.stringify(dayjs(change.date_to_change.slice(0,10)).$d); // this formats the date to match that of the new change
-            let newChangeDate = JSON.stringify(thisChange.date_to_change)
-            // does the dog_id match?
-            if (thisChange.dog_id === change.dog_id){
-              console.log('ids match')
-              // does the date and is_scheduled match? 
-              if(existingChangeDate === newChangeDate && thisChange.is_scheduled === change.is_scheduled){
-                //  this change already exists, continue
-                console.log('this change already exists')
-                break loop1;
-              }
-              // does the date match and the is_scheduled does not?
-              else if (existingChangeDate === newChangeDate && thisChange.is_scheduled !== change.is_scheduled){
-                // this change already exists and needs to be updated
-                console.log('this change exists and needs to be updated')
-                updatedChanges.push(thisChange)
-                break loop1;
-              }
-            }
-            // the dog_id does not match
-            else{
-              addChanges.push(thisChange)
-              break;
-            }
-            
-          }
-      }
-      console.log(updatedChanges);
-      console.log(addChanges);    
-      // dispatch updatedChanges an addChanges to add/update changes. 
-    }
-    }
-
-
-//this function changes a client's regular schedule
-const regularScheduleChange = (event) =>{
-  dispatch({type: 'REGULAR_SCHEDULE_CHANGE', payload: schedule})
-}
+  }
 
   // CALENDAR STUFF
-  const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
-  console.log(clientSchedule)
-  const [updatedSchedule, setUpdatedSchedule] = useState(clientSchedule);
-  console.log(updatedSchedule)
-
   const noChange = ()=> {// This is a blank function used as a placeholder for the onChange of the calendar picker. onChange is required but has no use in this case. 
   }
 
@@ -175,8 +97,10 @@ const regularScheduleChange = (event) =>{
   
 
   const handleWeekScheduleChange =()=>{
-    //dispatch updatedSchedule
-
+    //dispatch updatedSchedule // this object included the client_id
+    dispatch({type: 'REGULAR_SCHEDULE_CHANGE', payload: updatedSchedule})
+    // disable the weekly schedule:
+    setDisabled(!disabled);
   }
 
   return (
@@ -210,7 +134,7 @@ const regularScheduleChange = (event) =>{
                 <Button variant='contained' color='secondary' onClick={()=> {
                   setUpdatedSchedule(schedule)
                   setDisabled(!disabled)}}>Cancel</Button>
-                <Button variant='contained' color='secondary' onClick={handleWeekScheduleChange}>Submit</Button>
+                <Button variant='contained' color='secondary' onClick={handleWeekScheduleChange}>Confirm</Button>
               </Grid>
             :
               <Grid item xs={16} sx={{display: 'flex', justifyContent: 'right'}}>
@@ -431,7 +355,7 @@ const regularScheduleChange = (event) =>{
                       label="Date desktop"
                       inputFormat="MM/DD/YYYY"
                       value={value}
-                      onChange={handleChange}
+                      onChange={handleDateChange}
                       renderInput={(params) => <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />}
                   />
                 </LocalizationProvider>

@@ -179,6 +179,21 @@ function* regularScheduleChange(action){
 }
 
 
+function* search(action){
+    console.log('search term? ->>>>>>', action.payload)
+    const searchText = action.payload
+    let urlQuery = `/api/clients/search/matches?search=${searchText}`
+    console.log('url queery?', urlQuery)
+        try {
+            const results = yield axios.get(`${urlQuery}`);
+            console.log('results from server' ,results.data)
+            yield put ({type: 'SET_SEARCH_RESULTS', payload: results.data[0]});
+        } catch (error) {
+            console.log(error);
+            alert('Error setting search results');
+        }
+    }
+
 
 
 function* clientSaga() {
@@ -193,6 +208,7 @@ function* clientSaga() {
     yield takeLatest('FETCH_SCHEDULE', fetchSchedule);
     yield takeLatest('SEND_ONE_SCHEDULE_CHANGE', oneOffScheduleChange);
     yield takeLatest('REGULAR_SCHEDULE_CHANGE', regularScheduleChange);
+    yield takeLatest('SEARCH_CLIENTS', search);
     
   }
 

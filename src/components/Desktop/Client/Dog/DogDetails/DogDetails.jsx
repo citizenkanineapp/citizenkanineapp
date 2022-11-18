@@ -29,7 +29,7 @@ console.log(dog)
           {/*-------------------- DETAILS --------------------*/}
           <Box sx={{ display: "flex", flexDirection: "row", height: "90%", width: "100%", justifyContent: "center", alignItems: "center", gap: 5 }}>
               <Card sx={{ width: "40%", height: "50%" }}>  {/*need to figure out aspect ratio and conditional rendering to change into image upload for editing image*/}
-              <img src={dog.image}/>
+              <img src={dog.image ? dog.image : 'images/dogfiller.jpeg'}/>
               </Card>
 
               <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "60%", gap: 3}}>

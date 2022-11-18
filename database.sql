@@ -54,10 +54,12 @@ CREATE TABLE "user" (
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	
---** user MOCK data **--
-insert into "user"
+--** USER INITIALIZATION DATA **--
+--** USERNAME: 'admin'
+--** PASSWORD: 'admin'
+INSERT INTO "user"
 	("username","password","admin")
-values
+VALUES
 	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true);
 
 CREATE TABLE employees_schedule (

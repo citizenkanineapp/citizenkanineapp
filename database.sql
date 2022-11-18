@@ -54,6 +54,11 @@ CREATE TABLE "user" (
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	
+insert into "user"
+	("username","password","admin")
+values
+	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true);
+	
 
 CREATE TABLE employees_schedule (
 	"id" SERIAL PRIMARY KEY,
@@ -133,8 +138,8 @@ CREATE TABLE clients (
 	"email" VARCHAR(150) NOT NULL,
 	"notes" VARCHAR,
 	"date" DATE DEFAULT CURRENT_DATE,
-	"lat" INT,
-	"long" INT 
+	"lat" VARCHAR(100),
+	"long" VARCHAR (100)
 	);
 
 --** Clients MOCK DATA -- Using addresses found in the area surrounding Lake Harriet **--

@@ -81,7 +81,7 @@ pool.query(queryText)
 /**
  * POST route for initially adding a client
  */
-router.post('/', rejectUnauthenticated, async (req, res) => {
+router.post('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
   // console.log(req.body);
   console.log(req.user);
   const client = await pool.connect();

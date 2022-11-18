@@ -11,7 +11,6 @@ import Nav from '../Desktop/DesktopNav/Nav';
 import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
 import LoginPage from '../AllPages/Login/Login/LoginPage';
-import RegisterPage from '../AllPages/Login/Register/RegisterPage';
 import ResetPassPage from '../AllPages/Login/ResetPass/ResetPassPage';
 import Invoicing from '../Desktop/Invoicing/Invoicing';
 import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
@@ -69,14 +68,6 @@ function App() {
                 <Redirect to="/user" />
                 :
                 <LoginPage />}
-            </Route>
-
-            {/* just for building the app, should be worked into add employee */}
-            <Route exact path="/registration">
-              {user.id ? // "/user" --> splash page
-                <Redirect to="/user" />
-                :
-                <RegisterPage />}
             </Route>
 
             {/* ----------------------- DESKTOP ----------------------- */}

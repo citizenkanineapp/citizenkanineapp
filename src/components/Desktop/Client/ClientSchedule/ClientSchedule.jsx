@@ -175,6 +175,7 @@ function ClientSchedule() {
                         }}
                   // renderDay is essentially mapping through each day in the selected month.
                   renderDay={(day, _value, DayComponentProps) => {
+                    console
                     // console.log(JSON.stringify(DayComponentProps.day.$d))
                     let thisDayString = JSON.stringify(DayComponentProps.day.$d)
                     let selectedMUIClass='';
@@ -200,13 +201,16 @@ function ClientSchedule() {
                         // Is today a regularly scheduled day?
                           <Box className='avatarBox' sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                             {/* Regularly Scheduled Day? */}
-                            {clientSchedule[day.$W]?
+                            { clientSchedule[day.$W]?
                               // map through dogs
                               <>
-                                {dogs.map((dog, index)=>{
+                                {dogs && dogs.map((dog, index)=>{
                                   
                                   // map through changes
                                     return(
+                                      <>
+                                      {/* Are there any changes? */}
+                                      { changes.length > 0 ?
                                         <div id={day.$D}>
                                         {changes.map(change=>{
                                           // is there a change for this dog?
@@ -243,30 +247,48 @@ function ClientSchedule() {
                                             )
                                           }
                                         })}
-                                        </div>)
+                                        </div>
+                                      :
+                                      // no changes on this regularly scheduled day
+                                        <DogAvatar index={index} dog={dog} id={dog.dog_id}/>
+                                      }
+                                      </>
+                                      
+
+                                        )
                                 })}
                               </>
                           :
                           // {/* NOT a Regularly Scheduled Day */}
-                          <>
-                          {dogs.map((dog, index)=>{
+                          <div id={day.$D}>
+                          {dogs && dogs.map((dog, index)=>{
                             return (
-                              <div id={day.$D}>
-                                {changes.map(change=> {
-                                  // Is there a change for this dog?
-                                  if(change.dog_id === dog.dog_id){
-                                    // is the change for today?
-                                    if(thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)){
-                                      return(
-                                        <DogAvatar index={index} dog={dog} id={dog.dog_id}/>
-                                      )
+                              //  are there changes?
+                              <>
+                                {changes ? 
+                                  <div id={day.$D}>
+                                  {changes && changes.map(change=> {
+                                    // Is there a change for this dog?
+                                    if(change.dog_id === dog.dog_id){
+                                      // is the change for today?
+                                      if(thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)){
+                                        if (change.is_scheduled){
+                                          return(
+                                            <DogAvatar index={index} dog={dog} id={dog.dog_id}/>
+                                          )
+                                        }
+                                      }
                                     }
-                                  }
-                                })}
-                              </div>
+                                    
+                                  })}
+                                </div>
+                                :
+                                null
+                                }
+                              </>
                             )
                           })}
-                          </>
+                          </div>
                           }
                           </Box>
                           : 

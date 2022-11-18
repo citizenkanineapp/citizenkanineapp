@@ -335,7 +335,7 @@ pool.query(queryText, queryValues)
 //this is for one off schedule changes
 router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 
-console.log('one off change', req.body)
+// console.log('one off change', req.body)
 
 const client = await pool.connect();
   // const {date, is_scheduled, dog_id, client_id } = req.body

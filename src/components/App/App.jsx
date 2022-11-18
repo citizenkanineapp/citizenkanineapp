@@ -11,7 +11,6 @@ import Nav from '../Desktop/DesktopNav/Nav';
 import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
 import LoginPage from '../AllPages/Login/Login/LoginPage';
-import RegisterPage from '../AllPages/Login/Register/RegisterPage';
 import ResetPassPage from '../AllPages/Login/ResetPass/ResetPassPage';
 import Invoicing from '../Desktop/Invoicing/Invoicing';
 import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
@@ -24,7 +23,8 @@ import AdminNotes from '../Desktop/AdminNotes/AdminNotes';
 import Home from '../Mobile/Home/Home';
 import Map from '../Mobile/MapView/MapView';
 import WalkerSchedule from '../Mobile/WalkerSchedule/WalkerSchedule';
-import Routes from '../Mobile/DailyRoutes/DailyRoutes';
+import RouteSelect from '../Mobile/RouteSelect/RouteSelect';
+import Routes from '../Mobile/Route/Route';
 import LoadBalancing from '../Mobile/LoadBalancing/LoadBalancing';
 import MobileNav from '../Mobile/MobileNav/MobileNav';
 import DogDetails from '../Mobile/DogDetails/DogDetails';
@@ -69,14 +69,6 @@ function App() {
                 <Redirect to="/user" />
                 :
                 <LoginPage />}
-            </Route>
-
-            {/* just for building the app, should be worked into add employee */}
-            <Route exact path="/registration">
-              {user.id ? // "/user" --> splash page
-                <Redirect to="/user" />
-                :
-                <RegisterPage />}
             </Route>
 
             {/* ----------------------- DESKTOP ----------------------- */}
@@ -134,10 +126,14 @@ function App() {
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/routes">
+              <RouteSelect />
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/m/route/:id">
               <Routes />
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/m/dog/"> {/* should we use params here? - sarah */}
+            <ProtectedRoute exact path="/m/dog/:id"> {/* should we use params here? - sarah */}
               <DogDetails />
             </ProtectedRoute>
 
@@ -159,7 +155,7 @@ function App() {
 
           </Switch>
 
-          <MobileNav /> 
+          <MobileNav />
         </div>
       </ThemeProvider>
     </Router>

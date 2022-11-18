@@ -3,9 +3,9 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 
 
-function* uploadImage(action){
+function* uploadImage(action) {
     // console.log('arrived in image saga' , action.payload);
-    try{
+    try {
         const image = yield axios({
             method: 'POST',
             url: '/api/image',
@@ -13,23 +13,51 @@ function* uploadImage(action){
         })
         console.log(action.payload.index)
         console.log('what comes back from server', image)
-        const {data} = image
-        const newImageObject = {data}
+        const { data } = image
+
+        const newImageObject = { data }
+        console.log('THE OBJECT IS:', newImageObject);
         newImageObject.index = action.payload.index
         console.log('testing format', newImageObject)
         //need to decide what type of state the reducer should be
-        yield put ({type: 'SET_DOG_PHOTO', payload: newImageObject});
+        yield put({ type: 'SET_DOG_PHOTO', payload: newImageObject });
     } catch {
         console.log('error in addImage')
     }
 }
 
-// f
+function* updateDogPhoto(action) {
+    // console.log('DOG ID IS:', action.payload);
+    try {
+        const image = yield axios({
+            method: 'POST',
+            url: '/api/image',
+            data: action.payload
+        })
+        console.log('IMAGE IS:', image);
+        const { data } = image;
+        const newImageObject = { data };
+        newImageObject.dogID = action.payload.dogID
+
+        console.log('testing format', newImageObject)
+
+        yield axios({
+            method: 'PUT',
+            url: '/api/mobile/photos',
+            data: newImageObject
+        })
+
+        //need to decide what type of state the reducer should be
+        yield put({ type: 'FETCH_DOG_DETAILS', payload: action.payload.dogID })
+    } catch {
+        console.log('error updating dog photo');
+    }
+}
 
 function* imageSaga() {
     yield takeLatest('ADD_IMAGE', uploadImage);
-    
-  }
+    yield takeLatest('UPDATE_DOG_PHOTO', updateDogPhoto);
 
-  export default imageSaga;
-  
+}
+
+export default imageSaga;

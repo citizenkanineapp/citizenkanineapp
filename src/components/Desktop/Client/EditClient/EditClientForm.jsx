@@ -7,7 +7,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
-import swal from '@sweetalert/with-react'
+import swal from 'sweetalert'
 
 
 
@@ -19,7 +19,6 @@ function ClientForm(){
     dispatch({
       type: 'FETCH_CLIENTS'
     })
-   
     
   },[])
 

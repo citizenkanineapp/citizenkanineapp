@@ -1,11 +1,10 @@
-const clientsReducer = (state = [], action) => {
+const invoiceReducer = (state = {}, action) => {
     switch (action.type) {
-        case 'SET_CLIENTS':
+        case 'SET_INVOICE_DATA':
             return action.payload;
         default:
             return state;
     }
 }
 
-
-export default clientsReducer;
+export default invoiceReducer;

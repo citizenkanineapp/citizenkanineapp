@@ -12,10 +12,12 @@ import clientScheduleReducer from './clientSchedule.reducer';
 import newDogReducer from './newDog.reducer';
 import dogDelete from './dogDelete.reducer';
 import searchReducer from './search.reducer';
+import invoiceReducer from './invoiceData.reducer'
 import clientReducer from './client.reducer';
 import routeReducer from './route.reducer';
 import details from './details.reducer';
 import adminNotesReducer from './adminNotes.reducer';
+
 
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
@@ -34,6 +36,8 @@ const rootReducer = combineReducers({
   routeReducer,
   searchReducer,
   adminNotesReducer,
+  details,
+  invoiceReducer
 });
 
 export default rootReducer;

@@ -4,7 +4,6 @@
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
 
-
 -- ORDERING BASED ON DEPENDENT COLUMNS/SECTIONS:
 DROP TABLE IF EXISTS daily_dogs;
 DROP TABLE IF EXISTS dogs_schedule_changes;
@@ -16,8 +15,7 @@ DROP TABLE IF EXISTS employees_schedule;
 DROP TABLE IF EXISTS admin_notes;
 DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS employees;
-
-
+DROP TABLE IF EXISTS services;
 
 CREATE TABLE employees (
 	"id" SERIAL PRIMARY KEY,
@@ -56,6 +54,11 @@ CREATE TABLE "user" (
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	
+--** user MOCK data **--
+insert into "user"
+	("username","password","admin")
+values
+	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true);
 
 CREATE TABLE employees_schedule (
 	"id" SERIAL PRIMARY KEY,
@@ -102,7 +105,26 @@ VALUES
 	('far'),
 	('misfits'),
 	('unassigned');
-	
+
+CREATE TABLE services (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR (150),
+	"price" INT
+);
+
+INSERT INTO services
+	("name", "price")
+VALUES
+	('Friends and Family', '20'),
+	('1 Dog - Ad Hoc', '35'),
+	('1 Dog - 2-4x / week', '30'),
+	('1 Dog - 5x / week', '26'),
+	('2 Dogs - Ad Hoc', '45'),
+	('2 Dogs - 2-4x / week', '42'),
+	('2 Dogs - 5x / week', '37'),
+	('3 Dogs',  '54'),
+	('Other', '0');
+
 CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,
 	"first_name" VARCHAR(150) NOT NULL,
@@ -110,6 +132,7 @@ CREATE TABLE clients (
 	"street" VARCHAR(150),
 	"city" VARCHAR(150),
 	"zip" INT,
+--	"service_id" INT NOT NULL REFERENCES,
 	"route_id" INT NOT NULL REFERENCES routes(id),
 	"phone" VARCHAR(13),
 	"email" VARCHAR(150) NOT NULL,
@@ -137,7 +160,6 @@ values
 	('Sunny', 'Mateiko', '4100 Lyndale Ave S', 'Minneapolis', 55409, 1, '(838)150-5160', 'smateikoc@illinois.edu'),
 	('Noelyn', 'Rowden', '813 W 50th St', 'Minneapolis', 55419, 2, '(976)109-9306', 'nrowdend@uiuc.edu'),
 	('Madelina', 'Becerro', '1601 W 50th St', 'Minneapolis', 55419, 1, '(849)163-0399', 'mbecerroe@msu.edu');
-
 
 
 CREATE TABLE dogs (
@@ -217,11 +239,12 @@ CREATE TABLE dogs_schedule_changes (
 	"dog_id" INT NOT NULL REFERENCES dogs(id) ON DELETE CASCADE,
 	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
 	"date_to_change" DATE NOT NULL,
-	"is_scheduled" BOOLEAN DEFAULT NULL,
+	"is_scheduled" BOOLEAN DEFAULT FALSE,
 	"date" DATE DEFAULT CURRENT_DATE
 	);
 	
-	
+-- ** added "week_of_year" to daily_dogs for purposes of invoice query.
+-- ** week_of_year added to each data row in mobile.router PUT request	
 CREATE TABLE daily_dogs (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(150) NOT NULL,
@@ -234,9 +257,32 @@ CREATE TABLE daily_dogs (
 	"cancelled" BOOLEAN DEFAULT NULL,
 	UNIQUE ("dog_id", "date")
 	);
-	
+-- ** daily_dogs MOCK DATA
+insert into daily_dogs
+	("date","name", "dog_id","checked_in","no_show","cancelled","route_id","client_id")
+values
+	('2022-10-31','Michael','3','true','false','false','1','1'),
+	('2022-10-31','Darya','5','true','false','false','1','1'),
+	('2022-11-02','Michael','3','true','false','false','1','1'),
+	('2022-11-02','Darya','5','true','false','false','1','1'),
+	('2022-11-04','Michael','3','true','false','false','1','1'),
+	('2022-11-04','Darya','5','true','false','false','1','1'),
+	('2022-11-07','Michael','3','true','false','false','1','1'),
+	('2022-11-07','Darya','5','true','false','false','1','1'),
+	('2022-11-09','Michael','3','true','false','false','1','1'),
+	('2022-11-11','Michael','3','false','true','false','1','1'),
+	('2022-11-11','Darya','5','false','true','false','1','1'),
+	('2022-10-31','Gunner','6','true','false','false','1','13'),
+	('2022-11-01','Gunner','6','true','false','false','1','13'),
+	('2022-11-02','Gunner','6','true','false','false','1','13'),
+	('2022-11-03','Gunner','6','false','true','false','1','13'),
+	('2022-11-04','Gunner','6','true','false','false','1','13'),
+	('2022-11-07','Gunner','6','true','false','false','1','13'),
+	('2022-11-08','Gunner','6','true','false','false','1','13'),
+	('2022-11-09','Gunner','6','true','false','false','1','13');
+
 CREATE TABLE admin_notes (
 	"id" SERIAL PRIMARY KEY,
 	"user_id" INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
 	"notes" VARCHAR
-	);	
+	);

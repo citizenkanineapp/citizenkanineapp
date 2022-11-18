@@ -7,6 +7,7 @@ import resetPassSaga from './passreset.saga';
 import employeesSaga from './employees.saga.js';
 import clientSaga from './clients.saga';
 import RouteSaga from './routes.saga';
+import InvoiceDataSaga from './invoiceData.saga';
 import clientScheduleSaga from './clientSchedule.saga';
 import detailsSaga from './details.saga';
 import adminSaga from './admin.saga';
@@ -29,6 +30,7 @@ export default function* rootSaga() {
     employeesSaga(),
     clientSaga(),
     RouteSaga(),
+    InvoiceDataSaga(),
     clientScheduleSaga(),
     detailsSaga(),
     adminSaga(),

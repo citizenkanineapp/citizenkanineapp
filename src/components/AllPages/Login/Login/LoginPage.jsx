@@ -53,6 +53,7 @@ function LoginPage() {
             />
             <TextField
               margin="dense"
+              type="password"
               label="password"
               size="small"
               value={password}

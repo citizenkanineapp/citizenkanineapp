@@ -7,8 +7,7 @@ import FlagIcon from '@mui/icons-material/Flag';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ImageUpload from '../../AllPages/ImageUpload/ImageUpload';
-
+import MobileImageUpload from './MobileImageUpload';
 
 
 function DogDetails() {
@@ -182,7 +181,7 @@ function DogDetails() {
 
       <Modal open={open} onClose={handleClose} sx={{ mt: 5.5, ml: 4 }} >
         <Grid item xs={12}>
-          <ImageUpload />
+          <MobileImageUpload id={dog.dog_id} />
         </Grid>
       </Modal>
 

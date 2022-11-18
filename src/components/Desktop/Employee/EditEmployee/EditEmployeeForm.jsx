@@ -1,5 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import swal from 'sweetalert'
+
 
 //MUI
 import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea, Switch } from "@mui/material";
@@ -22,11 +24,31 @@ function EmployeeForm() {
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
   const deleteEmployee = async (employee) => {
-    console.log(employee.id);
     let employeeID = employee.id;
-    await dispatch({ type: 'SAGA_DELETE_EMPLOYEE', payload: employeeID })
+    swal({
+      title: "Are you sure?",
+      text: "This will permanently delete this Employee",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          dispatch({ type: 'SAGA_DELETE_EMPLOYEE', payload: employeeID })
+            .then(dispatch({ type: 'SET_MODAL_STATUS' }))
+          swal("Success!", {
+            icon: "success",
 
-    await dispatch({ type: 'SET_MODAL_STATUS' })
+          });
+        } else {
+          swal("The employee is safe!");
+        }
+      });
+
+    // console.log(employee.id);
+    // await dispatch({ type: 'SAGA_DELETE_EMPLOYEE', payload: employeeID })
+
+    // await dispatch({ type: 'SET_MODAL_STATUS' })
   }
   return (
     <Grid className="container" sx={{ display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>

@@ -1,6 +1,8 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const axios = require('axios');
+require('dotenv').config();
 
 const {
     rejectUnauthenticated,
@@ -81,6 +83,7 @@ pool.query(queryText)
  */
 router.post('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
   // console.log(req.body);
+  console.log(req.user);
   const client = await pool.connect();
   const {first_name, last_name, street, city, zip, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone, flag } = req.body
   // const customer = {first_name, last_name, address, phone, email, route_id}
@@ -88,17 +91,32 @@ router.post('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => 
   // const vet = {vet_name, vet_phone}
   // console.log ('vet', vet)
  
+  console.log('in client POST route');
 
  
   try {
+
+  //geocoding for client
+  const api_key = process.env.map_api_key;
+  const config = { headers: { Authorization: api_key } };
+
+  const address = street.replace(/ /g,"+");
+  const town = city.replace(/ /g, '');
+
+  const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
+  
+  const lat = geoStats.data.addresses[0].latitude;
+  const long = geoStats.data.addresses[0].longitude;
+  console.log('heres the geoStats!', lat, long);
+
   await client.query('BEGIN')
   const clientTxt = await client.query(`
                           INSERT INTO clients 
-                              ("first_name", "last_name", "street", "city", "zip", "route_id", "phone", "email", "notes") 
+                            ("first_name", "last_name", "street", "city", "zip", "route_id", "phone", "email", "notes", "lat", "long") 
                             VALUES
-                            ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
                             RETURNING "id";
-  `, [first_name, last_name, street, city, zip, route_id, phone, email, notes])
+  `, [first_name, last_name, street, city, zip, route_id, phone, email, notes, lat, long])
   const customerId = clientTxt.rows[0].id
 
   await Promise.all(dogArray.map(dog => { 

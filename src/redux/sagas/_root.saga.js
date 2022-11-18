@@ -9,6 +9,7 @@ import clientSaga from './clients.saga';
 import RouteSaga from './routes.saga';
 import clientScheduleSaga from './clientSchedule.saga';
 import detailsSaga from './details.saga';
+import adminSaga from './admin.saga';
 
 
 // rootSaga is the primary saga.
@@ -30,5 +31,6 @@ export default function* rootSaga() {
     RouteSaga(),
     clientScheduleSaga(),
     detailsSaga(),
+    adminSaga(),
   ]);
 }

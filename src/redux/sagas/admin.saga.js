@@ -33,9 +33,13 @@ function* fetchAdminNotes(action) {
 
 
 function* adminSaga() {
-    yield takeLatest('ADD_NOTES', setAdminNotes);
+    yield takeLatest('ADD_ADMIN_NOTES', setAdminNotes);
     yield takeLatest('FETCH_NOTES', fetchAdminNotes);
 
 }
 
 export default adminSaga;
+
+
+//Note to self:  I think I need to just make a put route and
+//get rid of the post route

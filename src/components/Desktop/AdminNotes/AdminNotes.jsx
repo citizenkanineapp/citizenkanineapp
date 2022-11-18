@@ -34,7 +34,7 @@ function AdminNotes(){
     const onEnterSubmit = (e) => {
         if(e.keyCode == 13 && e.shiftKey == false) {
           e.preventDefault();
-          dispatch({ type: 'ADD_NOTES', payload: {notes: note} });
+          dispatch({ type: 'ADD_ADMIN_NOTES', payload: adminNotes});
           setNote('');
           setToggleNotes(!toggleNotes);
         };
@@ -43,7 +43,7 @@ function AdminNotes(){
     
     //sends notes to DB via button
     const buttonSubmit = () => {
-        dispatch({ type: 'ADD_NOTES', payload: {notes: note}});
+        dispatch({ type: 'ADD_ADMIN_NOTES', payload: adminNotes});
         setToggleNotes(!toggleNotes);
         setNote();
        
@@ -67,8 +67,8 @@ function AdminNotes(){
                     <div className="edit_notes">
                         <textarea type="text" 
                             className="notes_input"
-                            value={note} 
-                            onChange={(e) => setNote(e.target.value)}
+                            value={adminNotes.notes} 
+                            onChange={(e) => dispatch({type: 'ADD_ADMIN_NOTES', payload: e.target.value})}
                             onKeyDown={(e) => onEnterSubmit(e)}/>
                     </div>
                 </div>

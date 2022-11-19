@@ -16,10 +16,11 @@ const {
 /**
  * GET all clients and their dogs
  */
+//GET LAT/LONG
 router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   // console.log('arrived in server get all route')
   const queryText = `
-                    SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
+                    SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, clients.lat, clients.long, routes.id as route,
                     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, 
                     dogs.vet_phone, dogs.flag, dogs.regular, clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
                             JOIN dogs
@@ -150,6 +151,8 @@ router.post('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => 
 });
 
 //route to edit client
+
+// ADAPT LAT/LON for editing client 
 router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
   // console.log('dogs have id?', req.body)
   const connection = await pool.connect();
@@ -168,6 +171,20 @@ router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     route = 5
   }
   // console.log(route)
+
+  //geocoding for client
+  const api_key = process.env.map_api_key;
+  const config = { headers: { Authorization: api_key } };
+
+  const address = street.replace(/ /g,"+");
+  const town = city.replace(/ /g, '');
+
+  const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
+  
+  const lat = geoStats.data.addresses[0].latitude;
+  const long = geoStats.data.addresses[0].longitude;
+  console.log('heres the geoStats!',last_name, lat, long);
+
   //SQL text for updating client table
   const clientTxt = `
             UPDATE clients
@@ -178,13 +195,15 @@ router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                   route_id = $4,
                   phone= $5,
                   email = $6,
-                  notes = $7
+                  notes = $7,
+                  lat = $9,
+                  long = $10
               
                 WHERE
                   id = $8;
 
   `
-  const clientValues = [street, city, zip, route, phone, email, notes, id]
+  const clientValues = [street, city, zip, route, phone, email, notes, id, lat, long]
   // console.log(clientValues)
   try{
     await connection.query('BEGIN');

@@ -44,7 +44,7 @@ function InvoiceTable({monthsShort}) {
                   </TableRow>
                 </TableHead>
                 <TableBody>                  
-                  {invoiceItems && invoiceItems.map && invoiceItems.map((item) => (
+                  {invoiceItems && invoiceItems.map && invoiceItems[0].clientid && invoiceItems.map((item) => (
                       <StyledTableRow key={item.id} >
                         <TableCell key={item.id} >{item.month}/{item.year}</TableCell>
                         <TableCell key={item.id} >{item.first_name} {item.last_name}</TableCell>

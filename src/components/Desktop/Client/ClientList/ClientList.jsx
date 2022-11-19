@@ -6,8 +6,9 @@ import '../../Desktop.css';
 import ClientModal from '../ClientModal/ClientModal';
 
 //MUI
-import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField, Fab } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 // NO THESE COLORS AREN'T FINAL BUT WE DEF SHOULD HAVE SOME VISUAL CHANGE
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -67,6 +68,7 @@ function ClientList() {
                   <TableCell sx={{fontWeight: '800'}}>Dogs:</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Phone</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Email</TableCell>
+                  <TableCell sx={{fontWeight: '800'}}>Schedule</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -79,6 +81,14 @@ function ClientList() {
                       <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
                       <TableCell>{client.phone}</TableCell>
                       <TableCell>{client.email}</TableCell>
+                      <TableCell>
+                        <Fab onClick={() => {
+                        openModal('ClientSchedule')
+                        dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })
+                      }}>
+                        <CalendarMonthIcon sx={{ fontSize: 45, color: '#341341' }}/> 
+                      </Fab>
+                      </TableCell>
                     </StyledTableRow>
                 ))}
               </TableBody>

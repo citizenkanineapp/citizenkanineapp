@@ -130,7 +130,7 @@ function ClientDetails(){
                     sx={{height: 175}}
                     />
               </Card>
-                 ))}
+              ))}
 
 
        

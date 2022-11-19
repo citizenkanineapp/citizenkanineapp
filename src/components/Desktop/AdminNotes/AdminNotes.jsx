@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './AdminNotes.css'
 
@@ -12,7 +13,7 @@ import { Button, TextField, Typography, Grid, Avatar, Box } from "@mui/material"
 
 function AdminNotes(){
     useEffect(() => {
-        dispatch({ type: 'FETCH_NOTES' })
+        dispatch({ type: 'FETCH_ADMIN_NOTES' })
       }, []);
     
     
@@ -43,14 +44,14 @@ function AdminNotes(){
     
     //sends notes to DB via button
     const buttonSubmit = () => {
-        dispatch({ type: 'ADD_ADMIN_NOTES', payload: note});
         setToggleNotes(!toggleNotes);
         setNote('');
        
     };
 
     const deleteNote = (id) =>{
-        dispatch({type: ''})
+        console.log(id)
+        dispatch({type: 'DELETE_ADMIN_NOTES', payload: id})
     }
 
 
@@ -65,7 +66,7 @@ function AdminNotes(){
                             <h4 className="notes_text">Notes:</h4>
                                 {/* <button className="widget_button" onClick={() =>  buttonSubmit()}>⨉</button> */}
                                <IconButton onClick={() =>  buttonSubmit()}>
-                                    <CheckBoxOutlinedIcon/>
+                                    <CancelPresentationIcon/>
                                 </IconButton>
                     </div>
                     <div className="edit_notes">
@@ -75,6 +76,15 @@ function AdminNotes(){
                             placeholder="Add a new note"
                             onChange={(e) => setNote(e.target.value)}
                             onKeyDown={(e) => onEnterSubmit(e)}/>
+                             <ul>
+                       {adminNotes.map ((notes) => (
+                            <li className="notes" key={notes.id}>{notes.notes}
+                                 <IconButton onClick={() => deleteNote(notes.id)}>
+                                    <CancelPresentationIcon sx={{ fontSize: 20, color: '#341341' }}/> 
+                                </IconButton>
+                            </li>
+                        ))}
+                        </ul>
                     </div>
                 </div>
             </Grid>
@@ -95,9 +105,9 @@ function AdminNotes(){
                        <ul>
                        {adminNotes.map ((notes) => (
                             <li className="notes" key={notes.id}>{notes.notes}
-                                 <IconButton onClick={() => deleteNote(notes.id)}>
+                                 {/* <IconButton onClick={() => deleteNote(notes.id)}>
                                     <DeleteIcon sx={{ fontSize: 20, color: '#341341' }}/> 
-                                </IconButton>
+                                </IconButton> */}
                             </li>
                         ))}
                         </ul>
@@ -111,3 +121,7 @@ function AdminNotes(){
 }
 
 export default AdminNotes;
+
+//get rid of edit. 
+//have plus and input
+//delete from main view

@@ -4,3 +4,11 @@
     background-size: cover;
     background-color: #3f89a4;
 }
+
+.dogPhoto{
+    width: "100%";
+}
+
+.dogPhoto:hover{
+    filter: brightness(90%);
+}

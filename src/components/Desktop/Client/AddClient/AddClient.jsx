@@ -35,7 +35,7 @@ function AddClient(){
   const [errorEmail, setErrorEmail] = useState(false)
   const [errorRoute, setErrorRoute] = useState(false)
 
-  const clientSchedule = useSelector(store => store.clientScheduleReducer)
+  const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
 
 
   const [monday, setMonday] = useState(false);
@@ -183,7 +183,7 @@ function AddClient(){
                     value={clientToAdd.phone} 
                     onChange={(event) => dispatch({type: 'ADD_PHONE', payload: event.target.value})}
                     error={errorPhone}
-                    helperText={errorPhone ? errorPhone && "* Phone (xxx)xxx-xxxx" : "* Phone"}  
+                    helperText={errorPhone ? errorPhone && "* Phone (xxx)—xxx—xxxx" : "* Phone"}  
                     size="small" />
                   <TextField 
                     value={clientToAdd.street} 
@@ -248,9 +248,8 @@ function AddClient(){
                   <TextField 
                       value={clientToAdd.notes} 
                       onChange={(event) => dispatch({type: 'ADD_NOTES', payload: event.target.value})}
-                      helperText="Protocols"  
-                      size="small"
-                      multiline rows={2} />         
+                      helperText="Entry Protocol"  
+                      size="small"/>         
             </Grid> 
 
 
@@ -259,38 +258,38 @@ function AddClient(){
       <h2>Weekly Schedule</h2>
       <Grid container spacing={2} sx={{ display: 'flex', mb: 2, flexDirection: 'row', justifyContent: 'center' }} >
         <Grid item xs={2}>
-          <Card raised onClick={(event) => handleClick('Monday')} >
+          <Card elevation={4} onClick={(event) => handleClick('Monday')} >
             {/* try 1 instead of monday */}
-            <CardContent sx={{ backgroundColor: clientSchedule[1] ? '#7BCEC8' : null }}>
+            <CardContent sx={{ backgroundColor: clientSchedule[1] ? '#a3bbc4' : null, boxShadow: 'none' }}>
               Monday
             </CardContent>
           </Card>
         </Grid>
        
       <Grid item xs={2} >
-          <Card raised onClick={(event) => handleClick('Tuesday')} >
-            <CardContent sx={{ backgroundColor: clientSchedule[2] ? '#7BCEC8' : null }}>
+          <Card elevation={4} onClick={(event) => handleClick('Tuesday')} >
+            <CardContent sx={{ backgroundColor: clientSchedule[2] ? '#a3bbc4' : null, boxShadow: 'none' }}>
               Tuesday
             </CardContent>
           </Card>
       </Grid>
       <Grid item xs={2}>
-          <Card raised onClick={(event) => handleClick('Wednesday')}>
-            <CardContent sx={{ backgroundColor: clientSchedule[3] ? '#7BCEC8' : null }}>
+          <Card elevation={4} onClick={(event) => handleClick('Wednesday')}>
+            <CardContent sx={{ backgroundColor: clientSchedule[3] ? '#a3bbc4' : null, boxShadow: 'none' }}>
               Wednesday
             </CardContent>
           </Card>
       </Grid>
       <Grid item xs={2}>
-          <Card raised onClick={(event) => handleClick('Thursday')} >
-            <CardContent sx={{ backgroundColor: clientSchedule[4] ? '#7BCEC8' : null }}>
+          <Card elevation={4} onClick={(event) => handleClick('Thursday')} >
+            <CardContent sx={{ backgroundColor: clientSchedule[4] ? '#a3bbc4' : null, boxShadow: 'none' }}>
               Thursday
             </CardContent>
           </Card>
       </Grid>
       <Grid item xs={2}>
-          <Card raised onClick={(event) => handleClick('Friday')}>
-            <CardContent sx={{ backgroundColor: clientSchedule[5] ? '#7BCEC8' : null }}>
+          <Card elevation={4} onClick={(event) => handleClick('Friday')}>
+            <CardContent sx={{ backgroundColor: clientSchedule[5] ? '#a3bbc4' : null }}>
               Friday
             </CardContent>
           </Card>
@@ -301,7 +300,7 @@ function AddClient(){
         <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
             <Button variant="outlined" color="info"
               onClick={back}>Back</Button>  {/*goes back to client list*/}
-            <Button variant="contained" color="success" onClick={checkInputs}>Next</Button> 
+            <Button variant="contained" color="secondary" onClick={checkInputs}>Add Dogs</Button> 
         </Box>
       </Box>
     // </div>

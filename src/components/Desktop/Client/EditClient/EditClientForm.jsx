@@ -4,10 +4,9 @@ import { useEffect } from "react";
 import { Box } from "@mui/system";
 import { Button, TextField, Avatar, Typography, Card, CardActions, CardMedia, Select, MenuItem, FormControl, FormHelperText, Grid, IconButton } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import DeleteIcon from '@mui/icons-material/Delete';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
-import swal from 'sweetalert'
+
 
 
 
@@ -38,32 +37,6 @@ const back = event => {
   // dispatch({type: 'CLEAR_DOGS'})
 }
 
-const deleteClient = (id) => {
-
-  swal({
-    title: "Are you sure?",
-    text: "This will permanently delete this client",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  })
-  .then((willDelete) => {
-    if (willDelete) {
-      dispatch({type: 'SET_MODAL_STATUS'})
-      dispatch({type: 'DELETE_CLIENT', payload: id})
-      dispatch({type: 'CLEAR_CLIENT'})
-      
-      swal("Success!", {
-        icon: "success",
-
-      });
-    } else {
-      swal("The client is safe!");
-    }
-  });
-
-
-}
 
 const openModal = (view) => {
   dispatch({ type: 'SET_CLIENT_MODAL', payload: view }); //opens dog edit form
@@ -194,14 +167,9 @@ const fetchOneDog = (dog) =>{
 
             {/*-------------------- BUTTONS --------------------*/}
             <Box sx={{mt: 2 }} display="flex" justifyContent="space-between">
-              <Box width="28%" display="flex" justifyContent="space-between">
-                <Button variant="outlined" color="info" onClick={back}>Cancel</Button>  {/*goes back to client list*/}
-                    <Button variant="contained"
-                      onClick={() => deleteClient(client.id)}>Delete</Button> 
-              </Box>
-                <Button variant="contained" color="secondary"
-                  onClick={saveChanges}>Save</Button> 
-
+              <Button variant="outlined" color="info" onClick={back}>Cancel</Button>  {/*goes back to client list*/}
+              <Button variant="contained" color="secondary"
+                onClick={saveChanges}>Save</Button> 
             </Box>
       </Box>
     );

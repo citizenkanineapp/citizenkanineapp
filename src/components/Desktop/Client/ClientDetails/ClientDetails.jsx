@@ -53,58 +53,76 @@ function ClientDetails(){
 
          
               {/*-------------------- TEXT FIELDS --------------------*/}
-            <Grid sx={{display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', gap: 1}}>
+            <Grid sx={{display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', gap: 1, py: 3}}>
           
-                  <TextField 
+              <TextField
+                focused={false}
+                variant="standard" 
                 value={client.street} 
                 helperText="Street"  
                 size="small" 
                 InputProps={{readOnly: true}}
               />
-              <TextField 
+              <TextField
+                focused={false}
+                variant="standard" 
                 value={client.city} 
                 helperText="City"  
                 size="small" 
                 InputProps={{readOnly: true}}
                 />
-              <TextField 
+              <TextField
+                focused={false}
+                variant="standard" 
                 value={client.zip} 
                 helperText="Zip"  
                 size="small" 
                 InputProps={{readOnly: true}}
                />
               
-              <TextField 
+              <TextField
+                focused={false}
+                variant="standard" 
                 value={client.email} 
                 helperText="Email"  
                 size="small" 
                 InputProps={{readOnly: true}}
                />
-            <TextField 
+            <TextField
+              focused={false}
+              variant="standard" 
                 value={client.phone} 
                 helperText="Phone"  
                 size="small" 
                 InputProps={{readOnly: true}}
                 />
-              <TextField 
+              <TextField
+                focused={false}
+                variant="standard" 
                 value={client.notes || ''} 
                 helperText="Protocols"  
                 size="small" 
                 InputProps={{readOnly: true}}
                />
-              <TextField 
+              <TextField
+                focused={false}
+                variant="standard" 
                 value={client.vet_name || ''} 
                 helperText="Vet Name"  
                 size="small" 
                 InputProps={{readOnly: true}}
             />
-              <TextField 
+              <TextField
+                focused={false}
+                variant="standard" 
                 value={client.vet_phone || ''} 
                 helperText="Vet Phone"  
                 size="small" 
                 InputProps={{readOnly: true}}
                />
-               <TextField 
+               <TextField
+                focused={false}
+                variant="standard" 
                 value={client.route_name || ''} 
                 helperText="Default Route"  
                 size="small" 
@@ -118,9 +136,7 @@ function ClientDetails(){
           {client.dogs && client.dogs.map && client.dogs.map((dog, index) => (
               <Card key={index} sx={{width: '35%', m: 1}} onClick={() => fetchOneDog(dog)}>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size="small" variant="outlined" disabled>
-                              {dog.dog_name}
-                        </Button>
+                    <Typography>{dog.dog_name}</Typography>
                   </CardActions>
                   <CardMedia component="img"  
                     // sx={{width: 1}}
@@ -138,17 +154,18 @@ function ClientDetails(){
             
           </Grid>
 
-
-          
-
-
           {/*-------------------- BUTTONS --------------------*/}
-          <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant="outlined" color="info"
-              onClick={back}>Back</Button>  {/*goes back to client list*/}
-            <Button variant="contained" color="success"
-              onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Edit</Button> 
+          <Box sx={{mt: 2 }} display="flex" justifyContent="space-between">
+            <Box width="23%" display="flex" justifyContent="space-between">
+              <Button variant="outlined" color="info"
+                onClick={back}>Back</Button>  {/*goes back to client list*/}
+              <Button variant="contained"
+                onClick={() => deleteClient(client.id)}>Delete</Button> 
+            </Box>
+              <Button variant="contained" color="secondary"
+                onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Edit</Button> 
           </Box>
+
       </Box>
     );
 }

@@ -116,7 +116,7 @@ function AddDogFromEdit(){
             <Box display="flex" justifyContent="space-between">
               <Button variant="outlined" color="info"
                   onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Back</Button> 
-              <Button variant="contained" color="success"
+              <Button variant="contained" color="secondary"
                   onClick={() => saveDog()}>Save</Button> 
             </Box>
 

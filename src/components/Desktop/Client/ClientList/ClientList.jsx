@@ -6,8 +6,9 @@ import '../../Desktop.css';
 import ClientModal from '../ClientModal/ClientModal';
 
 //MUI
-import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { Paper, Table, TableBody, TableContainer, TableHead, TableRow, TableCell, Box, Divider, Typography, Button, Grid, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
+
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
@@ -153,7 +154,7 @@ function ClientList() {
                     {clientList.map((client ) => (
                         <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
                           <TableCell>{client.first_name} {client.last_name}</TableCell>
-                          <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                          <TableCell>{client.dogs.map((dog, i) => (i === client.dogs.length-1 ? dog.dog_name : dog.dog_name + ' • '))}</TableCell>
                           <TableCell>{client.phone}</TableCell>
                           <TableCell>{client.email}</TableCell>
                         </StyledTableRow>

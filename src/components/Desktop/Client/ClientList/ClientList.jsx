@@ -68,7 +68,6 @@ function ClientList() {
                   <TableCell sx={{fontWeight: '800'}}>Dogs:</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Phone</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Email</TableCell>
-                  <TableCell sx={{fontWeight: '800'}}>Schedule</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -81,14 +80,6 @@ function ClientList() {
                       <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
                       <TableCell>{client.phone}</TableCell>
                       <TableCell>{client.email}</TableCell>
-                      <TableCell>
-                        <Fab onClick={() => {
-                        openModal('ClientSchedule')
-                        dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })
-                      }}>
-                        <CalendarMonthIcon sx={{ fontSize: 45, color: '#341341' }}/> 
-                      </Fab>
-                      </TableCell>
                     </StyledTableRow>
                 ))}
               </TableBody>

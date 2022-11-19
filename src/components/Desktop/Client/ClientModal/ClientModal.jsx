@@ -36,6 +36,7 @@ function ClientModal(){
 
   //chooses which component to view
   const pickView = () => {
+    console.log(modalView)
     switch(modalView){                 //conditionally renders components inside modal
       case "AddClient":  return <AddClient/>
       case "EditClientForm": return <EditClientForm/>

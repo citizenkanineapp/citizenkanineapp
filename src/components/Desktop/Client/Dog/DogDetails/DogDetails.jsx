@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 //MUI
 import { Box } from "@mui/system";
-import { Button, TextField, Typography, Card, Switch, IconButton } from "@mui/material";
+import { Button, TextField, Typography, Card, CardMedia, Switch, IconButton } from "@mui/material";
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -29,7 +29,8 @@ console.log(dog)
           {/*-------------------- DETAILS --------------------*/}
           <Box sx={{ display: "flex", flexDirection: "row", height: "90%", width: "100%", justifyContent: "center", alignItems: "center", gap: 5 }}>
               <Card sx={{ width: "40%", height: "50%" }}>  {/*need to figure out aspect ratio and conditional rendering to change into image upload for editing image*/}
-              <img src={dog.image ? dog.image : 'images/dogfiller.jpeg'}/>
+              <CardMedia component='img' image={dog.image ? dog.image : 'images/dogfiller.jpeg'} />
+              {/* <img src={dog.image ? dog.image : 'images/dogfiller.jpeg'}/> */}
               </Card>
 
               <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "60%", gap: 3}}>

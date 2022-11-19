@@ -176,12 +176,19 @@ function DogDetails() {
             </Button>
           </AccordionDetails>
         </Accordion>
-
+        <Card>
+          Hi
+          <CardMedia
+            component='img'
+            image={dog.image}
+          />
+        </Card>
       </Grid>
 
       <Modal open={status} sx={{ mt: 5.5, ml: 4 }} >
         <Grid item xs={12}>
           <MobileImageUpload id={dog.dog_id} />
+
         </Grid>
       </Modal>
 

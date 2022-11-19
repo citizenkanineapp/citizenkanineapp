@@ -202,6 +202,7 @@ function ClientSchedule() {
                               <Box key={day.$D} sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                                 <>
                                   {dogs.map((dog, index)=>{
+                                    // console.log(dog.dog_name, dog.regular)
                                     if (clientSchedule[day.$W]){
                                        // Regularly Scheduled Day
                                       // console.log(day.$W)
@@ -212,25 +213,39 @@ function ClientSchedule() {
                                           )
                                         }
                                       }
+
                                       if (changes.length > 0){ // Changes on a regularly scheduled day
-                                        // map through changes
-                                        for (let change of changes){
-                                          console.log(change)
-                                          if (!dog.regular && change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) === thisDayString && change.is_scheduled){
-                                              <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                        // returns an object with the change for the day if there is one
+                                        let dogChange = changes.filter(change=>{
+                                          return change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) === thisDayString
+                                        })
+                                        
+                                        // console.log(typeof(dogChange))
+                                        // if there is a change for the dog:
+                                        if(dogChange.length > 0){
+                                          console.log('there is a change', dogChange);
+                                          let change = dogChange[0]
+                                          if(dog.regular){
+                                            if (change.is_scheduled){
+                                              return (
+                                                <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                              )
+                                            }
                                           }
-                                          if (change.dog_id !== dog.dog_id && dog.regular){
-                                            return (
-                                              <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
-                                            )
+                                          if(!dog.regular){
+                                            if (change.is_scheduled){
+                                              return (
+                                                <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                              )
+                                            }
                                           }
-                                          // if (dog.regular && change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) && change.is_scheduled ){
-                                          //   return (
-                                          //     <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
-                                          //   )
-                                          // }
-                                          
                                         }
+                                        // Else there is not change for this dog on this day => render regularly scheduled dog
+                                      else if (dog.regular){
+                                        return (
+                                          <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                        )
+                                      }
                                       }
                                     }
                                     if (!clientSchedule[day.$W]){
@@ -284,7 +299,7 @@ function ClientSchedule() {
                 </FormControl>
                 <LocalizationProvider dateAdapter={AdapterDayjs} >
                     <DesktopDatePicker
-                      
+                      shouldDisableDate={isWeekend}
                       label="Date desktop"
                       inputFormat="MM/DD/YYYY"
                       value={value}

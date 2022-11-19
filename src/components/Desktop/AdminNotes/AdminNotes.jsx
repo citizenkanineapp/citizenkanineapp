@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
-import DeleteIcon from '@mui/icons-material/Delete';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import './AdminNotes.css'
 
 
@@ -96,18 +96,18 @@ function AdminNotes(){
                 <div className="notes_container" sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width:'20%', gap: 2 }}>
                     <div className="notes_header">
                             <h4 className="notes_text"> Notes:</h4>
-                                <button className="widget_button" >
+                                <IconButton>
                                     {/* edit above */}
-                                    <EditIcon fontSize="small" onClick={() => toggleMode()}/>
-                                </button>
+                                    <AddBoxOutlinedIcon className="button" sx={{fontSize: 20}} onClick={() => toggleMode()}/>
+                                </IconButton>
                     </div>
                     <div className="notes_body">
                        <ul>
                        {adminNotes.map ((notes) => (
                             <li className="notes" key={notes.id}>{notes.notes}
-                                 {/* <IconButton onClick={() => deleteNote(notes.id)}>
-                                    <DeleteIcon sx={{ fontSize: 20, color: '#341341' }}/> 
-                                </IconButton> */}
+                                <IconButton onClick={() => deleteNote(notes.id)}>
+                                    <CancelPresentationIcon sx={{ fontSize: 20, color: '#341341' }}/> 
+                                </IconButton>
                             </li>
                         ))}
                         </ul>

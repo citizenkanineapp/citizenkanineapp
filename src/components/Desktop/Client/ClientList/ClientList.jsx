@@ -56,6 +56,12 @@ function ClientList() {
     setSubmittedSearch(search.toLowerCase())
   }
 
+  const onEnterSubmit = (e) => {
+    if(e.keyCode == 13 && e.shiftKey == false) {
+      searchFunction();
+    };
+  };
+
   const clearResults = (event) => {
     setSubmittedSearch('')
   }
@@ -74,6 +80,7 @@ function ClientList() {
           <TextField
             value={search || ''}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => onEnterSubmit(e)}
             label="Search Clients & Dogs"
             variant="filled"
             sx={{width: '60%'}}

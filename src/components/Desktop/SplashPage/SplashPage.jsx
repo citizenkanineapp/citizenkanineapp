@@ -1,12 +1,18 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './SplashPage.css';
+import { useHistory } from 'react-router-dom';
 
 //MUI
 import { Box, Grid, Typography, Card, CardActionArea, CardMedia, CardContent } from '@mui/material';
 
 function SplashPage() {
   const user = useSelector((store) => store.user);
+  const history = useHistory();
+
+  useEffect(() => {
+
+  }, []);
 
   return (
     <Box className="splash_container">

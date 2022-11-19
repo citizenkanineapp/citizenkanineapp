@@ -18,7 +18,7 @@ function LoginPage() {
   }, []);
 
   const login = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
     if (username && password) {
       dispatch({
@@ -51,43 +51,48 @@ function LoginPage() {
     }
   }; // end login
 
+  const checkMobile = () => {
+
+  }
 
   return (
     <Box className="login_container">
       <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", height: "80vh" }}>
-        <Card className="login_card" sx={{ width: "30%", height: "70%" }}>
-          <Typography sx={{ mt: 2 }} align="center">
-            Login
-          </Typography>
-          {errors.loginMessage && (
-            <Typography sx={{ fontSize: 10 }} align="center" className="alert" role="alert">
-              {errors.loginMessage}
+        <Grid item xs={10} sm={4}>
+          <Card className="login_card" sx={{ height: "60%" }}>
+            <Typography sx={{ mt: 2 }} align="center">
+              Login
             </Typography>
-          )}
-          <CardContent onSubmit={login} component="form" className="formPanel" sx={{ justifyContent: "center", display: "flex", flexDirection: "column", alignItems: "center", height: '80%' }}>
-            <TextField
-              margin="dense"
-              label="username"
-              size="small"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-            <TextField
-              margin="dense"
-              type="password"
-              label="password"
-              size="small"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-            <Button sx={{ display: { xs: 'block', sm: 'none', color: 'primary' } }} onClick={(event) => mobilelogin()}>
-              Login
-            </Button>
-            <Button type="submit" sx={{ display: { xs: 'none', sm: 'block', color: 'primary' } }}>
-              Login
-            </Button>
-          </CardContent>
-        </Card>
+            {errors.loginMessage && (
+              <Typography sx={{ fontSize: 10 }} align="center" className="alert" role="alert">
+                {errors.loginMessage}
+              </Typography>
+            )}
+            <CardContent component="form" className="formPanel" sx={{ justifyContent: "center", display: "flex", flexDirection: "column", alignItems: "center", height: '80%' }}>
+              <TextField
+                margin="dense"
+                label="username"
+                size="small"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              />
+              <TextField
+                margin="dense"
+                type="password"
+                label="password"
+                size="small"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+              <Button sx={{ display: { xs: 'block', sm: 'none', color: 'primary' } }} onClick={(event) => mobilelogin()}>
+                Login
+              </Button>
+              <Button sx={{ display: { xs: 'none', sm: 'block', color: 'primary' } }} onClick={(event) => login()}>
+                Login
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </Box>
   );

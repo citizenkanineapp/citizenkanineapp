@@ -1,16 +1,22 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const axios = require('axios');
+require('dotenv').config();
 
 const {
     rejectUnauthenticated,
   } = require('../modules/authentication-middleware');
 
+const {
+    rejectUnauthorized,
+  } = require('../modules/authorization-middleware');
+
 
 /**
  * GET all clients and their dogs
  */
-router.get('/', rejectUnauthenticated, (req, res) => {
+router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   // console.log('arrived in server get all route')
   const queryText = `
                     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
@@ -75,8 +81,9 @@ pool.query(queryText)
 /**
  * POST route for initially adding a client
  */
-router.post('/', rejectUnauthenticated, async (req, res) => {
-  console.log(req.body);
+router.post('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
+  // console.log(req.body);
+  console.log(req.user);
   const client = await pool.connect();
   const {first_name, last_name, street, city, zip, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone, flag } = req.body
   // const customer = {first_name, last_name, address, phone, email, route_id}
@@ -84,17 +91,32 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   // const vet = {vet_name, vet_phone}
   // console.log ('vet', vet)
  
+  console.log('in client POST route');
 
  
   try {
+
+  //geocoding for client
+  const api_key = process.env.map_api_key;
+  const config = { headers: { Authorization: api_key } };
+
+  const address = street.replace(/ /g,"+");
+  const town = city.replace(/ /g, '');
+
+  const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
+  
+  const lat = geoStats.data.addresses[0].latitude;
+  const long = geoStats.data.addresses[0].longitude;
+  console.log('heres the geoStats!', lat, long);
+
   await client.query('BEGIN')
   const clientTxt = await client.query(`
                           INSERT INTO clients 
-                              ("first_name", "last_name", "street", "city", "zip", "route_id", "phone", "email", "notes") 
+                            ("first_name", "last_name", "street", "city", "zip", "route_id", "phone", "email", "notes", "lat", "long") 
                             VALUES
-                            ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
                             RETURNING "id";
-  `, [first_name, last_name, street, city, zip, route_id, phone, email, notes])
+  `, [first_name, last_name, street, city, zip, route_id, phone, email, notes, lat, long])
   const customerId = clientTxt.rows[0].id
 
   await Promise.all(dogArray.map(dog => { 
@@ -128,11 +150,11 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 });
 
 //route to edit client
-router.put('/', rejectUnauthenticated, async (req, res) => {
-  console.log('dogs have id?', req.body)
+router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
+  // console.log('dogs have id?', req.body)
   const connection = await pool.connect();
   let {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, dogs} = req.body
- console.log('dogs array?', dogs)
+//  console.log('dogs array?', dogs)
   //logic to convert string into correct form for database
   if(route_name === 'tangletown'){
     route = 1;
@@ -178,8 +200,8 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
         WHERE id =$3;
     `
       const dogValues = [vet_name, vet_phone, dog.dog_id]
-      console.log('dog values?', dogValues)
-      console.log('dog values?', dog.dog_id)
+      // console.log('dog values?', dogValues)
+      // console.log('dog values?', dog.dog_id)
       return connection.query(dogTxt, dogValues)
     }));
     await connection.query('COMMIT')
@@ -192,8 +214,8 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
 });
 
 //route to edit dog
-router.put('/dogs', rejectUnauthenticated, async (req, res) => {
-  console.log('dogs have id?', req.body)
+router.put('/dogs', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
+  // console.log('dogs have id?', req.body)
   const {dog_name, dog_notes, flag, dog_id} = req.body
   
   const dogTxt = `
@@ -218,8 +240,8 @@ router.put('/dogs', rejectUnauthenticated, async (req, res) => {
 });
 
 //adding one dog
-router.post('/dog', rejectUnauthenticated, (req, res) => {
-  console.log(req.body)
+router.post('/dog', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+  // console.log(req.body)
   const{vet_name, vet_phone, dog_name, dog_notes, image, client_id, flag} = req.body
 
   try{
@@ -239,7 +261,7 @@ router.post('/dog', rejectUnauthenticated, (req, res) => {
 });
 
 
-router.get('/:id', rejectUnauthenticated, (req, res) => {
+router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
     // console.log('arrived in server get one route', req.params.id)
     let clientId = req.params.id
     const queryText = `
@@ -308,8 +330,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
       })
   });
 
-
-router.get('/schedule/:id', rejectUnauthenticated, (req, res) => {
+router.get('/schedule/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   // console.log('arrived in server get schedule route', req.params.id)
   let clientId = req.params.id
   const queryText = `
@@ -319,25 +340,26 @@ router.get('/schedule/:id', rejectUnauthenticated, (req, res) => {
 const queryValues = [clientId]
 pool.query(queryText, queryValues)
     .then(result => {
-
+   
     // console.log('result from query?', result.rows)
 
 
         res.send(result.rows);
-
+   
     })
     .catch(err => {
-        console.log('Error getting one client', err);
-        res.sendStatus(500);
+      console.log('Error getting one client', err);
+      res.sendStatus(500);
     })
 });
 
 //this is for one off schedule changes
+
 router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 
-// console.log('one off change', req.body)
-
-const client = await pool.connect();
+ console.log('one off change', req.body)
+  
+ const client = await pool.connect();
   // const {date, is_scheduled, dog_id, client_id } = req.body
   // const schedule = req.body
   try {
@@ -397,8 +419,8 @@ router.put('/schedule/updated', rejectUnauthenticated, async (req, res) => {
 });
 
 
-router.delete('/:id', rejectUnauthenticated, (req, res) => {
-    console.log(req.params.id)
+router.delete('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+    // console.log(req.params.id)
     
     const queryText = 'DELETE FROM clients WHERE id=$1';
     pool.query(queryText, [req.params.id])
@@ -409,8 +431,8 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
       });
   });
 
-router.delete('/dogs/:id', rejectUnauthenticated, (req, res) => {
-    console.log(req.params.id)
+router.delete('/dogs/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+    // console.log(req.params.id)
     
     const queryText = 'DELETE FROM dogs WHERE id=$1';
     pool.query(queryText, [req.params.id])
@@ -422,8 +444,8 @@ router.delete('/dogs/:id', rejectUnauthenticated, (req, res) => {
   });
 
   //route to edit regular schedule
-router.put('/schedule', rejectUnauthenticated, async (req, res) => {
-  console.log('schedule as it arrives in server: ', req.body["1"])
+router.put('/schedule', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
+  // console.log('schedule as it arrives in server: ', req.body["1"])
 
   const scheduleTxt = `
             UPDATE clients_schedule
@@ -448,5 +470,8 @@ router.put('/schedule', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+  
+  
+  
 
 module.exports = router;

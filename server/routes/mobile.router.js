@@ -296,6 +296,28 @@ router.put('/notes', async (req, res) => {
 
 })
 
+// UPDATE A DOG's PHOTO
+router.put('/photos', async (req, res) => {
+    // expect an object being sent over for the put request?
+    // pull out relevant dog ID and note
+    console.log('REQ BODY IS:', req.body);
+    const dogID = req.body.dogID;
+    const photo = req.body.data;
+
+    console.log('UPDATED DOG', dogID, photo);
+
+    const updateQuery = `UPDATE dogs SET "image" = $2 WHERE "id" = $1`;
+    const updateValues = [dogID, photo];
+
+    pool.query(updateQuery, updateValues)
+        .then(changeResults => {
+            res.sendStatus(200);
+        }).catch((error => {
+            console.log('/dog/:id error getting dog details:', error);
+        }));
+
+})
+
 
 
 

@@ -11,13 +11,13 @@ import Nav from '../Desktop/DesktopNav/Nav';
 import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
 import LoginPage from '../AllPages/Login/Login/LoginPage';
-import RegisterPage from '../AllPages/Login/Register/RegisterPage';
 import ResetPassPage from '../AllPages/Login/ResetPass/ResetPassPage';
 import Invoicing from '../Desktop/Invoicing/Invoicing';
 import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
 import ClientList from '../Desktop/Client/ClientList/ClientList';
 import EmployeeSchedule from '../Desktop/Employee/EmployeeSchedule/EmployeeSchedule';
 import AdminSettings from '../Desktop/AdminSettings/AdminSettings';
+import AdminNotes from '../Desktop/AdminNotes/AdminNotes';
 
 //MOBILE COMPONENTS
 import Home from '../Mobile/Home/Home';
@@ -71,14 +71,6 @@ function App() {
                 <LoginPage />}
             </Route>
 
-            {/* just for building the app, should be worked into add employee */}
-            <Route exact path="/registration">
-              {user.id ? // "/user" --> splash page
-                <Redirect to="/user" />
-                :
-                <RegisterPage />}
-            </Route>
-
             {/* ----------------------- DESKTOP ----------------------- */}
 
             {/* only needed for presentation */}
@@ -113,6 +105,11 @@ function App() {
             <ProtectedRoute exact path="/resetpass">
               {user.admin ? <ResetPassPage /> : <Redirect to="/home" />}
             </ProtectedRoute>
+
+            {/* <ProtectedRoute exact path="/adminnotes">
+              {user.admin ? <AdminNotes /> : <Redirect to="/home" />}
+            </ProtectedRoute> */}
+
 
             {/* ----------------------- MOBILE ----------------------- */}
 

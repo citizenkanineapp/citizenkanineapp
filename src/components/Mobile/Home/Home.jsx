@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Paper, Stack, Avatar, Box, Divider, Typography, Button, Grid } from '@mui/material';
 import LogOutButton from '../../AllPages/LogOutButton/LogOutButton';
+import MobileTopNav from '../MobileNav/MobileTopNav';
 import MobileNav from '../MobileNav/MobileNav';
 
 function Home() {
@@ -30,9 +31,9 @@ function Home() {
 
       <MobileNav />
 
-      <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifySelf: 'center', gap: 1, m: 3 }}>
+      <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifySelf: 'center', gap: 1, m: 0 }}>
 
-        <Avatar sx={{ width: 150, height: 150, fontSize: 100, my: 1 }}>{user.username[0].toUpperCase() || ''}</Avatar>
+        <img src="Images/dogwalker3.png" height="300px" width="300px"/>
 
         <Paper sx={{ p: 2, borderRadius: 5, textAlign: 'center', backgroundColor: '#539BD1', color: 'white' }}>
           WELCOME {user.username.toUpperCase()}:

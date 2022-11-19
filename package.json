@@ -23,6 +23,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pg": "^8.5.1",
+    "pigeon-maps": "^0.21.3",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.1",

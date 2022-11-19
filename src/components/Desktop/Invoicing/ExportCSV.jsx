@@ -1,10 +1,13 @@
 import { useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
 import { Button, Box } from "@mui/material";
+import dayjs from 'dayjs';
+// let localeData = require('dayjs/plugin/localeData');
+// dayjs.extend(localeData);
 
-const ExportCSV = () => {
+const ExportCSV = ({monthsShort}) => {
     const invoiceItems = useSelector(store=>store.invoiceReducer);
-    console.log(invoiceItems);
+    // console.log(invoiceItems);
   
     const headers = [
         {label: 'InvoiceNo', key: 'InvoiceNo'},
@@ -12,6 +15,7 @@ const ExportCSV = () => {
         {label: 'InvoiceDate', key: 'InvoiceDate'},
         {label: 'DueDate', key: 'DueDate'},
         {label: 'Item(Product/Service)', key: 'Item(Product/Service)'},
+        {label: 'Description', key: 'Description'},
         {label: 'ItemQuantity', key: 'ItemQuantity'},
         {label: 'ItemRate', key: 'ItemRate'},
         {label: 'ItemAmount', key: 'ItemAmount'},
@@ -23,16 +27,17 @@ const ExportCSV = () => {
         for (let item of invoiceItems) {
             data.push(
                 {
-                    "InvoiceNo": 1,
+                    "InvoiceNo": item.clientid,
                     "Customer": item.first_name + ' ' + item.last_name,
-                    "InvoiceDate": item.month + '/' + item.year,
-                    "DueDate": item.month + '/' + item.year,
+                    "InvoiceDate": dayjs().format('MM/DD/YYYY'),
+                    "DueDate": dayjs().add(1, 'month').format('MM/DD/YYYY'),
                     "Item(Product/Service)": item.service.service,
+                    "Description": `${monthsShort[invoiceItems[0].month-1]}: ${item.dates.map(date => (date))}`,
                     "ItemQuantity": item.dates.length,
                     "ItemRate": item.service.price,
                     "ItemAmount": item.service.price*item.dates.length,
-                    "Taxable": true,
-                    "TaxRate": 8.03
+                    "Taxable": 'Y',
+                    "TaxRate": '8.03%'
                 }
             );
         }

@@ -25,16 +25,16 @@ function ClientSchedule() {
   const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
   const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
   // console.log(clientSchedule)
-  const [updatedSchedule, setUpdatedSchedule] = useState(schedule);
   // console.log(updatedSchedule)
   
   
   useEffect(() => {
     dispatch({ type: 'FETCH_SCHEDULE', payload: client.id })
     // Fetch client schedule changes
-    dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.id})
+    dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.id })
   }, []);
   
+  const [updatedSchedule, setUpdatedSchedule] = useState(schedule);
   const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
   // console.log(dayjs(changes[0].date_to_change).$d)
 ;  //local useState state I am using for this functionality
@@ -59,14 +59,14 @@ function ClientSchedule() {
     console.log(changeDate)
 
     let newChanges = [];
-    if (dog === "all"){
+    if (dog === "all") {
       client.dogs.map(singleDog => {
-        let thisChange = {dog_id: singleDog.dog_id, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled}
+        let thisChange = { dog_id: singleDog.dog_id, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled }
         newChanges.push(thisChange)
       })
     }
     else {
-      let thisChange = {dog_id: dog, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled}
+      let thisChange = { dog_id: dog, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled }
       newChanges.push(thisChange)
     }
 
@@ -91,14 +91,14 @@ function ClientSchedule() {
   const noChange = ()=> {// This is a blank function used as a placeholder for the onChange of the calendar picker. onChange is required but has no use in this case. 
   }
 
-  const avatarColors = ['#4A5061', '#F5A572', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
+  const avatarColors = ['#4A5061', '#F5A572', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D'];
 
   // weekly schedule stuff:
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const [disabled, setDisabled] = useState(true);
 
   // This object will be dispatched when the weekly schedule has been updated;
-  
+
 
   const handleWeekScheduleChange =()=>{
     //dispatch updatedSchedule // this object included the client_id
@@ -122,28 +122,29 @@ function ClientSchedule() {
 
   return (
     <>
-    <Grid container spacing={2} sx={{display: 'flex', justifyContent: 'center', xs: 12}}>
-      {/* Grid containing weekly schedule */}
-      <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
-        {schedule && daysOfWeek.map((day, index) => (
-            <Grid key={index + 1} item xs={2} sx={{mt: 5}} >
+      <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', xs: 12 }}>
+        {/* Grid containing weekly schedule */}
+        <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
+          {schedule && daysOfWeek.map((day, index) => (
+            <Grid key={index + 1} item xs={2} sx={{ mt: 5 }} >
               <Card raised>
                 <CardActionArea component={Button}
                   disabled={disabled}
-                  onClick={()=>{
-                    if (updatedSchedule[index+1]){
-                      setUpdatedSchedule({...updatedSchedule, [index+1]: false})
+                  onClick={() => {
+                    if (updatedSchedule[index + 1]) {
+                      setUpdatedSchedule({ ...updatedSchedule, [index + 1]: false })
                     }
-                    
+
                     else {
-                      setUpdatedSchedule({...updatedSchedule, [index+1]: true})
-                    }}}
-                  >
-                  <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: updatedSchedule[index+1]? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
-                      <Typography variant="h7" sx={{textTransform: 'capitalize'}}>{day}</Typography>
+                      setUpdatedSchedule({ ...updatedSchedule, [index + 1]: true })
+                    }
+                  }}
+                >
+                  <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: updatedSchedule[index + 1] ? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
+                    <Typography variant="h7" sx={{ textTransform: 'capitalize' }}>{day}</Typography>
                   </CardContent>
                 </CardActionArea>
-              </Card> 
+              </Card>
             </Grid>
             ))}
             { !disabled ?
@@ -154,11 +155,11 @@ function ClientSchedule() {
                 <Button variant='contained' color='secondary' onClick={handleWeekScheduleChange}>Confirm</Button>
               </Grid>
             :
-              <Grid item xs={16} sx={{display: 'flex', justifyContent: 'right'}}>
-                <Button variant='contained' color='secondary' onClick={()=> setDisabled(!disabled)}>Edit Weekly Schedule</Button>
-              </Grid>
-            }
-            
+            <Grid item xs={16} sx={{ display: 'flex', justifyContent: 'right' }}>
+              <Button variant='contained' color='secondary' onClick={() => setDisabled(!disabled)}>Edit Weekly Schedule</Button>
+            </Grid>
+          }
+
         </Grid>
       {/* Grid containing calendar and form */}
           {/* Calendar */}
@@ -271,8 +272,8 @@ function ClientSchedule() {
               </LocalizationProvider>
               {/* END of CALENDAR */}
 
-              
-          {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
+
+            {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
           <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button> */}
         </Box >
           </Grid>
@@ -299,7 +300,7 @@ function ClientSchedule() {
                 </FormControl>
                 <LocalizationProvider dateAdapter={AdapterDayjs} >
                     <DesktopDatePicker
-                      shouldDisableDate={isWeekend}
+                      
                       label="Date desktop"
                       inputFormat="MM/DD/YYYY"
                       value={value}
@@ -312,18 +313,10 @@ function ClientSchedule() {
                   <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
               </Grid>
           </Grid>
-    </Grid>
-    
-    
+        </Grid>
+    </>
 
-    
-  {/*-------- below here is for the one off changes------------ */}
 
-  
-    
-  
-  {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button> */}
-  </>
   )
 }
 

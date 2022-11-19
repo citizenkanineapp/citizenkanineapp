@@ -2,9 +2,9 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 
-function* fetchAllEmployees(){
+function* fetchAllEmployees() {
     // console.log('saga getting request to fetch employees');
-    try{
+    try {
         const employees = yield axios({
             method: 'GET',
             url: '/api/employees'
@@ -20,8 +20,8 @@ function* fetchAllEmployees(){
 }
 
 // This function gets all the employee schedule data for week1 to autofill the employee schedule calendar. 
-function* fetchOddEmpSchedules (){
-    try{
+function* fetchOddEmpSchedules() {
+    try {
         const empSchedule = yield axios({
             method: 'GET',
             url: '/api/employees/schedules/odd'
@@ -38,8 +38,8 @@ function* fetchOddEmpSchedules (){
 }
 
 // This function gets all the employee schedule data for week2 to autofill the employee schedule calendar. 
-function* fetchEvenEmpSchedules (){
-    try{
+function* fetchEvenEmpSchedules() {
+    try {
         const empSchedule = yield axios({
             method: 'GET',
             url: '/api/employees/schedules/even'
@@ -56,9 +56,9 @@ function* fetchEvenEmpSchedules (){
 }
 
 // This function gets the selected employee schedule details for both week1 and week2.
-function* fetchEmpSchedule(action){
+function* fetchEmpSchedule(action) {
     const empID = action.payload
-    try{
+    try {
         const empSchedule = yield axios({
             method: 'GET',
             url: `/api/employees/schedule/${empID}`
@@ -82,9 +82,9 @@ function* fetchEmpSchedule(action){
     }
 }
 
-function* updateEmpDetails(action){
+function* updateEmpDetails(action) {
     const updatedEmp = action.payload;
-    try{
+    try {
         const empDetails = yield axios({
             method: 'PUT',
             url: '/api/employees/details',
@@ -94,7 +94,7 @@ function* updateEmpDetails(action){
         yield axios({
             method: 'PUT',
             url: '/api/user/admin',
-            data: {admin: updatedEmp.admin, emp_id: updatedEmp.id}
+            data: { admin: updatedEmp.admin, emp_id: updatedEmp.id }
         })
         // updates the selectedEmployee reducer so that the details page will render the updated employee details
         yield put({
@@ -110,10 +110,10 @@ function* updateEmpDetails(action){
     }
 }
 
-function* updateEmpSchedule(action){
+function* updateEmpSchedule(action) {
     const updatedEmpSchedules = action.payload;
     // [{week1 schedule}, {week2 schedule}]
-    try{
+    try {
         const empSchedule = yield axios({
             method: 'PUT',
             url: '/api/employees/schedules',
@@ -125,19 +125,19 @@ function* updateEmpSchedule(action){
     }
 }
 
-function* addEmployee(action){
+function* addEmployee(action) {
     const newEmployee = action.payload;
     const email = newEmployee[0].email;
     const admin = newEmployee[0].admin;
-    
-    try{
+
+    try {
         const employeeAdded = yield axios({
             method: 'POST',
             url: '/api/employees',
             data: newEmployee
         })
         const emp_id = employeeAdded.data.emp_id;
-        const newUser = {emp_id: emp_id, username: email, email: email, admin: admin}
+        const newUser = { emp_id: emp_id, username: email, email: email, admin: admin }
         // yield console.log(emp_id);
         // {emp_id: #}
         // ADDING USER:
@@ -155,15 +155,33 @@ function* addEmployee(action){
     }
 }
 
+function* deleteEmployee(action) {
+    console.log('Employee ID to delete', action.payload);
+    let employeeID = action.payload;
+    try {
+        yield axios({
+            method: 'DELETE',
+            url: `/api/employees/${employeeID}`
+        })
+        yield put({
+            type: 'SAGA_FETCH_EMPLOYEES'
+        })
 
-function* employeesSaga(){
+    } catch {
+        console.log('error in Employee Delete');
+    }
+}
+
+
+function* employeesSaga() {
     yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees),
-    yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_ODD', fetchOddEmpSchedules),
-    yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_EVEN', fetchEvenEmpSchedules),
-    yield takeLatest('SAGA_FETCH_EMP_SCHEDULE', fetchEmpSchedule),
-    yield takeLatest('SAGA_UPDATE_EMP_DETAILS', updateEmpDetails),
-    yield takeLatest('SAGA_UPDATE_EMP_SCHEDULE', updateEmpSchedule),
-    yield takeLatest('SAGA_ADD_EMPLOYEE', addEmployee)
+        yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_ODD', fetchOddEmpSchedules),
+        yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_EVEN', fetchEvenEmpSchedules),
+        yield takeLatest('SAGA_FETCH_EMP_SCHEDULE', fetchEmpSchedule),
+        yield takeLatest('SAGA_UPDATE_EMP_DETAILS', updateEmpDetails),
+        yield takeLatest('SAGA_UPDATE_EMP_SCHEDULE', updateEmpSchedule),
+        yield takeLatest('SAGA_ADD_EMPLOYEE', addEmployee),
+        yield takeLatest('SAGA_DELETE_EMPLOYEE', deleteEmployee)
 }
 
 export default employeesSaga;

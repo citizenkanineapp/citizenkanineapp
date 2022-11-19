@@ -8,25 +8,28 @@
 21. add photo? for what? for editing a dog?
 
 28. font size titles add client form
-33. client schedule changes form 
+
 35. still having funky stuff happen moving through client views
 36. add form remove extra dog added accidnetally?
-37. if no image for dog?
+37. if no image for dog? ----- added a possibility but it looks funky
 
-41. Need to add regular dog/update table
+41. Need to add regular dog/update table (what???)
      * re write all routes
+
+
 
 42. change FAB button and UNCONTROLLED CHECK box issue
 43.  route for dogs added from edit for regular status
 44. have an update for dog's regular status?
+45. fix sweet alerts
+46. admin notes
+47. calendar icon on client list 
 
 
 
-
-22. client search 
 23. admin note
 11. Fix image sizing issue
-18. Where dpes schedule changes go? <---- yani?
+
 39. give her the api key
 
 

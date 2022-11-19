@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Grid, Typography, Card, TextField, CardContent, Button } from '@mui/material';
+import swal from 'sweetalert'
 
 
 function ResetPassPage() {
@@ -30,7 +31,8 @@ function ResetPassPage() {
       setNewPass('');
       setConfPass('');
       dispatch({ type: 'PASSWORD_RESET' });
-      history.push('/home');
+      swal("Password changed!");
+      // history.push('/home');
     } else {
       console.log('password input fail!');
       dispatch({ type: 'PASSWORD_INPUT_ERROR' });

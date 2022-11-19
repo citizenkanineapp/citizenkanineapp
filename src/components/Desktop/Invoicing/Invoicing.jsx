@@ -8,12 +8,13 @@ dayjs.extend(localeData);
 import '../Desktop.css';
 
 //MUI
-import { Box, Button, Grid, FormControl, MenuItem, Select, InputLabel, Container } from '@mui/material';
+import { Box, Button, Grid, FormControl, MenuItem, Select, InputLabel } from '@mui/material';
 // import { styled } from '@mui/material/styles';
 
 function Invoicing(){
   //set date/year arrays
   const months = dayjs.months();
+  const monthsShort = dayjs.monthsShort();
   const getYears = () => {
     let max = 2050;
     let min = 2020;
@@ -119,13 +120,13 @@ function Invoicing(){
           </Button>
 
           <Box component="span">
-            <ExportCSV />
+            <ExportCSV monthsShort={monthsShort}/>
           </Box>
 
         </Grid>
       </Grid>
     
-      <InvoiceTable />
+      <InvoiceTable monthsShort={monthsShort}/>
 
     </Box>
     );

@@ -6,7 +6,7 @@ import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, Icon
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PetsIcon from '@mui/icons-material/Pets';
 import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
@@ -126,7 +126,8 @@ function ClientDetails(){
                     // sx={{width: 1}}
                     width="100%"
                     alt="client dog photo"
-                    src={dog.image}
+                    src={dog.image ? dog.image : 'images/dogfiller.jpeg'}
+                    // src={'images/dogfiller.jpeg'}
                     sx={{height: 175}}
                     />
               </Card>

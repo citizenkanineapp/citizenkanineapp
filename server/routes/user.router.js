@@ -2,6 +2,9 @@ const express = require('express');
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
+const {
+  rejectUnauthorized,
+} = require('../modules/authorization-middleware');
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
@@ -14,27 +17,27 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
-// THIS POST is for adding a new user from the registration page only:
-router.post('/register', (req, res, next) => {
-  const username = req.body.username;
-  const password = encryptLib.encryptPassword(req.body.password);
+// // THIS POST is for adding a new user from the registration page only:
+// router.post('/register', (req, res, next) => {
+//   const username = req.body.username;
+//   const password = encryptLib.encryptPassword(req.body.password);
 
-  const queryText = `INSERT INTO "user" (username, password, admin)
-    VALUES ($1, $2,true) RETURNING id`;
-  pool
-    .query(queryText, [username, password])
-    .then(() => res.sendStatus(201))
-    .catch((err) => {
-      console.log('User registration failed: ', err);
-      res.sendStatus(500);
-    });
-});
+//   const queryText = `INSERT INTO "user" (username, password, admin)
+//     VALUES ($1, $2,true) RETURNING id`;
+//   pool
+//     .query(queryText, [username, password])
+//     .then(() => res.sendStatus(201))
+//     .catch((err) => {
+//       console.log('User registration failed: ', err);
+//       res.sendStatus(500);
+//     });
+// });
 
 // POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 // THIS POST is for a user being added when an employee is added.
-router.post('/register/employee', (req, res, next) => {
+router.post('/register/employee', rejectUnauthenticated, rejectUnauthorized, (req, res, next) => {
   const { username, emp_id, admin } = req.body;
 
   // All new users will have a default password of 'packleader' until the user logs in and updates it.
@@ -61,7 +64,7 @@ router.post('/register/employee', (req, res, next) => {
 });
 
 //PUT route for password reset. need user ID params.
-router.put('/passreset/:id', (req, res) => {
+router.put('/passreset/:id', rejectUnauthenticated, (req, res) => {
   const userId = req.params.id;
   console.log(req.params.id)
   const password = encryptLib.encryptPassword(req.body.password);
@@ -80,7 +83,7 @@ router.put('/passreset/:id', (req, res) => {
 
 // PUT route to update the admin status when an employee's details are changed. 
 
-router.put('/admin', (req, res)=> {
+router.put('/admin',rejectUnauthenticated, rejectUnauthorized, (req, res)=> {
   const { admin, emp_id} = req.body;
   // console.log(admin);
   const sqlQuery = 

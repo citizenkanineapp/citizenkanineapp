@@ -57,6 +57,7 @@ function* fetchEvenEmpSchedules() {
 
 // This function gets the selected employee schedule details for both week1 and week2.
 function* fetchEmpSchedule(action) {
+    console.log('test', action.payload)
     const empID = action.payload
     try {
         const empSchedule = yield axios({
@@ -158,18 +159,18 @@ function* addEmployee(action) {
 function* deleteEmployee(action) {
     console.log('Employee ID to delete', action.payload);
     let employeeID = action.payload;
-    try {
-        yield axios({
-            method: 'DELETE',
-            url: `/api/employees/${employeeID}`
-        })
-        yield put({
-            type: 'SAGA_FETCH_EMPLOYEES'
-        })
+    // try {
+    //     yield axios({
+    //         method: 'DELETE',
+    //         url: `/api/employees/${employeeID}`
+    //     })
+    //     yield put({
+    //         type: 'SAGA_FETCH_EMPLOYEES'
+    //     })
 
-    } catch {
-        console.log('error in Employee Delete');
-    }
+    // } catch {
+    //     console.log('error in Employee Delete');
+    // }
 }
 
 function* addEmpScheduleChange(action){
@@ -189,6 +190,24 @@ function* addEmpScheduleChange(action){
     }
 }
 
+function* fetchEmpScheduleChanges(){
+    
+    try{
+        const changes = yield axios({
+            method: 'GET',
+            url: '/api/employees/schedule/changes'
+        })
+    
+    yield put({
+        type: 'SET_EMP_SCHEDULE_CHANGES',
+        payload: changes.data
+    })
+    }
+    catch {
+        console.log('error in Fetching Emp Schedule Changes');
+    }
+}
+
 function* employeesSaga() {
     yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees),
         yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_ODD', fetchOddEmpSchedules),
@@ -198,7 +217,8 @@ function* employeesSaga() {
         yield takeLatest('SAGA_UPDATE_EMP_SCHEDULE', updateEmpSchedule),
         yield takeLatest('SAGA_ADD_EMPLOYEE', addEmployee),
         yield takeLatest('SAGA_DELETE_EMPLOYEE', deleteEmployee),
-        yield takeLatest('SAGA_ADD_EMP_CHANGE', addEmpScheduleChange);
+        yield takeLatest('SAGA_ADD_EMP_CHANGE', addEmpScheduleChange),
+        yield takeLatest('SAGA_FETCH_EMP_SCHEDULE_CHANGES', fetchEmpScheduleChanges)
 }
 
 export default employeesSaga;

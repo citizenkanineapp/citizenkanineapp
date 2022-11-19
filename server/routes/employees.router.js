@@ -102,27 +102,27 @@ router.get('/schedules/even', rejectUnauthenticated, (req, res)=>{
 })
 
 // GET individual employee schedules:
-router.get('/schedule/:id', rejectUnauthenticated, (req, res)=> {
-    const empID = req.params.id;
-    console.log(empID);
-    // the order by is to ensure the correct week is being targeted when setting the reducers for each week.
-    const sqlQuery = `
-    SELECT * FROM 
-        employees_schedule
-    WHERE emp_id = $1
-    ORDER BY week;
-    `
+// router.get('/schedule/:id', rejectUnauthenticated, (req, res)=> {
+//     const empID = req.params.id;
+//     console.log(empID);
+//     // the order by is to ensure the correct week is being targeted when setting the reducers for each week.
+//     const sqlQuery = `
+//     SELECT * FROM 
+//         employees_schedule
+//     WHERE emp_id = $1
+//     ORDER BY week;
+//     `
 
-    pool.query(sqlQuery, [empID])
-        .then(dbRes => {
-            res.send(dbRes.rows);
-            // console.log('employee schedules',dbRes.rows);
-        })
-        .catch(error => {
-            res.sendStatus(500);
-            console.log('error with GET /employees/schedule/:id :', error);
-        })
-})
+//     pool.query(sqlQuery, [empID])
+//         .then(dbRes => {
+//             res.send(dbRes.rows);
+//             // console.log('employee schedules',dbRes.rows);
+//         })
+//         .catch(error => {
+//             res.sendStatus(500);
+//             console.log('error with GET /employees/schedule/:id :', error);
+//         })
+// })
 
 // Update Employee details:
 router.put('/details', rejectUnauthenticated, (req, res)=>{
@@ -237,6 +237,7 @@ router.post('/', rejectUnauthenticated, async (req, res)=> {
     // }
 })
 
+// add employee schedule changes
 router.post('/schedule', rejectUnauthenticated, async (req, res) => {
     const {emp_id, date_to_change, is_scheduled} = req.body;
     const sqlQuery = 
@@ -258,9 +259,25 @@ router.post('/schedule', rejectUnauthenticated, async (req, res) => {
             res.sendStatus(500);
             console.log('error in POST /employees/schedule', error)
         })
-
-
 });
+
+// get emp schedule changes
+router.get('/schedule/changes', rejectUnauthenticated, (req, res)=>{
+    console.log('get request landed')
+    const sqlQuery =
+    `
+    SELECT * FROM employees_schedule_changes;
+    `
+    pool.query(sqlQuery)
+        .then(dbRes=>{
+            console.log('GET ok')
+            res.send(dbRes.rows)
+        })
+        .catch(error=>{
+            res.sendStatus(500);
+            console.log('error in GET /employees/changes', error)
+        })
+})
 
 
 

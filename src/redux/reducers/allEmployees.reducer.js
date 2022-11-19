@@ -29,7 +29,14 @@ const evenEmpSchedules = (state=[], action)=> {
     }
 }
 
-
+const empScheduleChanges = (state=[], action)=>{
+    switch (action.type){
+        case 'SET_EMP_SCHEDULE_CHANGES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
 
 
 
@@ -37,6 +44,7 @@ const allEmployeesReducer = combineReducers({
     employees,
     oddEmpSchedules,
     evenEmpSchedules,
+    empScheduleChanges,
 })
 
 export default allEmployeesReducer;

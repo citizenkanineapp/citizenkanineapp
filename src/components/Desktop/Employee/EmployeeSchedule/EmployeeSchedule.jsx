@@ -61,11 +61,17 @@ function EmployeeSchedule(){
     dispatch({
       type: 'SAGA_FETCH_EMPLOYEES'
     })
+    // FETCH emp schedule changes
+    dispatch({
+      type: 'SAGA_FETCH_EMP_SCHEDULE_CHANGES'
+    })
   },[]);
   // console.log('first week of year',dayjs('2023-01-01').week())
   // console.log('last week of year',dayjs('2022-12-30').week())
 
   const allEmployees = useSelector(store=> store.allEmployeesReducer.employees);
+  const changes = useSelector(store=> store.allEmployeesReducer.empScheduleChanges);
+  console.log('changes', changes)
 
   const openModal = (view) => {
     dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: view }); //assures the view to be the right component

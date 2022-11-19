@@ -1,12 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import '../../Desktop.css';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
 
 //COMPONENTS
 import ClientModal from '../ClientModal/ClientModal';
 
 //MUI
-import { Paper, Table, TableBody, TableContainer, TableHead, TableRow, TableCell, Box, Divider, Typography, Button, Grid, TextField } from '@mui/material';
+import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 
@@ -58,11 +60,22 @@ function ClientList() {
     setSubmittedSearch(search.toLowerCase())
   }
 
+  const onEnterSubmit = (e) => {
+    if(e.keyCode == 13 && e.shiftKey == false) {
+      searchFunction();
+    };
+  };
+
   const clearResults = (event) => {
     setSubmittedSearch('');
     setSearch('');
   }
 
+  const clientScheduleView = (client) => {
+    console.log('does it hit?')
+    dispatch({ type: 'SET_CLIENT', payload: client })
+    openModal('ClientSchedule')
+  }
 
 
   return (
@@ -86,6 +99,7 @@ function ClientList() {
           <TextField
             value={search || ''}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => onEnterSubmit(e)}
             label="Search Clients & Dogs"
             variant="filled"
             size="small"
@@ -141,22 +155,32 @@ function ClientList() {
                         }
                       })
                       .map((client ) => (
-                        <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
-                          <TableCell>{client.first_name} {client.last_name}</TableCell>
-                          <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
-                          <TableCell>{client.phone}</TableCell>
-                          <TableCell>{client.email}</TableCell>
+                        <StyledTableRow key={client.id} hover> 
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.first_name} {client.last_name}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.phone}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.email}</TableCell>
+                          <TableCell>
+                            <IconButton onClick={() => clientScheduleView(client)}>
+                              <CalendarMonthIcon sx={{ fontSize: 20, color: '#341341' }}/> 
+                            </IconButton>
+                          </TableCell>
                         </StyledTableRow>
                     ))}
                   </TableBody>
                 :
                   <TableBody>
                     {clientList.map((client ) => (
-                        <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
-                          <TableCell>{client.first_name} {client.last_name}</TableCell>
-                          <TableCell>{client.dogs.map((dog, i) => (i === client.dogs.length-1 ? dog.dog_name : dog.dog_name + ' • '))}</TableCell>
-                          <TableCell>{client.phone}</TableCell>
-                          <TableCell>{client.email}</TableCell>
+                        <StyledTableRow key={client.id} hover> 
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.first_name} {client.last_name}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.phone}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.email}</TableCell>
+                          <TableCell>
+                            <IconButton onClick={() => clientScheduleView(client)}>
+                              <CalendarMonthIcon sx={{ fontSize: 20, color: '#341341' }}/> 
+                            </IconButton>
+                          </TableCell>
                         </StyledTableRow>
                     ))}
                 

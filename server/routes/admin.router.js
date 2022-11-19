@@ -6,6 +6,11 @@ const {
     rejectUnauthenticated,
   } = require('../modules/authentication-middleware');
 
+  const {
+    rejectUnauthorized,
+  } = require('../modules/authorization-middleware');
+
+
 
 /**
  * This router is for admin notes 
@@ -41,8 +46,8 @@ pool.query(queryText, queryValues)
  * POST route for admin notes
  */
  router.post('/', rejectUnauthenticated, (req, res) => {
-    console.log(req.body)
-    console.log('who is user?', req.user.id)
+    // console.log('does this get to server?', req.body)
+    // console.log('who is user?', req.user.id)
     const {notes} = req.body
     const user = req.user.id
 
@@ -61,5 +66,20 @@ pool.query(queryText, queryValues)
       res.sendStatus(500);
     }
   });
+
+  //deleting and admin note
+
+  router.delete('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+    // console.log(req.params.id)
+    
+    const queryText = 'DELETE FROM admin_notes WHERE id=$1';
+    pool.query(queryText, [req.params.id])
+      .then(() => { res.sendStatus(200); })
+      .catch((err) => {
+        console.log('Error completing delete admin notes', err);
+        res.sendStatus(500);
+      });
+  });
+
 
 module.exports = router;

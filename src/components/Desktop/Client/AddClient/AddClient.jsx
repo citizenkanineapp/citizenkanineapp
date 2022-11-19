@@ -82,6 +82,20 @@ function AddClient(){
     dispatch({type: 'CLEAR_SCHEDULE'})
   }
 
+  const presentationDetails = event => {
+    dispatch({type: 'ADD_FIRST_NAME', payload: 'Sam'})
+    dispatch({type: 'ADD_LAST_NAME', payload: 'Freeman'})
+    dispatch({type: 'ADD_PHONE', payload: '(925)330-9462'})
+    dispatch({type: 'ADD_EMAIL', payload: 'citizenkanineapp@gmail.com'})
+    dispatch({type: 'ADD_STREET', payload: '4249 Bryant Ave S'})
+    dispatch({type: 'ADD_CITY', payload: 'Minneapolis'})
+    dispatch({type: 'ADD_ZIPCODE', payload: '55409'})
+    dispatch({type: 'ADD_NOTES', payload: 'Back door entry'})
+    dispatch({type: 'ADD_VET_NAME', payload: 'Lake Harriet Veterinary'})
+    dispatch({type: 'ADD_VET_PHONE', payload: '(612)822-1545'})
+    dispatch({type: 'ADD_ROUTE', payload: 2})
+  }
+
   const checkInputs = (event) => {
     let errorFree = false;
     setErrorFirst(false)
@@ -150,7 +164,7 @@ function AddClient(){
 
             {/*----------------------- HEADER -----------------------*/}
             <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2}}>  
-              <Typography variant="h3" >Add Client</Typography>
+              <Typography variant="h3" onClick={presentationDetails} >Add Client</Typography>
               {/* <IconButton disabled>
                 <CalendarMonthIcon sx={{ fontSize: 45, color: 'rgb(163, 147, 142)' }}/> 
               </IconButton> */}

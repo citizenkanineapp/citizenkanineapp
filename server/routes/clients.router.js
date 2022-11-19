@@ -81,7 +81,7 @@ pool.query(queryText)
 /**
  * POST route for initially adding a client
  */
-router.post('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
+router.post('/', rejectUnauthenticated, async (req, res) => {
   // console.log(req.body);
   console.log(req.user);
   const client = await pool.connect();
@@ -340,8 +340,12 @@ router.get('/schedule/:id', rejectUnauthenticated, rejectUnauthorized, (req, res
 const queryValues = [clientId]
 pool.query(queryText, queryValues)
     .then(result => {
-   // console.log('result from query?', result.rows)
-      res.send(result.rows);
+   
+    // console.log('result from query?', result.rows)
+
+
+        res.send(result.rows);
+   
     })
     .catch(err => {
       console.log('Error getting one client', err);
@@ -351,9 +355,9 @@ pool.query(queryText, queryValues)
 
 //this is for one off schedule changes
 
-router.post('/schedule', rejectUnauthenticated,rejectUnauthorized,  async (req, res) => {
+router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 
-//  console.log('one off change', req.body)
+ console.log('one off change', req.body)
   
  const client = await pool.connect();
   // const {date, is_scheduled, dog_id, client_id } = req.body
@@ -366,9 +370,41 @@ router.post('/schedule', rejectUnauthenticated,rejectUnauthorized,  async (req, 
                               ("dog_id", "client_id", "date_to_change", "is_scheduled") 
                             VALUES
                               ($1, $2, $3, $4)
+                            ON CONFLICT (dog_id, date_to_change)
+                            DO UPDATE SET "is_scheduled" = $4;
 
       `
-      const scheduleValues = [scheduleChange.dog_id, scheduleChange.client_id, scheduleChange.date, scheduleChange.is_scheduled]
+      const scheduleValues = [scheduleChange.dog_id, scheduleChange.client_id, scheduleChange.date_to_change, scheduleChange.is_scheduled]
+      return client.query(scheduleTxt, scheduleValues)
+  }));
+      await client.query('COMMIT')
+      res.sendStatus(201);
+    } catch (error) {
+      await client.query('ROLLBACK')
+      console.log('Error in post route for schedule changes', error);
+      res.sendStatus(500);
+    } finally {
+      client.release()
+    }
+});
+
+// Updating schedule changes
+router.put('/schedule/updated', rejectUnauthenticated, async (req, res) => {
+
+  // console.log('one off change', req.body)
+
+  const client = await pool.connect();
+   // const {date, is_scheduled, dog_id, client_id } = req.body
+   // const schedule = req.body
+  try {
+  await client.query('BEGIN')
+  await Promise.all(req.body.map(change => { 
+      const scheduleTxt = `
+                          UPDATE dogs_schedule_changes
+                          SET is_scheduled = $1
+                          WHERE dog_id = $2 AND date_to_change = $3;
+                          `
+      const scheduleValues = [change.is_scheduled, change.dog_id, change.date_to_Change]
       return client.query(scheduleTxt, scheduleValues)
   }));
       await client.query('COMMIT')
@@ -434,64 +470,8 @@ router.put('/schedule', rejectUnauthenticated, rejectUnauthorized, async (req, r
   }
 });
 
- //get search results 
-router.get('/search/matches', rejectUnauthenticated, async (req, res) => {
-  console.log('arrived in server search', req.query.search)
-  const client = await pool.connect();
-  let searchTerm = req.query.search
-  const results = []
-  const first_name = []
-  const last_name = [] 
-  const dog_name = []
-    try { 
-
-      await client.query('BEGIN')
-          const clientFirstText = await client.query(`
-                        SELECT clients.id as client_id, clients.first_name, clients.last_name, clients.city, clients.street, 
-                        clients.zip, clients.email, clients.notes, clients.route_id, clients.phone, dogs.vet_name, 
-                        dogs.vet_phone, dogs.id as dog_id, dogs.image, dogs.name as dog_name, dogs.flag, dogs.regular, dogs.notes as dog_notes from clients 
-                            JOIN dogs
-                            on clients.id = dogs.client_id
-                            WHERE first_name ilike $1 or last_name ilike $2 or name ilike $3
-                    ; `, [`${searchTerm}%`, `${searchTerm}%`, `${searchTerm}%`])
-        results.push(clientFirstText.rows)
-
-      //   const clientLastText = await client.query(`
-      //                       SELECT * FROM clients
-      //                           WHERE last_name ilike $1; `, [`${searchTerm}%`])
-
-      //   last_name.push(clientLastText.rows)
-      // const dogText = await client.query( `
-      //                       SELECT * FROM dogs
-      //                           WHERE name ilike $1;`, [`${searchTerm}%`])
-      //   dog_name.push(dogText.rows)
-      //   results.first_name = first_name
-      //   results.last_name = last_name
-      //   results.dog_name = dog_name
-        console.log(results)
-  //   pool.query(clientLastText, [`${searchTerm}%`])
-  //   .then(result => {
-      
-  //   console.log('result from  second query?', result.rows)
-  //   results.push(result.rows)
-      
-  //   })
-    
-
-
-              res.send(results);
-              await client.query('COMMIT')
-              // res.sendStatus(201)  
-    } catch(err) {
-      await client.query('ROLLBACK')
-    console.log('Error in post route for new recipe', err);
-    res.sendStatus(500);
-  } finally {
-    client.release()
-  }
-});
-
   
-
+  
+  
 
 module.exports = router;

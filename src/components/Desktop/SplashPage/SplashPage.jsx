@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './SplashPage.css';
 import { useHistory } from 'react-router-dom';
+import AdminNotes from '../AdminNotes/AdminNotes';
 
 //MUI
 import { Box, Grid, Typography, Card, CardActionArea, CardMedia, CardContent } from '@mui/material';
@@ -17,6 +18,7 @@ function SplashPage() {
   return (
     <Box className="splash_container">
       <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", height: "80vh" }}>
+        <AdminNotes />
         <Card sx={{ width: "30%", height: "60%" }}>
           <CardActionArea>
             <CardMedia

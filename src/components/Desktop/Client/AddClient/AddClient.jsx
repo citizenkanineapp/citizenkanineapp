@@ -35,7 +35,7 @@ function AddClient(){
   const [errorEmail, setErrorEmail] = useState(false)
   const [errorRoute, setErrorRoute] = useState(false)
 
-  const clientSchedule = useSelector(store => store.clientScheduleReducer)
+  const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
 
 
   const [monday, setMonday] = useState(false);

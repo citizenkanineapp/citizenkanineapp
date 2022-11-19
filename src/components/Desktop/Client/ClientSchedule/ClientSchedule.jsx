@@ -89,6 +89,7 @@ function ClientSchedule() {
   let updatedChanges = [];
   let addChanges = [];
   const handleSubmit = (event) => {
+
     // need to add date_to_change and is_selected to each one
     let newChanges = [];
     if (dog === "all") {

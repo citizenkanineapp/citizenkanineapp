@@ -10,6 +10,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 const isWeekend = (date) => {
   const day = date.day();
@@ -24,7 +26,7 @@ function ClientSchedule() {
   const dogs = client.dogs;
   const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
   const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
-  // console.log(clientSchedule)
+  console.log(clientSchedule)
   // console.log(updatedSchedule)
   
   
@@ -34,23 +36,23 @@ function ClientSchedule() {
     dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.id })
   }, []);
   
-  const [updatedSchedule, setUpdatedSchedule] = useState(schedule);
   const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
   // console.log(dayjs(changes[0].date_to_change).$d)
-;  //local useState state I am using for this functionality
+  ;  //local useState state I am using for this functionality
   const [dog, setDog] = useState('');
   // console.log(dog);
   const [scheduled, setScheduled] = useState('');
   const [value, setValue] = useState(dayjs());
-
-
-// THIS handles the change of the date based on the date picker
+  
+  
+  // THIS handles the change of the date based on the date picker
   const handleDateChange = (newValue) => {
     console.log(newValue);
     setValue(newValue);
   }
   
-
+  
+  const [updatedSchedule, setUpdatedSchedule] = useState(schedule);
   //This is for the submit button for the one off changes
   // NEED to not be able to add the dog if is is regularly scheduled
   const handleSubmit = () => {
@@ -120,9 +122,14 @@ function ClientSchedule() {
     </Avatar>)
   }
 
+  const [addChange, setAddChange] = useState(false);
+
   return (
     <>
       <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', xs: 12 }}>
+        <Grid item xs={12}>
+          <Typography variant="h3" sx={{ display: 'flex', alignSelf: 'left'}}>{client.first_name} {client.last_name}</Typography>
+        </Grid>
         {/* Grid containing weekly schedule */}
         <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
           {schedule && daysOfWeek.map((day, index) => (
@@ -148,7 +155,7 @@ function ClientSchedule() {
             </Grid>
             ))}
             { !disabled ?
-              <Grid item xs={16} sx={{display: 'flex', justifyContent: 'right'}}>
+              <Grid item xs={12} sx={{display: 'flex', justifyContent: 'right'}}>
                 <Button variant='contained' color='secondary' onClick={()=> {
                   setUpdatedSchedule(schedule)
                   setDisabled(!disabled)}}>Cancel</Button>
@@ -156,7 +163,7 @@ function ClientSchedule() {
               </Grid>
             :
             <Grid item xs={16} sx={{ display: 'flex', justifyContent: 'right' }}>
-              <Button variant='contained' color='secondary' onClick={() => setDisabled(!disabled)}>Edit Weekly Schedule</Button>
+              <Button variant='contained' color='secondary' onClick={() => setDisabled(!disabled)}>Edit</Button>
             </Grid>
           }
 
@@ -164,7 +171,7 @@ function ClientSchedule() {
       {/* Grid containing calendar and form */}
           {/* Calendar */}
           <Grid item xs={6}>
-              <Box className="clientSchedule" sx={{display: 'flex', height: '55vh', width: '40vw', border: 1, borderColor: 'black', justifyContent: 'center', alignContent: 'center'}}>
+              <Box className="clientSchedule" sx={{display: 'flex', height: '55vh', width: '40vw',max_height:'55vh', border: 1, borderColor: 'black', justifyContent: 'center', alignContent: 'center'}}>
                   {/* <h1>Client Name</h1> */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <CalendarPicker 
@@ -190,7 +197,7 @@ function ClientSchedule() {
                       <Box
                         key={day.$D}
                         className="clientSchedule"
-                        sx={{width: '6vw', height: '6vw', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'center', justifyContent: 'flex-start', border: 1, borderColor: '#7BCEC8', mt: 0}}>
+                        sx={{width: '6vw', height: '8vh', maxHeight: '10vh', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'center', justifyContent: 'flex-start', border: 1, borderColor: '#7BCEC8', mt: 0}}>
                           {/* This box is just for the date number */}
                           <Box sx={{display: 'flex', justifyContent: 'center', mb: 0, heigh: '1vw', width: '4.5vw'}}>
                             <PickersDay 
@@ -271,51 +278,59 @@ function ClientSchedule() {
                     }}/>
               </LocalizationProvider>
               {/* END of CALENDAR */}
-
-
-            {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
-          <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button> */}
         </Box >
-          </Grid>
-          {/* Form */}
-          <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center'}}>
-            <h2 >Month View / Adjust Schedule</h2>
-            <FormControl  sx={{ mr: 4, pb: 1, mb:2, width: '20vw' }}>
-                  <InputLabel>Dog</InputLabel>
-                  <Select value={dog} onChange={(event) => setDog(event.target.value)}>
-                      <MenuItem value="all">All Dogs</MenuItem>
-                        {client.dogs && client.dogs.map(singleDog => {
-                          return (
-                              <MenuItem key={singleDog.dog_id} value={singleDog.dog_id}>{singleDog.dog_name}</MenuItem>
-                              )
-                        })}
-                  </Select>
-                </FormControl>
-                <FormControl  sx={{ mr: 4, pb: 1, width: '20vw' }}>
-                  <InputLabel>Action</InputLabel>
-                  <Select value={scheduled} onChange={(event) => setScheduled(event.target.value)}>
-                    <MenuItem value={true}>Add Walk</MenuItem>
-                    <MenuItem value={false}>Cancel Walk</MenuItem>
-                  </Select>
-                </FormControl>
-                <LocalizationProvider dateAdapter={AdapterDayjs} >
-                    <DesktopDatePicker
-                      
-                      label="Date desktop"
-                      inputFormat="MM/DD/YYYY"
-                      value={value}
-                      onChange={handleDateChange}
-                      renderInput={(params) => <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />}
-                  />
-                </LocalizationProvider>
-              <Grid sx={{mt: 2}}>
-                  <Button variant='contained' color='secondary' onClick={handleSubmit}> Submit</Button>
-                  <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
+        </Grid>
+
+        
+        {/* ADD One-Off Changes Form */}
+              {addChange ? 
+                <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center'}}>
+                    <h2 >Month View / Adjust Schedule</h2>
+                    <FormControl  sx={{ mr: 4, pb: 1, mb:2, width: '20vw' }}>
+                          <InputLabel>Dog</InputLabel>
+                          <Select value={dog} onChange={(event) => setDog(event.target.value)}>
+                              <MenuItem value="all">All Dogs</MenuItem>
+                                {client.dogs && client.dogs.map(singleDog => {
+                                  return (
+                                      <MenuItem key={singleDog.dog_id} value={singleDog.dog_id}>{singleDog.dog_name}</MenuItem>
+                                      )
+                                })}
+                          </Select>
+                        </FormControl>
+                        <FormControl  sx={{ mr: 4, pb: 1, width: '20vw' }}>
+                          <InputLabel>Action</InputLabel>
+                          <Select value={scheduled} onChange={(event) => setScheduled(event.target.value)}>
+                            <MenuItem value={true}>Add Walk</MenuItem>
+                            <MenuItem value={false}>Cancel Walk</MenuItem>
+                          </Select>
+                        </FormControl>
+                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                            <DesktopDatePicker
+                              shouldDisableDate={isWeekend}
+                              label="Date desktop"
+                              inputFormat="MM/DD/YYYY"
+                              value={value}
+                              onChange={handleDateChange}
+                              renderInput={(params) => <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />}
+                          />
+                        </LocalizationProvider>
+                      <Grid sx={{mt: 2}}>
+                          <Button variant='contained' color='secondary' onClick={handleSubmit}> Submit</Button>
+                          <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
+                      </Grid>
+                </Grid>
+              :
+              <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center', mt: 10}}>
+                <Typography>Add A Schedule Change</Typography>
+                  <Fab color="secondary" aria-label="add" onClick={()=> setAddChange(!addChange)}>
+                    <AddIcon />
+                  </Fab>
+                  <Button variant="outlined" color="info" onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Cancel</Button>
               </Grid>
-          </Grid>
+              }
+          
         </Grid>
     </>
-
 
   )
 }

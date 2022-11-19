@@ -42,6 +42,7 @@
 /* rows */
 .clientSchedule .css-ghi3gg-MuiDayPicker-weekContainer {
     width: 36vw !important;
+    max-height: 10vh !important;
     margin: 0 0 0 0 !important;
     border-right: 1px #7BCEC8 solid;
 }
@@ -50,16 +51,17 @@
     margin: 0 0 0 0 !important;
 }
 
-/* .clientSchedule .css-6t5f1e-MuiDayPicker-monthContainer{
+.clientSchedule .css-6t5f1e-MuiDayPicker-monthContainer{
     overflow-x: visible !important;
     width: 50vw !important;
-    max-height: 80vh !important;
-} */
+    /* max-height: 80vh !important; */
+    max-height: 55vh !important;
+}
 
 
 .clientSchedule .css-169iwlq-MuiCalendarPicker-root{
     width: 100vw !important;
-    max-height: 90vh !important;
+    max-height: 55vh !important;
     margin: 0 0 0 0 !important;
     overflow-x: visible !important;
     display: flex;
@@ -85,7 +87,7 @@
 }
 
 /* box around calendar */
-.css-x495pz {
+.clientSchedule .css-x495pz {
     height: 40vw !important;
     width: 40vw !important;
     outline: black 1px;

@@ -65,7 +65,7 @@ function ClientModal(){
             }
             }} 
           >
-          <Box sx={{ ...style, width: modalView === "ClientSchedule" ? '80vw' : '60vw', height: '80vh', outline: 'none', borderRadius: '5px', display: 'flex', alignContent: 'center', justifyContent: 'left' }}>
+          <Box sx={{ ...style, width: modalView === "ClientSchedule" ? '80vw' : '60vw', height: modalView === "ClientSchedule" ? '80vh' : '60vh', outline: 'none', borderRadius: '5px', display: 'flex', alignContent: 'center', justifyContent: 'left' }}>
             {pickView()}
           </Box>
       </Modal>

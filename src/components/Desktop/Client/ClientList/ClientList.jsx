@@ -60,6 +60,11 @@ function ClientList() {
     setSubmittedSearch('')
   }
 
+  const clientScheduleView = (client) => {
+    console.log('does it hit?')
+    dispatch({ type: 'SET_CLIENT', payload: client })
+    openModal('ClientSchedule')
+  }
 
 
   return (
@@ -116,13 +121,13 @@ function ClientList() {
                         }
                       })
                       .map((client ) => (
-                        <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
-                          <TableCell>{client.first_name} {client.last_name}</TableCell>
-                          <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
-                          <TableCell>{client.phone}</TableCell>
-                          <TableCell>{client.email}</TableCell>
+                        <StyledTableRow key={client.id} hover> 
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.first_name} {client.last_name}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.phone}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.email}</TableCell>
                           <TableCell>
-                            <IconButton onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })}>
+                            <IconButton onClick={() => clientScheduleView(client)}>
                               <CalendarMonthIcon sx={{ fontSize: 20, color: '#341341' }}/> 
                             </IconButton>
                           </TableCell>
@@ -132,13 +137,13 @@ function ClientList() {
                 :
                   <TableBody>
                     {clientList.map((client ) => (
-                        <StyledTableRow key={client.id} hover onClick={() => fetchOneClient(client)}> 
-                          <TableCell>{client.first_name} {client.last_name}</TableCell>
-                          <TableCell>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
-                          <TableCell>{client.phone}</TableCell>
-                          <TableCell>{client.email}</TableCell>
+                        <StyledTableRow key={client.id} hover> 
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.first_name} {client.last_name}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.phone}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.email}</TableCell>
                           <TableCell>
-                            <IconButton onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })}>
+                            <IconButton onClick={() => clientScheduleView(client)}>
                               <CalendarMonthIcon sx={{ fontSize: 20, color: '#341341' }}/> 
                             </IconButton>
                           </TableCell>

@@ -85,8 +85,14 @@ function EmployeeSchedule(){
   // {1: true, 2: true, 3: false, 4: true, 5: true, id: 1, week: 2, first_name: 'Den', last_name: 'Paolini', email: 'dpaolini0@paypal.com', phone: '(840)6732127', …}
 
   const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
-  console.log(dayjs());
+  // console.log(dayjs());
+
+
   return (
+    <>
+    <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', xs: 12 }}>
+      <Grid item xs={8}></Grid>
+    </Grid>
   <Box sx={{display: 'flex', width: '100vw', justifyContent: 'center'}}>
     {/* // MUI DatePicker: */}
     <Box className="container" sx={{display: 'flex', flexDirection: 'row', mt: 1}}>
@@ -123,7 +129,7 @@ function EmployeeSchedule(){
                               {/* is the day within the current month and is this week even(2)? */}
                               {!DayComponentProps.outsideCurrentMonth?
                                 <>
-                                  {weekInYear % 2 !== 0  ?
+                                  {weekInYear % 2 !== 0  ? // odd week (week1)
                                     <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', justifyContent: 'center', alignContent: 'flex-start', flexWrap: 'wrap'}}>
                                     {oddEmpSchedules.map((employee, index) => {
                                       if (employee[day.$W]){
@@ -133,6 +139,7 @@ function EmployeeSchedule(){
                                     })}
                                     </Box>
                                     :
+                                    // even week (week2)
                                     <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', justifyContent: 'top', alignContent: 'flex-start', flexWrap: 'wrap'}}>
                                     {evenEmpSchedules.map((employee, index) => {
                                     if (employee[day.$W]){
@@ -185,6 +192,7 @@ function EmployeeSchedule(){
         ))}
     </Box>
     </Box>
+    </>
   )      
 }
 

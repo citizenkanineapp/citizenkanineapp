@@ -77,7 +77,7 @@
 
 /* this changes the today's date indicator circle */
 .empCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
-    color: black !important;
+    color: orange !important;
     width: 5vw !important;
     height: 5vw !important;
     background-color: transparent !important;

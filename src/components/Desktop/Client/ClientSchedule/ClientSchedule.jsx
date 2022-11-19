@@ -107,9 +107,10 @@ function ClientSchedule() {
     setDisabled(!disabled);
   }
 
-  const DogAvatar=({dog,index, id})=>{
+  const DogAvatar=({dog,index, id, className})=>{
     return (
     <Avatar
+        className={className}
         key={id}
         sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
         alt={dog.dog_name[0]}
@@ -185,7 +186,7 @@ function ClientSchedule() {
                       }
 
                     return (
-                        <Box
+                      <Box
                         key={day.$D}
                         className="clientSchedule"
                         sx={{width: '6vw', height: '6vw', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'center', justifyContent: 'flex-start', border: 1, borderColor: '#7BCEC8', mt: 0}}>
@@ -197,44 +198,59 @@ function ClientSchedule() {
                             {...DayComponentProps} />
                           </Box>
                         {/* Is this date in the current month ?*/}
-                        {!DayComponentProps.outsideCurrentMonth ?
-                        // Is today a regularly scheduled day?
-                          <Box className='avatarBox' sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
-                            {/* Regularly Scheduled Day? */}
-                            {clientSchedule[day.$W] ? 
+                          {!DayComponentProps.outsideCurrentMonth ? 
                               <Box key={day.$D} sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
-                                {/* Are there changes? */}
-                                {changes.length > 0 ?
-                                  <>
-                                    
-                                  </>
-                                :
-                                // no changes on these days so render only on regularly scheduled days
                                 <>
-                                  {clientSchedule[day.$W] ?
-                                    <>
-                                      {dogs.map((dog, index)=>{
-                                        return (
-                                          <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
-                                        )
-                                      })}
-                                    </>
-                                  :
-                                  // not a regularly scheduled day and no changes
-                                  null
-                                  }
+                                  {dogs.map((dog, index)=>{
+                                    if (clientSchedule[day.$W]){
+                                       // Regularly Scheduled Day
+                                      // console.log(day.$W)
+                                      if (changes.length <= 0){ // No changes for client
+                                        if (dog.regular){
+                                          return (
+                                            <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                          )
+                                        }
+                                      }
+                                      if (changes.length > 0){ // Changes on a regularly scheduled day
+                                        // map through changes
+                                        for (let change of changes){
+                                          console.log(change)
+                                          if (!dog.regular && change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) === thisDayString && change.is_scheduled){
+                                              <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                          }
+                                          if (change.dog_id !== dog.dog_id && dog.regular){
+                                            return (
+                                              <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                            )
+                                          }
+                                          // if (dog.regular && change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) && change.is_scheduled ){
+                                          //   return (
+                                          //     <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                          //   )
+                                          // }
+                                          
+                                        }
+                                      }
+                                    }
+                                    if (!clientSchedule[day.$W]){
+                                      // NOT REGULARLY SCHEDULED DAY
+                                      if (changes.length > 0){
+                                        for (let thisChange of changes){
+                                          
+                                          if (thisChange.dog_id === dog.dog_id && JSON.stringify(dayjs(thisChange.date_to_change).$d) === thisDayString && thisChange.is_scheduled){
+                                            return (
+                                              <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                            )
+                                          }
+                                        }
+                                      }
+                                    }
+                                  })}
                                 </>
-                                  }
-                                
                               </Box>
-                            : null}
-                            
-                          </Box>
-                          : 
-                          // this is for if the day id outside of the current month
-                          null
-                          } 
-                        </Box>
+                          :null}
+                      </Box>
                     );
                     }}/>
               </LocalizationProvider>

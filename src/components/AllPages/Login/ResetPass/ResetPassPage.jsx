@@ -13,13 +13,13 @@ function ResetPassPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  useEffect(()=> {
-    dispatch({ type: 'CLEAR_PASSWORD_ERROR'});
-  },[]);
+  useEffect(() => {
+    dispatch({ type: 'CLEAR_PASSWORD_ERROR' });
+  }, []);
 
   const resetPassword = (event) => {
     event.preventDefault();
-    if ((newPass === confPass)  && (newPass != '')) {
+    if ((newPass === confPass) && (newPass != '')) {
       dispatch({
         type: 'RESETPASS',
         payload: {
@@ -42,35 +42,37 @@ function ResetPassPage() {
   return (
     <Box className="login_container">
       <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", height: "80vh" }}>
-        <Card className="login_card" sx={{ width: "30%", height: "60%" }}>
-          <Typography sx={{mt: 2}}align="center">
-            Reset Password
-          </Typography>
+        <Grid item xs={10} sm={4}>
+          <Card className="login_card" sx={{ height: '60%' }}>
+            <Typography sx={{ mt: 2 }} align="center">
+              Reset Password
+            </Typography>
             {errors.resetPasswordMessage && (
-              <Typography sx={{fontSize: 10}} align="center" className="alert" role="alert">
+              <Typography sx={{ fontSize: 10 }} align="center" className="alert" role="alert">
                 {errors.resetPasswordMessage}
               </Typography>
             )}
-          <CardContent onSubmit={resetPassword} component ="form" className="formPanel" sx={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", height: '70%' }}>
-            <TextField
-              margin="dense"
-              label="New password"
-              size="small"
-              value={newPass}
-              onChange={(event) => setNewPass(event.target.value)}
-            />
-            <TextField
-              margin="dense"
-              label="Confirm password"
-              size="small"
-              value={confPass}
-              onChange={(event) => setConfPass(event.target.value)}
-            />
-            <Button type="submit">
-              SUBMIT
-            </Button>
-          </CardContent>
-        </Card>
+            <CardContent onSubmit={resetPassword} component="form" className="formPanel" sx={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", height: '70%' }}>
+              <TextField
+                margin="dense"
+                label="New password"
+                size="small"
+                value={newPass}
+                onChange={(event) => setNewPass(event.target.value)}
+              />
+              <TextField
+                margin="dense"
+                label="Confirm password"
+                size="small"
+                value={confPass}
+                onChange={(event) => setConfPass(event.target.value)}
+              />
+              <Button type="submit">
+                SUBMIT
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </Box>
   );

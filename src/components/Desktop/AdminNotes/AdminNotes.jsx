@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
 import './AdminNotes.css'
 
 
@@ -34,20 +35,23 @@ function AdminNotes(){
     const onEnterSubmit = (e) => {
         if(e.keyCode == 13 && e.shiftKey == false) {
           e.preventDefault();
-          dispatch({ type: 'ADD_ADMIN_NOTES', payload: adminNotes});
+          dispatch({ type: 'ADD_ADMIN_NOTES', payload: note});
           setNote('');
           setToggleNotes(!toggleNotes);
         };
-        // console.log(note)
       };
     
     //sends notes to DB via button
     const buttonSubmit = () => {
-        dispatch({ type: 'ADD_ADMIN_NOTES', payload: adminNotes});
+        dispatch({ type: 'ADD_ADMIN_NOTES', payload: note});
         setToggleNotes(!toggleNotes);
-        setNote();
+        setNote('');
        
     };
+
+    const deleteNote = (id) =>{
+        dispatch({type: ''})
+    }
 
 
 
@@ -67,8 +71,9 @@ function AdminNotes(){
                     <div className="edit_notes">
                         <textarea type="text" 
                             className="notes_input"
-                            value={adminNotes.notes} 
-                            onChange={(e) => dispatch({type: 'ADD_ADMIN_NOTES', payload: e.target.value})}
+                            value={note} 
+                            placeholder="Add a new note"
+                            onChange={(e) => setNote(e.target.value)}
                             onKeyDown={(e) => onEnterSubmit(e)}/>
                     </div>
                 </div>
@@ -87,9 +92,15 @@ function AdminNotes(){
                                 </button>
                     </div>
                     <div className="notes_body">
-                       {adminNotes.notes ? 
-                        <p className="notes">{adminNotes.notes || ''}</p>
-                        : null}
+                       <ul>
+                       {adminNotes.map ((notes) => (
+                            <li className="notes" key={notes.id}>{notes.notes}
+                                 <IconButton onClick={() => deleteNote(notes.id)}>
+                                    <DeleteIcon sx={{ fontSize: 20, color: '#341341' }}/> 
+                                </IconButton>
+                            </li>
+                        ))}
+                        </ul>
                     </div>
                 </div>
             </Grid>

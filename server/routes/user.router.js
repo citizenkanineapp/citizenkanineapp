@@ -2,6 +2,9 @@ const express = require('express');
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
+const {
+  rejectUnauthorized,
+} = require('../modules/authorization-middleware');
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
@@ -34,7 +37,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 // THIS POST is for a user being added when an employee is added.
-router.post('/register/employee', (req, res, next) => {
+router.post('/register/employee', rejectUnauthenticated, rejectUnauthorized, (req, res, next) => {
   const { username, emp_id, admin } = req.body;
 
   // All new users will have a default password of 'packleader' until the user logs in and updates it.
@@ -80,7 +83,7 @@ router.put('/passreset/:id', rejectUnauthenticated, (req, res) => {
 
 // PUT route to update the admin status when an employee's details are changed. 
 
-router.put('/admin', (req, res)=> {
+router.put('/admin',rejectUnauthenticated, rejectUnauthorized, (req, res)=> {
   const { admin, emp_id} = req.body;
   // console.log(admin);
   const sqlQuery = 

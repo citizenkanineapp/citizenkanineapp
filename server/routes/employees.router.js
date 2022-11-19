@@ -11,7 +11,7 @@ const {
 } = require('../modules/authorization-middleware');
 
 // get all employees
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res)=> {
     const sqlQuery = `
     SELECT * FROM employees
     ORDER BY employees.last_name;
@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
 })
 
 // get individual employee
-router.get('/:id', (req, res) => {
+router.get('/:id', rejectUnauthenticated, (req, res)=> {
     const empID = req.params.id;
     const sqlQuery = `
     SELECT * FROM employees
@@ -59,8 +59,8 @@ router.delete('/:id', (req, res) => {
 })
 
 // gets all employee with schedule data for odd week;
-router.get('/schedules/odd', (req, res) => {
-    const sqlQuery = `
+router.get('/schedules/odd', rejectUnauthenticated, (req, res)=>{
+    const sqlQuery=`
     SELECT * FROM 
         employees
     INNER JOIN
@@ -81,8 +81,8 @@ router.get('/schedules/odd', (req, res) => {
 
 })
 
-router.get('/schedules/even', (req, res) => {
-    const sqlQuery = `
+router.get('/schedules/even', rejectUnauthenticated, (req, res)=>{
+    const sqlQuery=`
     SELECT * FROM 
         employees
     INNER JOIN
@@ -102,7 +102,7 @@ router.get('/schedules/even', (req, res) => {
 })
 
 // GET individual employee schedules:
-router.get('/schedule/:id', (req, res) => {
+router.get('/schedule/:id', rejectUnauthenticated, (req, res)=> {
     const empID = req.params.id;
     console.log(empID);
     // the order by is to ensure the correct week is being targeted when setting the reducers for each week.
@@ -125,7 +125,7 @@ router.get('/schedule/:id', (req, res) => {
 })
 
 // Update Employee details:
-router.put('/details', (req, res) => {
+router.put('/details', rejectUnauthenticated, (req, res)=>{
     const updatedEmp = req.body;
     // console.log(updatedEmp);
     // {id: 1, first_name: 'Den', last_name: 'P', email: 'dpaolini0@paypal.com', phone: '(840)6732127', image: null, street: '2900 W 43rd St', city: 'Minneapolis', zip: 55410, date: '2022-11-11T06:00:00.000Z'}
@@ -163,7 +163,7 @@ router.put('/details', (req, res) => {
 })
 
 // Update selected employee schedules simultaneously:
-router.put('/schedules', async (req, res) => {
+router.put('/schedules', rejectUnauthenticated, async (req, res)=>{
     const schedules = req.body;
 
     const client = await pool.connect();
@@ -193,7 +193,7 @@ router.put('/schedules', async (req, res) => {
 })
 
 // POST new employee
-router.post('/', async (req, res) => {
+router.post('/', rejectUnauthenticated, async (req, res)=> {
     const client = await pool.connect();
     const empDetails = req.body[0];
     const schedule = [req.body[1], req.body[2]];

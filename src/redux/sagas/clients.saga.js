@@ -132,6 +132,7 @@ function* fetchSchedule(action){
         const schedule = yield axios.get(`/api/clients/schedule/${clientId}`);
         console.log('back to saga', schedule)
         yield put ({type: 'SET_SCHEDULE', payload: schedule.data[0]});
+        yield put ({type: 'SET_EDIT_CLIENT_SCHEDULE', payload: schedule.data[0]})
     } catch (error) {
         console.log(error);
         alert('Error fetching one client schedule');

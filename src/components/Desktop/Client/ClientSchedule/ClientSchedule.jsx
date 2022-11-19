@@ -23,11 +23,9 @@ function ClientSchedule() {
   //use selectors and defining dispatch
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
-  const dogs = client.dogs;
-  const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
-  const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
-  console.log(clientSchedule)
+  // console.log(clientSchedule)
   // console.log(updatedSchedule)
+  const dogs = client.dogs;
   
   
   useEffect(() => {
@@ -36,6 +34,8 @@ function ClientSchedule() {
     dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.id })
   }, []);
   
+  const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
+  const clientSchedule = useSelector(store => store.clientScheduleReducer.editClientSchedule)
   const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
   // console.log(dayjs(changes[0].date_to_change).$d)
   ;  //local useState state I am using for this functionality
@@ -52,13 +52,12 @@ function ClientSchedule() {
   }
   
   
-  const [updatedSchedule, setUpdatedSchedule] = useState(schedule);
   //This is for the submit button for the one off changes
   // NEED to not be able to add the dog if is is regularly scheduled
   const handleSubmit = () => {
     // need to add date_to_change and is_selected to each one
     let changeDate = `${value.$y}-${value.$M + 1}-${value.$D}`;
-    console.log(changeDate)
+    // console.log(changeDate)
 
     let newChanges = [];
     if (dog === "all") {
@@ -85,7 +84,7 @@ function ClientSchedule() {
     setDog('');
     setScheduled('');
     setValue (dayjs());
-    console.log('newChanges', newChanges)
+    // console.log('newChanges', newChanges)
 
   }
 
@@ -104,8 +103,12 @@ function ClientSchedule() {
 
   const handleWeekScheduleChange =()=>{
     //dispatch updatedSchedule // this object included the client_id
-    dispatch({type: 'REGULAR_SCHEDULE_CHANGE', payload: updatedSchedule})
+    dispatch({type: 'REGULAR_SCHEDULE_CHANGE', payload: clientSchedule})
     // disable the weekly schedule:
+    dispatch({
+      type: 'SET_EDIT_CLIENT_SCHEDULE',
+      payload: schedule
+    })
     setDisabled(!disabled);
   }
 
@@ -132,22 +135,31 @@ function ClientSchedule() {
         </Grid>
         {/* Grid containing weekly schedule */}
         <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
-          {schedule && daysOfWeek.map((day, index) => (
+          {daysOfWeek.map((day, index) => (
             <Grid key={index + 1} item xs={2} sx={{ mt: 5 }} >
               <Card raised>
                 <CardActionArea component={Button}
                   disabled={disabled}
                   onClick={() => {
-                    if (updatedSchedule[index + 1]) {
-                      setUpdatedSchedule({ ...updatedSchedule, [index + 1]: false })
+                    if (!clientSchedule[index + 1]) {
+                      dispatch({
+                        type: 'EDIT_CLIENT_WEEK_SCHEDULE',
+                        payload: { day: index + 1, change: true }
+  
+                      })
+                      
                     }
 
                     else {
-                      setUpdatedSchedule({ ...updatedSchedule, [index + 1]: true })
+                      dispatch({
+                        type: 'EDIT_CLIENT_WEEK_SCHEDULE',
+                        payload: { day: index + 1, change: false }
+  
+                      })
                     }
                   }}
                 >
-                  <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: updatedSchedule[index + 1] ? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
+                  <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: clientSchedule[index + 1] ? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
                     <Typography variant="h7" sx={{ textTransform: 'capitalize' }}>{day}</Typography>
                   </CardContent>
                 </CardActionArea>
@@ -156,8 +168,7 @@ function ClientSchedule() {
             ))}
             { !disabled ?
               <Grid item xs={12} sx={{display: 'flex', justifyContent: 'right'}}>
-                <Button variant='contained' color='secondary' onClick={()=> {
-                  setUpdatedSchedule(schedule)
+                <Button variant="outlined" color="info" onClick={()=> {
                   setDisabled(!disabled)}}>Cancel</Button>
                 <Button variant='contained' color='secondary' onClick={handleWeekScheduleChange}>Confirm</Button>
               </Grid>
@@ -231,7 +242,7 @@ function ClientSchedule() {
                                         // console.log(typeof(dogChange))
                                         // if there is a change for the dog:
                                         if(dogChange.length > 0){
-                                          console.log('there is a change', dogChange);
+                                          // console.log('there is a change', dogChange);
                                           let change = dogChange[0]
                                           if(dog.regular){
                                             if (change.is_scheduled){
@@ -316,7 +327,7 @@ function ClientSchedule() {
                         </LocalizationProvider>
                       <Grid sx={{mt: 2}}>
                           <Button variant='contained' color='secondary' onClick={handleSubmit}> Submit</Button>
-                          <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
+                          <Button variant="outlined" color="info" onClick={() => setAddChange(!addChange)}>Cancel</Button>
                       </Grid>
                 </Grid>
               :
@@ -325,7 +336,8 @@ function ClientSchedule() {
                   <Fab color="secondary" aria-label="add" onClick={()=> setAddChange(!addChange)}>
                     <AddIcon />
                   </Fab>
-                  <Button variant="outlined" color="info" onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Cancel</Button>
+                  <Button onClick={() => {
+                    dispatch({ type: 'SET_MODAL_STATUS' })}}>Back</Button>
               </Grid>
               }
           

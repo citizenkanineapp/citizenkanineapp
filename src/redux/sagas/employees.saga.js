@@ -172,6 +172,22 @@ function* deleteEmployee(action) {
     }
 }
 
+function* addEmpScheduleChange(action){
+    const change = action.payload;
+    try {
+        yield axios({
+            method: 'POST',
+            url: `/api/employees/schedule`,
+            data: change
+        })
+        // yield put({
+        //     type: 'SAGA_FETCH_EMPLOYEES'
+        // })
+
+    } catch {
+        console.log('error in Adding Employee Schedule Change');
+    }
+}
 
 function* employeesSaga() {
     yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees),
@@ -181,7 +197,8 @@ function* employeesSaga() {
         yield takeLatest('SAGA_UPDATE_EMP_DETAILS', updateEmpDetails),
         yield takeLatest('SAGA_UPDATE_EMP_SCHEDULE', updateEmpSchedule),
         yield takeLatest('SAGA_ADD_EMPLOYEE', addEmployee),
-        yield takeLatest('SAGA_DELETE_EMPLOYEE', deleteEmployee)
+        yield takeLatest('SAGA_DELETE_EMPLOYEE', deleteEmployee),
+        yield takeLatest('SAGA_ADD_EMP_CHANGE', addEmpScheduleChange);
 }
 
 export default employeesSaga;

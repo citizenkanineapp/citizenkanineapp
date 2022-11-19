@@ -41,8 +41,8 @@ pool.query(queryText, queryValues)
  * POST route for admin notes
  */
  router.post('/', rejectUnauthenticated, (req, res) => {
-    console.log(req.body)
-    console.log('who is user?', req.user.id)
+    // console.log('does this get to server?', req.body)
+    // console.log('who is user?', req.user.id)
     const {notes} = req.body
     const user = req.user.id
 

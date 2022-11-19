@@ -106,9 +106,9 @@ function App() {
               {user.admin ? <ResetPassPage /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/adminnotes">
+            {/* <ProtectedRoute exact path="/adminnotes">
               {user.admin ? <AdminNotes /> : <Redirect to="/home" />}
-            </ProtectedRoute>
+            </ProtectedRoute> */}
 
 
             {/* ----------------------- MOBILE ----------------------- */}

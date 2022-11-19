@@ -52,7 +52,7 @@ function Nav(props) {
         <ListItem >
           <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/schedule')}>
             <CalendarMonthIcon />
-            <ListItemText primary='Employee Schedule' />
+            <ListItemText primary='employee schedule' />
           </ListItemButton>
         </ListItem>
 
@@ -85,7 +85,7 @@ function Nav(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column'}}>
       <AppBar component="nav" position='sticky' sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
 
         {user.id && (

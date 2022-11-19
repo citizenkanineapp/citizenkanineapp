@@ -16,7 +16,7 @@ export const theme = createTheme({
     secondary: {
       main: '#53b0d1',
       contrastText: '#fbfaf8',
-      dark: '#53c8d1',
+      dark: '#3f89a4',
     },
     error: {
       main: '#f8614d',
@@ -50,5 +50,6 @@ export const theme = createTheme({
         fontSize: "2.5rem",
       },
   },
-      
+
+
 });

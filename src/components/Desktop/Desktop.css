@@ -1,5 +1,6 @@
 .desktop_container{
-    height: 90vh;
+    height: 150%;
     background-image: url('https://img.freepik.com/free-vector/digital-technology-background-with-abstract-wave-border_53876-117508.jpg?w=1800&t=st=1667757157~exp=1667757757~hmac=8e0fdfc65e72c2cc5430d8585ea5e091b5d888ba84d8a1dde5cdc32b4a251f8b');
     background-size: cover;
+    background-color: #3f89a4;
 }

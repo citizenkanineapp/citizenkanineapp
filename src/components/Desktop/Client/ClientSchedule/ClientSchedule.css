@@ -19,8 +19,8 @@
 }
 
 .clientSchedule .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
-    /* width: 50vw !important; */
-    height: 70vh !important;
+    width: 100vw !important;
+    height: 100vh !important;
 }
 
 .clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
@@ -42,6 +42,7 @@
 /* rows */
 .clientSchedule .css-ghi3gg-MuiDayPicker-weekContainer {
     width: 36vw !important;
+    max-height: 10vh !important;
     margin: 0 0 0 0 !important;
     border-right: 1px #7BCEC8 solid;
 }
@@ -50,16 +51,17 @@
     margin: 0 0 0 0 !important;
 }
 
-/* .clientSchedule .css-6t5f1e-MuiDayPicker-monthContainer{
+.clientSchedule .css-6t5f1e-MuiDayPicker-monthContainer{
     overflow-x: visible !important;
     width: 50vw !important;
-    max-height: 80vh !important;
-} */
+    /* max-height: 80vh !important; */
+    max-height: 55vh !important;
+}
 
 
 .clientSchedule .css-169iwlq-MuiCalendarPicker-root{
     width: 100vw !important;
-    max-height: 90vh !important;
+    max-height: 55vh !important;
     margin: 0 0 0 0 !important;
     overflow-x: visible !important;
     display: flex;
@@ -68,13 +70,13 @@
 }
 
 /* Header */
-.clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
+/* .clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
     width: 36vw !important;
     padding: 0 0 0 0 !important;
-}
+} */
 
 /* All of the day labels */
-.clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root  {
+.clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root  {
     width: 1vw !important;
     height: 1vw !important;
     justify-content: center !important;
@@ -85,7 +87,7 @@
 }
 
 /* box around calendar */
-.css-x495pz {
+.clientSchedule .css-x495pz {
     height: 40vw !important;
     width: 40vw !important;
     outline: black 1px;
@@ -107,6 +109,6 @@
 }
 
 /* month & year label */
-.css-dplwbx-MuiPickersCalendarHeader-label{
+.clientSchedule .css-dplwbx-MuiPickersCalendarHeader-label{
     font-size: 1.5rem !important;
 }

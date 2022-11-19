@@ -8,9 +8,10 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import CheckIcon from '@mui/icons-material/Check';
 import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 const isWeekend = (date) => {
   const day = date.day();
@@ -22,75 +23,42 @@ function ClientSchedule() {
   //use selectors and defining dispatch
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
-  const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
+  // console.log(clientSchedule)
+  // console.log(updatedSchedule)
   const dogs = client.dogs;
-
-
+  
+  
   useEffect(() => {
     dispatch({ type: 'FETCH_SCHEDULE', payload: client.id })
     // Fetch client schedule changes
     dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.id })
   }, []);
-
-  const changes = useSelector(store => store.clientScheduleReducer.clientScheduleChanges)
-  //local useState state I am using for this functionality
+  
+  const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
+  const clientSchedule = useSelector(store => store.clientScheduleReducer.editClientSchedule)
+  const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
+  // console.log(dayjs(changes[0].date_to_change).$d)
+  ;  //local useState state I am using for this functionality
   const [dog, setDog] = useState('');
   // console.log(dog);
-  const [changeDate, setChangeDate] = useState('');
-  const [dogChanges, setDogChanges] = useState('');
-  const [action, setAction] = useState('');
   const [scheduled, setScheduled] = useState('');
   const [value, setValue] = useState(dayjs());
-  const [monday, setMonday] = useState(schedule["1"])
-  const [tuesday, setTuesday] = useState(schedule["2"]);
-  const [wednesday, setWednesday] = useState(schedule["3"]);
-  const [thursday, setThursday] = useState(schedule["4"]);
-  const [friday, setFriday] = useState(schedule["5"]);
-
-  //this function handles the change of regular schedule
-  const handleClick = (event) => {
-    switch (event) {
-      case "Monday":
-        setMonday(current => !current);
-        dispatch({ type: 'SET_MONDAY_CHANGE', payload: !monday })
-        break;
-      case "Tuesday":
-        setTuesday(current => !current);
-        dispatch({ type: 'SET_TUESDAY_CHANGE', payload: !tuesday })
-        break;
-      case "Wednesday":
-        setWednesday(current => !current);
-        dispatch({ type: 'SET_WEDNESDAY_CHANGE', payload: !wednesday })
-        break;
-      case "Thursday":
-        setThursday(current => !current);
-        dispatch({ type: 'SET_THURSDAY_CHANGE', payload: !thursday })
-        break;
-      case "Friday":
-        setFriday(current => !current);
-        dispatch({ type: 'SET_FRIDAY_CHANGE', payload: !friday })
-        break;
-    }
-  };
-
-
-
-  // this handles the change of the date based on the date picker
-  const handleChange = (newValue) => {
-    // setValue(dayjs(newValue.$d.slice(0,10)));
-    let changeDateFormatting = JSON.stringify(newValue).slice(1, 11); //this gets back just the yyyy-mm-dd string value
-    setValue(newValue)
-    setChangeDate(dayjs(changeDateFormatting).$d)
-    // console.log(changeDate);
+  
+  
+  // THIS handles the change of the date based on the date picker
+  const handleDateChange = (newValue) => {
+    console.log(newValue);
+    setValue(newValue);
   }
-  //NEED to get value and change.date_to_change to match
-
-  //this is for the submit button for the one off changes
-  let updatedChanges = [];
-  let addChanges = [];
-  const handleSubmit = (event) => {
-
+  
+  
+  //This is for the submit button for the one off changes
+  // NEED to not be able to add the dog if is is regularly scheduled
+  const handleSubmit = () => {
     // need to add date_to_change and is_selected to each one
+    let changeDate = `${value.$y}-${value.$M + 1}-${value.$D}`;
+    // console.log(changeDate)
+
     let newChanges = [];
     if (dog === "all") {
       client.dogs.map(singleDog => {
@@ -102,68 +70,26 @@ function ClientSchedule() {
       let thisChange = { dog_id: dog, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled }
       newChanges.push(thisChange)
     }
-    // need to reset local states:
+
+    // if there are new changes, then post changes.
+    if (newChanges.length > 0){
+      dispatch({
+        type: 'SEND_ONE_SCHEDULE_CHANGE',
+        payload: newChanges
+      })
+    }
+
+
+     // need to reset local states:
     setDog('');
     setScheduled('');
-    setValue(dayjs());
+    setValue (dayjs());
+    // console.log('newChanges', newChanges)
 
-    if (changes.length === 0) {
-      addChanges = newChanges;
-    }
-    else {
-      // mapping through newChanges
-      loop1:
-      for (let thisChange of newChanges) {
-        console.log('in newChanges');
-        for (let change of changes) {
-          console.log('thisChange is:', thisChange);
-          console.log('change is:', change);
-          let existingChangeDate = JSON.stringify(dayjs(change.date_to_change.slice(0, 10)).$d); // this formats the date to match that of the new change
-          let newChangeDate = JSON.stringify(thisChange.date_to_change)
-          // does the dog_id match?
-          if (thisChange.dog_id === change.dog_id) {
-            console.log('ids match')
-            // does the date and is_scheduled match? 
-            if (existingChangeDate === newChangeDate && thisChange.is_scheduled === change.is_scheduled) {
-              //  this change already exists, continue
-              console.log('this change already exists')
-              break loop1;
-            }
-            // does the date match and the is_scheduled does not?
-            else if (existingChangeDate === newChangeDate && thisChange.is_scheduled !== change.is_scheduled) {
-              // this change already exists and needs to be updated
-              console.log('this change exists and needs to be updated')
-              updatedChanges.push(thisChange)
-              break loop1;
-            }
-          }
-          // the dog_id does not match
-          else {
-            addChanges.push(thisChange)
-            break;
-          }
-
-        }
-      }
-      console.log(updatedChanges);
-      console.log(addChanges);
-      // dispatch updatedChanges an addChanges to add/update changes. 
-    }
-  }
-
-
-  //this function changes a client's regular schedule
-  const regularScheduleChange = (event) => {
-    dispatch({ type: 'REGULAR_SCHEDULE_CHANGE', payload: schedule })
   }
 
   // CALENDAR STUFF
-  const clientSchedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
-  console.log(clientSchedule)
-  const [updatedSchedule, setUpdatedSchedule] = useState(clientSchedule);
-  console.log(updatedSchedule)
-
-  const noChange = () => {// This is a blank function used as a placeholder for the onChange of the calendar picker. onChange is required but has no use in this case. 
+  const noChange = ()=> {// This is a blank function used as a placeholder for the onChange of the calendar picker. onChange is required but has no use in this case. 
   }
 
   const avatarColors = ['#4A5061', '#F5A572', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D'];
@@ -175,321 +101,248 @@ function ClientSchedule() {
   // This object will be dispatched when the weekly schedule has been updated;
 
 
-  const handleWeekScheduleChange = () => {
-    //dispatch updatedSchedule
-
+  const handleWeekScheduleChange =()=>{
+    //dispatch updatedSchedule // this object included the client_id
+    dispatch({type: 'REGULAR_SCHEDULE_CHANGE', payload: clientSchedule})
+    // disable the weekly schedule:
+    dispatch({
+      type: 'SET_EDIT_CLIENT_SCHEDULE',
+      payload: schedule
+    })
+    setDisabled(!disabled);
   }
+
+  const DogAvatar=({dog,index, id, className})=>{
+    return (
+    <Avatar
+        className={className}
+        key={id}
+        sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
+        alt={dog.dog_name[0]}
+        src={dog.image ? dog.image : null}
+    >
+    {dog.dog_name[0]}
+    </Avatar>)
+  }
+
+  const [addChange, setAddChange] = useState(false);
 
   return (
     <>
       <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', xs: 12 }}>
+        <Grid item xs={12}>
+          <Typography variant="h3" sx={{ display: 'flex', alignSelf: 'left'}}>{client.first_name} {client.last_name}</Typography>
+        </Grid>
         {/* Grid containing weekly schedule */}
         <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
-          {schedule && daysOfWeek.map((day, index) => (
+          {daysOfWeek.map((day, index) => (
             <Grid key={index + 1} item xs={2} sx={{ mt: 5 }} >
               <Card raised>
                 <CardActionArea component={Button}
                   disabled={disabled}
                   onClick={() => {
-                    if (updatedSchedule[index + 1]) {
-                      setUpdatedSchedule({ ...updatedSchedule, [index + 1]: false })
+                    if (!clientSchedule[index + 1]) {
+                      dispatch({
+                        type: 'EDIT_CLIENT_WEEK_SCHEDULE',
+                        payload: { day: index + 1, change: true }
+  
+                      })
+                      
                     }
 
                     else {
-                      setUpdatedSchedule({ ...updatedSchedule, [index + 1]: true })
+                      dispatch({
+                        type: 'EDIT_CLIENT_WEEK_SCHEDULE',
+                        payload: { day: index + 1, change: false }
+  
+                      })
                     }
                   }}
                 >
-                  <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: updatedSchedule[index + 1] ? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
+                  <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: clientSchedule[index + 1] ? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
                     <Typography variant="h7" sx={{ textTransform: 'capitalize' }}>{day}</Typography>
                   </CardContent>
                 </CardActionArea>
               </Card>
             </Grid>
-          ))}
-          {!disabled ?
-            <Grid item xs={16} sx={{ display: 'flex', justifyContent: 'right' }}>
-              <Button variant='contained' color='secondary' onClick={() => {
-                setUpdatedSchedule(schedule)
-                setDisabled(!disabled)
-              }}>Cancel</Button>
-              <Button variant='contained' color='secondary' onClick={handleWeekScheduleChange}>Submit</Button>
-            </Grid>
+            ))}
+            { !disabled ?
+              <Grid item xs={12} sx={{display: 'flex', justifyContent: 'right'}}>
+                <Button variant="outlined" color="info" onClick={()=> {
+                  setDisabled(!disabled)}}>Cancel</Button>
+                <Button variant='contained' color='secondary' onClick={handleWeekScheduleChange}>Confirm</Button>
+              </Grid>
             :
             <Grid item xs={16} sx={{ display: 'flex', justifyContent: 'right' }}>
-              <Button variant='contained' color='secondary' onClick={() => setDisabled(!disabled)}>Edit Weekly Schedule</Button>
+              <Button variant='contained' color='secondary' onClick={() => setDisabled(!disabled)}>Edit</Button>
             </Grid>
           }
 
         </Grid>
-        {/* Grid containing calendar and form */}
-        {/* Calendar */}
-        <Grid item xs={6}>
-          <Box className="clientSchedule" sx={{ display: 'flex', height: '55vh', width: '40vw', border: 1, borderColor: 'black', justifyContent: 'center', alignContent: 'center' }}>
-            {/* <h1>Client Name</h1> */}
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <CalendarPicker
-                className='clientSchedule'
-                shouldDisableDate={isWeekend}
-                onChange={noChange}
-                renderInput={(params) => {
-                  // console.log(dayjs());
-                  <TextField key={day.$D} {...params} />
-                }}
-                // renderDay is essentially mapping through each day in the selected month.
-                renderDay={(day, _value, DayComponentProps) => {
-                  // console.log(clientSchedule)
-                  let selectedMUIClass = '';
-                  if (day.$d === dayjs()) {
-                    selectedMUIClass = "MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
-                  }
+      {/* Grid containing calendar and form */}
+          {/* Calendar */}
+          <Grid item xs={6}>
+              <Box className="clientSchedule" sx={{display: 'flex', height: '55vh', width: '40vw',max_height:'55vh', border: 1, borderColor: 'black', justifyContent: 'center', alignContent: 'center'}}>
+                  {/* <h1>Client Name</h1> */}
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <CalendarPicker 
+                  className='clientSchedule'
+                  shouldDisableDate={isWeekend}
+                  onChange={noChange}
+                  renderInput={(params) => {
+                        // console.log(dayjs());
+                        <TextField key={day.$D} {...params} />
+                        }}
+                  // renderDay is essentially mapping through each day in the selected month.
+                  renderDay={(day, _value, DayComponentProps) => {
+                    console
+                    // console.log(JSON.stringify(DayComponentProps.day.$d))
+                    let thisDayString = JSON.stringify(DayComponentProps.day.$d)
+                    let selectedMUIClass='';
+                    console.log()
+                    if (day.$d === dayjs()){
+                        selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
+                      }
 
-                  return (
-                    <Box
-                      key={day.$D}
-                      className="clientSchedule"
-                      sx={{ width: '6vw', height: '6vw', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'center', justifyContent: 'flex-start', border: 1, borderColor: '#7BCEC8', mt: 0 }}>
-                      {/* This box is just for the date number */}
-                      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 0, heigh: '1vw', width: '4.5vw' }}>
-                        <PickersDay
-                          key={day.$D}
-                          className={selectedMUIClass}
-                          {...DayComponentProps} />
-                      </Box>
-                      {/* Is this date in the current month ?*/}
-                      {!DayComponentProps.outsideCurrentMonth ?
-                        <Box key={day.$D} sx={{ display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap', width: '4.5vw', alignContent: 'flex-start', justifyContent: 'center', mb: 0, pt: 1.5 }}>
-                          {/*  map through changes array: Is there a change for today? YES:, NO: check to see if it is a regularly scheduled day and render regularly scheduled dogs */}
-
-                          {changes.length !== 0 ?
-                            <>
-                              {changes && changes.map((change, index) => {
-                                // does the change date match today's date?
-                                return (
-                                  <div key={change.id}>
-                                    {/* is there a change scheduled today (month, day & year? */}
-                                    {JSON.stringify(DayComponentProps.day.$d) === JSON.stringify(dayjs(change.date_to_change).$d) ?
-                                      <div>
-                                        {/*  is this change to add a dog? */}
-                                        {change.is_scheduled ?
-                                          <>
-                                            {/* Is this change happening on a regularly scheduled weekday? */}
-                                            {clientSchedule && clientSchedule[day.$W] ?
-                                              <>
-                                                {dogs.map((dog, index) => {
-                                                  return (
-                                                    <div key={dog.dog_id}>
-                                                      {/* render all the regularly scheduled dogs AND the dog added */}
-                                                      {dog.regular || change.dog_id === dog.dog_id ?
-                                                        <Avatar
-                                                          key={dog.dog_id}
-                                                          sx={{ width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index] }}
-                                                          alt={dog.dog_name[0]}
-                                                          src={dog.image ? dog.image : null}
-                                                        >{dog.dog_name[0]}
-                                                        </Avatar>
-                                                        : null}
-                                                    </div>)
-                                                })}
-                                              </>
-                                              :
-                                              // Adding a dog on a non-regularly scheduled weekday:
-                                              <>
-                                                {dogs.map((dog, index) => {
-                                                  return (
-                                                    <div key={dog.dog_id}>
-                                                      {/* render the dog(s) added */}
-                                                      {change.dog_id === dog.dog_id ?
-                                                        <Avatar
-                                                          key={dog.dog_id}
-                                                          sx={{ width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index] }}
-                                                          alt={dog.dog_name[0]}
-                                                          src={dog.image ? dog.image : null}
-                                                        >{dog.dog_name[0]}
-                                                        </Avatar>
-                                                        : null}
-                                                    </div>)
-                                                })}
-                                              </>
-                                            }</>
-
-                                          :
-                                          // The change is to delete a dog, change.is_scheduled === false:
-                                          <>
-                                            {/* Is this change happening on a regularly scheduled weekday? */}
-                                            {clientSchedule[day.$W] ?
-                                              <>
-                                                {dogs.map((dog, index) => {
-                                                  return (
-                                                    <div key={dog.dog_id}>
-                                                      {/* render all the regularly scheduled dogs EXCEPT the dog deleted */}
-                                                      {dog.regular && change.dog_id !== dog.dog_id ?
-                                                        <Avatar
-                                                          key={dog.dog_id}
-                                                          sx={{ width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index] }}
-                                                          alt={dog.dog_name[0]}
-                                                          src={dog.image ? dog.image : null}
-                                                        >{dog.dog_name[0]}
-                                                        </Avatar>
-                                                        : null}
-                                                    </div>)
-                                                })}
-                                              </>
-                                              :
-                                              null
-                                            }</>
-                                        }
-                                      </div>
-                                      :
-                                      // There are no schedule changes for today:
-                                      <>
-                                        {/* is today a regularly scheduled weekday? */}
-                                        {/* the index === changes.length-1 part prevents the dogs from rendering multiple times */}
-                                        {clientSchedule[day.$W] && index === changes.length - 1 ?
-                                          <Box key={day.$D} sx={{ display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap', width: '4.5vw', alignContent: 'flex-start', justifyContent: 'center', mb: 0, pt: 1.5 }}>
-                                            {dogs.map((dog, index) => {
-
-                                              return (
-                                                <div key={dog.dog_id}>
-                                                  {/* render the dog(s) added */}
-                                                  {dog.regular && JSON.stringify(DayComponentProps.day.$d) !== JSON.stringify(dayjs(change.date_to_change).$d) ?
-                                                    <Avatar
-                                                      key={dog.dog_id}
-                                                      sx={{ width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index] }}
-                                                      alt={dog.dog_name[0]}
-                                                      src={dog.image ? dog.image : null}
-                                                    >{dog.dog_name[0]}
-                                                    </Avatar>
-                                                    : null}
-                                                </div>)
-                                            })}
-                                          </Box>
-                                          :
-                                          // There are no changes today AND today is not a regularly scheduled day
-                                          null
-                                        }
-                                      </>
-                                    }
-                                  </div>)
-                              })} {/* this is the end of mapping through changes */}
-                            </>
-                            :
-                            <>
-                              {clientSchedule[day.$W] ?
+                    return (
+                      <Box
+                        key={day.$D}
+                        className="clientSchedule"
+                        sx={{width: '6vw', height: '8vh', maxHeight: '10vh', display: 'flex', mt: 1, flexDirection: 'column', alignContent: 'center', justifyContent: 'flex-start', border: 1, borderColor: '#7BCEC8', mt: 0}}>
+                          {/* This box is just for the date number */}
+                          <Box sx={{display: 'flex', justifyContent: 'center', mb: 0, heigh: '1vw', width: '4.5vw'}}>
+                            <PickersDay 
+                            key={day.$D}
+                            className={ selectedMUIClass }
+                            {...DayComponentProps} />
+                          </Box>
+                        {/* Is this date in the current month ?*/}
+                          {!DayComponentProps.outsideCurrentMonth ? 
+                              <Box key={day.$D} sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                                 <>
-                                  {dogs.map((dog, index) => (
-                                    <Avatar
-                                      key={dog.dog_id}
-                                      sx={{ width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index] }}
-                                      alt={dog.dog_name[0]}
-                                    // src={dog.image !== null ? dog.image : null }
-                                    >{dog.dog_name[0]}
-                                    </Avatar>
-                                  ))}
+                                  {dogs.map((dog, index)=>{
+                                    // console.log(dog.dog_name, dog.regular)
+                                    if (clientSchedule[day.$W]){
+                                       // Regularly Scheduled Day
+                                      // console.log(day.$W)
+                                      if (changes.length <= 0){ // No changes for client
+                                        if (dog.regular){
+                                          return (
+                                            <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                          )
+                                        }
+                                      }
+
+                                      if (changes.length > 0){ // Changes on a regularly scheduled day
+                                        // returns an object with the change for the day if there is one
+                                        let dogChange = changes.filter(change=>{
+                                          return change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) === thisDayString
+                                        })
+                                        
+                                        // console.log(typeof(dogChange))
+                                        // if there is a change for the dog:
+                                        if(dogChange.length > 0){
+                                          // console.log('there is a change', dogChange);
+                                          let change = dogChange[0]
+                                          if(dog.regular){
+                                            if (change.is_scheduled){
+                                              return (
+                                                <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                              )
+                                            }
+                                          }
+                                          if(!dog.regular){
+                                            if (change.is_scheduled){
+                                              return (
+                                                <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                              )
+                                            }
+                                          }
+                                        }
+                                        // Else there is not change for this dog on this day => render regularly scheduled dog
+                                      else if (dog.regular){
+                                        return (
+                                          <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                        )
+                                      }
+                                      }
+                                    }
+                                    if (!clientSchedule[day.$W]){
+                                      // NOT REGULARLY SCHEDULED DAY
+                                      if (changes.length > 0){
+                                        for (let thisChange of changes){
+                                          
+                                          if (thisChange.dog_id === dog.dog_id && JSON.stringify(dayjs(thisChange.date_to_change).$d) === thisDayString && thisChange.is_scheduled){
+                                            return (
+                                              <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                            )
+                                          }
+                                        }
+                                      }
+                                    }
+                                  })}
                                 </>
-                                :
-                                null
-                              }
-                            </>
-
-                          } {/* No changes go here */}
-
-                        </Box>
-                        : null} {/* this null is for the day not being within the current month */}
-                    </Box>
-                  );
-                }} />
-            </LocalizationProvider>
-            {/* END of CALENDAR */}
-
-
-            {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
-          <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button> */}
-          </Box >
+                              </Box>
+                          :null}
+                      </Box>
+                    );
+                    }}/>
+              </LocalizationProvider>
+              {/* END of CALENDAR */}
+        </Box >
         </Grid>
-        {/* Form */}
-        <Grid item xs={5} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <h2 >Month View / Adjust Schedule</h2>
-          <FormControl sx={{ mr: 4, pb: 1, mb: 2, width: '20vw' }}>
-            <InputLabel>Dog</InputLabel>
-            <Select value={dog} onChange={(event) => setDog(event.target.value)}>
-              <MenuItem value="all">All Dogs</MenuItem>
-              {client.dogs && client.dogs.map(singleDog => {
-                return (
-                  <MenuItem key={singleDog.dog_id} value={singleDog.dog_id}>{singleDog.dog_name}</MenuItem>
-                )
-              })}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ mr: 4, pb: 1, width: '20vw' }}>
-            <InputLabel>Action</InputLabel>
-            <Select value={scheduled} onChange={(event) => setScheduled(event.target.value)}>
-              <MenuItem value={true}>Add Walk</MenuItem>
-              <MenuItem value={false}>Cancel Walk</MenuItem>
-            </Select>
-          </FormControl>
-          <LocalizationProvider dateAdapter={AdapterDayjs} >
-            <DesktopDatePicker
 
-              label="Date desktop"
-              inputFormat="MM/DD/YYYY"
-              value={value}
-              onChange={handleChange}
-              renderInput={(params) => <TextField {...params} sx={{ mt: 2, mr: 4, pb: 1, width: '20vw' }} />}
-            />
-          </LocalizationProvider>
-          <Grid sx={{ mt: 2 }}>
-            <Button variant='contained' color='secondary' onClick={handleSubmit}> Submit</Button>
-            <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
-          </Grid>
+        
+        {/* ADD One-Off Changes Form */}
+              {addChange ? 
+                <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center'}}>
+                    <h2 >Month View / Adjust Schedule</h2>
+                    <FormControl  sx={{ mr: 4, pb: 1, mb:2, width: '20vw' }}>
+                          <InputLabel>Dog</InputLabel>
+                          <Select value={dog} onChange={(event) => setDog(event.target.value)}>
+                              <MenuItem value="all">All Dogs</MenuItem>
+                                {client.dogs && client.dogs.map(singleDog => {
+                                  return (
+                                      <MenuItem key={singleDog.dog_id} value={singleDog.dog_id}>{singleDog.dog_name}</MenuItem>
+                                      )
+                                })}
+                          </Select>
+                        </FormControl>
+                        <FormControl  sx={{ mr: 4, pb: 1, width: '20vw' }}>
+                          <InputLabel>Action</InputLabel>
+                          <Select value={scheduled} onChange={(event) => setScheduled(event.target.value)}>
+                            <MenuItem value={true}>Add Walk</MenuItem>
+                            <MenuItem value={false}>Cancel Walk</MenuItem>
+                          </Select>
+                        </FormControl>
+                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                            <DesktopDatePicker
+                              shouldDisableDate={isWeekend}
+                              label="Date desktop"
+                              inputFormat="MM/DD/YYYY"
+                              value={value}
+                              onChange={handleDateChange}
+                              renderInput={(params) => <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />}
+                          />
+                        </LocalizationProvider>
+                      <Grid sx={{mt: 2}}>
+                          <Button variant='contained' color='secondary' onClick={handleSubmit}> Submit</Button>
+                          <Button variant="outlined" color="info" onClick={() => setAddChange(!addChange)}>Cancel</Button>
+                      </Grid>
+                </Grid>
+              :
+              <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center', mt: 10}}>
+                <Typography>Add A Schedule Change</Typography>
+                  <Fab color="secondary" aria-label="add" onClick={()=> setAddChange(!addChange)}>
+                    <AddIcon />
+                  </Fab>
+                  <Button onClick={() => {
+                    dispatch({ type: 'SET_MODAL_STATUS' })}}>Back</Button>
+              </Grid>
+              }
+          
         </Grid>
-      </Grid>
-
-
-
-      {/*-------- below here is for the one off changes------------ */}
-
-      <h2 >Month View / Adjust Schedule</h2>
-      <Grid container spacing={2} sx={{ mt: 2 }}>
-        <Grid item xs={6}>
-          <FormControl fullWidth sx={{ mr: 4, pb: 1, mb: 2 }}>
-            <InputLabel>Dog</InputLabel>
-            <Select value={dog} onChange={(event) => setDog(event.target.value)}>
-              <MenuItem value={client.dogs}>All Dogs</MenuItem>
-              {client.dogs && client.dogs.map(singleDog => {
-                return (
-                  <MenuItem key={singleDog.dog_id} value={singleDog}>{singleDog.dog_name}</MenuItem>
-                )
-              })}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth sx={{ mr: 4, pb: 1 }}>
-            <InputLabel>Action</InputLabel>
-            <Select value={scheduled} onChange={(event) => setScheduled(event.target.value)}>
-              <MenuItem value={true}>Add Walk</MenuItem>
-              <MenuItem value={false}>Cancel Walk</MenuItem>
-            </Select>
-          </FormControl>
-          <Button variant='contained' color='secondary' onClick={handleSubmit}>Submit</Button>
-        </Grid>
-        <Grid item xs={6}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
-              label="Date desktop"
-              inputFormat="MM/DD/YYYY"
-              value={value}
-              onChange={handleChange}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
-        </Grid>
-      </Grid>
-      <Grid>
-        <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm' })}>Back</Button>
-        {/* <Button onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientScheduleChanges' })}>Edit</Button> */}
-      </Grid>
     </>
-
 
   )
 }

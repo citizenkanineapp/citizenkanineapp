@@ -32,6 +32,19 @@ const clientSchedule = (state = {1: false, 2: false, 3: false, 4: false, 5: fals
     }
 }
 
+const editClientSchedule = (state = {}, action) => {
+    switch (action.type) {
+        case 'SET_EDIT_CLIENT_SCHEDULE':
+            return action.payload;
+        case 'EDIT_CLIENT_WEEK_SCHEDULE':
+            const day = action.payload.day;
+            const change = action.payload.change;
+            return {...state, [day]: change}
+        default:
+            return state;
+    }
+}
+
 function clientScheduleChanges (state = [], action){
     switch (action.type){
         case 'SET_CLIENT_SCHEDULE_CHANGES':
@@ -44,6 +57,7 @@ function clientScheduleChanges (state = [], action){
 const clientScheduleReducer= combineReducers({
     clientSchedule,
     clientScheduleChanges,
+    editClientSchedule,
 })
 
 export default clientScheduleReducer;

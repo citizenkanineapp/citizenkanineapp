@@ -22,7 +22,7 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res)=> {
     pool.query(sqlQuery, [client_id])
         .then(dbRes=> {
             res.send(dbRes.rows);
-            console.log(dbRes.rows[0]);
+            // console.log(dbRes.rows[0]);
         })
         .catch(error=> {
             res.sendStatus(500);

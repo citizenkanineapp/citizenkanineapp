@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 20vw;
-    color: gray;
+    color: black;
     border: 1px solid black;
 }
 
@@ -10,6 +10,7 @@
     height: 20%;
     width: 100%;
     background-color: rgba(245, 245, 245, 0.484);
+    color: black;
     border-radius: 0.5rem 0.5rem 0 0;
     display: flex;
     align-items: center;
@@ -29,7 +30,7 @@
     width: 100%;
     height: 80%;
     color: black;
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 
 .notes{ /* to match MUI list */
@@ -48,7 +49,7 @@
     word-break: break-all;
     word-break: break-word;
     /* background-color: transparent; */
-    background-color: aqua;
+    /* background-color: aqua; */
     border: 1px solid rgb(101, 96, 96, 0.2);
     /* border-radius: 0.3rem; */
     /* padding: 1rem;
@@ -61,4 +62,8 @@
 
 .notes_input{
     outline: none !important;
+}
+
+.button {
+    color: black;
 }

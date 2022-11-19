@@ -6,6 +6,11 @@ const {
     rejectUnauthenticated,
   } = require('../modules/authentication-middleware');
 
+  const {
+    rejectUnauthorized,
+  } = require('../modules/authorization-middleware');
+
+
 
 /**
  * This router is for admin notes 
@@ -61,5 +66,20 @@ pool.query(queryText, queryValues)
       res.sendStatus(500);
     }
   });
+
+  //deleting and admin note
+
+  router.delete('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+    // console.log(req.params.id)
+    
+    const queryText = 'DELETE FROM admin_notes WHERE id=$1';
+    pool.query(queryText, [req.params.id])
+      .then(() => { res.sendStatus(200); })
+      .catch((err) => {
+        console.log('Error completing delete admin notes', err);
+        res.sendStatus(500);
+      });
+  });
+
 
 module.exports = router;

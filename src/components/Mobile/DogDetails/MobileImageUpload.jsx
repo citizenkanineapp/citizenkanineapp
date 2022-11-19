@@ -47,6 +47,7 @@ function MobileImageUpload({ id }) {
             payload: { new_image_url: base64EncodedImage, dogID: id },
             headers: { 'Content-type': 'application/json' }
         })
+
     }
 
     return (

@@ -10,7 +10,7 @@ function* setAdminNotes(action) {
             url: '/api/admin',
             data: note
         })
-        yield put ({type: 'FETCH_NOTES'});
+        yield put ({type: 'FETCH_ADMIN_NOTES'});
     } catch (error) {
         console.log(error);
         alert('Error adding admin notes');
@@ -30,12 +30,24 @@ function* fetchAdminNotes(action) {
     
 }
 
+function* deleteAdminNotes(action) {
+    const noteId = action.payload
+    console.log('in saga', noteId)
+    try{
+        const note = yield axios.delete(`/api/admin/${noteId}`);
+        yield put ({type: 'FETCH_ADMIN_NOTES'});
+    } catch (error){
+        console.log('error deleting admin note', error)
+    }
+}
+
 
 
 
 function* adminSaga() {
     yield takeLatest('ADD_ADMIN_NOTES', setAdminNotes);
-    yield takeLatest('FETCH_NOTES', fetchAdminNotes);
+    yield takeLatest('FETCH_ADMIN_NOTES', fetchAdminNotes);
+    yield takeLatest('DELETE_ADMIN_NOTES', deleteAdminNotes);
 
 }
 

@@ -14,6 +14,7 @@ import { Button, TextField, Typography, Grid, Avatar, Box } from "@mui/material"
 function AdminNotes(){
     useEffect(() => {
         dispatch({ type: 'FETCH_ADMIN_NOTES' })
+        
       }, []);
     
     
@@ -26,9 +27,6 @@ function AdminNotes(){
 
     const toggleMode = () => {
        console.log('testing')
-        // if (plot.notes){
-        //     setNote();
-        // }
         setToggleNotes(!toggleNotes)
     }
 
@@ -96,9 +94,9 @@ function AdminNotes(){
                 <div className="notes_container" sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width:'20%', gap: 2 }}>
                     <div className="notes_header">
                             <h4 className="notes_text"> Notes:</h4>
-                                <IconButton>
+                                <IconButton onClick={() => toggleMode()}>
                                     {/* edit above */}
-                                    <AddBoxOutlinedIcon className="button" sx={{fontSize: 20}} onClick={() => toggleMode()}/>
+                                    <AddBoxOutlinedIcon className="button" sx={{fontSize: 20}} />
                                 </IconButton>
                     </div>
                     <div className="notes_body">

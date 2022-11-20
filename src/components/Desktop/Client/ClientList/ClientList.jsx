@@ -14,9 +14,6 @@ import { styled } from '@mui/material/styles';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
-  // '&.MuiTableRow-root':{
-  //   backgroundColor: '#edf2f4',
-  // },
   '&.MuiTableRow-root:hover':{
     backgroundColor: '#accad5' ,
   },
@@ -25,11 +22,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   // },
 
 }));
-
-
-//if search results map through that list 
-//else map through clients 
-
 
 function ClientList() {
   const clientList = useSelector(store => store.clientsReducer);

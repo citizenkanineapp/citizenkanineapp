@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { Box } from "@mui/system";
 import { Button, TextField, Avatar, Typography, Card, CardActions, CardMedia, Select, MenuItem, FormControl, FormHelperText, Grid, IconButton } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
-import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
+import FlagCircleIcon from '@mui/icons-material/FlagCircle';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 
@@ -58,10 +58,10 @@ const fetchOneDog = (dog) =>{
 }
 
   return (
-        <Box sx={{ m:2, p:2, display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ m:2, p:2,  height: '90%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
 
               {/*----------------------- HEADER -----------------------*/}
-              <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2 }}>  
+              <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>  
                 <Typography variant="h3" >{client.first_name} {client.last_name}</Typography>
                 <Box sx={{justifyContent:'space-between'}}>
                 {/* <IconButton onClick={() => deleteClient(client.id)}>
@@ -75,7 +75,7 @@ const fetchOneDog = (dog) =>{
 
 
                 {/*-------------------- TEXT FIELDS --------------------*/}
-              <Grid sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr', gap: 1 }}>
+              <Grid sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr', columnGap: 1, py: 2 }}>
                 <TextField 
                   value={client.street}
                   onChange={(e) => dispatch({type: 'ADD_STREET', payload: e.target.value})}
@@ -138,38 +138,35 @@ const fetchOneDog = (dog) =>{
 
 
             {/*-------------------- DOG PICTURES --------------------*/}
-            <Grid sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
+            <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
               {client.dogs.map((dog, index) => (
-              <Card key={index} sx={{width: '100%', m: 1}}
-                    onClick={() => fetchOneDog(dog)}>
-                  <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size="small" variant="outlined">
-                              {dog.dog_name}
-                        </Button>
-                  </CardActions>
-                  <CardMedia component="img" width="100%" alt="client dog photo"
-                    src={dog.image}
-                    sx={{height: 175}}/>
-              </Card>
+                  <Card key={index} sx={{width: '35%', height: '225px', m: 1}}>
+                    <CardActions sx={{ justifyContent: 'space-between', ml: 1, py: 0, pr: 0}}>
+                      <Typography>{dog.dog_name}</Typography>
+                      <IconButton sx={{borderRadius: 0}}>
+                        <EditIcon  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditDogForm'})}/>
+                      </IconButton>
+                    </CardActions>
+                    <CardMedia component="img"  
+                      width="100%"
+                      alt="client dog photo"
+                      src={dog.image ? dog.image : 'images/dogfiller.png'}
+                      sx={{height: 175}}
+                      />
+                  </Card>
                 ))}
          
-              
-
-              {/*------------------ ADD DOG EXAMPLE ------------------*/}
-              <Card sx={{ width: '100%', m: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                  <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "rgb(227, 218, 216, 0.5)", width: "89%", height: "90%", borderRadius: "0.5rem" }} alt="add dog button" 
-                     onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogFromEdit'})}>
-                      <LibraryAddIcon  sx={{ height: "100%", color: "rgb(171, 164, 162)" }}/>
-                  </Box>
-              </Card>
             </Grid>
 
-
             {/*-------------------- BUTTONS --------------------*/}
-            <Box sx={{mt: 2 }} display="flex" justifyContent="space-between">
-              <Button variant="outlined" color="info" onClick={back}>Cancel</Button>  {/*goes back to client list*/}
-              <Button variant="contained" color="secondary"
-                onClick={saveChanges}>Save</Button> 
+            <Box display="flex" justifyContent="space-between">
+              <Button variant="outlined" color="info" onClick={back}>Cancel</Button>
+              <Box width="23%" display="flex" justifyContent="space-between">
+                <Button variant="contained" color="error"
+                  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogFromEdit'})}>Add Dog</Button>  
+                 <Button variant="contained" color="secondary"
+                  onClick={saveChanges}>Save</Button> 
+              </Box>
             </Box>
       </Box>
     );

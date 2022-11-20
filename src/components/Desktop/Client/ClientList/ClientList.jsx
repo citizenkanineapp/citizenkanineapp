@@ -8,24 +8,20 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ClientModal from '../ClientModal/ClientModal';
 
 //MUI
-import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField, Fab } from '@mui/material';
+import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-// NO THESE COLORS AREN'T FINAL BUT WE DEF SHOULD HAVE SOME VISUAL CHANGE
+
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.secondary.light,
+
+  '&.MuiTableRow-root:hover':{
+    backgroundColor: '#accad5' ,
   },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
+  // '&:nth-of-type(odd)': {
+  //   backgroundColor: '#a3bbc4'
+  // },
+
 }));
-
-
-//if search results map through that list 
-//else map through clients 
-
 
 function ClientList() {
   const clientList = useSelector(store => store.clientsReducer);
@@ -63,7 +59,8 @@ function ClientList() {
   };
 
   const clearResults = (event) => {
-    setSubmittedSearch('')
+    setSubmittedSearch('');
+    setSearch('');
   }
 
   const clientScheduleView = (client) => {
@@ -74,8 +71,22 @@ function ClientList() {
 
 
   return (
-    <Box className="desktop_container" sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', my: 25}}>
-      <Grid container sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width:'80%', gap: 2 }}>
+    <Box className="desktop_container" 
+        sx={{ height: '88%', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              justifyContent: 'flex-start', 
+              alignItems: 'center',
+              gap: 2 
+              }}>
+      <Grid container 
+          sx={{ m: 2, mx: 4, 
+                pt: 6,
+                display: 'flex', 
+                flexDirection: 'row', 
+                justifyContent: 'center', 
+                width:'80%', gap: 2 
+                }}>
        
           <TextField
             value={search || ''}
@@ -83,31 +94,40 @@ function ClientList() {
             onKeyDown={(e) => onEnterSubmit(e)}
             label="Search Clients & Dogs"
             variant="filled"
+            size="small"
+            color="secondary"
             sx={{width: '60%'}}
           />
        {submittedSearch ?
-        <Button size="large" variant="contained" color="secondary" onClick={() => clearResults()}>Clear</Button> :
+        <Button size="small" variant="contained" color="secondary" onClick={() => clearResults()}>Clear</Button> :
 
-          <Button size="large" variant="contained" color="secondary" onClick={() => searchFunction()}>Search</Button>
+          <Button size="small" variant="contained" color="secondary" onClick={() => searchFunction()}>Search</Button>
        }
-          <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary'>Add Client</Button>
+          <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary' size="small">Add Client</Button>
        
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={12} sx={{ mx: 5, display:'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Grid item xs={12} 
+            sx={{ mx: 5, 
+                  display:'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center' 
+                  }}>
           {/* TABLE OPTION */}
-          <TableContainer component={Paper} sx={{width: '70%'}}>
-            <Table stickyHeader>
+          <TableContainer component={Paper} sx={{width: '70%', height: '65vh'}}>
+            <Table stickyHeader size="small">
               <TableHead>
                 <TableRow>
                   <TableCell sx={{fontWeight: '800'}}>Name:</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Dogs:</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Phone</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Email</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               {submittedSearch ? 
-                <TableBody>   
+                <TableBody
+                    >  
                     {clientList
                       .filter((client) => {
                         const firstName = client.first_name.toLowerCase()

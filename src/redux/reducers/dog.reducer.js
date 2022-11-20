@@ -58,6 +58,8 @@ const dogReducer = (state = [{dog_name: '', image: '', dog_notes: '', flag: fals
                 }
             })
             return regularState;
+        case 'DELETE_DOG_INPUT':
+            return state.filter((dog, i) => i !== action.payload);
         case 'CLEAR_DOGS':
             return [{dog_name: '', image: '', dog_notes: '', flag: false, regular: true}];
         default:

@@ -23,11 +23,11 @@ function RouteSelect() {
 
     const getRouteColor = (route) => {
         switch (route) {
-            case 'tangletown': return '#4a5061';
-            case 'emerson': return '#539bd1';
-            case 'far': return '#3DA49D';
-            case 'misfits': return '#f5a572';
-            case 'unassigned': return '#f37e2d';
+            case 'Tangletown': return '#4a5061';
+            case 'Emerson': return '#539bd1';
+            case 'Far': return '#3DA49D';
+            case 'Misfits': return '#f5a572';
+            case 'Unassigned': return '#f37e2d';
             default: return '#f8614d';
         }
     }

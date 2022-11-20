@@ -29,40 +29,40 @@ function* getRoutes() {
           }
 
         const dayRoutes = {
-            tangletown: routes.data
-                .filter(dog => (dog.route === 'tangletown'))
+            Tangletown: routes.data
+                .filter(dog => (dog.route === 'Tangletown'))
                 .map(dog => {           //if there's more than one dog in the household
                     const dogMatch = routes.data.find(dawg => dog.dog_id !== dawg.dog_id && dog.client_id === dawg.client_id);
                     if (dogMatch){ return {...dog, color: colors(dog) }; } //assign a color using colors function
                     else{ return dog; }
                 }),
 
-            emerson: routes.data
-                .filter(dog => (dog.route === 'emerson'))
+            Emerson: routes.data
+                .filter(dog => (dog.route === 'Emerson'))
                 .map(dog => {           
                     const dogMatch = routes.data.find(dawg => dog.dog_id !== dawg.dog_id && dog.client_id === dawg.client_id);
                     if (dogMatch){ return {...dog, color: colors(dog) }; }
                     else{ return dog; }
                 }),
 
-            far: routes.data
-                .filter(dog => (dog.route === 'far'))
+            Far: routes.data
+                .filter(dog => (dog.route === 'Far'))
                 .map(dog => {          
                     const dogMatch = routes.data.find(dawg => dog.dog_id !== dawg.dog_id && dog.client_id === dawg.client_id);
                     if (dogMatch){ return {...dog, color: colors(dog) }; } 
                     else{ return dog; }
                 }),
 
-            misfits: routes.data
-                .filter(dog => (dog.route === 'misfits'))
+            Misfits: routes.data
+                .filter(dog => (dog.route === 'Misfits'))
                 .map(dog => {          
                     const dogMatch = routes.data.find(dawg => dog.dog_id !== dawg.dog_id && dog.client_id === dawg.client_id);
                     if (dogMatch){ return {...dog, color: colors(dog) }; } 
                     else{ return dog; }
                 }),
 
-            unassigned: routes.data
-                .filter(dog => (dog.route === 'unassigned'))
+            Unassigned: routes.data
+                .filter(dog => (dog.route === 'Unassigned'))
                 .map(dog => {          
                     const dogMatch = routes.data.find(dawg => dog.dog_id !== dawg.dog_id && dog.client_id === dawg.client_id);
                     if (dogMatch){ return {...dog, color: colors(dog) }; } 
@@ -106,19 +106,19 @@ function* updateRoute(action) {
     let routeID = null;
 
     switch (routeName) {
-        case 'tangletown':
+        case 'Tangletown':
             routeID = 1
             break;
-        case 'emerson':
+        case 'Emerson':
             routeID = 2
             break;
-        case 'far':
+        case 'Far':
             routeID = 3
             break;
-        case 'misfits':
+        case 'Misfits':
             routeID = 4
             break;
-        case 'unassigned':
+        case 'Unassigned':
             routeID = 5
             break;
     }

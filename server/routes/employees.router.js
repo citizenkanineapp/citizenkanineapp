@@ -10,11 +10,27 @@ const {
     rejectUnauthorized,
 } = require('../modules/authorization-middleware');
 
+router.get('/changes', (req, res)=>{
+    const sqlQuery=
+    `
+    SELECT * FROM employees_schedule_changes;
+    `
+    pool.query(sqlQuery)
+        .then(dbRes=>{
+            res.send(dbRes.rows);
+        })
+        .catch(error=>{
+            res.sendStatus(500);
+            console.log('error in GET /employees/schedule/changes', error)
+        })
+
+})
+
 // get all employees
 router.get('/', rejectUnauthenticated, (req, res)=> {
     const sqlQuery = `
     SELECT * FROM employees
-    ORDER BY employees.last_name;
+    ORDER BY id;
     `
 
     pool.query(sqlQuery)
@@ -236,6 +252,33 @@ router.post('/', rejectUnauthenticated, async (req, res)=> {
     //     res.send(emp_id);
     // }
 })
+
+// add employee schedule changes
+router.post('/schedule', rejectUnauthenticated, async (req, res) => {
+    const {emp_id, date_to_change, is_scheduled} = req.body;
+    const sqlQuery = 
+        `
+        INSERT INTO employees_schedule_changes
+            ("emp_id", "date_to_change", "is_scheduled")
+        VALUES
+            ($1, $2, $3)
+        ON CONFLICT (emp_id, date_to_change)
+        DO UPDATE SET "is_scheduled" = $3;
+        `
+
+    const sqlValues = [emp_id, date_to_change, is_scheduled]
+    pool.query(sqlQuery, sqlValues)
+        .then(dbRes=>{
+            res.sendStatus(201);
+        })
+        .catch(error=>{
+            res.sendStatus(500);
+            console.log('error in POST /employees/schedule', error)
+        })
+});
+
+
+
 
 
 

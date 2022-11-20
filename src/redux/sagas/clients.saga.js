@@ -29,16 +29,15 @@ function* addClient(action){
         yield put ({type: 'CLEAR_SCHEDULE'})
         yield put ({type: 'CLEAR_CLIENT'})
         yield put ({type: 'CLEAR_DOGS'})
+
     } catch (error) {
         console.log(error);
         alert('Error adding clients');
     }
-    
 }
 
 function* editClient(action){
     // console.log('arrived in edit client route', action.payload);
-
     try {
         const client = yield axios({
             method: 'PUT',
@@ -97,11 +96,12 @@ function* deleteClient(action) {
 }
 
 function* deleteDog(action) {
-    const dogId = action.payload.dog_id
-    console.log(dogId)
+    console.log(action.payload);
+    const dogId = action.payload.dog.dog_id;
+    const clientId = action.payload.client.id;
     try{
         const dog = yield axios.delete(`/api/clients/dogs/${dogId}`);
-        yield put ({type: 'FETCH_ONE_CLIENT', payload: action.payload.client_id});
+        yield put ({type: 'FETCH_ONE_CLIENT', payload: clientId });
     } catch (error){
         console.log('error deleting dog', error)
     }
@@ -117,6 +117,7 @@ function* updateDog(action){
             data: action.payload
         })
         yield put ({type: 'FETCH_ONE_CLIENT', payload: action.payload.client_id});
+        yield put ({ type: 'CLEAR_EDIT_DOG' });
         //probably need to fetch specific client?
     } catch (error) {
         console.log(error);

@@ -37,6 +37,9 @@ router.get('/daily', async (req, res) => {
     `
 
     switch (weekday.number) {
+        case 0:
+            searchQuery = null;
+            break;
         case 1:
             console.log('Monday');
             searchQuery += 'WHERE "1" = TRUE ORDER BY route_id;';
@@ -163,7 +166,7 @@ router.get('/route/:route_id', async (req, res) => {
     // routes need to be arrays of dog objects ...
     // do we want separate arrays per route?
     const routeQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes AS dog_notes, dogs.image, routes.name AS route, clients.id, concat_ws(' ', clients.first_name, clients.last_name) AS client_name, clients.notes AS client_protocol from daily_dogs
+    SELECT daily_dogs.*, dogs.flag, dogs.notes AS dog_notes, dogs.image, routes.name AS route, clients.id, concat_ws(' ', clients.first_name, clients.last_name) AS client_name, clients.notes AS client_protocol, clients.lat, clients.long, clients.street from daily_dogs
 	JOIN dogs
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes
@@ -190,11 +193,13 @@ router.get('/route/:route_id', async (req, res) => {
 
 router.get('/routes', async (req, res) => {
     const routesQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes, dogs.image, routes.name AS route from daily_dogs
+    SELECT daily_dogs.*, dogs.flag, dogs.notes, dogs.image, routes.name AS route, clients.lat, clients.long, clients.street from daily_dogs
 	JOIN dogs
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes
 		ON daily_dogs.route_id = routes.id
+    JOIN clients
+        ON daily_dogs.client_id = clients.id
 	WHERE daily_dogs.date = CURRENT_DATE
     ORDER BY dogs.client_id;
     `

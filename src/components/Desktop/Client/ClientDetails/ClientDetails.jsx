@@ -1,13 +1,13 @@
+import { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import swal from 'sweetalert'
 
 //MUI
 import { Box } from "@mui/system";
-import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, IconButton } from "@mui/material";
+import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, Menu, Divider, MenuItem, IconButton, CardContent, CardHeader } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import PetsIcon from '@mui/icons-material/Pets';
-import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
-import DeleteIcon from '@mui/icons-material/Delete';
-
+import FlagCircleIcon from '@mui/icons-material/FlagCircle';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 function ClientDetails(){
@@ -15,36 +15,92 @@ function ClientDetails(){
   const client = useSelector(store => store.clientReducer)
   
   const back = event => {
-    dispatch({type: 'CLEAR_CLIENT'})
-    dispatch({ type: 'SET_MODAL_STATUS' })
+    dispatch({type: 'CLEAR_CLIENT'});
+    dispatch({ type: 'FETCH_CLIENTS'});
+    dispatch({ type: 'SET_MODAL_STATUS' });
   }
 
-  const fetchOneDog = (dog) =>{
+
+  const [flipCard, setFlipCard] = useState(false);
+  const [cardIndex, setCardIndex] = useState(-1);
+
+  const showDetails = (index) => {
+    setCardIndex(index);
+    setFlipCard(!flipCard);
+  }
+
+  const deleteClient = (client) => {
+    console.log(client);
+    swal({
+      title: "Are you sure?",
+      text: "This will permanently delete this client",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        dispatch({ type: 'DELETE_CLIENT', payload: client });
+        dispatch({ type: 'SET_MODAL_STATUS' });
+        dispatch({ type: 'CLEAR_CLIENT'});
+
+        swal("Client Deleted", {
+          icon: "success",
+        });
+      } 
+    });
+  }
+
+
+  const editDog = (dog) =>{
     const clientDogObj = {
       client_id: client.id,
       dog_name: dog.dog_name,
       image: dog.image,
       dog_id: dog.dog_id,
       dog_notes: dog.dog_notes,
-      flag: dog.flag
-  
+      flag: dog.flag,
+      regular: dog.regular
     }
-    dispatch({type: 'SET_DOG', payload: clientDogObj})
-    console.log(' does it pass dog?' ,clientDogObj)
-    openModal('DogDetails')
-  }
-
-  const openModal = (view) => {
-    dispatch({ type: 'SET_CLIENT_MODAL', payload: view }); //opens dog edit form
-    
+    dispatch({type: 'SET_DOG_EDIT', payload: clientDogObj})
+    dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditDogForm' });
   }
   
+  
+  const deleteDog = (dog) => {
+    setAnchorEl(null); //closes menu 
+    swal({
+      title: "Are you sure?",
+      text: "This will permanently delete this dog",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        console.log(dog)
+        dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
+      } 
+    });
+  };
+  
+  
+  //MUI DOG MENU STUFF
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const openMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+    console.log(event)
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
-      <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{m:2, p:2, height: '95%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
 
             {/*----------------------- HEADER -----------------------*/}
-            <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2}}>  
+            <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between' }}>  
               <Typography variant="h3" >{client.first_name} {client.last_name}</Typography>
               <IconButton onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })}>
                 <CalendarMonthIcon sx={{ fontSize: 45, color: '#341341' }}/> 
@@ -53,102 +109,162 @@ function ClientDetails(){
 
          
               {/*-------------------- TEXT FIELDS --------------------*/}
-            <Grid sx={{display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', gap: 1}}>
+            <Grid sx={{display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr', columnGap: 1, py: 2 }}>
           
-                  <TextField 
+              <TextField
+                focused={false}
                 value={client.street} 
                 helperText="Street"  
                 size="small" 
-                InputProps={{readOnly: true}}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
               />
-              <TextField 
+              <TextField
+                focused={false}
                 value={client.city} 
                 helperText="City"  
                 size="small" 
-                InputProps={{readOnly: true}}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                 />
-              <TextField 
+              <TextField
+                focused={false}
                 value={client.zip} 
                 helperText="Zip"  
                 size="small" 
-                InputProps={{readOnly: true}}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                />
               
-              <TextField 
+              <TextField
+                focused={false}
                 value={client.email} 
                 helperText="Email"  
                 size="small" 
-                InputProps={{readOnly: true}}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                />
-            <TextField 
+            <TextField
+                focused={false}
                 value={client.phone} 
                 helperText="Phone"  
                 size="small" 
-                InputProps={{readOnly: true}}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                 />
-              <TextField 
+              <TextField
+                focused={false}
                 value={client.notes || ''} 
                 helperText="Protocols"  
                 size="small" 
-                InputProps={{readOnly: true}}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                />
-              <TextField 
+              <TextField
+                focused={false}
                 value={client.vet_name || ''} 
                 helperText="Vet Name"  
                 size="small" 
-                InputProps={{readOnly: true}}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
             />
-              <TextField 
+              <TextField
+                focused={false}
                 value={client.vet_phone || ''} 
                 helperText="Vet Phone"  
                 size="small" 
-                InputProps={{readOnly: true}}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                />
-               <TextField 
+               <TextField
+                focused={false}
                 value={client.route_name || ''} 
                 helperText="Default Route"  
                 size="small" 
-                InputProps={{readOnly: true}}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                 />
             </Grid> {/* value is what you see in the field, read only*/}
 
 
           {/*-------------------- DOG PICTURES --------------------*/}
           <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
-          {client.dogs && client.dogs.map && client.dogs.map((dog, index) => (
-              <Card key={index} sx={{width: '35%', m: 1}} onClick={() => fetchOneDog(dog)}>
-                  <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size="small" variant="outlined" disabled>
-                              {dog.dog_name}
-                        </Button>
+          {client.dogs && client.dogs.map && client.dogs.map((dog, index) => 
+              ((flipCard === true && cardIndex === index) ?
+                <Card key={index} sx={{width: '35%', height: '225px', m: 1}} onClick={() => showDetails(index)} onClose={() => setFlipCard(!flipCard)}>
+                   <CardActions sx={{ justifyContent: 'space-between', ml: 1 }}>
+                    <Typography>{dog.dog_name}</Typography>
+                    {dog.flag && <FlagCircleIcon sx={{color: '#e0603f'}}/>}
+                  </CardActions>
+                  <CardContent sx={{height: '80%', bgcolor: '#e5e1df'}}>
+                    <Typography>{dog.dog_notes}</Typography>
+                  </CardContent>
+                </Card>
+                  :
+                <Card key={index} sx={{width: '35%', height: '225px', m: 1}}>
+                  <CardActions sx={{ justifyContent: 'space-between', ml: 2, p: 0}}>
+                    <Typography>{dog.dog_name}</Typography>
+                    <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                    <IconButton
+                        onClick={openMenu}
+                        size="small"
+                        sx={{ py: 1, borderRadius: 0 }}>
+                        <MoreVertIcon/>
+                      </IconButton>
+                      <Menu
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        PaperProps={{
+                          elevation: 0,
+                          sx: {
+                            overflow: 'visible',
+                            mt: 1.5,
+                            '& .MuiAvatar-root': {
+                              width: 32,
+                              height: 32,
+                              ml: -0.5,
+                              mr: 1,
+                            },
+                            '&:before': {
+                              content: '""',
+                              display: 'block',
+                              position: 'absolute',
+                              top: 0,
+                              right: 14,
+                              width: 10,
+                              height: 10,
+                              bgcolor: 'background.paper',
+                              transform: 'translateY(-50%) rotate(45deg)',
+                              zIndex: 0,
+                            },
+                          },
+                        }}
+                        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                        >
+                        <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => editDog(dog)}>Edit</MenuItem>
+                          <Divider />
+                        <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => deleteDog(dog)}>Delete</MenuItem>
+                      </Menu>
+                    </Box>
                   </CardActions>
                   <CardMedia component="img"  
                     // sx={{width: 1}}
                     width="100%"
                     alt="client dog photo"
-                    src={dog.image ? dog.image : 'images/dogfiller.jpeg'}
-                    // src={'images/dogfiller.jpeg'}
-                    sx={{height: 175}}
+                    onClick={() => showDetails(index)}
+                    src={dog.image ? dog.image : 'images/dogfiller.png'}
+                    sx={{height: 175, '&:hover': {filter: 'brightness(90%)'}}}
                     />
-              </Card>
+                </Card>
               ))}
 
-
-       
-            
           </Grid>
 
-
-          
-
-
           {/*-------------------- BUTTONS --------------------*/}
-          <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant="outlined" color="info"
-              onClick={back}>Back</Button>  {/*goes back to client list*/}
-            <Button variant="contained" color="success"
-              onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Edit</Button> 
+          <Box display="flex" justifyContent="space-between">
+            <Box width="22%" display="flex" justifyContent="space-between">
+              <Button variant="outlined" color="info"
+                onClick={back}>Back</Button>  {/*goes back to client list*/}
+              <Button variant="contained"
+                onClick={() => deleteClient(client.id)}>Delete</Button> 
+            </Box>
+              <Button variant="contained" color="secondary"
+                onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Edit</Button> 
           </Box>
+
       </Box>
     );
 }

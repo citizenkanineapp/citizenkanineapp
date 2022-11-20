@@ -1,18 +1,8 @@
-//Note from Sam: this may become 
-//part of a different router.  This is for 
-//testing
-
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 const { cloudinary } = require('../modules/cloudinary.js');
 
-/**
- * GET route template
- */
-router.get('/', (req, res) => {
-    // GET route code here
-});
 
 /**
  * This uploads an image to cloudinary
@@ -28,7 +18,7 @@ router.post('/', async (req, res) => {
             folder: 'dog_photos',
         });
         console.log('url for photo:', uploadResponse.url);
-        const addParams = '/upload/c_crop,h_300,w_300/';
+        const addParams = '/upload/c_fit,h_650,w_650/';
 
         const firstChunk = uploadResponse.url.split("upload/");
         const updatedURL = firstChunk[0] + addParams + firstChunk[1];

@@ -156,13 +156,13 @@ router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
   let {first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, dogs} = req.body
 //  console.log('dogs array?', dogs)
   //logic to convert string into correct form for database
-  if(route_name === 'tangletown'){
+  if(route_name === 'Tangletown'){
     route = 1;
-  } else if (route_name === 'emerson'){
+  } else if (route_name === 'Emerson'){
     route = 2
-  } else if(route_name === 'far'){
+  } else if(route_name === 'Far'){
     route = 3
-  } else if(route_name === 'misfits'){
+  } else if(route_name === 'Misfits'){
     route = 4
   } else {
     route = 5

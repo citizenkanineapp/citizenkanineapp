@@ -33,11 +33,11 @@ values
 INSERT INTO routes
 	("name")
 VALUES
-	('tangletown'),
-	('emerson'),
-	('far'),
-	('misfits'),
-	('unassigned');
+	('Tangletown'),
+	('Emerson'),
+	('Far'),
+	('Misfits'),
+	('Unassigned');
 
 -- this shouldn't change
 INSERT INTO services

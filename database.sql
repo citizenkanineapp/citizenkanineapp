@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS dogs;
 DROP TABLE IF EXISTS clients;
 DROP TABLE IF EXISTS routes;
 DROP TABLE IF EXISTS employees_schedule;
+DROP TABLE IF EXISTS employees_schedule_changes;
 DROP TABLE IF EXISTS admin_notes;
 DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS employees;
@@ -102,7 +103,7 @@ values
 -- ADDED EMP SCHEDULE CHANGES TABLE (Yani)
 CREATE TABLE employees_schedule_changes (
 	"id" SERIAL PRIMARY KEY,
-	"emp_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+	"emp_id" INT NOT NULL,   --REFERENCES clients(id) ON DELETE CASCADE--
 	"date_to_change" DATE NOT NULL,
 	"is_scheduled" BOOLEAN,
 	"date" DATE DEFAULT CURRENT_DATE,
@@ -117,11 +118,11 @@ CREATE TABLE routes (
 INSERT INTO routes
 	("name")
 VALUES
-	('tangletown'),
-	('emerson'),
-	('far'),
-	('misfits'),
-	('unassigned');
+	('Tangletown'),
+	('Emerson'),
+	('Far'),
+	('Misfits'),
+	('Unassigned');
 
 CREATE TABLE services (
 	"id" SERIAL PRIMARY KEY,
@@ -290,10 +291,6 @@ CREATE TABLE dogs_schedule_changes (
 	"is_scheduled" BOOLEAN,
 	"date" DATE DEFAULT CURRENT_DATE,
 	UNIQUE("dog_id", "date_to_change")
-=======
-	"is_scheduled" BOOLEAN DEFAULT NULL,
-	"date" DATE DEFAULT CURRENT_DATE
->>>>>>> main
 	);
 	
 -- ** added "week_of_year" to daily_dogs for purposes of invoice query.

@@ -8,13 +8,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function DogDetails() {
   const dispatch = useDispatch();
-  const dog = useSelector(store => store.dogDelete)
+  const dog = useSelector(store => store.dogEdit)
 
   console.log(dog)
 
   const back = event => {
-    dispatch({ type: 'CLEAR_DELETE_DOG' })
-    dispatch({ type: 'BACK_TO_VIEW' })
+    dispatch({type: 'CLEAR_EDIT_DOG'})
+    dispatch({ type: 'BACK_TO_VIEW'})
   }
 
   return (

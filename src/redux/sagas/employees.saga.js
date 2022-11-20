@@ -57,14 +57,13 @@ function* fetchEvenEmpSchedules() {
 
 // This function gets the selected employee schedule details for both week1 and week2.
 function* fetchEmpSchedule(action) {
-    console.log('test', action.payload)
     const empID = action.payload
     try {
         const empSchedule = yield axios({
             method: 'GET',
             url: `/api/employees/schedule/${empID}`
         })
-        yield console.log(empSchedule.data);
+        // yield console.log(empSchedule.data);
         yield put({
             type: 'SET_EMPLOYEE_SCHEDULE',
             payload: empSchedule.data
@@ -159,18 +158,18 @@ function* addEmployee(action) {
 function* deleteEmployee(action) {
     console.log('Employee ID to delete', action.payload);
     let employeeID = action.payload;
-    // try {
-    //     yield axios({
-    //         method: 'DELETE',
-    //         url: `/api/employees/${employeeID}`
-    //     })
-    //     yield put({
-    //         type: 'SAGA_FETCH_EMPLOYEES'
-    //     })
+    try {
+        yield axios({
+            method: 'DELETE',
+            url: `/api/employees/${employeeID}`
+        })
+        yield put({
+            type: 'SAGA_FETCH_EMPLOYEES'
+        })
 
-    // } catch {
-    //     console.log('error in Employee Delete');
-    // }
+    } catch {
+        console.log('error in Employee Delete');
+    }
 }
 
 function* addEmpScheduleChange(action){
@@ -178,24 +177,24 @@ function* addEmpScheduleChange(action){
     try {
         yield axios({
             method: 'POST',
-            url: `/api/employees/schedule`,
+            url: '/api/employees/schedule',
             data: change
         })
-        // yield put({
-        //     type: 'SAGA_FETCH_EMPLOYEES'
-        // })
+        yield put({
+            type: 'SAGA_FETCH_CHANGES'
+        })
 
     } catch {
         console.log('error in Adding Employee Schedule Change');
     }
 }
 
-function* fetchEmpScheduleChanges(){
-    
+function* fetchEmpChanges(){
+    console.log('getting request')
     try{
         const changes = yield axios({
             method: 'GET',
-            url: '/api/employees/schedule/changes'
+            url: '/api/employees/changes'
         })
     
     yield put({
@@ -218,7 +217,7 @@ function* employeesSaga() {
         yield takeLatest('SAGA_ADD_EMPLOYEE', addEmployee),
         yield takeLatest('SAGA_DELETE_EMPLOYEE', deleteEmployee),
         yield takeLatest('SAGA_ADD_EMP_CHANGE', addEmpScheduleChange),
-        yield takeLatest('SAGA_FETCH_EMP_SCHEDULE_CHANGES', fetchEmpScheduleChanges)
+        yield takeLatest('SAGA_FETCH_CHANGES', fetchEmpChanges)
 }
 
 export default employeesSaga;

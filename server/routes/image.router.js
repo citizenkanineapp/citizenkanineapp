@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
             folder: 'dog_photos',
         });
         console.log('url for photo:', uploadResponse.url);
-        const addParams = '/upload/c_crop,h_300,w_300/';
+        const addParams = '/upload/c_fit,h_650,w_650/';
 
         const firstChunk = uploadResponse.url.split("upload/");
         const updatedURL = firstChunk[0] + addParams + firstChunk[1];

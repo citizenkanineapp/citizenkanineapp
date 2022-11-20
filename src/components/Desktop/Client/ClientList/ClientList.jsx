@@ -122,6 +122,7 @@ function ClientList() {
                   <TableCell sx={{fontWeight: '800'}}>Dogs:</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Phone</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Email</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               {submittedSearch ? 

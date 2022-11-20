@@ -18,39 +18,22 @@ function AddDogForm (){
   const dogs = useSelector(store => store.dogReducer)
   
 
-  const back = event => {
+  const back = () => {
     dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddClient'})
     dispatch({type: 'CLEAR_DOGS'});
   }
 
-  const checkInputs = (event) => {
+  const checkInputs = () => {
    for(let dog of dogs){
     if(dog.dog_name ===  undefined || dog.dog_name ===  '') {
       console.log('error in form')
     } else {
-      // dispatch({ type: 'SET_CLIENT_MODAL', })
-      saveClient();
+      dispatch({type: 'ADD_DOGS', payload: dogs});
+      dispatch({type: 'ADD_CLIENT', payload: client});
+      dispatch({type: 'SET_MODAL_STATUS'});
     }  
+  }
 }
-}
-
-
- const saveSchedule = (view) => {
-    dispatch({type: 'ADD_DOGS', payload: dogs})
-    dispatch({ type: 'SET_CLIENT_MODAL', payload: view})
-    // dispatch({type: 'CLEAR_SCHEDULE'})
-    saveClient();
-     
- }
- const saveClient = event => {
-
-  dispatch({type: 'ADD_DOGS', payload: dogs})
-  // dispatch({type: 'ADD_CLIENT', payload: client})
-  dispatch({type: 'SET_CLIENT_MODAL', payload: 'ConfirmClient'})
-}
-
-
-
 
     return (
       <Grid container sx={{ height: '100%', width: '100%', display: 'flex', justifyContent: "center", flexDirection: 'column', gap: 1}}>

@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import swal from 'sweetalert'
 
 //MUI
 import { Box } from "@mui/system";
-import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, IconButton, CardContent, CardHeader } from "@mui/material";
+import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, Menu, Divider, MenuItem, IconButton, CardContent, CardHeader } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 function ClientDetails(){
@@ -13,32 +15,86 @@ function ClientDetails(){
   const client = useSelector(store => store.clientReducer)
   
   const back = event => {
-    dispatch({type: 'CLEAR_CLIENT'})
-    dispatch({ type: 'SET_MODAL_STATUS' })
+    dispatch({type: 'CLEAR_CLIENT'});
+    dispatch({ type: 'FETCH_CLIENTS'});
+    dispatch({ type: 'SET_MODAL_STATUS' });
   }
 
-  const fetchOneDog = (dog) =>{
+
+  const [flipCard, setFlipCard] = useState(false);
+  const [cardIndex, setCardIndex] = useState(-1);
+
+  const showDetails = (index) => {
+    setCardIndex(index);
+    setFlipCard(!flipCard);
+  }
+
+  const deleteClient = (client) => {
+    console.log(client);
+    swal({
+      title: "Are you sure?",
+      text: "This will permanently delete this client",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        dispatch({ type: 'DELETE_CLIENT', payload: client });
+        dispatch({ type: 'SET_MODAL_STATUS' });
+        dispatch({ type: 'CLEAR_CLIENT'});
+
+        swal("Client Deleted", {
+          icon: "success",
+        });
+      } 
+    });
+  }
+
+
+  const editDog = (dog) =>{
     const clientDogObj = {
       client_id: client.id,
       dog_name: dog.dog_name,
       image: dog.image,
       dog_id: dog.dog_id,
       dog_notes: dog.dog_notes,
-      flag: dog.flag
-  
+      flag: dog.flag,
+      regular: dog.regular
     }
-    dispatch({type: 'SET_DOG', payload: clientDogObj})
-    console.log(' does it pass dog?' ,clientDogObj)
-    openModal('DogDetails')
+    dispatch({type: 'SET_DOG_EDIT', payload: clientDogObj})
+    dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditDogForm' });
   }
-
-  const openModal = (view) => {
-    dispatch({ type: 'SET_CLIENT_MODAL', payload: view }); //opens dog edit form
-    
-  }
-
-  const [flipCard, setFlipCard] = useState(false);
   
+  
+  const deleteDog = (dog) => {
+    setAnchorEl(null); //closes menu 
+    swal({
+      title: "Are you sure?",
+      text: "This will permanently delete this dog",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        console.log(dog)
+        dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
+      } 
+    });
+  };
+  
+  
+  //MUI DOG MENU STUFF
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const openMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+    console.log(event)
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
       <Box sx={{m:2, p:2, height: '95%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
@@ -125,8 +181,8 @@ function ClientDetails(){
           {/*-------------------- DOG PICTURES --------------------*/}
           <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
           {client.dogs && client.dogs.map && client.dogs.map((dog, index) => 
-              ((flipCard === true && dog.dog_notes) ?
-                <Card key={index} sx={{width: '35%', height: '225px', m: 1}} onClick={() => setFlipCard(!flipCard)}>
+              ((flipCard === true && cardIndex === index) ?
+                <Card key={index} sx={{width: '35%', height: '225px', m: 1}} onClick={() => showDetails(index)} onClose={() => setFlipCard(!flipCard)}>
                    <CardActions sx={{ justifyContent: 'space-between', ml: 1 }}>
                     <Typography>{dog.dog_name}</Typography>
                     {dog.flag && <FlagCircleIcon sx={{color: '#e0603f'}}/>}
@@ -136,17 +192,61 @@ function ClientDetails(){
                   </CardContent>
                 </Card>
                   :
-                <Card key={index} sx={{width: '35%', height: '225px', m: 1}} onClick={() => setFlipCard(!flipCard)}>
-                  <CardActions sx={{ justifyContent: 'space-between', ml: 1 }}>
+                <Card key={index} sx={{width: '35%', height: '225px', m: 1}}>
+                  <CardActions sx={{ justifyContent: 'space-between', ml: 2, p: 0}}>
                     <Typography>{dog.dog_name}</Typography>
-                    {dog.flag && <FlagCircleIcon sx={{color: '#e0603f'}}/>}
+                    <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                    <IconButton
+                        onClick={openMenu}
+                        size="small"
+                        sx={{ py: 1, borderRadius: 0 }}>
+                        <MoreVertIcon/>
+                      </IconButton>
+                      <Menu
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        PaperProps={{
+                          elevation: 0,
+                          sx: {
+                            overflow: 'visible',
+                            mt: 1.5,
+                            '& .MuiAvatar-root': {
+                              width: 32,
+                              height: 32,
+                              ml: -0.5,
+                              mr: 1,
+                            },
+                            '&:before': {
+                              content: '""',
+                              display: 'block',
+                              position: 'absolute',
+                              top: 0,
+                              right: 14,
+                              width: 10,
+                              height: 10,
+                              bgcolor: 'background.paper',
+                              transform: 'translateY(-50%) rotate(45deg)',
+                              zIndex: 0,
+                            },
+                          },
+                        }}
+                        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                        >
+                        <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => editDog(dog)}>Edit</MenuItem>
+                          <Divider />
+                        <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => deleteDog(dog)}>Delete</MenuItem>
+                      </Menu>
+                    </Box>
                   </CardActions>
                   <CardMedia component="img"  
                     // sx={{width: 1}}
                     width="100%"
                     alt="client dog photo"
+                    onClick={() => showDetails(index)}
                     src={dog.image ? dog.image : 'images/dogfiller.png'}
-                    sx={{height: 175}}
+                    sx={{height: 175, '&:hover': {filter: 'brightness(90%)'}}}
                     />
                 </Card>
               ))}

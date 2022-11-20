@@ -136,11 +136,11 @@ const handleClose = () => {
                       dispatch({type: 'CHANGE_ROUTE', payload: event.target.value})
                     }}
                   >
-                    <MenuItem value={'tangletown'}>Tangletown</MenuItem>
-                    <MenuItem value={'emerson'}>Emerson</MenuItem>
-                    <MenuItem value={'far'}>Far</MenuItem>
-                    <MenuItem value={'misfits'}>Misfits</MenuItem>
-                    <MenuItem value={'unassigned'}>Unassigned</MenuItem>
+                    <MenuItem value={'Tangletown'}>Tangletown</MenuItem>
+                    <MenuItem value={'Emerson'}>Emerson</MenuItem>
+                    <MenuItem value={'Far'}>Far</MenuItem>
+                    <MenuItem value={'Misfits'}>Misfits</MenuItem>
+                    <MenuItem value={'Unassigned'}>Unassigned</MenuItem>
                 </Select>
                 <FormHelperText>Default Route</FormHelperText>
               </FormControl>

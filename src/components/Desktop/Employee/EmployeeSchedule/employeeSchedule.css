@@ -19,7 +19,9 @@
     background-color: transparent !important;
     
 } */
-
+.empCalendar .empCalendar .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel{
+    height:70vh ;
+}
 
 /* changes the size of the calendar div */
 .empCalendar .css-epd502 {
@@ -36,6 +38,8 @@
     /* outline: 1px black solid; */
     margin-left: 0px !important;
     margin-right: 0px !important;
+    font-size: 1rem !important;
+    color: black !important;
 }
 
 
@@ -101,4 +105,13 @@
 
 .empCalendar .css-ghi3gg-MuiDayPicker-weekContainer{
     margin: 0 0 0 0 !important;
+}
+
+.css-hlj6pa-MuiDialogActions-root {
+    display: none !important;
+}
+
+.empCalendar .css-dplwbx-MuiPickersCalendarHeader-label{
+    font-size: 1.5rem !important;
+    font-weight: bold !important;
 }

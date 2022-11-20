@@ -71,7 +71,6 @@ function EmployeeSchedule(){
 
   const allEmployees = useSelector(store=> store.allEmployeesReducer.employees);
   const changes = useSelector(store=> store.allEmployeesReducer.empScheduleChanges);
-  console.log('changes', changes)
 
   const openModal = (view) => {
     dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: view }); //assures the view to be the right component
@@ -115,11 +114,18 @@ function EmployeeSchedule(){
     setDate(dayjs())
   }
 
-  changes.map(change=>{
-    console.log(JSON.stringify(dayjs(change.date_to_change).$d))
-    console.log(JSON.stringify(dayjs('2022-11-03').$d))
-    console.log(JSON.stringify(dayjs('2022-11-03').$d) === JSON.stringify(dayjs(change.date_to_change).$d))
-  })
+  const handleClick = (employee)=> {
+    openModal('EmployeeDetails');
+    // Need to send dispatch to fetch employee and their schedule
+    dispatch({
+      type: 'SET_EMPLOYEE',
+      payload: employee
+    })
+    dispatch({
+      type: 'SAGA_FETCH_EMP_SCHEDULE',
+      payload: employee.id
+    })
+  }
 
   return (
     <>
@@ -161,7 +167,7 @@ function EmployeeSchedule(){
           </Grid> */}
       </Grid> 
       
-      <Grid item xs={7}>
+      <Grid item xs={8} sx={{display:'flex', height:'80vh', justifyContent:'center'}}>
         {/* calendar here */}
         <Card variant="outlined" sx={{bgcolor: '#FCF4EB'}}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -204,17 +210,13 @@ function EmployeeSchedule(){
                                         // if it's a regularly scheduled day and there is an add request, render the employee
                                         if (employee[day.$W]){
                                           // check to see if there are any changes for this employee on this day
-                                          // console.log(thisDayString);
-                                          console.log(employee.emp_id)
                                           const empChange = changes.filter(change=> {
                                             return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
                                           })
 
                                           
-                                          console.log(empChange);
                                           // if there are changes for this emp on this day
                                           if (empChange.length > 0){
-                                            console.log('there is a change on', thisDayString)
                                             if(empChange[0].is_scheduled){
                                               return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                             }
@@ -235,7 +237,6 @@ function EmployeeSchedule(){
                                           })
                                           // if there are changes for this emp on this day
                                           if (empChange.length > 0){
-                                            // console.log('there is a change on', thisDayString)
                                             if(empChange[0].is_scheduled){
                                               return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                             }
@@ -256,16 +257,12 @@ function EmployeeSchedule(){
                                         if (employee[day.$W]){
                                           // check to see if there are any changes for this employee on this day
                                           // console.log(thisDayString);
-                                          console.log(employee.emp_id)
                                           const empChange = changes.filter(change=> {
                                             return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
                                           })
 
-                                          
-                                          console.log(empChange);
                                           // if there are changes for this emp on this day
                                           if (empChange.length > 0){
-                                            console.log('there is a change on', thisDayString)
                                             if(empChange[0].is_scheduled){
                                               return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                             }
@@ -308,14 +305,14 @@ function EmployeeSchedule(){
             </LocalizationProvider>
           </Card>
       </Grid> {/* End of Calendar */}
-      <Grid item xs={4}>
+      <Grid item xs={4} sx={{display: 'flex', justifyContent:'center'}}>
         {/* cards here */}
         <Box sx={{display: 'flex', flexDirection: 'column', ml: 2, width: '30vw', alignItems: 'center'}}>
-            {evenEmpSchedules.map( (employee, index)=> (
+            {allEmployees.map( (employee, index)=> (
               <Card raised key={employee.id} sx={{display: 'flex', flexDirection: 'row', mb: 1.5, height: '13vh', width: '25vw', justifyContent: 'center'}}>
-                <CardActionArea component={Button}>
+                <CardActionArea component={Button} onClick={()=> handleClick(employee)} >
                   <CardContent sx={{display: 'flex', flexDirection: 'row'}}>
-                    <Grid container xs={12}>
+                    <Grid container sx={{xs: 12}}>
                       <Grid item xs={2}>
                         <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: avatarColors[index], height: 50 , width: 50, fontSize: 10, mr: 1, alignSelf: 'center' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                       </Grid>
@@ -341,29 +338,6 @@ function EmployeeSchedule(){
         </Box>
       </Grid>
     </Grid>
-  <Box sx={{display: 'flex', width: '100vw', justifyContent: 'center'}}>
-    {/* // MUI DatePicker: */}
-      
-        {/* <div className="display_calendar">
-        <p onClick={() => openModal('EmployeeDetails')}>Dolly Parton - Click me</p> 
-        <Button onClick={() => history.push('/employees')}>Back</Button>
-        <Button onClick={() => setShowEditCalendar(!showEditCalendar)}>Edit</Button> 
-      </div>
-
-      : //toggles between edit mode and viewing mode
-
-      <div className="edit_calendar">
-        <h2>Edit Calendar</h2>
-        <p onClick={() => openModal('EmployeeDetails')}>Dolly Parton WANTS TO WORK</p> 
-        <Button onClick={() => setShowEditCalendar(!showEditCalendar)}>Cancel</Button>
-        <Button onClick={() => setShowEditCalendar(!showEditCalendar)}>Submit</Button> 
-        </div> */}
-
-      <EmployeeModal/> 
-      {/* only open when button is pressed */}
-    {/* employee cards */}
-    
-    </Box>
     </>
   )      
 }

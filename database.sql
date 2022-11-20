@@ -196,6 +196,7 @@ CREATE TABLE dogs (
 	"notes" VARCHAR,
 	"flag" BOOLEAN DEFAULT FALSE,
 	"date" DATE DEFAULT CURRENT_DATE,
+	"active" BOOLEAN DEFAULT TRUE,
 	"regular" BOOLEAN DEFAULT TRUE -- added this so that if a guest dog (client's daughter) is also being walked, they can be added add-hoc
 	);
 
@@ -345,9 +346,10 @@ CREATE TABLE admin_notes (
 INSERT INTO admin_notes
 	("user_id", "notes")
 VALUES
-	('1', 'Follow up on last months invoices'),
-	('1', 'Purchase new leashes for the supply cabinet'),
-	('1', 'More TREATS!'),
-	('1', 'Branded scarves to match our fancy orange coats');
+	('1', 'Revoke access from the ex-employee'),
+	('1', 'Check who is working today'),
+	('1', 'Remove those dogs from the schedule'),
+	('1', 'Generate Invoices for November'),
+	('1', 'More TREATS!');
 
 

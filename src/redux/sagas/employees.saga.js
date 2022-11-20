@@ -63,7 +63,7 @@ function* fetchEmpSchedule(action) {
             method: 'GET',
             url: `/api/employees/schedule/${empID}`
         })
-        yield console.log(empSchedule.data);
+        // yield console.log(empSchedule.data);
         yield put({
             type: 'SET_EMPLOYEE_SCHEDULE',
             payload: empSchedule.data
@@ -172,6 +172,40 @@ function* deleteEmployee(action) {
     }
 }
 
+function* addEmpScheduleChange(action){
+    const change = action.payload;
+    try {
+        yield axios({
+            method: 'POST',
+            url: '/api/employees/schedule',
+            data: change
+        })
+        yield put({
+            type: 'SAGA_FETCH_CHANGES'
+        })
+
+    } catch {
+        console.log('error in Adding Employee Schedule Change');
+    }
+}
+
+function* fetchEmpChanges(){
+    console.log('getting request')
+    try{
+        const changes = yield axios({
+            method: 'GET',
+            url: '/api/employees/changes'
+        })
+    
+    yield put({
+        type: 'SET_EMP_SCHEDULE_CHANGES',
+        payload: changes.data
+    })
+    }
+    catch {
+        console.log('error in Fetching Emp Schedule Changes');
+    }
+}
 
 function* employeesSaga() {
     yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees),
@@ -181,7 +215,9 @@ function* employeesSaga() {
         yield takeLatest('SAGA_UPDATE_EMP_DETAILS', updateEmpDetails),
         yield takeLatest('SAGA_UPDATE_EMP_SCHEDULE', updateEmpSchedule),
         yield takeLatest('SAGA_ADD_EMPLOYEE', addEmployee),
-        yield takeLatest('SAGA_DELETE_EMPLOYEE', deleteEmployee)
+        yield takeLatest('SAGA_DELETE_EMPLOYEE', deleteEmployee),
+        yield takeLatest('SAGA_ADD_EMP_CHANGE', addEmpScheduleChange),
+        yield takeLatest('SAGA_FETCH_CHANGES', fetchEmpChanges)
 }
 
 export default employeesSaga;

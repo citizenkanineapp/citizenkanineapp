@@ -29,7 +29,7 @@ function MobileImageUpload({ id }) {
         reader.onloadend = () => {
             setPreviewSource(reader.result);
         }
-        uploadImage(reader.result, id)
+        // uploadImage(reader.result, id)
     }
 
     //to handle the form submitting and sending to Cloudinary
@@ -61,7 +61,7 @@ function MobileImageUpload({ id }) {
                 <Avatar
                     onClick={() => fileInputRef.current.click()}
                     alt="New Dog Avatar"
-                    sx={{ width: 150, height: 150 }}
+                    sx={{ width: 150, height: 150, mt: 5.5 }}
                 >
                     {previewSource ?
                         <Avatar

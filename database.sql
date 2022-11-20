@@ -255,6 +255,10 @@ CREATE TABLE dogs_schedule_changes (
 	"is_scheduled" BOOLEAN,
 	"date" DATE DEFAULT CURRENT_DATE,
 	UNIQUE("dog_id", "date_to_change")
+=======
+	"is_scheduled" BOOLEAN DEFAULT NULL,
+	"date" DATE DEFAULT CURRENT_DATE
+>>>>>>> main
 	);
 	
 -- ** added "week_of_year" to daily_dogs for purposes of invoice query.

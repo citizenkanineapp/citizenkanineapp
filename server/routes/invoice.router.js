@@ -4,11 +4,11 @@ const router = express.Router();
 
 const {
     rejectUnauthenticated,
-  } = require('../modules/authentication-middleware');
+} = require('../modules/authentication-middleware');
 
 const {
     rejectUnauthorized,
-  } = require('../modules/authorization-middleware');
+} = require('../modules/authorization-middleware');
 
 router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     // console.log('in /api/invoice');
@@ -16,27 +16,27 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     const searchClientId = req.query.clientId;
     const searchMonth = req.query.month;
     const searchYear = req.query.year;
-    let searchTerms ;
+    let searchTerms;
 
     const querySchedule = `SELECT * FROM clients_schedule`;
     const queryServices = `SELECT * FROM services`;
 
     // use in case of client ALL
-    if (searchClientId!=0) {
+    if (searchClientId != 0) {
         searchQuery = `
             WHERE
                 clients.id = $1 AND
                 EXTRACT (MONTH FROM daily_dogs.date) = $2 AND
                 EXTRACT (YEAR FROM daily_dogs.date) = $3
             `;
-        searchTerms = [ searchClientId, searchMonth, searchYear ];
+        searchTerms = [searchClientId, searchMonth, searchYear];
     } else {
         searchQuery = `
             WHERE
                 EXTRACT (MONTH FROM daily_dogs.date) = $1 AND
                 EXTRACT (YEAR FROM daily_dogs.date) = $2
             `;
-        searchTerms = [ searchMonth, searchYear ];
+        searchTerms = [searchMonth, searchYear];
     }
 
     // console.log(searchQuery);
@@ -94,27 +94,27 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         const resServices = await pool.query(queryServices)
         const services = resServices.rows;
         // console.log(services);
-        const resDetails = await pool.query(queryWalkDetails,searchTerms);
+        const resDetails = await pool.query(queryWalkDetails, searchTerms);
         const invoiceData = resDetails.rows;
         // console.log(invoiceData);
 
         const resSchedule = await pool.query(querySchedule);
         const schedules = resSchedule.rows;
-        
+
         // adds service data to invoice data object. some of this should be done in SQL!
-        for ( let item of invoiceData ) {
+        for (let item of invoiceData) {
             let serviceId
 
             // adds walks per week to invoice item
-            for ( let client of schedules) {
+            for (let client of schedules) {
                 if (client.id === item.clientid) {
                     const values = Object.values(client);
-                    const walks = values.filter( i => i === true).length;
+                    const walks = values.filter(i => i === true).length;
 
-                     // grabs services ID from services list.
+                    // grabs services ID from services list.
                     // THIS WILL NEED WORK IF QUICKBOOKS API SYNC IS IMPLEMENTED. will 'sync' be able to preserve serivceId? will there need to be another function to grab serviceId by service type?
                     if (item.num_dogs === "1") {
-                        switch(walks) {
+                        switch (walks) {
                             case 1:
                                 serviceId = 2;
                                 break;
@@ -126,7 +126,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                                 break;
                         }
                     } else if (item.num_dogs === "2") {
-                        switch(walks) {
+                        switch (walks) {
                             case 1:
                                 serviceId = 5;
                                 break;
@@ -137,16 +137,16 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                                 serviceId = 7;
                                 break;
                         }
-                    }  else if (item.num_dogs === "3") {
+                    } else if (item.num_dogs === "3") {
                         serviceId = 8;
-                    }   else {
+                    } else {
                         serviceId = 9;
                     }
                 }
             }
-           
+
             // adds service details to invoice item
-            for ( let service of services) {
+            for (let service of services) {
                 if (service.id === serviceId) {
                     item.month = searchMonth;
                     item.year = searchYear;
@@ -155,15 +155,18 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                         service
                     }
                     if (item.no_show === true) {
-                        item.service.service = 'Same Day Cancellation';           
+                        item.service.service = 'Same Day Cancellation';
                     } else {
                         item.service.service = service.name;
                     }
                 }
             }
-        }     
+        }
         // console.log(invoiceData);
-        res.send(invoiceData); 
+
+        if (invoiceData[0]) {
+            res.send(invoiceData);
+        }
     } catch (error) {
         console.log('Error GET /api/invoice', error);
         res.sendStatus(500);

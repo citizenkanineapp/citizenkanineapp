@@ -15,16 +15,6 @@ const clientSchedule = (state = {1: false, 2: false, 3: false, 4: false, 5: fals
             return {...state, 5: action.payload};
         case 'SET_SCHEDULE':
             return action.payload;
-        case 'SET_MONDAY_CHANGE': 
-            return {...state, 1: action.payload};
-        case 'SET_TUESDAY_CHANGE': 
-            return {...state, 2: action.payload};
-        case 'SET_WEDNESDAY_CHANGE': 
-            return {...state, 3: action.payload};
-        case 'SET_THURSDAY_CHANGE': 
-            return {...state, 4: action.payload};
-        case 'SET_FRIDAY_CHANGE': 
-            return {...state, 5: action.payload}
         case 'CLEAR_SCHEDULE':
             return{1: false, 2: false, 3: false, 4: false, 5: false};
         default:

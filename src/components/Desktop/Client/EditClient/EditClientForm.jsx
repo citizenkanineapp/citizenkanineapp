@@ -71,7 +71,7 @@ const handleClose = () => {
 
 
   return (
-        <Box sx={{ m:2, p:2,  height: '90%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
+        <Box sx={{ m:2, p:2,  height: '90%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
 
               {/*----------------------- HEADER -----------------------*/}
               <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>  
@@ -85,7 +85,7 @@ const handleClose = () => {
 
 
                 {/*-------------------- TEXT FIELDS --------------------*/}
-              <Grid sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr', columnGap: 1, py: 2 }}>
+              <Grid sx={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr', columnGap: 1, py: 2 }}>
                 <TextField 
                   value={client.street}
                   onChange={(e) => dispatch({type: 'ADD_STREET', payload: e.target.value})}
@@ -102,9 +102,9 @@ const handleClose = () => {
                   helperText="Zip Code"  
                   size="small"/>
                 <TextField 
-                  value={client.email}
-                  onChange={(e) => dispatch({type: 'ADD_EMAIL', payload: e.target.value})} 
-                  helperText="Email"  
+                  value={client.notes || ''} 
+                  onChange={(e) => dispatch({type: 'ADD_NOTES', payload: e.target.value})}
+                  helperText="Notes"  
                   size="small"/>
                 <TextField 
                   value={client.phone}
@@ -112,9 +112,9 @@ const handleClose = () => {
                   helperText="Phone"  
                   size="small"/>
                 <TextField 
-                  value={client.notes || ''} 
-                  onChange={(e) => dispatch({type: 'ADD_NOTES', payload: e.target.value})}
-                  helperText="Notes"  
+                  value={client.email}
+                  onChange={(e) => dispatch({type: 'ADD_EMAIL', payload: e.target.value})} 
+                  helperText="Email"  
                   size="small"/>
                 <TextField 
                   value={client.vet_name || ''} 
@@ -200,7 +200,7 @@ const handleClose = () => {
                       width="100%"
                       alt="client dog photo"
                       src={dog.image ? dog.image : 'images/dogfiller.png'}
-                      sx={{height: 175}}
+                      sx={{height: '100%'}}
                       />
                   </Card>
                 ))}

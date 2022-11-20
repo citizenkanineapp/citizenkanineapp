@@ -4,7 +4,7 @@ import swal from 'sweetalert'
 
 //MUI
 import { Box } from "@mui/system";
-import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, Menu, Divider, MenuItem, IconButton, CardContent, CardHeader } from "@mui/material";
+import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, Menu, Divider, MenuItem, IconButton, CardContent,Tooltip } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -12,12 +12,14 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function ClientDetails(){
   const dispatch = useDispatch();
-  const client = useSelector(store => store.clientReducer)
+  const client = useSelector(store => store.clientReducer);
+  const dogToEdit = useSelector(store => store.dogEdit);
   
   const back = event => {
     dispatch({type: 'CLEAR_CLIENT'});
     dispatch({ type: 'FETCH_CLIENTS'});
     dispatch({ type: 'SET_MODAL_STATUS' });
+    dispatch({type: 'CLEAR_EDIT_DOG'});
   }
 
 
@@ -53,6 +55,7 @@ function ClientDetails(){
 
 
   const editDog = (dog) =>{
+    console.log(dog);
     const clientDogObj = {
       client_id: client.id,
       dog_name: dog.dog_name,
@@ -88,16 +91,18 @@ function ClientDetails(){
   //MUI DOG MENU STUFF
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const openMenu = (event) => {
+  const openMenu = (event, dog) => {
+    console.log(dog);
     setAnchorEl(event.currentTarget);
     console.log(event)
+    console.log(dogToEdit);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   return (
-      <Box sx={{m:2, p:2, height: '95%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
+      <Box sx={{m:2, p:2, height: '95%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
 
             {/*----------------------- HEADER -----------------------*/}
             <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between' }}>  
@@ -109,7 +114,7 @@ function ClientDetails(){
 
          
               {/*-------------------- TEXT FIELDS --------------------*/}
-            <Grid sx={{display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr', columnGap: 1, py: 2 }}>
+            <Grid sx={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr', columnGap: 1, py: 2 }}>
           
               <TextField
                 focused={false}
@@ -132,25 +137,25 @@ function ClientDetails(){
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                />
-              
               <TextField
                 focused={false}
-                value={client.email} 
-                helperText="Email"  
+                value={client.notes || ''} 
+                helperText="Entry Protocol"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px" }}}
                />
-            <TextField
+              <TextField
                 focused={false}
                 value={client.phone} 
                 helperText="Phone"  
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                 />
+
               <TextField
                 focused={false}
-                value={client.notes || ''} 
-                helperText="Protocols"  
+                value={client.email} 
+                helperText="Email"  
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                />
@@ -182,12 +187,12 @@ function ClientDetails(){
           <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
           {client.dogs && client.dogs.map && client.dogs.map((dog, index) => 
               ((flipCard === true && cardIndex === index) ?
-                <Card key={index} sx={{width: '35%', height: '225px', m: 1}} onClick={() => showDetails(index)} onClose={() => setFlipCard(!flipCard)}>
+                <Card key={index} sx={{width: '35%', height: '225px', m: 1}}>
                    <CardActions sx={{ justifyContent: 'space-between', ml: 1 }}>
                     <Typography>{dog.dog_name}</Typography>
                     {dog.flag && <FlagCircleIcon sx={{color: '#e0603f'}}/>}
                   </CardActions>
-                  <CardContent sx={{height: '80%', bgcolor: '#e5e1df'}}>
+                  <CardContent sx={{height: '80%', bgcolor: '#e5e1df'}} onClick={() => showDetails(index)}>
                     <Typography>{dog.dog_notes}</Typography>
                   </CardContent>
                 </Card>
@@ -246,7 +251,7 @@ function ClientDetails(){
                     alt="client dog photo"
                     onClick={() => showDetails(index)}
                     src={dog.image ? dog.image : 'images/dogfiller.png'}
-                    sx={{height: 175, '&:hover': {filter: 'brightness(90%)'}}}
+                    sx={{height: '100%', '&:hover': {filter: 'brightness(90%)'}}}
                     />
                 </Card>
               ))}
@@ -257,9 +262,11 @@ function ClientDetails(){
           <Box display="flex" justifyContent="space-between">
             <Box width="22%" display="flex" justifyContent="space-between">
               <Button variant="outlined" color="info"
-                onClick={back}>Back</Button>  {/*goes back to client list*/}
+                onClick={back}>Back</Button>
+            <Tooltip title="Delete Client" placement="top-end">
               <Button variant="contained"
                 onClick={() => deleteClient(client.id)}>Delete</Button> 
+            </Tooltip>
             </Box>
               <Button variant="contained" color="secondary"
                 onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Edit</Button> 

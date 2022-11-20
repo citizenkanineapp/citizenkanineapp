@@ -37,13 +37,13 @@ CREATE TABLE employees (
 insert into employees 
 	(first_name, last_name, email, phone, street, city, "zip", admin) 
 values 
-	('Den', 'Paolini', 'dpaolini0@paypal.com', '(840)6732127', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Grantley', 'Abels', 'gabels1@weather.com', '(885)7477091', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Say', 'O''Hickey', 'sohickey2@google.ru', '(915)6380768', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Reeba', 'Pretswell', 'rpretswell3@feedburner.com', '(964)6881625', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Fiorenze', 'Mary', 'fmary4@unesco.org', '(697)2096190', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Osborne', 'Barrand', 'obarrand5@wufoo.com', '(537)1594107', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Lidia', 'Nichols', 'lnichols6@virginia.edu', '(802)5280961', '2900 W 43rd St', 'Minneapolis',  55410, false);
+	('Den', 'Paolini', 'dpaolini0@paypal.com', '(840)673-2127', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Grantley', 'Abels', 'gabels1@weather.com', '(885)747-7091', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Say', 'O''Hickey', 'sohickey2@google.ru', '(915)638-0768', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Reeba', 'Pretswell', 'rpretswell3@feedburner.com', '(964)688-1625', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Fiorenze', 'Mary', 'fmary4@unesco.org', '(697)209-6190', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Osborne', 'Barrand', 'obarrand5@wufoo.com', '(537)159-4107', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Lidia', 'Nichols', 'lnichols6@virginia.edu', '(802)528-0961', '2900 W 43rd St', 'Minneapolis',  55410, false);
 
 
 -- removed email from user since we no longer need it for password retrieval.
@@ -133,14 +133,14 @@ CREATE TABLE services (
 INSERT INTO services
 	("name", "price")
 VALUES
-	('Group Dog Walking:Friends & Family', '20'),
-	('Group Dog Walking:Walk 1 dog - Ad hoc', '35'),
-	('Group Dog Walking:Walk 1 dog 2-4x / week', '30'),
-	('Group Dog Walking:Walk 1 dog 5 days / week', '26'),
-	('Group Dog Walking:Walk 2 dogs - Ad hoc', '45'),
-	('Group Dog Walking:Walk 2 Dogs 2-4x / week', '42'),
-	('Group Dog Walking:Walk 2 dogs 5 days / week', '37'),
-	('Group Dog Walking:Walk 3 dogs', '54');
+	('Group Dog Walking: Friends & Family', '20'),
+	('Group Dog Walking: 1 dog - Ad hoc', '35'),
+	('Group Dog Walking: 1 dog 2-4x / week', '30'),
+	('Group Dog Walking: 1 dog 5x / week', '26'),
+	('Group Dog Walking: 2 dogs - Ad hoc', '45'),
+	('Group Dog Walking: 2 Dogs 2-4x / week', '42'),
+	('Group Dog Walking: 2 dogs 5x / week', '37'),
+	('Group Dog Walking: 3 dogs', '54'); --3 dogs, how many times a week?
 
 CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,
@@ -206,40 +206,40 @@ CREATE TABLE dogs (
 insert into dogs 
 	(client_id, name, vet_name, vet_phone, image, notes, flag) 
 values
-	(1, 'Alvin', 'Micheal Matschoss', '(488)4063596', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904895/Dog%20Photos/Pictures-Dogs-Making-Funny-Faces.jpg_copy_mckfqu.png', 'Very good boy', false),
-	(1, 'Balto', 'Micheal Matschoss', '(488)4063596', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/463527_copy_wi2o1i.png', 'Very brave dog that can lead a pack of dogs through a nasty winter storm', false),
-	(2, 'Finn', 'Ebonee Ramsier', '(588)7890127', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904893/Dog%20Photos/photo-1518020382113-a7e8fc38eac9_iciudy.jpg', 'No treats! He is on a diet', true),
-	(3, 'Ike', 'Sheffield Crothers', '(430) 5630934', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/images_mocxln.jpg', 'Train on sitting during rest periods', true),
-	(3, 'Chef', 'Sheffield Crothers', '(430) 5630934', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/Pug-Dog.jpg_copy_zx4qbw.png', 'Cooking show celebrity - keep the pawparazzi away', true),
-	(4, 'Maple', 'Lia Lanphier', '(332)9874217', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/4b424cd8c2981b8cc9f5cffbc0d07792_jsyear.jpg', 'Really loves leaves', false),
-	(5, 'Otis', 'Aylmar Fleisch', '(161)9087110', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/funny-pet-stories_rxl13n.jpg', null, false),
-	(5, 'Baxter', 'Aylmar Fleisch', '(161)9087110', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/5da9debc045a31381e7c8d94_copy_muiawp.png', 'Perfect little guy', false),
-	(6, 'Yogi', 'Vinnie Behne', '(128)3824261', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/istockphoto-1212177973-612x612_jaztmp.jpg', null, false),
-	(7, 'Ruben', 'Dede Desson', '(965)7732496', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910987/Dog%20Photos/New/New%20New/cavalier-king-charles-spaniel-card-medium_j7mpec.jpg', null, false),
-	(8, 'Cord', 'Corney Agutter', '(560)7340244', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/GettyImages-709182477_lpst4n.jpg', null, false),
-	(9, 'Rufus', 'Cord Slaight', '(448)8303613', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910987/Dog%20Photos/New/New%20New/cool-dog-breeds-blue-heeler-762x1024_gkjrpu.jpg', null, false),
-	(9, 'Max', 'Cord Slaight', '(448)8303613', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/AdobeStock_274099078.jpg_copy_vhrmcz.png', 'Needs to work on listening', true),
-	(9, 'Duffy', 'Cord Slaight', '(448)8303613', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/american-eskimo-dog-royalty-free-image-184272401-1565190028_vpu6sk.jpg', null, false),
-	(10, 'Lynda', 'Liz Quoit', '(593)4846767', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/istockphoto-680810342-612x612_tso1kr.jpg', null, false),
-	(10, 'Lori', 'Liz Quoit', '(593)4846767', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/istockphoto-618949520-612x612_uttcq8.jpg', null, false),
-	(11, 'Freddy', 'Ryann Bertwistle', '(485)6205496', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/portrait-of-dog-on-snow-royalty-free-image-727142515-1556050424_ud9onj.jpg', null, false),
-	(11, 'Ryan', 'Rosie Bertwistle', '(485)6205496', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/GettyImages-889552354-e1606774439626_y2shap.jpg', null, false),
-	(12, 'Noah', 'Gunner Hankins', '(857)3817172', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/welsh-springer-spaniel_dhcjmk.jpg', 'Total diva - try and keep away from Louie for now', true),
-	(13, 'Shaggy', 'Gunner Hankins', '(857)3817172', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910986/Dog%20Photos/New/New%20New/Bergamasco-Sheepdog-standing-in-a-pasture_j0hh3h.jpg', null, false),
-	(14, 'Bert', 'Ludovika Saladin', '(197)4161988', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/5da9dd1c045a3104cd06f2a2_copy_w5mkmi.png', null, false),
-	(14, 'Willow', 'Audra Schrieves', '(368)2739382', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910987/Dog%20Photos/New/New%20New/dog-breeds-that-look-different-1593069055_khmxve.jpg', 'Her fur gets really matted - may need brushing on the way home', true),
-	(15, 'Audra', 'Derwin Pritchard', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910986/Dog%20Photos/New/New%20New/image-2_iy7rwa.jpg', null, false),
-	(15, 'Luna', 'Derwin Pritchard', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910986/Dog%20Photos/New/New%20New/1458326999-gettyimages-480245719_foepiq.jpg', null, false),
-	(16, 'Milo', 'James Moon', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/medium-sized-dogs-1613083812_te198m.jpg', 'Allergic to grass', true),
-	(16, 'Lola', 'James Moon', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/beautiful-australian-shepherd-walking-royalty-free-image-168814214-1565190235_ssrcki.jpg', null, false),
-	(17, 'Teddy', 'Rose Cuevas', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910627/Dog%20Photos/New/medium-dog-breeds-sharpie-1613075637_ax8quv.jpg', null, false),
-	(18, 'Duke', 'Derek Pritchard', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910627/Dog%20Photos/New/purebred-dog-chow-chow-royalty-free-image-526855507-1560959187_ve1cy6.jpg', null, false),
-	(18, 'Daisy', 'Derek Pritchard', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910627/Dog%20Photos/New/Cute-medium-sized-dogs_uyxe1r.jpg', 'Needs time to warm up to new friends', true),
-	(18, 'Cooper', 'Derek Pritchard', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910627/Dog%20Photos/New/breed_profile_corgi_1117986_recirc_917-dc0372b7151c442bab53666b4687a8fd-8d973deaf99a42878fa0d2ee5da84ced_lijohf.jpg', null, false),
-	(19, 'Bella', 'Robert Cannon', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910627/Dog%20Photos/New/dog-shetland-sheepdog-collie-sheltie-royalty-free-image-491206081-1565123992_ovh8t6.jpg', null, false),
-	(20, 'Zoe', 'Derwin Pritchard', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/medium-dog-breeds-border-collie-1613075882_azf5qj.jpg', null, false),
-	(20, 'Louie', 'Derwin Pritchard', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/pembroke-welsh-corgi-card-medium_dsgd2l.jpg', null, false),
-	(20, 'Nova', 'Derwin Pritchard', '(504)9197307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/medium-sized-dogs-bull-terrier-1613077403_srggj5.jpg', 'Total diva - look out for her attitude', true);
+	(1, 'Alvin', 'Micheal Matschoss', '(488)406-3596', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904895/Dog%20Photos/Pictures-Dogs-Making-Funny-Faces.jpg_copy_mckfqu.png', 'Very good boy', false),
+	(1, 'Balto', 'Micheal Matschoss', '(488)406-3596', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/463527_copy_wi2o1i.png', 'Very brave dog that can lead a pack of dogs through a nasty winter storm', false),
+	(2, 'Finn', 'Ebonee Ramsier', '(588)789-0127', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904893/Dog%20Photos/photo-1518020382113-a7e8fc38eac9_iciudy.jpg', 'No treats! He is on a diet', true),
+	(3, 'Ike', 'Sheffield Crothers', '(430)563-0934', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/images_mocxln.jpg', 'Train on sitting during rest periods', true),
+	(3, 'Chef', 'Sheffield Crothers', '(430)563-0934', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/Pug-Dog.jpg_copy_zx4qbw.png', 'Cooking show celebrity - keep the pawparazzi away', true),
+	(4, 'Maple', 'Lia Lanphier', '(332)987-4217', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/4b424cd8c2981b8cc9f5cffbc0d07792_jsyear.jpg', 'Really loves leaves', false),
+	(5, 'Otis', 'Aylmar Fleisch', '(161)908-7110', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/funny-pet-stories_rxl13n.jpg', null, false),
+	(5, 'Baxter', 'Aylmar Fleisch', '(161)908-7110', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/5da9debc045a31381e7c8d94_copy_muiawp.png', 'Perfect little guy', false),
+	(6, 'Yogi', 'Vinnie Behne', '(128)382-4261', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/istockphoto-1212177973-612x612_jaztmp.jpg', null, false),
+	(7, 'Ruben', 'Dede Desson', '(965)773-2496', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910987/Dog%20Photos/New/New%20New/cavalier-king-charles-spaniel-card-medium_j7mpec.jpg', null, false),
+	(8, 'Cord', 'Corney Agutter', '(560)734-0244', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/GettyImages-709182477_lpst4n.jpg', null, false),
+	(9, 'Rufus', 'Cord Slaight', '(448)830-3613', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910987/Dog%20Photos/New/New%20New/cool-dog-breeds-blue-heeler-762x1024_gkjrpu.jpg', null, false),
+	(9, 'Max', 'Cord Slaight', '(448)830-3613', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/AdobeStock_274099078.jpg_copy_vhrmcz.png', 'Needs to work on listening', true),
+	(9, 'Duffy', 'Cord Slaight', '(448)830-3613', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/american-eskimo-dog-royalty-free-image-184272401-1565190028_vpu6sk.jpg', null, false),
+	(10, 'Lynda', 'Liz Quoit', '(593)484-6767', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/istockphoto-680810342-612x612_tso1kr.jpg', null, false),
+	(10, 'Lori', 'Liz Quoit', '(593)484-6767', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904892/Dog%20Photos/istockphoto-618949520-612x612_uttcq8.jpg', null, false),
+	(11, 'Freddy', 'Ryann Bertwistle', '(485)620-5496', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/portrait-of-dog-on-snow-royalty-free-image-727142515-1556050424_ud9onj.jpg', null, false),
+	(11, 'Ryan', 'Rosie Bertwistle', '(485)620-5496', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/GettyImages-889552354-e1606774439626_y2shap.jpg', null, false),
+	(12, 'Noah', 'Gunner Hankins', '(857)381-7172', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/welsh-springer-spaniel_dhcjmk.jpg', 'Total diva - try and keep away from Louie for now', true),
+	(13, 'Shaggy', 'Gunner Hankins', '(857)381-7172', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910986/Dog%20Photos/New/New%20New/Bergamasco-Sheepdog-standing-in-a-pasture_j0hh3h.jpg', null, false),
+	(14, 'Bert', 'Ludovika Saladin', '(197)416-1988', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668904891/Dog%20Photos/5da9dd1c045a3104cd06f2a2_copy_w5mkmi.png', null, false),
+	(14, 'Willow', 'Audra Schrieves', '(368)273-9382', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910987/Dog%20Photos/New/New%20New/dog-breeds-that-look-different-1593069055_khmxve.jpg', 'Her fur gets really matted - may need brushing on the way home', true),
+	(15, 'Audra', 'Derwin Pritchard', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910986/Dog%20Photos/New/New%20New/image-2_iy7rwa.jpg', null, false),
+	(15, 'Luna', 'Derwin Pritchard', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910986/Dog%20Photos/New/New%20New/1458326999-gettyimages-480245719_foepiq.jpg', null, false),
+	(16, 'Milo', 'James Moon', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/medium-sized-dogs-1613083812_te198m.jpg', 'Allergic to grass', true),
+	(16, 'Lola', 'James Moon', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/beautiful-australian-shepherd-walking-royalty-free-image-168814214-1565190235_ssrcki.jpg', null, false),
+	(17, 'Teddy', 'Rose Cuevas', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910627/Dog%20Photos/New/medium-dog-breeds-sharpie-1613075637_ax8quv.jpg', null, false),
+	(18, 'Duke', 'Derek Pritchard', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910627/Dog%20Photos/New/purebred-dog-chow-chow-royalty-free-image-526855507-1560959187_ve1cy6.jpg', null, false),
+	(18, 'Daisy', 'Derek Pritchard', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910627/Dog%20Photos/New/Cute-medium-sized-dogs_uyxe1r.jpg', 'Needs time to warm up to new friends', true),
+	(18, 'Cooper', 'Derek Pritchard', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910627/Dog%20Photos/New/breed_profile_corgi_1117986_recirc_917-dc0372b7151c442bab53666b4687a8fd-8d973deaf99a42878fa0d2ee5da84ced_lijohf.jpg', null, false),
+	(19, 'Bella', 'Robert Cannon', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910627/Dog%20Photos/New/dog-shetland-sheepdog-collie-sheltie-royalty-free-image-491206081-1565123992_ovh8t6.jpg', null, false),
+	(20, 'Zoe', 'Derwin Pritchard', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/medium-dog-breeds-border-collie-1613075882_azf5qj.jpg', null, false),
+	(20, 'Louie', 'Derwin Pritchard', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/pembroke-welsh-corgi-card-medium_dsgd2l.jpg', null, false),
+	(20, 'Nova', 'Derwin Pritchard', '(504)919-7307', 'https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668910628/Dog%20Photos/New/medium-sized-dogs-bull-terrier-1613077403_srggj5.jpg', 'Total diva - look out for her attitude', true);
 
 
 -- ** Changed table name to client_schedule since the days will be set for the client and changes will be made to individual dogs.

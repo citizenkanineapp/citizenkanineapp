@@ -99,11 +99,11 @@ function ClientList() {
             sx={{width: '60%'}}
           />
        {submittedSearch ?
-        <Button size="small" variant="contained" color="secondary" onClick={() => clearResults()}>Clear</Button> :
+        <Button onClick={() => clearResults()} variant="contained" color="secondary">Clear</Button> :
 
-          <Button size="small" variant="contained" color="secondary" onClick={() => searchFunction()}>Search</Button>
+          <Button onClick={() => searchFunction()} variant="contained" color="secondary">Search</Button>
        }
-          <Button onClick={() => openModal('AddClient')} variant='contained' color='secondary' size="small">Add Client</Button>
+          <Button onClick={() => openModal('AddClient')} variant='contained' color="secondary">Add Client</Button>
        
       </Grid>
       <Grid container spacing={2}>
@@ -166,7 +166,8 @@ function ClientList() {
                     {clientList.map((client ) => (
                         <StyledTableRow key={client.id} hover> 
                           <TableCell onClick={() => fetchOneClient(client)}>{client.first_name} {client.last_name}</TableCell>
-                          <TableCell onClick={() => fetchOneClient(client)}>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
+                          <TableCell onClick={() => fetchOneClient(client)}>{client.dogs.map(
+                           (dog, i) => (i === client.dogs.length-1 ? dog.dog_name : dog.dog_name + ' • '))}</TableCell>
                           <TableCell onClick={() => fetchOneClient(client)}>{client.phone}</TableCell>
                           <TableCell onClick={() => fetchOneClient(client)}>{client.email}</TableCell>
                           <TableCell>

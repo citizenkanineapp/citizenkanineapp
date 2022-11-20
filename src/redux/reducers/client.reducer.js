@@ -27,8 +27,6 @@ city: '', zip: '', notes: '', vet_name: '', vet_phone: '', route_id: ''}, action
             return {...state, route_id: action.payload};
         case 'CHANGE_ROUTE':
             return {...state, route_name: action.payload};
-        case 'ADD_DOGS':
-            return {...state, dogs: action.payload};
         case 'ADD_ONE_DOG':
             return{...state, newDog: action.payload}
         case 'ADD_SCHEDULE':

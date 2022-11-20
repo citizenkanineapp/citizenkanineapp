@@ -13,7 +13,6 @@ import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
 function AddDogForm (){
   const dispatch = useDispatch();
 
-  const dogUrl = useSelector(store => store.dogPhotoReducer);
   const client = useSelector(store => store.clientReducer)
   const dogs = useSelector(store => store.dogReducer)
   
@@ -24,16 +23,24 @@ function AddDogForm (){
   }
 
   const checkInputs = () => {
-   for(let dog of dogs){
-    if(dog.dog_name ===  undefined || dog.dog_name ===  '') {
-      console.log('error in form')
-    } else {
-      dispatch({type: 'ADD_DOGS', payload: dogs});
-      dispatch({type: 'ADD_CLIENT', payload: client});
-      dispatch({type: 'SET_MODAL_STATUS'});
-    }  
+   if(dogs.filter(dog => dog.dog_name ===  undefined || dog.dog_name ===  '').length === 0){
+    console.log('All required dog inputs are here!');
+    setTimeout(() => {
+      console.log("Delayed for 2 seconds");
+      dispatch({type: 'ADD_CLIENT', payload: {...client, dogs: dogs}}); //waiting for cloudinary url to return before adding client
+      }, "2000");
+    dispatch({type: 'SET_MODAL_STATUS'});
+    };
   }
-}
+
+  const saveClient = event => {
+    dispatch({type: 'ADD_CLIENT', payload: client});
+    dispatch({type: 'SET_MODAL_STATUS', payload: 'ClientList'});
+    dispatch({type: 'CLEAR_SCHEDULE'});
+    dispatch({type: 'CLEAR_CLIENT'});
+    dispatch({type: 'CLEAR_DOGS'});
+    //need to add clear client?
+  }
 
     return (
       <Grid container sx={{ height: '100%', width: '100%', display: 'flex', justifyContent: "center", flexDirection: 'column', gap: 1}}>

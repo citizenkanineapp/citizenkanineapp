@@ -32,10 +32,13 @@ function AddDogFromEdit(){
   const saveDog = () => {
     console.log(newDog.dog_name)
     if (newDog.dog_name){
-      dispatch({type: 'ADD_NEW_DOG', payload: newDog});
-      dispatch({type: 'CLEAR_NEW_DOG'});
-      dispatch({type: 'CLEAR_DOGS'});
-      dispatch({type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'});
+      setTimeout(() => { //waiting for cloudinary url to return before adding client
+        console.log("Delayed for 1 second");
+        dispatch({type: 'ADD_NEW_DOG', payload: newDog});
+        dispatch({type: 'CLEAR_NEW_DOG'});
+        dispatch({type: 'CLEAR_DOGS'}); 
+        }, "1000");
+        dispatch({type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'});
     };
   }
 
@@ -125,7 +128,7 @@ function AddDogFromEdit(){
               </Grid>
             <Grid item sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
               <Button variant="outlined" color="info"
-                  onClick={() => goBack()}>Back</Button> 
+                  onClick={() => goBack()}>Cancel</Button> 
               <Button variant="contained" color="secondary"
                   onClick={() => saveDog()}>Save</Button> 
             </Grid>

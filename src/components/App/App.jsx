@@ -28,6 +28,7 @@ import Routes from '../Mobile/Route/Route';
 import LoadBalancing from '../Mobile/LoadBalancing/LoadBalancing';
 import MobileNav from '../Mobile/MobileNav/MobileNav';
 import DogDetails from '../Mobile/DogDetails/DogDetails';
+import MobileTopNav from '../Mobile/MobileNav/MobileTopNav';
 //MISC COMPONENTS
 import ImageUpload from '../AllPages/ImageUpload/ImageUpload';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
@@ -112,28 +113,33 @@ function App() {
 
 
             {/* ----------------------- MOBILE ----------------------- */}
-
             <ProtectedRoute exact path="/m/user">
+              <MobileTopNav />
               <Home />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/map">
+              <MobileTopNav />
               <Map />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/schedule">
+              <MobileTopNav />
               <WalkerSchedule />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/routes">
+              <MobileTopNav />
               <RouteSelect />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/route/:id">
+              <MobileTopNav />
               <Routes />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/dog/:id"> {/* should we use params here? - sarah */}
+              <MobileTopNav />
               <DogDetails />
             </ProtectedRoute>
 
@@ -142,6 +148,7 @@ function App() {
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/resetpass">
+              <MobileTopNav />
               <ResetPassPage />
             </ProtectedRoute>
 

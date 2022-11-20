@@ -37,6 +37,9 @@ router.get('/daily', async (req, res) => {
     `
 
     switch (weekday.number) {
+        case 0:
+            searchQuery = null;
+            break;
         case 1:
             console.log('Monday');
             searchQuery += 'WHERE "1" = TRUE ORDER BY route_id;';

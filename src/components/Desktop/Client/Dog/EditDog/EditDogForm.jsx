@@ -25,6 +25,24 @@ function EditDogForm(){
     dispatch({type: 'CLEAR_NEW_DOG'})
     dispatch({ type: 'BACK_TO_VIEW'})
   }
+
+  const deleteDog = (dog) => {
+   console.log(dog)
+    swal({
+      title: "Are you sure?",
+      text: "This will permanently delete this dog",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        console.log(dog)
+        dispatch({ type: 'DELETE_DOG', payload: dog });
+        dispatch({ type: 'BACK_TO_VIEW'})
+      } 
+    });
+  };
  
     return (
       <Grid container sx={{ height: '100%', width: '100%', display: 'flex', justifyContent: "center", flexDirection: 'column', gap: 1}}>
@@ -103,8 +121,13 @@ function EditDogForm(){
 
             {/*-----------BUTTONS----------*/}
             <Grid item sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Box width="22%" display="flex" justifyContent="space-between">
                 <Button variant="outlined" color="info"
                       onClick={back}>Cancel</Button> 
+                 <Button variant="contained" 
+                      onClick={() => deleteDog(dog)}>Delete</Button> 
+                </Box>
+                
                 <Button variant="contained" color="secondary"
                     onClick={() => saveDogDetails()}>Save</Button>
             </Grid>

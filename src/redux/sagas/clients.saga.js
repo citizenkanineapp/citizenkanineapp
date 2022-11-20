@@ -17,7 +17,10 @@ function* getAllClients(action){
 
 function* addClient(action){
     // console.log('arrived in add client route', action.payload);
-
+    // yield delay(1000);
+    setTimeout(() => {
+        console.log("Delayed for 1 second.");
+      }, "1000")
     try {
         const client = yield axios({
             method: 'POST',
@@ -97,8 +100,8 @@ function* deleteClient(action) {
 
 function* deleteDog(action) {
     console.log(action.payload);
-    const dogId = action.payload.dog.dog_id;
-    const clientId = action.payload.client.id;
+    const dogId = action.payload.dog_id;
+    const clientId = action.payload.client_id;
     try{
         const dog = yield axios.delete(`/api/clients/dogs/${dogId}`);
         yield put ({type: 'FETCH_ONE_CLIENT', payload: clientId });
@@ -108,7 +111,7 @@ function* deleteDog(action) {
 }
 
 function* updateDog(action){
-    // console.log('arrived in edit dog route', action.payload);
+    console.log('arrived in edit dog route', action.payload);
 
     try {
         const dog = yield axios({

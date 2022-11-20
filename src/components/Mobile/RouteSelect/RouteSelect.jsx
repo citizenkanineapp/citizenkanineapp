@@ -33,7 +33,7 @@ function RouteSelect() {
     }
 
     const checkoutRoute = (routeID) => {
-        // dispatch({ type: 'GET_ROUTE_DETAILS', payload: routeID })
+        dispatch({ type: 'GET_ROUTE_DETAILS', payload: routeID })
         history.push(`/m/route/${routeID}`);
     }
 
@@ -53,7 +53,7 @@ function RouteSelect() {
                             <AvatarGroup>
                                 {dailyRoutes && dailyRoutes[route].map((dog, index) => (
 
-                                    <>
+                                    <div key={index}>
                                         {dog.image ?
                                             <Avatar src={dog.image} key={index} />
                                             :
@@ -62,7 +62,7 @@ function RouteSelect() {
                                             </Avatar>
 
                                         }
-                                    </>
+                                    </div>
                                 ))}
                             </AvatarGroup>
                         </CardContent>

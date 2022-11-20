@@ -2,7 +2,7 @@
 Grid
 -------------------------------------------------------------------------------- */
 .login_container{
-  background-image: url('/public/Images/dogwalker.png');
+  /* background-image: url('public/Images/dogwalker.png'); */
   height: 100%;
   background-size: contain;
   background-repeat: no-repeat;

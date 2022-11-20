@@ -1,10 +1,14 @@
-import { Box, Typography, Grid } from '@mui/material';
+import { AppBar, ToolBar, Box, Typography, Grid } from '@mui/material';
 
 function MobileTopNav() {
     return (
-        <Box item sx={{ display: { xs: 'flex', sm: 'none' }, height: '35px', width: '105%', bgcolor: '#e0923f' }}>
-            <Typography sx={{ color: 'transparent' }}>PACK CENTRAL</Typography>
-        </Box>
+        <AppBar position='static' sx={{ display: { xs: 'flex', sm: 'none' }, top: 0, left: 0, right: 0, height: '35px', width: '100%', bgcolor: '#e0923f', mb: 1 }}>
+
+
+        </AppBar>
+        // <Box item >
+        //     <Typography sx={{ color: 'transparent' }}>PACK CENTRAL</Typography>
+        // </Box>
     )
 }
 

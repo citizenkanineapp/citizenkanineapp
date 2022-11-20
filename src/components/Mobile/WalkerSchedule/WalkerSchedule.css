@@ -1,0 +1,145 @@
+/* This gets rid of the date selected that normally displays on top of the StaticDayPicker */
+.walkerCalendar .css-j88s13-MuiPickersToolbar-root-MuiDatePickerToolbar-root.css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root {
+    display: none !important;
+}
+
+.walkerCalendar .css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root{
+    display: none !important;
+}
+
+/* This gets rid of the button that normally display on the bottom of the StaticDayPicker */
+.walkerCalendar css-hlj6pa-MuiDialogActions-root {
+    display: none !important;
+}
+
+/* This changes the background and text color. The !important is to override the MUI component styling */
+/* .css-bkrceb-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+    color: black !important;
+    this changes the color of the circle that usually highlights the day you click on
+    background-color: transparent !important;
+    
+} */
+.walkerCalendar .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel{
+    height:70vh ;
+}
+
+/* changes the size of the calendar div */
+.walkerCalendar .css-epd502 {
+    width: 100vw !important;
+    min-height: 90vh !important;
+    /* border: 2px lightcoral dotted; */
+    border-radius: 10px;
+}
+
+/*  This customized the weekday label */
+.walkerCalendar .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel {
+    width: 30vw !important;
+    height: 5vh !important;
+    /* outline: 1px black solid; */
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    font-size: 1rem !important;
+    color: black !important;
+}
+
+
+
+/* .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
+    display: none !important;
+} */
+
+/* individual day buttons (circle) */
+.walkerCalendar .css-bkrceb-MuiButtonBase-root-MuiPickersDay-root, .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+    width: 8vw !important;
+    height: 12vh !important;
+    justify-content: right !important;
+    align-items: flex-start !important;
+    /* padding-top: 10px; */
+} 
+
+/* This resized the entire calendar container */
+.walkerCalendar .css-169iwlq-MuiCalendarPicker-root {
+    width: 95vw !important;
+    height: 100vh !important;
+    min-height: 90vh !important;
+}
+
+.walkerCalendar .css-6t5f1e-MuiDayPicker-monthContainer {
+    min-height: 8vh !important;
+}
+
+.walkerCalendar .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
+    min-height: 75vh !important;
+    
+}
+
+
+/* removes the option to select the year */
+.walkerCalendar .css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon{
+    display: none !important;
+}
+
+
+/* this changes the today's date indicator circle */
+.walkerCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+    color: orange !important;
+    width: 5vw !important;
+    height: 5vw !important;
+    background-color: transparent !important;
+    /* border: #7BCEC8 1px solid; */
+
+}
+
+.walkerCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .css-argrvh-MuiButtonBase-root-MuiPickersDay-root{
+    width: 2vw !important;
+    height: 2vw !important;
+    margin: 0 0 0 0 !important;
+}
+
+/* .walkerCalendar .css-1lunv-MuiPaper-root-MuiCard-root {
+    height: 90vh !important;
+} */
+
+.dayBox {
+}
+
+.walkerCalendar .css-ghi3gg-MuiDayPicker-weekContainer{
+    margin: 0 0 0 0 !important;
+}
+
+.walkerCalendar .css-hlj6pa-MuiDialogActions-root {
+    display: none !important;
+}
+
+
+.walkerCalendar .css-nk89i7-MuiPickersCalendarHeader-root{
+    height: 5vh !important;
+    max-height: 50vh !important;
+    min-height: 5vh !important;
+    /* width: 80vw !important; */
+    padding: 0 0 0 0 !important;
+}
+.walkerCalendar .css-dplwbx-MuiPickersCalendarHeader-label{
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    height: 50px !important;
+    display: flex;
+    align-items: center;
+}
+
+.walkerCalendar .css-10fao8b-MuiPickersCalendarHeader-labelContainer{
+    width: 80vw !important;
+}
+
+.walkerCalendar .css-1vcokmn-MuiCalendarOrClockPicker-root{
+    height: 20vh !important;
+    width: 100vw !important;
+    display: flex;
+    align-self: center;
+}
+
+.walkerCalendar .css-bn2k2g-MuiPickerStaticWrapper-content{
+    height: 90vh !important;
+    width: 95vw !important;
+}
+

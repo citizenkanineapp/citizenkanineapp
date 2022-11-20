@@ -7,26 +7,13 @@ var weekOfYear = require('dayjs/plugin/weekOfYear')
 dayjs.extend(weekOfYear)
 import './employeeSchedule.css';
 
-// Calender Imports:
-import format from "date-fns/format";
-import getDay from "date-fns/getDay";
-import parse from "date-fns/parse";
-import startOfWeek from "date-fns/startOfWeek";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import "react-datepicker/dist/react-datepicker.css";
-
 // MUI Imports:
-import Badge from '@mui/material/Badge';
 import TextField from '@mui/material/TextField';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { CalendarPickerSkeleton } from '@mui/x-date-pickers/CalendarPickerSkeleton';
 import { Typography, Grid, Avatar, CardActionArea, Box, Card, CardContent, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
-import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 
@@ -36,6 +23,7 @@ import EmployeeModal from "../EmployeeModal/EmployeeModal";
 //MUI
 import Button from '@mui/material/Button';
 
+// used to disable user from scheduling on a weekend day
 const isWeekend = (date) => {
   const day = date.day();
 
@@ -76,9 +64,6 @@ function EmployeeSchedule(){
     dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: view }); //assures the view to be the right component
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
   }
-
-  //toggle between edit and viewing calendar
-  const [showEditCalendar, setShowEditCalendar] = useState(false);
 
 
   const [value, setValue] = useState(dayjs());
@@ -176,9 +161,9 @@ function EmployeeSchedule(){
                       disableHighlightToday={false}
                       orientation="portrait"
                       openTo="day"
-                      value={value}
+                      value={value} // not being used
                       shouldDisableDate={isWeekend}
-                      onChange={(newValue) => {
+                      onChange={(newValue) => { // not being used but required
                       setValue(newValue);
                       }}
                       renderInput={(params) => {
@@ -251,7 +236,7 @@ function EmployeeSchedule(){
                                       :
                                       // even week (week2)
                                       <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', justifyContent: 'center', alignContent: 'flex-start', flexWrap: 'wrap'}}>
-                                      {oddEmpSchedules && oddEmpSchedules.map((employee, index) => {
+                                      {evenEmpSchedules && evenEmpSchedules.map((employee, index) => {
                                         const bgColor = avatarColors[index];
                                         // if it's a regularly scheduled day and there is an add request, render the employee
                                         if (employee[day.$W]){

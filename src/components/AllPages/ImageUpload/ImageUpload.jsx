@@ -26,7 +26,7 @@ function ImageUpload({ index }) {
         reader.onloadend = () => {
             setPreviewSource(reader.result);
         }
-        uploadImage(reader.result, index);
+        // uploadImage(reader.result, index);
         setShowButton(!showButton);
     }
 

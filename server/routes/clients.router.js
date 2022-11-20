@@ -89,7 +89,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   // const customer = {first_name, last_name, address, phone, email, route_id}
   const dogArray = dogs
   // const vet = {vet_name, vet_phone}
-  // console.log ('vet', vet)
+  console.log ('dogs', dogs)
  
   console.log('in client POST route');
 
@@ -276,7 +276,8 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
             ON clients.route_id=routes.id
             JOIN clients_schedule
             ON clients.id = clients_schedule.client_id
-            WHERE clients.id = $1;
+            WHERE clients.id = $1
+            ORDER BY dogs.id;
  
   ;
     `

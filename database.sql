@@ -99,6 +99,15 @@ values
 	(7, 1, true, true, true, true, false),
 	(7, 2, true, true, true, true, false);
 
+-- ADDED EMP SCHEDULE CHANGES TABLE (Yani)
+CREATE TABLE employees_schedule_changes (
+	"id" SERIAL PRIMARY KEY,
+	"emp_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+	"date_to_change" DATE NOT NULL,
+	"is_scheduled" BOOLEAN,
+	"date" DATE DEFAULT CURRENT_DATE,
+	UNIQUE("emp_id", "date_to_change")
+	);
 
 CREATE TABLE routes (
 	"id" SERIAL PRIMARY KEY,
@@ -277,9 +286,13 @@ CREATE TABLE dogs_schedule_changes (
 	"dog_id" INT NOT NULL REFERENCES dogs(id) ON DELETE CASCADE,
 	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
 	"date_to_change" DATE NOT NULL,
-	"is_scheduled" BOOLEAN DEFAULT FALSE,
+	"is_scheduled" BOOLEAN,
 	"date" DATE DEFAULT CURRENT_DATE,
 	UNIQUE("dog_id", "date_to_change")
+=======
+	"is_scheduled" BOOLEAN DEFAULT NULL,
+	"date" DATE DEFAULT CURRENT_DATE
+>>>>>>> main
 	);
 	
 -- ** added "week_of_year" to daily_dogs for purposes of invoice query.

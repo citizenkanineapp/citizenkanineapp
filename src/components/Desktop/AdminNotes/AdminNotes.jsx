@@ -27,9 +27,6 @@ function AdminNotes(){
 
     const toggleMode = () => {
        console.log('testing')
-        // if (plot.notes){
-        //     setNote();
-        // }
         setToggleNotes(!toggleNotes)
     }
 

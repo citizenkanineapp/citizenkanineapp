@@ -1,7 +1,7 @@
 //using this reducer for dogs added through edit form only
 
 const newDogReducer = (state = {client_id: '', vet_phone: '', vet_name: '',
-dog_name:'', dog_notes: '', image: '', flag: false }, action) => {
+dog_name:'', dog_notes: '', image: '', flag: false, regular: false }, action) => {
     // console.log ('in dog reducer', action.payload)
     switch (action.type) {
         case 'ADD_CLIENT_ID_TO_DOG':
@@ -18,6 +18,8 @@ dog_name:'', dog_notes: '', image: '', flag: false }, action) => {
             return{...state, image: action.payload.data}
         case 'SET_FLAG':
             return{...state, flag: action.payload}
+        case 'SET_REGULAR':
+            return{...state, regular: action.payload}
         case 'CLEAR_NEW_DOG':
             return {client_id: '', vet_phone: '', vet_name: '',
             dog_name:'', dog_notes: '', image: '', flag: false };

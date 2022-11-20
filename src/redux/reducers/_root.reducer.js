@@ -10,7 +10,7 @@ import clientsReducer from './clients.reducer';
 import dogReducer from './dog.reducer';
 import clientScheduleReducer from './clientSchedule.reducer';
 import newDogReducer from './newDog.reducer';
-import dogDelete from './dogDelete.reducer';
+import dogEdit from './dogEdit.reducer';
 import searchReducer from './search.reducer';
 import invoiceReducer from './invoiceData.reducer'
 import clientReducer from './client.reducer';
@@ -31,7 +31,7 @@ const rootReducer = combineReducers({
   dogReducer,
   clientScheduleReducer,
   newDogReducer,
-  dogDelete,
+  dogEdit,
   selectedEmployeeReducer,
   routeReducer,
   searchReducer,

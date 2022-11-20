@@ -1,14 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import swal from 'sweetalert'
 //MUI
 import { Box } from "@mui/system";
-import { Button, TextField, Avatar, Typography, Card, CardActions, CardMedia, Select, MenuItem, FormControl, FormHelperText, Grid, IconButton } from "@mui/material";
+import { Button, TextField, Typography, Card, CardActions, CardMedia, Select, Menu, Divider, MenuItem, FormControl, FormHelperText, Grid, IconButton } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import DeleteIcon from '@mui/icons-material/Delete';
-import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
-import ImageUpload from "../../../AllPages/ImageUpload/ImageUpload";
-import swal from 'sweetalert'
-
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 function ClientForm(){
@@ -19,12 +16,8 @@ function ClientForm(){
     dispatch({
       type: 'FETCH_CLIENTS'
     })
-    
   },[])
 
-
-
-  //STYLING NOTES: still have to figure out picture size (so it's cropped or uniform)
 const saveChanges = event => {
   dispatch({type: 'EDIT_CLIENT', payload: client})
   dispatch({type: 'CLEAR_CLIENT'})
@@ -32,68 +25,58 @@ const saveChanges = event => {
   //need to update dogs as well
 }
 
-const back = event => {
-  dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientDetails'})
-  // dispatch({type: 'CLEAR_CLIENT'})
-  // dispatch({type: 'CLEAR_DOGS'})
-}
-
-const deleteClient = (id) => {
-
-  swal({
-    title: "Are you sure?",
-    text: "This will permanently delete this client",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  })
-  .then((willDelete) => {
-    if (willDelete) {
-      dispatch({type: 'SET_MODAL_STATUS'})
-      dispatch({type: 'DELETE_CLIENT', payload: id})
-      dispatch({type: 'CLEAR_CLIENT'})
-      
-      swal("Success!", {
-        icon: "success",
-
-      });
-    } else {
-      swal("The client is safe!");
-    }
-  });
-
-
-}
-
-const openModal = (view) => {
-  dispatch({ type: 'SET_CLIENT_MODAL', payload: view }); //opens dog edit form
-  
-}
-
-const fetchOneDog = (dog) =>{
+const editDog = (dog) =>{
   const clientDogObj = {
     client_id: client.id,
     dog_name: dog.dog_name,
     image: dog.image,
     dog_id: dog.dog_id,
     dog_notes: dog.dog_notes,
-    flag: dog.flag
-
+    flag: dog.flag,
+    regular: dog.regular
   }
-  dispatch({type: 'SET_DOG_DELETE', payload: clientDogObj})
-  openModal('EditDogForm')
+  dispatch({type: 'SET_DOG_EDIT', payload: clientDogObj})
+  dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditDogForm' });
 }
 
+
+const deleteDog = (dog) => {
+  setAnchorEl(null); //closes menu 
+  swal({
+    title: "Are you sure?",
+    text: "This will permanently delete this dog",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+      console.log(dog);
+      dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
+    } 
+  });
+};
+
+
+//MUI DOG MENU STUFF
+const [anchorEl, setAnchorEl] = useState(null);
+const open = Boolean(anchorEl);
+const openMenu = (event) => {
+  setAnchorEl(event.currentTarget);
+  console.log(event)
+};
+const handleClose = () => {
+  setAnchorEl(null);
+};
+
+
   return (
-        <Box sx={{ m:2, p:2, display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ m:2, p:2,  height: '90%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
 
               {/*----------------------- HEADER -----------------------*/}
-              <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2 }}>  
+              <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>  
                 <Typography variant="h3" >{client.first_name} {client.last_name}</Typography>
                 <Box sx={{justifyContent:'space-between'}}>
-                {/* <IconButton onClick={() => deleteClient(client.id)}>
-                    <DeleteIcon sx={{ fontSize: 45, color: '#341341', mr: 3 }}/>
-                </IconButton> */}
                 <IconButton onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientSchedule' })}>
                     <CalendarMonthIcon sx={{ fontSize: 45, color: '#341341' }}/>
                 </IconButton>
@@ -102,7 +85,7 @@ const fetchOneDog = (dog) =>{
 
 
                 {/*-------------------- TEXT FIELDS --------------------*/}
-              <Grid sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr', gap: 1 }}>
+              <Grid sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr', columnGap: 1, py: 2 }}>
                 <TextField 
                   value={client.street}
                   onChange={(e) => dispatch({type: 'ADD_STREET', payload: e.target.value})}
@@ -153,11 +136,11 @@ const fetchOneDog = (dog) =>{
                       dispatch({type: 'CHANGE_ROUTE', payload: event.target.value})
                     }}
                   >
-                    <MenuItem value={'tangletown'}>Tangletown</MenuItem>
-                    <MenuItem value={'emerson'}>Emerson</MenuItem>
-                    <MenuItem value={'far'}>Far</MenuItem>
-                    <MenuItem value={'misfits'}>Misfits</MenuItem>
-                    <MenuItem value={'unassigned'}>Unassigned</MenuItem>
+                    <MenuItem value={'Tangletown'}>Tangletown</MenuItem>
+                    <MenuItem value={'Emerson'}>Emerson</MenuItem>
+                    <MenuItem value={'Far'}>Far</MenuItem>
+                    <MenuItem value={'Misfits'}>Misfits</MenuItem>
+                    <MenuItem value={'Unassigned'}>Unassigned</MenuItem>
                 </Select>
                 <FormHelperText>Default Route</FormHelperText>
               </FormControl>
@@ -165,43 +148,74 @@ const fetchOneDog = (dog) =>{
 
 
             {/*-------------------- DOG PICTURES --------------------*/}
-            <Grid sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
+            <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
               {client.dogs.map((dog, index) => (
-              <Card key={index} sx={{width: '100%', m: 1}}
-                    onClick={() => fetchOneDog(dog)}>
-                  <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size="small" variant="outlined">
-                              {dog.dog_name}
-                        </Button>
-                  </CardActions>
-                  <CardMedia component="img" width="100%" alt="client dog photo"
-                    src={dog.image}
-                    sx={{height: 175}}/>
-              </Card>
+                  <Card key={index} sx={{width: '35%', height: '225px', m: 1}}>
+                    <CardActions sx={{ justifyContent: 'space-between', ml: 1, py: 0, pr: 0}}>
+                      <Typography>{dog.dog_name}</Typography>
+                      <IconButton
+                        onClick={openMenu}
+                        size="small"
+                        sx={{ ml: 2, py: 1, borderRadius: 0 }}>
+                        <MoreVertIcon/>
+                      </IconButton>
+                      <Menu
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        PaperProps={{
+                          elevation: 0,
+                          sx: {
+                            overflow: 'visible',
+                            mt: 1.5,
+                            '& .MuiAvatar-root': {
+                              width: 32,
+                              height: 32,
+                              ml: -0.5,
+                              mr: 1,
+                            },
+                            '&:before': {
+                              content: '""',
+                              display: 'block',
+                              position: 'absolute',
+                              top: 0,
+                              right: 14,
+                              width: 10,
+                              height: 10,
+                              bgcolor: 'background.paper',
+                              transform: 'translateY(-50%) rotate(45deg)',
+                              zIndex: 0,
+                            },
+                          },
+                        }}
+                        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                        >
+                        <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => editDog(dog)}>Edit</MenuItem>
+                          <Divider />
+                        <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => deleteDog(dog)}>Delete</MenuItem>
+                      </Menu>
+                    </CardActions>
+                    <CardMedia component="img"  
+                      width="100%"
+                      alt="client dog photo"
+                      src={dog.image ? dog.image : 'images/dogfiller.png'}
+                      sx={{height: 175}}
+                      />
+                  </Card>
                 ))}
          
-              
-
-              {/*------------------ ADD DOG EXAMPLE ------------------*/}
-              <Card sx={{ width: '100%', m: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                  <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "rgb(227, 218, 216, 0.5)", width: "89%", height: "90%", borderRadius: "0.5rem" }} alt="add dog button" 
-                     onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogFromEdit'})}>
-                      <LibraryAddIcon  sx={{ height: "100%", color: "rgb(171, 164, 162)" }}/>
-                  </Box>
-              </Card>
             </Grid>
 
-
             {/*-------------------- BUTTONS --------------------*/}
-            <Box sx={{mt: 2 }} display="flex" justifyContent="space-between">
-              <Box width="28%" display="flex" justifyContent="space-between">
-                <Button variant="outlined" color="info" onClick={back}>Cancel</Button>  {/*goes back to client list*/}
-                    <Button variant="contained"
-                      onClick={() => deleteClient(client.id)}>Delete</Button> 
-              </Box>
-                <Button variant="contained" color="secondary"
+            <Box display="flex" justifyContent="space-between">
+              <Button variant="outlined" color="info" onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientDetails'})}>Back</Button>
+              <Box width="23%" display="flex" justifyContent="space-between">
+                <Button variant="contained" color="error"
+                  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogFromEdit'})}>Add Dog</Button>  
+                 <Button variant="contained" color="secondary"
                   onClick={saveChanges}>Save</Button> 
-
+              </Box>
             </Box>
       </Box>
     );

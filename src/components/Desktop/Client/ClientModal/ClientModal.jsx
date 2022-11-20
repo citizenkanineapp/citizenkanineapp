@@ -61,7 +61,9 @@ function ClientModal(){
           onClose={(_,reason) => {
             reason === 'backdropClick';
             if (modalView === "ClientDetails"){
-              dispatch({ type: 'SET_MODAL_STATUS' })
+              dispatch({ type: 'SET_MODAL_STATUS' });
+              dispatch({ type: 'CLEAR_CLIENT' });
+              dispatch({ type: 'FETCH_CLIENTS' });
             }
             }} 
           >

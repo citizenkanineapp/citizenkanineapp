@@ -1,7 +1,6 @@
-const dogDelete = (state = {dog_name: '', dog_notes: '', flag: false}, action) => {
-    // console.log ('in dog reducer', action.payload)
+const dogEdit = (state = {dog_name: '', dog_notes: '', image: '', flag: false, regular: false}, action) => {
     switch (action.type) {
-        case 'SET_DOG_DELETE':
+        case 'SET_DOG_EDIT':
         return action.payload;
         case 'SET_DOG':
             return action.payload;
@@ -10,13 +9,15 @@ const dogDelete = (state = {dog_name: '', dog_notes: '', flag: false}, action) =
         case 'UPDATE_DOG_NOTES':
             return {...state, dog_notes: action.payload}
         case 'SET_EDIT_FLAG':
-                return{...state, flag: action.payload}
-        case 'CLEAR_DELETE_DOG':
+            return{...state, flag: action.payload}
+        case 'SET_EDIT_REGULAR':
+            return{...state, regular: action.payload}
+        case 'CLEAR_EDIT_DOG':
             return {dog_name: '', dog_notes: '', flag: false}
         default:
             return state;
     }
 }
 
-export default dogDelete;
+export default dogEdit;
 

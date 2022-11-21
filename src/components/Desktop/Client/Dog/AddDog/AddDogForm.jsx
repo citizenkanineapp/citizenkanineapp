@@ -42,6 +42,8 @@ function AddDogForm (){
     //need to add clear client?
   }
 
+
+
     return (
       <Grid container sx={{ height: '100%', width: '100%', display: 'flex', justifyContent: "center", flexDirection: 'column', gap: 1}}>
         <Grid item>

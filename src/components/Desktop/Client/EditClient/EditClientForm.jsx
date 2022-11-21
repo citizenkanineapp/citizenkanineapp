@@ -6,6 +6,8 @@ import { Box } from "@mui/system";
 import { Button, TextField, Typography, Card, CardActions, CardMedia, Select, Menu, Divider, MenuItem, FormControl, FormHelperText, Grid, IconButton } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+
 
 
 function ClientForm(){
@@ -40,22 +42,22 @@ const editDog = (dog) =>{
 }
 
 
-const deleteDog = (dog) => {
-  setAnchorEl(null); //closes menu 
-  swal({
-    title: "Are you sure?",
-    text: "This will permanently delete this dog",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  })
-  .then((willDelete) => {
-    if (willDelete) {
-      console.log(dog);
-      dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
-    } 
-  });
-};
+// const deleteDog = (dog) => {
+//   setAnchorEl(null); //closes menu 
+//   swal({
+//     title: "Are you sure?",
+//     text: "This will permanently delete this dog",
+//     icon: "warning",
+//     buttons: true,
+//     dangerMode: true,
+//   })
+//   .then((willDelete) => {
+//     if (willDelete) {
+//       console.log(dog);
+//       dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
+//     } 
+//   });
+// };
 
 
 //MUI DOG MENU STUFF
@@ -154,12 +156,12 @@ const handleClose = () => {
                     <CardActions sx={{ justifyContent: 'space-between', ml: 1, py: 0, pr: 0}}>
                       <Typography>{dog.dog_name}</Typography>
                       <IconButton
-                        onClick={openMenu}
+                        onClick={() => editDog(dog)}
                         size="small"
                         sx={{ ml: 2, py: 1, borderRadius: 0 }}>
-                        <MoreVertIcon/>
+                        <CreateOutlinedIcon/>
                       </IconButton>
-                      <Menu
+                      {/* <Menu
                         anchorEl={anchorEl}
                         open={open}
                         onClose={handleClose}
@@ -194,7 +196,7 @@ const handleClose = () => {
                         <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => editDog(dog)}>Edit</MenuItem>
                           <Divider />
                         <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => deleteDog(dog)}>Delete</MenuItem>
-                      </Menu>
+                      </Menu> */}
                     </CardActions>
                     <CardMedia component="img"  
                       width="100%"

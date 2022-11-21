@@ -8,7 +8,7 @@ import { Button, TextField, Typography, Card, CardActions, CardMedia, Grid, Menu
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 
 function ClientDetails(){
   const dispatch = useDispatch();
@@ -19,16 +19,21 @@ function ClientDetails(){
     dispatch({type: 'CLEAR_CLIENT'});
     dispatch({ type: 'FETCH_CLIENTS'});
     dispatch({ type: 'SET_MODAL_STATUS' });
-    dispatch({type: 'CLEAR_EDIT_DOG'});
+    dispatch({ type: 'CLEAR_EDIT_DOG' });
   }
 
 
   const [flipCard, setFlipCard] = useState(false);
   const [cardIndex, setCardIndex] = useState(-1);
 
-  const showDetails = (index) => {
+  const showDetails = (id, index) => {
     setCardIndex(index);
+    console.log('index of this card?',)
+    console.log(id)
+    // console.log(client)
+    const currentDog = client.dogs.filter(dog => {return dog.dog_id === id})
     setFlipCard(!flipCard);
+    console.log(flipCard)
   }
 
   const deleteClient = (client) => {
@@ -54,8 +59,10 @@ function ClientDetails(){
   }
 
 
-  const editDog = (dog) =>{
-    console.log(dog);
+  const editDog = (dog) => {
+    console.log('which dog is clicked?', dog)
+    // const currentDog = client.dogs.filter(dog => {return dog.dog_id === id})
+    // console.log('current dog', currentDog)
     const clientDogObj = {
       client_id: client.id,
       dog_name: dog.dog_name,
@@ -65,27 +72,28 @@ function ClientDetails(){
       flag: dog.flag,
       regular: dog.regular
     }
+    // console.log('client dog object', currentDog)
     dispatch({type: 'SET_DOG_EDIT', payload: clientDogObj})
     dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditDogForm' });
   }
   
   
-  const deleteDog = (dog) => {
-    setAnchorEl(null); //closes menu 
-    swal({
-      title: "Are you sure?",
-      text: "This will permanently delete this dog",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        console.log(dog)
-        dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
-      } 
-    });
-  };
+  // const deleteDog = (dog) => {
+  //   setAnchorEl(null); //closes menu 
+  //   swal({
+  //     title: "Are you sure?",
+  //     text: "This will permanently delete this dog",
+  //     icon: "warning",
+  //     buttons: true,
+  //     dangerMode: true,
+  //   })
+  //   .then((willDelete) => {
+  //     if (willDelete) {
+  //       console.log(dog)
+  //       dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
+  //     } 
+  //   });
+  // };
   
   
   //MUI DOG MENU STUFF
@@ -186,30 +194,21 @@ function ClientDetails(){
           {/*-------------------- DOG PICTURES --------------------*/}
           <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
           {client.dogs && client.dogs.map && client.dogs.map((dog, index) => 
-              ((flipCard === true && cardIndex === index) ?
-                <Card key={index} sx={{width: '35%', height: '225px', m: 1}}>
-                   <CardActions sx={{ justifyContent: 'space-between', ml: 1 }}>
-                    <Typography>{dog.dog_name}</Typography>
-                    {dog.flag && <FlagCircleIcon sx={{color: '#e0603f'}}/>}
-                  </CardActions>
-                  <CardContent sx={{height: '80%', bgcolor: '#e5e1df'}} onClick={() => showDetails(index)}>
-                    <Typography>{dog.dog_notes}</Typography>
-                  </CardContent>
-                </Card>
-                  :
+                  
                 <Card key={index} sx={{width: '35%', height: '225px', m: 1}}>
                   <CardActions sx={{ justifyContent: 'space-between', ml: 2, p: 0}}>
                     <Typography>{dog.dog_name}</Typography>
                     <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                     <IconButton
-                        onClick={openMenu}
+                        onClick={() => editDog(dog)}
                         size="small"
                         sx={{ py: 1, borderRadius: 0 }}>
-                        <MoreVertIcon/>
+                        <CreateOutlinedIcon/>
                       </IconButton>
-                      <Menu
+                      {/* <Menu
                         anchorEl={anchorEl}
                         open={open}
+                        // dog={dog}
                         onClose={handleClose}
                         PaperProps={{
                           elevation: 0,
@@ -239,23 +238,24 @@ function ClientDetails(){
                         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                         >
-                        <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => editDog(dog)}>Edit</MenuItem>
+                        <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => editDog(dog.dog_id)}>Edit</MenuItem>
                           <Divider />
                         <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => deleteDog(dog)}>Delete</MenuItem>
-                      </Menu>
+                      </Menu> */}
                     </Box>
                   </CardActions>
                   <CardMedia component="img"  
-                    // sx={{width: 1}}
-                    width="100%"
-                    alt="client dog photo"
-                    onClick={() => showDetails(index)}
-                    src={dog.image ? dog.image : 'images/dogfiller.png'}
-                    sx={{height: '100%', '&:hover': {filter: 'brightness(90%)'}}}
-                    />
-                </Card>
-              ))}
-
+                        // sx={{width: 1}}
+                        width="100%"
+                        alt="client dog photo"
+                        onClick={() => showDetails(dog.dog_id, index)}
+                        src={dog.image ? dog.image : 'images/dogfiller.png'}
+                        sx={{height: 175, '&:hover': {filter: 'brightness(90%)'}}}
+                      /> 
+            </Card>
+              )
+              }
+              
           </Grid>
 
           {/*-------------------- BUTTONS --------------------*/}

@@ -97,6 +97,7 @@ function ClientSchedule() {
   // weekly schedule stuff:
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const [disabled, setDisabled] = useState(true);
+  console.log('disabled', disabled)
 
   // This object will be dispatched when the weekly schedule has been updated;
 
@@ -133,6 +134,9 @@ function ClientSchedule() {
         <Grid item xs={12} sx={{mt: 2}}>
           <Typography variant="h2" sx={{ display: 'flex', alignSelf: 'left'}}>{client.first_name} {client.last_name}</Typography>
         </Grid>
+        <Grid item xs={12} sx={{mt: 1}}>
+          <Typography variant="h5" sx={{ display: 'flex', alignSelf: 'left', ml: 2}}>Weekly Schedule</Typography>
+        </Grid>
         {/* Grid containing weekly schedule */}
         <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
           {daysOfWeek.map((day, index) => (
@@ -167,7 +171,7 @@ function ClientSchedule() {
             </Grid>
             ))}
             { !disabled ?
-              <Grid item xs={11}  sx={{display: 'flex', justifyContent: 'right', mt: 2}}>
+              <Grid item xs={11}  sx={{display: 'flex', justifyContent: 'right', mt: 1}}>
                 <Button variant="outlined" 
                   sx={{mr: 3}}
                   color="info" onClick={()=> {
@@ -175,7 +179,7 @@ function ClientSchedule() {
                 <Button variant='contained' color='secondary' onClick={handleWeekScheduleChange}>Confirm</Button>
               </Grid>
             :
-            <Grid item xs={11} sx={{ display: 'flex', justifyContent: 'right' }}>
+            <Grid item xs={11} sx={{ display: 'flex', justifyContent: 'right', mt:1}}>
               <Button variant='contained' color='secondary' onClick={() => setDisabled(!disabled)}>Edit</Button>
             </Grid>
           }

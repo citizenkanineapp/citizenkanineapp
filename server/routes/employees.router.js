@@ -30,7 +30,7 @@ router.get('/changes', (req, res)=>{
 router.get('/', rejectUnauthenticated, (req, res)=> {
     const sqlQuery = `
     SELECT * FROM employees
-    ORDER BY id;
+    ORDER BY employees.last_name;
     `
 
     pool.query(sqlQuery)
@@ -83,7 +83,8 @@ router.get('/schedules/odd', rejectUnauthenticated, (req, res)=>{
         employees_schedule
     ON
         employees.id = employees_schedule.emp_id
-    WHERE employees_schedule.week = 1;
+    WHERE employees_schedule.week = 1
+    ORDER BY employees.last_name;
     `
     pool.query(sqlQuery)
         .then(dbRes => {
@@ -105,7 +106,8 @@ router.get('/schedules/even', rejectUnauthenticated, (req, res)=>{
         employees_schedule
     ON
         employees.id = employees_schedule.emp_id
-    WHERE employees_schedule.week = 2;
+    WHERE employees_schedule.week = 2
+    ORDER BY employees.last_name;
     `
     pool.query(sqlQuery)
         .then(dbRes => {

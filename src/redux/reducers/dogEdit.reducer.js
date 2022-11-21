@@ -1,8 +1,6 @@
 const dogEdit = (state = {dog_name: '', dog_notes: '', image: '', flag: false, regular: false}, action) => {
     switch (action.type) {
         case 'SET_DOG_EDIT':
-        return action.payload;
-        case 'SET_DOG':
             return action.payload;
         case 'UPDATE_DOG_NAME':
             return {...state, dog_name: action.payload}

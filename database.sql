@@ -87,8 +87,8 @@ insert into employees_schedule
 values
 	(1, 1, true, true, false, true, true),
 	(1, 2, false, true, false, false, false),
-	(2, 1, false, true, false, false, false),
-	(2, 2, false, true, false, false, false),
+	(2, 1, false, true, true, false, false),
+	(2, 2, false, true, true, false, true),
 	(3, 1, false, false, false, false, false),
 	(3, 2, false, false, false, false, false),
 	(4, 1, true, true, true, false, true),

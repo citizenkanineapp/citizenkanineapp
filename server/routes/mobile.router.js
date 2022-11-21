@@ -42,7 +42,7 @@ router.get('/daily', async (req, res) => {
             break;
         case 1:
             console.log('Monday');
-            searchQuery += 'WHERE "1" = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "1" = TRUE AND dogs.active = TRUE ORDER BY route_id;';
             break;
         case 2:
             console.log('Tuesday');

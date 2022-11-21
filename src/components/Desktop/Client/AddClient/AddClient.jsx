@@ -248,8 +248,8 @@ function AddClient(){
 
 
 
-    {/* <div> */}
-      
+   
+      {/*--------SCHEDULE*--------*/}
       <Grid sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', py: 1 }} >
         <Grid item xs={12} sx={{display: 'flex', flexDirecion: 'row', justifyContent: 'center', pt: 3}}>
          <Typography variant="h5">Weekly Schedule</Typography>

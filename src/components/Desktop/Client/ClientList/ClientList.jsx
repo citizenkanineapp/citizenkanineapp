@@ -13,19 +13,13 @@ import { styled } from '@mui/material/styles';
 
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-
   '&.MuiTableRow-root:hover':{
     backgroundColor: '#accad5' ,
   },
-  // '&:nth-of-type(odd)': {
-  //   backgroundColor: '#a3bbc4'
-  // },
-
 }));
 
 function ClientList() {
   const clientList = useSelector(store => store.clientsReducer);
-  const searchResults = useSelector(store => store.searchReducer)
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState('')

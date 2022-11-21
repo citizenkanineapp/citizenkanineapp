@@ -9,14 +9,9 @@ import EmployeeModal from "../EmployeeModal/EmployeeModal";
 import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-// THESE COLORS AREN'T FINAL BUT WE DEF SHOULD HAVE SOME VISUAL CHANGE
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.secondary.light,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
+  '&.MuiTableRow-root:hover':{
+    backgroundColor: '#accad5' ,
   },
 }));
 
@@ -54,18 +49,18 @@ function EmployeeList() {
   }
 
   return (
-    <Box className="desktop_container"  sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+    <Box className="desktop_container"  sx={{ height: '88%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
       {/*<Typography variant="h4" sx={{display: 'flex', justifyContent: 'center', pt: 3}}>Employees</Typography>*/}
       <Grid container spacing={2}>
-        <Grid item xs={12} sx={{ mr: 22, display: 'flex', justifyContent: 'flex-end' }}>
-          <Button onClick={() => history.push('/schedule')} variant='contained' color='info' sx={{ mr: 2 }}>Schedule</Button>
-          <Button onClick={() => openModal('AddEmployee')} variant='contained' color='secondary'  >Add Employee</Button>
+        <Grid item xs={12} sx={{ mr: 45, display: 'flex', justifyContent: 'flex-end', gap: 2}}>
+          <Button onClick={() => openModal('AddEmployee')} variant='contained' color='secondary'>Add Employee</Button>
+          <Button onClick={() => history.push('/schedule')} variant='contained' color='info'>Schedule</Button>
         </Grid>
         <Grid item xs={12} sx={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 
           {/* TABLE OPTION */}
-          <TableContainer component={Paper} sx={{width: '70%'}}>
-            <Table stickyHeader>
+          <TableContainer component={Paper} sx={{width: '50%', height: '50vh'}}>
+            <Table stickyHeader size="small">
               <TableHead>
                 <TableRow>
                   <TableCell sx={{fontWeight: '800'}}>Name</TableCell>

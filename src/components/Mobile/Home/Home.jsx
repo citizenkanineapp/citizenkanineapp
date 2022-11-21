@@ -11,6 +11,7 @@ function Home() {
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
 
+  // on page load - populate the daily dogs table using day of the week and the scheduled dogs for the day
   useEffect(() => {
     if (user.admin) {
       dispatch({
@@ -21,6 +22,8 @@ function Home() {
 
   }, [])
 
+  // in case the on page load fails - this runs on navigation to the routes page so that the daily dogs
+  // should be accessible 
   const adminTime = () => {
     dispatch({ type: 'POPULATE_DAILY_DOGS' });
     history.push('/m/routes');
@@ -33,7 +36,7 @@ function Home() {
 
       <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifySelf: 'center', gap: 1, m: 0 }}>
 
-        <img src="Images/dogwalker3.png" height="300px" width="300px"/>
+        <img src="Images/dogwalker3.png" height="300px" width="300px" />
 
         <Paper sx={{ p: 2, borderRadius: 5, textAlign: 'center', backgroundColor: '#539BD1', color: 'white' }}>
           WELCOME {user.username.toUpperCase()}:

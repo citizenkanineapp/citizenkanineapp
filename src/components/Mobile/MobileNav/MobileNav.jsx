@@ -10,6 +10,8 @@ import PinDropIcon from '@mui/icons-material/PinDrop';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 function MobileNav() {
+  // navigation that is conditionally rendered based on screen size 
+  // bottom navigation for ease of access on mobile
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
 
@@ -18,6 +20,7 @@ function MobileNav() {
   // history to navigate us to different pages
   const history = useHistory();
 
+  // this populates daily dogs in case it has not already happened
   const adminTime = async () => {
     await dispatch({ type: 'POPULATE_DAILY_DOGS' });
     history.push('/m/routes');

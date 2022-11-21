@@ -7,6 +7,8 @@ import EventBusyIcon from '@mui/icons-material/EventBusy';
 import FlagIcon from '@mui/icons-material/Flag';
 
 function RouteSelect() {
+    // this screen gives an employee the option to select which route they are assigned for the day
+    // it gives a snapshot of how many dogs are on the route, and shows their avatars on a card
     const history = useHistory();
     const dispatch = useDispatch();
     useEffect(() => {

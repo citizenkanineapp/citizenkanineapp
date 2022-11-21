@@ -187,7 +187,7 @@ function EmployeeSchedule(){
                         }}
                         renderInput={(params) => {
                         // console.log(dayjs());
-                        <TextField key={day.$D} {...params} sx={{height: '80vh'}} />
+                        <TextField key={day.$D} {...params}  />
                         }}
                         // render day loops through the days in the month and performs the given function. 
                         renderDay={(day, _value, DayComponentProps) => {
@@ -197,7 +197,7 @@ function EmployeeSchedule(){
                             // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
                             const weekInYear = day.diff(`${currentYear}-01-01`, 'week', false)
                             return (
-                                <Box key={day.$d} className="dayBox"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '8vw', height: '7w', justifyContent: 'center', border: 1, borderColor: '#7BCEC8'}}>
+                                <Box key={day.$d} className="dayBox"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '8vw', height: '7vw', justifyContent: 'center', border: 1, borderColor: '#7BCEC8'}}>
                                   {/* This box is just for the date number */}
                                   <Box sx={{display: 'flex', justifyContent: 'center'}}>
                                     <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>

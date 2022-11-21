@@ -25,7 +25,7 @@ function* fetchAdminNotes(action) {
         // console.log('notes structure', notes.data)
     } catch (error) {
         console.log(error);
-        alert('Error fetching notes');
+        // alert('Error fetching notes');
     }
 
 }

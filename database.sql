@@ -37,13 +37,13 @@ CREATE TABLE employees (
 insert into employees 
 	(first_name, last_name, email, phone, street, city, "zip", admin) 
 values 
-	('Den', 'Paolini', 'dpaolini0@paypal.com', '(840)673-2127', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Grantley', 'Abels', 'gabels1@weather.com', '(885)747-7091', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Say', 'O''Hickey', 'sohickey2@google.ru', '(915)638-0768', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Reeba', 'Pretswell', 'rpretswell3@feedburner.com', '(964)688-1625', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Fiorenze', 'Mary', 'fmary4@unesco.org', '(697)209-6190', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Osborne', 'Barrand', 'obarrand5@wufoo.com', '(537)159-4107', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Lidia', 'Nichols', 'lnichols6@virginia.edu', '(802)528-0961', '2900 W 43rd St', 'Minneapolis',  55410, false);
+	('Danny', 'Paolini', 'dpaolini0@paypal.com', '(840)673-2127', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Grant', 'Abels', 'gabels1@weather.com', '(885)747-7091', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Angie', 'Stevens', 'sohickey2@google.ru', '(915)638-0768', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Reeba', 'McEntire', 'rpretswell3@feedburner.com', '(964)688-1625', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Florence', 'Wells', 'fmary4@unesco.org', '(697)209-6190', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Otis', 'Barrand', 'obarrand5@wufoo.com', '(537)159-4107', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Lydia', 'Nichols', 'lnichols6@virginia.edu', '(802)528-0961', '2900 W 43rd St', 'Minneapolis',  55410, false);
 
 
 -- removed email from user since we no longer need it for password retrieval.
@@ -60,11 +60,11 @@ CREATE TABLE "user" (
 --** USERNAME: 'admin'
 --** PASSWORD: 'admin'
 INSERT INTO "user"
-	("username","password","admin")
+	("username","password","admin", "emp_id")
 VALUES
-	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true),
+	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, null),
 	-- REMOVE BEFORE DEPLOYMENT
-	('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true);
+	('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2);
 	
 
 CREATE TABLE employees_schedule (
@@ -87,8 +87,8 @@ insert into employees_schedule
 values
 	(1, 1, true, true, false, true, true),
 	(1, 2, false, true, false, false, false),
-	(2, 1, false, true, false, false, false),
-	(2, 2, false, true, false, false, false),
+	(2, 1, false, true, true, false, false),
+	(2, 2, false, true, true, false, true),
 	(3, 1, false, false, false, false, false),
 	(3, 2, false, false, false, false, false),
 	(4, 1, true, true, true, false, true),
@@ -343,10 +343,12 @@ CREATE TABLE admin_notes (
 INSERT INTO admin_notes
 	("user_id", "notes")
 VALUES
-	('1', 'Revoke access from the ex-employee'),
-	('1', 'Check who is working today'),
-	('1', 'Remove those dogs from the schedule'),
-	('1', 'Generate Invoices for November'),
-	('1', 'More TREATS!');
+	('1', 'Grant is swapping shifts with Lydia on the 24th'),
+	('1', 'Remove Florence from employees - she went to attend Prime'),
+	('1', 'Add the new puppy to the Higgins Family'),
+	('1', 'Change protocol for Nick W.'),
+	('1', 'Double check Invoices for October'),
+	('1', 'Export CSV for November'),
+	('1', 'Buy more leashes for the supply cabinet');
 
 

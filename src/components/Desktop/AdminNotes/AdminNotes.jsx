@@ -11,13 +11,13 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import './AdminNotes.css'
 
 
+
 //MUI
-import { Fab, Card, CardContent, List, ListItem, ListItemText, ListItemIcon, Button, TextField, Typography, Grid, Avatar, Box } from "@mui/material";
+import { ListSubheader, Fab, Card, CardContent, List, ListItem, ListItemText, ListItemIcon, Button, TextField, Typography, Grid, Avatar, Box } from "@mui/material";
 
 function AdminNotes() {
     useEffect(() => {
         dispatch({ type: 'FETCH_ADMIN_NOTES' })
-
     }, []);
 
 
@@ -68,7 +68,7 @@ function AdminNotes() {
                                     <RemoveIcon sx={{ fill: 'white' }} />
                                 </Fab>
                                 <CardContent>
-                                    <Typography variant='h4'>
+                                    <Typography variant='h5'>
                                         Your Notes:
                                         {/* <IconButton onClick={() => buttonSubmit()} sx={{ ml: 10 }} edge='end'>
                                             <CancelPresentationIcon />
@@ -80,6 +80,9 @@ function AdminNotes() {
                                 </CardContent>
                                 <CardContent>
                                     <List>
+                                        <ListSubheader>
+                                            Your Notes:
+                                        </ListSubheader>
                                         {adminNotes.map((notes) => (
                                             <ListItem className="notes" key={notes.id}
                                                 secondaryAction={
@@ -112,7 +115,7 @@ function AdminNotes() {
                                 </Fab>
                                 <CardContent>
                                     <Typography variant='h4'>
-                                        Your Notes:
+                                        {/* Your Notes: */}
                                         {/* <IconButton onClick={() => toggleMode()}>
                                             <AddBoxOutlinedIcon className="button" sx={{ fontSize: 20, ml: 10 }} />
                                         </IconButton> */}
@@ -122,6 +125,9 @@ function AdminNotes() {
                                 </CardContent>
                                 <CardContent>
                                     <List>
+                                        <ListSubheader>
+                                            Your Notes:
+                                        </ListSubheader>
                                         {adminNotes.map((notes) => (
                                             <ListItem className="notes" key={notes.id}
                                                 secondaryAction={<IconButton onClick={() => deleteNote(notes.id)}>

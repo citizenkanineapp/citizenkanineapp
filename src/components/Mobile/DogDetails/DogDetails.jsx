@@ -14,14 +14,16 @@ function DogDetails() {
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+
   // local state to manage dog note editing ability
   const [editStatus, setEditStatus] = useState(false);
 
   // specific dog details - fetched by the useEffect
   const dog = useSelector(store => store.details);
+  // modal open and close status
   const status = useSelector(store => store.modal.status);
 
-
+  // on page load fetch dog details (by dog ID) using the number provided in the URL
   useEffect(() => {
     dispatch({
       type: 'FETCH_DOG_DETAILS',
@@ -36,6 +38,7 @@ function DogDetails() {
   }, [params.id])
 
 
+  // while we were not able to get map display functionality, clicking this should open either the google maps app or a webpage 
   const openMap = async (dog) => {
     // takes in address details and encodes them into URI 
     const destination = encodeURIComponent(`${dog.street} ${dog.zip}`);
@@ -45,6 +48,7 @@ function DogDetails() {
   }
 
 
+  // this is a button that allows for an employee to click and prompt for a phone call to a given number
   const clicktoCall = (number) => {
     // removes any symbols from the phone number
     let nosymbols = number.replace(/[^a-zA-Z0-9 ]/g, '');
@@ -54,6 +58,7 @@ function DogDetails() {
     window.open(`tel:+1${readyNumber}`);
   }
 
+  // function that allows an employee to add notes to a dog
   const submitNote = (action) => {
     console.log(dog.dog_notes, dog.dog_id);
     let updatedDog = { id: dog.dog_id, note: dog.dog_notes };
@@ -178,7 +183,7 @@ function DogDetails() {
         </Accordion>
 
       </Grid>
-
+      {/* Modal for mobile photo upload */}
       <Modal open={status} sx={{ mt: 5.5, ml: 4 }} >
         <Grid item xs={12}>
           <MobileImageUpload id={dog.dog_id} />

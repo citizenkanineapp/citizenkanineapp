@@ -19,9 +19,7 @@
     background-color: transparent !important;
     
 } */
-.empCalendar .empCalendar .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel{
-    height:70vh ;
-}
+
 
 /* changes the size of the calendar div */
 .empCalendar .css-epd502 {
@@ -38,8 +36,6 @@
     /* outline: 1px black solid; */
     margin-left: 0px !important;
     margin-right: 0px !important;
-    font-size: 1rem !important;
-    color: black !important;
 }
 
 
@@ -65,11 +61,11 @@
 }
 
 .empCalendar .css-6t5f1e-MuiDayPicker-monthContainer {
-    min-height: 80vh !important;
+    max-height: 70vh !important;
 }
 
 .empCalendar .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
-    min-height: 100vh !important;
+    min-height: 65vh !important;
 }
 
 
@@ -81,7 +77,7 @@
 
 /* this changes the today's date indicator circle */
 .empCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
-    color: orange !important;
+    color: black !important;
     width: 5vw !important;
     height: 5vw !important;
     background-color: transparent !important;
@@ -103,15 +99,12 @@
     outline: black 1px;
 }
 
-.empCalendar .css-ghi3gg-MuiDayPicker-weekContainer{
+.css-ghi3gg-MuiDayPicker-weekContainer{
     margin: 0 0 0 0 !important;
 }
 
-.css-hlj6pa-MuiDialogActions-root {
-    display: none !important;
-}
 
-.empCalendar .css-dplwbx-MuiPickersCalendarHeader-label{
-    font-size: 1.5rem !important;
-    font-weight: bold !important;
+.empCalendar .css-15dbmtb-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer{
+    /* width: 36vw !important; */
+    height: 50vh !important;
 }

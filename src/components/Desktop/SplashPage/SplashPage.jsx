@@ -17,10 +17,9 @@ function SplashPage() {
 
   return (
     <Box className="splash_container">
-      <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", height: "80vh" }}>
-       {user.id ?
-        <AdminNotes /> : null }
-        <Card sx={{ width: "30%", height: "60%" }}>
+      <Grid container sx={{ justifyContent: "start", alignItems: "center", display: "flex", ml: 35, mt: 5 }}>
+
+        <Card sx={{ width: "30%", pb: 2, mb: 5 }}>
           <CardActionArea>
             <CardMedia
               component="img"
@@ -32,11 +31,13 @@ function SplashPage() {
               <Typography gutterBottom variant="h5" fontStyle="italic">
                 WELCOME BACK, {user.username.toUpperCase()}!
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              {/* <Typography variant="body2" color="text.secondary">
                 Dog fact of the day: A dog’s nose print is unique, much like a person’s fingerprint.
-              </Typography>
+              </Typography> */}
             </CardContent>
           </CardActionArea>
+          {user.id ?
+            <AdminNotes /> : null}
         </Card>
       </Grid>
     </Box>

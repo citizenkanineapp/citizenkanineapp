@@ -30,48 +30,48 @@ function Nav(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', mt: 7 }}>
-      <Avatar sx={{ width: 200, height: 200, fontSize: 50, ml: 10, mb: 5 }}>ADMIN</Avatar>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+      <Avatar sx={{ width: 250, height: 250, ml: 8, my: 1 }} src={"/images/dogwalker.png"}/>
       <Divider />
       <List>
 
         <ListItem >
-          <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/user')}>
+          <ListItemButton sx={{ textAlign: 'center', mt: 2 }} onClick={(event) => history.push('/user')}>
             <DashboardIcon />
             <ListItemText primary='dashboard' />
           </ListItemButton>
         </ListItem>
 
         <ListItem >
-          <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/employees')}>
+          <ListItemButton sx={{ textAlign: 'center' }} onClick={() => history.push('/employees')}>
             <BadgeIcon />
             <ListItemText primary='pack leaders' />
           </ListItemButton>
         </ListItem>
 
         <ListItem >
-          <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/schedule')}>
+          <ListItemButton sx={{ textAlign: 'center' }} onClick={() => history.push('/schedule')}>
             <CalendarMonthIcon />
             <ListItemText primary='employee schedule' />
           </ListItemButton>
         </ListItem>
 
         <ListItem >
-          <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/clients')}>
+          <ListItemButton sx={{ textAlign: 'center' }} onClick={() => history.push('/clients')}>
             <PetsIcon />
             <ListItemText primary='clients' />
           </ListItemButton>
         </ListItem>
 
         <ListItem sx={{ testAlign: 'center' }}>
-          <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/invoice')}>
+          <ListItemButton sx={{ textAlign: 'center' }} onClick={() => history.push('/invoice')}>
             <EqualizerIcon sx={{ textAlign: 'flex-end' }} />
             <ListItemText primary='reports' />
           </ListItemButton>
         </ListItem>
 
-        <ListItem sx={{ mb: 10 }}>
-          <ListItemButton sx={{ textAlign: 'center' }} onClick={(event) => history.push('/resetpass')}>
+        <ListItem sx={{ mb: 4 }}>
+          <ListItemButton sx={{ textAlign: 'center' }} onClick={() => history.push('/resetpass')}>
             <SettingsIcon sx={{ textAlign: 'flex-end' }} />
             <ListItemText primary='account' />
           </ListItemButton>

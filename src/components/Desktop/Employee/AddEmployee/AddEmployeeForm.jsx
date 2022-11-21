@@ -1,14 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 //MUI
-import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea, Switch } from "@mui/material";
+import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea, Switch, Tooltip } from "@mui/material";
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 function AddEmployee() {
   const dispatch = useDispatch();
   const [employee, setEmployee] = useState({ first_name: '', last_name: '', phone: '', street: '', city: '', zip: '', email: '' })
 
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const daysOfWeek = ['MON', 'TUES', 'WEDS', 'THURS', 'FRI'];
   const [week1, setWeek1] = useState({ week: 1, 1: false, 2: false, 3: false, 4: false, 5: false });
 
   const [week2, setWeek2] = useState({ week: 2, 1: false, 2: false, 3: false, 4: false, 5: false });
@@ -95,85 +95,86 @@ function AddEmployee() {
   }
 
   return (
-    <Grid className="container" sx={{ display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>
-      <Grid sx={{ display: 'flex', justifyContent: 'right', mb: 1 }}>
-        <Switch
-          checked={admin}
-          onChange={handleSwitch}
-        />
-        <SupervisorAccountIcon style={{ fontSize: 36, color: '#e0603f' }} />
+    <Grid className="container" sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', width: '100%', height: '100%', justifyContent: 'center', gap: 2}}>
+        <Grid sx={{display: 'flex', flexDirection: 'row', height: "15%",justifyContent: 'space-between', mt: 5, mb: 1, mx: 10 }}>
+        <Box sx={{display: 'flex', flexDirection: 'row', width: '78%', my: 1, py: 1, gap: 2}}>
+            <TextField
+              fullWidth
+              value={employee.first_name} size="small"
+              onChange={e => setEmployee({ ...employee, first_name: e.target.value })}
+              error={errorFirst}
+              helperText={errorFirst ? errorFirst && "* First Name" : "* First Name"}
+            />
+            <TextField
+              fullWidth
+              value={employee.last_name} size="small"
+              onChange={e => setEmployee({ ...employee, last_name: e.target.value })}
+              error={errorLast}
+              helperText={errorLast ? errorLast && "* Last Name" : "* Last Name"}
+            />
+        </Box>
+        <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1, mb: 4}}>
+              <Switch
+                checked={admin}
+                onChange={handleSwitch}
+              />
+              <Tooltip title="Admin" placement="top-start">         
+                <SupervisorAccountIcon style={{ fontSize: 36, color: '#e0603f' }} />
+              </Tooltip>
+        </Box>
       </Grid>
+
       {/*-------------------- TEXT FIELDS --------------------*/}
-      <Grid sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%" }}>
-        <TextField
-          value={employee.first_name} size="small"
-          onChange={e => setEmployee({ ...employee, first_name: e.target.value })
-          }
-          error={errorFirst}
-          helperText={errorFirst ? errorFirst && "* First Name" : "* First Name"}
-        />
-        <TextField
-          value={employee.last_name} size="small"
-          onChange={e => setEmployee({ ...employee, last_name: e.target.value })
-          }
-          error={errorLast}
-          helperText={errorLast ? errorLast && "* Last Name" : "* Last Name"}
-        />
-        <TextField
-          value={employee.phone} size="small"
-          onChange={e => setEmployee({ ...employee, phone: e.target.value })
-          }
-          error={errorPhone}
-          helperText={errorPhone ? errorPhone && "* Phone (xxx)xxx-xxxx" : "* Phone"}
-        />
+      <Grid sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "60%", mx: 10, gap: 2 }}>
+              <TextField
+                  value={employee.street} size="small"
+                  onChange={e => setEmployee({ ...employee, street: e.target.value })
+                  }
+                  error={errorStreet}
+                  helperText={errorStreet ? errorStreet && "* Street" : "* Street"}
+                />
+              <TextField
+                value={employee.city} size="small"
+                onChange={e => setEmployee({ ...employee, city: e.target.value })
+                }
+                error={errorCity}
+                helperText={errorCity ? errorCity && "* City" : "* City"}
+              />
+              <TextField
+                value={employee.zip} size="small"
+                onChange={e => setEmployee({ ...employee, zip: e.target.value })
+                }
+                error={errorZip}
+                helperText={errorZip ? errorZip && "* Zip Code" : "* Zip Code"}
+              />
+              <TextField
+                value={employee.email} size="small"
+                onChange={e => setEmployee({ ...employee, email: e.target.value })
+                }
+                error={errorEmail}
+                helperText={errorEmail ? errorEmail && "* Email" : "* Email"}
+              />
+            <TextField
+              value={employee.phone} size="small"
+              onChange={e => setEmployee({ ...employee, phone: e.target.value })
+              }
+              error={errorPhone}
+              helperText={errorPhone ? errorPhone && "* Phone (xxx)xxx-xxxx" : "* Phone"}
+            />
       </Grid>
 
-      <Grid sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%" }}>
-        <TextField
-          value={employee.street} size="small"
-          onChange={e => setEmployee({ ...employee, street: e.target.value })
-          }
-          error={errorStreet}
-          helperText={errorStreet ? errorStreet && "* Street" : "* Street"}
-        />
-        <TextField
-          value={employee.city} size="small"
-          onChange={e => setEmployee({ ...employee, city: e.target.value })
-          }
-          error={errorCity}
-          helperText={errorCity ? errorCity && "* City" : "* City"}
-        />
-        <TextField
-          value={employee.zip} size="small"
-          onChange={e => setEmployee({ ...employee, zip: e.target.value })
-          }
-          error={errorZip}
-          helperText={errorZip ? errorZip && "* Zip Code" : "* Zip Code"}
-        />
+      {/*-------------------- SCHEDULE --------------------*/}
+      <Grid item xs={1.5} sx={{display: 'flex', justifyContent: 'center'}}>
+        <Typography variant="b1" sx={{fontWeight: 800}}>Week 1:</Typography>
       </Grid>
-
-      <Grid sx={{ display: 'grid', gap: 1, height: "20%", width: 273.09 }}>
-        <TextField
-          value={employee.email} size="small"
-          onChange={e => setEmployee({ ...employee, email: e.target.value })
-          }
-          error={errorEmail}
-          helperText={errorEmail ? errorEmail && "* Email" : "* Email"}
-        />
-      </Grid>
-
-
       {/* Schedule day selectors */}
       <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
-        <Grid item xs={1.5} sx={{ display: 'flex', justifyContent: 'left', mt: 2 }}>
-          <Typography variant="h6">Week 1:</Typography>
-        </Grid>
-
         {/* Mapping through days of the week array to render buttons for week1 */}
         {daysOfWeek.map((day, index) => (
           <Grid key={index + 1} item xs={2}>
-            <Card>
+            <Card elevation={2} xs={{ height: '30vh' }}>
               <CardActionArea component={Button}
+                disabled={false}
                 onClick={() => {
 
                   if (!week1[index + 1]) {
@@ -185,8 +186,8 @@ function AddEmployee() {
                 }}
               >
 
-                <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: week1[index + 1] ? '#7BCEC8' : 'none' }}>
-                  <Typography variant="h7" sx={{ textTransform: 'capitalize' }}>{day}</Typography>
+                <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: week1[index+1]? '#4a5061' : 'none', height: '3vh', alignItems: 'center' }}>
+                  <Typography sx={{color: week1[index+1] ? 'whitesmoke' : '#4a5061', fontWeight: 800 }}>{day}</Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -194,15 +195,16 @@ function AddEmployee() {
         ))}
       </Grid>
 
-      <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mt: 1 }} >
-        <Grid item xs={1.5} sx={{ display: 'flex', justifyContent: 'left', mt: 2 }}>
-          <Typography variant="h6">Week 2:</Typography>
-        </Grid>
 
+      <Grid item xs={1.5} sx={{display: 'flex', justifyContent: 'center'}}>
+        <Typography variant="b1" sx={{fontWeight: 800}}>Week 2:</Typography>
+      </Grid>
+
+      <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mb: 3}} >
         {/* Mapping through days of the week array to render buttons for week2 */}
         {daysOfWeek.map((day, index) => (
           <Grid key={index + 1} item xs={2}>
-            <Card>
+            <Card elevation={2} xs={{ height: '30vh' }}>
               <CardActionArea component={Button}
                 onClick={() => {
                   if (!week2[index + 1]) {
@@ -213,8 +215,8 @@ function AddEmployee() {
                   }
                 }}
               >
-                <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: week2[index + 1] ? '#7BCEC8' : 'none' }}>
-                  <Typography variant="h7" sx={{ textTransform: 'capitalize' }}>{day}</Typography>
+                <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: week2[index+1]? '#4a5061' : 'none', height: '3vh', alignItems: 'center' }}>
+                  <Typography sx={{color: week2[index+1] ? 'whitesmoke' : '#4a5061', fontWeight: 800 }}>{day}</Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -222,19 +224,14 @@ function AddEmployee() {
         ))}
       </Grid>
 
+      {/*-------------------- BUTTONS --------------------*/}
+      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "10%", mb: 1, mx: 3}}>
+        
+          <Button variant="outlined" color="info" onClick={() => dispatch({type: 'SET_MODAL_STATUS'})}>Back</Button>
 
-      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "5%", mt: 3 }}>
-
-        {/* DELETE BUTTON */}
-        <Button variant="contained" sx={{ ml: 2 }}>Delete</Button>
-        {/* CANCEL BUTTON */}
-        <Box sx={{ width: "24%", display: "flex", justifyContent: "space-between" }}>
-          <Button onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Cancel</Button>  {/*goes back to Employee list*/}
           {/* SAVE BUTTON */}
-          <Button onClick={() => {
-            checkInputs()
-          }}>Submit</Button>
-        </Box>
+          <Button variant="contained" color="secondary" onClick={() => {checkInputs()}}>Submit</Button>
+
       </Box>
     </Grid>
   );

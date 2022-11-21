@@ -50,6 +50,91 @@ function EmployeeForm() {
 
     // await dispatch({ type: 'SET_MODAL_STATUS' })
   }
+
+  const [errorFirst, setErrorFirst] = useState(false);
+  const [errorLast, setErrorLast] = useState(false)
+  const [errorPhone, setErrorPhone] = useState(false)
+  const [errorStreet, setErrorStreet] = useState(false)
+  const [errorZip, setErrorZip] = useState(false)
+  const [errorCity, setErrorCity] = useState(false)
+  const [errorEmail, setErrorEmail] = useState(false)
+  const [errorRoute, setErrorRoute] = useState(false)
+  const [errorFree, setErrorFree] = useState(true)
+  console.log(errorFree);
+  console.log(errorFirst)
+
+
+  const checkInputs = (event) => {
+    setErrorFirst(false)
+    setErrorLast(false)
+    setErrorPhone(false)
+    setErrorStreet(false)
+    setErrorCity(false)
+    setErrorZip(false)
+    setErrorEmail(false)
+    setErrorRoute(false)
+
+
+    if (employee.first_name === undefined || employee.first_name === '') {
+      setErrorFirst(true)
+      setErrorFree(false);
+      // errorFree = true
+    }
+    else if (employee.last_name === undefined || employee.last_name === '') {
+      setErrorLast(true)
+      setErrorFree(false);
+      // errorFree = true
+    }
+    else if (employee.phone === undefined || employee.phone === '') {
+      setErrorPhone(true)
+      setErrorFree(false);
+      // errorFree = true
+    }
+    else if (employee.street === undefined || employee.street === '') {
+      setErrorStreet(true)
+      setErrorFree(false);
+      // errorFree = true
+    }
+    else if (employee.city === undefined || employee.city === '') {
+      setErrorCity(true)
+      setErrorFree(false);
+      // errorFree = true
+    }
+    else if (employee.zip === undefined || employee.zip === '') {
+      setErrorZip(true)
+      setErrorFree(false);
+      // errorFree = true
+    }
+    else if (employee.email === undefined || employee.email === '') {
+      setErrorEmail(true)
+      setErrorFree(false);
+      // errorFree = true
+    }
+    else {
+      // send updated form data to server to update the database:
+    dispatch({
+      type: 'SAGA_UPDATE_EMP_DETAILS',
+      payload: employee
+    })
+    // sends updated schedule data to server to update the database:
+    dispatch({
+      type: 'SAGA_UPDATE_EMP_SCHEDULE',
+      payload: [week1, week2]
+    })
+    // This updates the selectedEmpSchedule reducer so that the details page will render the updated employee schedule
+    dispatch({
+      type: 'SET_EMPLOYEE_SCHEDULE',
+      payload: [week1, week2]
+    })
+    dispatch({
+      type: 'SET_EMPLOYEE_MODAL', 
+      payload: 'EmployeeDetails' })
+    }
+  }
+
+
+
+  
   return (
     <Grid className="container" sx={{ display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>
       <Grid sx={{ display: 'flex', justifyContent: 'right', mb: 1 }}>
@@ -75,73 +160,91 @@ function EmployeeForm() {
       {/*-------------------- TEXT FIELDS --------------------*/}
       <Grid sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%" }}>
         <TextField
-          value={employee.first_name} helperText="First Name" size="small"
-          onChange={e =>
+          value={employee.first_name} size="small"
+          onChange={e =>{
             dispatch({
               type: 'UPDATE_EMP_FIRST_NAME',
               payload: e.target.value
             })
-          }
+          }}
+          error={errorFirst}
+          helperText={errorFirst ? errorFirst && "* First Name" : "* First Name"}
         />
         <TextField
-          value={employee.last_name} helperText="Last Name" size="small"
-          onChange={e =>
+          value={employee.last_name} size="small"
+          onChange={e => {
             dispatch({
               type: 'UPDATE_EMP_LAST_NAME',
               payload: e.target.value
             })
-          }
+          }}
+          error={errorLast}
+          helperText={errorLast ? errorLast && "* Last Name" : "* Last Name"}
         />
         <TextField
-          value={employee.phone} helperText="Phone" size="small"
-          onChange={e =>
+          // type='number'
+          value={employee.phone}  size="small"
+          inputProps={{ min: 10, max: 14}}
+          onChange={e => {
             dispatch({
               type: 'UPDATE_EMP_PHONE',
               payload: e.target.value
             })
-          }
+          }}
+          error={errorPhone}
+          helperText={errorPhone ? errorPhone && "* Phone (xxx)xxx-xxxx" : "* Phone"}
         />
       </Grid>
 
       <Grid sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%" }}>
         <TextField
-          value={employee.street} helperText="Street" size="small"
-          onChange={e =>
+          value={employee.street}  size="small"
+          onChange={e => {
             dispatch({
               type: 'UPDATE_EMP_STREET',
               payload: e.target.value
             })
-          }
+          }}
+          error={errorStreet}
+          helperText={errorStreet ? errorStreet && "* Street" : "* Street"}
         />
         <TextField
-          value={employee.city} helperText="City" size="small"
-          onChange={e =>
+          value={employee.city}  size="small"
+          onChange={e =>{
             dispatch({
               type: 'UPDATE_EMP_CITY',
               payload: e.target.value
             })
-          }
+          }}
+          error={errorCity}
+          helperText={errorCity ? errorCity && "* City" : "* City"}
         />
         <TextField
-          value={employee.zip} helperText="Zip" size="small"
-          onChange={e =>
+          type='number'
+          value={employee.zip}  size="small"
+          inputProps={{min: 0, max: 5}}
+          onChange={e =>{
             dispatch({
               type: 'UPDATE_EMP_ZIP',
               payload: e.target.value
             })
-          }
+          }}
+          error={errorZip}
+          helperText={errorZip ? errorZip && "* Zip Code" : "* Zip Code"}
         />
       </Grid>
 
       <Grid sx={{ display: 'grid', gap: 1, height: "20%", width: 273.09 }}>
         <TextField
-          value={employee.email} helperText="Email" size="small"
-          onChange={e =>
+          value={employee.email}  size="small"
+          onChange={e => {
             dispatch({
-              type: 'UPDATE_EMP_PHONE',
+              type: 'UPDATE_EMP_EMAIL',
               payload: e.target.value
             })
-          }
+          }}
+          error={errorEmail}
+          helperText={errorEmail ? errorEmail && "* Email" : "* Email"}
         />
       </Grid>
 
@@ -242,24 +345,7 @@ function EmployeeForm() {
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => {
-              // send updated form data to server to update the database:
-              dispatch({
-                type: 'SAGA_UPDATE_EMP_DETAILS',
-                payload: employee
-              })
-              // sends updated schedule data to server to update the database:
-              dispatch({
-                type: 'SAGA_UPDATE_EMP_SCHEDULE',
-                payload: [week1, week2]
-              })
-              // This updates the selectedEmpSchedule reducer so that the details page will render the updated employee schedule
-              dispatch({
-                type: 'SET_EMPLOYEE_SCHEDULE',
-                payload: [week1, week2]
-              })
-              dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails' })
-            }}>Save</Button>
+            onClick={checkInputs}>Save</Button>
         </Box>
       </Box>
     </Grid>

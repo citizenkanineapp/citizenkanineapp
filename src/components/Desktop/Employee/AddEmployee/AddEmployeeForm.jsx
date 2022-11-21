@@ -225,8 +225,6 @@ function AddEmployee() {
 
       <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "5%", mt: 3 }}>
 
-        {/* DELETE BUTTON */}
-        <Button variant="contained" sx={{ ml: 2 }}>Delete</Button>
         {/* CANCEL BUTTON */}
         <Box sx={{ width: "24%", display: "flex", justifyContent: "space-between" }}>
           <Button onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Cancel</Button>  {/*goes back to Employee list*/}

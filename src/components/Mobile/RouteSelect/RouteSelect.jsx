@@ -55,16 +55,19 @@ function RouteSelect() {
                             <AvatarGroup>
                                 {dailyRoutes && dailyRoutes[route].map((dog, index) => (
 
-                                    <div key={index}>
-                                        {dog.image ?
-                                            <Avatar src={dog.image} key={index} />
-                                            :
-                                            <Avatar key={index}>
-                                                {dog.name[0]}
-                                            </Avatar>
+                                    <>
+                                        {
+                                            dog.image ?
+                                                <Avatar src={dog.image} key={index} />
+                                                :
+                                                <Avatar key={index}>
+                                                    {dog.name[0]}
+                                                </Avatar>
 
                                         }
-                                    </div>
+
+                                    </>
+
                                 ))}
                             </AvatarGroup>
                         </CardContent>

@@ -93,13 +93,15 @@ router.get('/daily', async (req, res) => {
             ("dog_id", "route_id", "client_id", "name")
         VALUES
             ($1, $2, $3, $4)
-        ON CONFLICT ("dog_id", "date")
-        DO UPDATE 
-  	        SET "dog_id" = $1,
-  	 	        "route_id" = $2,
-  	 	        "client_id"=$3,
-  	 	        "name" = $4;
+       
         `
+
+        // ON CONFLICT ("dog_id", "date")
+        // DO UPDATE 
+        //     SET "dog_id" = $1,
+        //         "route_id" = $2,
+        //         "client_id"=$3,
+        //         "name" = $4;
 
         // find the dogs default scheduled for the day
         const scheduledDogsResponse = await client.query(searchQuery);

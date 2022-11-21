@@ -56,7 +56,7 @@ With this project being a much larger workload than previous projects in our exp
 
 Through the sprint, our team met with the Client on multiple occasions to provide updates, and clarify questions. In order to remain on schedule, our group utilized a Kanban board to visualize tasks that were in-progress, completed, or blocked. This helped clarify which pieces of the puzzle still needed completion, and streamlined the team's workflow.
 
-![]([https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668992553/Screen_Shot_2022-11-20_at_7.01.18_PM_tjohkv.png](https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668992553/Screen_Shot_2022-11-20_at_7.01.18_PM_tjohkv.png)
+![]([https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668992553/Screen_Shot_2022-11-20_at_7.01.18_PM_tjohkv.png](https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668992553/Screen_Shot_2022-11-20_at_7.01.18_PM_tjohkv.png))
 
 As a representation of the planning spent on this project - we have included the scope document. This process involved spending time considering user flow, component structure, and design potential for the application. This experience also involved setting a timeline for certain features and was an interesting venture into estimating development time for a small team of developers.
 

@@ -97,13 +97,17 @@ function* deleteClient(action) {
         console.log('error deleting client', error)
     }
 }
-
+//this just makes the dog in-active.  Need to keep in database for invoicing
 function* deleteDog(action) {
     console.log(action.payload);
     const dogId = action.payload.dog_id;
     const clientId = action.payload.client_id;
     try{
-        const dog = yield axios.delete(`/api/clients/dogs/${dogId}`);
+        const dog = yield axios({
+            method: 'PUT',
+            url: `/api/clients/dogs/${dogId}`,
+            data: action.payload
+        })
         yield put ({type: 'FETCH_ONE_CLIENT', payload: clientId });
     } catch (error){
         console.log('error deleting dog', error)

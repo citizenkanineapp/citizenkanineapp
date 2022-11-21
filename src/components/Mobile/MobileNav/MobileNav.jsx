@@ -10,6 +10,8 @@ import PinDropIcon from '@mui/icons-material/PinDrop';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 function MobileNav() {
+  // navigation that is conditionally rendered based on screen size 
+  // bottom navigation for ease of access on mobile
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
 

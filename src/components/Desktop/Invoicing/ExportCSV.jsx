@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
 import { Button, Box } from "@mui/material";
 import dayjs from 'dayjs';
+import './CSVLink.css';
 // let localeData = require('dayjs/plugin/localeData');
 // dayjs.extend(localeData);
 
@@ -46,11 +47,12 @@ const ExportCSV = ({ monthsShort }) => {
     return (
         <Box component="span">
             {invoiceItems && invoiceItems.map &&
-                <Button size="large" variant="contained" color="secondary" sx={{ mx: 1 }}>
+                <Button size="small" variant="contained" color="primary" sx={{ mx: 1, mt: 1 }}>
                     <CSVLink
                         headers={headers}
                         data={data}
                         filename={`invoice_${data[0].InvoiceDate}.csv` || null}
+                        id='csvButton'
                     >
                         EXPORT
                     </CSVLink>

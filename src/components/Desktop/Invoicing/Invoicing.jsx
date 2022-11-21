@@ -56,7 +56,7 @@ function Invoicing() {
   }
 
   return (
-    <Box className="desktop_container" sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'top', alignItems: 'center' }}>
+    <Box className="desktop_container" sx={{ height: '88%', display: 'flex', flexDirection: 'column', justifyContent: 'top', alignItems: 'center' }}>
       <Grid container sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '80%' }}>
         <Grid item xs={8}>
           <FormControl sx={{ mx: 2, width: 350 }}>

@@ -161,8 +161,12 @@ function App() {
             </Route>
 
           </Switch>
+          {user.id ?
+            <MobileNav />
 
-          <MobileNav />
+            :
+            null
+          }
         </div>
       </ThemeProvider>
     </Router>

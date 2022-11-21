@@ -88,17 +88,20 @@ function EmployeeSchedule(){
       return dayjs();
     }
   });
-  const [empChange, setEmpChange] = useState({emp_id:'', date_to_change:'', is_scheduled: ''});
+  const [empChange, setEmpChange] = useState({emp_id:'', date_to_change:`${date.$y}-${date.$M + 1}-${date.$D}`, is_scheduled: ''});
   const handleDateChange=(newValue)=>{
-    console.log(newValue)
+    // console.log(newValue)
     setDate(newValue)
     let changeDate = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
-    console.log(changeDate)
+    // console.log(changeDate)
     setEmpChange({...empChange, date_to_change: changeDate});
+    
   }
 
   const handleSubmit=()=>{
     // dispatch change to be added to database
+    console.log(date)
+    console.log(empChange);
     dispatch({
       type: 'SAGA_ADD_EMP_CHANGE',
       payload: empChange

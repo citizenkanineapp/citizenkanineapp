@@ -26,6 +26,7 @@ const ExportCSV = ({ monthsShort }) => {
     const data = [];
     if (invoiceItems && invoiceItems.map) {
         for (let item of invoiceItems) {
+            console.log(item)
             data.push(
                 {
                     "InvoiceNo": item.clientid,

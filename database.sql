@@ -345,7 +345,8 @@ INSERT INTO admin_notes
 VALUES
 	('1', 'Revoke access from the ex-employee'),
 	('1', 'Adjust for employee call ins'),
-	('1', 'Add the new puppy to the client')
+	('1', 'Add the new puppy to the client'),
+	('1', 'Update client addresses'),
 	('1', 'Generate Invoices for November'),
 	('1', 'More TREATS!');
 

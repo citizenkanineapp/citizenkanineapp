@@ -205,7 +205,6 @@ function EmployeeSchedule(){
                                       {weekInYear % 2 !== 0  ? // odd week (week1)
                                         <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', justifyContent: 'center', alignContent: 'flex-start', flexWrap: 'wrap'}}>
                                         {oddEmpSchedules && oddEmpSchedules.map((employee, index) => {
-                                          const bgColor = avatarColors[index];
                                           // if it's a regularly scheduled day and there is an add request, render the employee
                                           if (employee[day.$W]){
                                             // check to see if there are any changes for this employee on this day
@@ -217,7 +216,7 @@ function EmployeeSchedule(){
                                             // if there are changes for this emp on this day
                                             if (empChange.length > 0){
                                               if(empChange[0].is_scheduled){
-                                                return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                                                return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: avatarColors[index], height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
                                               else{
                                                 return null
@@ -225,6 +224,7 @@ function EmployeeSchedule(){
                                             }
                                             //  no changes for this employee and is a regularly scheduled day
                                             else{
+                                              let bgColor = avatarColors[index];
                                               return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                             }
                                             
@@ -237,6 +237,7 @@ function EmployeeSchedule(){
                                             // if there are changes for this emp on this day
                                             if (empChange.length > 0){
                                               if(empChange[0].is_scheduled){
+                                                let bgColor = avatarColors[index];
                                                 return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
                                               else{
@@ -251,7 +252,6 @@ function EmployeeSchedule(){
                                         // even week (week2)
                                         <Box sx={{display:'flex', flexDirection: 'row', flexGrow: '7', justifyContent: 'center', alignContent: 'flex-start', flexWrap: 'wrap'}}>
                                         {evenEmpSchedules && evenEmpSchedules.map((employee, index) => {
-                                          const bgColor = avatarColors[index];
                                           // if it's a regularly scheduled day and there is an add request, render the employee
                                           if (employee[day.$W]){
                                             // check to see if there are any changes for this employee on this day
@@ -262,6 +262,7 @@ function EmployeeSchedule(){
 
                                             // if there are changes for this emp on this day
                                             if (empChange.length > 0){
+                                              let bgColor = avatarColors[index];
                                               if(empChange[0].is_scheduled){
                                                 return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
@@ -271,6 +272,7 @@ function EmployeeSchedule(){
                                             }
                                             //  no changes for this employee and is a regularly scheduled day
                                             else{
+                                              let bgColor = avatarColors[index];
                                               return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                             }
                                             
@@ -282,8 +284,10 @@ function EmployeeSchedule(){
                                             })
                                             // if there are changes for this emp on this day
                                             if (empChange.length > 0){
+                                              
                                               // console.log('there is a change on', thisDayString)
                                               if(empChange[0].is_scheduled){
+                                                let bgColor = avatarColors[index];
                                                 return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
                                               else{

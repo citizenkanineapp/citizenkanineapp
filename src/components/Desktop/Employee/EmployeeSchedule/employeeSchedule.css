@@ -26,14 +26,14 @@
 /* changes the size of the calendar div */
 .empCalendar .css-epd502 {
     width: 60vw !important;
-    min-height: 90vh !important;
+    min-height: 100vh !important;
     /* border: 2px lightcoral dotted; */
     border-radius: 10px;
 }
 
 /*  This customized the weekday label */
 .empCalendar .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel {
-    width: 8vw !important;
+    width: 8.25vw !important;
     height: 5vh !important;
     /* outline: 1px black solid; */
     margin-left: 0px !important;
@@ -49,7 +49,7 @@
 } */
 
 /* individual day buttons (circle) */
-.empCalendar css-bkrceb-MuiButtonBase-root-MuiPickersDay-root, .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+.empCalendar .css-bkrceb-MuiButtonBase-root-MuiPickersDay-root, .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
     width: 8vw !important;
     height: 12vh !important;
     justify-content: right !important;
@@ -99,9 +99,9 @@
     height: 90vh !important;
 }
 
-.dayBox {
+/* .dayBox {
     outline: black 1px;
-}
+} */
 
 .empCalendar .css-ghi3gg-MuiDayPicker-weekContainer{
     margin: 0 0 0 0 !important;

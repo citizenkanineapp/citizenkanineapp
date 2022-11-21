@@ -209,6 +209,11 @@ Since the app is not client facing at this time - there is no registration page.
 
 #### Mapping routes and dog location
   While we started exploring mapping for this project, it unfortunately did not fit into our timeline - this is a feature we think would be incredibly helpful for a visual of routes (for load balancing, and navigation). (Map API's / Providers listed below)
+
+  some effort towards mapping routes has been made in the 'map' branch. In this branch:
+  - "clients" table includes "lat" and "long" fields.
+  - add new and update client routes automatically populates table with coorinate data based on address (MapTiler).
+  - SQL queries in mobile.router need to updated to select "lat" and "long" for each client.
   
   Another area for exploration would be to attempt to develop step by step route directions for the employee - providing a streamlined pickup process for their morning. 
 

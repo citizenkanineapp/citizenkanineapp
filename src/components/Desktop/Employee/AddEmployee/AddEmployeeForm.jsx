@@ -227,8 +227,6 @@ function AddEmployee() {
       {/*-------------------- BUTTONS --------------------*/}
       <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "10%", mb: 1, mx: 3}}>
 
-          {/* CANCEL BUTTON */}
-          <Button onClick={() => dispatch({ type: 'SET_MODAL_STATUS' })}>Cancel</Button>  
 
           {/* SAVE BUTTON */}
           <Button onClick={() => {checkInputs()}}>Submit</Button>

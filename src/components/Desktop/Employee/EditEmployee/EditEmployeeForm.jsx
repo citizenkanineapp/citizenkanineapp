@@ -85,7 +85,7 @@ function EmployeeForm() {
       setErrorFree(false);
       // errorFree = true
     }
-    else if (employee.phone === undefined || employee.phone === '') {
+    else if (employee.phone === undefined || employee.phone === '' || employee.phone.length > 13) {
       setErrorPhone(true)
       setErrorFree(false);
       // errorFree = true
@@ -100,7 +100,7 @@ function EmployeeForm() {
       setErrorFree(false);
       // errorFree = true
     }
-    else if (employee.zip === undefined || employee.zip === '') {
+    else if (employee.zip === undefined || employee.zip === '' || employee.zip.length > 5) {
       setErrorZip(true)
       setErrorFree(false);
       // errorFree = true

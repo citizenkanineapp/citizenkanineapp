@@ -323,6 +323,7 @@ function EmployeeSchedule(){
         </Box>
       </Grid>
     </Grid>
+    <EmployeeModal/>
     </>
   )      
 }

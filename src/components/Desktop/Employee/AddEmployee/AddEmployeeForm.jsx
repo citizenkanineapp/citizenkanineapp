@@ -8,7 +8,7 @@ function AddEmployee() {
   const dispatch = useDispatch();
   const [employee, setEmployee] = useState({ first_name: '', last_name: '', phone: '', street: '', city: '', zip: '', email: '' })
 
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const daysOfWeek = ['MON', 'TUES', 'WEDS', 'THURS', 'FRI'];
   const [week1, setWeek1] = useState({ week: 1, 1: false, 2: false, 3: false, 4: false, 5: false });
 
   const [week2, setWeek2] = useState({ week: 2, 1: false, 2: false, 3: false, 4: false, 5: false });

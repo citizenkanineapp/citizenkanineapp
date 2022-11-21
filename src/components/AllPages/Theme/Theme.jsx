@@ -20,7 +20,7 @@ export const theme = createTheme({
     },
     error: {
       main: '#e0923f',
-      contrastText: '#fbfaf8',
+      contrastText: '#bd7222',
     },
     warning: {
       main: '#ff5e4a',

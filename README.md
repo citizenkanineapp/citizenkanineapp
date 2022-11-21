@@ -1,123 +1,238 @@
 
-# Prime Solo Project Starting Repo
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
-
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
-
-## Use the Template for This Repository (Don't Clone)
-
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account. Make the project `PUBLIC`!
 
 
-## Prerequisites
+  
 
-Before you get started, make sure you have the following software installed on your computer:
+![REPO SIZE](https://img.shields.io/github/repo-size/citizenkanineapp/citizenkanineapp?style=flat-square)
 
-- [Node.js](https://nodejs.org/en/)
-- [PostrgeSQL](https://www.postgresql.org/)
-- [Nodemon](https://nodemon.io/)
+  
 
-## Create database and table
+![TOP_LANGUAGE](https://img.shields.io/github/languages/top/citizenkanineapp/citizenkanineapp?style=flat-square)
 
-Create a new database called `prime_app` and create a `user` table:
+  
 
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
+![FORKS](https://img.shields.io/github/forks/citizenkanineapp/citizenkanineapp?style=social)
+
+  
+
+  
+
+# Citizen Kanine
+
+  
+
+  
+
+_Duration: Two Week Sprint_
+
+  
+
+  ## Summary
+
+Citizen Kanine is a dog walking business based in Minneapolis - where each morning 'Pack Leaders' embark on a route to pick up dogs from client homes for their daily walk. On a typical day, the business walks 36+ dogs in small groups around Lake Harriet rain or shine. 
+
+ 
+Our goal was to provide a solution to Citizen Kanine that streamlined their workflow. This included developing an admin portal that provides a centralized location for the client to manage employees, client information, client scheduling, as well as invoicing. This portal is estimated to save our client multiple hours a month on invoicing alone.  The huge win is that our client shouldn't have to reference multiple sources of information to complete monthly invoices.
+
+Our solution contained two separate workflows: the admin dashboard mentioned above - and a mobile view for employees. The mobile view allows employees to keep track of their schedules,  manage the distribution of dogs between Pack Leaders on a daily basis, as well as efficiently checking in dogs for future invoicing. The mobile view came with the hurdle of displaying loads of information in a user friendly way on a small display. 
+
+  
+
+
+
+
+This project was a team effort -  built in its entirety over the course of two weeks as a part of [Prime Digital Academy](www.primeacademy.io).
+
+  
+
+  
+
+## Approach:
+
+With this project being a much larger workload than previous projects in our experience, and the added layer of Client involvement planning was integral to results. Before starting development we spent a week scoping the project, connecting with the client to clarify their needs,  and setting up a timeline. 
+
+##### Wireframe / User Flow Prototype:
+  
+
+Through the sprint, our team met with the Client on multiple occasions to provide updates, and clarify questions. In order to remain on schedule, our group utilized a Kanban board to visualize tasks that were in-progress, completed, or blocked. This helped clarify which pieces of the puzzle still needed completion, and streamlined the team's workflow.
+
+![]([https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668992553/Screen_Shot_2022-11-20_at_7.01.18_PM_tjohkv.png](https://res.cloudinary.com/ddmwrgnrd/image/upload/v1668992553/Screen_Shot_2022-11-20_at_7.01.18_PM_tjohkv.png))
+
+As a representation of the planning spent on this project - we have included the scope document. This process involved spending time considering user flow, component structure, and design potential for the application. This experience also involved setting a timeline for certain features and was an interesting venture into estimating development time for a small team of developers.
+
+[Scope Document with Wireframes](https://docs.google.com/document/d/1_sO_B9sY84xYKGdlWtzBYzdPIXpx9b63RNzQ3Ie6izc/)
+
+  
+
+If you would like to see a draft of the database structure created during scoping - we have included the relevant ERD. This shows how the tables interact with one another and gives context to functions within the program.
+
+  
+
+[Entity-Relationship Diagram](https://app.dbdesigner.net/designer/schema/563565)
+
+  
+
+  
+
+## Getting Started:
+
+  
+
+  
+
+### Prerequisites
+
+  
+
+- React.js *(built on version 17.0.2)*
+
+  
+
+- Keys for Cloudinary & PidgeonMaps API's
+
+  
+
+- DotEnv file 
+
+  
+
+-  [Node.js](https://nodejs.org/en/)
+
+  
+
+- Axios
+
+  
+
+- Redux
+
+  
+
+- Redux-Saga
+
+  
+
+-  [Material.UI](https://mui.com)
+
+  
+
+- Express
+
+  
+
+- Body-Parser
+
+  
+
+- 'PG'
+
+  
+
+- Database Manager
+
+  
+
+  
+
+### Installation
+Using your package manager - install the dependencies
+
+```
+$ ~ npm install
+```
+In your database manager - create a database named `citizen_kanine` use the provided database.sql file to create the necessary tables for this project. 
+*(We have included optional dummy data for testing purposes)*
+
+With your database set up - start the server.
+```
+$ ~ npm run server
 ```
 
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+With the server running - open another terminal window and start your client.
 
-## Development Setup Instructions
+Navigate to http://localhost:3000 if the run client script doesn't automatically open the application.
 
-- Run `npm install`
-- Create a `.env` file at the root of the project and paste this line into the file:
-  ```
-  SERVER_SESSION_SECRET=superDuperSecret
-  ```
-  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm run server`
-- Run `npm run client`
-- Navigate to `localhost:3000`
+```
+$ ~ npm run client
+```
 
-## Debugging
+Since the app is not client facing at this time - there is no registration page. You will have to add an account through a `SQL INSERT` in your database manager.
 
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
+## Built With:
 
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
+*  [React.js](https://reactjs.org/docs/getting-started.html)
+*  [Node.js](https://nodejs.org/en/docs/)
+* [Material-UI](https://mui.com) - components and styling
+* [React-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) - Drag and Drop functionality for mobile view
+* [Day.js](https://day.js.org) - Time Utility
+* [SweetAlert](https://sweetalert.js.org) - Visual feedback for users
+* [Passport](https://www.passportjs.org) - Secure Login & Account Management
 
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
+*For a full list of dependencies - see the Package.json*
 
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
+  
 
-## Testing Routes with Postman
+## Screen Shots
 
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum.
+  ![](/ScreenShots/Landing.png)
 
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
 
-1. Start the server - `npm run server`
-2. Import the sample routes JSON file [v2](./PostmanPrimeSoloRoutesv2.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password
-   2. `POST /api/user/login` will login a user, see body to change username/password
-   3. `GET /api/user` will get user information, by default it's not very much
 
-After running the login route above, you can try any other route you've created that requires a logged in user!
+## Usage
 
-## Production Build
+  This application is meant to serve as a business management tool for Citizen Canine. It is meant to handle client, and employee scheduling - as well as client invoicing.  The next sections will walk you through the tools at your disposal in each view. 
 
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
+### Desktop *(Admin Dashboard)*
 
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm start`
-- Navigate to `localhost:5000`
+ 1. **Log In** - when logging in on a desktop using admin level credentials users will be brought to a desktop 'Splash Page'
+ 2. **Splash Page** - a Home Screen for the desktop experience, contains a notes section to help keep admin organized. Also includes a collapsible sidebar which allows for convenient site navigation.
+ 3. **Employee Management 'Pack Leaders'** - enter this view through the sidebar -  in this view admin is able to add/edit/delete employees, as well as modify and view their schedules.  Adding an employee will generate an account with their email as the username, and a temporary password.
+ 4. **Clients** -  enter this view through the sidebar - in this view admin can add/edit/delete clients as well as their dogs. There is also a search function to help access a specific client quickly. Also allows for schedule viewing and editing. 
+ 5. **Reports** -  enter this view through the sidebar - an invoicing tool for admins to select relevant data and export a CSV file to import into Quickbooks.
+ 6. **Account** - a form for admin to change their password.
 
-## Lay of the Land
+### Mobile *(Employee View)*
 
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
+ 1. **Log In** - employees and admins can log in on a mobile device to access the mobile features. 
+ 2. **Splash Page** -  quick navigation page for relevant tools, as well as a bottom navigation bar to access these tools.
 
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
+**Dogs in this section may contain 'flags' which tell the employee there may be a relevant note about the dog and its behavior.**
 
-Directory Structure:
+ 3. **Routes / Route Select** - accessing routes through the provided navigation tools will lead users to a view showing the assigned dogs for a given day, and their default route distribution. **Admin** level users will have a button to access load balancing. Once routes are set for the day - users simply click their assigned route to view the details. 
+ 4. **Load Balancing** -  a tool for Admin level users to distribute dogs amongst their daily employees using a drag and drop interface. If a household has multiple dogs - they are grouped and have a matching background color. (Section contains flags)
+ 5. **Route Screen** -  once routes are set, and a user selects their assigned route on the route select page and is brought to a list view with tools for route management. Clicking on a line in the list of dogs will reveal the options available for a user. Here employees are able to mark a dog as 'checked in' or a 'no show', which will in turn update their list visually marking said dog off of the list. In this view, Admin level users are able to cancel a dog at no charge - in case they were accidentally still on the schedule for a given day. Clicking on a dog photo or avatar on the left side of the list will bring a user to Dog Details.  (Section contains flags)
+ 6. **Dog Details** - this view shows relevant information for a specific dog and their client. Here is a centralized location for access protocols for client homes, notes on dog needs, emergency contact information, as well as photo upload for dog identification. (Section contains flags)
+ 7. **Account** - a form for users to change their password.
+ 
 
-- `src/` contains the React application
-- `public/` contains static assets for the client-side
-- `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-- `server/` contains the Express App
+  
 
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
+## Developer Notes
 
-- src/components
-  - App/App
-  - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - InfoPage/InfoPage
-  - UserPage/UserPage
-  - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
-  - ProtectedRoute/ProtectedRoute
+Given the opportunity to revisit this project - we would be interested in exploring Quickbooks API integration especially for Client Data sync so that any changes made app-side will reflect on Quickbooks.
 
-## Deployment
+ While we started exploring mapping for this project, it unfortunately did not fit into our timeline - this is a feature we think would be incredibly helpful for a visual of routes (for load balancing, and navigation). (Map API's / Providers listed below)
+ 
+Another area for exploration would be to attempt to develop step by step route directions for the employee - providing a streamlined pickup process for their morning. 
 
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
+  
 
-## Update Documentation
+  
 
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+## Authors & Acknowledgement
 
-Note:  Need to update this
+Thanks to [Cloudinary](https://cloudinary.com) whose API supplied image upload capabilities for multiple parts of this application.
+
+Thanks to [Prime Digital Academy](www.primeacademy.io) who equipped and helped us make this application a reality.
+
+
+
+Special thanks to the services that made the start of our Map display development possible:
+
+ - [Radar](https://radar.com) - for Geo Coding
+ - [MapTiler](https://www.maptiler.com) 
+ - [Pigeon Maps](https://pigeon-maps.js.org) - React Maps
+
+  
+
+  

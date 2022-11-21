@@ -43,14 +43,14 @@ VALUES
 INSERT INTO services
 	("name", "price")
 VALUES
-	('Group Dog Walking: Friends & Family', '20'),
-	('Group Dog Walking: 1 dog - Ad hoc', '35'),
-	('Group Dog Walking: 1 dog 2-4x / week', '30'),
-	('Group Dog Walking: 1 dog 5x / week', '26'),
-	('Group Dog Walking: 2 dogs - Ad hoc', '45'),
-	('Group Dog Walking: 2 Dogs 2-4x / week', '42'),
-	('Group Dog Walking: 2 dogs 5x / week', '37'),
-	('Group Dog Walking: 3 dogs', '54'); --3 dogs, how many times a week?
+	('Group Dog Walking:Friends & Family', '20'),
+	('Group Dog Walking:1 dog - Ad hoc', '35'),
+	('Group Dog Walking:1 dog 2-4x / week', '30'),
+	('Group Dog Walking:1 dog 5x / week', '26'),
+	('Group Dog Walking:2 dogs - Ad hoc', '45'),
+	('Group Dog Walking:2 Dogs 2-4x / week', '42'),
+	('Group Dog Walking:2 dogs 5x / week', '37'),
+	('Group Dog Walking:3 dogs', '54');
 
 
 -- dummy data for 20 clients

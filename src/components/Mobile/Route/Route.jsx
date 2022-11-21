@@ -12,10 +12,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 function DailyRoutes() {
+  // this is the 'to-do' list for a walker ... showing the dogs they need to pick up each day and their status
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
 
+  // on page load - fetch routes, and also fetch specifc route data according to URL route ID
   useEffect(() => {
     dispatch({ type: 'GET_DAILY_ROUTES' });
     dispatch({ type: 'GET_ROUTE_DETAILS', payload: params.id })

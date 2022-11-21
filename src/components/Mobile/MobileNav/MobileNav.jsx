@@ -18,6 +18,7 @@ function MobileNav() {
   // history to navigate us to different pages
   const history = useHistory();
 
+  // this populates daily dogs in case it has not already happened
   const adminTime = async () => {
     await dispatch({ type: 'POPULATE_DAILY_DOGS' });
     history.push('/m/routes');

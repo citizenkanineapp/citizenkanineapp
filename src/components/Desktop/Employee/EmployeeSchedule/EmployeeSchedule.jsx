@@ -128,12 +128,12 @@ function EmployeeSchedule(){
   return (
     <>
     <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', height: '90%', width: '100%'}}>
-      <Box sx={{display: 'flex', flexDirection: 'column', height: '20%', width: '100%', justifyContent: 'flex-end', gap: 1,  ml: '7vw'}}>
-        <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+      <Box sx={{display: 'flex', flexDirection: 'column', height: '6vh', width: '100%', justifyContent: 'flex-start', mt: 3, gap: 1,  ml: '7vw'}}>
+        <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
           <Typography sx={{fontSize: '1.5rem', fontWeight: '800'}}>Schedule Changes</Typography>
         
         </Box>
-        <Box sx={{display: 'flex', flexDirection: 'row', gap: 2}}>
+        <Box sx={{display: 'flex', flexDirection: 'row', gap: 2, justifyContent: 'flex-start'}}>
         {/* change form here */}
           <FormControl  sx={{width: '15vw' }}>
             <InputLabel>Employee</InputLabel>
@@ -171,9 +171,9 @@ function EmployeeSchedule(){
           </Grid> */}
     </Box>
       <Box sx={{display: 'flex', flexDirection: 'row', gap: 5, height: '75%'}}>
-        <Box sx={{display:'flex', justifyContent:'center',}}>
+        <Box sx={{display:'flex', justifyContent:'center',justifyContent: 'flex-start'}}>
           {/* calendar here */}
-          <Card variant="outlined" sx={{bgcolor: '#FCF4EB'}}>
+          <Card variant="outlined" sx={{bgcolor: '#FCF4EB', height: '76vh'}}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <StaticDatePicker
                         className='empCalendar'
@@ -197,9 +197,9 @@ function EmployeeSchedule(){
                             // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
                             const weekInYear = day.diff(`${currentYear}-01-01`, 'week', false)
                             return (
-                                <Box key={day.$d} className="dayBox"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '8vw', height: '8vw', justifyContent: 'center', border: 1, borderColor: '#7BCEC8'}}>
+                                <Box key={day.$d} className="dayBox"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '8vw', height: '7w', justifyContent: 'center', border: 1, borderColor: '#7BCEC8'}}>
                                   {/* This box is just for the date number */}
-                                  <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: '1'}}>
+                                  <Box sx={{display: 'flex', justifyContent: 'center'}}>
                                     <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>
                                   </Box>
 
@@ -221,7 +221,7 @@ function EmployeeSchedule(){
                                             // if there are changes for this emp on this day
                                             if (empChange.length > 0){
                                               if(empChange[0].is_scheduled){
-                                                return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: avatarColors[index], height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                                                return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: avatarColors[index], height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5, alignSelf:'flex-start' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
                                               else{
                                                 return null
@@ -230,7 +230,7 @@ function EmployeeSchedule(){
                                             //  no changes for this employee and is a regularly scheduled day
                                             else{
                                               let bgColor = avatarColors[index];
-                                              return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                                              return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5, alignSelf:'flex-start' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                             }
                                             
                                           }// NOT a regularly scheduled day=> check for changes.
@@ -243,7 +243,7 @@ function EmployeeSchedule(){
                                             if (empChange.length > 0){
                                               if(empChange[0].is_scheduled){
                                                 let bgColor = avatarColors[index];
-                                                return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                                                return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5, alignSelf:'flex-start' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
                                               else{
                                                 return null
@@ -269,7 +269,7 @@ function EmployeeSchedule(){
                                             if (empChange.length > 0){
                                               let bgColor = avatarColors[index];
                                               if(empChange[0].is_scheduled){
-                                                return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                                                return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5, alignSelf:'flex-start' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
                                               else{
                                                 return null
@@ -278,7 +278,7 @@ function EmployeeSchedule(){
                                             //  no changes for this employee and is a regularly scheduled day
                                             else{
                                               let bgColor = avatarColors[index];
-                                              return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                                              return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5, alignSelf:'flex-start' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                             }
                                             
                                           }// NOT a regularly scheduled day=> check for changes.
@@ -293,7 +293,7 @@ function EmployeeSchedule(){
                                               // console.log('there is a change on', thisDayString)
                                               if(empChange[0].is_scheduled){
                                                 let bgColor = avatarColors[index];
-                                                return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5 }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                                                return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5, alignSelf:'flex-start' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
                                               else{
                                                 return null
@@ -320,7 +320,7 @@ function EmployeeSchedule(){
                   <CardActionArea component={Button} onClick={()=> handleClick(employee)} >
                     <CardContent sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', pl: 6, gap: 3}}>
 
-                          <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: avatarColors[index], height: 50 , width: 50, fontSize: 10, mr: 1, alignSelf: 'center' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
+                          <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: avatarColors[index],  height: '2.25vw' , width: '2.25vw', fontSize: 10, mr: 1, alignSelf: 'center' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
 
                           <Typography sx={{display: 'flex', alignSelf: 'center'}}>
                             {employee.first_name} {employee.last_name}

@@ -30,7 +30,7 @@ router.get('/changes', (req, res)=>{
 router.get('/', rejectUnauthenticated, (req, res)=> {
     const sqlQuery = `
     SELECT * FROM employees
-    ORDER BY id;
+    ORDER BY employees.last_name;
     `
 
     pool.query(sqlQuery)

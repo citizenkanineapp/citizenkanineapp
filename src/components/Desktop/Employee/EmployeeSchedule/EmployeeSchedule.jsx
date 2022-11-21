@@ -79,7 +79,15 @@ function EmployeeSchedule(){
   const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
   // console.log(dayjs());
 
-  const [date, setDate] = useState(dayjs());
+   // The conditional useState prevents the user from adding an employee to a weekend day
+    const [date, setDate] = useState(()=>{
+    if(dayjs().$W === 0 || dayjs().$W === 6){
+      return dayjs().add(1, 'day');
+    }
+    else{
+      return dayjs();
+    }
+  });
   const [empChange, setEmpChange] = useState({emp_id:'', date_to_change:'', is_scheduled: ''});
   const handleDateChange=(newValue)=>{
     console.log(newValue)

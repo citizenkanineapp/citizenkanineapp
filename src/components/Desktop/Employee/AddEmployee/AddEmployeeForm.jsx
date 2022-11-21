@@ -226,10 +226,11 @@ function AddEmployee() {
 
       {/*-------------------- BUTTONS --------------------*/}
       <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "10%", mb: 1, mx: 3}}>
-
+        
+          <Button variant="outlined" color="info" onClick={() => dispatch({type: 'SET_MODAL_STATUS'})}>Back</Button>
 
           {/* SAVE BUTTON */}
-          <Button onClick={() => {checkInputs()}}>Submit</Button>
+          <Button variant="contained" color="secondary" onClick={() => {checkInputs()}}>Submit</Button>
 
       </Box>
     </Grid>

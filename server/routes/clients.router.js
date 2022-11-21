@@ -21,7 +21,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   const queryText = `
                     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
                     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, 
-                    dogs.vet_phone, dogs.flag, dogs.regular, clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
+                    dogs.vet_phone, dogs.flag, dogs.regular, dogs.active, clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
                             JOIN dogs
                             ON clients.id = dogs.client_id
                             JOIN routes
@@ -64,8 +64,14 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
         // const {first_name, last_name, address} = result.rows[0];
         const { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday } = forDogMap[0];
         const client = { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday }
-        client.dogs = forDogMap.map(dog => { return ({ dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular }) })
+        let dogsPreFilter = forDogMap.map(dog => { return ({ dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular, active: dog.active}) })
 
+       const dogsResult = dogsPreFilter.filter(dog => dog.active === true)
+       console.log ('dogs array?', dogsResult)
+       
+       //add dogs to client
+        client.dogs = dogsResult
+        
         clients.push(client)
 
       }
@@ -265,7 +271,7 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   const queryText = `
     SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, 
-    dogs.vet_phone, dogs.notes as dog_notes, dogs.flag, dogs.regular,
+    dogs.vet_phone, dogs.notes as dog_notes, dogs.flag, dogs.regular, dogs.active,
    clients_schedule."1", clients_schedule."2", clients_schedule."3", clients_schedule."4", clients_schedule."5"  
     from clients
             JOIN dogs
@@ -315,8 +321,14 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
         // const {first_name, last_name, address} = result.rows[0];
         const { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name } = forDogMap[0];
         const client = { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name }
-        client.dogs = forDogMap.map(dog => { return ({ dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular }) })
+      let dogsPreFilter = forDogMap.map(dog => { return ({ dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular, active: dog.active}) })
 
+       const dogsResult = dogsPreFilter.filter(dog => dog.active === true)
+       console.log ('dogs array?', dogsResult)
+       
+       //add dogs to client
+        client.dogs = dogsResult
+        
         clients.push(client)
 
       }
@@ -430,10 +442,14 @@ router.delete('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
     });
 });
 
-router.delete('/dogs/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+router.put('/dogs/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   // console.log(req.params.id)
 
-  const queryText = 'DELETE FROM dogs WHERE id=$1';
+  const queryText = `
+                UPDATE dogs
+                      SET active = false
+                      WHERE id = $1;
+  `;
   pool.query(queryText, [req.params.id])
     .then(() => { res.sendStatus(200); })
     .catch((err) => {

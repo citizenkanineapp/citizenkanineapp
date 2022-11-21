@@ -76,14 +76,15 @@
 } */
 
 /* All of the day labels */
-.clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root  {
+.clientSchedule .css-pntf9m-MuiButtonBase-root-MuiPickersDay-root, .clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root  {
     width: 1vw !important;
     height: 1vw !important;
     justify-content: center !important;
     align-items: flex-start !important;
     background-color: transparent !important;
-    color: black !important;
+    /* color: black !important; */
     margin-top: 5px !important;
+    margin-bottom: 5px !important;
 }
 
 /* box around calendar */
@@ -93,8 +94,17 @@
     outline: black 1px;
 }
 
-.clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
-    border: black 1px !important;
+.clientSchedule .css-r5lgva-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected){
+    color: orange !important;
+    width: 1vw !important;
+    height: 1vw !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    background-color: transparent !important;
+    margin-top: 5px !important;
+    border: none !important;
+    margin-bottom: 5px !important;
+
 }
 
 .clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected){
@@ -114,4 +124,7 @@
 }
 
 
+.clientSchedule .css-1bkb27x{
+    padding-top: 0 !important;
+}
 

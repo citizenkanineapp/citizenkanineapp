@@ -159,7 +159,7 @@ function ClientSchedule() {
                     }
                   }}
                 >
-                  <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: clientSchedule[index + 1] ? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
+                  <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: clientSchedule[index + 1] ? '#4A5061' : 'none', color: clientSchedule[index + 1] ? 'white' : 'black', height: '3vh', alignItems: 'center' }}>
                     <Typography variant="h7" sx={{ textTransform: 'capitalize' }}>{day}</Typography>
                   </CardContent>
                 </CardActionArea>

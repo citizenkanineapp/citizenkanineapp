@@ -223,7 +223,7 @@ function EmployeeForm() {
         ))}
       </Grid>
 
-
+      {/*-------------------- BUTTONS --------------------*/}
       <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "10%", mb: 1, mx: 3}}>
         <Box sx={{ width: "24%", display: "flex", justifyContent: "space-between" }}>
           {/* CANCEL BUTTON */}

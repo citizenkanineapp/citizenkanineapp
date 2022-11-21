@@ -36,7 +36,7 @@ function EmployeeList() {
   // const modalStatus = useSelector(store=> store.modal.status);
   
   const handleClick = (employee)=> {
-    openModal('EmployeeDetails');
+   
     // Need to send dispatch to fetch employee and their schedule
     dispatch({
       type: 'SET_EMPLOYEE',
@@ -46,6 +46,11 @@ function EmployeeList() {
       type: 'SAGA_FETCH_EMP_SCHEDULE',
       payload: employee.id
     })
+    setTimeout(() => {
+      console.log("Delayed for 1 second"); //waits for employee to be set
+      openModal('EmployeeDetails');
+      }, "500");
+   
   }
 
   return (

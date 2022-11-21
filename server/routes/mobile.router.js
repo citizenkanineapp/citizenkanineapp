@@ -92,7 +92,13 @@ router.get('/daily', async (req, res) => {
         INSERT INTO daily_dogs
             ("dog_id", "route_id", "client_id", "name")
         VALUES
-            ($1, $2, $3, $4);
+            ($1, $2, $3, $4)
+        ON CONFLICT ("dog_id", "date")
+        DO UPDATE 
+  	        SET "dog_id" = $1,
+  	 	        "route_id" = $2,
+  	 	        "client_id"=$3,
+  	 	        "name" = $4;
         `
 
         // find the dogs default scheduled for the day
@@ -113,7 +119,7 @@ router.get('/daily', async (req, res) => {
             await Promise.all(scheduledDogs.map(dog => {
                 const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4);`;
                 const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name];
-                return client.query(insertQuery, insertValues);
+                return client.query(insertSQL, insertValues);
             }));
 
             await client.query('COMMIT')
@@ -142,7 +148,7 @@ router.get('/daily', async (req, res) => {
             await Promise.all(adjustedDogs.map(dog => {
                 const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4)`;
                 const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name];
-                return client.query(insertQuery, insertValues);
+                return client.query(insertSQL, insertValues);
             }));
 
             await client.query('COMMIT')
@@ -152,7 +158,7 @@ router.get('/daily', async (req, res) => {
     } catch (error) {
         await client.query('ROLLBACK')
         // alert('Error Getting Daily Dogs - Could be due to attempted duplicate entries.')
-        console.log('Error POST /api/order', error);
+        console.log('Error in Generating / Getting Daily Dogs', error);
         res.sendStatus(500);
     } finally {
         client.release()

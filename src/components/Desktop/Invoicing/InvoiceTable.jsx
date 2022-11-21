@@ -49,7 +49,7 @@ function InvoiceTable({ monthsShort }) {
                   <TableCell key={item.id} >{item.month}/{item.year}</TableCell>
                   <TableCell key={item.id} >{item.first_name} {item.last_name}</TableCell>
                   <TableCell key={item.id} >{item.service.service}</TableCell>
-                  <TableCell key={item.id} >{month}: {item.dates.map(date => (date + ', '))}</TableCell>
+                  <TableCell key={item.id} >{month}: {item.dates.map((date,i) => (i < item.dates.length-1 ? date + ', ': date))}</TableCell>
                   <TableCell key={item.id} >{item.dates.length}</TableCell>
                   <TableCell key={item.id} >{item.service.price}</TableCell>
                   <TableCell key={item.id} >{item.service.price * item.dates.length}</TableCell>

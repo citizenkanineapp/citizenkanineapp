@@ -6,6 +6,8 @@ import { Box } from "@mui/system";
 import { Button, TextField, Typography, Card, CardActions, CardMedia, Select, Menu, Divider, MenuItem, FormControl, FormHelperText, Grid, IconButton } from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+
 
 
 function ClientForm(){
@@ -40,22 +42,22 @@ const editDog = (dog) =>{
 }
 
 
-const deleteDog = (dog) => {
-  setAnchorEl(null); //closes menu 
-  swal({
-    title: "Are you sure?",
-    text: "This will permanently delete this dog",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  })
-  .then((willDelete) => {
-    if (willDelete) {
-      console.log(dog);
-      dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
-    } 
-  });
-};
+// const deleteDog = (dog) => {
+//   setAnchorEl(null); //closes menu 
+//   swal({
+//     title: "Are you sure?",
+//     text: "This will permanently delete this dog",
+//     icon: "warning",
+//     buttons: true,
+//     dangerMode: true,
+//   })
+//   .then((willDelete) => {
+//     if (willDelete) {
+//       console.log(dog);
+//       dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
+//     } 
+//   });
+// };
 
 
 //MUI DOG MENU STUFF
@@ -71,7 +73,7 @@ const handleClose = () => {
 
 
   return (
-        <Box sx={{ m:2, p:2,  height: '90%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
+        <Box sx={{ m:2, p:2,  height: '90%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
 
               {/*----------------------- HEADER -----------------------*/}
               <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>  
@@ -85,7 +87,7 @@ const handleClose = () => {
 
 
                 {/*-------------------- TEXT FIELDS --------------------*/}
-              <Grid sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr', columnGap: 1, py: 2 }}>
+              <Grid sx={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr', columnGap: 1, py: 2 }}>
                 <TextField 
                   value={client.street}
                   onChange={(e) => dispatch({type: 'ADD_STREET', payload: e.target.value})}
@@ -102,9 +104,9 @@ const handleClose = () => {
                   helperText="Zip Code"  
                   size="small"/>
                 <TextField 
-                  value={client.email}
-                  onChange={(e) => dispatch({type: 'ADD_EMAIL', payload: e.target.value})} 
-                  helperText="Email"  
+                  value={client.notes || ''} 
+                  onChange={(e) => dispatch({type: 'ADD_NOTES', payload: e.target.value})}
+                  helperText="Notes"  
                   size="small"/>
                 <TextField 
                   value={client.phone}
@@ -112,9 +114,9 @@ const handleClose = () => {
                   helperText="Phone"  
                   size="small"/>
                 <TextField 
-                  value={client.notes || ''} 
-                  onChange={(e) => dispatch({type: 'ADD_NOTES', payload: e.target.value})}
-                  helperText="Notes"  
+                  value={client.email}
+                  onChange={(e) => dispatch({type: 'ADD_EMAIL', payload: e.target.value})} 
+                  helperText="Email"  
                   size="small"/>
                 <TextField 
                   value={client.vet_name || ''} 
@@ -154,12 +156,12 @@ const handleClose = () => {
                     <CardActions sx={{ justifyContent: 'space-between', ml: 1, py: 0, pr: 0}}>
                       <Typography>{dog.dog_name}</Typography>
                       <IconButton
-                        onClick={openMenu}
+                        onClick={() => editDog(dog)}
                         size="small"
                         sx={{ ml: 2, py: 1, borderRadius: 0 }}>
-                        <MoreVertIcon/>
+                        <CreateOutlinedIcon/>
                       </IconButton>
-                      <Menu
+                      {/* <Menu
                         anchorEl={anchorEl}
                         open={open}
                         onClose={handleClose}
@@ -194,13 +196,13 @@ const handleClose = () => {
                         <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => editDog(dog)}>Edit</MenuItem>
                           <Divider />
                         <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => deleteDog(dog)}>Delete</MenuItem>
-                      </Menu>
+                      </Menu> */}
                     </CardActions>
                     <CardMedia component="img"  
                       width="100%"
                       alt="client dog photo"
                       src={dog.image ? dog.image : 'images/dogfiller.png'}
-                      sx={{height: 175}}
+                      sx={{height: '100%'}}
                       />
                   </Card>
                 ))}

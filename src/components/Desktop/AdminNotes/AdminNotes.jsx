@@ -5,20 +5,23 @@ import IconButton from '@mui/material/IconButton';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import './AdminNotes.css'
 
 
 //MUI
-import { Button, TextField, Typography, Grid, Avatar, Box } from "@mui/material";
+import { Fab, Card, CardContent, List, ListItem, ListItemText, ListItemIcon, Button, TextField, Typography, Grid, Avatar, Box } from "@mui/material";
 
-function AdminNotes(){
+function AdminNotes() {
     useEffect(() => {
         dispatch({ type: 'FETCH_ADMIN_NOTES' })
-        
-      }, []);
-    
-    
-    
+
+    }, []);
+
+
+
     const dispatch = useDispatch();
     const adminNotes = useSelector(store => store.adminNotesReducer)
 
@@ -26,95 +29,123 @@ function AdminNotes(){
     const [note, setNote] = useState('');
 
     const toggleMode = () => {
-       console.log('testing')
+        console.log('testing')
         setToggleNotes(!toggleNotes)
     }
 
     //sends notes to DB via 'Enter'
     const onEnterSubmit = (e) => {
-        if(e.keyCode == 13 && e.shiftKey == false) {
-          e.preventDefault();
-          dispatch({ type: 'ADD_ADMIN_NOTES', payload: note});
-          setNote('');
-          setToggleNotes(!toggleNotes);
+        if (e.keyCode == 13 && e.shiftKey == false) {
+            e.preventDefault();
+            dispatch({ type: 'ADD_ADMIN_NOTES', payload: note });
+            setNote('');
+            setToggleNotes(!toggleNotes);
         };
-      };
-    
+    };
+
     //sends notes to DB via button
     const buttonSubmit = () => {
         setToggleNotes(!toggleNotes);
         setNote('');
-       
+
     };
 
-    const deleteNote = (id) =>{
+    const deleteNote = (id) => {
         console.log(id)
-        dispatch({type: 'DELETE_ADMIN_NOTES', payload: id})
+        dispatch({ type: 'DELETE_ADMIN_NOTES', payload: id })
     }
 
 
 
-  return (
-        <>  
-        {toggleNotes ?          ////EDIT MODE////
-        <Box>
-            <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                <div className="notes_container" sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width:'20%', gap: 2 }}> 
-                    <div className="notes_header">
-                            <h4 className="notes_text">Notes:</h4>
-                                {/* <button className="widget_button" onClick={() =>  buttonSubmit()}>⨉</button> */}
-                               <IconButton onClick={() =>  buttonSubmit()}>
-                                    <CancelPresentationIcon/>
-                                </IconButton>
-                    </div>
-                    <div className="edit_notes">
-                        <textarea type="text" 
-                            className="notes_input"
-                            value={note} 
-                            placeholder="Add a new note"
-                            onChange={(e) => setNote(e.target.value)}
-                            onKeyDown={(e) => onEnterSubmit(e)}/>
-                             <ul>
-                       {adminNotes.map ((notes) => (
-                            <li className="notes" key={notes.id}>{notes.notes}
-                                 <IconButton onClick={() => deleteNote(notes.id)}>
-                                    <CancelPresentationIcon sx={{ fontSize: 20, color: '#341341' }}/> 
-                                </IconButton>
-                            </li>
-                        ))}
-                        </ul>
-                    </div>
-                </div>
-            </Grid>
-        </Box>
+    return (
+        <>
+            {toggleNotes ?          ////EDIT MODE////
+                <Box>
+                    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <Grid item xs={12}>
+                            <Card>
+                                <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()} sx={{ position: 'fixed', mt: 3, ml: 41 }}>
+                                    <RemoveIcon sx={{ fill: 'white' }} />
+                                </Fab>
+                                <CardContent>
+                                    <Typography variant='h4'>
+                                        Your Notes:
+                                        {/* <IconButton onClick={() => buttonSubmit()} sx={{ ml: 10 }} edge='end'>
+                                            <CancelPresentationIcon />
+                                        </IconButton> */}
+                                    </Typography>
+                                </CardContent>
+                                <CardContent>
+                                    <TextField fullWidth type='text' value={note} placeholder='Add a new note' helperText='Press enter to Submit' onChange={(e) => setNote(e.target.value)} onKeyDown={(e) => onEnterSubmit(e)}></TextField>
+                                </CardContent>
+                                <CardContent>
+                                    <List>
+                                        {adminNotes.map((notes) => (
+                                            <ListItem className="notes" key={notes.id}
+                                                secondaryAction={
+                                                    <IconButton onClick={() => deleteNote(notes.id)} sx={{ ml: 10 }}>
+                                                        <DeleteIcon sx={{ fontSize: 20, color: '#341341' }} />
+                                                    </IconButton>
+                                                }>
+                                                <ListItemText>{notes.notes}</ListItemText>
+                                            </ListItem>
+                                        ))}
+
+                                    </List>
+
+                                </CardContent>
+
+                            </Card>
+
+                        </Grid>
+
+                    </Grid>
+                </Box>
                 :               ////DISPLAY MODE////
-                
-        <Box>
-            <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                <div className="notes_container" sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width:'20%', gap: 2 }}>
-                    <div className="notes_header">
-                            <h4 className="notes_text"> Notes:</h4>
-                                <IconButton onClick={() => toggleMode()}>
-                                    {/* edit above */}
-                                    <AddBoxOutlinedIcon className="button" sx={{fontSize: 20}} />
-                                </IconButton>
-                    </div>
-                    <div className="notes_body">
-                       <ul>
-                       {adminNotes.map ((notes) => (
-                            <li className="notes" key={notes.id}>{notes.notes}
-                                <IconButton onClick={() => deleteNote(notes.id)}>
-                                    <CancelPresentationIcon sx={{ fontSize: 20, color: '#341341' }}/> 
-                                </IconButton>
-                            </li>
-                        ))}
-                        </ul>
-                    </div>
-                </div>
-            </Grid>
-        </Box>
-        }
-    </>
+
+                <Box>
+                    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <Grid item xs={12}>
+                            <Card>
+                                <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()} sx={{ position: 'fixed', mt: 3, ml: 41 }}>
+                                    <AddIcon sx={{ fill: 'white' }} />
+                                </Fab>
+                                <CardContent>
+                                    <Typography variant='h4'>
+                                        Your Notes:
+                                        {/* <IconButton onClick={() => toggleMode()}>
+                                            <AddBoxOutlinedIcon className="button" sx={{ fontSize: 20, ml: 10 }} />
+                                        </IconButton> */}
+                                    </Typography>
+
+
+                                </CardContent>
+                                <CardContent>
+                                    <List>
+                                        {adminNotes.map((notes) => (
+                                            <ListItem className="notes" key={notes.id}
+                                                secondaryAction={<IconButton onClick={() => deleteNote(notes.id)}>
+                                                    <DeleteIcon />
+
+                                                </IconButton>}
+                                                sx={{ mx: 1 }}
+                                            >
+                                                <ListItemText>{notes.notes}</ListItemText>
+
+                                            </ListItem>
+                                        ))}
+                                    </List>
+
+                                </CardContent>
+
+                            </Card>
+
+                        </Grid>
+
+                    </Grid>
+                </Box>
+            }
+        </>
     );
 }
 

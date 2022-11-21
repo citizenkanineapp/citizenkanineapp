@@ -4,7 +4,7 @@ import swal from 'sweetalert'
 
 
 //MUI
-import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea, Switch } from "@mui/material";
+import { Box, Button, TextField, Typography, Grid, Avatar, Card, CardContent, CardActionArea, Switch, Tooltip } from "@mui/material";
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 function EmployeeForm() {
@@ -21,13 +21,13 @@ function EmployeeForm() {
   const week1 = employeeSchedule1;
   const week2 = employeeSchedule2;
 
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const daysOfWeek = ['MON', 'TUES', 'WEDS', 'THURS', 'FRI'];
 
   const deleteEmployee = async (employee) => {
     let employeeID = employee.id;
     swal({
       title: "Are you sure?",
-      text: "This will permanently delete this Employee",
+      text: "This will permanently delete this employee",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -36,126 +36,126 @@ function EmployeeForm() {
         if (willDelete) {
           dispatch({ type: 'SAGA_DELETE_EMPLOYEE', payload: employeeID })
             .then(dispatch({ type: 'SET_MODAL_STATUS' }))
-          swal("Success!", {
+          swal("Removed employee", {
             icon: "success",
 
           });
-        } else {
-          swal("The employee is safe!");
-        }
+        } 
       });
-
     // console.log(employee.id);
     // await dispatch({ type: 'SAGA_DELETE_EMPLOYEE', payload: employeeID })
 
     // await dispatch({ type: 'SET_MODAL_STATUS' })
   }
+
+
   return (
-    <Grid className="container" sx={{ display: 'flex', flexDirection: 'column', alignContent: 'center', pr: 2, justifyContent: 'center', ml: 1, mt: 3, width: '65vw' }}>
-      <Grid sx={{ display: 'flex', justifyContent: 'right', mb: 1 }}>
-        <Switch
-          checked={employee.admin}
-          onChange={() => {
-            if (!employee.admin) {
-              dispatch({
-                type: 'UPDATE_EMP_ADMIN',
-                payload: true
-              })
-            }
-            else {
-              dispatch({
-                type: 'UPDATE_EMP_ADMIN',
-                payload: false
-              })
-            }
-          }}
-        />
-        <SupervisorAccountIcon style={{ fontSize: 36, color: '#e0603f' }} />
+    <Grid className="container" sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', width: '100%', height: '100%', justifyContent: 'center', gap: 2}}>
+      <Grid sx={{display: 'flex', flexDirection: 'row', height: "15%",justifyContent: 'space-between', mt: 5, mb: 1, mx: 10 }}>
+          <Box sx={{display: 'flex', flexDirection: 'row', width: '78%', my: 1, py: 1, gap: 2}}>
+                  <TextField
+                    fullWidth
+                    value={employee.first_name} helperText="First Name" size="small"
+                    onChange={e =>
+                      dispatch({
+                        type: 'UPDATE_EMP_FIRST_NAME',
+                        payload: e.target.value
+                      })
+                    }
+                  />
+                  <TextField
+                    fullWidth
+                    value={employee.last_name} helperText="Last Name" size="small"
+                    onChange={e =>
+                      dispatch({
+                        type: 'UPDATE_EMP_LAST_NAME',
+                        payload: e.target.value
+                      })
+                    }
+                  />
+            </Box>
+            <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1, mb: 4}}>
+              <Switch
+                checked={employee.admin}
+                onChange={() => {
+                  if (!employee.admin) {
+                    dispatch({
+                      type: 'UPDATE_EMP_ADMIN',
+                      payload: true
+                    })
+                  }
+                  else {
+                    dispatch({
+                      type: 'UPDATE_EMP_ADMIN',
+                      payload: false
+                    })
+                  }
+                }}
+              />
+              <Tooltip title="Admin" placement="top-start">         
+                <SupervisorAccountIcon style={{ fontSize: 36, color: '#e0603f' }} />
+              </Tooltip>
+        </Box>
       </Grid>
       {/*-------------------- TEXT FIELDS --------------------*/}
-      <Grid sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%" }}>
-        <TextField
-          value={employee.first_name} helperText="First Name" size="small"
-          onChange={e =>
-            dispatch({
-              type: 'UPDATE_EMP_FIRST_NAME',
-              payload: e.target.value
-            })
-          }
-        />
-        <TextField
-          value={employee.last_name} helperText="Last Name" size="small"
-          onChange={e =>
-            dispatch({
-              type: 'UPDATE_EMP_LAST_NAME',
-              payload: e.target.value
-            })
-          }
-        />
-        <TextField
-          value={employee.phone} helperText="Phone" size="small"
-          onChange={e =>
-            dispatch({
-              type: 'UPDATE_EMP_PHONE',
-              payload: e.target.value
-            })
-          }
-        />
+        <Grid sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "60%", mx: 10, gap: 2 }}>
+              <TextField
+                value={employee.street} helperText="Street" size="small"
+                onChange={e =>
+                  dispatch({
+                    type: 'UPDATE_EMP_STREET',
+                    payload: e.target.value
+                  })
+                }
+              />
+              <TextField
+                value={employee.city} helperText="City" size="small"
+                onChange={e =>
+                  dispatch({
+                    type: 'UPDATE_EMP_CITY',
+                    payload: e.target.value
+                  })
+                }
+              />
+              <TextField
+                value={employee.zip} helperText="Zip" size="small"
+                onChange={e =>
+                  dispatch({
+                    type: 'UPDATE_EMP_ZIP',
+                    payload: e.target.value
+                  })
+                }
+              />
+              <TextField
+                value={employee.email} helperText="Email" size="small"
+                onChange={e =>
+                  dispatch({
+                    type: 'UPDATE_EMP_PHONE',
+                    payload: e.target.value
+                  })
+                }
+              />
+            <TextField
+                value={employee.phone} helperText="Phone" size="small"
+                onChange={e =>
+                  dispatch({
+                    type: 'UPDATE_EMP_PHONE',
+                    payload: e.target.value
+                  })
+                }
+              />
       </Grid>
 
-      <Grid sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 0.5fr ', gap: 1, height: "20%" }}>
-        <TextField
-          value={employee.street} helperText="Street" size="small"
-          onChange={e =>
-            dispatch({
-              type: 'UPDATE_EMP_STREET',
-              payload: e.target.value
-            })
-          }
-        />
-        <TextField
-          value={employee.city} helperText="City" size="small"
-          onChange={e =>
-            dispatch({
-              type: 'UPDATE_EMP_CITY',
-              payload: e.target.value
-            })
-          }
-        />
-        <TextField
-          value={employee.zip} helperText="Zip" size="small"
-          onChange={e =>
-            dispatch({
-              type: 'UPDATE_EMP_ZIP',
-              payload: e.target.value
-            })
-          }
-        />
+      {/*-------------------- SCHEDULE --------------------*/}
+      <Grid item xs={1.5} sx={{display: 'flex', justifyContent: 'center'}}>
+        <Typography variant="b1" sx={{fontWeight: 800}}>Week 1:</Typography>
       </Grid>
-
-      <Grid sx={{ display: 'grid', gap: 1, height: "20%", width: 273.09 }}>
-        <TextField
-          value={employee.email} helperText="Email" size="small"
-          onChange={e =>
-            dispatch({
-              type: 'UPDATE_EMP_PHONE',
-              payload: e.target.value
-            })
-          }
-        />
-      </Grid>
-
-
       {/* Schedule day selectors */}
       <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
-        <Grid item xs={1.5} sx={{ display: 'flex', justifyContent: 'left', mt: 2 }}>
-          <Typography variant="h6">Week 1:</Typography>
-        </Grid>
-
         {/* Mapping through days of the week array to render buttons for week1 */}
         {daysOfWeek.map((day, index) => (
           <Grid key={index + 1} item xs={2}>
-            <Card raised xs={{ height: '30vh' }}>
+            <Card elevation={2} xs={{ height: '30vh' }}>
               <CardActionArea component={Button}
                 disabled={false}
                 onClick={() => {
@@ -177,8 +177,8 @@ function EmployeeForm() {
                 }}
               >
 
-                <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: week1[index + 1] ? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
-                  <Typography variant="h7" sx={{ textTransform: 'capitalize' }}>{day}</Typography>
+                <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: week1[index+1]? '#4a5061' : 'none', height: '3vh', alignItems: 'center' }}>
+                  <Typography sx={{color: week1[index+1] ? 'whitesmoke' : '#4a5061', fontWeight: 800 }}>{day}</Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -186,15 +186,16 @@ function EmployeeForm() {
         ))}
       </Grid>
 
-      <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mt: 1 }} >
-        <Grid item xs={1.5} sx={{ display: 'flex', justifyContent: 'left', mt: 2 }}>
-          <Typography variant="h6">Week 2:</Typography>
-        </Grid>
 
+      <Grid item xs={1.5} sx={{display: 'flex', justifyContent: 'center'}}>
+        <Typography variant="b1" sx={{fontWeight: 800}}>Week 2:</Typography>
+      </Grid>
+
+      <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mb: 3}} >
         {/* Mapping through days of the week array to render buttons for week2 */}
         {daysOfWeek.map((day, index) => (
           <Grid key={index + 1} item xs={2}>
-            <Card raised xs={{ height: '30vh' }}>
+            <Card elevation={2} xs={{ height: '30vh' }}>
               <CardActionArea component={Button}
                 onClick={() => {
                   if (!week2[index + 1]) {
@@ -213,8 +214,8 @@ function EmployeeForm() {
                   }
                 }}
               >
-                <CardContent sx={{ display: 'flex', justifyContent: 'center', backgroundColor: week2[index + 1] ? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
-                  <Typography variant="h7" sx={{ textTransform: 'capitalize' }}>{day}</Typography>
+                <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: week2[index+1]? '#4a5061' : 'none', height: '3vh', alignItems: 'center' }}>
+                  <Typography sx={{color: week2[index+1] ? 'whitesmoke' : '#4a5061', fontWeight: 800 }}>{day}</Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -222,22 +223,23 @@ function EmployeeForm() {
         ))}
       </Grid>
 
-
-      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "5%", mt: 3 }}>
-
-        {/* DELETE BUTTON */}
-        <Button variant="contained" sx={{ ml: 2 }}
-          onClick={() => deleteEmployee(employee)}>Delete</Button>
-
-        {/* CANCEL BUTTON */}
+      {/*-------------------- BUTTONS --------------------*/}
+      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: "10%", mb: 1, mx: 3}}>
         <Box sx={{ width: "24%", display: "flex", justifyContent: "space-between" }}>
+          {/* CANCEL BUTTON */}
           <Button
-            variant="outlined" color="info"
-            onClick={() => {
-              dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails' })
-            }}>
-            Cancel
-          </Button>  {/*goes back to Employee list*/}
+              variant="outlined" color="info"
+              onClick={() => {
+                dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails' })
+              }}>
+              Cancel
+            </Button>  {/*goes back to Employee list*/}
+        { /* DELETE BUTTON */}
+          <Tooltip title="Delete Employee" placement="top">
+            <Button variant="contained" sx={{ ml: 2 }}
+              onClick={() => deleteEmployee(employee)}>Delete</Button>
+          </Tooltip>
+        </Box>
           {/* SAVE BUTTON */}
           <Button
             variant="contained"
@@ -258,9 +260,9 @@ function EmployeeForm() {
                 type: 'SET_EMPLOYEE_SCHEDULE',
                 payload: [week1, week2]
               })
-              dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: 'EmployeeDetails' })
+              dispatch({ type: 'SET_MODAL_STATUS' })
             }}>Save</Button>
-        </Box>
+        
       </Box>
     </Grid>
   );

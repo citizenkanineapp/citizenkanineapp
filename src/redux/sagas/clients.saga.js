@@ -17,7 +17,10 @@ function* getAllClients(action){
 
 function* addClient(action){
     // console.log('arrived in add client route', action.payload);
-
+    // yield delay(1000);
+    setTimeout(() => {
+        console.log("Delayed for 1 second.");
+      }, "1000")
     try {
         const client = yield axios({
             method: 'POST',
@@ -94,13 +97,17 @@ function* deleteClient(action) {
         console.log('error deleting client', error)
     }
 }
-
+//this just makes the dog in-active.  Need to keep in database for invoicing
 function* deleteDog(action) {
     console.log(action.payload);
-    const dogId = action.payload.dog.dog_id;
-    const clientId = action.payload.client.id;
+    const dogId = action.payload.dog_id;
+    const clientId = action.payload.client_id;
     try{
-        const dog = yield axios.delete(`/api/clients/dogs/${dogId}`);
+        const dog = yield axios({
+            method: 'PUT',
+            url: `/api/clients/dogs/${dogId}`,
+            data: action.payload
+        })
         yield put ({type: 'FETCH_ONE_CLIENT', payload: clientId });
     } catch (error){
         console.log('error deleting dog', error)
@@ -108,7 +115,7 @@ function* deleteDog(action) {
 }
 
 function* updateDog(action){
-    // console.log('arrived in edit dog route', action.payload);
+    console.log('arrived in edit dog route', action.payload);
 
     try {
         const dog = yield axios({

@@ -7,66 +7,66 @@ function* getRoutes() {
     try {
         const routes = yield axios.get('/api/mobile/routes');
         console.log(routes);
-        
+
         //assigns color to dog for grouping purposes
         const colors = (dog) => {
             //grabs the last digit in client_id, to account for many many numbers
             const lastClientDigit = Number(dog.client_id.toString().slice(-1));
-           
-            switch(lastClientDigit){
-              case 1: return'#4A5061'; break; 
-              case 2: return '#539BD1'; break; 
-              case 3: return '#7BCEC8'; break; 
-              case 4: return '#F9CB78'; break; 
-              case 5: return '#F5A572'; break; 
-              case 6: return '#F37E2D'; break; 
-              case 7: return '#F8614D'; break; 
-              case 8: return '#4A5061'; break; 
-              case 9: return '#539BD1'; break; 
-              case 10: return '#7BCEC8'; break; 
-              default : return '#F8614D'; 
+
+            switch (lastClientDigit) {
+                case 1: return '#4A5061'; break;
+                case 2: return '#539BD1'; break;
+                case 3: return '#7BCEC8'; break;
+                case 4: return '#F9CB78'; break;
+                case 5: return '#F5A572'; break;
+                case 6: return '#F37E2D'; break;
+                case 7: return '#F8614D'; break;
+                case 8: return '#4A5061'; break;
+                case 9: return '#539BD1'; break;
+                case 10: return '#7BCEC8'; break;
+                default: return '#F8614D';
             }
-          }
+        }
 
         const dayRoutes = {
             Tangletown: routes.data
                 .filter(dog => (dog.route === 'Tangletown'))
                 .map(dog => {           //if there's more than one dog in the household
                     const dogMatch = routes.data.find(dawg => dog.dog_id !== dawg.dog_id && dog.client_id === dawg.client_id);
-                    if (dogMatch){ return {...dog, color: colors(dog) }; } //assign a color using colors function
-                    else{ return dog; }
+                    if (dogMatch) { return { ...dog, color: colors(dog) }; } //assign a color using colors function
+                    else { return dog; }
                 }),
 
             Emerson: routes.data
                 .filter(dog => (dog.route === 'Emerson'))
-                .map(dog => {           
+                .map(dog => {
                     const dogMatch = routes.data.find(dawg => dog.dog_id !== dawg.dog_id && dog.client_id === dawg.client_id);
-                    if (dogMatch){ return {...dog, color: colors(dog) }; }
-                    else{ return dog; }
+                    if (dogMatch) { return { ...dog, color: colors(dog) }; }
+                    else { return dog; }
                 }),
 
             Far: routes.data
                 .filter(dog => (dog.route === 'Far'))
-                .map(dog => {          
+                .map(dog => {
                     const dogMatch = routes.data.find(dawg => dog.dog_id !== dawg.dog_id && dog.client_id === dawg.client_id);
-                    if (dogMatch){ return {...dog, color: colors(dog) }; } 
-                    else{ return dog; }
+                    if (dogMatch) { return { ...dog, color: colors(dog) }; }
+                    else { return dog; }
                 }),
 
             Misfits: routes.data
                 .filter(dog => (dog.route === 'Misfits'))
-                .map(dog => {          
+                .map(dog => {
                     const dogMatch = routes.data.find(dawg => dog.dog_id !== dawg.dog_id && dog.client_id === dawg.client_id);
-                    if (dogMatch){ return {...dog, color: colors(dog) }; } 
-                    else{ return dog; }
+                    if (dogMatch) { return { ...dog, color: colors(dog) }; }
+                    else { return dog; }
                 }),
 
             Unassigned: routes.data
                 .filter(dog => (dog.route === 'Unassigned'))
-                .map(dog => {          
+                .map(dog => {
                     const dogMatch = routes.data.find(dawg => dog.dog_id !== dawg.dog_id && dog.client_id === dawg.client_id);
-                    if (dogMatch){ return {...dog, color: colors(dog) }; } 
-                    else{ return dog; }
+                    if (dogMatch) { return { ...dog, color: colors(dog) }; }
+                    else { return dog; }
                 })
         };
 
@@ -145,7 +145,7 @@ function* populateDailyDogs(action) {
     try {
         const populatedDogs = yield axios.get('/api/mobile/daily');
     } catch (error) {
-        console.log('Duplicate Dogs Detected - Press OK to continue', error);
+        console.log('Daily Dogs only generates on Weekdays - More than likely that is why you are seeing this error', error);
     }
 }
 

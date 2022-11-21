@@ -25,7 +25,8 @@ function* fetchAdminNotes(action) {
         // console.log('notes structure', notes.data)
     } catch (error) {
         console.log(error);
-        // alert('Error fetching notes');
+        console.log('Admin notes not available when logged out. Please log in to see them again');
+
     }
 
 }

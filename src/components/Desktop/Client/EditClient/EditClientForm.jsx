@@ -106,7 +106,7 @@ const handleClose = () => {
                 <TextField 
                   value={client.notes || ''} 
                   onChange={(e) => dispatch({type: 'ADD_NOTES', payload: e.target.value})}
-                  helperText="Notes"  
+                  helperText="Entry Protocol"  
                   size="small"/>
                 <TextField 
                   value={client.phone}

@@ -19,7 +19,7 @@ const {
 /**
  * GET route for admin notes
  */
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
 console.log('arrived in server get admin notes route')
 let adminId = req.user.id
   const queryText = `
@@ -45,7 +45,7 @@ pool.query(queryText, queryValues)
 /**
  * POST route for admin notes
  */
- router.post('/', rejectUnauthenticated, (req, res) => {
+ router.post('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
     // console.log('does this get to server?', req.body)
     // console.log('who is user?', req.user.id)
     const {notes} = req.body

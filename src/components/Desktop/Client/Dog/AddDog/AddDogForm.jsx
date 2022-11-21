@@ -26,9 +26,9 @@ function AddDogForm (){
    if(dogs.filter(dog => dog.dog_name ===  undefined || dog.dog_name ===  '').length === 0){
     console.log('All required dog inputs are here!');
     setTimeout(() => {
-      console.log("Delayed for 2 seconds");
+      console.log("Delayed for 1 seconds");
       dispatch({type: 'ADD_CLIENT', payload: {...client, dogs: dogs}}); //waiting for cloudinary url to return before adding client
-      }, "2000");
+      }, "1000");
     dispatch({type: 'SET_MODAL_STATUS'});
     };
   }

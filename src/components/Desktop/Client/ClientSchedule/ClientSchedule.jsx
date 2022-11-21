@@ -167,9 +167,10 @@ function ClientSchedule() {
             </Grid>
             ))}
             { !disabled ?
-              <Grid item xs={11}  sx={{display: 'flex', justifyContent: 'right'}}>
+              <Grid item xs={11}  sx={{display: 'flex', justifyContent: 'right', mt: 2}}>
                 <Button variant="outlined" 
-                  sx={{mr: 2}} color="info" onClick={()=> {
+                  sx={{mr: 3}}
+                  color="info" onClick={()=> {
                   setDisabled(!disabled)}}>Cancel</Button>
                 <Button variant='contained' color='secondary' onClick={handleWeekScheduleChange}>Confirm</Button>
               </Grid>
@@ -326,14 +327,14 @@ function ClientSchedule() {
                               renderInput={(params) => <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />}
                           />
                         </LocalizationProvider>
-                      <Grid sx={{mt: 2}}>
+                      <Grid sx={{mt: 2, display:'flex', justifyContent: 'center'}}>
                           <Button variant='contained' color='secondary' onClick={handleSubmit}> Submit</Button>
-                          <Button variant="outlined" color="info" onClick={() => setAddChange(!addChange)}>Cancel</Button>
+                          <Button variant="outlined" color="info" sx={{ml:3}} onClick={() => setAddChange(!addChange)}>Cancel</Button>
                       </Grid>
                 </Grid>
               :
               <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center', mt: 10}}>
-                <Typography variant='h5'>Add A Schedule Change</Typography>
+                <Typography variant='h5' sx={{mb: 4}}>Add A Schedule Change</Typography>
                   <Fab color="secondary" aria-label="add" onClick={()=> setAddChange(!addChange)}>
                     <AddIcon />
                   </Fab>

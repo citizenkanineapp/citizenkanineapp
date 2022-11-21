@@ -59,12 +59,13 @@ function Invoicing() {
     <Box className="desktop_container" sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'top', alignItems: 'center' }}>
       <Grid container sx={{ m: 2, mx: 4, p: 2, display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '80%' }}>
         <Grid item xs={8}>
-          <FormControl sx={{ mx: 2, width: 150 }}>
-            <InputLabel>Select Client</InputLabel>
+          <FormControl sx={{ mx: 2, width: 350 }}>
+            <InputLabel >Select Client</InputLabel>
             <Select
               size="small"
               value={selectedId}
               onChange={e => setId(e.target.value)}
+              sx={{ mt: 1 }}
             >
               <MenuItem value={0}>
                 <em>All</em>
@@ -79,12 +80,14 @@ function Invoicing() {
               ))}
             </Select>
           </FormControl>
-          <FormControl sx={{ mr: 2, width: 150 }}>
-            <InputLabel>Select Month</InputLabel>
+          <FormControl sx={{ mr: 2, width: 150 }} >
+            <InputLabel id='month-select'>Select Month</InputLabel>
             <Select
+              labelId='month-select'
               size="small"
               value={selectedMonth}
               onChange={e => setMonth(e.target.value)}
+              sx={{ mt: 1 }}
             >
 
               {months.map((month, i) => (
@@ -101,7 +104,7 @@ function Invoicing() {
             <InputLabel>Select Year</InputLabel>
             <Select
               size="small"
-
+              sx={{ mt: 1 }}
               value={selectedYear}
               onChange={e => setYear(e.target.value)}
             >
@@ -116,9 +119,10 @@ function Invoicing() {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={4}>
-          <Button size="large" variant="contained" color="secondary" sx={{ mx: 1 }}
+        <Grid item xs={2} sx={{ mr: 2 }}>
+          <Button size="small" variant="contained" color="secondary" sx={{ mx: 1, mt: 1 }}
             onClick={e => fetchInvoiceData()}
+
           >
             Search
           </Button>
@@ -132,7 +136,7 @@ function Invoicing() {
 
       <InvoiceTable monthsShort={monthsShort} />
 
-    </Box>
+    </Box >
   );
 }
 

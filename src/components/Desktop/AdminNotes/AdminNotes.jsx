@@ -76,7 +76,7 @@ function AdminNotes() {
                                     </Typography>
                                 </CardContent>
                                 <CardContent>
-                                    <TextField fullWidth type='text' value={note} placeholder='Add a new note' onChange={(e) => setNote(e.target.value)} onKeyDown={(e) => onEnterSubmit(e)}></TextField>
+                                    <TextField fullWidth type='text' value={note} placeholder='Add a new note' helperText='Press enter to Submit' onChange={(e) => setNote(e.target.value)} onKeyDown={(e) => onEnterSubmit(e)}></TextField>
                                 </CardContent>
                                 <CardContent>
                                     <List>

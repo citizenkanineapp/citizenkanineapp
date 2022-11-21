@@ -123,7 +123,7 @@ function EmployeeSchedule(){
   return (
     <>
     <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', height: '90%', width: '100%'}}>
-      <Box sx={{display: 'flex', flexDirection: 'column', height: '20%', width: '100%', justifyContent: 'flex-end', gap: 1, mx: 12}}>
+      <Box sx={{display: 'flex', flexDirection: 'column', height: '20%', width: '100%', justifyContent: 'flex-end', gap: 1,  ml: '7vw'}}>
         <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <Typography sx={{fontSize: '1.5rem', fontWeight: '800'}}>Schedule Changes</Typography>
         

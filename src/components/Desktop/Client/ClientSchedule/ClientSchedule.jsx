@@ -43,7 +43,15 @@ function ClientSchedule() {
   const [dog, setDog] = useState('');
   // console.log(dog);
   const [scheduled, setScheduled] = useState('');
-  const [value, setValue] = useState(dayjs());
+  // The conditional useState prevents the user from adding a dog walk on a weekend
+  const [value, setValue] = useState(()=>{
+    if(dayjs().$W === 0 || dayjs().$W === 6){
+      return dayjs().add(1, 'day');
+    }
+    else{
+      return dayjs();
+    }
+  });
   
   
   // THIS handles the change of the date based on the date picker
@@ -52,6 +60,8 @@ function ClientSchedule() {
     setValue(newValue);
   }
   
+
+
   
   //This is for the submit button for the one off changes
   // NEED to not be able to add the dog if is is regularly scheduled
@@ -78,6 +88,7 @@ function ClientSchedule() {
         type: 'SEND_ONE_SCHEDULE_CHANGE',
         payload: newChanges
       })
+      setAddChange(!addChange)
     }
 
      // need to reset local states:

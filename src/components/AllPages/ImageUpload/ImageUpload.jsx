@@ -10,7 +10,7 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 function ImageUpload({ index }) {
     const dispatch = useDispatch();
-    console.log('does index get here?', index)
+    // console.log('does index get here?', index)
     //useStates needed for image upload and image preview 
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
@@ -42,7 +42,7 @@ function ImageUpload({ index }) {
     }
 
     const uploadImage = (base64EncodedImage, index) => {
-        console.log('index last step', index)
+        // console.log('index last step', index)
         dispatch({
             type: 'ADD_IMAGE',
             payload: { new_image_url: base64EncodedImage, index: index },

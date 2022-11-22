@@ -30,10 +30,10 @@ function AddDogFromEdit(){
   },[])
 
   const saveDog = () => {
-    console.log(newDog.dog_name)
+    // console.log(newDog.dog_name)
     if (newDog.dog_name){
       setTimeout(() => { //waiting for cloudinary url to return before adding client
-        console.log("Delayed for 1 second");
+        // console.log("Delayed for 1 second");
         dispatch({type: 'ADD_NEW_DOG', payload: newDog});
         dispatch({type: 'CLEAR_NEW_DOG'});
         dispatch({type: 'CLEAR_DOGS'}); 

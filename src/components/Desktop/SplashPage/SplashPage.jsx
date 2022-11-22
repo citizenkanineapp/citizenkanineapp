@@ -19,7 +19,7 @@ function SplashPage() {
     <Box className="splash_container" sx={{width: '100%'}}>
       <Grid container sx={{ justifyContent: "start", alignItems: "center", display: "flex", pl: '20vw', mt: 5 }}>
 
-        <Card sx={{ width: "40%", pb: 2, mb: 5 }}>
+        <Card sx={{ width: "40%", height: '75vh', pb: 2, mb: 5 }}>
           <CardActionArea>
             <CardMedia
               component="img"

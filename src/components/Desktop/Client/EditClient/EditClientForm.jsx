@@ -42,30 +42,13 @@ const editDog = (dog) =>{
 }
 
 
-// const deleteDog = (dog) => {
-//   setAnchorEl(null); //closes menu 
-//   swal({
-//     title: "Are you sure?",
-//     text: "This will permanently delete this dog",
-//     icon: "warning",
-//     buttons: true,
-//     dangerMode: true,
-//   })
-//   .then((willDelete) => {
-//     if (willDelete) {
-//       console.log(dog);
-//       dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
-//     } 
-//   });
-// };
-
 
 //MUI DOG MENU STUFF
 const [anchorEl, setAnchorEl] = useState(null);
 const open = Boolean(anchorEl);
 const openMenu = (event) => {
   setAnchorEl(event.currentTarget);
-  console.log(event)
+  // console.log(event)
 };
 const handleClose = () => {
   setAnchorEl(null);

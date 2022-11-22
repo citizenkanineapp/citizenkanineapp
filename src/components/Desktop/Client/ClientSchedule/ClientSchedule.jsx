@@ -12,6 +12,7 @@ import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const isWeekend = (date) => {
   const day = date.day();
@@ -42,7 +43,16 @@ function ClientSchedule() {
   const [dog, setDog] = useState('');
   // console.log(dog);
   const [scheduled, setScheduled] = useState('');
-  const [value, setValue] = useState(dayjs());
+  
+  const initialDate =()=> {
+    if(dayjs().$W === 0 || dayjs().$W === 6){
+      return dayjs().add(1, 'day');
+    }
+    else{
+      return dayjs();
+  }}
+  
+  const [value, setValue] = useState(initialDate);
   
   
   // THIS handles the change of the date based on the date picker
@@ -50,7 +60,6 @@ function ClientSchedule() {
     console.log(newValue);
     setValue(newValue);
   }
-  
   
   //This is for the submit button for the one off changes
   // NEED to not be able to add the dog if is is regularly scheduled
@@ -188,7 +197,7 @@ function ClientSchedule() {
       {/* Grid containing calendar and form */}
           {/* Calendar */}
           <Grid item xs={6}>
-              <Box className="clientSchedule" sx={{display: 'flex', height: '55vh', width: '40vw',max_height:'55vh', border: 1, borderColor: 'black', justifyContent: 'center', alignContent: 'center'}}>
+              <Box className="clientSchedule" sx={{display: 'flex', height: '53vh', width: '40vw',max_height:'55vh', border: 1, borderColor: 'black', justifyContent: 'center', alignContent: 'center'}}>
                   {/* <h1>Client Name</h1> */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <CalendarPicker 
@@ -345,7 +354,7 @@ function ClientSchedule() {
                   
               </Grid>
               }
-          <Grid item xs={11} sx={{display: 'flex', justifyContent: 'right'}}>
+          <Grid item xs={11} sx={{display: 'flex', justifyContent: 'right', pb: 3}}>
             <Button 
             variant="outlined" color="info"
             onClick={() => {

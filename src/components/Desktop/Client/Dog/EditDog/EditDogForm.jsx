@@ -27,7 +27,7 @@ function EditDogForm(){
   }
 
   const deleteDog = (dog) => {
-   console.log(dog)
+  //  console.log(dog)
     swal({
       title: "Are you sure?",
       text: "This will permanently delete this dog",
@@ -37,7 +37,7 @@ function EditDogForm(){
     })
     .then((willDelete) => {
       if (willDelete) {
-        console.log(dog)
+        // console.log(dog)
         dispatch({ type: 'DELETE_DOG', payload: dog });
         dispatch({ type: 'BACK_TO_VIEW'})
       } 

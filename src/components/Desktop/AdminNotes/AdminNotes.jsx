@@ -74,10 +74,10 @@ function AdminNotes() {
                                 <CardContent sx={{pt: 0}}>
                                     <List sx={{height: '30vh', width: '100%', overflow: 'auto'}}>
                                         {adminNotes.map((notes) => (
-                                            <ListItem className="notes" key={notes.id}
+                                            <ListItem className="notes" key={notes.id} 
                                                 secondaryAction={
                                                     <IconButton onClick={() => deleteNote(notes.id)} sx={{ ml: 10 }}>
-                                                        <DeleteIcon sx={{ fontSize: 20, color: '#341341', width: '90%', }} />
+                                                        <DeleteIcon sx={{ fontSize: 20, color: '#341341'}} />
                                                     </IconButton>
                                                 }>
                                                 <ListItemText>{notes.notes}</ListItemText>
@@ -103,15 +103,12 @@ function AdminNotes() {
                                 <CardContent sx={{pt: 0}}>
                                         <List sx={{height: '30vh', width: '100%', overflow: 'auto'}}>
                                         {adminNotes.map((notes) => (
-                                            <ListItem className="notes" key={notes.id}
-                                                secondaryAction={<IconButton onClick={() => deleteNote(notes.id)}>
-                                                    <DeleteIcon sx={{ fontSize: 18, color: '#341341' }}/>
-
-                                                </IconButton>}
-                                                sx={{ mx: 1 }}
-                                            >
-                                                <ListItemText sx={{mr: 2, fontSize: '1rem'}}>{notes.notes}</ListItemText>
-
+                                            <ListItem className="notes" key={notes.id} sx={{width: '100%'}}
+                                                secondaryAction={
+                                                <IconButton onClick={() => deleteNote(notes.id)}>
+                                                    <DeleteIcon sx={{ fontSize: 20, color: '#341341' }}/>
+                                                </IconButton>}>
+                                            <ListItemText sx={{mr: 2, fontSize: '1rem'}}>{notes.notes}</ListItemText>
                                             </ListItem>
                                         ))}
                                     </List>

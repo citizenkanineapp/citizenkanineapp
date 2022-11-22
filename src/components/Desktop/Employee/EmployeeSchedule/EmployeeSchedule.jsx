@@ -15,7 +15,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { Typography, Grid, Avatar, CardActionArea, Box, Card, CardContent, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-
+import 'react-datepicker/dist/react-datepicker.css';
 
 
 //COMPONENTS

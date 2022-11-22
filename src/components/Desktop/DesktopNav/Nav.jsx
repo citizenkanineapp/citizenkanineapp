@@ -31,7 +31,7 @@ function Nav(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Avatar sx={{ width: 250, height: 250, ml: 8, my: 1 }} src={"/images/dogwalker.png"}/>
+      <Avatar sx={{ width: 250, height: 250, ml: 8, my: 1 }} src={"/Images/dogwalker.png"}/>
       <Divider />
       <List>
 

@@ -64,25 +64,15 @@ function AdminNotes() {
                     <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <Grid item xs={12}>
                             <Card>
-                                <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()} sx={{ position: 'fixed', mt: 3, ml: 41 }}>
+                                <CardContent sx={{width: '90%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: 4, p: 1, mt: 2, ml: 2.5}}>
+                                <TextField sx={{width: '85%'}}
+                                    type='text' value={note} placeholder='Add a new note' helperText='Press enter to Submit' onChange={(e) => setNote(e.target.value)} onKeyDown={(e) => onEnterSubmit(e)}></TextField>
+                                <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()} sx={{justifySelf: 'flex-end'}}>
                                     <RemoveIcon sx={{ fill: 'white' }} />
                                 </Fab>
-                                <CardContent>
-                                    <Typography variant='h5'>
-                                        Your Notes:
-                                        {/* <IconButton onClick={() => buttonSubmit()} sx={{ ml: 10 }} edge='end'>
-                                            <CancelPresentationIcon />
-                                        </IconButton> */}
-                                    </Typography>
                                 </CardContent>
-                                <CardContent>
-                                    <TextField fullWidth type='text' value={note} placeholder='Add a new note' helperText='Press enter to Submit' onChange={(e) => setNote(e.target.value)} onKeyDown={(e) => onEnterSubmit(e)}></TextField>
-                                </CardContent>
-                                <CardContent>
+                                <CardContent sx={{pt: 0}}>
                                     <List>
-                                        <ListSubheader>
-                                            Your Notes:
-                                        </ListSubheader>
                                         {adminNotes.map((notes) => (
                                             <ListItem className="notes" key={notes.id}
                                                 secondaryAction={
@@ -110,23 +100,14 @@ function AdminNotes() {
                     <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <Grid item xs={12}>
                             <Card>
-                                <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()} sx={{ position: 'fixed', mt: 3, ml: 41 }}>
+                                <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()} sx={{ position: 'absolute', mt: 3, ml: 41 }}>
                                     <AddIcon sx={{ fill: 'white' }} />
                                 </Fab>
-                                <CardContent>
-                                    <Typography variant='h4'>
-                                        {/* Your Notes: */}
-                                        {/* <IconButton onClick={() => toggleMode()}>
-                                            <AddBoxOutlinedIcon className="button" sx={{ fontSize: 20, ml: 10 }} />
-                                        </IconButton> */}
-                                    </Typography>
 
-
-                                </CardContent>
                                 <CardContent>
                                     <List>
                                         <ListSubheader>
-                                            Your Notes:
+                                            Notes:
                                         </ListSubheader>
                                         {adminNotes.map((notes) => (
                                             <ListItem className="notes" key={notes.id}

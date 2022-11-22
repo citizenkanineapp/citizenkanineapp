@@ -16,10 +16,10 @@ function SplashPage() {
   }, []);
 
   return (
-    <Box className="splash_container">
-      <Grid container sx={{ justifyContent: "start", alignItems: "center", display: "flex", ml: 35, mt: 5 }}>
+    <Box className="splash_container" sx={{width: '100%'}}>
+      <Grid container sx={{ justifyContent: "start", alignItems: "center", display: "flex", pl: '20vw', mt: 5 }}>
 
-        <Card sx={{ width: "30%", pb: 2, mb: 5 }}>
+        <Card sx={{ width: "40%", pb: 2, mb: 5 }}>
           <CardActionArea>
             <CardMedia
               component="img"

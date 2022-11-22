@@ -210,7 +210,7 @@ function LoadBalancing() {
                             hideBackdrop={true} 
                             sx={{
                               '& .css-1u4brho-MuiPaper-root-MuiDialog-paper': 
-                                  { boxShadow: '1px 1px 1px #cdc0b6',
+                                  { boxShadow: 'none !important',
                                     border: '0.2px solid  #cdc0b6',
                                     width: '30%' 
                                     }}}>

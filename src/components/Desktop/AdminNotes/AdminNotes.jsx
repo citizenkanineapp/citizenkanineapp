@@ -64,90 +64,61 @@ function AdminNotes() {
                     <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <Grid item xs={12}>
                             <Card>
-                                <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()} sx={{ position: 'fixed', mt: 3, ml: 41 }}>
+                                <CardContent sx={{width: '27vw', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 4, p: 1, pr: 3, mt: 1.5, ml: 3}}>
+                                <TextField sx={{width: '85%'}}
+                                    type='text' value={note} placeholder='Add a new note' helperText='Press enter to Submit' onChange={(e) => setNote(e.target.value)} onKeyDown={(e) => onEnterSubmit(e)}></TextField>
+                                <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()} sx={{justifySelf: 'flex-end'}}>
                                     <RemoveIcon sx={{ fill: 'white' }} />
                                 </Fab>
-                                <CardContent>
-                                    <Typography variant='h5'>
-                                        Your Notes:
-                                        {/* <IconButton onClick={() => buttonSubmit()} sx={{ ml: 10 }} edge='end'>
-                                            <CancelPresentationIcon />
-                                        </IconButton> */}
-                                    </Typography>
                                 </CardContent>
-                                <CardContent>
-                                    <TextField fullWidth type='text' value={note} placeholder='Add a new note' helperText='Press enter to Submit' onChange={(e) => setNote(e.target.value)} onKeyDown={(e) => onEnterSubmit(e)}></TextField>
-                                </CardContent>
-                                <CardContent>
-                                    <List>
-                                        <ListSubheader>
-                                            Your Notes:
-                                        </ListSubheader>
+                                <CardContent sx={{pt: 0}}>
+                                    <List sx={{height: '30vh', width: '100%', overflow: 'auto'}}>
                                         {adminNotes.map((notes) => (
                                             <ListItem className="notes" key={notes.id}
                                                 secondaryAction={
                                                     <IconButton onClick={() => deleteNote(notes.id)} sx={{ ml: 10 }}>
-                                                        <DeleteIcon sx={{ fontSize: 20, color: '#341341' }} />
+                                                        <DeleteIcon sx={{ fontSize: 20, color: '#341341', width: '90%', }} />
                                                     </IconButton>
                                                 }>
                                                 <ListItemText>{notes.notes}</ListItemText>
                                             </ListItem>
                                         ))}
-
                                     </List>
-
                                 </CardContent>
-
                             </Card>
-
                         </Grid>
-
                     </Grid>
                 </Box>
                 :               ////DISPLAY MODE////
-
                 <Box>
                     <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <Grid item xs={12}>
                             <Card>
-                                <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()} sx={{ position: 'fixed', mt: 3, ml: 41 }}>
-                                    <AddIcon sx={{ fill: 'white' }} />
-                                </Fab>
-                                <CardContent>
-                                    <Typography variant='h4'>
-                                        {/* Your Notes: */}
-                                        {/* <IconButton onClick={() => toggleMode()}>
-                                            <AddBoxOutlinedIcon className="button" sx={{ fontSize: 20, ml: 10 }} />
-                                        </IconButton> */}
-                                    </Typography>
-
-
+                                <CardContent sx={{width: '27vw', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 4, p: 1, pr: 3, mt: 2, ml: 2.5}}>
+                                    <Typography sx={{width: '70%', fontSize: '2rem', fontWeight: '800', pb: 2, pt: 1}}>Notes:</Typography>
+                                    <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()}>
+                                        <AddIcon sx={{ fill: 'white' }} />
+                                    </Fab>
                                 </CardContent>
-                                <CardContent>
-                                    <List>
-                                        <ListSubheader>
-                                            Your Notes:
-                                        </ListSubheader>
+                                <CardContent sx={{pt: 0}}>
+                                        <List sx={{height: '30vh', width: '100%', overflow: 'auto'}}>
                                         {adminNotes.map((notes) => (
                                             <ListItem className="notes" key={notes.id}
                                                 secondaryAction={<IconButton onClick={() => deleteNote(notes.id)}>
-                                                    <DeleteIcon />
+                                                    <DeleteIcon sx={{ fontSize: 20, color: '#341341' }}/>
 
                                                 </IconButton>}
                                                 sx={{ mx: 1 }}
                                             >
-                                                <ListItemText>{notes.notes}</ListItemText>
+                                                <ListItemText sx={{mr: 2, fontSize: '1rem'}}>{notes.notes}</ListItemText>
 
                                             </ListItem>
                                         ))}
                                     </List>
 
                                 </CardContent>
-
                             </Card>
-
                         </Grid>
-
                     </Grid>
                 </Box>
             }

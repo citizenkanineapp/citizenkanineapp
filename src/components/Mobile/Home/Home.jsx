@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Paper, Stack, Avatar, Divider, Typography, Button, Grid } from '@mui/material';
@@ -8,6 +9,16 @@ function Home() {
   const history = useHistory();
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user.admin) {
+      dispatch({
+        type: 'POPULATE_DAILY_DOGS'
+      })
+    }
+
+
+  }, [])
 
   const adminTime = () => {
     dispatch({ type: 'POPULATE_DAILY_DOGS' });

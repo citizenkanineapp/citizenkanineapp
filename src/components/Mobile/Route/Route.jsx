@@ -49,6 +49,8 @@ function DailyRoutes() {
     }
     else if (dog.no_show) {
       return '#F8614D';
+    } else if (dog.cancelled) {
+      return 'lightgrey';
     }
   }
 
@@ -101,10 +103,12 @@ function DailyRoutes() {
           <Grid item xs={12} sx={{ mx: 2 }}>
 
 
-            {route && route.map && route.map((dog) => (
+            <List sx={{ mb: 10 }}>
+              {route && route.map && route.map((dog) => (
 
-              <List>
-                <ListItem sx={{ backgroundColor: dog.cancelled ? '#7BCEC8' : null }}
+                <ListItem sx={{ backgroundColor: () => determineStatus(dog) }}
+
+
                   secondaryAction={
                     <>
                       {dog.cancelled ?
@@ -132,7 +136,6 @@ function DailyRoutes() {
                       }
                     </>
                   }
-                  sx={{ backgroundColor: () => determineStatus(dog), }}
                 >
                   <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >
                     {dog.image ?
@@ -150,9 +153,9 @@ function DailyRoutes() {
                     sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
                   />
                 </ListItem>
-              </List>
 
-            ))}
+              ))}
+            </List>
 
 
           </Grid>

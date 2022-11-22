@@ -94,8 +94,8 @@ function AdminNotes() {
                     <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <Grid item xs={12}>
                             <Card>
-                                <CardContent sx={{width: '27vw', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 4, p: 1, pr: 3, mt: 2, ml: 2.5}}>
-                                    <Typography sx={{width: '70%', fontSize: '2rem', fontWeight: '800', pb: 2, pt: 1}}>Notes:</Typography>
+                                <CardContent sx={{width: '27.25vw', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 4, p: 1, pr: 3, mt: 2, ml: 2.5}}>
+                                    <Typography sx={{width: '70%', fontSize: '2rem', fontWeight: '800', pb: 2.5, pt: 1}}>Notes:</Typography>
                                     <Fab size="small" edge='end' color="primary" onClick={() => toggleMode()}>
                                         <AddIcon sx={{ fill: 'white' }} />
                                     </Fab>
@@ -105,7 +105,7 @@ function AdminNotes() {
                                         {adminNotes.map((notes) => (
                                             <ListItem className="notes" key={notes.id}
                                                 secondaryAction={<IconButton onClick={() => deleteNote(notes.id)}>
-                                                    <DeleteIcon sx={{ fontSize: 20, color: '#341341' }}/>
+                                                    <DeleteIcon sx={{ fontSize: 18, color: '#341341' }}/>
 
                                                 </IconButton>}
                                                 sx={{ mx: 1 }}

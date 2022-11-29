@@ -83,6 +83,7 @@ function AddClient(){
   }
 
   const checkInputs = (event) => {
+    let errorFree = false;
     setErrorFirst(false)
     setErrorLast(false)
     setErrorPhone(false)
@@ -92,41 +93,60 @@ function AddClient(){
     setErrorEmail(false)
     setErrorRoute(false)
 
+
     if(clientToAdd.first_name === undefined || clientToAdd.first_name === ''){
       setErrorFirst(true)
+      errorFree = true
     } 
     if(clientToAdd.last_name === undefined || clientToAdd.last_name === ''){
       setErrorLast(true)
+      errorFree = true
     }
     if(clientToAdd.phone === undefined || clientToAdd.phone === ''){
       setErrorPhone(true)
+      errorFree = true
     }
     if(clientToAdd.street === undefined || clientToAdd.street === ''){
       setErrorStreet(true)
+      errorFree = true
     }
     if(clientToAdd.city === undefined || clientToAdd.city === ''){
       setErrorCity(true)
+      errorFree = true
     }
     if(clientToAdd.zip === undefined || clientToAdd.zip === ''){
       setErrorZip(true)
+      errorFree = true
     }
     if(clientToAdd.email === undefined || clientToAdd.email === ''){
       setErrorEmail(true)
+      errorFree = true
     }
     if(clientToAdd.route === undefined || clientToAdd.route === ''){
       setErrorRoute(true)
+      errorFree = true
     }
       if(clientToAdd.phone.length > 13){
       setErrorPhone(true)
-    } else if (errorFirst === false && errorLast === false && errorPhone === false && errorStreet === false
-    && errorZip === false && errorCity === false && errorEmail === false && errorRoute === false) {
+      errorFree = true
+    } else if( errorFirst === false && 
+          errorLast === false &&
+          errorPhone === false &&
+          errorStreet === false &&
+          errorCity === false &&
+          errorZip === false &&
+          errorEmail === false &&
+          errorRoute === false )  {
+        
+          errorFree = false
+    } else  {
       dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogForm'})
       dispatch({type: 'ADD_SCHEDULE', payload: clientSchedule})
   }
 }
   return (
  
-      <Box sx={{m:2, p:2, display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{m:2, mt: 1, p:2, display: 'flex', flexDirection: 'column' }}>
 
             {/*----------------------- HEADER -----------------------*/}
             <Grid sx={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', mb: 2}}>  
@@ -189,11 +209,11 @@ function AddClient(){
                     error={errorEmail}
                     helperText={errorEmail ? errorEmail && "* Email" : "* Email"}
                     size="small" />
-                  <TextField 
+                  {/* <TextField 
                     value={clientToAdd.notes} 
                     onChange={(event) => dispatch({type: 'ADD_NOTES', payload: event.target.value})}
-                    helperText="Notes"  
-                    size="small" />
+                    helperText="Protocols"  
+                    size="small" /> */}
                   <TextField 
                     value={clientToAdd.vet_name || ''} 
                     onChange={(event) => dispatch({type: 'ADD_VET_NAME', payload: event.target.value})}
@@ -209,7 +229,7 @@ function AddClient(){
                     labelId="route"
                     size="small"
                     id="route"
-                    // error={errorRoute}
+                    error={errorRoute}
                     value={clientToAdd.route_id || ''}
                     onChange={(event) => {
                       
@@ -224,7 +244,13 @@ function AddClient(){
                     <MenuItem value={5}>Unassigned</MenuItem>
                   </Select>
                   <FormHelperText>* Default Route</FormHelperText>
-                </FormControl>          
+                </FormControl> 
+                  <TextField 
+                      value={clientToAdd.notes} 
+                      onChange={(event) => dispatch({type: 'ADD_NOTES', payload: event.target.value})}
+                      helperText="Protocols"  
+                      size="small"
+                      multiline rows={2} />         
             </Grid> 
 
 

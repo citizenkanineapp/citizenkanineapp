@@ -6,7 +6,7 @@ import { Button, TextField, Typography, Card, Switch, IconButton } from "@mui/ma
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
-import swal from '@sweetalert/with-react'
+import swal from 'sweetalert'
 
 function EditDogForm(){
  
@@ -110,7 +110,7 @@ function EditDogForm(){
                         payload: false
                     })
                     }}}/>
-                      {dog. flag? <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
+                      {dog.flag? <FlagCircleIcon style={{ fontSize: 36, color: '#e0603f' }}/>   
                       :
                        <FlagCircleIcon style={{ fontSize: 36, color: '#808080' }}/> 
                   }

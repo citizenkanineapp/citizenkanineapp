@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AvatarGroup, Card, CardContent, Avatar, Typography, Grid } from '@mui/material';
+import { AvatarGroup, Card, CardContent, Avatar, Typography, Grid, Button } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import FlagIcon from '@mui/icons-material/Flag';
 
 function RouteSelect() {
+    const history = useHistory();
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({ type: 'GET_DAILY_ROUTES' });
@@ -15,9 +16,10 @@ function RouteSelect() {
     }, []);
 
     // reducer getting filled with a specific routes dogs
+    const user = useSelector(store => store.user);
     const dailyRoutes = useSelector(store => store.dailyDogz);
     const allroutes = Object.keys(dailyRoutes); //pulls route names out of route object
-    const routes = allroutes.slice(0, 4);
+    // const routes = allroutes.slice(0, 4);
 
     const getRouteColor = (route) => {
         switch (route) {
@@ -31,17 +33,18 @@ function RouteSelect() {
     }
 
     const checkoutRoute = (routeID) => {
-        dispatch({ type: 'GET_ROUTE_DETAILS', payload: routeID })
+        // dispatch({ type: 'GET_ROUTE_DETAILS', payload: routeID })
+        history.push(`/m/route/${routeID}`);
     }
 
 
 
     return (
-        <Grid container spacing={2} sx={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+        <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'start', justifyContent: 'space-evenly', mt: 2, mb: 3 }}>
 
             {/* route is the name of each route */}
-            {routes.map((route, i) => (
-                <Grid item xs={11} sx={{ height: '20%' }}>
+            {allroutes.map((route, i) => (
+                <Grid item xs={11} key={i} >
                     <Card raised sx={{ background: () => getRouteColor(route) }} onClick={(event) => checkoutRoute((i + 1))}>
                         <Typography sx={{ color: 'white', textTransform: 'uppercase', textAlign: 'center' }}>
                             {route} {dailyRoutes[route].length}
@@ -52,9 +55,9 @@ function RouteSelect() {
 
                                     <>
                                         {dog.image ?
-                                            <Avatar src={dog.image} />
+                                            <Avatar src={dog.image} key={index} />
                                             :
-                                            <Avatar>
+                                            <Avatar key={index}>
                                                 {dog.name[0]}
                                             </Avatar>
 
@@ -66,6 +69,14 @@ function RouteSelect() {
                     </Card>
                 </Grid>
             ))}
+
+            {user.admin ?
+                <Grid item xs={12} sx={{ justifyContent: 'space-around', alignItems: 'center' }}>
+                    <Button variant='contained' color='info' onClick={() => history.push('/m/routes/admin')} sx={{ position: 'absolute', left: '31%' }}>Load Balancing</Button>
+                </Grid>
+                :
+                null
+            }
         </Grid>
 
     );

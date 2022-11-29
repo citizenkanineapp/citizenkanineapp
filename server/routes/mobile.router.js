@@ -75,7 +75,6 @@ router.get('/daily', async (req, res) => {
 
     try {
         await client.query('BEGIN');
-        thisWeek = dayjs().week();
 
         // const dailyDogs = adjustedDogs.map(dog => {
         //     final = {

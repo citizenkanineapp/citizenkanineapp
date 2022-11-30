@@ -2,5 +2,6 @@
     background-image: url('/public/Images/dogwalker2.png');
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: right bottom;
+    background-position: right;
+    height: 90%;
 }

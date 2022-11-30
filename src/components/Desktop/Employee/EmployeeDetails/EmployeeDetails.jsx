@@ -61,13 +61,17 @@ function EmployeeDetails() {
 
             {/* Mapping through days of the week array to render buttons for week1 */}
             {week1 && daysOfWeek.map((day, index) => (
-              <Grid key={index + 1} item xs={2}>
-              <Card >
-                  <CardContent sx={{ display:'flex', justifyContent: 'center', backgroundColor: week1[index+1]? '#7BCEC8' : null}}>
-                      <Typography variant="h7"sx={{textTransform: 'capitalize'}}>{day}</Typography>
-                  </CardContent>
-              </Card> 
-            </Grid>
+              <Grid key={index + 1} item xs={2} >
+                <Card raised xs={{height: '30vh'}}>
+                  <CardActionArea component={Button}
+                    disabled={true}
+                    >
+                    <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: week1[index+1]? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
+                        <Typography variant="h7" sx={{textTransform: 'capitalize'}}>{day}</Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card> 
+              </Grid>
             ))}
           </Grid> 
 
@@ -78,11 +82,15 @@ function EmployeeDetails() {
 
             {/* Mapping through days of the week array to render buttons for week2 */}
             {week2 && daysOfWeek.map((day, index) => (
-            <Grid key={index + 1} item xs={2}>
-              <Card>
-                  <CardContent sx={{ display:'flex', justifyContent: 'center', backgroundColor: week2[index+1]? '#7BCEC8' : 'none' }}>
+            <Grid key={index + 1} item xs={2} >
+              <Card raised xs={{height: '30vh'}}>
+                <CardActionArea component={Button}
+                  disabled={true}
+                  >
+                  <CardContent sx={{ display:'flex', justifyContent: 'center',backgroundColor: week2[index+1]? '#7BCEC8' : 'none', height: '3vh', alignItems: 'center' }}>
                       <Typography variant="h7" sx={{textTransform: 'capitalize'}}>{day}</Typography>
                   </CardContent>
+                </CardActionArea>
               </Card> 
             </Grid>
             ))}

@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { put, takeLatest, all } from 'redux-saga/effects';
 
-function* fetchClientDogs(action){
+function* fetchClientScheduleChanges(action){
     const client_id = action.payload;
     try{
-        const clientDogs = yield axios({
+        const clientChanges = yield axios({
             method: 'GET',
             url: `/api/clientSchedule/${client_id}`
         })
-        // yield put({
-        //     type: 'SET_EMPLOYEES',
-        //     payload: employees.data
-        // })
+        yield put({
+            type: 'SET_CLIENT_SCHEDULE_CHANGES',
+            payload: clientChanges.data
+        })
     }
     catch {
         console.log('error in fetchClientDogs');
@@ -20,7 +20,7 @@ function* fetchClientDogs(action){
 
 
 function* clientScheduleSaga(){
-    yield takeLatest('SAGA_FETCH_DOGS', fetchClientDogs)
+    yield takeLatest('SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', fetchClientScheduleChanges)
 }
 
 export default clientScheduleSaga;

@@ -161,6 +161,7 @@ function* updateStatus(action) {
             url: `/api/mobile/daily`,
             data: dog
         })
+
         yield put({ type: 'GET_ROUTE_DETAILS', payload: routeID })
 
         console.log('CHANGED');

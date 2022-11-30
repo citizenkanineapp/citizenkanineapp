@@ -23,7 +23,8 @@ function* addClient(action){
             method: 'POST',
             url: '/api/clients',
             data: action.payload
-        })
+        });
+        console.log(client);
         yield put ({type: 'FETCH_CLIENTS'});
         yield put ({type: 'CLEAR_SCHEDULE'})
         yield put ({type: 'CLEAR_CLIENT'})

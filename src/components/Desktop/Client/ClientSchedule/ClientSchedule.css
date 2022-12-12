@@ -11,25 +11,29 @@
     height: 47vh !important;
 }
 
-.clientSchedule .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel{
+/* .clientSchedule .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel{ */
+.clientSchedule div > span.MuiDayPicker-weekDayLabel {
     width: 6vw !important;
     height: 2.5vw !important;
     outline: black solid 1px;
     margin: 0 0 0 0  !important;
 }
 
-.clientSchedule .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
+/* .clientSchedule .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{ */
+.clientSchedule div.PrivatePickersSlideTransition-root {
     width: 100vw !important;
     height: 100vh !important;
 }
 
-.clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{
+/* .clientSchedule .css-nk89i7-MuiPickersCalendarHeader-root{ */
+.clientSchedule div.MuiPickersCalendarHeader-root {
     display: flex;
     width: 36vw;
     justify-content: center;
 }
 
-.clientSchedule .css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon{
+/* .clientSchedule .css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon{ */
+.clientSchedule div button > svg.MuiPickersCalendarHeader-switchViewIcon {
     display: none !important;
     display: none;
 }
@@ -40,26 +44,29 @@
 
 
 /* rows */
-.clientSchedule .css-ghi3gg-MuiDayPicker-weekContainer {
+/* .clientSchedule .css-ghi3gg-MuiDayPicker-weekContainer { */
+.clientSchedule div.MuiDayPicker-weekContainer {
     width: 36vw !important;
     max-height: 10vh !important;
     margin: 0 0 0 0 !important;
     border-right: 1px #7BCEC8 solid;
 }
 
-.clientSchedule .css-argrvh-MuiButtonBase-root-MuiPickersDay-root{
+/* MATT: Didn't seem to impact anything. */
+/* .clientSchedule .css-argrvh-MuiButtonBase-root-MuiPickersDay-root{
     margin: 0 0 0 0 !important;
-}
+} */
 
-.clientSchedule .css-6t5f1e-MuiDayPicker-monthContainer{
+/* .clientSchedule .css-6t5f1e-MuiDayPicker-monthContainer{ */
+.clientSchedule div.MuiDayPicker-monthContainer {
     overflow-x: visible !important;
     width: 50vw !important;
-    /* max-height: 80vh !important; */
     max-height: 55vh !important;
 }
 
 
-.clientSchedule .css-169iwlq-MuiCalendarPicker-root{
+/* .clientSchedule .css-169iwlq-MuiCalendarPicker-root{ */
+.clientSchedule div.MuiCalendarPicker-root {
     width: 100vw !important;
     max-height: 55vh !important;
     margin: 0 0 0 0 !important;
@@ -76,7 +83,9 @@
 } */
 
 /* All of the day labels */
-.clientSchedule .css-pntf9m-MuiButtonBase-root-MuiPickersDay-root, .clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root  {
+/* .clientSchedule div > button.MuiPickersDay-dayWithMargin { */
+/* .clientSchedule .css-pntf9m-MuiButtonBase-root-MuiPickersDay-root, .clientSchedule .css-1izsx9q-MuiButtonBase-root-MuiPickersDay-root { */
+.clientSchedule div > button.MuiPickersDay-dayWithMargin  {
     width: 1vw !important;
     height: 1vw !important;
     justify-content: center !important;
@@ -87,14 +96,15 @@
     margin-bottom: 5px !important;
 }
 
-/* box around calendar */
-.clientSchedule .css-x495pz {
+/* box around calendar MATT: Not impacting anything. */
+/* .clientSchedule .css-x495pz {
     height: 40vw !important;
     width: 40vw !important;
     outline: black 1px;
-}
+} */
 
-.clientSchedule .css-r5lgva-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected){
+/* .clientSchedule .css-r5lgva-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected){ */
+.clientSchedule div > button.MuiPickersDay-today:not(.Mui-selected) {
     color: orange !important;
     width: 1vw !important;
     height: 1vw !important;
@@ -107,7 +117,8 @@
 
 }
 
-.clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected){
+/* MATT: Doesn't seem to impact anything. */
+/* .clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .clientSchedule .css-wkqhow-MuiButtonBase-root-MuiPickersDay-root:not(.Mui-selected){
     color: orange !important;
     width: 1vw !important;
     height: 1vw !important;
@@ -116,15 +127,31 @@
     background-color: transparent !important;
     margin-top: 5px !important;
     border: none !important
-}
+} */
 
 /* month & year label */
-.clientSchedule .css-dplwbx-MuiPickersCalendarHeader-label{
+/* .clientSchedule .css-dplwbx-MuiPickersCalendarHeader-label{ */
+.clientSchedule div.MuiPickersCalendarHeader-label {
     font-size: 1.5rem !important;
 }
 
 
-.clientSchedule .css-1bkb27x{
+/* .clientSchedule .css-1bkb27x{ */
+.clientSchedule div.MuiDayPicker-weekContainer > div > div:nth-child(2) {
     padding-top: 0 !important;
+    /* position: relative;
+    top: -10px; */
 }
 
+/*
+MATT:
+
+Uncomment lines 143 and 143, and the little doggie icons will
+go from looking like this:
+* https://imgur.com/a/FB0bYgz
+
+To looking like this:
+* https://imgur.com/a/zumkaxm
+
+Seems preferable, but I'd want to test it with different displays and stuff.
+*/

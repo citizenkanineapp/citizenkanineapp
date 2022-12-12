@@ -190,7 +190,7 @@ function* addEmpScheduleChange(action){
 }
 
 function* fetchEmpChanges(){
-    console.log('getting request')
+    // console.log('getting request')
     try{
         const changes = yield axios({
             method: 'GET',

@@ -13,7 +13,6 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('useEffect')
     dispatch({ type: 'CLEAR_LOGIN_ERROR' });
   }, []);
 

@@ -1,14 +1,12 @@
 /* This gets rid of the date selected that normally displays on top of the StaticDayPicker */
-.empCalendar .css-j88s13-MuiPickersToolbar-root-MuiDatePickerToolbar-root.css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root {
-    display: none !important;
-}
-
-.empCalendar .css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root{
+/* .empCalendar .css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root{ */
+.empCalendar > div > div > div:nth-child(1) {
     display: none !important;
 }
 
 /* This gets rid of the button that normally display on the bottom of the StaticDayPicker */
-.empCalendar css-hlj6pa-MuiDialogActions-root {
+/* .empCalendar css-hlj6pa-MuiDialogActions-root { */
+.empCalendar > div:nth-child(2) {
     display: none !important;
 }
 
@@ -19,12 +17,10 @@
     background-color: transparent !important;
     
 } */
-.empCalendar .empCalendar .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel{
-    height:70vh ;
-}
 
 /* changes the size of the calendar div */
-.empCalendar .css-epd502 {
+/* .empCalendar .css-epd502 { */
+.empCalendar > div > div > div:nth-child(2) {
     width: 60vw !important;
     min-height: 100vh !important;
     /* border: 2px lightcoral dotted; */
@@ -32,7 +28,8 @@
 }
 
 /*  This customized the weekday label */
-.empCalendar .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel {
+/* .empCalendar .css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel { */
+.empCalendar div > span.MuiDayPicker-weekDayLabel {
     width: 8.25vw !important;
     height: 5vh !important;
     /* outline: 1px black solid; */
@@ -48,70 +45,72 @@
     display: none !important;
 } */
 
-/* individual day buttons (circle) */
-.empCalendar .css-bkrceb-MuiButtonBase-root-MuiPickersDay-root, .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+/* individual day buttons (circle) MATT: This doesn't seem to do anything */
+/* .empCalendar .css-bkrceb-MuiButtonBase-root-MuiPickersDay-root, .css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
     width: 8vw !important;
     height: 12vh !important;
     justify-content: right !important;
     align-items: flex-start !important;
-    /* padding-top: 10px; */
-} 
+}  */
 
 /* This resized the entire calendar container */
-.empCalendar .css-169iwlq-MuiCalendarPicker-root {
+/* .empCalendar .css-169iwlq-MuiCalendarPicker-root { */
+.empCalendar > div > div > div > div.MuiCalendarPicker-root {
     width: 60vw !important;
     height: 100vh !important;
     min-height: 100vh !important;
 }
 
-.empCalendar .css-6t5f1e-MuiDayPicker-monthContainer {
+/* .empCalendar .css-6t5f1e-MuiDayPicker-monthContainer { */
+.empCalendar div.MuiDayPicker-monthContainer {
     min-height: 80vh !important;
 }
 
-.empCalendar .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{
+/* .empCalendar .css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition{ */
+.empCalendar div.PrivatePickersSlideTransition-root {
     min-height: 100vh !important;
 }
 
 
 /* removes the option to select the year */
-.empCalendar .css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon{
+/* .empCalendar .css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon{ */
+.empCalendar div button > svg.MuiSvgIcon-root {
     display: none !important;
 }
 
 
-/* this changes the today's date indicator circle */
-.empCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+/* this changes the today's date indicator circle MATT: Lines 82 through 98 don't change anything, so commented them out. */
+/* .empCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
     color: orange !important;
     width: 5vw !important;
     height: 5vw !important;
     background-color: transparent !important;
-    /* border: #7BCEC8 1px solid; */
+} */
 
-}
-
-.empCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .css-argrvh-MuiButtonBase-root-MuiPickersDay-root{
+/* .empCalendar .css-1u7d6o-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .css-argrvh-MuiButtonBase-root-MuiPickersDay-root{
     width: 2vw !important;
     height: 2vw !important;
     margin: 0 0 0 0 !important;
-}
-
-.empCalendar .css-1lunv-MuiPaper-root-MuiCard-root {
-    height: 90vh !important;
-}
-
-/* .dayBox {
-    outline: black 1px;
 } */
 
-.empCalendar .css-ghi3gg-MuiDayPicker-weekContainer{
-    margin: 0 0 0 0 !important;
+/* .empCalendar .css-1lunv-MuiPaper-root-MuiCard-root {
+    height: 90vh !important;
+} */
+
+
+
+/* .empCalendar .css-ghi3gg-MuiDayPicker-weekContainer{ */
+.empCalendar div.MuiDayPicker-weekContainer {
+    margin: 0 !important;
 }
 
-.css-hlj6pa-MuiDialogActions-root {
+/* .css-hlj6pa-MuiDialogActions-root { */
+.empCalendar div.MuiDialogActions-root {
     display: none !important;
 }
 
-.empCalendar .css-dplwbx-MuiPickersCalendarHeader-label{
+/* .empCalendar .css-dplwbx-MuiPickersCalendarHeader-label{ */
+.empCalendar div.MuiPickersCalendarHeader-label {
     font-size: 1.5rem !important;
     font-weight: bold !important;
 }

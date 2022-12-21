@@ -11,22 +11,58 @@ function* getRoutes() {
         //assigns color to dog for grouping purposes
         const colors = (dog) => {
             //grabs the last digit in client_id, to account for many many numbers
-            const lastClientDigit = Number(dog.client_id.toString().slice(-1));
-
-            switch (lastClientDigit) {
-                case 1: return '#4A5061'; break;
-                case 2: return '#539BD1'; break;
-                case 3: return '#7BCEC8'; break;
-                case 4: return '#F9CB78'; break;
-                case 5: return '#F5A572'; break;
-                case 6: return '#F37E2D'; break;
-                case 7: return '#F8614D'; break;
-                case 8: return '#4A5061'; break;
-                case 9: return '#539BD1'; break;
-                case 10: return '#7BCEC8'; break;
-                default: return '#F8614D';
+            if (Number(dog.client_id.toString().slice(-2, -1)) === 0){  //if single digit
+                const lastClientDigit = Number(dog.client_id.toString().slice(-1));
+                switch (lastClientDigit) {
+                    case 0: return '#e25032'; break;
+                    case 1: return '#F38542'; break;
+                    case 2: return '#F37E2D'; break;
+                    case 3: return '#F8614D'; break;
+                    case 4: return '#F49250'; break;
+                    case 5: return '#f6703d'; break;
+                    case 6: return '#F2932E'; break;
+                    case 7: return '#FA7C6C'; break;
+                    case 8: return '#F96F5D'; break;
+                    case 9: return '#DC862A'; break;
+                    default: return '#7F2020';
+                }}
+                
+            else{ //double digits and beyond
+                const secondToLast = Number(dog.client_id.toString().slice(-2, -1));
+                const last = Number(dog.client_id.toString().slice(-1));
+                // if (secondToLast % 2 === 0){ //if even number
+                switch (last) {
+                    case 0: return '#4A5061'; break;
+                    case 1: return '#eea937'; break;
+                    case 2: return '#4F7699'; break;
+                    case 3: return '#eea937'; break;
+                    case 4: return '#5DA8CF'; break;
+                    case 5: return '#67B5CD'; break;
+                    case 6: return '#71C2CB'; break;
+                    case 7: return '#94CFD3'; break;
+                    case 8: return '#94CFD3'; break;
+                    case 9: return '#94CFD3'; break;
+                    default: return '#4A5061';
+                }
+       
+                //}
+                // else{
+                //     switch (last) {
+                //         case 0: return '#354D89'; break;
+                //         case 1: return '#DC682A'; break;
+                //         case 2: return '#F37E2D'; break;
+                //         case 3: return '#F87462'; break;
+                //         case 4: return '#53B0D1'; break;
+                //         case 5: return '#B02C65'; break;
+                //         case 6: return '#1F96F1'; break;
+                //         case 7: return '#7C87CF'; break;
+                //         case 8: return '#FFA1A1'; break;
+                //         case 9: return '#FA789F'; break;
+                //         default: return '#B668D0';
+                //     }}
+                }
             }
-        }
+        
 
         const dayRoutes = {
             Tangletown: routes.data

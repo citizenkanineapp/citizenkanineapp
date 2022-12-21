@@ -31,11 +31,11 @@ function LoadBalancing() {
   //COLOR OF ROUTE HEADER
   const getRouteColor = (route) => {
     switch (route) {
-      case 'Tangletown': return '#4a5061';
-      case 'Emerson': return '#539bd1';
-      case 'Far': return '#3DA49D';
-      case 'Misfits': return '#f5a572';
-      case 'Unassigned': return '#f37e2d';
+      case 'Tangletown': return '#6e6d6c';
+      case 'Emerson': return '#6e6d6c';
+      case 'Far': return '#878482';
+      case 'Misfits': return '#a39f9d';
+      case 'Unassigned': return '#c2bebb';
       default: return '#f8614d';
     }
   }
@@ -71,7 +71,9 @@ function LoadBalancing() {
   //DOUBLE CLICK LISTENER FOR DOG DETAILS
   const openDialog = useDoubleTap((event) => {
     console.log('Double tapped');
-    setShowDetails(!showDetails)
+    if (doggo.flag === true){
+      setShowDetails(!showDetails);
+    }
   });
 
 
@@ -102,23 +104,26 @@ function LoadBalancing() {
       </Card>
       
       {/*----LANDSCAPE NAV----*/}
-      <Box sx={{ height: '7%',
+      <Box sx={{ height: '10%',
                  width: '100%',  
                  display: {xs: 'none', sm: 'flex'},
                  flexDirection: 'row', 
                  justifyContent: 'space-between',
-                 bgcolor: '#e0923f' }}>
+                 bgcolor: '#e0603f' }}>
 
-        <Box>
-          <Button onClick={() => history.push('/m/user')} sx={{color: 'whitesmoke', width: '15%', p: 0 }}>Home</Button>
-          <Button onClick={() => history.push('/m/routes')} sx={{color: 'whitesmoke', width: '15%', p: 0 }}>Routes</Button>
-          <Button onClick={() => history.push('/m/map')} sx={{color: 'whitesmoke', width: '15%', p: 0 }}>Map</Button>
-          <Button onClick={() => history.push('/m/schedule')} sx={{color: 'whitesmoke', width: '15%', p: 0 }}>Schedule</Button>
+        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+          <Button onClick={() => history.push('/m/user')} sx={{color: 'whitesmoke', fontWeight: '800'}}>Home</Button>
+          <Button onClick={() => history.push('/m/routes')} sx={{color: 'whitesmoke', fontWeight: '800'}}>Routes</Button>
+          <Button onClick={() => history.push('/m/schedule')} sx={{color: 'whitesmoke', fontWeight: '800'}}>Schedule</Button>
         </Box>
 
-        <Box sx={{ justifyContent: 'center'}}>  {/* conditional rendering to enable drag */}
-          <Switch onChange={() => setDraggingStatus(!draggingStatus)} checked={draggingStatus === true ? false : true} size="small" sx={{ p: 0.5 }}/>
-          <Button onClick={() => setDraggingStatus(!draggingStatus)} sx={{color: 'whitesmoke', p: 0 }}>Edit</Button>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>  {/* conditional rendering to enable drag */}
+          <Switch onChange={() => setDraggingStatus(!draggingStatus)} checked={draggingStatus === true ? false : true} size="small" 
+            sx={{ p: 0.5, 
+                  "& .Mui-checked": {color: "whitesmoke"}, 
+                  "& .MuiSwitch-track": {backgroundColor: "whitesmoke !important"}
+                  }}/>
+          <Button onClick={() => setDraggingStatus(!draggingStatus)} sx={{color: 'whitesmoke', p: 0, fontWeight: '800'}}>Edit</Button>
         </Box>
       
       </Box>
@@ -173,6 +178,7 @@ function LoadBalancing() {
                   fontSize: '0.8rem',
                   mr: 0.5,
                   bgcolor: 'whitesmoke',
+                  fontWeight: '800',
                   color: () => getRouteColor(route)
                   }}>
                 {dailyRoutes[route].length}
@@ -184,17 +190,22 @@ function LoadBalancing() {
                 <Box  {...provided.droppableProps} ref={provided.innerRef}
                   sx={{
                       height: '85%',
-                      width: '75%',
+                      width: '100%',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifySelf: 'flex-end',
-                      overflowY: 'scroll', pt: 1,
+                      overflowY: 'scroll', pt: 2, p: 0, mt: 1,
                       boxShadow: '5px, 5px, 5px #4c4b49 !important'
                       }}>
                   {/* maps through each dog in route list and creates a chip */}
                   {dailyRoutes && dailyRoutes[route].map((dog, index) => 
-                    <Grid container key={dog.id}>
+                    <Grid container key={dog.id} 
+                        sx={{display: 'flex', 
+                             flexDirection: 'column', 
+                             gap: 1,
+                             alignItems: 'center',
+                             }}>
                         <Dialog open={dog.notes && showDetails === true} onClose={() => setShowDetails(!showDetails)}
                             hideBackdrop={true} 
                             sx={{
@@ -227,7 +238,7 @@ function LoadBalancing() {
                         </Dialog>
                 
                     {/*-------------CHIP-------------*/}                            {/*where drag is disabled*/}
-                    <Draggable draggableId={`${dog.dog_id}`} index={index} isDragDisabled={draggingStatus} key={dog.dog_id}>
+                    <Draggable draggableId={`${dog.dog_id}`} index={index} isDragDisabled={draggingStatus} key={dog.dog_id} sx={{width: '100%'}}>
                       {(provided, snapshot) => (
 
                         <Box
@@ -245,20 +256,29 @@ function LoadBalancing() {
                           //----MUI----//
                           variant='outlined'
                           sx={{ 
-                              width: '90%', 
+                              width: '60%', 
+                              height: '8vh',
                               display: 'flex', 
                               flexDirection: 'row', 
                               alignItems: 'center',
                               justifyContent: 'space-between',
-                              borderRadius: 2,
-                              border: '0.5px solid grey',
-                              pl: 0.7, pr: 0, my: 0.3,
+                              borderRadius: 1,
+                              border: '0.5px solid #cbc7c7',
+                              pl: 1, pr: 1, my: 0.3
                               }}>
-                            <Typography sx={{ fontSize: '0.6rem', letterSpacing: '0.005rem' }}>
-                              {dog.name.length > 8 ? (dog.name.toUpperCase()).slice(0, 8) + "..." : dog.name.toUpperCase()}
+                            <Typography 
+                              sx={{ fontSize: '0.9rem', 
+                                    fontWeight: '300', 
+                                    color: dog.color ? 'whitesmoke' : '#444444'
+                                    }}>
+                              {dog.name.length > 8 ? dog.name.slice(0, 8) + "..." : dog.name}
                             </Typography>
                             {dog.flag === true &&  //conditionally rendering if dog has flag status
-                              <FlagCircleRoundedIcon sx={{ fontSize: '1rem', fill: '#322f2ded', transform: 'rotate(-30deg)' }} />}
+                              <FlagCircleRoundedIcon 
+                                sx={{ fontSize: '1rem', 
+                                      transform: 'rotate(-30deg)',
+                                      fill: dog.color ? 'whitesmoke' : '#444444'
+                                      }}/>}
 
                         </Box>
 

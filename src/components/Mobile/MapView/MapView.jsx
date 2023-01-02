@@ -10,8 +10,8 @@ function MapView() {
   // during our time we were not able to get this working - so it has been disabled / removed from the nav bar
 
   const maptilerProvider = maptiler('JAXJd8TmToDTZ2jWk33G', 'bright')
-  const [hue, setHue] = useState(0)
-  const color = `hsl(${hue % 360}deg 39% 70%)`
+  // const [hue, setHue] = useState(0)
+  // const color = `hsl(${hue % 360}deg 39% 70%)`
   const [markers, setMarkers] = useState([[44.92306458149502, -93.30491066897952], [44.924, -93.305], [44.923, -93.306]])
  
 

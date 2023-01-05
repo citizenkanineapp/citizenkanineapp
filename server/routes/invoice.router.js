@@ -27,14 +27,14 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
             WHERE
                 clients.id = $1 AND
                 EXTRACT (MONTH FROM daily_dogs.date) = $2 AND
-                EXTRACT (YEAR FROM daily_dogs.date) = $3
+                EXTRACT (YEAR FROM daily_dogs.date) = $3 AND
             `;
         searchTerms = [searchClientId, searchMonth, searchYear];
     } else {
         searchQuery = `
             WHERE
                 EXTRACT (MONTH FROM daily_dogs.date) = $1 AND
-                EXTRACT (YEAR FROM daily_dogs.date) = $2
+                EXTRACT (YEAR FROM daily_dogs.date) = $2 AND
             `;
         searchTerms = [searchMonth, searchYear];
     }
@@ -70,6 +70,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 ON dogs.client_id = clients.id`
         + searchQuery +
         `
+            (checked_in = true OR no_show = true)
             GROUP BY
                 daily_dogs.date,
                 checked_in,

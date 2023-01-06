@@ -30,6 +30,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 EXTRACT (YEAR FROM daily_dogs.date) = $3 AND
             `;
         searchTerms = [searchClientId, searchMonth, searchYear];
+        // console.log(searchQuery);
     } else {
         searchQuery = `
             WHERE
@@ -37,6 +38,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 EXTRACT (YEAR FROM daily_dogs.date) = $2 AND
             `;
         searchTerms = [searchMonth, searchYear];
+        // console.log(searchQuery);
     }
 
     // console.log(searchQuery);
@@ -97,10 +99,11 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         // console.log(services);
         const resDetails = await pool.query(queryWalkDetails, searchTerms);
         const invoiceData = resDetails.rows;
-        // console.log(invoiceData);
+        // console.log('invoiceData', invoiceData);
 
         const resSchedule = await pool.query(querySchedule);
         const schedules = resSchedule.rows;
+        // console.log('schedules', schedules)
 
         // adds service data to invoice data object. some of this should be done in SQL!
         for (let item of invoiceData) {
@@ -108,7 +111,8 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
 
             // adds walks per week to invoice item
             for (let client of schedules) {
-                if (client.id === item.clientid) {
+                // console.log('client.id: ', client.client_id, "item.clientid: ", item.clientid);
+                if (client.client_id === item.clientid) {
                     const values = Object.values(client);
                     const walks = values.filter(i => i === true).length;
 
@@ -144,7 +148,10 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                         serviceId = 9;
                     }
                 }
+
             }
+            // console.log('in walks/week', item.clientid, serviceId);
+
 
             // adds service details to invoice item
             for (let service of services) {

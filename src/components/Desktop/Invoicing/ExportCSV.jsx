@@ -33,11 +33,11 @@ const ExportCSV = ({ monthsShort }) => {
                     "Customer": item.first_name + ' ' + item.last_name,
                     "InvoiceDate": dayjs().format('MM/DD/YYYY'),
                     "DueDate": dayjs().add(1, 'month').format('MM/DD/YYYY'),
-                    "Item(Product/Service)": item.service.service,
+                    // "Item(Product/Service)": item.service.service,
                     "Description": `${monthsShort[invoiceItems[0].month - 1]}: ${item.dates.map(date => (date))}`,
                     "ItemQuantity": item.dates.length,
-                    "ItemRate": item.service.price,
-                    "ItemAmount": item.service.price * item.dates.length,
+                    // "ItemRate": item.service.price,
+                    // "ItemAmount": item.service.price * item.dates.length,
                     "Taxable": 'Y',
                     "TaxRate": '8.03%'
                 }

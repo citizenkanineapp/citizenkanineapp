@@ -111,6 +111,8 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 
     const lat = geoStats.data.addresses[0].latitude;
     const long = geoStats.data.addresses[0].longitude;
+    // const lat = 0;
+    // const long = 0;
     console.log('heres the geoStats!', lat, long);
 
     await client.query('BEGIN')

@@ -7,7 +7,6 @@ require('dotenv').config();
 
 var Tools = function () {
   var tools = this;
-  // console.log('environment variables?', process.env)
   var authConfig = {
     // clientId: config.clientId,
     clientId: process.env.clientId,
@@ -20,7 +19,7 @@ var Tools = function () {
 
   // Use a local copy for startup.  This will be updated in refreshEndpoints() to call:
   // https://developer.api.intuit.com/.well-known/openid_configuration/
-  this.openid_configuration = require('./openid_configuration.json')
+  //this.openid_configuration = require('./openid_configuration.json')
 
   // Should be called at app start & scheduled to run once a day
   // Get the latest OAuth/OpenID endpoints from Intuit

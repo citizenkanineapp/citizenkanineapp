@@ -20,7 +20,7 @@ const {
  * GET route for admin notes
  */
 router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
-console.log('arrived in server get admin notes route')
+// console.log('arrived in server get admin notes route')
 let adminId = req.user.id
   const queryText = `
             SELECT * FROM admin_notes
@@ -30,7 +30,7 @@ const queryValues = [adminId]
 pool.query(queryText, queryValues)
     .then(result => {
    
-    console.log('result from query?', result.rows)
+    // console.log('result from query?', result.rows)
 
 
         res.send(result.rows);

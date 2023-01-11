@@ -67,7 +67,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
         let dogsPreFilter = forDogMap.map(dog => { return ({ dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular, active: dog.active}) })
 
        const dogsResult = dogsPreFilter.filter(dog => dog.active === true)
-       console.log ('dogs array?', dogsResult)
+      //  console.log ('dogs array?', dogsResult)
        
        //add dogs to client
         client.dogs = dogsResult

@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const OAuthClient = require('intuit-oauth');
+
 
 const app = express();
 
@@ -32,6 +34,16 @@ app.use(sessionMiddleware);
 // start up passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+
+/* OAuth Library */
+const oauthClient = new OAuthClient({
+  clientId: process.env.clientId,
+  clientSecret: process.env.clientSecret,
+  environment: 'sandbox' || 'production',
+  redirectUri: '<Enter your callback URL>',
+});
 
 /* Routes */
 app.use('/api/user', userRouter);

@@ -289,7 +289,7 @@ function ClientSchedule() {
                                           
                                           if (thisChange.dog_id === dog.dog_id && JSON.stringify(dayjs(thisChange.date_to_change).$d) === thisDayString && thisChange.is_scheduled){
                                             return (
-                                              <DogAvatar id={dog.dog_id} index={index} dog={dog}/>
+                                              <DogAvatar id={dog.dog_id} index={index} key={dog.dog_id} dog={dog}/>
                                             )
                                           }
                                         }

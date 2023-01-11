@@ -200,7 +200,7 @@ function LoadBalancing() {
                       }}>
                   {/* maps through each dog in route list and creates a chip */}
                   {dailyRoutes && dailyRoutes[route].map((dog, index) => 
-                    <Grid container key={dog.id} 
+                    <Grid container key={dog.id}
                         sx={{display: 'flex', 
                              flexDirection: 'column', 
                              gap: 1,

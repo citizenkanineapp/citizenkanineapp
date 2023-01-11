@@ -4,14 +4,16 @@ import { put, takeLatest } from 'redux-saga/effects';
 function* authorizationRequest (action) {
     console.log('arrived in saga for authorization request')
     try {
-        const authToken = yield axios({
-            method: 'POST',
-            url: '/api/quickbooks/trigger'
+        const uri = yield axios({
+            method: 'GET',
+            url: '/api/quickbooks/connect_handler'
         })
-        // yield put({
-        //     type: '',
-        //     payload: authToken.data
-        // })
+
+        //HIIIIIIIIIIII.  Ok I will close this now and check in later with any pushes you make
+        yield put({
+            type: '',
+            payload: uri.data
+        })
     }
     catch {
         console.log('error in authorizationRequest');

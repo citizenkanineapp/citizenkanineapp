@@ -13,23 +13,23 @@ const router = express.Router();
 //   }
 // app.use(cors());
 
-router.post('/trigger', (req, res) => {
-  console.log('trigger');
-    axios.get('http://localhost:5000/api/quickbooks/connect_handler')
-        .then((res)=>{
-            console.log('res', res);
-        })
-        .catch((err)=>{
-            console.log('err!', err);
-        })
-})
+// router.post('/trigger', (req, res) => {
+//   console.log('trigger');
+//     axios.get('http://localhost:5000/api/quickbooks/connect_handler')
+//         .then((res)=>{
+//             console.log('res');
+//         })
+//         .catch((err)=>{
+//             console.log('err!', err);
+//         })
+// })
 
 router.get('/connect_handler', (req, res) => {
     // GET route code here
     console.log('in api/quickbooks/connect_handler');
     // console.log(corsOptions);
     // Set the OpenID + Accounting + Payment scopes
-    // tools.setScopes('connect_handler')
+    tools.setScopes('connect_handler')
 
     //console.log(tools.intuitAuth);
     // // Constructs the authorization URI.
@@ -39,8 +39,10 @@ router.get('/connect_handler', (req, res) => {
     })
     // Redirect
     console.log('Redirecting to authorization uri: ' + uri)
+    // TO SEE /callback console.logs, copy generated uri from terminal and paste in browser. once Qb log in is complete, a req is sent to teh /callback endpoint!
+
     // res.redirect('http://localhost:5000/api/callback');
-    res.redirect(uri);
+    res.send(uri);
     // axios.get('http://localhost:5000/api/callback')
     //     .then(res=>{
     //         console.log(200)

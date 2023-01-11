@@ -356,10 +356,11 @@ function ClientSchedule() {
               }
           <Grid item xs={11} sx={{display: 'flex', justifyContent: 'right', pb: 3}}>
             <Button 
-            variant="outlined" color="info"
-            onClick={() => {
-                    dispatch({ type: 'SET_MODAL_STATUS' })}}>
-            Back</Button>
+              variant="outlined" color="info"
+              onClick={() => {
+                      dispatch({ type: 'SET_MODAL_STATUS' })}}>
+              Back
+            </Button>
           </Grid>
         </Grid>
     </>

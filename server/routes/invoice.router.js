@@ -28,16 +28,18 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
             WHERE
                 clients.id = $1 AND
                 EXTRACT (MONTH FROM daily_dogs.date) = $2 AND
-                EXTRACT (YEAR FROM daily_dogs.date) = $3
+                EXTRACT (YEAR FROM daily_dogs.date) = $3 AND
             `;
         searchTerms = [searchClientId, searchMonth, searchYear];
+        // console.log(searchQuery);
     } else {
         searchQuery = `
             WHERE
                 EXTRACT (MONTH FROM daily_dogs.date) = $1 AND
-                EXTRACT (YEAR FROM daily_dogs.date) = $2
+                EXTRACT (YEAR FROM daily_dogs.date) = $2 AND
             `;
         searchTerms = [searchMonth, searchYear];
+        // console.log(searchQuery);
     }
 
     // console.log(searchQuery);
@@ -71,6 +73,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 ON dogs.client_id = clients.id`
         + searchQuery +
         `
+            (checked_in = true OR no_show = true)
             GROUP BY
                 daily_dogs.date,
                 checked_in,
@@ -97,78 +100,99 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         // console.log(services);
         const resDetails = await pool.query(queryWalkDetails, searchTerms);
         const invoiceData = resDetails.rows;
-        // console.log(invoiceData);
+        // console.log('invoiceData', invoiceData);
 
         const resSchedule = await pool.query(querySchedule);
         const schedules = resSchedule.rows;
+        // console.log('schedules', schedules)
+
+
+        const testDailyDogs = await pool.query(`
+            SELECT * FROM daily_dogs
+            WHERE
+            EXTRACT (MONTH FROM daily_dogs.date) = 1 AND
+            EXTRACT (YEAR FROM daily_dogs.date) = 2023 AND
+            (checked_in = true OR no_show = true);
+        `);
+
+        console.log(testDailyDogs.rows);
+
+
+
+
+
+
 
         // adds service data to invoice data object. some of this should be done in SQL!
-        for (let item of invoiceData) {
-            let serviceId
+        // for (let item of invoiceData) {
+        //     let serviceId
 
-            // adds walks per week to invoice item
-            for (let client of schedules) {
-                if (client.id === item.clientid) {
-                    const values = Object.values(client);
-                    const walks = values.filter(i => i === true).length;
+        //     // adds walks per week to invoice item
+        //     for (let client of schedules) {
+        //         // console.log('client.id: ', client.client_id, "item.clientid: ", item.clientid);
+        //         if (client.client_id === item.clientid) {
+        //             const values = Object.values(client);
+        //             const walks = values.filter(i => i === true).length;
 
-                    // grabs services ID from services list.
-                    // THIS WILL NEED WORK IF QUICKBOOKS API SYNC IS IMPLEMENTED. will 'sync' be able to preserve serivceId? will there need to be another function to grab serviceId by service type?
-                    if (item.num_dogs === "1") {
-                        switch (walks) {
-                            case 1:
-                                serviceId = 2;
-                                break;
-                            case 2: case 3: case 4:
-                                serviceId = 3;
-                                break;
-                            case 5:
-                                serviceId = 4;
-                                break;
-                        }
-                    } else if (item.num_dogs === "2") {
-                        switch (walks) {
-                            case 1:
-                                serviceId = 5;
-                                break;
-                            case 2: case 3: case 4:
-                                serviceId = 6;
-                                break;
-                            case 5:
-                                serviceId = 7;
-                                break;
-                        }
-                    } else if (item.num_dogs === "3") {
-                        serviceId = 8;
-                    } else {
-                        serviceId = 9;
-                    }
-                }
-            }
+        //             // grabs services ID from services list.
+        //             // THIS WILL NEED WORK IF QUICKBOOKS API SYNC IS IMPLEMENTED. will 'sync' be able to preserve serivceId? will there need to be another function to grab serviceId by service type?
+        //             if (item.num_dogs === "1") {
+        //                 switch (walks) {
+        //                     case 1:
+        //                         serviceId = 2;
+        //                         break;
+        //                     case 2: case 3: case 4:
+        //                         serviceId = 3;
+        //                         break;
+        //                     case 5:
+        //                         serviceId = 4;
+        //                         break;
+        //                 }
+        //             } else if (item.num_dogs === "2") {
+        //                 switch (walks) {
+        //                     case 1:
+        //                         serviceId = 5;
+        //                         break;
+        //                     case 2: case 3: case 4:
+        //                         serviceId = 6;
+        //                         break;
+        //                     case 5:
+        //                         serviceId = 7;
+        //                         break;
+        //                 }
+        //             } else if (item.num_dogs === "3") {
+        //                 serviceId = 8;
+        //             } else {
+        //                 serviceId = 9;
+        //             }
+        //         }
 
-            // adds service details to invoice item
-            for (let service of services) {
-                // console.log('service', service)
-                if (service.id === serviceId) {
-                    item.month = searchMonth;
-                    item.year = searchYear;
-                    item.service = {
-                        price: service.price,
-                        service
-                    }
-                    if (item.no_show === true) {
-                        item.service.service = 'Same Day Cancellation';
-                    } else {
-                        item.service.service = service.name;
-                    }
-                }
-            }
-        }
-        // console.log(invoiceData);
+        //     }
+        //     // console.log('in walks/week', item.clientid, serviceId);
 
-        if (invoiceData[0]) {
-            res.send(invoiceData);
-        }
+
+        //     // adds service details to invoice item
+        //     for (let service of services) {
+        //         if (service.id === serviceId) {
+        //             item.month = searchMonth;
+        //             item.year = searchYear;
+        //             item.service = {
+        //                 price: service.price,
+        //                 service
+        //             }
+        //             if (item.no_show === true) {
+        //                 item.service.service = 'Same Day Cancellation';
+        //             } else {
+        //                 item.service.service = service.name;
+        //             }
+        //         }
+        //     }
+        // }
+        // // console.log(invoiceData);
+
+        // if (invoiceData[0]) {
+        //     res.send(invoiceData);
+        // }
     } catch (error) {
         console.log('Error GET /api/invoice', error);
         res.sendStatus(500);

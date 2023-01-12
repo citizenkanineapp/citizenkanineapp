@@ -90,8 +90,14 @@ router.get('/connect_handler', (req, res) => {
         // maybe in our app we would limit what we sent back at this point
         let customers = JSON.parse(response.body)
         console.log('is this JSON customers', customers)
-        res.send(customers)
-        // filterCustomers(JSON.parse(response.body))
+
+        //this gets the customers ready for the Client side of application
+        let filteredCustomers =  filterCustomers(JSON.parse(response.body))
+        console.log('back to top level?', filteredCustomers)
+        
+        //this sucessfully sent back the customers after being processed
+        //do we need to worry about timing issues long term?
+        res.send(filteredCustomers)
       }, function (err) {
         console.log(err)
         return res.json(err)
@@ -99,6 +105,55 @@ router.get('/connect_handler', (req, res) => {
     })
   
   })
+
+  function filterCustomers(customers) {
+    // console.log('customer function', customers.QueryResponse)
+    let customerArray = customers.QueryResponse.Customer
+    let customerNotes = []
+    for (let oneCustomer of customerArray) {
+      let customer = {
+        client_id: Number(oneCustomer.Id),
+        notesObj: oneCustomer.Notes
+      }
+      // console.log('id?', oneCustomer.Id)
+      // console.log('id is a number?', Number(oneCustomer.Id))
+      customerNotes.push(customer)
+    }
+    let customersWithSchedule = getDogSchedule(customerNotes)
+    return customersWithSchedule
+  }
+  
+  function getDogSchedule(dogNotes) {
+    // this function processes the data from the Notes field on QB
+    //and breaks it out into dog and schedule arrays to be added to customer object
+    //and sent to client in CK app
+    let customerArray = []
+    for (let dog of dogNotes) {
+      let result = dog.notesObj.split("-")
+  
+      //this sections gets rid of extra spaces that might be surrounding each string 
+      let dogsArray = result[0].split(",").map(function (dogName) {
+        return dogName.trim();
+      })
+      let scheduleArray = result[1].split(",").map(function (dayName) {
+        return dayName.trim();
+      })
+      // console.log('dogs array', dogsArray)
+      // console.log('schedule array', scheduleArray)
+      let customer = {
+        dogs: dogsArray,
+        schedule: scheduleArray,
+        client_id: dog.client_id
+      }
+      //adds each indidual customer object to the array of objects (customers)
+      customerArray.push(customer)
+      // console.log('one customer is:', customer)
+    }
+  
+    // console.log(customerArray)
+   return customerArray
+  
+  }
   
   
 

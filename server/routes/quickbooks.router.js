@@ -48,25 +48,17 @@ router.get('/connect_handler', (req, res) => {
     })
     // Redirect
     console.log('Redirecting to authorization uri: ' + uri)
-    // TO SEE /callback console.logs, copy generated uri from terminal and paste in browser. once Qb log in is complete, a req is sent to teh /callback endpoint!
 
-    // res.redirect('http://localhost:5000/api/callback');
-    // res.send(uri);
-    
 
       res.redirect(uri);
-
- 
-    // axios.get('http://localhost:5000/api/callback')
-    //     .then(res=>{
-    //         console.log(200)
-    //     })
-    //     .catch(err=>{
-    //         console.log('err!')
-    //     })
   });
 
-  router.get('/customer', function (req, res) {
+
+        /*this is the Get route to get customer from quickbooks
+        the functions called inside prepare the customers to be inserted 
+                        into DB*/
+
+router.get('/customer', function (req, res) {
     console.log('in server fetch customers')
     var query = '/query?query= select * from customer'
     var url = config.api_uri + req.session.realmId + query
@@ -79,25 +71,27 @@ router.get('/connect_handler', (req, res) => {
       }
   
     }
-  
+
     request(requestObj, function (err, response) {
   
       tools.checkForUnauthorized(req, requestObj, err, response).then(function ({ err, response }) {
         if (err || response.statusCode != 200) {
           return res.json({ error: err, statusCode: response.statusCode })
         }
-        //success
-        // maybe in our app we would limit what we sent back at this point
-        let customers = JSON.parse(response.body)
-        console.log('is this JSON customers', customers)
 
-        //this gets the customers ready for the Client side of application
-        let filteredCustomers =  filterCustomers(JSON.parse(response.body))
-        console.log('back to top level?', filteredCustomers)
+        let customers = JSON.parse(response.body)
+      
+        //this function starts the process of formatting the customers
+        let filteredCustomers =  filterCustomers(customers)
+
+        //one more filter to remove key no longer needed on object
+        let finalCustomers = filteredCustomers.filter(customer => delete customer.notesObj )
         
-        //this sucessfully sent back the customers after being processed
-        //do we need to worry about timing issues long term?
-        res.send(filteredCustomers)
+
+        /*  this sucessfully sent back the customers after being processed
+        do we need to worry about timing issues long term?  */
+        res.send(finalCustomers)
+        
       }, function (err) {
         console.log(err)
         return res.json(err)
@@ -107,29 +101,42 @@ router.get('/connect_handler', (req, res) => {
   })
 
   function filterCustomers(customers) {
-    // console.log('customer function', customers.QueryResponse)
-    let customerArray = customers.QueryResponse.Customer
-    let customerNotes = []
+    
+    let customerArray = customers.QueryResponse.Customer //what comes from QB API
+    let customersAfterProcessing = []
     for (let oneCustomer of customerArray) {
+      // console.log(oneCustomer)
+      let mobile;
+      if(oneCustomer.hasOwnProperty('Mobile')){
+        mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
+      } else {                                      //this handles undefined errors
+        mobile = ""
+      }
       let customer = {
         client_id: Number(oneCustomer.Id),
-        notesObj: oneCustomer.Notes
+        notesObj: oneCustomer.Notes,
+        email: oneCustomer.PrimaryEmailAddr.Address,
+        first_name: oneCustomer.GivenName,
+        last_name: oneCustomer.FamilyName,
+        phone: oneCustomer.PrimaryPhone.FreeFormNumber,
+        mobile: mobile,
+        street: oneCustomer.BillAddr.Line1,
+        city: oneCustomer.BillAddr.City,
+        zip: oneCustomer.BillAddr.PostalCode,
+        notes: oneCustomer.ShipAddr.Line1
       }
-      // console.log('id?', oneCustomer.Id)
-      // console.log('id is a number?', Number(oneCustomer.Id))
-      customerNotes.push(customer)
+      customersAfterProcessing.push(customer)
     }
-    let customersWithSchedule = getDogSchedule(customerNotes)
+    // this next function deals with dogs' names and schedules 
+    let customersWithSchedule = getDogSchedule(customersAfterProcessing)
     return customersWithSchedule
   }
   
-  function getDogSchedule(dogNotes) {
-    // this function processes the data from the Notes field on QB
-    //and breaks it out into dog and schedule arrays to be added to customer object
-    //and sent to client in CK app
+  function getDogSchedule(customers) {
+   
     let customerArray = []
-    for (let dog of dogNotes) {
-      let result = dog.notesObj.split("-")
+    for (let oneCustomer of customers) {
+      let result = oneCustomer.notesObj.split("-")
   
       //this sections gets rid of extra spaces that might be surrounding each string 
       let dogsArray = result[0].split(",").map(function (dogName) {
@@ -138,19 +145,13 @@ router.get('/connect_handler', (req, res) => {
       let scheduleArray = result[1].split(",").map(function (dayName) {
         return dayName.trim();
       })
-      // console.log('dogs array', dogsArray)
-      // console.log('schedule array', scheduleArray)
-      let customer = {
-        dogs: dogsArray,
-        schedule: scheduleArray,
-        client_id: dog.client_id
-      }
-      //adds each indidual customer object to the array of objects (customers)
-      customerArray.push(customer)
-      // console.log('one customer is:', customer)
+    
+        oneCustomer.dogs = dogsArray,   //adding dogs key to customer object
+        oneCustomer.schedule =  scheduleArray, //adding schedule key to customer obj
+      
+        customerArray.push(oneCustomer)
+      
     }
-  
-    // console.log(customerArray)
    return customerArray
   
   }

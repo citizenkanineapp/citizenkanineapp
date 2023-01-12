@@ -3,9 +3,12 @@ const axios = require('axios');
 const app = express();
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
-// const cors = require('cors');
+const cors = require('cors');
+const config = require('../../config.json')
+const request = require('request')
 
 const router = express.Router();
+
 
 // var corsOptions = {
 //     origin: 'http://localhost:3000',
@@ -13,25 +16,31 @@ const router = express.Router();
 //   }
 // app.use(cors());
 
-// router.post('/trigger', (req, res) => {
-//   console.log('trigger');
-//     axios.get('http://localhost:5000/api/quickbooks/connect_handler')
-//         .then((res)=>{
-//             console.log('res');
-//         })
-//         .catch((err)=>{
-//             console.log('err!', err);
-//         })
-// })
+router.get('/trigger', async (req, res) => {
+  console.log('trigger');
+   try{
+    const connectHandler = await axios.get('http://localhost:5000/api/quickbooks/connect_handler')
+    console.log('anything happen here?', connectHandler)
+    res.sendStatus(200)
+   }catch(error){
+    console.log('error in get request in trigger', error)
+   }
+        // .then((res)=>{
+        //     // console.log('res', res);
+        // })
+        // .catch((err)=>{
+        //     console.log('err!', err);
+        // })
+ })
 
 router.get('/connect_handler', (req, res) => {
     // GET route code here
     console.log('in api/quickbooks/connect_handler');
-    // console.log(corsOptions);
-    // Set the OpenID + Accounting + Payment scopes
+    console.log(req.session)
+   
+    // Set  Accounting scopes
     tools.setScopes('connect_handler')
 
-    //console.log(tools.intuitAuth);
     // // Constructs the authorization URI.
     var uri = tools.intuitAuth.code.getUri({
         // Add CSRF protection
@@ -42,7 +51,12 @@ router.get('/connect_handler', (req, res) => {
     // TO SEE /callback console.logs, copy generated uri from terminal and paste in browser. once Qb log in is complete, a req is sent to teh /callback endpoint!
 
     // res.redirect('http://localhost:5000/api/callback');
-    res.send(uri);
+    // res.send(uri);
+    
+
+      res.redirect(uri);
+
+ 
     // axios.get('http://localhost:5000/api/callback')
     //     .then(res=>{
     //         console.log(200)
@@ -51,6 +65,41 @@ router.get('/connect_handler', (req, res) => {
     //         console.log('err!')
     //     })
   });
+
+  router.get('/customer', function (req, res) {
+    console.log('in server fetch customers')
+    var query = '/query?query= select * from customer'
+    var url = config.api_uri + req.session.realmId + query
+    // console.log('Making API Customer call to: ' + url)
+    var requestObj = {
+      url: url,
+      headers: {
+        // 'Authorization': 'Bearer ' + token.accessToken,
+        'Accept': 'application/json'
+      }
+  
+    }
+  
+    request(requestObj, function (err, response) {
+  
+      tools.checkForUnauthorized(req, requestObj, err, response).then(function ({ err, response }) {
+        if (err || response.statusCode != 200) {
+          return res.json({ error: err, statusCode: response.statusCode })
+        }
+        //success
+        // maybe in our app we would limit what we sent back at this point
+        let customers = JSON.parse(response.body)
+        console.log('is this JSON customers', customers)
+        res.send(customers)
+        // filterCustomers(JSON.parse(response.body))
+      }, function (err) {
+        console.log(err)
+        return res.json(err)
+      })
+    })
+  
+  })
+  
   
 
 module.exports = router;

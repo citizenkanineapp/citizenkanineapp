@@ -8,9 +8,7 @@ require('dotenv').config();
 var Tools = function () {
   var tools = this;
   var authConfig = {
-    // clientId: config.clientId,
     clientId: process.env.clientId,
-    // clientSecret: config.clientSecret,
     clientSecret: process.env.clientSecret,
     redirectUri: config.redirectUri
   }

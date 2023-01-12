@@ -24,6 +24,8 @@ router.get('/', function (req, res) {
     req.session.realmId = req.query.realmId
     console.log(req.session.realmId);
 
+    res.redirect('http://localhost:3000/#/about')
+
 
 //if we skip JWT token-----> next step is to get to "connected page"
         

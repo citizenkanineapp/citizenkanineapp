@@ -2,16 +2,15 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* authorizationRequest (action) {
-    console.log('arrived in saga for authorization request')
+    // console.log('arrived in saga for authorization request')
     try {
         const uri = yield axios({
             method: 'GET',
             url: '/api/quickbooks/connect_handler'
         })
 
-        //HIIIIIIIIIIII.  Ok I will close this now and check in later with any pushes you make
         yield put({
-            type: '',
+            type: 'SET_AUTH_URL',
             payload: uri.data
         })
     }
@@ -21,8 +20,28 @@ function* authorizationRequest (action) {
   
 }
 
+function* fetchQbCustomers (action) {
+    console.log('arrived in saga for fetching qb customers')
+    try {
+        const customers = yield axios({
+            method: 'GET',
+            url: '/api/quickbooks/customer'
+        })
+        console.log(customers)
+        // yield put({
+        //     type: 'SET_AUTH_URL',
+        //     payload: uri.data
+        // })
+    }
+    catch {
+        console.log('error in authorizationRequest');
+    }
+  
+}
+
 function* quickBooksSaga() {
     yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
+    yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
 }
 
 export default quickBooksSaga;

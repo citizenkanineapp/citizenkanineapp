@@ -9,6 +9,7 @@ function* authorizationRequest (action) {
             url: '/api/quickbooks/connect_handler'
         })
 
+        // I DON"T KNOW IF WE WANT TO SET URI TO DATA.
         yield put({
             type: 'SET_AUTH_URL',
             payload: uri.data

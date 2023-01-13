@@ -53,6 +53,30 @@ router.get('/connect_handler', (req, res) => {
       res.redirect(uri);
   });
 
+  router.get('/callback', function (req, res) {
+    console.log('in /api/quickbooks/callback')
+    console.log('do we get req.session.realmId', req.session)
+    // Verify anti-forgery
+    if(!tools.verifyAntiForgery(req.session, req.query.state)) {
+        return res.send('Error - invalid anti-forgery CSRF response!')
+    }
+
+    // Exchange auth code for access token
+    tools.intuitAuth.code.getToken(req.originalUrl).then(function (token) {
+    // Store token - this would be where tokens would need to be
+    // persisted (in a SQL DB, for example).
+    tools.saveToken(req.session, token)
+    req.session.realmId = req.query.realmId
+    console.log(req.session.realmId);
+
+    res.redirect('http://localhost:3000/#/about')
+  
+    })
+})
+
+
+
+
 
         /*this is the Get route to get customer from quickbooks
         the functions called inside prepare the customers to be inserted 

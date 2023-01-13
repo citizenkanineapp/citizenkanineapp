@@ -76,7 +76,7 @@ app.use('/api/clientSchedule', clientScheduleRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/quickbooks', quickbooksRouter);
 app.use('/api/callback', callbackRouter)
-app.use('/api/test', testRouter)
+// app.use('/api/test', testRouter)
 
 
 

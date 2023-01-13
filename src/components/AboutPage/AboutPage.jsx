@@ -19,17 +19,12 @@ function AboutPage() {
     dispatch({ type: 'GET_QB_CUSTOMERS'})
   }
 
-  const testConnect = () => {
-    dispatch({ type: 'TEST_AUTHORIZATION'})
-  }
-
 
   return (
     <div className="container">
       <h1>AboutPage</h1>
       <button onClick={connectQB}>Connect to QB</button>
       <button onClick={apiCall}>API call</button>
-      <button onClick={testConnect}>Test</button>
     </div>
   );
 }

@@ -156,7 +156,93 @@ router.get('/customer', function (req, res) {
    return customerArray
   
   }
+
+  /*To initially add QB customers to DB */
+  router.post('/qbcustomers', async (req, res) => {
+    // console.log('arrvied in server?', req.body)
+
+    const client = await pool.connect();
+    const customers = req.body // obj desctructing of QB data
+    // const dogsArray = dogs
+    // const scheduleArray = schedule
+
+    
+      //geocoding for customers
+   
+      const api_key = process.env.map_api_key;
+      const config = { headers: { Authorization: api_key } };
+
+      let geoStatsResponse = await Promise.all(customers.map(async customer => {
+      
+      const address = customer.street.replace(/ /g, "+");
+      const town = customer.city.replace(/ /g, '');
+      const zip = customer.zip
+
+      const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
   
+      // console.log('geostats data', geoStats.data)
+      const lat = geoStats.data.addresses[0].latitude;
+      const long = geoStats.data.addresses[0].longitude;
+      // console.log('heres the geoStats!', lat, long);
+      customer.lat = lat
+      customer.long = long
+    return customer
+    }))
+    // console.log(geoStatsResponse)
+    processSchedule(geoStatsResponse)
+    console.log('after schedule processing',  processSchedule(geoStatsResponse))
+
+    //Paused here: January 13th.  Next is to replicate the SQL insert statements for all tables
+
+    try{ 
+      // console.log('customers after map', customers)
+    } catch (error) {
+      console.log('error in post route of adding clients from QB', error)
+    }
+  });
   
+  function processSchedule (customers) {
+    // console.log(customers)
+
+    /* Schedule from QB sample
+          ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri' ]
+    
+    */
+    for (let customer of customers){
+      let schedule = customer.schedule
+      //default values for each schedule
+      customer.monday = false
+      customer.tuesday = false
+      customer.wednesday = false
+      customer.thursday = false
+      customer.friday = false
+
+      // console.log(schedule)
+      if(schedule.includes('Mon')){
+        customer.monday = true
+      }
+      if(schedule.includes('Tues')){
+        customer.tuesday = true
+      }
+      if(schedule.includes('Wed')){
+        customer.wednesday = true
+      }
+      if(schedule.includes('Thurs')){
+        customer.thursday = true
+      }
+      if(schedule.includes('Fri')){
+        customer.friday = true
+      }
+      if(schedule.includes('Daily')){
+        customer.monday = true
+        customer.tuesday = true
+        customer.wednesday = true
+        customer.thursday = true
+        customer.friday = true
+  
+      }
+    }
+    return customers
+  }
 
 module.exports = router;

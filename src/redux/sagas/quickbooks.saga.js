@@ -29,10 +29,9 @@ function* fetchQbCustomers (action) {
         })
         console.log(customers)
 
-        /* Here instead call a function that compares current clients to QB clients 
-        and only POSTS the new ones to DB? */
+        /* Call function that will be post route to add QB clients to DB */
         yield put({
-            type: 'SET_QB_CLIENTS',
+            type: 'POST_QB_CLIENTS',
             payload: customers.data
         })
     }
@@ -42,9 +41,29 @@ function* fetchQbCustomers (action) {
   
 }
 
+/*This function adds customers to DB from QB*/
+function* addAllQbCustomers(action){
+    console.log('arrived in add QB clients route', action.payload);
+
+    try {
+        const qbClients = yield axios({
+            method: 'POST',
+            url: '/api/quickbooks/qbcustomers',
+            data: action.payload
+        })
+        //fetch all clients here (From DB) to display to DOM?
+        
+    } catch (error) {
+        console.log(error);
+        alert('Error adding QB customers');
+    }
+    
+}
+
 function* quickBooksSaga() {
     yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
     yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
+    yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);
 }
 
 export default quickBooksSaga;

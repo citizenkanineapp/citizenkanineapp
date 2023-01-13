@@ -59,14 +59,15 @@ router.get('/connect_handler', (req, res) => {
                         into DB*/
 
 router.get('/customer', function (req, res) {
+    let token = tools.getToken(req.session)
     console.log('in server fetch customers')
-    var query = '/query?query= select * from customer'
+    var query = encodeURI('/query?query= select * from customer')
     var url = config.api_uri + req.session.realmId + query
     // console.log('Making API Customer call to: ' + url)
     var requestObj = {
       url: url,
       headers: {
-        // 'Authorization': 'Bearer ' + token.accessToken,
+        'Authorization': 'Bearer ' + token.accessToken,
         'Accept': 'application/json'
       }
   

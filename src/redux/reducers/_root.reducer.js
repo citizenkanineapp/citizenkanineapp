@@ -16,7 +16,7 @@ import clientReducer from './client.reducer';
 import routeReducer from './route.reducer';
 import details from './details.reducer';
 import adminNotesReducer from './adminNotes.reducer';
-import oAuth2Reducer from './oAuth2.reducer';
+import qbClientsReducer from './qbClients.reducer';
 
 
 const rootReducer = combineReducers({
@@ -37,7 +37,7 @@ const rootReducer = combineReducers({
   adminNotesReducer,
   details,
   invoiceReducer,
-  oAuth2Reducer
+  qbClientsReducer
 });
 
 export default rootReducer;

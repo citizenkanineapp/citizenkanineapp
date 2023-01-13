@@ -28,10 +28,13 @@ function* fetchQbCustomers (action) {
             url: '/api/quickbooks/customer'
         })
         console.log(customers)
-        // yield put({
-        //     type: 'SET_AUTH_URL',
-        //     payload: uri.data
-        // })
+
+        /* Here instead call a function that compares current clients to QB clients 
+        and only POSTS the new ones to DB? */
+        yield put({
+            type: 'SET_QB_CLIENTS',
+            payload: customers.data
+        })
     }
     catch {
         console.log('error in authorizationRequest');

@@ -1,14 +1,10 @@
 const express = require('express');
 const axios = require('axios');
-const app = express();
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
 const cors = require('cors');
 const config = require('../../config.json')
-const request = require('request')
-
 const router = express.Router();
-
 
 // var corsOptions = {
 //     origin: 'http://localhost:3000',
@@ -16,27 +12,12 @@ const router = express.Router();
 //   }
 // app.use(cors());
 
-// router.get('/trigger', async (req, res) => {
-//   console.log('trigger');
-//    try{
-//     const connectHandler = await axios.get('http://localhost:5000/api/quickbooks/connect_handler')
-//     console.log('anything happen here?', connectHandler)
-//     res.sendStatus(200)
-//    }catch(error){
-//     console.log('error in get request in trigger', error)
-//    }
-//         // .then((res)=>{
-//         //     // console.log('res', res);
-//         // })
-//         // .catch((err)=>{
-//         //     console.log('err!', err);
-//         // })
-//  })
 
 router.get('/connect_handler', (req, res) => {
     // GET route code here
     console.log('in api/quickbooks/connect_handler');
-    console.log(req.session)
+    console.log(req.session.data)
+    // console.log(req)
    
     // Set  Accounting scopes
     tools.setScopes('connect_handler')
@@ -48,12 +29,13 @@ router.get('/connect_handler', (req, res) => {
     })
     // Redirect
     console.log('Redirecting to authorization uri: ' + uri)
-      res.redirect(uri);
+    // console.log('after generating CSRF state',req.session)
+    res.redirect(uri);
   });
 
   router.get('/callback', function (req, res) {
     console.log('in /api/quickbooks/callback')
-    console.log('do we get req.session.realmId', req.session)
+    // console.log('do we get req.session.realmId', req.session)
     // Verify anti-forgery
     if(!tools.verifyAntiForgery(req.session, req.query.state)) {
         return res.send('Error - invalid anti-forgery CSRF response!')
@@ -64,8 +46,25 @@ router.get('/connect_handler', (req, res) => {
     // Store token - this would be where tokens would need to be
     // persisted (in a SQL DB, for example).
     tools.saveToken(req.session, token)
-    req.session.realmId = req.query.realmId
-    console.log(req.session.realmId);
+    
+    try {
+      const tokensQuery = (tokenType)=>{
+        return `
+          INSERT INTO "oauth2_${tokenType}_tokens" ("${tokenType}_token", "time") VALUES ($1, NOW());
+        `
+      }
+    // console.log(req.session.data)
+    pool.query(tokensQuery('access'),[req.session.data.access_token]);
+    pool.query(tokensQuery('refresh'),[req.session.data.refresh_token]);
+
+    } catch(err) {
+ 
+    }
+    // console.log(req.query.refresh_token);
+    // req.session.realmId = req.query.realmId;
+    // req.session.data.access_token = req.query.access_token;
+    // req.session.data.refresh_token = req.query.refresh_token;
+    // console.log(req.session.realmId, req.session.data.refresh_token, req.session.data.access_token);
 
     res.redirect('http://localhost:3000/#/about')
   

@@ -51,7 +51,9 @@ function* addAllQbCustomers(action){
             url: '/api/quickbooks/qbcustomers',
             data: action.payload
         })
-        //fetch all clients here (From DB) to display to DOM?
+        
+        //testing if I can call a saga function in a different saga file
+        yield put ({type: 'FETCH_CLIENTS'});
         
     } catch (error) {
         console.log(error);

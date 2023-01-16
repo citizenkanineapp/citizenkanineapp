@@ -108,13 +108,20 @@ router.get('/customer', function (req, res) {
     for (let oneCustomer of customerArray) {
       // console.log(oneCustomer)
       let mobile;
+      let route_id;
+      let vet_name;
+      let vet_phone;
       if(oneCustomer.hasOwnProperty('Mobile')){
         mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
       } else {                                      //this handles undefined errors
         mobile = ""
       }
+      if(!oneCustomer.hasOwnProperty('route_id')){
+        route_id = 5      //adds a default route_id of unassigned
+                           //QB doesn't have route data but it is needed 
+      }
       let customer = {
-        client_id: Number(oneCustomer.Id),
+        qb_id: Number(oneCustomer.Id),
         notesObj: oneCustomer.Notes,
         email: oneCustomer.PrimaryEmailAddr.Address,
         first_name: oneCustomer.GivenName,
@@ -124,7 +131,8 @@ router.get('/customer', function (req, res) {
         street: oneCustomer.BillAddr.Line1,
         city: oneCustomer.BillAddr.City,
         zip: oneCustomer.BillAddr.PostalCode,
-        notes: oneCustomer.ShipAddr.Line1
+        notes: oneCustomer.ShipAddr.Line1,
+        route_id: route_id
       }
       customersAfterProcessing.push(customer)
     }
@@ -141,7 +149,15 @@ router.get('/customer', function (req, res) {
   
       //this sections gets rid of extra spaces that might be surrounding each string 
       let dogsArray = result[0].split(",").map(function (dogName) {
-        return dogName.trim();
+        return {name: dogName.trim(), 
+                notes: "", 
+                flag: false, 
+                active: true, 
+                regular: true,     //creating a dog object for each dog
+                image: "",
+                vet_name: "",
+                vet_phone: ""
+              };
       })
       let scheduleArray = result[1].split(",").map(function (dayName) {
         return dayName.trim();
@@ -189,15 +205,57 @@ router.get('/customer', function (req, res) {
     return customer
     }))
     // console.log(geoStatsResponse)
-    processSchedule(geoStatsResponse)
-    console.log('after schedule processing',  processSchedule(geoStatsResponse))
-
-    //Paused here: January 13th.  Next is to replicate the SQL insert statements for all tables
+    let customersResult = processSchedule(geoStatsResponse)
+    // console.log('after schedule processing',  customersResult)
 
     try{ 
-      // console.log('customers after map', customers)
+      await client.query('BEGIN')
+      for (let eachCustomer of customersResult){
+        const clientTxt = await client.query( `
+                            INSERT INTO clients 
+                              ("qb_id", "first_name", "last_name", "street", "city", "zip", "route_id", "phone", "mobile", "email", "notes", "lat", "long") 
+                              VALUES
+                              ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+                              RETURNING "id";
+    ` , [eachCustomer.qb_id, eachCustomer.first_name, eachCustomer.last_name, 
+                            eachCustomer.street, eachCustomer.city, eachCustomer.zip, eachCustomer.route_id, eachCustomer.phone, eachCustomer.mobile,
+                            eachCustomer.email, eachCustomer.notes, eachCustomer.lat, eachCustomer.long])
+      const customerId = clientTxt.rows[0].id
+      eachCustomer.client_id = customerId
+    }
+    console.log('does it add client_id', customersResult)
+    for(let eachCustomer of customersResult){
+      await Promise.all(eachCustomer.dogs.map(dog => {
+        const dogTxt = `
+                            INSERT INTO dogs 
+                                ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag", "regular", "active") 
+                              VALUES
+                                ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+  
+        `
+        const dogValues = [eachCustomer.client_id, dog.name, dog.image, dog.vet_name, dog.vet_phone, dog.dog_notes, dog.flag, dog.regular, dog.active]
+        return client.query(dogTxt, dogValues)
+      }));
+    }
+    for(let eachCustomer of customersResult) {
+        const scheduleTxt = `
+                              INSERT INTO clients_schedule
+                              ("client_id", "1", "2", "3", "4", "5")  
+                              VALUES
+                              ($1, $2, $3, $4, $5, $6)
+  `
+        const dayValues = [eachCustomer.client_id, eachCustomer.monday, eachCustomer.tuesday, 
+                            eachCustomer.wednesday, eachCustomer.thursday, eachCustomer.friday]
+        await client.query(scheduleTxt, dayValues)
+    }
+      await client.query('COMMIT')
+      res.sendStatus(201);
     } catch (error) {
-      console.log('error in post route of adding clients from QB', error)
+      await client.query('ROLLBACK')
+      console.log('Error in post route for add clients from QB', error);
+      res.sendStatus(500);
+    } finally {
+      client.release()
     }
   });
   
@@ -208,6 +266,7 @@ router.get('/customer', function (req, res) {
           ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri' ]
     
     */
+
     for (let customer of customers){
       let schedule = customer.schedule
       //default values for each schedule

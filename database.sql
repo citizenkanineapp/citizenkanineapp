@@ -351,4 +351,5 @@ VALUES
 	('1', 'Export CSV for November'),
 	('1', 'Buy more leashes for the supply cabinet');
 
-
+CREATE TABLE oauth2_tokens
+	("access_token","access_timestamp","refresh_")

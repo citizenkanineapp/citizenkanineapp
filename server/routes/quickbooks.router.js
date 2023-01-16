@@ -16,22 +16,22 @@ const router = express.Router();
 //   }
 // app.use(cors());
 
-router.get('/trigger', async (req, res) => {
-  console.log('trigger');
-   try{
-    const connectHandler = await axios.get('http://localhost:5000/api/quickbooks/connect_handler')
-    console.log('anything happen here?', connectHandler)
-    res.sendStatus(200)
-   }catch(error){
-    console.log('error in get request in trigger', error)
-   }
-        // .then((res)=>{
-        //     // console.log('res', res);
-        // })
-        // .catch((err)=>{
-        //     console.log('err!', err);
-        // })
- })
+// router.get('/trigger', async (req, res) => {
+//   console.log('trigger');
+//    try{
+//     const connectHandler = await axios.get('http://localhost:5000/api/quickbooks/connect_handler')
+//     console.log('anything happen here?', connectHandler)
+//     res.sendStatus(200)
+//    }catch(error){
+//     console.log('error in get request in trigger', error)
+//    }
+//         // .then((res)=>{
+//         //     // console.log('res', res);
+//         // })
+//         // .catch((err)=>{
+//         //     console.log('err!', err);
+//         // })
+//  })
 
 router.get('/connect_handler', (req, res) => {
     // GET route code here
@@ -48,8 +48,6 @@ router.get('/connect_handler', (req, res) => {
     })
     // Redirect
     console.log('Redirecting to authorization uri: ' + uri)
-
-
       res.redirect(uri);
   });
 
@@ -74,52 +72,34 @@ router.get('/connect_handler', (req, res) => {
     })
 })
 
-
-
-
-
-        /*this is the Get route to get customer from quickbooks
-        the functions called inside prepare the customers to be inserted 
-                        into DB*/
+  /*this is the Get route to get customer from quickbooks
+  the functions called inside prepare the customers to be inserted 
+                  into DB*/
 
 router.get('/customer', function (req, res) {
     console.log('in server fetch customers')
+    var token = tools.getToken(req.session)
+    console.log('tokens',token.expires);
     var query = '/query?query= select * from customer'
     var url = config.api_uri + req.session.realmId + query
-    // console.log('Making API Customer call to: ' + url)
-    var requestObj = {
+    console.log('Making API Customer call to: ' + url)
+
+    axios({
+      method: 'GET',
       url: url,
       headers: {
-        // 'Authorization': 'Bearer ' + token.accessToken,
+        'Authorization': 'Bearer ' + token.accessToken,
         'Accept': 'application/json'
       }
-  
-    }
-
-    request(requestObj, function (err, response) {
-  
-      tools.checkForUnauthorized(req, requestObj, err, response).then(function ({ err, response }) {
-        if (err || response.statusCode != 200) {
-          return res.json({ error: err, statusCode: response.statusCode })
-        }
-
-        let customers = JSON.parse(response.body)
-      
-        //this function starts the process of formatting the customers
-        let filteredCustomers =  filterCustomers(customers)
-
-        //one more filter to remove key no longer needed on object
-        let finalCustomers = filteredCustomers.filter(customer => delete customer.notesObj )
-        
-
-        /*  this sucessfully sent back the customers after being processed
-        do we need to worry about timing issues long term?  */
-        res.send(finalCustomers)
-        
-      }, function (err) {
-        console.log(err)
-        return res.json(err)
-      })
+    }).then(response=>{
+      const customers = response.data;
+      //this function starts the process of formatting the customers
+      let filteredCustomers =  filterCustomers(customers)
+      res.send(filteredCustomers);
+      // /*  this sucessfully sent back the customers after being processed
+      // do we need to worry about timing issues long term?  */
+    }).catch(error=>{
+      console.log('err',error);
     })
   
   })
@@ -153,7 +133,9 @@ router.get('/customer', function (req, res) {
     }
     // this next function deals with dogs' names and schedules 
     let customersWithSchedule = getDogSchedule(customersAfterProcessing)
-    return customersWithSchedule
+    //one more filter to remove key no longer needed on object
+    let finalCustomers = customersWithSchedule.filter(customer => delete customer.notesObj);
+    return finalCustomers;
   }
   
   function getDogSchedule(customers) {

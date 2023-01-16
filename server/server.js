@@ -22,7 +22,7 @@ const invoiceRouter = require('./routes/invoice.router');
 const clientScheduleRouter = require('./routes/clientSchedule.router');
 const adminRouter = require('./routes/admin.router');
 const quickbooksRouter = require('./routes/quickbooks.router');
-const callbackRouter = require('./routes/callback.router');
+// const callbackRouter = require('./routes/callback.router');
 const testRouter = require('./routes/test.router');
 
 
@@ -75,7 +75,7 @@ app.use('/api/clientSchedule', clientScheduleRouter);
 
 app.use('/api/admin', adminRouter);
 app.use('/api/quickbooks', quickbooksRouter);
-app.use('/api/callback', callbackRouter)
+// app.use('/api/callback', callbackRouter)
 app.use('/api/test', testRouter)
 
 

@@ -159,7 +159,13 @@ function ClientDetails(){
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                 />
-
+              <TextField
+                focused={false}
+                value={client.mobile || ''} 
+                helperText="Mobile"  
+                size="small" 
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                />
               <TextField
                 focused={false}
                 value={client.email} 
@@ -173,15 +179,15 @@ function ClientDetails(){
                 helperText="Vet Name"  
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
-            />
+             />
               <TextField
                 focused={false}
                 value={client.vet_phone || ''} 
                 helperText="Vet Phone"  
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
-               />
-               <TextField
+              />
+              <TextField
                 focused={false}
                 value={client.route_name || ''} 
                 helperText="Default Route"  

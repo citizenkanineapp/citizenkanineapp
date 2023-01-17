@@ -5,7 +5,7 @@ function AboutPage() {
   const dispatch = useDispatch();
 
   // useEffect(() => {
-  //   dispatch({ type: 'AUTHORIZATION_REQUEST'})
+  //   dispatch({ type: 'FETCH_CLIENTS'})
   // }, []);
 
   const authURL = useSelector(store => store.oAuth2Reducer)
@@ -15,8 +15,12 @@ function AboutPage() {
    location.href = "http://localhost:5000/api/quickbooks/connect_handler";
   }
 
-  const apiCall = ()=>{
+  const originalSync = ()=>{
     dispatch({ type: 'GET_QB_CUSTOMERS'})
+  }
+
+  const updateAllCustomers= ()=>{
+    dispatch({ type: 'UPDATE_ALL_QB_CUSTOMERS'})
   }
 
 
@@ -24,7 +28,8 @@ function AboutPage() {
     <div className="container">
       <h1>AboutPage</h1>
       <button onClick={connectQB}>Connect to QB</button>
-      <button onClick={apiCall}>API call</button>
+      <button onClick={originalSync}>Original Sync Test</button>
+      <button onClick={updateAllCustomers}>Update All Customers</button>
     </div>
   );
 }

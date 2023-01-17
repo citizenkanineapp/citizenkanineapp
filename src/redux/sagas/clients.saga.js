@@ -188,6 +188,7 @@ function* regularScheduleChange(action){
 
 function* updatedScheduleChange(action){
     const updatedChanges = action.payload;
+    console.log('what is sent to server?', action.payload)
     try {
         const changes = yield axios({
             method: 'PUT',
@@ -201,6 +202,7 @@ function* updatedScheduleChange(action){
     }
 }
 
+//I don't think this is being used anymore?
 function* search(action){
     console.log('search term? ->>>>>>', action.payload)
     const searchText = action.payload

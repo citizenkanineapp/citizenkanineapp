@@ -22,7 +22,8 @@ function EditDogForm(){
   }
   
   const back = event => {
-    dispatch({type: 'CLEAR_NEW_DOG'})
+    // dispatch({type: 'CLEAR_NEW_DOG'})
+    dispatch({type: 'CLEAR_EDIT_DOG'})
     dispatch({ type: 'BACK_TO_VIEW'})
   }
 

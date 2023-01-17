@@ -30,9 +30,9 @@ function ClientSchedule() {
   
   
   useEffect(() => {
-    dispatch({ type: 'FETCH_SCHEDULE', payload: client.id })
+    dispatch({ type: 'FETCH_SCHEDULE', payload: client.client_id })
     // Fetch client schedule changes
-    dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.id })
+    dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.client_id })
   }, []);
   
   const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
@@ -71,12 +71,12 @@ function ClientSchedule() {
     let newChanges = [];
     if (dog === "all") {
       client.dogs.map(singleDog => {
-        let thisChange = { dog_id: singleDog.dog_id, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled }
+        let thisChange = { dog_id: singleDog.dog_id, client_id: client.client_id, date_to_change: changeDate, is_scheduled: scheduled }
         newChanges.push(thisChange)
       })
     }
     else {
-      let thisChange = { dog_id: dog, client_id: client.id, date_to_change: changeDate, is_scheduled: scheduled }
+      let thisChange = { dog_id: dog, client_id: client.client_id, date_to_change: changeDate, is_scheduled: scheduled }
       newChanges.push(thisChange)
     }
 

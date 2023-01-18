@@ -175,7 +175,7 @@ router.get('/customer', function (req, res) {
 
   /*To initially add QB customers to DB */
   router.post('/qbcustomers', async (req, res) => {
-    // console.log('arrvied in server?', req.body)
+    console.log('arrvied in server?', req.body)
 
     const client = await pool.connect();
     const customers = req.body // obj desctructing of QB data

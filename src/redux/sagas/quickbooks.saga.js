@@ -65,7 +65,6 @@ function* addAllQbCustomers(action){
 
 function* updateAllQbCustomers(action){
     console.log('arrived in function to compare DB to QB');
-    try {
         /* These two axios calls get the DB and QB customers */
         const qbCustomers = yield axios.get('/api/quickbooks/customer')
         const dbCustomers = yield axios.get('/api/clients')
@@ -82,11 +81,25 @@ function* updateAllQbCustomers(action){
 
          /* Post Route to Add Unique Customers to Database*/
 
+         if (uniqueCustomers.length === 0){
+            yield put ({type: 'FETCH_CLIENTS'});
+            console.log('Clients are up to date')
+         } else {
+        try {
+            const qbClients = yield axios({
+                method: 'POST',
+                url: '/api/quickbooks/qbcustomers',
+                data: uniqueCustomers
+         })
+         
+         //fetches clients from CK database
+        yield put ({type: 'FETCH_CLIENTS'});
+
     } catch (error) {
         console.log(error);
-        alert('Error updating customers!');
-    }
-    
+        alert('Error updating QB customers!');
+    }   
+    } 
 }
 
 function* quickBooksSaga() {

@@ -271,7 +271,7 @@ function ClientDetails(){
                 onClick={back}>Back</Button>
             <Tooltip title="Delete Client" placement="top-end">
               <Button variant="contained"
-                onClick={() => deleteClient(client.id)}>Delete</Button> 
+                onClick={() => deleteClient(client.client_id)}>Delete</Button> 
             </Tooltip>
             </Box>
               <Button variant="contained" color="secondary"

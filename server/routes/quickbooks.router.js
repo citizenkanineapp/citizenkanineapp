@@ -3,15 +3,13 @@ const axios = require('axios');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
 const cors = require('cors');
-const config = require('../../config.json')
+const config = require('../../config.json');
+const request = require('request');
 const router = express.Router();
 
-// var corsOptions = {
-//     origin: 'http://localhost:3000',
-//     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-//   }
-// app.use(cors());
-
+const {
+  checkAuthTokens,
+} = require('../modules/oauth2-middleware');
 
 router.get('/connect_handler', (req, res) => {
     // GET route code here
@@ -34,7 +32,7 @@ router.get('/connect_handler', (req, res) => {
   });
 
   router.get('/callback', function (req, res) {
-    console.log('in /api/quickbooks/callback')
+    console.log('in /api/quickbooks/callback');
     // console.log('do we get req.session.realmId', req.session)
     // Verify anti-forgery
     if(!tools.verifyAntiForgery(req.session, req.query.state)) {
@@ -42,29 +40,41 @@ router.get('/connect_handler', (req, res) => {
     }
 
     // Exchange auth code for access token
-    tools.intuitAuth.code.getToken(req.originalUrl).then(function (token) {
+    tools.intuitAuth.code.getToken(req.originalUrl).then(async function (token) {
     // Store token - this would be where tokens would need to be
     // persisted (in a SQL DB, for example).
     tools.saveToken(req.session, token)
+
+    console.log('token', token);
     
     try {
-      const tokensQuery = (tokenType)=>{
-        return `
-          INSERT INTO "oauth2_${tokenType}_tokens" ("${tokenType}_token", "time") VALUES ($1, NOW());
-        `
-      }
-    // console.log(req.session.data)
-    pool.query(tokensQuery('access'),[req.session.data.access_token]);
-    pool.query(tokensQuery('refresh'),[req.session.data.refresh_token]);
+      // const tokensQuery = (tokenType, interval)=>{
+      //   return `
+      //     UPDATE "oauth2_${tokenType}_tokens"
+      //       SET
+      //         ${tokenType}_token = $1,
+      //         time = NOW() + interval '${interval}'
+      //       WHERE id = 1 
+      //       RETURNING time;
+      //   `
+      // }
+      const tokensQuery = `
+        UPDATE "oauth2_tokens"
+          SET
+            access_token = $1,
+            access_time = NOW() + INTERVAL '3600 seconds',
+            refresh_token = $2,
+            refresh_time = NOW() + INTERVAL '8726400 seconds'
+          WHERE id = 1
+          RETURNING access_time, refresh_time;
+      `
+    const accessTime = await pool.query(tokensQuery,[token.accessToken, token.refreshToken]);
+    console.log(accessTime.rows);
 
     } catch(err) {
  
     }
-    // console.log(req.query.refresh_token);
-    // req.session.realmId = req.query.realmId;
-    // req.session.data.access_token = req.query.access_token;
-    // req.session.data.refresh_token = req.query.refresh_token;
-    // console.log(req.session.realmId, req.session.data.refresh_token, req.session.data.access_token);
+    req.session.realmId = req.query.realmId;
 
     res.redirect('http://localhost:3000/#/about')
   
@@ -75,31 +85,66 @@ router.get('/connect_handler', (req, res) => {
   the functions called inside prepare the customers to be inserted 
                   into DB*/
 
-router.get('/customer', function (req, res) {
-    console.log('in server fetch customers')
-    var token = tools.getToken(req.session)
-    console.log('tokens',token.expires);
-    var query = '/query?query= select * from customer'
-    var url = config.api_uri + req.session.realmId + query
-    console.log('Making API Customer call to: ' + url)
 
-    axios({
-      method: 'GET',
-      url: url,
-      headers: {
-        'Authorization': 'Bearer ' + token.accessToken,
-        'Accept': 'application/json'
+router.get('/customer', checkAuthTokens, (req, res) => {
+  console.log('in server fetch customers')
+  var token = tools.getToken(req.session)
+  // console.log(token.accessToken)
+  // console.log(tools.basicAuth)
+
+  var query = '/query?query= select * from customer'
+  var url = config.api_uri + req.session.realmId + query
+  console.log('Making API Customer call to: ' + url)
+  
+  // tools.refreshTokensWithToken(token.refreshToken)
+
+  var requestObj = {
+    url: url,
+    headers: {
+      'Authorization': 'Bearer ' + token.accessToken,
+      'Accept': 'application/json'
+    }
+  }
+
+  request(requestObj, function (err, response) { 
+    // req.session.accessToken = 'bad!'
+    // req.session.refreshToken = '0202'
+    console.log('first log', tools.getToken(req.session))
+
+    tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
+      // if (err&& err.data.error === 'invalid_grant') {
+      //   // console.log('in CHECK FOR UNAUTHORIZED', err.data.error)
+      // }
+      if (err || response.statusCode != 200) {
+        if(err.body.error === 'invalid_grant') {
+          console.log(err.body.error)
+          res.send('connectToQB')
+
+        } else {
+        return res.json({ error: err, statusCode: response.statusCode })
+        }
+      } else {
+
+
+
+
+        let customers = JSON.parse(response.body)
+      
+        //this function starts the process of formatting the customers
+        let filteredCustomers =  filterCustomers(customers)
+        req.session.data.extra = 'testd';
+        console.log('second log', tools.getToken(req.session))
+
+        /*  this sucessfully sent back the customers after being processed
+        do we need to worry about timing issues long term?  */
+        res.send(filteredCustomers)
       }
-    }).then(response=>{
-      const customers = response.data;
-      //this function starts the process of formatting the customers
-      let filteredCustomers =  filterCustomers(customers)
-      res.send(filteredCustomers);
-      // /*  this sucessfully sent back the customers after being processed
-      // do we need to worry about timing issues long term?  */
-    }).catch(error=>{
-      console.log('err',error);
+      
+    }, function (err) {
+      console.log(err)
+      return res.json(err)
     })
+  })
   
   })
 

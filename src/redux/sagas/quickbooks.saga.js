@@ -8,12 +8,13 @@ function* authorizationRequest (action) {
             method: 'GET',
             url: '/api/quickbooks/connect_handler'
         })
+        console.log('in QB saga', uri);
 
         // I DON"T KNOW IF WE WANT TO SET URI TO DATA.
-        yield put({
-            type: 'SET_AUTH_URL',
-            payload: uri.data
-        })
+        // yield put({
+        //     type: 'SET_AUTH_URL',
+        //     payload: uri.data
+        // })
     }
     catch {
         console.log('error in authorizationRequest');
@@ -29,6 +30,9 @@ function* fetchQbCustomers (action) {
             url: '/api/quickbooks/customer'
         })
         console.log(customers)
+        if (customers.data === 'connectToQB'){
+            location.href = "http://localhost:5000/api/quickbooks/connect_handler"
+        }
         // yield put({
         //     type: 'SET_AUTH_URL',
         //     payload: uri.data

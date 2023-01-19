@@ -2,7 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
-const cors = require('cors');
+// const cors = require('cors');
 const config = require('../../config.json');
 const request = require('request');
 const router = express.Router();
@@ -47,35 +47,26 @@ router.get('/connect_handler', (req, res) => {
 
     console.log('token', token);
     
-    try {
-      // const tokensQuery = (tokenType, interval)=>{
-      //   return `
-      //     UPDATE "oauth2_${tokenType}_tokens"
-      //       SET
-      //         ${tokenType}_token = $1,
-      //         time = NOW() + interval '${interval}'
-      //       WHERE id = 1 
-      //       RETURNING time;
-      //   `
-      // }
-      const tokensQuery = `
-        UPDATE "oauth2_tokens"
-          SET
-            access_token = $1,
-            access_time = NOW() + INTERVAL '3600 seconds',
-            refresh_token = $2,
-            refresh_time = NOW() + INTERVAL '8726400 seconds'
-          WHERE id = 1
-          RETURNING access_time, refresh_time;
-      `
-    const accessTime = await pool.query(tokensQuery,[token.accessToken, token.refreshToken]);
-    console.log(accessTime.rows);
+      // this block of code stores returned tokens and expiration times in SQL db. unnecessary, as we are currently relying on browser storage of tokens. this will not pass must
+      // ALSO, it might make sense to move this to storage but abandon the time field. we are refreshing automatically based on server responses.
+    // try {
+    //   const tokensQuery = `
+    //     UPDATE "oauth2_tokens"
+    //       SET
+    //         access_token = $1,
+    //         access_time = NOW() + INTERVAL '3600 seconds',
+    //         refresh_token = $2,
+    //         refresh_time = NOW() + INTERVAL '8726400 seconds'
+    //       WHERE id = 1
+    //       RETURNING access_time, refresh_time;
+    //   `
+    // const accessTime = await pool.query(tokensQuery,[token.accessToken, token.refreshToken]);
+    // console.log(accessTime.rows);
 
-    } catch(err) {
+    // } catch(err) {
  
-    }
+    // }
     req.session.realmId = req.query.realmId;
-
     res.redirect('http://localhost:3000/#/about')
   
     })
@@ -86,7 +77,7 @@ router.get('/connect_handler', (req, res) => {
                   into DB*/
 
 
-router.get('/customer', checkAuthTokens, (req, res) => {
+router.get('/customer', (req, res) => {
   console.log('in server fetch customers')
   var token = tools.getToken(req.session)
   // console.log(token.accessToken)
@@ -107,32 +98,33 @@ router.get('/customer', checkAuthTokens, (req, res) => {
   }
 
   request(requestObj, function (err, response) { 
+    // FOR TESTING
     // req.session.accessToken = 'bad!'
     // req.session.refreshToken = '0202'
-    console.log('first log', tools.getToken(req.session))
+    // console.log('first log', tools.getToken(req.session))
+
+    // checks current access token. If access token is expired, it renews access token with stored refresh token.
+    // we need to test this at least 36 hours after refresh changes.
 
     tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
-      // if (err&& err.data.error === 'invalid_grant') {
-      //   // console.log('in CHECK FOR UNAUTHORIZED', err.data.error)
-      // }
-      if (err || response.statusCode != 200) {
-        if(err.body.error === 'invalid_grant') {
-          console.log(err.body.error)
-          res.send('connectToQB')
+        // status code 401 corrosponds to unauthorized request.
+        // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
+      if (response.statusCode === 401 ) {
+        // FOR TESTING
+        // console.log(response.statusCode)
+        // console.log(err.body)
+        // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
+        res.send('connectToQB')
 
-        } else {
+        // don't know if this second else-if block is necessary, ie, covering non-401 errors.
+      } else if (err || response.statusCode != 200) {
         return res.json({ error: err, statusCode: response.statusCode })
-        }
       } else {
 
-
-
-
+        // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci 
         let customers = JSON.parse(response.body)
-      
         //this function starts the process of formatting the customers
         let filteredCustomers =  filterCustomers(customers)
-        req.session.data.extra = 'testd';
         console.log('second log', tools.getToken(req.session))
 
         /*  this sucessfully sent back the customers after being processed

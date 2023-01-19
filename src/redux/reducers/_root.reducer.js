@@ -16,6 +16,7 @@ import clientReducer from './client.reducer';
 import routeReducer from './route.reducer';
 import details from './details.reducer';
 import adminNotesReducer from './adminNotes.reducer';
+import oAuth2Reducer from './oAuth2.reducer';
 
 
 const rootReducer = combineReducers({
@@ -35,7 +36,8 @@ const rootReducer = combineReducers({
   searchReducer,
   adminNotesReducer,
   details,
-  invoiceReducer
+  invoiceReducer,
+  oAuth2Reducer
 });
 
 export default rootReducer;

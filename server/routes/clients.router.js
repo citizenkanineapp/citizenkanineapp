@@ -19,7 +19,7 @@ const {
 router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   // console.log('arrived in server get all route')
   const queryText = `
-                    SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
+                    SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, clients.lat, clients.long, routes.id as route,
                     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, 
                     dogs.vet_phone, dogs.flag, dogs.regular, dogs.active, clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
                             JOIN dogs
@@ -62,12 +62,12 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
         let forDogMap = group[uniqueIds[i]]
 
         // const {first_name, last_name, address} = result.rows[0];
-        const { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday } = forDogMap[0];
-        const client = { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday }
+        const { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday, lat, long } = forDogMap[0];
+        const client = { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday, lat, long }
         let dogsPreFilter = forDogMap.map(dog => { return ({ dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular, active: dog.active}) })
 
        const dogsResult = dogsPreFilter.filter(dog => dog.active === true)
-       console.log ('dogs array?', dogsResult)
+      //  console.log ('dogs array?', dogsResult)
        
        //add dogs to client
         client.dogs = dogsResult
@@ -89,7 +89,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
  */
 router.post('/', rejectUnauthenticated, async (req, res) => {
   // console.log(req.body);
-  console.log(req.user);
+  // console.log(req.user);
   const client = await pool.connect();
   const { first_name, last_name, street, city, zip, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone, flag } = req.body
   // const customer = {first_name, last_name, address, phone, email, route_id}
@@ -271,7 +271,7 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   // console.log('arrived in server get one route', req.params.id)
   let clientId = req.params.id
   const queryText = `
-    SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, routes.id as route,
+    SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.email, clients.lat, clients.long, routes.id as route,
     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, 
     dogs.vet_phone, dogs.notes as dog_notes, dogs.flag, dogs.regular, dogs.active,
    clients_schedule."1", clients_schedule."2", clients_schedule."3", clients_schedule."4", clients_schedule."5"  
@@ -321,8 +321,8 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
         let forDogMap = group[uniqueIds[i]]
 
         // const {first_name, last_name, address} = result.rows[0];
-        const { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name } = forDogMap[0];
-        const client = { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name }
+        const { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, lat, long } = forDogMap[0];
+        const client = { first_name, last_name, street, city, zip, id, phone, email, notes, vet_name, vet_phone, route, route_name, lat, long }
       let dogsPreFilter = forDogMap.map(dog => { return ({ dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular, active: dog.active}) })
 
        const dogsResult = dogsPreFilter.filter(dog => dog.active === true)

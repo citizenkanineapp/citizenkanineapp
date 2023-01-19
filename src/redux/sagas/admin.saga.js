@@ -2,7 +2,7 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* setAdminNotes(action) {
-    console.log('Admin Notes', action.payload);
+    // console.log('Admin Notes', action.payload);
     const note = { notes: action.payload }
     try {
         const notes = yield axios({
@@ -18,7 +18,7 @@ function* setAdminNotes(action) {
 }
 
 function* fetchAdminNotes(action) {
-    console.log('Get Admin Notes', action.payload);
+    // console.log('Get Admin Notes', action.payload);
     try {
         const notes = yield axios.get('/api/admin');
         yield put({ type: 'SET_NOTES', payload: notes.data });

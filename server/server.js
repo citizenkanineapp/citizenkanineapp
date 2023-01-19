@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-// const cors = require('cors');
+const cors = require('cors');
 require('dotenv').config();
+
+
+// const OAuthClient = require('intuit-oauth');
+
 const app = express();
 
-// app.use(cors());
 
 const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
@@ -19,7 +22,8 @@ const invoiceRouter = require('./routes/invoice.router');
 const clientScheduleRouter = require('./routes/clientSchedule.router');
 const adminRouter = require('./routes/admin.router');
 const quickbooksRouter = require('./routes/quickbooks.router');
-const callbackRouter = require('./routes/callback.router');
+// const callbackRouter = require('./routes/callback.router');
+const testRouter = require('./routes/test.router');
 
 
 
@@ -39,6 +43,24 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(
+  cors({
+    origin: "http://localhost:3000", // allow to server to accept request from different origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true // allow session cookie from browser to pass through
+  })
+);
+
+
+
+/* OAuth Library */
+// const oauthClient = new OAuthClient({
+//   clientId: process.env.clientId,
+//   clientSecret: process.env.clientSecret,
+//   environment: 'sandbox' || 'production',
+//   redirectUri: '<Enter your callback URL>',
+// });
+
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/image', imageRouter);
@@ -53,7 +75,8 @@ app.use('/api/clientSchedule', clientScheduleRouter);
 
 app.use('/api/admin', adminRouter);
 app.use('/api/quickbooks', quickbooksRouter);
-app.use('/api/callback', callbackRouter)
+// app.use('/api/callback', callbackRouter)
+app.use('/api/test', testRouter)
 
 
 

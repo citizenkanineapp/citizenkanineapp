@@ -7,70 +7,66 @@ const config = require('../../config.json');
 const request = require('request');
 const router = express.Router();
 
-const {
-  checkAuthTokens,
-} = require('../modules/oauth2-middleware');
-
-router.get('/connect_handler', (req, res) => {
-    // GET route code here
-    console.log('in api/quickbooks/connect_handler');
-    console.log(req.session.data)
-    // console.log(req)
+// router.get('/connect_handler', (req, res) => {
+//     // GET route code here
+//     console.log('in api/quickbooks/connect_handler');
+//     console.log(req.session.data)
+//     // console.log(req)
    
-    // Set  Accounting scopes
-    tools.setScopes('connect_handler')
+//     // Set  Accounting scopes
+//     tools.setScopes('connect_handler')
 
-    // // Constructs the authorization URI.
-    var uri = tools.intuitAuth.code.getUri({
-        // Add CSRF protection
-        state: tools.generateAntiForgery(req.session)
-    })
-    // Redirect
-    console.log('Redirecting to authorization uri: ' + uri)
-    // console.log('after generating CSRF state',req.session)
-    res.redirect(uri);
-  });
+//     // // Constructs the authorization URI.
+//     var uri = tools.intuitAuth.code.getUri({
+//         // Add CSRF protection
+//         state: tools.generateAntiForgery(req.session)
+//     })
+//     // Redirect
+//     console.log('Redirecting to authorization uri: ' + uri)
+//     // console.log('after generating CSRF state',req.session)
+//     res.redirect(uri);
+//   });
 
-  router.get('/callback', function (req, res) {
-    console.log('in /api/quickbooks/callback');
-    // console.log('do we get req.session.realmId', req.session)
-    // Verify anti-forgery
-    if(!tools.verifyAntiForgery(req.session, req.query.state)) {
-        return res.send('Error - invalid anti-forgery CSRF response!')
-    }
+//   router.get('/callback', function (req, res) {
+//     console.log('in /api/quickbooks/callback');
+//     // console.log('do we get req.session.realmId', req.session)
+//     // Verify anti-forgery
+//     if(!tools.verifyAntiForgery(req.session, req.query.state)) {
+//         return res.send('Error - invalid anti-forgery CSRF response!')
+//     }
 
-    // Exchange auth code for access token
-    tools.intuitAuth.code.getToken(req.originalUrl).then(async function (token) {
-    // Store token - this would be where tokens would need to be
-    // persisted (in a SQL DB, for example).
-    tools.saveToken(req.session, token)
+//     // Exchange auth code for access token
+//     tools.intuitAuth.code.getToken(req.originalUrl).then(async function (token) {
+//     // Store token - this would be where tokens would need to be
+//     // persisted (in a SQL DB, for example).
+//     tools.saveToken(req.session, token)
 
-    console.log('token', token);
+//     console.log('token', token);
     
-      // this block of code stores returned tokens and expiration times in SQL db. unnecessary, as we are currently relying on browser storage of tokens. this will not pass must
-      // ALSO, it might make sense to move this to storage but abandon the time field. we are refreshing automatically based on server responses.
-    // try {
-    //   const tokensQuery = `
-    //     UPDATE "oauth2_tokens"
-    //       SET
-    //         access_token = $1,
-    //         access_time = NOW() + INTERVAL '3600 seconds',
-    //         refresh_token = $2,
-    //         refresh_time = NOW() + INTERVAL '8726400 seconds'
-    //       WHERE id = 1
-    //       RETURNING access_time, refresh_time;
-    //   `
-    // const accessTime = await pool.query(tokensQuery,[token.accessToken, token.refreshToken]);
-    // console.log(accessTime.rows);
+//       // this block of code stores returned tokens and expiration times in SQL db. unnecessary, as we are currently relying on browser storage of tokens. this will not pass must
+//       // ALSO, it might make sense to move this to storage but abandon the time field. we are refreshing automatically based on server responses.
+//     // try {
+//     //   const tokensQuery = `
+//     //     UPDATE "oauth2_tokens"
+//     //       SET
+//     //         access_token = $1,
+//     //         access_time = NOW() + INTERVAL '3600 seconds',
+//     //         refresh_token = $2,
+//     //         refresh_time = NOW() + INTERVAL '8726400 seconds'
+//     //       WHERE id = 1
+//     //       RETURNING access_time, refresh_time;
+//     //   `
+//     // const accessTime = await pool.query(tokensQuery,[token.accessToken, token.refreshToken]);
+//     // console.log(accessTime.rows);
 
-    // } catch(err) {
+//     // } catch(err) {
  
-    // }
-    req.session.realmId = req.query.realmId;
-    res.redirect('http://localhost:3000/#/about')
+//     // }
+//     req.session.realmId = req.query.realmId;
+//     res.redirect('http://localhost:3000/#/about')
   
-    })
-})
+//     })
+// })
 
   /*this is the Get route to get customer from quickbooks
   the functions called inside prepare the customers to be inserted 
@@ -79,17 +75,17 @@ router.get('/connect_handler', (req, res) => {
 
 router.get('/customer', (req, res) => {
   console.log('in server fetch customers')
-  var token = tools.getToken(req.session)
+  const token = tools.getToken(req.session)
   // console.log(token.accessToken)
   // console.log(tools.basicAuth)
 
-  var query = '/query?query= select * from customer'
-  var url = config.api_uri + req.session.realmId + query
+  const query = '/query?query= select * from item'
+  const url = config.api_uri + req.session.realmId + query
   console.log('Making API Customer call to: ' + url)
   
   // tools.refreshTokensWithToken(token.refreshToken)
 
-  var requestObj = {
+  const requestObj = {
     url: url,
     headers: {
       'Authorization': 'Bearer ' + token.accessToken,
@@ -120,12 +116,15 @@ router.get('/customer', (req, res) => {
       } else if (err || response.statusCode != 200) {
         return res.json({ error: err, statusCode: response.statusCode })
       } else {
-
+        // const items = JSON.parse(response.body).QueryResponse.Item;
+        // for(let item of items){
+        // console.log(item)
+        // }
         // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci 
         let customers = JSON.parse(response.body)
-        //this function starts the process of formatting the customers
+        // this function starts the process of formatting the customers
         let filteredCustomers =  filterCustomers(customers)
-        console.log('second log', tools.getToken(req.session))
+        // console.log('second log', tools.getToken(req.session))
 
         /*  this sucessfully sent back the customers after being processed
         do we need to worry about timing issues long term?  */

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { CSVLink } from "react-csv";
 import { Button, Box } from "@mui/material";
 import dayjs from 'dayjs';
@@ -7,6 +7,7 @@ import './CSVLink.css';
 // dayjs.extend(localeData);
 
 const ExportCSV = ({ monthsShort }) => {
+    const dispatch = useDispatch();
     const invoiceItems = useSelector(store => store.invoiceReducer);
     // console.log(invoiceItems);
 
@@ -48,15 +49,25 @@ const ExportCSV = ({ monthsShort }) => {
     return (
         <Box component="span">
             {invoiceItems && invoiceItems.map &&
-                <Button size="small" variant="contained" color="primary" sx={{ mx: 1, mt: 1 }}>
-                    <CSVLink
-                        headers={headers}
-                        data={data}
-                        filename={`invoice_${data[0].InvoiceDate}.csv` || null}
-                        id='csvButton'
-                    >
+                // <Button size="small" variant="contained" color="primary" sx={{ mx: 1, mt: 1 }}>
+                //     <CSVLink
+                //         headers={headers}
+                //         data={data}
+                //         filename={`invoice_${data[0].InvoiceDate}.csv` || null}
+                //         id='csvButton'
+                //     >
+                //         EXPORT
+                //     </CSVLink>
+                // </Button>
+                <Button 
+                    onClick={
+                        e=>dispatch({type: 'CREATE_QB_INVOICE', payload: invoiceItems })
+                    }
+                    size="small"
+                    variant="contained"
+                    color="primary"
+                    sx={{ mx: 1, mt: 1 }}>
                         EXPORT
-                    </CSVLink>
                 </Button>
             }
         </Box>

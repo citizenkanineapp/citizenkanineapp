@@ -22,8 +22,9 @@ const invoiceRouter = require('./routes/invoice.router');
 const clientScheduleRouter = require('./routes/clientSchedule.router');
 const adminRouter = require('./routes/admin.router');
 const quickbooksRouter = require('./routes/quickbooks.router');
-// const callbackRouter = require('./routes/callback.router');
-const testRouter = require('./routes/test.router');
+const oauth2Router = require('./routes/quickbooks.oauth2.router');
+const qbInvoiceRouter = require ('./routes/quickbooks.invoice.router');
+// const testRouter = require('./routes/test.router');
 
 
 
@@ -51,8 +52,6 @@ app.use(
   })
 );
 
-
-
 /* OAuth Library */
 // const oauthClient = new OAuthClient({
 //   clientId: process.env.clientId,
@@ -75,8 +74,9 @@ app.use('/api/clientSchedule', clientScheduleRouter);
 
 app.use('/api/admin', adminRouter);
 app.use('/api/quickbooks', quickbooksRouter);
-// app.use('/api/callback', callbackRouter)
-app.use('/api/test', testRouter)
+app.use('/api/oauth2', oauth2Router)
+app.use('/api/qbInvoice', qbInvoiceRouter);
+// app.use('/api/test', testRouter)
 
 
 

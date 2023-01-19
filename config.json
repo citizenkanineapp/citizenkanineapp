@@ -1,5 +1,5 @@
 {
-    "redirectUri": "http://localhost:5000/api/quickbooks/callback",
+    "redirectUri": "http://localhost:5000/api/oauth2/callback",
     "configurationEndpoint": "https://developer.api.intuit.com/.well-known/openid_sandbox_configuration/",
     "api_uri": "https://sandbox-quickbooks.api.intuit.com/v3/company/",
     "scopes": {

@@ -12,7 +12,7 @@ function AboutPage() {
   
   //curently re-directing to quickbooks log in but not working
   const connectQB = ()=>{
-   location.href = "http://localhost:5000/api/quickbooks/connect_handler";
+   location.href = "http://localhost:5000/api/oauth2/connect_handler";
   }
 
   const apiCall = ()=>{

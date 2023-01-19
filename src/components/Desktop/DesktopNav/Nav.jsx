@@ -125,7 +125,7 @@ function Nav(props) {
                 </Button>
               ))}
             </Box>
-            <Button variant="contained" color="tertiary">Quickbooks Sync</Button>
+            {/* <Button variant="contained" color="tertiary">Quickbooks Sync</Button> */}
 
           </Toolbar>
         )}

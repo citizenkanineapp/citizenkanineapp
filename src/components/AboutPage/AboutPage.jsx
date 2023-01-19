@@ -22,6 +22,10 @@ function AboutPage() {
   const updateAllCustomers= ()=>{
     dispatch({ type: 'UPDATE_ALL_QB_CUSTOMERS'})
   }
+  const putRouteCustomers = ()=>{
+    dispatch({ type: 'PUT_ROUTE_QB_CUSTOMERS'})
+  }
+
 
 
   return (
@@ -29,7 +33,8 @@ function AboutPage() {
       <h1>AboutPage</h1>
       <button onClick={connectQB}>Connect to QB</button>
       <button onClick={originalSync}>Original Sync Test</button>
-      <button onClick={updateAllCustomers}>Update All Customers</button>
+      <button onClick={updateAllCustomers}>Pull New Customers</button>
+      <button onClick={putRouteCustomers}>Update All Customers</button>
     </div>
   );
 }

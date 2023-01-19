@@ -102,11 +102,40 @@ function* updateAllQbCustomers(action){
     } 
 }
 
+//For checking for updates to existing clients and updating them
+function* putRouteCustomers (action) {
+    console.log('arrived in saga for updating qb customers')
+    const qbCustomers = yield axios.get('/api/quickbooks/customer')
+    const dbCustomers = yield axios.get('/api/clients')
+    let qbResult = qbCustomers.data
+    let dbResult = dbCustomers.data
+        console.log('Quickbooks customers:', qbResult)
+        console.log('Database customers:', dbResult)
+    const combinedDataObject = {
+        qb: qbResult,
+        db: dbResult
+    }
+
+    try {
+        const customers = yield axios({
+            method: 'PUT',
+            url: '/api/quickbooks/customer/put',
+            data: combinedDataObject
+        })
+        // console.log(customers)
+    }
+    catch {
+        console.log('error updating clients');
+    }
+  
+}
+
 function* quickBooksSaga() {
     yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
     yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
     yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);
     yield takeLatest('UPDATE_ALL_QB_CUSTOMERS', updateAllQbCustomers);
+    yield takeLatest('PUT_ROUTE_QB_CUSTOMERS', putRouteCustomers)
 }
 
 export default quickBooksSaga;

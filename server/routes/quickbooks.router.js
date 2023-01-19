@@ -3,18 +3,12 @@ const axios = require('axios');
 const app = express();
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
-const cors = require('cors');
+// const cors = require('cors');
 const config = require('../../config.json')
 const request = require('request')
 
 const router = express.Router();
 
-
-// var corsOptions = {
-//     origin: 'http://localhost:3000',
-//     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-//   }
-// app.use(cors());
 
 router.get('/trigger', async (req, res) => {
   console.log('trigger');
@@ -81,6 +75,7 @@ router.get('/customer', function (req, res) {
         }
 
         let customers = JSON.parse(response.body)
+        // console.log('response from QB', response)
       
         //this function starts the process of formatting the customers
         let filteredCustomers =  filterCustomers(customers)
@@ -303,5 +298,135 @@ router.get('/customer', function (req, res) {
     }
     return customers
   }
+
+
+  router.put('/customer/put', (req, res) => {
+    // console.log('arrived in server', req.body)
+    let qbData = req.body.qb
+    let dbData = req.body.db
+    console.log('qb data:', qbData.length)
+    console.log('db data:', dbData.length)
+  });
+  
+
+  /*This route gets QB clients and DB clients and
+    compares them. It will check for added or deleted dogs 
+    and process them accordingly */
+
+
+
+// router.get('/customer/put', async (req, res) => {
+//   let token = tools.getToken(req.session)
+//   console.log('in server fetch customers')
+//   var query = encodeURI('/query?query= select * from customer')
+//   var url = config.api_uri + req.session.realmId + query
+//   // console.log('Making API Customer call to: ' + url)
+//   var requestObj = {
+//     url: url,
+//     headers: {
+//       'Authorization': 'Bearer ' + token.accessToken,
+//       'Accept': 'application/json'
+//     }
+
+//   }
+
+//   request(requestObj,  function (err, response) {
+
+//     tools.checkForUnauthorized(req, requestObj, err, response).then(function ({ err, response }) {
+//       if (err || response.statusCode != 200) {
+//         return res.json({ error: err, statusCode: response.statusCode })
+//       }
+
+//       let customers = JSON.parse(response.body)
+//       // console.log('response from QB', response)
+    
+//       //this function starts the process of formatting the customers
+//       let filteredCustomers =  filterCustomers(customers)
+
+//       //one more filter to remove key no longer needed on object
+//       let qbCustomers = filteredCustomers.filter(customer => delete customer.notesObj )
+      
+
+//       /*  this sucessfully sent back the customers after being processed
+//       do we need to worry about timing issues long term?  */
+//       // console.log(qbCustomers)
+//       const dbClients = getDBclients()
+//       console.log('dbClients', dbClients)
+//       res.send(qbCustomers)
+//     }, function (err) {
+//       console.log(err)
+//       return res.json(err)
+//     })
+//   })
+
+//   });
+
+//   function getDBclients () {
+//     // console.log('hits this function')
+//     const queryText = `
+//                     SELECT clients.first_name, clients.id as client_id, clients.qb_id, clients.last_name, clients.notes, clients.phone, clients.mobile, clients.email, clients.lat, clients.long, routes.id as route,
+//                     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, 
+//                     dogs.vet_phone, dogs.flag, dogs.regular, dogs.active, clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
+//                             JOIN dogs
+//                             ON clients.id = dogs.client_id
+//                             JOIN routes
+//                             ON clients.route_id=routes.id
+//                             JOIN clients_schedule
+//                             ON clients.id = clients_schedule.client_id
+//                             ORDER BY clients.last_name ASC
+// ;
+//   `
+//  const clients = pool.query(queryText)
+//     .then(result => {
+//       // console.log('what comes back from query?', result.rows)
+//       //all IDs from database
+//       let idArray = [];
+//       for (let object of result.rows) {
+//         // console.log(object.id)
+//         idArray.push(object.client_id)
+//       }
+
+//       //this filters out duplicate IDs
+//       let uniqueIds = [...new Set(idArray)]
+
+//       //this groups result.rows by id
+//       const group = result.rows.reduce((acc, item) => {
+//         if (!acc[item.client_id]) {
+//           acc[item.client_id] = [];
+//         }
+
+//         acc[item.client_id].push(item);
+//         return acc;
+//       }, {})
+//       // console.log(result.rows);
+//       // console.log(group)
+//       let clients = [];
+
+
+//       for (let i = 0; i < uniqueIds.length; i++) {
+//         let forDogMap = group[uniqueIds[i]]
+
+//         // const {first_name, last_name, address} = result.rows[0];
+//         const { first_name, last_name, street, city, zip, client_id, qb_id, phone, mobile, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday, lat, long } = forDogMap[0];
+//         const client = { first_name, last_name, street, city, zip, client_id, qb_id, phone, mobile, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday, lat, long }
+//         let dogsPreFilter = forDogMap.map(dog => { return ({ client_id: client_id, dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular, active: dog.active}) })
+
+//        const dogsResult = dogsPreFilter.filter(dog => dog.active === true)
+//       //  console.log ('dogs array?', dogsResult)
+       
+//        //add dogs to client
+//         client.dogs = dogsResult
+        
+//         clients.push(client)
+//       }
+//       // console.log('does it create clients', clients)
+//       return clients
+//     })
+//     .catch(err => {
+//       console.log('Error getting clients list for client list component', err);
+//       res.sendStatus(500);
+//     })
+//     return clients
+//   }
 
 module.exports = router;

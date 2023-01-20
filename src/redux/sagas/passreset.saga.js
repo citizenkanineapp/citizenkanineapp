@@ -11,7 +11,7 @@ function* resetPass(action) {
 
     // passes the username and password from the payload to the server
     yield axios.put(`/api/user/passreset/${userId}`, action.payload);
-    yield axios.post(`/api/passreset/${userId}`)
+    // yield axios.post(`/api/passreset/${userId}`)
 
     // // automatically log a user in after registration
     // yield put({ type: 'LOGIN', payload: action.payload });
@@ -28,8 +28,24 @@ function* resetPass(action) {
   }
 }
 
+function* emailPassReset(action) {
+  try{
+    const email = action.payload;
+    console.log(email)
+    yield axios({
+      url:'/api/email_pass_reset',
+      method: 'POST',
+      data: {email: email}
+    });
+
+  } catch (error){
+
+  }
+}
+
 function* resetPassSaga() {
   yield takeLatest('RESETPASS', resetPass);
+  yield takeLatest('EMAIL_PASS_RESET', emailPassReset);
 }
 
 export default resetPassSaga;

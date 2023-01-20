@@ -26,7 +26,9 @@ function AboutPage() {
     dispatch({ type: 'PUT_ROUTE_QB_CUSTOMERS'})
   }
 
-
+  const passResetTest = ()=>{
+    dispatch({type: 'EMAIL_PASS_RESET', payload: 'citizenkanineapp@gmail.com'})
+  }
 
   return (
     <div className="container">
@@ -35,6 +37,7 @@ function AboutPage() {
       <button onClick={originalSync}>Original Sync Test</button>
       <button onClick={updateAllCustomers}>Pull New Customers</button>
       <button onClick={putRouteCustomers}>Update All Customers</button>
+      <button onClick={passResetTest}>passreset</button>
     </div>
   );
 }

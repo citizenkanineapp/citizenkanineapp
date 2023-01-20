@@ -14,29 +14,32 @@ const router = express.Router();
 
 // sends password reset email
 router.post('/', async (req, res) => {
+    
     const email = req.body.email;
+    console.log(email);
     // queries table if email exists
-    const queryTextEmail = `
-        SELECT EXISTS
-            (SELECT "email" FROM "user" WHERE "email"=$1);
-        `;
-    if (!email) {
-        console.log('no email');
-        res.sendStatus(500); //format error client side!
-    } else {
+    // const queryTextEmail = `
+    //     SELECT EXISTS
+    //         (SELECT "email" FROM "user" WHERE "email"=$1);
+    //     `;
+    // if (!email) {
+    //     console.log('no email');
+    //     res.sendStatus(500); //format error client side!
+    // } else {
 
-    //checks if email exists in database
-    const email_isTrue = await pool.query(queryTextEmail,[email])
+    // //checks if email exists in database
+    // const email_isTrue = await pool.query(queryTextEmail,[email])
 
-    //if e-mail exists
-    if(email_isTrue.rows[0].exists) {
+    // //if e-mail exists
+    // if(email_isTrue.rows[0].exists) {
         // console.log(email_isTrue.rows[0].exists);
 
         //generates password reset token
         const token = crypto.randomBytes(20).toString('hex');
         console.log('token: ',token);
         //get user id above
-        const resetExpires = Date.now();
+        const resetExpires = Date.now()+6000;
+        console.log(resetExpires);
         const queryTextToken = `
             UPDATE "user" 
               SET
@@ -77,13 +80,13 @@ router.post('/', async (req, res) => {
             }
         });
 
-    } else {
-        console.log(email_isTrue.rows[0].exists);
-        res.sendStatus(500); //formate error client side!
-    }
+    // } else {
+    //     console.log(email_isTrue.rows[0].exists);
+    //     res.sendStatus(500); //formate error client side!
+    // }
 
-    // res.sendStatus(200);
-    }
+    res.sendStatus(200);
+    // }
   });
   
   module.exports = router

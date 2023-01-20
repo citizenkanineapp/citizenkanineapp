@@ -12,7 +12,7 @@ router.get('/customer', (req, res) => {
   // console.log(token.accessToken)
   // console.log(tools.basicAuth)
 
-  const query = encodeURI('/query?query= select * from item');
+  const query = encodeURI('/query?query= select * from customer');
   const url = config.api_uri + req.session.realmId + query
   console.log('Making API Customer call to: ' + url)
   
@@ -55,6 +55,7 @@ router.get('/customer', (req, res) => {
         // }
         // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci 
         let customers = JSON.parse(response.body)
+        // console.log(customers)
         // this function starts the process of formatting the customers
         let filteredCustomers =  filterCustomers(customers)
         // console.log('second log', tools.getToken(req.session))
@@ -279,19 +280,51 @@ router.get('/customer', (req, res) => {
   }
 
 
+   //customer object = {
+        //   first_name: 'Sam',
+        //   last_name: 'Freeman',
+        //   dogs: ['Sandy', 'Shelley']
+        // }
+      // for (let dog of qbCustomer.dogs){
+        
+      //   // link them on qb id?
+      // }
+
   router.put('/customer/put', (req, res) => {
     // console.log('arrived in server', req.body)
     let allData = req.body
     let qbData = req.body.qb
     let dbData = req.body.db
-    console.log('qb data:', qbData.length)
-    console.log('db data:', dbData.length)
+    // console.log('qb data:', qbData.length)
+    // console.log('db data:', dbData.length)
     for(let qbCustomer of qbData){
-      for (let dog of qbCustomer.dogs){
-        console.log(`${qbCustomer.first_name} has a dog named ${dog.name} `)
+      for (let dbCustomer of dbData){
+        // console.log(' are dogs here', dbCustomer.dogs)
+        if (qbCustomer.qb_id === dbCustomer.qb_id) {
+          console.log(`${qbCustomer.first_name} has`,qbCustomer.dogs.length)
+          console.log(`${dbCustomer.first_name} has`, dbCustomer.dogs.length)
+          if(qbCustomer.dogs.length > dbCustomer.dogs.length ){
+          let initialDogs = new Set(dbCustomer.dogs)
+          let uniqueDogs = qbCustomer.dogs.filter(dog => !initialDogs.has(dog))
+          console.log('Am I shelley?', uniqueDogs)
+          }
+          //if qb array is longer than db array
+          //figure out logic to add
+          //if db arrau is longer than qb array
+          //need to delete?
+
+          /*One path is an array of customers that needs to add dogs
+          one where we need to delete
+          one where it's a normal put route */
+        }
       }
     }
   });
+
+  // { client_id: client_id, qb_id: qb_id, dog_name: dog.dog_name, 
+  //   image: dog.image, dog_id: dog.dog_id, 
+  //   dog_notes: dog.dog_notes, 
+  //   flag: dog.flag, regular: dog.regular, active: dog.active}
   
 
   /*This route gets QB clients and DB clients and

@@ -306,15 +306,64 @@ router.get('/customer', function (req, res) {
     let allData = req.body
     let qbData = req.body.qb
     let dbData = req.body.db
-    console.log('qb data:', qbData.length)
-    console.log('db data:', dbData.length)
+    // console.log('qb data:', qbData.length)
+    // console.log('db data:', dbData.length)
+    let customersAddDogs = []
+    let customersDeleteDogs = []
+    let customerNoDogChange = []
+
     for(let qbCustomer of qbData){
-      for (let dog of qbCustomer.dogs){
-        console.log(`${qbCustomer.first_name} has a dog named ${dog.name} `)
+      for (let dbCustomer of dbData){
+        // console.log(' are dogs here', dbCustomer.dogs)
+        if (qbCustomer.qb_id === dbCustomer.qb_id) {
+          // console.log(`${qbCustomer.first_name} has`,qbCustomer.dogs.length)
+          // console.log(`${dbCustomer.first_name} has`, dbCustomer.dogs.length)
+          
+          if(qbCustomer.dogs.length > dbCustomer.dogs.length ){
+          // console.log('dogs at this moment?', qbCustomer.dogs)
+          customersAddDogs.push(qbCustomer)
+          }
+          else if(qbCustomer.dogs.length < dbCustomer.dogs.length ){
+            customersDeleteDogs.push(qbCustomer)
+          }
+          else {
+            customerNoDogChange.push(qbCustomer)
+          }
+        }
       }
-    }
+    } //end of outermost for loop
+
+    /* Now have a for loop for each set of customers? */
+    console.log('checking data gets back up', getDogIdToDelete(customersDeleteDogs, dbData))
   });
-  
+
+  function getDogIdToDelete (customers, dbData) {
+    let processedCustomers = []
+      for(let customer of customers ){
+        let qbDogs = customer.dogs
+        for(let dbVersion of dbData){
+                if(customer.qb_id === dbVersion.qb_id){
+                  let dbDogs = dbVersion.dogs
+                  // console.log('database dogs', dbDogs)
+                  // console.log('quickbooks dogs', qbDogs)
+                  function resultFilter(dbDogs, qbDogs) {
+                    return dbDogs.filter(dbDogsItem =>
+                      !qbDogs.some(
+                        secondArrayItem => dbDogsItem.dog_name === secondArrayItem.name
+                      )
+                    );
+                  };
+                  let dogToDelete = resultFilter(dbDogs, qbDogs)
+                  // console.log('dog to delete', dogToDelete) //array of dog objects to be deleted
+                customer.dogDeleteIds = dogToDelete    //adding a new property that includes the objects of dogs to be deleted
+                }
+              }
+            processedCustomers.push(customer) //for each customer that goes through the process
+      }
+      // console.log(processedCustomers)
+      return processedCustomers //returning customers back up to the original route
+  }
+
 
   /*This route gets QB clients and DB clients and
     compares them. It will check for added or deleted dogs 

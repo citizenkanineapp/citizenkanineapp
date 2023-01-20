@@ -1,10 +1,10 @@
-const oAuth2Reducer = (state = '', action) => {
+const qbClientsReducer = (state = [], action) => {
     switch (action.type) {
-        case 'SET_AUTH_URL':
+        case 'SET_QB_CLIENTS':
             return action.payload;
         default:
             return state;
     }
 }
 
-export default oAuth2Reducer;
+export default qbClientsReducer;

@@ -28,16 +28,16 @@ const saveChanges = event => {
 }
 
 const editDog = (dog) =>{
-  const clientDogObj = {
-    client_id: client.id,
-    dog_name: dog.dog_name,
-    image: dog.image,
-    dog_id: dog.dog_id,
-    dog_notes: dog.dog_notes,
-    flag: dog.flag,
-    regular: dog.regular
-  }
-  dispatch({type: 'SET_DOG_EDIT', payload: clientDogObj})
+  // const clientDogObj = {
+  //   client_id: client.id,
+  //   dog_name: dog.dog_name,
+  //   image: dog.image,
+  //   dog_id: dog.dog_id,
+  //   dog_notes: dog.dog_notes,
+  //   flag: dog.flag,
+  //   regular: dog.regular
+  // }
+  dispatch({type: 'SET_DOG_EDIT', payload: dog})
   dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditDogForm' });
 }
 

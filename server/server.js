@@ -24,9 +24,6 @@ const adminRouter = require('./routes/admin.router');
 const quickbooksRouter = require('./routes/quickbooks.router');
 const oauth2Router = require('./routes/quickbooks.oauth2.router');
 const qbInvoiceRouter = require ('./routes/quickbooks.invoice.router');
-// const testRouter = require('./routes/test.router');
-
-
 
 
 // Body parser middleware
@@ -44,39 +41,18 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(
-  cors({
-    origin: "http://localhost:3000", // allow to server to accept request from different origin
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true // allow session cookie from browser to pass through
-  })
-);
-
-/* OAuth Library */
-// const oauthClient = new OAuthClient({
-//   clientId: process.env.clientId,
-//   clientSecret: process.env.clientSecret,
-//   environment: 'sandbox' || 'production',
-//   redirectUri: '<Enter your callback URL>',
-// });
-
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/image', imageRouter);
-
 app.use('/api/employees', employeesRouter);
-
 app.use('/api/clients', clientsRouter);
 app.use('/api/mobile', mobileRouter);
-
 app.use('/api/invoice', invoiceRouter);
 app.use('/api/clientSchedule', clientScheduleRouter);
-
 app.use('/api/admin', adminRouter);
 app.use('/api/quickbooks', quickbooksRouter);
-app.use('/api/oauth2', oauth2Router)
+app.use('/api/oauth2', oauth2Router);
 app.use('/api/qbInvoice', qbInvoiceRouter);
-// app.use('/api/test', testRouter)
 
 
 

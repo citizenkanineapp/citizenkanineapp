@@ -116,7 +116,7 @@ router.get('/daily', async (req, res) => {
 
         // if there are no changes - add original array to daily_dogs
         if (scheduleAdjustments.length < 1) {
-            console.log('Good to Go!');
+            console.log('Good to Go no adjustments!');
             // insert into daily_dogs
             await Promise.all(scheduledDogs.map(dog => {
                 const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4);`;
@@ -145,7 +145,7 @@ router.get('/daily', async (req, res) => {
                 adjustedDogs.push(item);
             }
 
-            console.log('Good to Go!');
+            console.log('Good to Go with adjustments!');
             // insert into daily_dogs
             await Promise.all(adjustedDogs.map(dog => {
                 const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4)`;

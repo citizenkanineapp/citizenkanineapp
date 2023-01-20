@@ -125,6 +125,8 @@ function Nav(props) {
                 </Button>
               ))}
             </Box>
+            {/* <Button variant="contained" color="tertiary">Quickbooks Sync</Button> */}
+
           </Toolbar>
         )}
         {/*----------NAV TRANSITION----------*/}
@@ -151,6 +153,7 @@ function Nav(props) {
           {drawer}
         </Drawer>
       </Box>
+
     </Box >
   );
 }

@@ -23,11 +23,11 @@ function DailyRoutes() {
     dispatch({ type: 'GET_ROUTE_DETAILS', payload: params.id })
 
 
-    return () => {
-      dispatch({
-        type: 'CLEAR_ROUTE'
-      })
-    }
+    // return () => {
+    //   dispatch({
+    //     type: 'CLEAR_ROUTE'
+    //   })
+    // }
   }, [params.id]);
 
   const [expanded, setExpanded] = useState(false);

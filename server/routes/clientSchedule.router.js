@@ -13,7 +13,7 @@ const {
 
 router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res)=> {
     const client_id = req.params.id;
-    // console.log(client_id);
+    console.log('get route', client_id);
     const sqlQuery = `
     SELECT id, dog_id, client_id, date_to_change, is_scheduled FROM dogs_schedule_changes
     WHERE client_id = $1;

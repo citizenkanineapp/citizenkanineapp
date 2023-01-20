@@ -66,7 +66,7 @@ router.post('/register/employee', rejectUnauthenticated, rejectUnauthorized, (re
 //PUT route for password reset. need user ID params.
 router.put('/passreset/:id', rejectUnauthenticated, (req, res) => {
   const userId = req.params.id;
-  console.log(req.params.id)
+  // console.log(req.params.id)
   const password = encryptLib.encryptPassword(req.body.password);
 
   const queryText = `UPDATE "user" 

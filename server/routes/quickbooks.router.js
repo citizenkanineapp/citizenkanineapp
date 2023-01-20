@@ -137,7 +137,7 @@ router.get('/customer', function (req, res) {
   }
   
   function getDogSchedule(customers) {
-   
+  //  console.log('customers:', customers)
     let customerArray = []
     for (let oneCustomer of customers) {
       let result = oneCustomer.notesObj.split("-")
@@ -151,7 +151,8 @@ router.get('/customer', function (req, res) {
                 regular: true,     //creating a dog object for each dog
                 image: "",
                 vet_name: "",
-                vet_phone: ""
+                vet_phone: "",
+                qb_id: oneCustomer.qb_id
               };
       })
       let scheduleArray = result[1].split(",").map(function (dayName) {
@@ -302,10 +303,16 @@ router.get('/customer', function (req, res) {
 
   router.put('/customer/put', (req, res) => {
     // console.log('arrived in server', req.body)
+    let allData = req.body
     let qbData = req.body.qb
     let dbData = req.body.db
     console.log('qb data:', qbData.length)
     console.log('db data:', dbData.length)
+    for(let qbCustomer of qbData){
+      for (let dog of qbCustomer.dogs){
+        console.log(`${qbCustomer.first_name} has a dog named ${dog.name} `)
+      }
+    }
   });
   
 

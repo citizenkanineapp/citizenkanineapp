@@ -64,7 +64,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
         // const {first_name, last_name, address} = result.rows[0];
         const { first_name, last_name, street, city, zip, client_id, qb_id, phone, mobile, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday, lat, long } = forDogMap[0];
         const client = { first_name, last_name, street, city, zip, client_id, qb_id, phone, mobile, email, notes, vet_name, vet_phone, route, route_name, monday, tuesday, wednesday, thursday, friday, lat, long }
-        let dogsPreFilter = forDogMap.map(dog => { return ({ client_id: client_id, dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular, active: dog.active}) })
+        let dogsPreFilter = forDogMap.map(dog => { return ({ client_id: client_id, qb_id: qb_id, dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular, active: dog.active}) })
 
        const dogsResult = dogsPreFilter.filter(dog => dog.active === true)
       //  console.log ('dogs array?', dogsResult)

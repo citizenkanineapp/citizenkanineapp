@@ -1,19 +1,39 @@
 import { Map, Marker } from "pigeon-maps"
 import { maptiler } from 'pigeon-maps/providers'
 import MobileTopNav from '../MobileNav/MobileTopNav';
+import { useDispatch, useSelector } from 'react-redux';
+
+
 //MUI
 import { Typography, Grid } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function MapView() {
-  // during our time we were not able to get this working - so it has been disabled / removed from the nav bar
-
-  const maptilerProvider = maptiler('JAXJd8TmToDTZ2jWk33G', 'bright')
-  // const [hue, setHue] = useState(0)
-  // const color = `hsl(${hue % 360}deg 39% 70%)`
-  const [markers, setMarkers] = useState([[44.92306458149502, -93.30491066897952], [44.924, -93.305], [44.923, -93.306]])
+  
+useEffect(() => {
+   populateMarkers()
+  }, [])
+  
+  const route = useSelector(store => store.routeReducer)
+  const maptilerProvider = maptiler('WjRnaGgNsm0nHmNUpFSq', 'bright')
+  const [markers, setMarkers] = useState([])
  
+  const populateMarkers = () => {
+   const markers = route.map(client => {
+    return {lat: Number(client.lat), long: Number(client.long), name: client.name}
+   })
+  //  console.log(markers)
+   setMarkers(markers)
+   testFunction()
+  }
+  const testFunction = () => {
+    console.log('markers right now ------>', markers)
+    // for (let marker of markers){
+    //   console.log(marker[lat])
+    // }
+  }
 
   return (
     <Grid container
@@ -27,14 +47,17 @@ function MapView() {
 
       {/* <MobileTopNav /> */}
       <Typography variant="h4" sx={{ m: 0 }}> Routes </Typography>
+      <button onClick={populateMarkers}>Test</button>
         <Grid item sx={{ width: '100%', height: '45rem' }}>
-          <Map provider={maptilerProvider} defaultCenter={[44.92306458149502, -93.30491066897952]} defaultZoom={14}>
+          <Map provider={maptilerProvider} defaultCenter={[44.92306458149522, -93.30491066897952]} defaultZoom={14}>
            {markers.map((oneMarker, index) => (
             <Marker 
               width={50} 
-              anchor={[oneMarker[0], oneMarker[1]]}
+              anchor={[oneMarker.lat, oneMarker.long]}
               key={index}
-              onClick={() => console.log('this is dog', index)}/>
+              onHover={() => console.log('hi')}
+              onClick={() => console.log('this is dog', oneMarker.name)}
+              />
            ))}
             {/* <Marker 
               width={50} 

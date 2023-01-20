@@ -11,6 +11,7 @@ function* resetPass(action) {
 
     // passes the username and password from the payload to the server
     yield axios.put(`/api/user/passreset/${userId}`, action.payload);
+    yield axios.post(`/api/passreset/${userId}`)
 
     // // automatically log a user in after registration
     // yield put({ type: 'LOGIN', payload: action.payload });

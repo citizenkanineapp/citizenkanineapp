@@ -1,18 +1,22 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
+
+// this standalone connect will be phased out.
 function* authorizationRequest (action) {
     // console.log('arrived in saga for authorization request')
     try {
         const uri = yield axios({
             method: 'GET',
-            url: '/api/quickbooks/connect_handler'
+            url: '/api/oauth2/connect_handler'
         })
+        console.log('in QB saga', uri);
 
-        yield put({
-            type: 'SET_AUTH_URL',
-            payload: uri.data
-        })
+        // I DON"T KNOW IF WE WANT TO SET URI TO DATA.
+        // yield put({
+        //     type: 'SET_AUTH_URL',
+        //     payload: uri.data
+        // })
     }
     catch {
         console.log('error in authorizationRequest');
@@ -29,6 +33,34 @@ function* fetchQbCustomers (action) {
             url: '/api/quickbooks/customer'
         })
         console.log(customers)
+        if (customers.data === 'connectToQB'){
+            location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        }
+      /* Call function that will be post route to add QB clients to DB */
+      yield put({
+        type: 'POST_QB_CLIENTS',
+        payload: customers.data
+    })
+
+    }
+    catch {
+        console.log('error in authorizationRequest');
+    }
+}
+
+function* createQbInvoice (action) {
+    // console.log('in createQbInvoice saga');
+    const invoiceItems = action.payload;
+    try {
+        const invoiceResponse = yield axios({
+            method: 'POST',
+            url: '/api/qbInvoice',
+            data: invoiceItems
+        })
+        console.log(invoiceResponse)
+        if (invoiceResponse.data === 'connectToQB'){
+            location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        }
 
         /* Call function that will be post route to add QB clients to DB */
         yield put({
@@ -39,7 +71,6 @@ function* fetchQbCustomers (action) {
     catch {
         console.log('error in authorizationRequest');
     }
-  
 }
 
 /*This function adds customers to DB from QB*/
@@ -133,9 +164,11 @@ function* putRouteCustomers (action) {
 function* quickBooksSaga() {
     yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
     yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
+    yield takeLatest('CREATE_QB_INVOICE', createQbInvoice);
     yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);
     yield takeLatest('UPDATE_ALL_QB_CUSTOMERS', updateAllQbCustomers);
     yield takeLatest('PUT_ROUTE_QB_CUSTOMERS', putRouteCustomers)
+
 }
 
 export default quickBooksSaga;

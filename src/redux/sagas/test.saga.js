@@ -6,7 +6,7 @@ function* testAuthorizationRequest (action) {
     try {
         const uri = yield axios({
             method: 'GET',
-            url: '/api/test'
+            url: '/api/test/trigger'
         })
     } catch {
         console.log('error in authorizationRequest');

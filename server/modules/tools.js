@@ -62,15 +62,20 @@ var Tools = function () {
         tools.refreshTokens(req.session).then(function(newToken) {
           // Try API call again, with new accessToken
           requestObj.headers.Authorization = 'Bearer ' + newToken.accessToken
-          // console.log('Trying again, making API call to: ' + requestObj.url)
+          console.log('Trying again, making API call to: ' + requestObj.url)
           request(requestObj, function (err, response) {
             // Logic (including error checking) should be continued with new
             // err/response objects.
             resolve({err, response})
           })
         }, function(err) {
-          // Error refreshing the tokens
-          reject(err)
+          if (err.body.error = 'invalid_grant') {
+            console.log('IN CHECKUNAUTHORIXED!', err.body.error)
+            resolve({err,response})
+          } else {
+            // Error refreshing the tokens
+            reject(err)
+          }
         })
       } else {
         // No 401, continue!
@@ -117,6 +122,8 @@ var Tools = function () {
       }
 
       var json = JSON.parse(response.body)
+
+      console.log(response.body)
       return tools.intuitAuth.createToken(
         json.access_token, json.refresh_token,
         json.token_type, json.x_refresh_token_expires_in)

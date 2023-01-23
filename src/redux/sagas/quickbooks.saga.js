@@ -125,6 +125,7 @@ function* updateAllQbCustomers(action){
          
          //fetches clients from CK database
         yield put ({type: 'FETCH_CLIENTS'});
+        
 
     } catch (error) {
         console.log(error);
@@ -153,7 +154,8 @@ function* putRouteCustomers (action) {
             url: '/api/quickbooks/customer/put',
             data: combinedDataObject
         })
-        // console.log(customers)
+        console.log('success in put route', customers)
+        
     }
     catch {
         console.log('error updating clients');

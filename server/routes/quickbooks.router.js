@@ -12,7 +12,7 @@ router.get('/customer', (req, res) => {
   // console.log(token.accessToken)
   // console.log(tools.basicAuth)
 
-  const query = encodeURI('/query?query= select * from item');
+  const query = encodeURI('/query?query= select * from customer');
   const url = config.api_uri + req.session.realmId + query
   console.log('Making API Customer call to: ' + url)
   
@@ -279,7 +279,7 @@ router.get('/customer', (req, res) => {
   }
 
 
-  router.put('/customer/put', (req, res) => {
+  router.put('/customer/put', async (req, res) => {
     // console.log('arrived in server', req.body)
     let allData = req.body
     let qbData = req.body.qb
@@ -311,8 +311,124 @@ router.get('/customer', (req, res) => {
       }
     } //end of outermost for loop
 
-    /* Now have a for loop for each set of customers? */
-    console.log('checking data gets back up', getDogIdToDelete(customersDeleteDogs, dbData))
+    /* These two functions prepare the customer objects for SQL (if dogs were added or deleted) */
+    let processedCustomerDeleteDogs = getDogIdToDelete(customersDeleteDogs, dbData)
+    let processedCustomersAddDogs =  getDogToAdd(customersAddDogs, dbData)
+    /* Will loop through for each customer and by type */
+    const connection = await pool.connect();
+      await connection.query('BEGIN');
+    try {
+      //updating client details for customers without dog changes
+      for(let regCustomer of customerNoDogChange ){
+        const clientTxt = `
+        UPDATE clients
+            SET
+              street = $1, 
+              city = $2,
+              zip = $3,
+              phone= $4,
+              mobile = $5,
+              email = $6,
+              notes = $7
+          
+            WHERE
+              qb_id = $8;
+
+    `
+          const clientValues = [regCustomer.street, regCustomer.city, regCustomer.zip, regCustomer.phone, regCustomer.mobile,
+                                regCustomer.email, regCustomer.notes, regCustomer.qb_id]
+         await connection.query(clientTxt, clientValues)
+      //updating client details for customers where dog is added
+      for(let addCustomer of processedCustomersAddDogs){
+        const clientTxt = `
+        UPDATE clients
+            SET
+              street = $1, 
+              city = $2,
+              zip = $3,
+              phone= $4,
+              mobile = $5,
+              email = $6,
+              notes = $7
+          
+            WHERE
+              qb_id = $8;
+
+    `
+          const clientValues = [addCustomer.street, addCustomer.city, addCustomer.zip, addCustomer.phone, addCustomer.mobile,
+                                addCustomer.email, addCustomer.notes, addCustomer.qb_id]
+          await connection.query(clientTxt, clientValues)
+      }
+      //for customers where dogs will be deleted
+      for(let deleteCustomer of processedCustomerDeleteDogs){
+        const clientTxt = `
+        UPDATE clients
+            SET
+              street = $1, 
+              city = $2,
+              zip = $3,
+              phone= $4,
+              mobile = $5,
+              email = $6,
+              notes = $7
+          
+            WHERE
+              qb_id = $8;
+
+    `
+          const clientValues = [deleteCustomer.street, deleteCustomer.city, deleteCustomer.zip, deleteCustomer.phone, deleteCustomer.mobile,
+                                deleteCustomer.email, deleteCustomer.notes, deleteCustomer.qb_id]
+          await connection.query(clientTxt, clientValues)
+      }
+      
+  }
+  if(processedCustomersAddDogs.length === 0){
+    console.log('No dogs need to be added')
+    } else {
+      console.log('dogs at this point?', processedCustomersAddDogs)
+    for(let oneCustomer of processedCustomersAddDogs){
+      console.log(oneCustomer.dogsToAdd)
+      await Promise.all(oneCustomer.dogsToAdd.map(dog => {
+    
+      const dogTxt = `
+              INSERT INTO dogs 
+                ("client_id", "name", "active", "regular") 
+              VALUES
+                ($1, $2, $3, $4);
+      `
+        const dogValues = [dog.client_id, dog.name, dog.active, dog.regular]
+          // console.log('dog values?', dogValues)
+          // console.log('dog values?', dog.dog_id)
+          return connection.query(dogTxt, dogValues)
+      }));
+}} //end of if/else block for adding dogs
+
+/*For deleting dogs from a customer */
+if(processedCustomerDeleteDogs.length === 0){
+    console.log('No dogs need to be deleted')
+  } else {
+  for(let oneCustomer of processedCustomerDeleteDogs){
+    console.log(oneCustomer)
+    await Promise.all(oneCustomer.dogDeleteIds.map(dog => {
+
+    const dogTxt = `
+            UPDATE dogs
+                  SET active = false
+                  WHERE id = $1;
+    `
+      const dogValues = [dog.dog_id]
+      return connection.query(dogTxt, dogValues)
+    }));
+}}
+    await connection.query('COMMIT')
+    res.sendStatus(201);
+  } catch (dbErr) {
+    console.log('Error in PUT route', dbErr)
+    await connection.query('ROLLBACK');
+    res.sendStatus(500);
+  }  finally {
+    connection.release()
+  }
   });
 
   function getDogIdToDelete (customers, dbData) {
@@ -327,13 +443,14 @@ router.get('/customer', (req, res) => {
                   function resultFilter(dbDogs, qbDogs) {
                     return dbDogs.filter(dbDogsItem =>
                       !qbDogs.some(
-                        secondArrayItem => dbDogsItem.dog_name === secondArrayItem.name
+                        qbDogItem => dbDogsItem.dog_name === qbDogItem.name
                       )
                     );
                   };
                   let dogToDelete = resultFilter(dbDogs, qbDogs)
                   // console.log('dog to delete', dogToDelete) //array of dog objects to be deleted
                 customer.dogDeleteIds = dogToDelete    //adding a new property that includes the objects of dogs to be deleted
+                customer.client_id = dbVersion.client_id //adding client ID to the dog object
                 }
               }
             processedCustomers.push(customer) //for each customer that goes through the process
@@ -342,6 +459,35 @@ router.get('/customer', (req, res) => {
       return processedCustomers //returning customers back up to the original route
   }
 
+  function getDogToAdd (customers, dbData) {
+    let processedCustomers = []
+    for(let customer of customers ){
+      let qbDogs = customer.dogs
+      for(let dbVersion of dbData){
+              if(customer.qb_id === dbVersion.qb_id){
+                let dbDogs = dbVersion.dogs
+                // console.log('database dogs', dbDogs)
+                // console.log('quickbooks dogs', qbDogs)
+                function resultFilter(dbDogs, qbDogs) {
+                  return qbDogs.filter(qbDogsItem =>
+                    !dbDogs.some(
+                      dbDogItem => qbDogsItem.name === dbDogItem.dog_name
+                    )
+                  );
+                };
+              let dogsToAdd = resultFilter(dbDogs, qbDogs)   //array of dog objects to be added
+              for(let eachDog of dogsToAdd){
+                eachDog.client_id = eachDog.client_id = dbVersion.client_id
+              }
+              customer.dogsToAdd = dogsToAdd    //adding a new property that includes the objects of dogs to be added
+              customer.client_id = dbVersion.client_id //adding DB ID to the dog object
+              }
+            }
+          processedCustomers.push(customer) //for each customer that goes through the process
+    }
+    // console.log(processedCustomers)
+    return processedCustomers //returning customers back up to the original route
+  }
 
   /*This route gets QB clients and DB clients and
     compares them. It will check for added or deleted dogs 

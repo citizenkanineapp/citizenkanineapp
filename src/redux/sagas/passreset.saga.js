@@ -30,12 +30,12 @@ function* resetPass(action) {
 
 function* emailPassReset(action) {
   try{
-    const email = action.payload;
-    console.log(email)
+    const email = action.payload.email;
+    console.log('in saga', email)
     yield axios({
       url:'/api/email_pass_reset',
       method: 'POST',
-      data: {email: email}
+      data: {email}
     });
 
   } catch (error){

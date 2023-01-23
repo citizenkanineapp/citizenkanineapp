@@ -18,6 +18,7 @@ import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
 import ClientList from '../Desktop/Client/ClientList/ClientList';
 import EmployeeSchedule from '../Desktop/Employee/EmployeeSchedule/EmployeeSchedule';
 import AdminSettings from '../Desktop/AdminSettings/AdminSettings';
+import EmailPassResetPage from '../AllPages/Login/ResetPass/EmailPassResetPage';
 import AdminNotes from '../Desktop/AdminNotes/AdminNotes';
 
 //MOBILE COMPONENTS
@@ -71,6 +72,10 @@ function App() {
                 <Redirect to="/user" />
                 :
                 <LoginPage />}
+            </Route>
+
+            <Route exact path="/emailPassReset">
+                <EmailPassResetPage />
             </Route>
 
             {/* ----------------------- DESKTOP ----------------------- */}

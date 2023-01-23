@@ -86,8 +86,14 @@ function LoginPage() {
               <Button sx={{ display: { xs: 'block', sm: 'none', color: 'primary' } }} onClick={(event) => mobilelogin()}>
                 Login
               </Button>
+              <Button sx={{ display: { xs: 'block', sm: 'none', color: 'primary' } }} onClick={()=> history.push('/emailPassReset')}>
+                Forgot Password?
+              </Button>
               <Button sx={{ display: { xs: 'none', sm: 'block', color: 'primary' } }} onClick={(event) => login()}>
                 Login
+              </Button>
+              <Button sx={{ display: { xs: 'none', sm: 'block', color: 'primary' } }} onClick={()=> history.push('/emailPassReset')}>
+                Forgot Password?
               </Button>
             </CardContent>
           </Card>

@@ -44,15 +44,13 @@ router.post('/', async (req, res) => {
             UPDATE "user" 
               SET
                 "password_reset_token" = $1
-              WHERE "id" = '1';
+              WHERE "id" = '1'
+              RETURNING "password_reset_token";
         `;
 
-        pool.query(queryTextToken,[token])
-            .then(()=> res.sendStatus(201))
-            .catch((err)=> {
-            console.log('token update failed. ', err);
-            res.sendStatus(500);
-            })
+        const resolve = await pool.query(queryTextToken,[token])
+        console.log(resolve.rows[0].password_reset_token);
+
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -61,6 +59,8 @@ router.post('/', async (req, res) => {
             }
         });
 
+        const resetLink = `http://localhost:3000/resetpass/${resolve.rows[0].password_reset_token}`
+
         const mailOptions = {
             from: 'citizenkanineapp@gmail.com', //sender
             to: `${email}`,
@@ -68,7 +68,7 @@ router.post('/', async (req, res) => {
             text:
                 `You are receiving this because you (or someone else) have request a password reset from your account. \n\n` +
                 `Please click on the following link, or paste this into your browser to complete these process: \n\n` +
-                `LINK\n`,
+                `${resetLink}\n`,
         }
 
         transporter.sendMail(mailOptions, (err, emailres) => {

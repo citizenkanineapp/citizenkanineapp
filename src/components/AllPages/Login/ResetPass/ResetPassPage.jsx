@@ -34,9 +34,9 @@ function ResetPassPage() {
 
         setNewPass('');
         setConfPass('');
-        // dispatch({ type: 'PASSWORD_RESET' });
-        // swal("Password changed!");
-        // history.push('/home');
+        dispatch({ type: 'PASSWORD_RESET' });
+        swal("Password changed!");
+        history.push('/home');
       } else {
         console.log('password input fail!');
         dispatch({ type: 'PASSWORD_INPUT_ERROR' });
@@ -57,7 +57,7 @@ function ResetPassPage() {
         setConfPass('');
         dispatch({ type: 'PASSWORD_RESET' });
         swal("Password changed!");
-        // history.push('/home');
+        history.push('/home');
       } else {
         console.log('password input fail!');
         dispatch({ type: 'PASSWORD_INPUT_ERROR' });

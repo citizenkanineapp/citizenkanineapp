@@ -1,18 +1,16 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
-//which encryption library should I use?
 const crypto = require('crypto');
 const { DateTime } = require("luxon");
+require('dotenv').config();
+
 const {
     rejectUnauthenticated,
   } = require('../modules/authentication-middleware');
-  const {
-    rejectUnauthorized,
-  } = require('../modules/authorization-middleware');
   const encryptLib = require('../modules/encryption');
 
 const pool = require('../modules/pool');
-const userStrategy = require('../strategies/user.strategy');
+// const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
@@ -47,7 +45,7 @@ router.post('/email_reset_link', async (req, res) => {
 
             console.log('token: ',token);
             //get user id above
-            let resetExpires = DateTime.now().plus({minutes:1}).toString();
+            let resetExpires = DateTime.now().plus({minutes: 60}).toString();
             // console.log(DateTime.now().toString() + ' ' + resetExpires.toString());
             console.log(resetExpires, typeof resetExpires);
             const queryTextToken = `
@@ -67,21 +65,22 @@ router.post('/email_reset_link', async (req, res) => {
                 service: 'gmail',
                 //set to KEYS
                 auth: {
-                    user: 'citizenkanineapp@gmail.com',
-                    pass: 'duuydbxfeolgddcn'
+                    user: process.env.resetEmail,
+                    pass: process.env.emailKey
                 }
             });
 
             const resetLink = `http://localhost:3000/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
 
             const mailOptions = {
-                from: 'citizenkanineapp@gmail.com', //sender
+                from: process.env.resetEmail, //sender
                 to: `${email}`,
                 subject: 'password reset',
                 text:
-                    `You are receiving this because you (or someone else) have request a password reset from your account. \n\n` +
+                    `You are receiving this because you (or someone else) have request a password reset from Citizen Kanine. \n\n` +
                     `Please click on the following link, or paste this into your browser to complete these process: \n\n` +
-                    `${resetLink}\n`,
+                    `${resetLink}\n\n` +
+                    `This link expires in 60 minutes\n`,
             }
 
             transporter.sendMail(mailOptions, (err, emailres) => {
@@ -121,27 +120,26 @@ router.put('/resetpass/:id', rejectUnauthenticated, (req, res) => {
       })
   })
   
-  //PUT route for password reset from e-mail link. need user ID param.
-  // will this reject unauthorized?
+  //PUT route for password reset from e-mail link. accepts user id and reset token in link URL.
   router.put('/resetpassfromlink', async (req, res) => {
     const { id, token } = req.body;
-    const password = encryptLib.encryptPassword(req.body.password);    console.log('in resetpassfromlink: ', id, password, token);
+    const password = encryptLib.encryptPassword(req.body.password);
+    // console.log('in resetpassfromlink: ', id, password, token);
     try {
       const validateTokenQuery = `
         SELECT password_reset_token, password_reset_expires
           FROM "user"
           WHERE id = $1
       `;
-      const currentTime = DateTime.now();
       const validations = await pool.query(validateTokenQuery, [id]);
       const password_reset_expires = DateTime.fromISO(validations.rows[0].password_reset_expires);
       const storedToken = validations.rows[0].password_reset_token;
-      console.log(storedToken, token)
+    //   console.log(storedToken, token)
       if(
             password_reset_expires > DateTime.now() &&
             storedToken === token
         ) {
-        console.log('not expired, passwords match');
+        // console.log('not expired, passwords match');
         updatePasswordQuery = `
             UPDATE "user"
                 SET
@@ -151,21 +149,14 @@ router.put('/resetpass/:id', rejectUnauthenticated, (req, res) => {
                 WHERE id= $2;
         `;
 
-        pool.query(updatePasswordQuery,[password, id])
-            .then(()=>{
-                res.sendStatus(201);
-                return;
-            })
-            .catch((error)=>{
-                console.log(error);
-                res.sendStatus(500)
-            })
+        await pool.query(updatePasswordQuery,[password, id])
 
       } else {
         console.log('expired');
         res.sendStatus(500)
         return;
       }
+      res.sendStatus(201);
       } catch (error) {
       console.log(error)
       res.sendStatus(500);

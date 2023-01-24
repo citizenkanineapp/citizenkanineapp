@@ -45,10 +45,10 @@ router.post('/register/employee', rejectUnauthenticated, rejectUnauthorized, (re
   const password = encryptLib.encryptPassword(defaultPassword);
   console.log('register post received');
 
-  const queryText = `INSERT INTO "user" (emp_id, username, password, admin)
-    VALUES ($1, $2, $3, $4) RETURNING id`;
+  const queryText = `INSERT INTO "user" (emp_id, username, password, admin, email)
+    VALUES ($1, $2, $3, $4, $5) RETURNING id`;
 
-  const queryValues = [emp_id, username, password, admin]
+  const queryValues = [emp_id, username, password, admin, username]
 
   // const queryText = `INSERT INTO "user" (emp_id, username, password, email, admin)
   //   VALUES ($1, $2, $3, $4, $5) RETURNING id`;

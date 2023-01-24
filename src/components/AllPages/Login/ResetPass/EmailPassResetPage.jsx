@@ -27,8 +27,8 @@ function ResetPassPage() {
 
       setEmail('');
     //   dispatch({ type: 'PASSWORD_RESET' });
-    //   swal("Password changed!");
-    //   history.push('/home');
+      swal("Email sent!");
+      history.push('/home');
   }; // end resetPass
 
   return (

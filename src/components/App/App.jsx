@@ -39,9 +39,7 @@ import { theme } from '../AllPages/Theme/Theme';
 
 function App() {
   const dispatch = useDispatch();
-
   const user = useSelector(store => store.user);
-
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
@@ -74,8 +72,12 @@ function App() {
                 <LoginPage />}
             </Route>
 
-            <Route exact path="/emailPassReset">
+            <Route path="/emailPassReset">
+              {/* {params.user_id ?
                 <EmailPassResetPage />
+                :
+                <LoginPage />} */}
+              <EmailPassResetPage />
             </Route>
 
             {/* ----------------------- DESKTOP ----------------------- */}
@@ -109,9 +111,14 @@ function App() {
               {user.admin ? <AdminSettings /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
+            <Route exact path="/resetpass/:user_id:token" >
+              <ResetPassPage />
+            </Route>
+
             <ProtectedRoute exact path="/resetpass">
               {user.admin ? <ResetPassPage /> : <Redirect to="/home" />}
             </ProtectedRoute>
+
 
             {/* <ProtectedRoute exact path="/adminnotes">
               {user.admin ? <AdminNotes /> : <Redirect to="/home" />}

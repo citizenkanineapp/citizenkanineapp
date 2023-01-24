@@ -54,18 +54,20 @@ CREATE TABLE "user" (
 	"password" VARCHAR(150) NOT NULL,
 	"admin" BOOLEAN DEFAULT FALSE,
 	"date" DATE DEFAULT CURRENT_DATE,
-	"email" VARCHAR(150),
+	"email" VARCHAR(300), -- LATER CHANGE TO NOT NULL
+	"password_reset_token" VARCHAR (40) NULL,
+	"password_reset_expires" TIMESTAMP NULL
 	);
 	
 --** USER INITIALIZATION DATA **--
 --** USERNAME: 'admin'
 --** PASSWORD: 'admin'
 INSERT INTO "user"
-	("username","password","admin", "emp_id")
+	("username","password","admin", "emp_id","email")
 VALUES
-	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, null),
+	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, null,'citizenkanineapp@gmail.com'),
 	-- REMOVE BEFORE DEPLOYMENT
-	('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2);
+	('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2,null);
 	
 
 CREATE TABLE employees_schedule (

@@ -56,7 +56,7 @@ CREATE TABLE "user" (
 	"date" DATE DEFAULT CURRENT_DATE,
 	"email" VARCHAR(300), -- LATER CHANGE TO NOT NULL
 	"password_reset_token" VARCHAR (40) NULL,
-	"password_reset_expires" TIMESTAMP NULL
+	"password_reset_expires"  VARCHAR (50) NULL
 	);
 	
 --** USER INITIALIZATION DATA **--

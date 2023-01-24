@@ -1,11 +1,15 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
+//which encryption library should I use?
 const crypto = require('crypto');
-
-// const {
-//   rejectUnauthenticated,
-// } = require('../modules/authentication-middleware');
-// const encryptLib = require('../modules/encryption');
+const { DateTime } = require("luxon");
+const {
+    rejectUnauthenticated,
+  } = require('../modules/authentication-middleware');
+  const {
+    rejectUnauthorized,
+  } = require('../modules/authorization-middleware');
+  const encryptLib = require('../modules/encryption');
 
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
@@ -13,7 +17,7 @@ const userStrategy = require('../strategies/user.strategy');
 const router = express.Router();
 
 // sends password reset email
-router.post('/', async (req, res) => {
+router.post('/email_reset_link', async (req, res) => {
     
     const email = req.body.email;
     console.log(email);
@@ -32,32 +36,36 @@ router.post('/', async (req, res) => {
         const userData = await pool.query(queryTextEmail,[email])
         // console.log(userData.rows[0]);
 
-
-
         //if e-mail exists
         if(userData.rows[0]) {
             console.log(userData.rows[0].email);
 
             //generates password reset token
             const token = crypto.randomBytes(20).toString('hex');
+            //should there be another step to encrypt token in DB?
+
+
             console.log('token: ',token);
             //get user id above
-            const resetExpires = Date.now()+6000;
-            console.log(Date.now() + ' ' + resetExpires);
+            let resetExpires = DateTime.now().plus({minutes:1}).toString();
+            // console.log(DateTime.now().toString() + ' ' + resetExpires.toString());
+            console.log(resetExpires, typeof resetExpires);
             const queryTextToken = `
                 UPDATE "user" 
-                SET
-                    "password_reset_token" = $1
-                WHERE "id" = '${userData.rows[0].id}'
-                RETURNING "password_reset_token";
+                    SET
+                        "password_reset_token" = $1,
+                        "password_reset_expires" = $2
+                    WHERE "id" = $3
+                    RETURNING "password_reset_token";
             `;
 
             console.log(userData.rows[0].id)
-            const resolve = await pool.query(queryTextToken,[token])
+            const resolve = await pool.query(queryTextToken,[token, resetExpires.toString(), userData.rows[0].id])
             const tokenParam = resolve.rows[0].password_reset_token;
 
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
+                //set to KEYS
                 auth: {
                     user: 'citizenkanineapp@gmail.com',
                     pass: 'duuydbxfeolgddcn'
@@ -94,5 +102,52 @@ router.post('/', async (req, res) => {
     res.sendStatus(200);
     }
   });
+
+  //PUT route for password reset. need user ID params.
+router.put('/resetpass/:id', rejectUnauthenticated, (req, res) => {
+    const userId = req.params.id;
+    // console.log(req.params.id)
+    const password = encryptLib.encryptPassword(req.body.password);
+  
+    const queryText = `UPDATE "user" 
+      SET "password" = $1
+      WHERE "id" = $2;`;
+    pool
+      .query(queryText, [password, userId])
+      .then(()=> res.sendStatus(201))
+      .catch((err)=> {
+        console.log('Password reset failed. ', err);
+        res.sendStatus(500);
+      })
+  })
+  
+  //PUT route for password reset from e-mail link. need user ID param.
+  // will this reject unauthorized?
+  router.put('/resetpassfromlink', async (req, res) => {
+    const { id, password, token } = req.body;
+    console.log('in resetpassfromlink: ', id, password, token);
+    try {
+      const validateTokenQuery = `
+        SELECT password_reset_token, password_reset_expires
+          FROM "user"
+          WHERE id = $1
+      `;
+      const currentTime = DateTime.now();
+      const validations = await pool.query(validateTokenQuery, [id]);
+      const password_reset_expires = DateTime.fromISO(validations.rows[0].password_reset_expires);
+      if( password_reset_expires > DateTime.now()){
+        console.log('not expired');
+      } else {
+        console.log('expired');
+      }
+  
+      console.log(201);
+    } catch (error) {
+      console.log(error)
+      res.send(500);
+    }
+  })
+  
+  
   
   module.exports = router

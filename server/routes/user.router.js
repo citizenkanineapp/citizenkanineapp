@@ -63,23 +63,6 @@ router.post('/register/employee', rejectUnauthenticated, rejectUnauthorized, (re
     });
 });
 
-//PUT route for password reset. need user ID params.
-router.put('/passreset/:id', rejectUnauthenticated, (req, res) => {
-  const userId = req.params.id;
-  // console.log(req.params.id)
-  const password = encryptLib.encryptPassword(req.body.password);
-
-  const queryText = `UPDATE "user" 
-    SET "password" = $1
-    WHERE "id" = $2;`;
-  pool
-    .query(queryText, [password, userId])
-    .then(()=> res.sendStatus(201))
-    .catch((err)=> {
-      console.log('Password reset failed. ', err);
-      res.sendStatus(500);
-    })
-})
 
 // PUT route to update the admin status when an employee's details are changed. 
 

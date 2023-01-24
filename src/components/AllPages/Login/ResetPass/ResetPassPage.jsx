@@ -82,6 +82,7 @@ function ResetPassPage() {
               <TextField
                 margin="dense"
                 label="New password"
+                type="password"
                 size="small"
                 value={newPass}
                 onChange={(event) => setNewPass(event.target.value)}
@@ -89,6 +90,7 @@ function ResetPassPage() {
               <TextField
                 margin="dense"
                 label="Confirm password"
+                type="password"
                 size="small"
                 value={confPass}
                 onChange={(event) => setConfPass(event.target.value)}

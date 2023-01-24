@@ -31,7 +31,7 @@ router.get('/connect_handler', (req, res) => {
     // console.log('do we get req.session.realmId', req.session)
     // Verify anti-forgery
     if(!tools.verifyAntiForgery(req.session, req.query.state)) {
-        return res.send('Error - invalid anti-forgery CSRF response!')
+        return res.sendStatus('Error - invalid anti-forgery CSRF response!')
     }
 
     // Exchange auth code for access token

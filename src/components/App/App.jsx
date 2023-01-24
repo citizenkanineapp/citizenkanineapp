@@ -111,7 +111,7 @@ function App() {
               {user.admin ? <AdminSettings /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
-            <Route exact path="/resetpass/:user_id:token" >
+            <Route exact path="/resetpass/:user_id/:token" >
               <ResetPassPage />
             </Route>
 

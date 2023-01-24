@@ -72,7 +72,7 @@ router.post('/email_reset_link', async (req, res) => {
                 }
             });
 
-            const resetLink = `http://localhost:3000/#/resetpass/${userData.rows[0].id}&${tokenParam}`;
+            const resetLink = `http://localhost:3000/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
 
             const mailOptions = {
                 from: 'citizenkanineapp@gmail.com', //sender
@@ -124,8 +124,8 @@ router.put('/resetpass/:id', rejectUnauthenticated, (req, res) => {
   //PUT route for password reset from e-mail link. need user ID param.
   // will this reject unauthorized?
   router.put('/resetpassfromlink', async (req, res) => {
-    const { id, password, token } = req.body;
-    console.log('in resetpassfromlink: ', id, password, token);
+    const { id, token } = req.body;
+    const password = encryptLib.encryptPassword(req.body.password);    console.log('in resetpassfromlink: ', id, password, token);
     try {
       const validateTokenQuery = `
         SELECT password_reset_token, password_reset_expires
@@ -135,16 +135,40 @@ router.put('/resetpass/:id', rejectUnauthenticated, (req, res) => {
       const currentTime = DateTime.now();
       const validations = await pool.query(validateTokenQuery, [id]);
       const password_reset_expires = DateTime.fromISO(validations.rows[0].password_reset_expires);
-      if( password_reset_expires > DateTime.now()){
-        console.log('not expired');
+      const storedToken = validations.rows[0].password_reset_token;
+      console.log(storedToken, token)
+      if(
+            password_reset_expires > DateTime.now() &&
+            storedToken === token
+        ) {
+        console.log('not expired, passwords match');
+        updatePasswordQuery = `
+            UPDATE "user"
+                SET
+                    "password" = $1,
+                    "password_reset_token" = NULL,
+                    "password_reset_expires" = NULL
+                WHERE id= $2;
+        `;
+
+        pool.query(updatePasswordQuery,[password, id])
+            .then(()=>{
+                res.sendStatus(201);
+                return;
+            })
+            .catch((error)=>{
+                console.log(error);
+                res.sendStatus(500)
+            })
+
       } else {
         console.log('expired');
+        res.sendStatus(500)
+        return;
       }
-  
-      console.log(201);
-    } catch (error) {
+      } catch (error) {
       console.log(error)
-      res.send(500);
+      res.sendStatus(500);
     }
   })
   

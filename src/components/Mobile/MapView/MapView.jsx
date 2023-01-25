@@ -11,6 +11,13 @@ import { Typography, Grid } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import PetsIcon from '@mui/icons-material/Pets';
+import ListItemButton from '@mui/material/ListItemButton';
 
 
 //style for modal
@@ -19,16 +26,12 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 100,
+  width: 120,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
-
-
-
-
 
 function MapView() {
   
@@ -67,38 +70,20 @@ useEffect(() => {
       acc[item.client_id].push(item);
       return acc;
     }, {})
-    console.log('does group work?', group)
-    console.log('unique client IDs', uniqueIds)
-    
+
     let clientMarkers = []
     for (let i = 0; i < uniqueIds.length; i++) {
       let preClient= group[uniqueIds[i]]
       const { client_name,  street, zip, client_id, lat, long } = preClient[0];
-      // let newLat = Number(lat)
-      // let newLong = Number(long)
       const client = {client_name, street, zip, client_id, lat, long}
       let dogsPreFilter = preClient.map(dog => { return ({dog_name: dog.name }) })
       client.dogs = dogsPreFilter
       console.log('clients after filter', client)
       clientMarkers.push(client)
     }
-  
-  // const testMarkers = route.map(client => {
-  //   return {lat: Number(client.lat), 
-  //           long: Number(client.long), 
-  //           name: client.client_name, 
-  //           street: client.street, 
-  //           zip: client.zip
-  //         }
-  //      })
-  //  console.log('what are testMarkers', testMarkers)
-  //  setMarkers(testMarkers)
    setMarkers(clientMarkers);
-  //  console.log('markers right now?', clientMarkers)
-  //  console.log('markers state?', markers)
-  //  console.log('name?', markers[0].client_name)
   }
-  console.log('markers state?', markers)
+
 
     const openMap = async (dog) => {
     // takes in address details and encodes them into URI 
@@ -108,11 +93,6 @@ useEffect(() => {
     window.open(link);
   }
 
-
-
-  // const markerRef = useRef()
-  // const tooltipRef = useRef()
-  // const {styles, attributes} = usePopper(markerRef.current, tooltipRef.current)
 
 
   return (
@@ -138,7 +118,35 @@ useEffect(() => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+        <List>
+          <ListItem disablePadding>
+              <ListItemText primary={modalData.client_name} />
+          </ListItem>
+          {modalData && modalData.dogs.map(dog => (
+            <ListItem disablePadding>
+                <ListItemIcon>
+                  <PetsIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText secondary={dog.dog_name} />
+           </ListItem>
+
+          ))}
+        </List>
+        <Divider />
+        <List>
+        <ListItem disablePadding>
+          <ListItemButton color="primary">
+              <ListItemText secondary="Open Google Maps"
+                onClick={() => openMap(modalData)}
+                secondaryTypographyProps={{
+                  color: 'secondary',
+                  fontWeight: 'medium',
+                  variant: 'body2',
+                }} />
+          </ListItemButton>
+          </ListItem>
+        </List>
+          {/* <Typography id="modal-modal-title" variant="h6" component="h2">
             {modalData.client_name}
           </Typography>
           {modalData && modalData.dogs.map(dog => (
@@ -148,7 +156,7 @@ useEffect(() => {
           ))}
             <Typography id="modal-modal-description" sx={{ mt: 2 }}  onClick={() => openMap(modalData)} >
             Open Google Maps
-          </Typography>
+          </Typography> */}
         </Box>
       </Modal>
            {markers.map((oneMarker, index) => (

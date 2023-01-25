@@ -40,7 +40,7 @@ router.get('/customer', (req, res) => {
         // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
       if (response.statusCode === 401 ) {
         // FOR TESTING
-        // console.log(response.statusCode)
+        // console.log("response bad auth", response)
         // console.log(err.body)
         // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
         res.send('connectToQB')
@@ -53,7 +53,8 @@ router.get('/customer', (req, res) => {
         // for(let item of items){
         // console.log(item)
         // }
-        // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci 
+        // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
+        console.log("response with fresh auth", response)
         let customers = JSON.parse(response.body)
         // console.log(customers)
         // this function starts the process of formatting the customers
@@ -150,7 +151,7 @@ router.get('/customer', (req, res) => {
 
   /*To initially add QB customers to DB */
   router.post('/qbcustomers', async (req, res) => {
-    console.log('arrvied in server?', req.body)
+    // console.log('arrvied in server?', req.body)
 
     const client = await pool.connect();
     const customers = req.body // obj desctructing of QB data
@@ -198,7 +199,7 @@ router.get('/customer', (req, res) => {
       const customerId = clientTxt.rows[0].id
       eachCustomer.client_id = customerId
     }
-    console.log('does it add client_id', customersResult)
+    // console.log('does it add client_id', customersResult)
     for(let eachCustomer of customersResult){
       await Promise.all(eachCustomer.dogs.map(dog => {
         const dogTxt = `

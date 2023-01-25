@@ -172,27 +172,27 @@ CREATE TABLE clients (
 -- insert into clients 
 -- 	(first_name, last_name, street, city, zip, route_id, phone, email, notes) 
 -- values 
-	-- ('Adam', 'Olson', '2900 W 43rd St', 'Minneapolis',  55410, 4, '(893)236-3575', 'aolson@nature.com', 'Back Door'),
-	-- ('Jamie', 'Stevens', '4147 Xerxes Ave S', 'Minneapolis', 55410, 1, '(506)409-5891', 'jstevens2@chicagotribune.com', 'Code 1243'),
-	-- ('Robert', 'Smith', '3300 W 44th St', 'Minneapolis', 55410, 4, '(636)411-6655', 'rsmith42@wordpress.org', 'Key under the door mat'),
-	-- ('Jessica', 'Higgins', '4444 Upton Ave S', 'Minneapolis', 55410, 2, '(422)682-9050', 'jhiggins12@mysql.com', 'Dogs will be in the entry way'),
-	-- ('Melissa', 'Schaefer', '3414 W 47th St Room E021', 'Minneapolis', 55410, 3, '(431)890-0167', 'mschaeff@hhs.gov', 'They will unlock the door after knocking'),
-	-- ('Ross', 'McClain', '3608 W 50th St', 'Minneapolis', 55410, 2, '(385)750-1935', 'rmcclain1@aboutads.info', 'Door code 11234'),
-	-- ('Nick', 'Wilkerson', '4912 Vincent Ave S', 'Minneapolis', 55410, 3, '(438)750-4252', 'nwilks6@exblog.jp', 'Side door - key under rock'),
-	-- ('Bob', 'Stein', '5000 Penn Ave S', 'Minneapolis', 55419, 2, '(956)761-8143', 'bst31n@ibm.com', 'Pack leader should have key - use side door'),
-	-- ('George', 'Nelson', '5025 Knox Ave S', 'Minneapolis', 55419, 2, '(764)768-8688', 'george.nelson@sbwire.com', 'Dial #498'),
-	-- ('Thomas', 'Romero', '812 W 46th St', 'Minneapolis', 55419, 2, '(403)522-9955', 'thomrom56@guardian.co.uk', 'Door code 9754'),
-	-- ('Heather', 'Park', '4530 Lyndale Ave S', 'Minneapolis', 55419, 1, '(123)912-1803', 'hparks@github.io', 'Key underneath the garden gnome on back steps'),
-	-- ('Stephanie', 'Carter', '4249 Bryant Ave S', 'Minneapolis', 55409, 3, '(589)917-5192', 'othermscarter@stumbleupon.com', 'Side door remains unlocked'),
-	-- ('Amanda', 'Love', '4100 Lyndale Ave S', 'Minneapolis', 55409, 4, '(838)150-5160', 'loveamanda@illinois.edu', 'Dogs in the foyer'),
-	-- ('Amy', 'Rowland', '4312 Upton Ave S', 'Minneapolis', 55410, 4, '(976)109-9306', 'arowland5@uiuc.edu', 'Call Amanda she will buzz you in'),
-	-- ('Patricia', 'Reid', '2720 W 43rd St', 'Minneapolis', 55419, 4, '(976)109-9306', 'patriciaR3@guardian.co.uk', 'Take dogs out of their kennels'),
-	-- ('Mary', 'Griffith', '813 W 50th St', 'Minneapolis', 55419, 4, '(976)109-9306', 'mgriffs12@hhs.gov', 'Front door - knock three times'),
-	-- ('Karen', 'Wiggins', '4291 Queen Ave S', 'Minneapolis', 55419, 4, '(976)109-9306', 'karenwiggins@exblog.jp', 'Smart Lock - Call Karen to get in'),
-	-- ('David', 'Garner', '4135 W Lake Harriert Pkwy', 'Minneapolis', 55419, 3, '(976)109-9306', 'garnerd612@uiuc.edu', 'Door Code # 76331'),
-	-- ('Thomas', 'Marquez', '4237 Colfax Ave S', 'Minneapolis', 55419, 3, '(976)109-9306', 'tmarq.ez@stumbleupon.com', 'Check for key under door mat'),
-	-- ('Rob', 'Cannon', '812 W 46th St', 'Minneapolis', 55419, 3, '(976)109-9306', 'cannonpress@sbwire.com', 'Side Door - Retina scan entry'),
-	-- ('Don', 'Jacobson', '1601 W 50th St', 'Minneapolis', 55419, 1, '(849)163-0399', 'dj1601@msu.edu', 'Door Code #45312');
+-- 	('Adam', 'Olson', '2900 W 43rd St', 'Minneapolis',  55410, 4, '(893)236-3575', 'aolson@nature.com', 'Back Door'),
+-- 	('Jamie', 'Stevens', '4147 Xerxes Ave S', 'Minneapolis', 55410, 1, '(506)409-5891', 'jstevens2@chicagotribune.com', 'Code 1243'),
+-- 	('Robert', 'Smith', '3300 W 44th St', 'Minneapolis', 55410, 4, '(636)411-6655', 'rsmith42@wordpress.org', 'Key under the door mat'),
+-- 	('Jessica', 'Higgins', '4444 Upton Ave S', 'Minneapolis', 55410, 2, '(422)682-9050', 'jhiggins12@mysql.com', 'Dogs will be in the entry way'),
+-- 	('Melissa', 'Schaefer', '3414 W 47th St Room E021', 'Minneapolis', 55410, 3, '(431)890-0167', 'mschaeff@hhs.gov', 'They will unlock the door after knocking'),
+-- 	('Ross', 'McClain', '3608 W 50th St', 'Minneapolis', 55410, 2, '(385)750-1935', 'rmcclain1@aboutads.info', 'Door code 11234'),
+-- 	('Nick', 'Wilkerson', '4912 Vincent Ave S', 'Minneapolis', 55410, 3, '(438)750-4252', 'nwilks6@exblog.jp', 'Side door - key under rock'),
+-- 	('Bob', 'Stein', '5000 Penn Ave S', 'Minneapolis', 55419, 2, '(956)761-8143', 'bst31n@ibm.com', 'Pack leader should have key - use side door'),
+-- 	('George', 'Nelson', '5025 Knox Ave S', 'Minneapolis', 55419, 2, '(764)768-8688', 'george.nelson@sbwire.com', 'Dial #498'),
+-- 	('Thomas', 'Romero', '812 W 46th St', 'Minneapolis', 55419, 2, '(403)522-9955', 'thomrom56@guardian.co.uk', 'Door code 9754'),
+-- 	('Heather', 'Park', '4530 Lyndale Ave S', 'Minneapolis', 55419, 1, '(123)912-1803', 'hparks@github.io', 'Key underneath the garden gnome on back steps'),
+-- 	('Stephanie', 'Carter', '4249 Bryant Ave S', 'Minneapolis', 55409, 3, '(589)917-5192', 'othermscarter@stumbleupon.com', 'Side door remains unlocked'),
+-- 	('Amanda', 'Love', '4100 Lyndale Ave S', 'Minneapolis', 55409, 4, '(838)150-5160', 'loveamanda@illinois.edu', 'Dogs in the foyer'),
+-- 	('Amy', 'Rowland', '4312 Upton Ave S', 'Minneapolis', 55410, 4, '(976)109-9306', 'arowland5@uiuc.edu', 'Call Amanda she will buzz you in'),
+-- 	('Patricia', 'Reid', '2720 W 43rd St', 'Minneapolis', 55419, 4, '(976)109-9306', 'patriciaR3@guardian.co.uk', 'Take dogs out of their kennels'),
+-- 	('Mary', 'Griffith', '813 W 50th St', 'Minneapolis', 55419, 4, '(976)109-9306', 'mgriffs12@hhs.gov', 'Front door - knock three times'),
+-- 	('Karen', 'Wiggins', '4291 Queen Ave S', 'Minneapolis', 55419, 4, '(976)109-9306', 'karenwiggins@exblog.jp', 'Smart Lock - Call Karen to get in'),
+-- 	('David', 'Garner', '4135 W Lake Harriert Pkwy', 'Minneapolis', 55419, 3, '(976)109-9306', 'garnerd612@uiuc.edu', 'Door Code # 76331'),
+-- 	('Thomas', 'Marquez', '4237 Colfax Ave S', 'Minneapolis', 55419, 3, '(976)109-9306', 'tmarq.ez@stumbleupon.com', 'Check for key under door mat'),
+-- 	('Rob', 'Cannon', '812 W 46th St', 'Minneapolis', 55419, 3, '(976)109-9306', 'cannonpress@sbwire.com', 'Side Door - Retina scan entry'),
+-- 	('Don', 'Jacobson', '1601 W 50th St', 'Minneapolis', 55419, 1, '(849)163-0399', 'dj1601@msu.edu', 'Door Code #45312');
 
 
 CREATE TABLE dogs (

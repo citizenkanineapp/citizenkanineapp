@@ -73,7 +73,7 @@ function Invoicing() {
               {clientList && clientList.map && clientList.map((client) => (
                 <MenuItem
                   key={client.id}
-                  value={client.id}
+                  value={client.client_id}
                 >
                   {client.first_name} {client.last_name}
                 </MenuItem>

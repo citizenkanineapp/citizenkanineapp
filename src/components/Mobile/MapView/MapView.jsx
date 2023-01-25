@@ -2,14 +2,33 @@ import { Map, Marker, Overlay } from "pigeon-maps"
 import { maptiler } from 'pigeon-maps/providers'
 import MobileTopNav from '../MobileNav/MobileTopNav';
 import { useDispatch, useSelector } from 'react-redux';
-import { usePopper } from 'react-popper';
+import { useState, useEffect, useRef } from "react";
+
 
 
 //MUI
 import { Typography, Grid } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 
-import { useState, useEffect, useRef } from "react";
+
+//style for modal
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+
+
+
 
 function MapView() {
   
@@ -20,7 +39,11 @@ useEffect(() => {
   const route = useSelector(store => store.routeReducer)
   const maptilerProvider = maptiler('WjRnaGgNsm0nHmNUpFSq', 'bright')
   const [markers, setMarkers] = useState([])
- 
+
+  // const [open, setOpen] = useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
+  
   const populateMarkers = () => {
   const markers = route.map(client => {
     return {lat: Number(client.lat), 
@@ -43,9 +66,9 @@ useEffect(() => {
 
 
 
-  const markerRef = useRef()
-  const tooltipRef = useRef()
-  const {styles, attributes} = usePopper(markerRef.current, tooltipRef.current)
+  // const markerRef = useRef()
+  // const tooltipRef = useRef()
+  // const {styles, attributes} = usePopper(markerRef.current, tooltipRef.current)
 
 
   return (
@@ -64,15 +87,16 @@ useEffect(() => {
         <Grid item sx={{ width: '100%', height: '45rem' }}>
           <Map provider={maptilerProvider} defaultCenter={[44.92306458149522, -93.30491066897952]} defaultZoom={14}>
            {markers.map((oneMarker, index) => (
-          
+             
              <Marker 
                 width={50} 
                 anchor={[oneMarker.lat, oneMarker.long]}
                 key={index}
+                // onClick={() => openMap(oneMarker)}
+                // onClick={handleOpen}
+                // onMouseOver={({event: HTMLMouseEvent, anchor: Point}) => console.log('hiii')}
                 
-                onClick={() => openMap(oneMarker)}
                  /> 
-         
            ))}
           </Map>
         </Grid>

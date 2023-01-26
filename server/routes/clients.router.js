@@ -97,7 +97,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   // const customer = {first_name, last_name, address, phone, email, route_id}
   const dogArray = dogs
   // const vet = {vet_name, vet_phone}
-  console.log('in client POST route');
+  // console.log('in client POST route');
 
 
   try {
@@ -159,7 +159,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 
 //route to edit client
 router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
-  console.log('client in put route:', req.body)
+  // console.log('client in put route:', req.body)
   const connection = await pool.connect();
   let { first_name, last_name, street, city, zip, client_id, phone, email, notes, vet_name, vet_phone, route, route_name, dogs } = req.body
   //  console.log('dogs array?', dogs)
@@ -175,7 +175,7 @@ router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
   } else {
     route = 5
   }
-  console.log('does route change?', route)
+  // console.log('does route change?', route)
   //SQL text for updating client table
   const clientTxt = `
             UPDATE clients

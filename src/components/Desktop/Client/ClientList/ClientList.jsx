@@ -97,7 +97,7 @@ function ClientList() {
 
           <Button onClick={() => searchFunction()} variant="contained" color="secondary">Search</Button>
        }
-          <Button onClick={() => openModal('AddClient')} variant='contained' color="secondary">Add Client</Button>
+          <Button onClick={() => dispatch({ type: 'QUICKBOOKS_SYNC'})} variant='contained' color="secondary">QuickBooks Sync</Button>
        
       </Grid>
       <Grid container spacing={2}>

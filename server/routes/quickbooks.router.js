@@ -14,7 +14,7 @@ router.get('/customer', (req, res) => {
 
   const query = encodeURI('/query?query= select * from customer');
   const url = config.api_uri + req.session.realmId + query
-  console.log('Making API Customer call to: ' + url)
+  // console.log('Making API Customer call to: ' + url)
   
   // tools.refreshTokensWithToken(token.refreshToken)
 
@@ -54,7 +54,7 @@ router.get('/customer', (req, res) => {
         // console.log(item)
         // }
         // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
-        console.log("response with fresh auth", response)
+        // console.log("response with fresh auth", response)
         let customers = JSON.parse(response.body)
         // console.log(customers)
         // this function starts the process of formatting the customers
@@ -216,11 +216,11 @@ router.get('/customer', (req, res) => {
     for(let eachCustomer of customersResult) {
         const scheduleTxt = `
                               INSERT INTO clients_schedule
-                              ("client_id", "1", "2", "3", "4", "5")  
+                              ("client_id", "qb_id", "1", "2", "3", "4", "5")  
                               VALUES
-                              ($1, $2, $3, $4, $5, $6)
+                              ($1, $2, $3, $4, $5, $6, $7)
   `
-        const dayValues = [eachCustomer.client_id, eachCustomer.monday, eachCustomer.tuesday, 
+        const dayValues = [eachCustomer.client_id, eachCustomer.qb_id, eachCustomer.monday, eachCustomer.tuesday, 
                             eachCustomer.wednesday, eachCustomer.thursday, eachCustomer.friday]
         await client.query(scheduleTxt, dayValues)
     }
@@ -283,8 +283,12 @@ router.get('/customer', (req, res) => {
 
   router.put('/customer/put', async (req, res) => {
     let qbData = req.body.qb
+    // console.log('looking for schedule info', qbData)
     let dbData = req.body.db
 
+    let customersWithSchedule = processSchedule(qbData)
+    qbData = customersWithSchedule
+    // console.log('customers with schedule', qbData)
     let customersAddDogs = []
     let customersDeleteDogs = []
     let customerNoDogChange = []
@@ -331,10 +335,10 @@ router.get('/customer', (req, res) => {
               qb_id = $8;
 
     `
-          const clientValues = [regCustomer.street, regCustomer.city, regCustomer.zip, regCustomer.phone, regCustomer.mobile,
+    const clientValues = [regCustomer.street, regCustomer.city, regCustomer.zip, regCustomer.phone, regCustomer.mobile,
                                 regCustomer.email, regCustomer.notes, regCustomer.qb_id]
-         await connection.query(clientTxt, clientValues)
-      //updating client details for customers where dog is added
+    await connection.query(clientTxt, clientValues)
+  //updating client details for customers where dog is added
       for(let addCustomer of processedCustomersAddDogs){
         const clientTxt = `
         UPDATE clients
@@ -355,7 +359,7 @@ router.get('/customer', (req, res) => {
                                 addCustomer.email, addCustomer.notes, addCustomer.qb_id]
           await connection.query(clientTxt, clientValues)
       }
-      //for customers where dogs will be deleted
+ //for customers where dogs will be deleted
       for(let deleteCustomer of processedCustomerDeleteDogs){
         const clientTxt = `
         UPDATE clients
@@ -378,6 +382,62 @@ router.get('/customer', (req, res) => {
       }
       
   }
+
+  //updating client schedule for clients that did not have dog changes
+  for(let regCustomer of customerNoDogChange ){
+            const scheduleTxt = `
+            UPDATE clients_schedule
+                SET
+                  "1" = $1, 
+                  "2" = $2,
+                  "3" = $3,
+                  "4" = $4,
+                  "5" = $5
+              
+                WHERE
+                  qb_id = $6;
+
+          `
+    const scheduleValues = [regCustomer.monday, regCustomer.tuesday, regCustomer.wednesday, regCustomer.thursday, regCustomer.friday, regCustomer.qb_id]
+    await connection.query(scheduleTxt, scheduleValues)
+  }
+  //updating client schedule for clients that added dogs
+  for(let addCustomer of customersAddDogs ){
+          const scheduleTxt = `
+          UPDATE clients_schedule
+              SET
+                "1" = $1, 
+                "2" = $2,
+                "3" = $3,
+                "4" = $4,
+                "5" = $5
+            
+              WHERE
+                qb_id = $6;
+
+        `
+    const scheduleValues = [addCustomer.monday, addCustomer.tuesday, addCustomer.wednesday, addCustomer.thursday, addCustomer.friday, addCustomer.qb_id]
+    await connection.query(scheduleTxt, scheduleValues)
+}
+
+//updating client schedule for clients that deleted dogs
+for(let deleteCustomer of customersDeleteDogs){
+      const scheduleTxt = `
+      UPDATE clients_schedule
+          SET
+            "1" = $1, 
+            "2" = $2,
+            "3" = $3,
+            "4" = $4,
+            "5" = $5
+        
+          WHERE
+            qb_id = $6;
+
+    `
+const scheduleValues = [deleteCustomer.monday, deleteCustomer.tuesday, deleteCustomer.wednesday, deleteCustomer.thursday, deleteCustomer.friday, deleteCustomer.qb_id]
+await connection.query(scheduleTxt, scheduleValues)
+}
   if(processedCustomersAddDogs.length === 0){
     console.log('No dogs need to be added')
     } else {

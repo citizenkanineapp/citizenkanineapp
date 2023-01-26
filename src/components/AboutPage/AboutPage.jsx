@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import './AboutPage.css'
 
 
 
@@ -24,8 +25,8 @@ function AboutPage() {
     <div className="container">
       <h1>AboutPage</h1>
       <button onClick={connectQB}>Connect to QB</button> 
-      <button onClick={connectQB}>
-        <img src="public/Images/qbButton.png" alt="quickbooks logo"/>
+      <button id="qb_button" onClick={connectQB}>
+        <img src="Images/qbButton.png" alt="quickbooks logo"/>
       </button>
       <button onClick={updateServices}>Sync Services</button>
       <button onClick={quickbooksSync}>Sync With Quickbooks</button>

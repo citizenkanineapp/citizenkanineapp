@@ -38,13 +38,11 @@ function DogDetails() {
     }
   }, [params.id])
 
-
+  
+//this routes the user back to the route for the day
   const backFunction = (event) => {
-    // console.log(route)
-    // console.log('access to dog?', dog)
     const currentRoute  = route.filter(thisDog => thisDog.dog_id === dog.dog_id)
     const currentRouteId = currentRoute[0].route_id
-    console.log('should say 4?', currentRouteId)
     history.push(`/m/route/${currentRouteId}`)
   }
 

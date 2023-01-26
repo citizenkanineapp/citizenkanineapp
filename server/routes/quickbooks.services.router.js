@@ -30,8 +30,6 @@ router.get('/', (req, res) => {
   request(requestObj, function (err, response) { 
 
     // checks current access token. If access token is expired, it renews access token with stored refresh token.
-    // we need to test this at least 36 hours after refresh changes.
-
     tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
         // status code 401 corrosponds to unauthorized request.
         // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
@@ -51,16 +49,10 @@ router.get('/', (req, res) => {
         // for(let item of items){
         // console.log(item)
         // }
-        // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
-        console.log("response with fresh auth", response)
-        let services = JSON.parse(response.body);
-        services = services.QueryResponse.Item;
-        console.log(services);
-        // this function starts the process of formatting the customers
-        // let filteredCustomers =  filterCustomers(customers)
-        // console.log('second log', tools.getToken(req.session))
-
-
+        // console.log("response with fresh auth", response)
+        const services = JSON.parse(response.body).QueryResponse.Item;
+        postServices(services);
+        
         /*  this sucessfully sent back the customers after being processed
         do we need to worry about timing issues long term?  */
         // res.send(filteredCustomers)
@@ -72,5 +64,33 @@ router.get('/', (req, res) => {
     })
   })
 }) 
+
+async function postServices(services) {
+  const client = await pool.connect();
+  // console.log(services);
+  //filters parent item 'Group Dog Walking" from services array
+  const servicesFiltered = services.filter(service => service.ParentRef);
+  const serviceQuery = `
+  INSERT INTO services
+      ("qb_id", "name", "price")
+    VALUES
+      ($1, $2, $3);    
+  `;
+
+  try{
+    await Promise.all(servicesFiltered.map(service => {
+      const serviceValues = [service.Id, service.FullyQualifiedName, service.UnitPrice];
+      client.query(serviceQuery, serviceValues)
+    }))
+  } catch (error) {
+    console.log('query error in postServices', error);
+  }
+  
+
+
+  
+
+}
+
 
 module.exports = router;

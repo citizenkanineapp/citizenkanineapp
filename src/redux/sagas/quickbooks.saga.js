@@ -11,12 +11,6 @@ function* authorizationRequest (action) {
             url: '/api/oauth2/connect_handler'
         })
         console.log('in QB saga', uri);
-
-        // I DON"T KNOW IF WE WANT TO SET URI TO DATA.
-        // yield put({
-        //     type: 'SET_AUTH_URL',
-        //     payload: uri.data
-        // })
     }
     catch {
         console.log('error in authorizationRequest');

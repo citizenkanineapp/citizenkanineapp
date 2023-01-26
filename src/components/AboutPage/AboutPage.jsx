@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
+
 function AboutPage() {
   const dispatch = useDispatch();
 

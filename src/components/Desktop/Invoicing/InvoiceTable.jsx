@@ -43,6 +43,7 @@ function InvoiceTable({ monthsShort }) {
                 <TableCell sx={{ fontWeight: '800' }}>Total Cost:</TableCell>
               </TableRow>
             </TableHead>
+            {invoiceItems ?
             <TableBody>
               {invoiceItems && invoiceItems.map && invoiceItems.map((item, i) => (
                 <StyledTableRow key={i} >
@@ -54,8 +55,9 @@ function InvoiceTable({ monthsShort }) {
                   <TableCell key={i+"6"} >{item.service.price}</TableCell>
                   <TableCell key={i+"7"} >{item.service.price * item.dates.length}</TableCell>
                 </StyledTableRow>
-              ))}
+              ))} 
             </TableBody>
+                       : null } 
           </Table>
         </TableContainer>
       </Grid>

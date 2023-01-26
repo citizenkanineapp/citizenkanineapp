@@ -46,7 +46,7 @@ useEffect(() => {
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState(false);
   const handleOpen = (text) => {
-    console.log(text)
+    // console.log(text)
     setModalData(text)
     setOpen(true);
   } 
@@ -76,9 +76,9 @@ useEffect(() => {
       let preClient= group[uniqueIds[i]]
       const { client_name,  street, zip, client_id, lat, long } = preClient[0];
       const client = {client_name, street, zip, client_id, lat, long}
-      let dogsPreFilter = preClient.map(dog => { return ({dog_name: dog.name }) })
+      let dogsPreFilter = preClient.map(dog => { return ({dog_name: dog.name, dog_id: dog.dog_id }) })
       client.dogs = dogsPreFilter
-      console.log('clients after filter', client)
+      // console.log('clients after filter', client)
       clientMarkers.push(client)
     }
    setMarkers(clientMarkers);
@@ -106,10 +106,10 @@ useEffect(() => {
       }}>
 
       {/* <MobileTopNav /> */}
-      <Typography variant="h4" sx={{ m: 0 }}> Routes </Typography>
+      <Typography variant="h4" sx={{ m: 0 }}> {route[0].route} </Typography>
       {/* <button onClick={populateMarkers}>Test</button> */}
         <Grid item sx={{ width: '100%', height: '45rem' }}>
-          <Map provider={maptilerProvider} defaultCenter={[44.92306458149522, -93.30491066897952]} defaultZoom={14}>
+          <Map provider={maptilerProvider} defaultCenter={[44.914450, -93.304140]} defaultZoom={13}>
           
       <Modal
         open={open}
@@ -123,7 +123,7 @@ useEffect(() => {
               <ListItemText primary={modalData.client_name} />
           </ListItem>
           {modalData && modalData.dogs.map(dog => (
-            <ListItem disablePadding>
+            <ListItem disablePadding key={dog.dog_id}>
                 <ListItemIcon>
                   <PetsIcon fontSize="small" />
                 </ListItemIcon>

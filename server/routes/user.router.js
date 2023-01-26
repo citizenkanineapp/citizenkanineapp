@@ -45,10 +45,10 @@ router.post('/register/employee', rejectUnauthenticated, rejectUnauthorized, (re
   const password = encryptLib.encryptPassword(defaultPassword);
   console.log('register post received');
 
-  const queryText = `INSERT INTO "user" (emp_id, username, password, admin)
-    VALUES ($1, $2, $3, $4) RETURNING id`;
+  const queryText = `INSERT INTO "user" (emp_id, username, password, admin, email)
+    VALUES ($1, $2, $3, $4, $5) RETURNING id`;
 
-  const queryValues = [emp_id, username, password, admin]
+  const queryValues = [emp_id, username, password, admin, username]
 
   // const queryText = `INSERT INTO "user" (emp_id, username, password, email, admin)
   //   VALUES ($1, $2, $3, $4, $5) RETURNING id`;
@@ -63,23 +63,6 @@ router.post('/register/employee', rejectUnauthenticated, rejectUnauthorized, (re
     });
 });
 
-//PUT route for password reset. need user ID params.
-router.put('/passreset/:id', rejectUnauthenticated, (req, res) => {
-  const userId = req.params.id;
-  // console.log(req.params.id)
-  const password = encryptLib.encryptPassword(req.body.password);
-
-  const queryText = `UPDATE "user" 
-    SET "password" = $1
-    WHERE "id" = $2;`;
-  pool
-    .query(queryText, [password, userId])
-    .then(()=> res.sendStatus(201))
-    .catch((err)=> {
-      console.log('Password reset failed. ', err);
-      res.sendStatus(500);
-    })
-})
 
 // PUT route to update the admin status when an employee's details are changed. 
 

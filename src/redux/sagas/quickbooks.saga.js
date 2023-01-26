@@ -48,6 +48,30 @@ function* fetchQbCustomers (action) {
     }
 }
 
+//this function fetches all QB Services and then calls post route to add to DB
+function* fetchServices (action) {
+    console.log('arrived in saga for fetching qb services')
+    try {
+        const services = yield axios({
+            method: 'GET',
+            url: '/api/quickbooks/services'
+        })
+        console.log(services)
+        if (services.data === 'connectToQB'){
+            location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        }
+      /* Call function that will be post route to add QB clients to DB */
+    //   yield put({
+    //     type: 'POST_QB_CLIENTS',
+    //     payload: customers.data
+    // })
+
+    }
+    catch {
+        console.log('error in authorizationRequest');
+    }
+}
+
 function* createQbInvoice (action) {
     // console.log('in createQbInvoice saga');
     const invoiceItems = action.payload;
@@ -183,6 +207,8 @@ function* quickBooksSync (action) {
 function* quickBooksSaga() {
     yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
     yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
+    yield takeLatest('GET_QB_SERVICES', fetchServices);
+
     yield takeLatest('CREATE_QB_INVOICE', createQbInvoice);
     yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);
     yield takeLatest('UPDATE_ALL_QB_CUSTOMERS', updateAllQbCustomers);

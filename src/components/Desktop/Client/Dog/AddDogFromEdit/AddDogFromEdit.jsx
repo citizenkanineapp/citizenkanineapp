@@ -16,7 +16,7 @@ function AddDogFromEdit(){
   useEffect(()=> {
     dispatch({
       type: 'ADD_CLIENT_ID_TO_DOG',
-      payload: client.id
+      payload: client.client_id
     })
     dispatch({
       type: 'ADD_VET_PHONE',

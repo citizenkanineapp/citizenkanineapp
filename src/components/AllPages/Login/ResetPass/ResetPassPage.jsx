@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Grid, Typography, Card, TextField, CardContent, Button } from '@mui/material';
 import swal from 'sweetalert'
 
 
 function ResetPassPage() {
+  const params = useParams()
   const [newPass, setNewPass] = useState('');
   const [confPass, setConfPass] = useState('');
   const errors = useSelector((store) => store.errors);
@@ -18,24 +19,49 @@ function ResetPassPage() {
   }, []);
 
   const resetPassword = (event) => {
-    event.preventDefault();
-    if ((newPass === confPass) && (newPass != '')) {
-      dispatch({
-        type: 'RESETPASS',
-        payload: {
-          password: newPass,
-          id: user.id
-        },
-      });
+    // conditional function if accessing page via e-mailed password redirect URL
+    if(params.user_id){
+      // console.log(params.user_id)
+      if ((newPass === confPass) && (newPass != '')) {
+        dispatch({
+          type: 'RESET_PASS_FROM_LINK',
+          payload: {
+            password: newPass,
+            id: params.user_id,
+            token: params.token
+          },
+        });
 
-      setNewPass('');
-      setConfPass('');
-      dispatch({ type: 'PASSWORD_RESET' });
-      swal("Password changed!");
-      // history.push('/home');
+        setNewPass('');
+        setConfPass('');
+        dispatch({ type: 'PASSWORD_RESET' });
+        swal("Password changed!");
+        history.push('/home');
+      } else {
+        console.log('password input fail!');
+        dispatch({ type: 'PASSWORD_INPUT_ERROR' });
+      }
+
     } else {
-      console.log('password input fail!');
-      dispatch({ type: 'PASSWORD_INPUT_ERROR' });
+      event.preventDefault();
+      if ((newPass === confPass) && (newPass != '')) {
+        dispatch({
+          type: 'RESETPASS',
+          payload: {
+            password: newPass,
+            id: user.id
+          },
+        });
+
+        setNewPass('');
+        setConfPass('');
+        dispatch({ type: 'PASSWORD_RESET' });
+        swal("Password changed!");
+        history.push('/home');
+      } else {
+        console.log('password input fail!');
+        dispatch({ type: 'PASSWORD_INPUT_ERROR' });
+      }
     }
   }; // end resetPass
 
@@ -56,6 +82,7 @@ function ResetPassPage() {
               <TextField
                 margin="dense"
                 label="New password"
+                type="password"
                 size="small"
                 value={newPass}
                 onChange={(event) => setNewPass(event.target.value)}
@@ -63,6 +90,7 @@ function ResetPassPage() {
               <TextField
                 margin="dense"
                 label="Confirm password"
+                type="password"
                 size="small"
                 value={confPass}
                 onChange={(event) => setConfPass(event.target.value)}

@@ -20,6 +20,7 @@ function DogDetails() {
 
   // specific dog details - fetched by the useEffect
   const dog = useSelector(store => store.details);
+  const route = useSelector(store => store.routeReducer);
   // modal open and close status
   const status = useSelector(store => store.modal.status);
 
@@ -37,6 +38,13 @@ function DogDetails() {
     }
   }, [params.id])
 
+  
+//this routes the user back to the route for the day
+  const backFunction = (event) => {
+    const currentRoute  = route.filter(thisDog => thisDog.dog_id === dog.dog_id)
+    const currentRouteId = currentRoute[0].route_id
+    history.push(`/m/route/${currentRouteId}`)
+  }
 
   // while we were not able to get map display functionality, clicking this should open either the google maps app or a webpage 
   const openMap = async (dog) => {
@@ -70,7 +78,8 @@ function DogDetails() {
     <Grid container spacing={1} sx={{ justifyContent: 'center' }}>
       {/* NAV BACK TO LIST */}
       <Grid item xs={12}>
-        <Button onClick={(event) => history.push(`/m/route/${dog.route_id}`)}>BACK</Button>
+        {/* <Button onClick={(event) => history.push(`/m/route/${dog.route_id}`)}>BACK</Button> */}
+        <Button onClick={(event) => backFunction(event)}>BACK</Button>
       </Grid>
       <Grid item xs={5} sx={{ justifyContent: 'center' }}>
         <Fab color="primary" aria-label="add" size='small' sx={{ position: 'fixed', mt: 1, ml: 1 }}>

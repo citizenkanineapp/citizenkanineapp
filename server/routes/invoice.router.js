@@ -14,7 +14,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     // console.log('in /api/invoice');
     // console.log(req.query)
     const searchClientId = req.query.clientId;
-    // console.log('client id?', searchClientId)
+    console.log('client id?', searchClientId)
     const searchMonth = req.query.month;
     const searchYear = req.query.year;
     let searchTerms;
@@ -115,7 +115,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
             (checked_in = true OR no_show = true);
         `);
 
-        console.log(testDailyDogs.rows);
+        // console.log(testDailyDogs.rows);
 
 
 
@@ -192,6 +192,8 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
 
         if (invoiceData[0]) {
             res.send(invoiceData);
+        } else {
+            res.sendStatus(204) //Sam added this
         }
     } catch (error) {
         console.log('Error GET /api/invoice', error);

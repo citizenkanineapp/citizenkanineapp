@@ -174,7 +174,7 @@ router.get('/route/:route_id', async (req, res) => {
     // routes need to be arrays of dog objects ...
     // do we want separate arrays per route?
     const routeQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes AS dog_notes, dogs.image, routes.name AS route, clients.id, concat_ws(' ', clients.first_name, clients.last_name) AS client_name, clients.notes AS client_protocol, clients.lat, clients.long, clients.street from daily_dogs
+    SELECT daily_dogs.*, dogs.flag, dogs.notes AS dog_notes, dogs.image, routes.name AS route, clients.id, concat_ws(' ', clients.first_name, clients.last_name) AS client_name, clients.notes AS client_protocol, clients.lat, clients.long, clients.street, clients.zip from daily_dogs
 	JOIN dogs
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes
@@ -189,7 +189,7 @@ router.get('/route/:route_id', async (req, res) => {
 
     pool.query(routeQuery, routeValue)
         .then(routeResponse => {
-            console.log(routeResponse.rows);
+            // console.log(routeResponse.rows);
             let routeArray = routeResponse.rows;
 
 
@@ -201,7 +201,7 @@ router.get('/route/:route_id', async (req, res) => {
 
 router.get('/routes', async (req, res) => {
     const routesQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes, dogs.image, routes.name AS route, clients.lat, clients.long, clients.street from daily_dogs
+    SELECT daily_dogs.*, dogs.flag, dogs.notes, dogs.image, routes.name AS route, clients.lat, clients.long, clients.street, clients.zip from daily_dogs
 	JOIN dogs
 		ON daily_dogs.dog_id = dogs.id
 	JOIN routes
@@ -215,6 +215,7 @@ router.get('/routes', async (req, res) => {
     pool.query(routesQuery)
         .then(allRoutesRes => {
             let dailyRoutes = allRoutesRes.rows;
+            // console.log('daily routes test', dailyRoutes)
             res.send(dailyRoutes);
         }).catch((error => {
             console.log('/routes error getting all daily routes:', error);

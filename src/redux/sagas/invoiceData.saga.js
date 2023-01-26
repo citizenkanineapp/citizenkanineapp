@@ -11,7 +11,12 @@ function* fetchInvoiceData(action) {
                 year: action.payload.year
             }
         });
-        // console.log(clients.data)
+        if(invoiceItems.data === ''){
+            console.log('no returned data')
+        } else {
+            console.log('invoices: ', invoiceItems.data)
+        }
+        // console.log('does it hit this', invoiceItems.data)
         yield put ({type: 'SET_INVOICE_DATA', payload: invoiceItems.data}); 
     } catch (error) {
         console.log(error);

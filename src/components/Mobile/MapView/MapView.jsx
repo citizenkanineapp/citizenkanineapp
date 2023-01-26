@@ -19,7 +19,6 @@ import Divider from '@mui/material/Divider';
 import PetsIcon from '@mui/icons-material/Pets';
 import ListItemButton from '@mui/material/ListItemButton';
 
-
 //style for modal
 const style = {
   position: 'absolute',
@@ -32,6 +31,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 
 function MapView() {
   
@@ -92,8 +92,6 @@ useEffect(() => {
     const link = `http://maps.google.com/?daddr=${destination}`;
     window.open(link);
   }
-
-
 
   return (
     <Grid container

@@ -15,6 +15,7 @@ router.post('/', (req, res) => {
 
   // console.log(token.accessToken)
   // console.log(tools.basicAuth)
+  console.log(req.body)
 
   const query = '/invoice?';
   const url = config.api_uri + req.session.realmId + query ;
@@ -51,49 +52,49 @@ router.post('/', (req, res) => {
   
   // tools.refreshTokensWithToken(token.refreshToken)
 
-  const requestObj = {
-    // method: 'POST',
-    url: url,
-    headers: {
-      'Authorization': 'Bearer ' + token.accessToken,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    data: invoiceData
-  }
+  // const requestObj = {
+  //   // method: 'POST',
+  //   url: url,
+  //   headers: {
+  //     'Authorization': 'Bearer ' + token.accessToken,
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json'
+  //   },
+  //   data: invoiceData
+  // }
 
 
-  request(requestObj, function (err, response) { 
-    // FOR TESTING
-    console.log(requestObj)
-    // console.log('first log', tools.getToken(req.session))
+  // request(requestObj, function (err, response) { 
+  //   // FOR TESTING
+  //   console.log(requestObj)
+  //   // console.log('first log', tools.getToken(req.session))
 
-    // checks current access token. If access token is expired, it renews access token with stored refresh token.
-    // we need to test this at least 36 hours after refresh changes.
+  //   // checks current access token. If access token is expired, it renews access token with stored refresh token.
+  //   // we need to test this at least 36 hours after refresh changes.
 
-    tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
-        // status code 401 corrosponds to unauthorized request.
-        // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
-      if (response.statusCode === 401 ) {
-        // FOR TESTING
-        // console.log(response.statusCode)
-        // console.log(err.body)
-        // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
-        res.send('connectToQB')
+  //   tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
+  //       // status code 401 corrosponds to unauthorized request.
+  //       // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
+  //     if (response.statusCode === 401 ) {
+  //       // FOR TESTING
+  //       // console.log(response.statusCode)
+  //       // console.log(err.body)
+  //       // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
+  //       res.send('connectToQB')
 
-        // don't know if this second else-if block is necessary, ie, covering non-401 errors.
-      } else if (err || response.statusCode != 200) {
-        return res.json({ error: err, statusCode: response.statusCode })
-      } else {
+  //       // don't know if this second else-if block is necessary, ie, covering non-401 errors.
+  //     } else if (err || response.statusCode != 200) {
+  //       return res.json({ error: err, statusCode: response.statusCode })
+  //     } else {
 
-        console.log(response)
-      }
+  //       console.log(response)
+  //     }
       
-    }, function (err) {
-      console.log(err)
-      return res.json(err)
-    })
-  })
+  //   }, function (err) {
+  //     console.log(err)
+  //     return res.json(err)
+  //   })
+  // })
   
   })
 

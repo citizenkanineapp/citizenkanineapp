@@ -19,6 +19,10 @@ function AboutPage() {
     dispatch({ type: 'GET_QB_CUSTOMERS'})
   }
 
+  const updateServices = ()=>{
+    dispatch({type: 'GET_QB_SERVICES'})
+  }
+
   const updateAllCustomers= ()=>{
     dispatch({ type: 'UPDATE_ALL_QB_CUSTOMERS'})
   }
@@ -38,6 +42,10 @@ function AboutPage() {
       <button onClick={updateAllCustomers}>Pull New Customers</button>
       <button onClick={putRouteCustomers}>Update All Customers</button>
       <button onClick={passResetTest}>passreset</button>
+      <button onClick={updateServices}>Sync Services</button>
+
+
+
     </div>
   );
 }

@@ -54,7 +54,7 @@ function* fetchServices (action) {
     try {
         const services = yield axios({
             method: 'GET',
-            url: '/api/quickbooks/services'
+            url: '/api/qb_services'
         })
         console.log(services)
         if (services.data === 'connectToQB'){

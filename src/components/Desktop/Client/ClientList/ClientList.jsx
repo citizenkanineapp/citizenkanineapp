@@ -142,7 +142,7 @@ function ClientList() {
                         }
                       })
                       .map((client ) => (
-                        <StyledTableRow key={client.id} hover> 
+                        <StyledTableRow key={client.client_id} hover> 
                           <TableCell onClick={() => fetchOneClient(client)}>{client.first_name} {client.last_name}</TableCell>
                           <TableCell onClick={() => fetchOneClient(client)}>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
                           <TableCell onClick={() => fetchOneClient(client)}>{client.phone}</TableCell>
@@ -158,7 +158,7 @@ function ClientList() {
                 :
                   <TableBody>
                     {clientList.map((client ) => (
-                        <StyledTableRow key={client.id} hover> 
+                        <StyledTableRow key={client.client_id} hover> 
                           <TableCell onClick={() => fetchOneClient(client)}>{client.first_name} {client.last_name}</TableCell>
                           <TableCell onClick={() => fetchOneClient(client)}>{client.dogs.map(
                            (dog, i) => (i === client.dogs.length-1 ? dog.dog_name : dog.dog_name + ' • '))}</TableCell>

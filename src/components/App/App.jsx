@@ -18,6 +18,7 @@ import EmployeeList from '../Desktop/Employee/EmployeeList/EmployeeList';
 import ClientList from '../Desktop/Client/ClientList/ClientList';
 import EmployeeSchedule from '../Desktop/Employee/EmployeeSchedule/EmployeeSchedule';
 import AdminSettings from '../Desktop/AdminSettings/AdminSettings';
+import EmailPassResetPage from '../AllPages/Login/ResetPass/EmailPassResetPage';
 import AdminNotes from '../Desktop/AdminNotes/AdminNotes';
 
 //MOBILE COMPONENTS
@@ -38,9 +39,7 @@ import { theme } from '../AllPages/Theme/Theme';
 
 function App() {
   const dispatch = useDispatch();
-
   const user = useSelector(store => store.user);
-
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
@@ -71,6 +70,14 @@ function App() {
                 <Redirect to="/user" />
                 :
                 <LoginPage />}
+            </Route>
+
+            <Route path="/emailPassReset">
+              {/* {params.user_id ?
+                <EmailPassResetPage />
+                :
+                <LoginPage />} */}
+              <EmailPassResetPage />
             </Route>
 
             {/* ----------------------- DESKTOP ----------------------- */}
@@ -104,9 +111,14 @@ function App() {
               {user.admin ? <AdminSettings /> : <Redirect to="/home" />}
             </ProtectedRoute>
 
+            <Route exact path="/resetpass/:user_id/:token" >
+              <ResetPassPage />
+            </Route>
+
             <ProtectedRoute exact path="/resetpass">
               {user.admin ? <ResetPassPage /> : <Redirect to="/home" />}
             </ProtectedRoute>
+
 
             {/* <ProtectedRoute exact path="/adminnotes">
               {user.admin ? <AdminNotes /> : <Redirect to="/home" />}

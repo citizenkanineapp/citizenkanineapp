@@ -64,7 +64,7 @@ function ClientDetails(){
     // const currentDog = client.dogs.filter(dog => {return dog.dog_id === id})
     // console.log('current dog', currentDog)
     const clientDogObj = {
-      client_id: client.id,
+      client_id: client.client_id,
       dog_name: dog.dog_name,
       image: dog.image,
       dog_id: dog.dog_id,
@@ -73,7 +73,7 @@ function ClientDetails(){
       regular: dog.regular
     }
     // console.log('client dog object', currentDog)
-    dispatch({type: 'SET_DOG_EDIT', payload: clientDogObj})
+    dispatch({type: 'SET_DOG_EDIT', payload: dog})
     dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditDogForm' });
   }
   
@@ -159,7 +159,13 @@ function ClientDetails(){
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                 />
-
+              <TextField
+                focused={false}
+                value={client.mobile || ''} 
+                helperText="Mobile"  
+                size="small" 
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                />
               <TextField
                 focused={false}
                 value={client.email} 
@@ -173,15 +179,15 @@ function ClientDetails(){
                 helperText="Vet Name"  
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
-            />
+             />
               <TextField
                 focused={false}
                 value={client.vet_phone || ''} 
                 helperText="Vet Phone"  
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
-               />
-               <TextField
+              />
+              <TextField
                 focused={false}
                 value={client.route_name || ''} 
                 helperText="Default Route"  
@@ -265,7 +271,7 @@ function ClientDetails(){
                 onClick={back}>Back</Button>
             <Tooltip title="Delete Client" placement="top-end">
               <Button variant="contained"
-                onClick={() => deleteClient(client.id)}>Delete</Button> 
+                onClick={() => deleteClient(client.client_id)}>Delete</Button> 
             </Tooltip>
             </Box>
               <Button variant="contained" color="secondary"

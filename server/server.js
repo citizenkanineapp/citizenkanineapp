@@ -1,8 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 
+
+// const OAuthClient = require('intuit-oauth');
+
 const app = express();
+
 
 const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
@@ -16,6 +21,10 @@ const mobileRouter = require('./routes/mobile.router');
 const invoiceRouter = require('./routes/invoice.router');
 const clientScheduleRouter = require('./routes/clientSchedule.router');
 const adminRouter = require('./routes/admin.router');
+const quickbooksRouter = require('./routes/quickbooks.router');
+const oauth2Router = require('./routes/quickbooks.oauth2.router');
+const qbInvoiceRouter = require ('./routes/quickbooks.invoice.router');
+const passReset = require('./routes/passreset.router');
 
 
 // Body parser middleware
@@ -36,16 +45,17 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/image', imageRouter);
-
 app.use('/api/employees', employeesRouter);
-
 app.use('/api/clients', clientsRouter);
 app.use('/api/mobile', mobileRouter);
-
 app.use('/api/invoice', invoiceRouter);
 app.use('/api/clientSchedule', clientScheduleRouter);
-
+app.use('/api/pass_reset', passReset);
 app.use('/api/admin', adminRouter);
+app.use('/api/quickbooks', quickbooksRouter);
+app.use('/api/oauth2', oauth2Router);
+app.use('/api/qbInvoice', qbInvoiceRouter);
+
 
 
 // Serve static files

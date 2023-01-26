@@ -42,6 +42,7 @@ function Invoicing() {
   const fetchInvoiceData = () => {
     //formats month for search query
     const month = months.indexOf(selectedMonth) + 1;
+    console.log("in fetchInvoiceData", selectedId, selectedYear);
 
     dispatch({
       type: 'FETCH_INVOICE_DATA',
@@ -72,8 +73,8 @@ function Invoicing() {
               </MenuItem>
               {clientList && clientList.map && clientList.map((client) => (
                 <MenuItem
-                  key={client.id}
-                  value={client.id}
+                  key={client.client_id}
+                  value={client.client_id}
                 >
                   {client.first_name} {client.last_name}
                 </MenuItem>

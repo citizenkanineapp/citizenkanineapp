@@ -63,7 +63,8 @@ function DogDetails() {
     // removes white space from number
     let readyNumber = nosymbols.trim();
     // sends prompt to call number
-    window.open(`tel:+1${readyNumber}`);
+    // window.open(`tel:+1${readyNumber}`);
+    location.href = `tel:+1${readyNumber}`;
   }
 
   // function that allows an employee to add notes to a dog

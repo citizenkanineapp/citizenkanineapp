@@ -9,6 +9,7 @@ import MobileNav from '../MobileNav/MobileNav';
 function Home() {
   const history = useHistory();
   const user = useSelector(store => store.user);
+  const dailyDogsCheck = useSelector(store => store.dailyDogz);
   const dispatch = useDispatch();
 
   // on page load - populate the daily dogs table using day of the week and the scheduled dogs for the day

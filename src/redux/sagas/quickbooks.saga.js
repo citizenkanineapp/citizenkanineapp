@@ -56,8 +56,8 @@ function* fetchServices (action) {
             console.log(services.status)
         }
         if (services.data === 'connectToQB'){
-            // location.href = "http://localhost:5000/api/oauth2/connect_handler"
-            location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+             location.href = "http://localhost:5000/api/oauth2/connect_handler"
+            //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
         }
 
@@ -79,8 +79,8 @@ function* createQbInvoice (action) {
         })
         console.log(invoiceResponse)
         if (invoiceResponse.data === 'connectToQB'){
-            // location.href = "http://localhost:5000/api/oauth2/connect_handler"
-            location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+            location.href = "http://localhost:5000/api/oauth2/connect_handler"
+            //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
         }
 

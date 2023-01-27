@@ -8,7 +8,7 @@ const { cloudinary } = require('../modules/cloudinary.js');
  * This uploads an image to cloudinary
  */
 router.post('/', async (req, res) => {
-    //    console.log(req.body)
+       console.log(req.body)
     try {
         const fileStr = req.body.new_image_url;
         // need to either configure upload_preset

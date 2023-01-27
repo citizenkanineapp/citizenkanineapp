@@ -15,7 +15,7 @@ router.get('/', ( req, res ) => {
 
 
 router.get('/test', ( req, res ) => {
-    const streamSource = process.env.STREAMSOURCE || 'http://localhost:5000/stream';
+    const streamSource = process.env.STREAMSOURCE;
     console.log('in /source, streamsource: ', streamSource);
     res.send(streamSource);    
 })

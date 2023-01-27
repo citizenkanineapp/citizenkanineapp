@@ -19,29 +19,29 @@ import swal from 'sweetalert';
   
 // }
 
-//this function fetches all QB clients and then calls post route to add to DB
-function* fetchQbCustomers (action) {
-    console.log('arrived in saga for fetching qb customers')
-    try {
-        const customers = yield axios({
-            method: 'GET',
-            url: '/api/quickbooks/customer'
-        })
-        console.log(customers)
-        if (customers.data === 'connectToQB'){
-            location.href = "http://localhost:5000/api/oauth2/connect_handler"
-        }
-      /* Call function that will be post route to add QB clients to DB */
-      yield put({
-        type: 'POST_QB_CLIENTS',
-        payload: customers.data
-    })
+// //this function fetches all QB clients and then calls post route to add to DB
+// function* fetchQbCustomers (action) {
+//     console.log('arrived in saga for fetching qb customers')
+//     try {
+//         const customers = yield axios({
+//             method: 'GET',
+//             url: '/api/quickbooks/customer'
+//         })
+//         console.log(customers)
+//         if (customers.data === 'connectToQB'){
+//             location.href = "http://localhost:5000/api/oauth2/connect_handler"
+//         }
+//       /* Call function that will be post route to add QB clients to DB */
+//       yield put({
+//         type: 'POST_QB_CLIENTS',
+//         payload: customers.data
+//     })
 
-    }
-    catch {
-        console.log('error in fetchQbCustomers');
-    }
-}
+//     }
+//     catch {
+//         console.log('error in fetchQbCustomers');
+//     }
+// }
 
 //this function fetches all QB Services and then calls post route to add to DB
 function* fetchServices (action) {
@@ -200,7 +200,7 @@ function* quickBooksSync (action) {
 
 function* quickBooksSaga() {
     // yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
-    yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
+    // yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
     yield takeLatest('GET_QB_SERVICES', fetchServices);
 
     yield takeLatest('CREATE_QB_INVOICE', createQbInvoice);

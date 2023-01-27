@@ -7,18 +7,19 @@ const config = require('../../config.json');
 const request = require('request');
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   console.log('in server fetch services')
+  const dbServices = await pool.query(`SELECT * FROM services`);
+  // console.log('DB services: ', dbServices.rows);
+
   const token = tools.getToken(req.session)
   // console.log(token.accessToken)
   // console.log(tools.basicAuth)
 
-  const query = encodeURI('/query?query= select * from item');
+  const query = encodeURI(`/query?query= select * from item where Active = true`);
   const url = config.api_uri + req.session.realmId + query
   console.log('Making API Customer call to: ' + url)
   
-  // tools.refreshTokensWithToken(token.refreshToken)
-
   const requestObj = {
     url: url,
     headers: {
@@ -34,9 +35,7 @@ router.get('/', (req, res) => {
         // status code 401 corrosponds to unauthorized request.
         // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
       if (response.statusCode === 401 ) {
-        // FOR TESTING
-        // console.log("response bad auth", response)
-        // console.log(err.body)
+        
         // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
         res.send('connectToQB')
 
@@ -45,17 +44,23 @@ router.get('/', (req, res) => {
         // console.log(response.statusCode)
         return res.json({ error: err, statusCode: response.statusCode })
       } else {
-        // const items = JSON.parse(response.body).QueryResponse.Item;
-        // for(let item of items){
-        // console.log(item)
-        // }
-        // console.log("response with fresh auth", response)
-        const services = JSON.parse(response.body).QueryResponse.Item;
-        postServices(services);
+    
+        let services = JSON.parse(response.body).QueryResponse.Item;        
+        //filters parent item 'Group Dog Walking" from services array
+        services = services.filter(service => service.ParentRef);
+        let qbServices = [];
+
+        //for some reason, can't directly filter out service.ParentRef.name/service.ParentRef.value
+        for (let i of services) {
+          if (i.ParentRef.name === 'Group Dog Walking') {
+            qbServices.push(i);
+          }
+        }
+        console.log(qbServices)
+
+
+        postServices(qbServices, dbServices.rows);
         
-        /*  this sucessfully sent back the customers after being processed
-        do we need to worry about timing issues long term?  */
-        // res.send(filteredCustomers)
         res.sendStatus(201);
       }   
     }, function (err) {
@@ -65,30 +70,40 @@ router.get('/', (req, res) => {
   })
 }) 
 
-async function postServices(services) {
+async function postServices(qbServices, dbServices) {
   const client = await pool.connect();
-  // console.log(services);
-  //filters parent item 'Group Dog Walking" from services array
-  const servicesFiltered = services.filter(service => service.ParentRef);
-  const serviceQuery = `
-  INSERT INTO services
-      ("qb_id", "name", "price")
-    VALUES
-      ($1, $2, $3);    
-  `;
+  console.log(qbServices);
 
-  try{
-    await Promise.all(servicesFiltered.map(service => {
-      const serviceValues = [service.Id, service.FullyQualifiedName, service.UnitPrice];
-      client.query(serviceQuery, serviceValues)
-    }))
-  } catch (error) {
-    console.log('query error in postServices', error);
-  }
-  
+      let existingServiceIds = new Set(dbServices.map(({qb_id}) => qb_id));
+      let existingServices = qbServices.filter( service => existingServiceIds.has(Number(service.Id)));
+      let uniqueServices = qbServices.filter( service => !existingServiceIds.has(Number(service.Id)))
+      // console.log(existingServiceIds, existingServices.length, uniqueServices.length);
 
+      const updateExistingServicesQuery = `
+        UPDATE services
+          SET
+            name = $1,
+            price = $2
+          WHERE
+            qb_id = $3;
+      `;
 
-  
+      const insertUniqueServicesQuery = `
+      INSERT INTO services
+          ("qb_id", "name", "price")
+        VALUES
+          ($1, $2, $3);    
+      `;
+
+      await Promise.all(uniqueServices.map(service => {
+        const values = [service.Id, service.FullyQualifiedName, service.UnitPrice];
+        client.query(insertUniqueServicesQuery, values);
+      }))
+
+      await Promise.all(existingServices.map(service => {
+        const values = [service.FullyQualifiedName, service.UnitPrice, service.Id];
+        client.query(updateExistingServicesQuery, values);
+      }))
 
 }
 

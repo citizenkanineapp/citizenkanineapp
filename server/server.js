@@ -25,6 +25,7 @@ const quickbooksRouter = require('./routes/quickbooks.router');
 const oauth2Router = require('./routes/quickbooks.oauth2.router');
 const qbInvoiceRouter = require ('./routes/quickbooks.invoice.router');
 const passReset = require('./routes/passreset.router');
+const qbServicesRouter = require('./routes/quickbooks.services.router');
 
 
 // Body parser middleware
@@ -55,6 +56,7 @@ app.use('/api/admin', adminRouter);
 app.use('/api/quickbooks', quickbooksRouter);
 app.use('/api/oauth2', oauth2Router);
 app.use('/api/qbInvoice', qbInvoiceRouter);
+app.use('/api/qb_services', qbServicesRouter);
 
 
 

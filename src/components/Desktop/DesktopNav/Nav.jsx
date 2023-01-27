@@ -24,7 +24,7 @@ function Nav(props) {
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-
+ 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -83,12 +83,8 @@ function Nav(props) {
         </ListItem>
       </List>
 
-      {/* <Box>
-        <Button sx={{mb: 5}} id="qb_button" onClick={connectQB}>
-          <img src="Images/qbButtonShort.png" alt="quickbooks logo"/>
-        </Button>
-      </Box> */}
-        <LogOutButton />
+      <LogOutButton />
+
     </Box>
   );
 
@@ -163,7 +159,6 @@ function Nav(props) {
           {drawer}
         </Drawer>
       </Box>
-
     </Box >
   );
 }

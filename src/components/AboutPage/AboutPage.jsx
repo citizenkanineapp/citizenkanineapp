@@ -9,7 +9,8 @@ function AboutPage() {
 
   const connectQB = ()=>{
     console.log(location)
-  //  location.href = "http://localhost:5000/api/oauth2/connect_handler";
+    location.href = "http://localhost:5000/api/oauth2/connect_handler";
+
   }
 
   const updateServices = ()=>{

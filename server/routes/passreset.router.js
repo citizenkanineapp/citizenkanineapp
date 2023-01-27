@@ -36,7 +36,7 @@ router.post('/email_reset_link', async (req, res) => {
 
         //if e-mail exists
         if(userData.rows[0]) {
-            console.log(userData.rows[0].email);
+            console.log('email from user table: ',userData.rows[0].email);
 
             //generates password reset token
             const token = crypto.randomBytes(20).toString('hex');
@@ -65,15 +65,15 @@ router.post('/email_reset_link', async (req, res) => {
                 service: 'gmail',
                 //set to KEYS
                 auth: {
-                    user: process.env.resetEmail,
-                    pass: process.env.emailKey
+                    user: process.env.RESETEMAIL,
+                    pass: process.env.EMAILKEY
                 }
             });
 
             const resetLink = `http://localhost:3000/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
 
             const mailOptions = {
-                from: process.env.resetEmail, //sender
+                from: process.env.RESETEMAIL, //sender
                 to: `${email}`,
                 subject: 'password reset',
                 text:

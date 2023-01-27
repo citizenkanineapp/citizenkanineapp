@@ -69,5 +69,5 @@ export default combineReducers({
   loginMessage,
   registrationMessage,
   resetPasswordMessage,
-  addClientErrors
+  addClientErrors,
 });

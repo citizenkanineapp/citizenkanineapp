@@ -1,52 +1,47 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
+import swal from 'sweetalert';
 
 
-// this standalone connect will be phased out.
-function* authorizationRequest (action) {
-    // console.log('arrived in saga for authorization request')
-    try {
-        const uri = yield axios({
-            method: 'GET',
-            url: '/api/oauth2/connect_handler'
-        })
-        console.log('in QB saga', uri);
-
-        // I DON"T KNOW IF WE WANT TO SET URI TO DATA.
-        // yield put({
-        //     type: 'SET_AUTH_URL',
-        //     payload: uri.data
-        // })
-    }
-    catch {
-        console.log('error in authorizationRequest');
-    }
+// // this standalone connect will be phased out.
+// function* authorizationRequest (action) {
+//     // console.log('arrived in saga for authorization request')
+//     try {
+//         const uri = yield axios({
+//             method: 'GET',
+//             url: '/api/oauth2/connect_handler'
+//         })
+//         console.log('in QB saga', uri);
+//     }
+//     catch {
+//         console.log('error in authorizationRequest');
+//     }
   
-}
+// }
 
-//this function fetches all QB clients and then calls post route to add to DB
-function* fetchQbCustomers (action) {
-    console.log('arrived in saga for fetching qb customers')
-    try {
-        const customers = yield axios({
-            method: 'GET',
-            url: '/api/quickbooks/customer'
-        })
-        console.log(customers)
-        if (customers.data === 'connectToQB'){
-            location.href = "http://localhost:5000/api/oauth2/connect_handler"
-        }
-      /* Call function that will be post route to add QB clients to DB */
-      yield put({
-        type: 'POST_QB_CLIENTS',
-        payload: customers.data
-    })
+// //this function fetches all QB clients and then calls post route to add to DB
+// function* fetchQbCustomers (action) {
+//     console.log('arrived in saga for fetching qb customers')
+//     try {
+//         const customers = yield axios({
+//             method: 'GET',
+//             url: '/api/quickbooks/customer'
+//         })
+//         console.log(customers)
+//         if (customers.data === 'connectToQB'){
+//             location.href = "http://localhost:5000/api/oauth2/connect_handler"
+//         }
+//       /* Call function that will be post route to add QB clients to DB */
+//       yield put({
+//         type: 'POST_QB_CLIENTS',
+//         payload: customers.data
+//     })
 
-    }
-    catch {
-        console.log('error in authorizationRequest');
-    }
-}
+//     }
+//     catch {
+//         console.log('error in fetchQbCustomers');
+//     }
+// }
 
 //this function fetches all QB Services and then calls post route to add to DB
 function* fetchServices (action) {
@@ -54,21 +49,20 @@ function* fetchServices (action) {
     try {
         const services = yield axios({
             method: 'GET',
-            url: '/api/quickbooks/services'
+            url: '/api/qb_services'
         })
-        console.log(services)
+        if (services.status === 201) {
+            swal("Services updated!");
+            console.log(services.status)
+        }
         if (services.data === 'connectToQB'){
             location.href = "http://localhost:5000/api/oauth2/connect_handler"
         }
-      /* Call function that will be post route to add QB clients to DB */
-    //   yield put({
-    //     type: 'POST_QB_CLIENTS',
-    //     payload: customers.data
-    // })
+
 
     }
     catch {
-        console.log('error in authorizationRequest');
+        console.log('error in services request');
     }
 }
 
@@ -93,7 +87,7 @@ function* createQbInvoice (action) {
         })
     }
     catch {
-        console.log('error in authorizationRequest');
+        console.log('error in createQbInvoice');
     }
 }
 
@@ -205,8 +199,8 @@ function* quickBooksSync (action) {
 }
 
 function* quickBooksSaga() {
-    yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
-    yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
+    // yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
+    // yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
     yield takeLatest('GET_QB_SERVICES', fetchServices);
 
     yield takeLatest('CREATE_QB_INVOICE', createQbInvoice);

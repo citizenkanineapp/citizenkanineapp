@@ -31,6 +31,12 @@ function ClientList() {
     dispatch({ type: 'CLEAR_MODALS'})
   }, []);
 
+  //starts OAuth process with QB
+  const connectQB = ()=>{
+    console.log(location)
+   location.href = "http://localhost:5000/api/oauth2/connect_handler";
+  }
+
   const openModal = (view) => {
     dispatch({ type: 'SET_CLIENT_MODAL', payload: view }); //assures the view to be the right component
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
@@ -97,7 +103,7 @@ function ClientList() {
 
           <Button onClick={() => searchFunction()} variant="contained" color="secondary">Search</Button>
        }
-          <Button onClick={() => openModal('AddClient')} variant='contained' color="secondary">Add Client</Button>
+          <Button onClick={() => dispatch({ type: 'QUICKBOOKS_SYNC'})} variant='contained' color="secondary">QuickBooks Sync</Button>
        
       </Grid>
       <Grid container spacing={2}>
@@ -178,7 +184,12 @@ function ClientList() {
             </Table>
           </TableContainer>
         </Grid>
-
+        <Grid item xs={12} sx={{ mr: 5, display: 'flex', justifyContent: 'flex-end' }}>
+          <Button onClick={connectQB}>
+              <img src="Images/qbButtonShort.png" alt="quickbooks logo"/>
+            </Button>
+        </Grid>
+      
       </Grid>
       {/* <Button onClick={() => openModal('ClientDetails')}>LISA FRANK - SPIKE, FIDO</Button>  opens client details */}
       <ClientModal /> {/* only open when button is pressed */}

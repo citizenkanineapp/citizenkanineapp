@@ -14,7 +14,7 @@ router.get('/customer', (req, res) => {
 
   const query = encodeURI('/query?query= select * from customer');
   const url = config.api_uri + req.session.realmId + query
-  console.log('Making API Customer call to: ' + url)
+  // console.log('Making API Customer call to: ' + url)
   
   // tools.refreshTokensWithToken(token.refreshToken)
 
@@ -27,21 +27,13 @@ router.get('/customer', (req, res) => {
   }
 
   request(requestObj, function (err, response) { 
-    // FOR TESTING
-    // req.session.accessToken = 'bad!'
-    // req.session.refreshToken = '0202'
-    // console.log('first log', tools.getToken(req.session))
-
     // checks current access token. If access token is expired, it renews access token with stored refresh token.
-    // we need to test this at least 36 hours after refresh changes.
 
     tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
         // status code 401 corrosponds to unauthorized request.
         // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
       if (response.statusCode === 401 ) {
-        // FOR TESTING
-        // console.log("response bad auth", response)
-        // console.log(err.body)
+       
         // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
         res.send('connectToQB')
 
@@ -49,19 +41,13 @@ router.get('/customer', (req, res) => {
       } else if (err || response.statusCode != 200) {
         return res.json({ error: err, statusCode: response.statusCode })
       } else {
-        // const items = JSON.parse(response.body).QueryResponse.Item;
-        // for(let item of items){
-        // console.log(item)
-        // }
+     
         // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
-        console.log("response with fresh auth", response)
+        // console.log("response with fresh auth", response)
         let customers = JSON.parse(response.body)
         // console.log(customers)
         // this function starts the process of formatting the customers
         let filteredCustomers =  filterCustomers(customers)
-        // console.log('second log', tools.getToken(req.session))
-
-
         /*  this sucessfully sent back the customers after being processed
         do we need to worry about timing issues long term?  */
         res.send(filteredCustomers)
@@ -216,11 +202,11 @@ router.get('/customer', (req, res) => {
     for(let eachCustomer of customersResult) {
         const scheduleTxt = `
                               INSERT INTO clients_schedule
-                              ("client_id", "1", "2", "3", "4", "5")  
+                              ("client_id", "qb_id", "1", "2", "3", "4", "5")  
                               VALUES
-                              ($1, $2, $3, $4, $5, $6)
+                              ($1, $2, $3, $4, $5, $6, $7)
   `
-        const dayValues = [eachCustomer.client_id, eachCustomer.monday, eachCustomer.tuesday, 
+        const dayValues = [eachCustomer.client_id, eachCustomer.qb_id, eachCustomer.monday, eachCustomer.tuesday, 
                             eachCustomer.wednesday, eachCustomer.thursday, eachCustomer.friday]
         await client.query(scheduleTxt, dayValues)
     }
@@ -283,8 +269,12 @@ router.get('/customer', (req, res) => {
 
   router.put('/customer/put', async (req, res) => {
     let qbData = req.body.qb
+    // console.log('looking for schedule info', qbData)
     let dbData = req.body.db
 
+    let customersWithSchedule = processSchedule(qbData)
+    qbData = customersWithSchedule
+    // console.log('customers with schedule', qbData)
     let customersAddDogs = []
     let customersDeleteDogs = []
     let customerNoDogChange = []
@@ -331,10 +321,10 @@ router.get('/customer', (req, res) => {
               qb_id = $8;
 
     `
-          const clientValues = [regCustomer.street, regCustomer.city, regCustomer.zip, regCustomer.phone, regCustomer.mobile,
+    const clientValues = [regCustomer.street, regCustomer.city, regCustomer.zip, regCustomer.phone, regCustomer.mobile,
                                 regCustomer.email, regCustomer.notes, regCustomer.qb_id]
-         await connection.query(clientTxt, clientValues)
-      //updating client details for customers where dog is added
+    await connection.query(clientTxt, clientValues)
+  //updating client details for customers where dog is added
       for(let addCustomer of processedCustomersAddDogs){
         const clientTxt = `
         UPDATE clients
@@ -355,7 +345,7 @@ router.get('/customer', (req, res) => {
                                 addCustomer.email, addCustomer.notes, addCustomer.qb_id]
           await connection.query(clientTxt, clientValues)
       }
-      //for customers where dogs will be deleted
+ //for customers where dogs will be deleted
       for(let deleteCustomer of processedCustomerDeleteDogs){
         const clientTxt = `
         UPDATE clients
@@ -378,6 +368,62 @@ router.get('/customer', (req, res) => {
       }
       
   }
+
+  //updating client schedule for clients that did not have dog changes
+  for(let regCustomer of customerNoDogChange ){
+            const scheduleTxt = `
+            UPDATE clients_schedule
+                SET
+                  "1" = $1, 
+                  "2" = $2,
+                  "3" = $3,
+                  "4" = $4,
+                  "5" = $5
+              
+                WHERE
+                  qb_id = $6;
+
+          `
+    const scheduleValues = [regCustomer.monday, regCustomer.tuesday, regCustomer.wednesday, regCustomer.thursday, regCustomer.friday, regCustomer.qb_id]
+    await connection.query(scheduleTxt, scheduleValues)
+  }
+  //updating client schedule for clients that added dogs
+  for(let addCustomer of customersAddDogs ){
+          const scheduleTxt = `
+          UPDATE clients_schedule
+              SET
+                "1" = $1, 
+                "2" = $2,
+                "3" = $3,
+                "4" = $4,
+                "5" = $5
+            
+              WHERE
+                qb_id = $6;
+
+        `
+    const scheduleValues = [addCustomer.monday, addCustomer.tuesday, addCustomer.wednesday, addCustomer.thursday, addCustomer.friday, addCustomer.qb_id]
+    await connection.query(scheduleTxt, scheduleValues)
+}
+
+//updating client schedule for clients that deleted dogs
+for(let deleteCustomer of customersDeleteDogs){
+      const scheduleTxt = `
+      UPDATE clients_schedule
+          SET
+            "1" = $1, 
+            "2" = $2,
+            "3" = $3,
+            "4" = $4,
+            "5" = $5
+        
+          WHERE
+            qb_id = $6;
+
+    `
+const scheduleValues = [deleteCustomer.monday, deleteCustomer.tuesday, deleteCustomer.wednesday, deleteCustomer.thursday, deleteCustomer.friday, deleteCustomer.qb_id]
+await connection.query(scheduleTxt, scheduleValues)
+}
   if(processedCustomersAddDogs.length === 0){
     console.log('No dogs need to be added')
     } else {
@@ -426,72 +472,6 @@ if(processedCustomerDeleteDogs.length === 0){
     connection.release()
   }
   });
-
-  router.get('/services', (req, res) => {
-    console.log('in server fetch services')
-    const token = tools.getToken(req.session)
-    // console.log(token.accessToken)
-    // console.log(tools.basicAuth)
-  
-    const query = encodeURI('/query?query= select * from item');
-    const url = config.api_uri + req.session.realmId + query
-    console.log('Making API Customer call to: ' + url)
-    
-    // tools.refreshTokensWithToken(token.refreshToken)
-  
-    const requestObj = {
-      url: url,
-      headers: {
-        'Authorization': 'Bearer ' + token.accessToken,
-        'Accept': 'application/json'
-      }
-    }
-  
-    request(requestObj, function (err, response) { 
-  
-      // checks current access token. If access token is expired, it renews access token with stored refresh token.
-      // we need to test this at least 36 hours after refresh changes.
-  
-      tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
-          // status code 401 corrosponds to unauthorized request.
-          // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
-        if (response.statusCode === 401 ) {
-          // FOR TESTING
-          // console.log("response bad auth", response)
-          // console.log(err.body)
-          // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
-          res.send('connectToQB')
-  
-          // don't know if this second else-if block is necessary, ie, covering non-401 errors.
-        } else if (err || response.statusCode != 200) {
-          // console.log(response.statusCode)
-          return res.json({ error: err, statusCode: response.statusCode })
-        } else {
-          // const items = JSON.parse(response.body).QueryResponse.Item;
-          // for(let item of items){
-          // console.log(item)
-          // }
-          // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
-          console.log("response with fresh auth", response)
-          let services = JSON.parse(response.body);
-          services = services.QueryResponse.Item;
-          console.log(services);
-          // this function starts the process of formatting the customers
-          // let filteredCustomers =  filterCustomers(customers)
-          // console.log('second log', tools.getToken(req.session))
-  
-  
-          /*  this sucessfully sent back the customers after being processed
-          do we need to worry about timing issues long term?  */
-          // res.send(filteredCustomers)
-          res.sendStatus(201);
-        }   
-      }, function (err) {
-        console.log(err)
-        return res.json(err)
-      })
-    })
-  })
 
   
   function getDogIdToDelete (customers, dbData) {

@@ -122,11 +122,11 @@ function ClientSchedule() {
     setDisabled(!disabled);
   }
 
-  const DogAvatar=({dog,index, id, className})=>{
+  const DogAvatar=({dog,index,  dog_id, className})=>{
     return (
     <Avatar
         className={className}
-        key={id}
+        key={dog_id}
         sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
         alt={dog.dog_name[0]}
         src={dog.image ? dog.image : null}

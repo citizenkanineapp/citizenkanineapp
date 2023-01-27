@@ -7,6 +7,10 @@ import './AboutPage.css'
 function AboutPage() {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch({ type: 'GET_HEROKU' })
+  }, []);
+
   const connectQB = ()=>{
     console.log(location)
     location.href = "http://localhost:5000/api/oauth2/connect_handler";

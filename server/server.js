@@ -26,7 +26,7 @@ const oauth2Router = require('./routes/quickbooks.oauth2.router');
 const qbInvoiceRouter = require ('./routes/quickbooks.invoice.router');
 const passReset = require('./routes/passreset.router');
 const qbServicesRouter = require('./routes/quickbooks.services.router');
-
+const redirectSourceRouter = require('./routes/redirect.router')
 
 // Body parser middleware
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -57,6 +57,8 @@ app.use('/api/quickbooks', quickbooksRouter);
 app.use('/api/oauth2', oauth2Router);
 app.use('/api/qbInvoice', qbInvoiceRouter);
 app.use('/api/qb_services', qbServicesRouter);
+app.use('/api/redirect', redirectSourceRouter);
+
 
 
 

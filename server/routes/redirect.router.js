@@ -8,7 +8,7 @@ const request = require('request');
 const router = express.Router();
 
 router.get('/', ( req, res ) => {
-    const streamSource = process.env || 'http://localhost:5000/stream';
+    const streamSource = process.env ;
     // console.log('in /source, streamsource: ', streamSource);
     res.send(streamSource);    
 })

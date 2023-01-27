@@ -96,6 +96,13 @@ const handleClose = () => {
                   onChange={(e) => dispatch({type: 'ADD_PHONE', payload: e.target.value})}
                   helperText="Phone"  
                   size="small"/>
+                <TextField
+                  focused={false}
+                  value={client.mobile || ''} 
+                  helperText="Mobile"  
+                  size="small" 
+                  InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                />
                 <TextField 
                   value={client.email}
                   onChange={(e) => dispatch({type: 'ADD_EMAIL', payload: e.target.value})} 

@@ -62,7 +62,7 @@ router.get('/connect_handler', (req, res) => {
  
     // }
     req.session.realmId = req.query.realmId;
-    res.redirect('http://localhost:3000/#/about')
+    res.redirect('http://localhost:3000/#/clients')
   
     })
 })

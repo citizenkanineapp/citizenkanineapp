@@ -58,8 +58,8 @@ function DogDetails() {
 
   // this is a button that allows for an employee to click and prompt for a phone call to a given number
   const clicktoCall = (number) => {
-    // removes any symbols from the phone number
-    let nosymbols = number.replace(/[^a-zA-Z0-9 ]/g, '');
+     // removes any symbols and letters from the phone number
+    let nosymbols = number.replace(/[^0-9 ]/g, '');
     // removes white space from number
     let readyNumber = nosymbols.trim();
     // sends prompt to call number
@@ -123,7 +123,7 @@ function DogDetails() {
             {editStatus ?
               <>
                 <TextField
-                  value={dog.dog_notes}
+                  value={dog.dog_notes || ''}
                   onChange={(event) => dispatch({ type: 'EDIT_DOG_NOTE', payload: event.target.value })}
                   label='Dog Notes'
                   fullWidth
@@ -183,11 +183,16 @@ function DogDetails() {
             <Typography>Vet Info:</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography variant='body2'>Dr. Terry</Typography>
-            {/* <a href="tel:+16127159132"><LocalPhoneIcon fontSize='small' />(612)-715-9132</a> */}
+          {dog.vet_name || dog.vet_phone ? 
+          <>
+            <Typography variant='body2'>{dog.vet_name || ''}</Typography>
             <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.vet_phone)} >
               Call
             </Button>
+          </>
+            :
+            <Typography sx={{mb: 2}} variant='body2'>No Vet on File</Typography>
+          }
           </AccordionDetails>
         </Accordion>
 

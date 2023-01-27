@@ -1,14 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import './AboutPage.css'
+
 
 
 function AboutPage() {
   const dispatch = useDispatch();
 
-  //curently re-directing to quickbooks log in but not working
   const connectQB = ()=>{
-  //  location.href = "http://localhost:5000/api/oauth2/connect_handler";
-   console.log(location)
+    console.log(location)
+    location.href = "http://localhost:5000/api/oauth2/connect_handler";
+
   }
 
   const updateServices = ()=>{
@@ -23,7 +25,10 @@ function AboutPage() {
   return (
     <div className="container">
       <h1>AboutPage</h1>
-      <button onClick={connectQB}>Connect to QB</button>
+      <button onClick={connectQB}>Connect to QB</button> 
+      <button id="qb_button" onClick={connectQB}>
+        <img src="Images/qbButton.png" alt="quickbooks logo"/>
+      </button>
       <button onClick={updateServices}>Sync Services</button>
       <button onClick={quickbooksSync}>Sync With Quickbooks</button>
     </div>

@@ -255,7 +255,7 @@ function ClientDetails(){
                         width="100%"
                         alt="client dog photo"
                         onClick={() => showDetails(dog.dog_id, index)}
-                        src={dog.image ? dog.image : 'images/dogfiller.png'}
+                        src={dog.image ? dog.image : 'Images/dogfiller.png'}
                         sx={{height: 175, '&:hover': {filter: 'brightness(90%)'}}}
                       /> 
             </Card>

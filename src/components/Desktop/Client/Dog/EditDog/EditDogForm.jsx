@@ -58,7 +58,7 @@ function EditDogForm(){
                     <Box sx={{ width: "90%", height: "80%", display: 'flex', alignItems: 'center', justifyContent: 'center', }}>  {/*need to figure out aspect ratio and conditional rendering to change into image upload for editing image*/}
                       <Avatar
                         sx={{width: '80%', height: '100%'}}
-                        src={dog.image ? dog.image : 'images/dogfiller.png'}/>
+                        src={dog.image ? dog.image : 'Images/dogfiller.png'}/>
                     </Box>
                     {/*<ImageUpload />*/}
 

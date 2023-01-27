@@ -191,7 +191,7 @@ const handleClose = () => {
                     <CardMedia component="img"  
                       width="100%"
                       alt="client dog photo"
-                      src={dog.image ? dog.image : 'images/dogfiller.png'}
+                      src={dog.image ? dog.image : 'Images/dogfiller.png'}
                       sx={{height: '100%'}}
                       />
                   </Card>

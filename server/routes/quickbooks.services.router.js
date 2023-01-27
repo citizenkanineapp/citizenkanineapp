@@ -77,20 +77,20 @@ async function postServices(qbServices, dbServices) {
       let existingServiceIds = new Set(dbServices.map(({qb_id}) => qb_id));
       let existingServices = qbServices.filter( service => existingServiceIds.has(Number(service.Id)));
       let uniqueServices = qbServices.filter( service => !existingServiceIds.has(Number(service.Id)))
-      console.log(existingServiceIds, existingServices.length, uniqueServices.length);
+      console.log(existingServiceIds, existingServices.length, uniqueServices);
 
       // this adds a service_id, and hard-codes a value based on actual service provided.
       // another option would be to hard-code servcie name into database, and re-name QB services to fit.
       // This is awkward and may break if additional services are added, going through with it at this point.
-      for (let service of uniqueServices) {
-        switch (service.FullyQualifiedName){
-          case 'Group Dog Walking:3 dogs':
-            service.service_id = 8;
-            break;
-          case 'Group Dog Walk:1'
+      // for (let service of uniqueServices) {
+      //   switch (service.FullyQualifiedName){
+      //     case 'Group Dog Walking:3 dogs':
+      //       service.service_id = 8;
+      //       break;
+      //     case 'Group Dog Walk:1'
 
-        }
-      }
+      //   }
+      // }
 
       const updateExistingServicesQuery = `
         UPDATE services
@@ -108,15 +108,15 @@ async function postServices(qbServices, dbServices) {
           ($1, $2, $3);    
       `;
 
-      // await Promise.all(uniqueServices.map(service => {
-      //   const values = [service.Id, service.FullyQualifiedName, service.UnitPrice];
-      //   client.query(insertUniqueServicesQuery, values);
-      // }))
+      await Promise.all(uniqueServices.map(service => {
+        const values = [service.Id, service.FullyQualifiedName, service.UnitPrice];
+        client.query(insertUniqueServicesQuery, values);
+      }))
 
-      // await Promise.all(existingServices.map(service => {
-      //   const values = [service.FullyQualifiedName, service.UnitPrice, service.Id];
-      //   client.query(updateExistingServicesQuery, values);
-      // }))
+      await Promise.all(existingServices.map(service => {
+        const values = [service.FullyQualifiedName, service.UnitPrice, service.Id];
+        client.query(updateExistingServicesQuery, values);
+      }))
 
 }
 

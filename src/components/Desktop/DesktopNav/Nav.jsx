@@ -24,7 +24,7 @@ function Nav(props) {
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-
+ 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -79,6 +79,7 @@ function Nav(props) {
 
       </List>
       <LogOutButton />
+
     </Box>
   );
 
@@ -153,7 +154,6 @@ function Nav(props) {
           {drawer}
         </Drawer>
       </Box>
-
     </Box >
   );
 }

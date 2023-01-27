@@ -8,10 +8,7 @@ const request = require('request');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  console.log('in server fetch services')
-  const dbServices = await pool.query(`SELECT * FROM services`);
-  // console.log('DB services: ', dbServices.rows);
-
+  // console.log('in server fetch services')
   const token = tools.getToken(req.session)
   // console.log(token.accessToken)
   // console.log(tools.basicAuth)
@@ -51,15 +48,13 @@ router.get('/', async (req, res) => {
         let qbServices = [];
 
         //for some reason, can't directly filter out service.ParentRef.name/service.ParentRef.value
-        for (let i of services) {
-          if (i.ParentRef.name === 'Group Dog Walking') {
-            qbServices.push(i);
+        for (let service of services) {
+          if (service.ParentRef.name === 'Group Dog Walking') {
+            qbServices.push(service);
           }
         }
-        // console.log(qbServices)
 
-
-        postServices(qbServices, dbServices.rows);
+        postServices(qbServices);
         
         res.sendStatus(201);
       }   
@@ -70,54 +65,23 @@ router.get('/', async (req, res) => {
   })
 }) 
 
-async function postServices(qbServices, dbServices) {
+async function postServices(qbServices) {
   const client = await pool.connect();
-  // console.log(qbServices);
+  console.log(qbServices);
 
-      let existingServiceIds = new Set(dbServices.map(({qb_id}) => qb_id));
-      let existingServices = qbServices.filter( service => existingServiceIds.has(Number(service.Id)));
-      let uniqueServices = qbServices.filter( service => !existingServiceIds.has(Number(service.Id)))
-      console.log(existingServiceIds, existingServices.length, uniqueServices);
-
-      // this adds a service_id, and hard-codes a value based on actual service provided.
-      // another option would be to hard-code servcie name into database, and re-name QB services to fit.
-      // This is awkward and may break if additional services are added, going through with it at this point.
-      // for (let service of uniqueServices) {
-      //   switch (service.FullyQualifiedName){
-      //     case 'Group Dog Walking:3 dogs':
-      //       service.service_id = 8;
-      //       break;
-      //     case 'Group Dog Walk:1'
-
-      //   }
-      // }
-
-      const updateExistingServicesQuery = `
+      const servicesQuery = `
         UPDATE services
           SET
-            name = $1,
+            qb_id = $1,
             price = $2
           WHERE
-            qb_id = $3;
+            name = $3;
       `;
 
-      const insertUniqueServicesQuery = `
-      INSERT INTO services
-          ("qb_id", "name", "price")
-        VALUES
-          ($1, $2, $3);    
-      `;
-
-      await Promise.all(uniqueServices.map(service => {
-        const values = [service.Id, service.FullyQualifiedName, service.UnitPrice];
-        client.query(insertUniqueServicesQuery, values);
+      await Promise.all(qbServices.map(service => {
+        const values = [service.Id, service.UnitPrice, service.FullyQualifiedName];
+        client.query(servicesQuery, values);
       }))
-
-      await Promise.all(existingServices.map(service => {
-        const values = [service.FullyQualifiedName, service.UnitPrice, service.Id];
-        client.query(updateExistingServicesQuery, values);
-      }))
-
 }
 
 

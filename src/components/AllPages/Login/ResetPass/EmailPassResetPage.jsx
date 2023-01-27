@@ -22,12 +22,12 @@ function ResetPassPage() {
       dispatch({
         type: 'EMAIL_PASS_RESET',
         payload: {
-          email: email},
+          email: email
+        },
       });
 
       setEmail('');
     //   dispatch({ type: 'PASSWORD_RESET' });
-      swal("Email sent!");
       history.push('/home');
   }; // end resetPass
 

@@ -2,47 +2,6 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import swal from 'sweetalert';
 
-
-// // this standalone connect will be phased out.
-// function* authorizationRequest (action) {
-//     // console.log('arrived in saga for authorization request')
-//     try {
-//         const uri = yield axios({
-//             method: 'GET',
-//             url: '/api/oauth2/connect_handler'
-//         })
-//         console.log('in QB saga', uri);
-//     }
-//     catch {
-//         console.log('error in authorizationRequest');
-//     }
-  
-// }
-
-// //this function fetches all QB clients and then calls post route to add to DB
-// function* fetchQbCustomers (action) {
-//     console.log('arrived in saga for fetching qb customers')
-//     try {
-//         const customers = yield axios({
-//             method: 'GET',
-//             url: '/api/quickbooks/customer'
-//         })
-//         console.log(customers)
-//         if (customers.data === 'connectToQB'){
-//             location.href = "http://localhost:5000/api/oauth2/connect_handler"
-//         }
-//       /* Call function that will be post route to add QB clients to DB */
-//       yield put({
-//         type: 'POST_QB_CLIENTS',
-//         payload: customers.data
-//     })
-
-//     }
-//     catch {
-//         console.log('error in fetchQbCustomers');
-//     }
-// }
-
 //this function fetches all QB Services and then calls post route to add to DB
 function* fetchServices (action) {
     console.log('arrived in saga for fetching qb services')
@@ -57,6 +16,7 @@ function* fetchServices (action) {
         }
         if (services.data === 'connectToQB'){
             location.href = "http://localhost:5000/api/oauth2/connect_handler"
+            //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
         }
 
 
@@ -78,6 +38,7 @@ function* createQbInvoice (action) {
         console.log(invoiceResponse)
         if (invoiceResponse.data === 'connectToQB'){
             location.href = "http://localhost:5000/api/oauth2/connect_handler"
+            //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
         }
 
         /* Call function that will be post route to add QB clients to DB */

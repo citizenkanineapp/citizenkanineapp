@@ -7,9 +7,9 @@ import './AboutPage.css'
 function AboutPage() {
   const dispatch = useDispatch();
 
-  //curently re-directing to quickbooks log in but not working
   const connectQB = ()=>{
-   location.href = "http://localhost:5000/api/oauth2/connect_handler";
+    console.log(location)
+  //  location.href = "http://localhost:5000/api/oauth2/connect_handler";
   }
 
   const updateServices = ()=>{

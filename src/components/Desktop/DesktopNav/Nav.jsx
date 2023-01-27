@@ -28,6 +28,11 @@ function Nav(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  // const connectQB = ()=>{
+  //   console.log('hi')
+  //   console.log(window)
+  //   location.href = "http://localhost:5000/api/oauth2/connect_handler";
+  //  }
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -76,9 +81,14 @@ function Nav(props) {
             <ListItemText primary='account' />
           </ListItemButton>
         </ListItem>
-
       </List>
-      <LogOutButton />
+
+      {/* <Box>
+        <Button sx={{mb: 5}} id="qb_button" onClick={connectQB}>
+          <img src="Images/qbButtonShort.png" alt="quickbooks logo"/>
+        </Button>
+      </Box> */}
+        <LogOutButton />
     </Box>
   );
 

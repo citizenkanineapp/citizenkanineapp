@@ -135,6 +135,7 @@ CREATE TABLE services (
 	-- "service_id" INT
 );
 
+-- service names MUST match names in QB
 INSERT INTO services
 	("name", "price")
 VALUES

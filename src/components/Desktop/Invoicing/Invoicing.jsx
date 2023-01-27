@@ -55,6 +55,9 @@ function Invoicing() {
 
     setId(0);
   }
+  const updateServices = ()=>{
+    dispatch({type: 'GET_QB_SERVICES'})
+  }
 
   return (
     <Box className="desktop_container" sx={{ height: '88%', display: 'flex', flexDirection: 'column', justifyContent: 'top', alignItems: 'center' }}>
@@ -131,6 +134,11 @@ function Invoicing() {
           <Box component="span">
             <ExportCSV monthsShort={monthsShort} />
           </Box>
+          <Button size="small" variant="contained" color="secondary" sx={{ mx: 1, mt: 1 }}
+            onClick={updateServices}
+          >
+            Sync services
+          </Button>
 
         </Grid>
       </Grid>

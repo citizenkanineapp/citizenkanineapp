@@ -7,15 +7,38 @@ import './AboutPage.css'
 function AboutPage() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch({ type: 'GET_HEROKU' })
-  }, []);
+  // useEffect(() => {
+  //   dispatch({ type: 'GET_HEROKU' })
+  // }, []);
+
+  // const connectQB = ()=>{
+  //   console.log(location)
+  //   location.href = "http://localhost:5000/api/oauth2/connect_handler";
+
+  // }
+
 
   const connectQB = ()=>{
     console.log(location)
-    location.href = "http://localhost:5000/api/oauth2/connect_handler";
+    // location.href = "http://localhost:5000/api/oauth2/connect_handler";
+    location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
+
 
   }
+
+
+  const connectQBTest = ()=>{
+    console.log(location)
+    location.href = "https://localhost:5000/api/oauth2/connect_handler";
+    // location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
+
+
+  }
+  // const connectQB = ()=>{
+  //   dispatch({ type: 'CONNECT_TEST' })
+
+  // }
+
 
   const updateServices = ()=>{
     dispatch({type: 'GET_QB_SERVICES'})
@@ -30,6 +53,7 @@ function AboutPage() {
     <div className="container">
       <h1>AboutPage</h1>
       <button onClick={connectQB}>Connect to QB</button> 
+      <button onClick={connectQBTest}>Connect to QB Original</button> 
       <button id="qb_button" onClick={connectQB}>
         <img src="Images/qbButton.png" alt="quickbooks logo"/>
       </button>

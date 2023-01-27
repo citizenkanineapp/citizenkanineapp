@@ -6,6 +6,10 @@ const config = require('../../config.json');
 const request = require('request');
 const router = express.Router();
 
+const {
+  fixCors,
+} = require('../modules/cors_middleware');
+
 router.get('/connect_handler', (req, res) => {
     // GET route code here
     console.log('in api/oauth2/connect_handler');
@@ -22,13 +26,13 @@ router.get('/connect_handler', (req, res) => {
     })
     // Redirect
     console.log('Redirecting to authorization uri: ' + uri)
-    // console.log('after generating CSRF state',req.session)
+    console.log('does it have header', res)
     res.redirect(uri);
   });
 
   router.get('/callback', function (req, res) {
     console.log('in /api/quickbooks/callback');
-    // console.log('do we get req.session.realmId', req.session)
+    console.log('do we get req.session.realmId', req.session)
     // Verify anti-forgery
     if(!tools.verifyAntiForgery(req.session, req.query.state)) {
         return res.sendStatus('Error - invalid anti-forgery CSRF response!')

@@ -29,6 +29,7 @@ router.get('/customer', (req, res) => {
   request(requestObj, function (err, response) { 
     // checks current access token. If access token is expired, it renews access token with stored refresh token.
 
+ 
     tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
         // status code 401 corrosponds to unauthorized request.
         // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?

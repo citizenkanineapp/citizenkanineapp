@@ -110,7 +110,7 @@ function* getRoutes() {
 
     } catch (error) {
         console.log(error);
-        alert('ERROR FETCHING DAILY DOGS');
+        // alert('ERROR FETCHING DAILY DOGS');
     }
 }
 

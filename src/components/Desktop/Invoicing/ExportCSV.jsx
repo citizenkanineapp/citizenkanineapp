@@ -9,7 +9,7 @@ import './CSVLink.css';
 const ExportCSV = ({ monthsShort }) => {
     const dispatch = useDispatch();
     const invoiceItems = useSelector(store => store.invoiceReducer);
-    // console.log(invoiceItems);
+    console.log(invoiceItems);
 
     const headers = [
         { label: 'InvoiceNo', key: 'InvoiceNo' },

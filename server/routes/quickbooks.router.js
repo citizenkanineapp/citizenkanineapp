@@ -9,12 +9,12 @@ const router = express.Router();
 router.get('/customer', (req, res) => {
   console.log('in server fetch customers')
   const token = tools.getToken(req.session)
-  // console.log(token.accessToken)
-  // console.log(tools.basicAuth)
+  console.log('token?', token.accessToken)
+  console.log('basic auth', tools.basicAuth)
 
   const query = encodeURI('/query?query= select * from customer');
   const url = config.api_uri + req.session.realmId + query
-  // console.log('Making API Customer call to: ' + url)
+  console.log('Making API Customer call to: ' + url)
   
   // tools.refreshTokensWithToken(token.refreshToken)
 

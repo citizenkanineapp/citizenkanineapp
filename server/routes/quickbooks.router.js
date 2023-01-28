@@ -67,6 +67,7 @@ router.get('/customer', (req, res) => {
     for (let oneCustomer of customerArray) {
       // console.log(oneCustomer)
       let mobile;
+      let phone;
       let route_id;
       let vet_name;
       let vet_phone;
@@ -74,6 +75,11 @@ router.get('/customer', (req, res) => {
         mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
       } else {                                      //this handles undefined errors
         mobile = ""
+      }
+      if(oneCustomer.hasOwnProperty('PrimaryPhone')){
+        phone = oneCustomer.PrimaryPhone.FreeFormNumber   //some customers don't have phones
+      } else {                                      //this handles undefined errors
+        phone = ""
       }
       if(!oneCustomer.hasOwnProperty('route_id')){
         route_id = 5      //adds a default route_id of unassigned
@@ -85,7 +91,7 @@ router.get('/customer', (req, res) => {
         email: oneCustomer.PrimaryEmailAddr.Address,
         first_name: oneCustomer.GivenName,
         last_name: oneCustomer.FamilyName,
-        phone: oneCustomer.PrimaryPhone.FreeFormNumber,
+        phone: phone,
         mobile: mobile,
         street: oneCustomer.BillAddr.Line1,
         city: oneCustomer.BillAddr.City,

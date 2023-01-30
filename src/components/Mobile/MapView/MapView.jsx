@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 
 
 //MUI
-import { Typography, Grid, IconButton } from '@mui/material';
+import { Typography, Grid, Button, IconButton } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -20,6 +20,7 @@ import Divider from '@mui/material/Divider';
 import PetsIcon from '@mui/icons-material/Pets';
 import ListItemButton from '@mui/material/ListItemButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DirectionsIcon from '@mui/icons-material/Directions';
 
 //style for modal
 const style = {
@@ -115,7 +116,7 @@ useEffect(() => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-Start',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         gap: 1
       }}>
@@ -126,80 +127,64 @@ useEffect(() => {
         </Typography>
       </Grid>
       <Grid item xs={8} sx={{display: 'flex', flexDirection: 'row-reverse', mb: 0}}>
-              <IconButton edge="end" 
-                  sx={{border: 1, mt: 1,
-                  flexDirection: 'column', px: 2}} >
-                  <ArrowBackIcon 
-                      sx={{fontSize: 25, mb: 0}}
-                      onClick={(event) => history.push(`/m/route/${thisRoute}`)}/>
-                      <Typography>Back</Typography>
-              </IconButton>
-          </Grid>
-    <Grid item sx={{ width: '100%', height: '45rem' }}>
-      <Map provider={maptilerProvider} defaultCenter={[44.914450, -93.304140]} defaultZoom={13}>
-          
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-        <List>
-          <ListItem disablePadding>
-              <ListItemText primary={modalData.client_name} />
-          </ListItem>
-          {modalData && modalData.dogs.map(dog => (
-            <ListItem disablePadding key={dog.dog_id}>
-                <ListItemIcon>
-                  <PetsIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText secondary={dog.dog_name} />
-           </ListItem>
-
-          ))}
-        </List>
-        <Divider />
-        <List>
-        <ListItem disablePadding>
-          <ListItemButton color="primary">
-              <ListItemText secondary="Open Google Maps"
-                onClick={() => openMap(modalData)}
-                secondaryTypographyProps={{
-                  color: 'secondary',
-                  fontWeight: 'medium',
-                  variant: 'body2',
-                }} />
-          </ListItemButton>
-          </ListItem>
-        </List>
-          {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-            {modalData.client_name}
-          </Typography>
-          {modalData && modalData.dogs.map(dog => (
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {dog.dog_name}
-          </Typography>
-          ))}
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}  onClick={() => openMap(modalData)} >
-            Open Google Maps
-          </Typography> */}
-        </Box>
-      </Modal>
-           {markers.map((oneMarker, index) => (
-             
-             <Marker 
-                width={50} 
-                anchor={[Number(oneMarker.lat), Number(oneMarker.long)]}
-                key={index}
-                // onClick={() => openMap(oneMarker)}
-                onClick={() => handleOpen(oneMarker)}
-                // onMouseOver={({event: HTMLMouseEvent, anchor: Point}) => console.log('hiii')}
-                
-                 /> 
-           ))}
-          </Map>
+            <IconButton edge="end" 
+                sx={{border: 1, mt: 1,
+                flexDirection: 'column', px: 2}} >
+                <ArrowBackIcon 
+                    sx={{fontSize: 25, mb: 0}}
+                    onClick={(event) => history.push(`/m/route/${thisRoute}`)}/>
+                    <Typography>Back</Typography>
+            </IconButton>
         </Grid>
+      <Grid item sx={{ width: '100%', height: '45rem' }}>
+        <Map provider={maptilerProvider} defaultCenter={[44.914450, -93.304140]} defaultZoom={13}>
+        {/*this modal opens to display more details  */}
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <List>
+                <ListItem disablePadding>
+                    <ListItemText primary={modalData.client_name} />
+                </ListItem>
+                {modalData && modalData.dogs.map(dog => (
+                <ListItem disablePadding key={dog.dog_id}>
+                    <ListItemIcon>
+                      <PetsIcon fontSize="small" />
+                    </ListItemIcon>
+                      <ListItemText secondary={dog.dog_name} />
+                </ListItem>
+                ))}
+              </List>
+                <Divider />
+              <List>
+                <ListItem disablePadding>
+                    <Button 
+                    sx={{mt: 1}}
+                      variant='contained' 
+                      endIcon={<DirectionsIcon />} 
+                      size='small' 
+                      onClick={() => openMap(modalData)}>
+                            Directions
+                    </Button>
+                  </ListItem>
+              </List>
+            </Box>
+          </Modal>
+          {/* this maps through markers and displays them on the map */}
+            {markers.map((oneMarker, index) => (
+              <Marker 
+                  width={50} 
+                  anchor={[Number(oneMarker.lat), Number(oneMarker.long)]}
+                  key={index}
+                  onClick={() => handleOpen(oneMarker)}
+                  /> 
+            ))}
+          </Map>
+          </Grid>
     </Grid>
   );
 }

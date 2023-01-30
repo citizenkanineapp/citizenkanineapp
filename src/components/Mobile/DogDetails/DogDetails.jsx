@@ -63,7 +63,6 @@ function DogDetails() {
     // removes white space from number
     let readyNumber = nosymbols.trim();
     // sends prompt to call number
-    // window.open(`tel:+1${readyNumber}`);
     location.href = `tel:+1${readyNumber}`;
   }
 
@@ -171,6 +170,14 @@ function DogDetails() {
             <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.phone)}>
               Call
             </Button>
+            {dog.mobile? 
+            <>
+                <Typography variant='body2'> Second Number</Typography>
+                <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.mobile)}>
+                  Call
+                </Button>  
+            </>
+          : null}
 
           </AccordionDetails>
         </Accordion>
@@ -199,7 +206,7 @@ function DogDetails() {
 
       </Grid>
       {/* Modal for mobile photo upload */}
-      <Modal open={status} sx={{ mt: 5.5, ml: 4 }} >
+      <Modal open={status} sx={{ mt: 5.5, ml: 4.2 }} >
         <Grid item xs={12}>
           <MobileImageUpload id={dog.dog_id} />
 

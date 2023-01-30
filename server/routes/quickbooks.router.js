@@ -6,7 +6,11 @@ const config = require('../../config.json');
 const request = require('request');
 const router = express.Router();
 
-router.get('/customer', (req, res) => {
+const {
+  rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
+
+router.get('/customer', rejectUnauthenticated, (req, res) => {
   console.log('in server fetch customers')
   const token = tools.getToken(req.session)
   console.log('token?', token.accessToken)
@@ -147,7 +151,7 @@ router.get('/customer', (req, res) => {
   }
 
   /*To initially add QB customers to DB */
-  router.post('/qbcustomers', async (req, res) => {
+  router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     // console.log('arrvied in server?', req.body)
 
     const client = await pool.connect();
@@ -183,23 +187,6 @@ router.get('/customer', (req, res) => {
       }
       let customersWithGeoStats =  await GetGeoStats(customers)
 
-      // let geoStatsResponse = await Promise.all(customers.map(async customer => {
-      
-      // const address = customer.street.replace(/ /g, "+");
-      // const town = customer.city.replace(/ /g, '');
-      // const zip = customer.zip
-
-      // const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
-  
-      // console.log('geostats data', geoStats.data)
-      // const lat = geoStats.data.addresses[0].latitude;
-      // const long = geoStats.data.addresses[0].longitude;
-      // console.log('heres the geoStats!', lat, long);
-    //   customer.lat = lat
-    //   customer.long = long
-    // return customer
-    // }))
-    // console.log(geoStatsResponse)
     let customersResult = processSchedule(customersWithGeoStats)
     // console.log('after schedule processing',  customersResult)
 
@@ -300,7 +287,7 @@ router.get('/customer', (req, res) => {
   }
 
 
-  router.put('/customer/put', async (req, res) => {
+  router.put('/customer/put', rejectUnauthenticated, async (req, res) => {
     let qbData = req.body.qb
     // console.log('looking for schedule info', qbData)
     let dbData = req.body.db

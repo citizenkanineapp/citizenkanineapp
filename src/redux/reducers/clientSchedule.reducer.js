@@ -30,6 +30,8 @@ const editClientSchedule = (state = {}, action) => {
             const day = action.payload.day;
             const change = action.payload.change;
             return {...state, [day]: change}
+        case 'CLEAR_SCHEDULE':
+            return{1: false, 2: false, 3: false, 4: false, 5: false};
         default:
             return state;
     }

@@ -33,6 +33,12 @@ function ClientSchedule() {
     dispatch({ type: 'FETCH_SCHEDULE', payload: client.client_id })
     // Fetch client schedule changes
     dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.client_id })
+
+     return () => {
+      dispatch({
+        type: 'CLEAR_SCHEDULE'
+      })
+    }
   }, []);
   
   const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
@@ -149,7 +155,7 @@ function ClientSchedule() {
         {/* Grid containing weekly schedule */}
         <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
           {daysOfWeek.map((day, index) => (
-            <Grid key={index + 1} item xs={2} sx={{ mt: 3 }} >
+            <Grid key={index + 1} item xs={2} sx={{ mt: 3, mb: 2 }} >
               <Card raised>
                 <CardActionArea component={Button}
                   disabled={disabled}
@@ -179,7 +185,9 @@ function ClientSchedule() {
               </Card>
             </Grid>
             ))}
-            { !disabled ?
+            {/* The below is turned off because client will no longer edit weekly schedule in app */}
+
+            {/* { !disabled ?
               <Grid item xs={11}  sx={{display: 'flex', justifyContent: 'right', mt: 1}}>
                 <Button variant="outlined" 
                   sx={{mr: 3}}
@@ -191,7 +199,7 @@ function ClientSchedule() {
             <Grid item xs={11} sx={{ display: 'flex', justifyContent: 'right', mt:1}}>
               <Button variant='contained' color='secondary' onClick={() => setDisabled(!disabled)}>Edit</Button>
             </Grid>
-          }
+          } */}
 
         </Grid>
       {/* Grid containing calendar and form */}
@@ -358,7 +366,7 @@ function ClientSchedule() {
             <Button 
               variant="outlined" color="info"
               onClick={() => {
-                      dispatch({ type: 'SET_MODAL_STATUS' })}}>
+                dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientDetails' });}}>
               Back
             </Button>
           </Grid>

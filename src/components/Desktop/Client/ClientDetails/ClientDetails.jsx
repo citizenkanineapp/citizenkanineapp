@@ -78,24 +78,6 @@ function ClientDetails(){
   }
   
   
-  // const deleteDog = (dog) => {
-  //   setAnchorEl(null); //closes menu 
-  //   swal({
-  //     title: "Are you sure?",
-  //     text: "This will permanently delete this dog",
-  //     icon: "warning",
-  //     buttons: true,
-  //     dangerMode: true,
-  //   })
-  //   .then((willDelete) => {
-  //     if (willDelete) {
-  //       console.log(dog)
-  //       dispatch({ type: 'DELETE_DOG', payload: {dog, client} });
-  //     } 
-  //   });
-  // };
-  
-  
   //MUI DOG MENU STUFF
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -145,13 +127,25 @@ function ClientDetails(){
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                />
+          {client.notes.length > 40 ?
+              
               <TextField
+                focused={false}
+                value={client.notes || ''} 
+                helperText="Entry Protocol"  
+                size="small" 
+                multiline
+                rows={2}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px" }}}
+               />: 
+               <TextField
                 focused={false}
                 value={client.notes || ''} 
                 helperText="Entry Protocol"  
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px" }}}
                />
+          }
               <TextField
                 focused={false}
                 value={client.phone} 
@@ -166,13 +160,32 @@ function ClientDetails(){
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                 />
-              <TextField
+              {client.email.includes(',') ?
+                <TextField
+                focused={false}
+                value={client.email} 
+                helperText="Email"  
+                size="small" 
+                multiline
+                rows={2}
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                />
+            :  
+                <TextField
                 focused={false}
                 value={client.email} 
                 helperText="Email"  
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
-               />
+              />
+            }
+              {/* <TextField
+                focused={false}
+                value={client.email} 
+                helperText="Email"  
+                size="small" 
+                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+               /> */}
               <TextField
                 focused={false}
                 value={client.vet_name || ''} 

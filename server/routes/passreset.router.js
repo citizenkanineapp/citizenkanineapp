@@ -94,7 +94,7 @@ router.post('/email_reset_link', async (req, res) => {
                 }
             });
 
-    } else {
+    } else {  
         console.log(userData.rows[0]);
         res.sendStatus(500);//formate error client side!
         return;

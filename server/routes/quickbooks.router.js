@@ -114,9 +114,13 @@ router.get('/customer', (req, res) => {
     let customerArray = []
     for (let oneCustomer of customers) {
       let result = oneCustomer.notesObj.split("-")
+      let dogs = result[0]
+      let schedule = result[1]
+      let dogsCleaned = dogs.replace(/[&/]/g, ",")
+      let scheduleCleaned = schedule.replace(/[&/]/g, ",")
   
       //this sections gets rid of extra spaces that might be surrounding each string 
-      let dogsArray = result[0].split(",").map(function (dogName) {
+      let dogsArray = dogsCleaned.split(",").map(function (dogName) {
         return {name: dogName.trim(), 
                 notes: "", 
                 flag: false, 
@@ -128,7 +132,7 @@ router.get('/customer', (req, res) => {
                 qb_id: oneCustomer.qb_id
               };
       })
-      let scheduleArray = result[1].split(",").map(function (dayName) {
+      let scheduleArray = scheduleCleaned.split(",").map(function (dayName) {
         return dayName.trim();
       })
     
@@ -157,24 +161,46 @@ router.get('/customer', (req, res) => {
       const api_key = process.env.map_api_key;
       const config = { headers: { Authorization: api_key } };
 
-      let geoStatsResponse = await Promise.all(customers.map(async customer => {
-      
-      const address = customer.street.replace(/ /g, "+");
-      const town = customer.city.replace(/ /g, '');
-      const zip = customer.zip
 
-      const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
+      const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+      async function GetGeoStats(customers) {
+       const customerResult = []
+       for(let customer of customers){
+        const address = customer.street.replace(/ /g, "+");
+        const town = customer.city.replace(/ /g, '');
+        const zip = customer.zip
+        const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
+        const lat = geoStats.data.addresses[0].latitude;
+        const long = geoStats.data.addresses[0].longitude;
+        customer.lat = lat
+        customer.long = long
+        await delay(100);
+        customerResult.push(customer)
+        console.log('testing geo stats', customer)
+        }
+        return customerResult;
+      }
+      let customersWithGeoStats = GetGeoStats(customers)
+
+      // let geoStatsResponse = await Promise.all(customers.map(async customer => {
+      
+      // const address = customer.street.replace(/ /g, "+");
+      // const town = customer.city.replace(/ /g, '');
+      // const zip = customer.zip
+
+      // const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
   
       // console.log('geostats data', geoStats.data)
-      const lat = geoStats.data.addresses[0].latitude;
-      const long = geoStats.data.addresses[0].longitude;
+      // const lat = geoStats.data.addresses[0].latitude;
+      // const long = geoStats.data.addresses[0].longitude;
       // console.log('heres the geoStats!', lat, long);
-      customer.lat = lat
-      customer.long = long
-    return customer
-    }))
+    //   customer.lat = lat
+    //   customer.long = long
+    // return customer
+    // }))
     // console.log(geoStatsResponse)
-    let customersResult = processSchedule(geoStatsResponse)
+    let customersResult = processSchedule(customersWithGeoStats)
     // console.log('after schedule processing',  customersResult)
 
     try{ 

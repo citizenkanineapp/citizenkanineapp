@@ -27,7 +27,7 @@ const ExportCSV = ({ monthsShort }) => {
     const data = [];
     if (invoiceItems && invoiceItems.map) {
         for (let item of invoiceItems) {
-            // console.log(item)
+            // data object exported as CSV
             data.push(
                 {
                     "InvoiceNo": item.clientid,
@@ -43,6 +43,8 @@ const ExportCSV = ({ monthsShort }) => {
                     "TaxRate": '8.03%'
                 }
             );
+            // item in invoiceItems sent in POST request to quickbooks for invoice creation
+            item.description = `${monthsShort[invoiceItems[0].month - 1]}: ${item.dates.map(date => (date))}`;
         }
     };
 

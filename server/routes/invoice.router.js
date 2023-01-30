@@ -48,6 +48,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     const queryWalkDetails = `
     SELECT
         clientid,
+        qb_id,
         first_name,
         last_name,
         num_dogs,
@@ -60,6 +61,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     FROM (	
         SELECT
             clients.id AS clientid,
+            clients.qb_id,
             daily_dogs.date,
             COUNT(dogs.id) AS num_dogs,
             daily_dogs.checked_in AS checked_in,
@@ -87,6 +89,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         ) results
     GROUP BY
         clientid,
+        qb_id,
         first_name,
         last_name, 
         num_dogs,
@@ -97,7 +100,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     try {
         const resServices = await pool.query(queryServices)
         const services = resServices.rows;
-        console.log(services);
+        // console.log(services);
         const resDetails = await pool.query(queryWalkDetails, searchTerms);
         const invoiceData = resDetails.rows;
         // console.log('invoiceData', invoiceData);
@@ -126,7 +129,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         //adds service data to invoice data object. some of this should be done in SQL!
         for (let item of invoiceData) {
             let serviceId
-            console.log(item);
+            // console.log(item);
 
             // adds walks per week to invoice item
             for (let client of schedules) {
@@ -181,8 +184,8 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 }
 
             }
-            console.log('in walks/week', item.clientid, serviceId);
-
+            // console.log('in walks/week', item.clientid, serviceId);
+            
 
             // adds service details to invoice item
             for (let service of services) {
@@ -191,6 +194,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     item.year = searchYear;
                     item.service = {
                         price: service.price,
+                        qb_id: service.qb_id,
                         service
                     }
                     if (item.no_show === true) {
@@ -204,7 +208,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         // console.log(invoiceData);
 
         if (invoiceData[0]) {
-            console.log(invoiceData)
+            // console.log(invoiceData)
             res.send(invoiceData);
         } else {
             res.sendStatus(204) //Sam added this

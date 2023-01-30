@@ -63,7 +63,7 @@ router.get('/connect_handler', (req, res) => {
     // }
     req.session.realmId = req.query.realmId;
     res.redirect('http://localhost:3000/#/clients');
-    // res.redirect('http://citizen-kanine.herokuapp.com/#/clients');
+    // res.redirect('https://citizen-kanine.herokuapp.com/#/clients');
 
   
     })

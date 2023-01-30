@@ -39,13 +39,15 @@ router.get('/customer', (req, res) => {
 
         // don't know if this second else-if block is necessary, ie, covering non-401 errors.
       } else if (err || response.statusCode != 200) {
+        console.log(err)
         return res.json({ error: err, statusCode: response.statusCode })
       } else {
      
         // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
         // console.log("response with fresh auth", response)
         let customers = JSON.parse(response.body)
-        // console.log(customers)
+        // for (let cust of customers.QueryResponse.Customer) {console.log(cust.Active, cust.FullyQualifiedName)}
+        // console.log(customers.QueryResponse.Customer)
         // this function starts the process of formatting the customers
         let filteredCustomers =  filterCustomers(customers)
         /*  this sucessfully sent back the customers after being processed

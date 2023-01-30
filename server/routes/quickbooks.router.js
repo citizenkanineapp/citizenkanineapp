@@ -181,7 +181,7 @@ router.get('/customer', (req, res) => {
         }
         return customerResult;
       }
-      let customersWithGeoStats = GetGeoStats(customers)
+      let customersWithGeoStats =  await GetGeoStats(customers)
 
       // let geoStatsResponse = await Promise.all(customers.map(async customer => {
       

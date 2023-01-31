@@ -17,6 +17,8 @@ DROP TABLE IF EXISTS admin_notes;
 DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS employees;
 DROP TABLE IF EXISTS services;
+DROP TABLE IF EXISTS invoices;
+DROP TABLE IF EXISTS oauth2_tokens;
 
 CREATE TABLE employees (
 	"id" SERIAL PRIMARY KEY,
@@ -241,14 +243,14 @@ VALUES
 	('1', 'Export CSV for November'),
 	('1', 'Buy more leashes for the supply cabinet');
 
--- CREATE TABLE oauth2_access_tokens (
--- 	"id" SERIAL PRIMARY KEY,
--- 	"access_token" VARCHAR(4096),
--- 	"time", TIMESTAMP
--- 	);
+CREATE TABLE oauth2_tokens (
+	"id" SERIAL PRIMARY KEY,
+	"access_token" VARCHAR(4096),
+	"refresh_token" VARCHAR(512)
+	);
 
--- CREATE TABLE oauth2_refresh_token (
--- 	"id" SERIAL PRIMARY KEY,
--- 	"refresh_token" VARCHAR(512),
--- 	"time", TIMESTAMP
--- 	);
+CREATE TABLE invoices (
+	"id" SERIAL PRIMARY KEY,
+	"period" VARCHAR(20),
+	"client_qb_id"
+);

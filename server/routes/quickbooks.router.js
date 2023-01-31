@@ -69,39 +69,50 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
     let customerArray = customers.QueryResponse.Customer //what comes from QB API
     let customersAfterProcessing = []
     for (let oneCustomer of customerArray) {
-      // console.log(oneCustomer)
-      let mobile;
-      let phone;
-      let route_id;
-      let vet_name;
-      let vet_phone;
-      if(oneCustomer.hasOwnProperty('Mobile')){
-        mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
-      } else {                                      //this handles undefined errors
-        mobile = ""
-      }
-      if(oneCustomer.hasOwnProperty('PrimaryPhone')){
-        phone = oneCustomer.PrimaryPhone.FreeFormNumber   //some customers don't have phones
-      } else {                                      //this handles undefined errors
-        phone = ""
-      }
-      if(!oneCustomer.hasOwnProperty('route_id')){
-        route_id = 5      //adds a default route_id of unassigned
-                           //QB doesn't have route data but it is needed 
-      }
       let customer = {
         qb_id: Number(oneCustomer.Id),
         notesObj: oneCustomer.Notes,
         email: oneCustomer.PrimaryEmailAddr.Address,
         first_name: oneCustomer.GivenName,
         last_name: oneCustomer.FamilyName,
-        phone: phone,
-        mobile: mobile,
         street: oneCustomer.BillAddr.Line1,
         city: oneCustomer.BillAddr.City,
         zip: oneCustomer.BillAddr.PostalCode,
         notes: oneCustomer.ShipAddr.Line1,
-        route_id: route_id
+      }
+
+      //adds keys if they apply to that customer
+      if(oneCustomer.hasOwnProperty('Mobile')){
+        customer.mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
+      } else {                                      //this handles undefined errors
+        customer.mobile = ""
+      }
+      if(oneCustomer.hasOwnProperty('PrimaryPhone')){
+        customer.phone = oneCustomer.PrimaryPhone.FreeFormNumber   //some customers don't have phones
+      } else {                                      //this handles undefined errors
+        customer.phone = ""
+      }
+      if(oneCustomer.ShipAddr.hasOwnProperty('City')){
+        let dogString = oneCustomer.ShipAddr.City
+        let dogsCleaned = dogString.replace(/[&/]/g, ",")  
+        let dogs = dogsCleaned.split(",")
+        let dogsArray = dogs.map(function (dogName) {
+          return {name: dogName.trim(), 
+                  notes: "", 
+                  flag: false, 
+                  active: true, 
+                  regular: false,     //creating a dog object for each dog
+                  image: "",
+                  vet_name: "",
+                  vet_phone: "",
+                  qb_id: oneCustomer.Id
+                };
+        }) 
+        customer.adHocDogs = dogsArray
+      }
+      if(!oneCustomer.hasOwnProperty('route_id')){
+        customer.route_id = 5      //adds a default route_id of unassigned
+                           //QB doesn't have route data but it is needed 
       }
       customersAfterProcessing.push(customer)
     }
@@ -152,14 +163,10 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 
   /*To initially add QB customers to DB */
   router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
-    // console.log('arrvied in server?', req.body)
+    console.log('arrvied in server?', req.body)
 
     const client = await pool.connect();
     const customers = req.body // obj desctructing of QB data
-    // const dogsArray = dogs
-    // const scheduleArray = schedule
-
-    
       //geocoding for customers
    
       const api_key = process.env.map_api_key;
@@ -219,6 +226,21 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         return client.query(dogTxt, dogValues)
       }));
     }
+    //for customers with Ad Hoc dogs
+    for(let eachCustomer of customersResult){
+      if(eachCustomer.hasOwnProperty('adHocDogs')){
+        await Promise.all(eachCustomer.adHocDogs.map(dog => {
+          const dogTxt = `
+                              INSERT INTO dogs 
+                                  ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag", "regular", "active") 
+                                VALUES
+                                  ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    
+          `
+          const dogValues = [eachCustomer.client_id, dog.name, dog.image, dog.vet_name, dog.vet_phone, dog.dog_notes, dog.flag, dog.regular, dog.active]
+          return client.query(dogTxt, dogValues)
+        }));
+    }}
     for(let eachCustomer of customersResult) {
         const scheduleTxt = `
                               INSERT INTO clients_schedule

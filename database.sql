@@ -178,7 +178,7 @@ CREATE TABLE dogs (
 	"flag" BOOLEAN DEFAULT FALSE,
 	"date" DATE DEFAULT CURRENT_DATE,
 	"active" BOOLEAN DEFAULT TRUE,
-	"regular" BOOLEAN DEFAULT TRUE -- added this so that if a guest dog (client's daughter) is also being walked, they can be added add-hoc
+	"regular" BOOLEAN -- added this so that if a guest dog (client's daughter) is also being walked, they can be added add-hoc
 	);
 
 -

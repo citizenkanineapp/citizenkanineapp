@@ -93,22 +93,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         customer.phone = ""
       }
       if(oneCustomer.ShipAddr.hasOwnProperty('City')){
-        let dogString = oneCustomer.ShipAddr.City
-        let dogsCleaned = dogString.replace(/[&/]/g, ",")  
-        let dogs = dogsCleaned.split(",")
-        let dogsArray = dogs.map(function (dogName) {
-          return {name: dogName.trim(), 
-                  notes: "", 
-                  flag: false, 
-                  active: true, 
-                  regular: false,     //creating a dog object for each dog
-                  image: "",
-                  vet_name: "",
-                  vet_phone: "",
-                  qb_id: oneCustomer.Id
-                };
-        }) 
-        customer.adHocDogs = dogsArray
+        customer.adHocDogs =oneCustomer.ShipAddr.City
       }
       if(!oneCustomer.hasOwnProperty('route_id')){
         customer.route_id = 5      //adds a default route_id of unassigned
@@ -119,9 +104,9 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
     // this next function deals with dogs' names and schedules 
     let customersWithSchedule = getDogSchedule(customersAfterProcessing)
     //one more filter to remove key no longer needed on object
-    let finalCustomers = customersWithSchedule.filter(customer => delete customer.notesObj);
+    let preFinalCustomers = customersWithSchedule.filter(customer => delete customer.notesObj);
+    let finalCustomers = customersWithSchedule.filter(customer => delete customer.adHocDogs);
     return finalCustomers;
-    //Note: During merge - need to test if the above works
   }
   
   function getDogSchedule(customers) {
@@ -133,7 +118,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       let schedule = result[1]
       let dogsCleaned = dogs.replace(/[&/]/g, ",")
       let scheduleCleaned = schedule.replace(/[&/]/g, ",")
-  
+      
       //this sections gets rid of extra spaces that might be surrounding each string 
       let dogsArray = dogsCleaned.split(",").map(function (dogName) {
         return {name: dogName.trim(), 
@@ -147,13 +132,30 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
                 qb_id: oneCustomer.qb_id
               };
       })
+      if(oneCustomer.hasOwnProperty('adHocDogs')){
+        let adHocDogsString = oneCustomer.adHocDogs
+        let dogsCleaned = adHocDogsString.replace(/[&/]/g, ",")
+        let adHocDogsArray = dogsCleaned.split(",").map(function (dogName) {
+          let adHocDog = {
+            name: dogName.trim(), 
+                  notes: "", 
+                  flag: false, 
+                  active: true, 
+                  regular: false,     //creating a dog object for each  ad hoc dog
+                  image: "",
+                  vet_name: "",
+                  vet_phone: "",
+                  qb_id: oneCustomer.qb_id
+          }
+                dogsArray.push(adHocDog)
+        })
+      }
       let scheduleArray = scheduleCleaned.split(",").map(function (dayName) {
         return dayName.trim();
       })
     
         oneCustomer.dogs = dogsArray,   //adding dogs key to customer object
         oneCustomer.schedule =  scheduleArray, //adding schedule key to customer obj
-      
         customerArray.push(oneCustomer)
       
     }
@@ -226,21 +228,6 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         return client.query(dogTxt, dogValues)
       }));
     }
-    //for customers with Ad Hoc dogs
-    for(let eachCustomer of customersResult){
-      if(eachCustomer.hasOwnProperty('adHocDogs')){
-        await Promise.all(eachCustomer.adHocDogs.map(dog => {
-          const dogTxt = `
-                              INSERT INTO dogs 
-                                  ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag", "regular", "active") 
-                                VALUES
-                                  ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-    
-          `
-          const dogValues = [eachCustomer.client_id, dog.name, dog.image, dog.vet_name, dog.vet_phone, dog.dog_notes, dog.flag, dog.regular, dog.active]
-          return client.query(dogTxt, dogValues)
-        }));
-    }}
     for(let eachCustomer of customersResult) {
         const scheduleTxt = `
                               INSERT INTO clients_schedule
@@ -316,11 +303,12 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 
     let customersWithSchedule = processSchedule(qbData)
     qbData = customersWithSchedule
-    // console.log('customers with schedule', qbData)
+  
+    //arrays for customers with regular dog changes (or not)
     let customersAddDogs = []
     let customersDeleteDogs = []
     let customerNoDogChange = []
-    
+
     for(let qbCustomer of qbData){
       for (let dbCustomer of dbData){
         // console.log(' are dogs here', dbCustomer.dogs)
@@ -339,6 +327,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       }
     } //end of outermost for loop
 
+    
     /* These two functions prepare the customer objects for SQL (if dogs were added or deleted) */
     let processedCustomerDeleteDogs = getDogIdToDelete(customersDeleteDogs, dbData)
     let processedCustomersAddDogs =  getDogToAdd(customersAddDogs, dbData)

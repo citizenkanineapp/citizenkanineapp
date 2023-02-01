@@ -56,8 +56,8 @@ function* fetchServices (action) {
             console.log(services.status)
         }
         if (services.data === 'connectToQB'){
-             location.href = "http://localhost:5000/api/oauth2/connect_handler"
-            //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+            // location.href = "http://localhost:5000/api/oauth2/connect_handler"
+            location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
         }
 
@@ -168,8 +168,8 @@ function* quickBooksSync (action) {
 
     if (qbResult === 'connectToQB'){
         console.log('need to connect to qb')
-       location.href = "http://localhost:5000/api/oauth2/connect_handler"
-        //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+      // location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
     }
 

@@ -38,9 +38,19 @@ router.get('/connect_handler', (req, res) => {
     tools.intuitAuth.code.getToken(req.originalUrl).then(async function (token) {
     // Store token - this would be where tokens would need to be
     // persisted (in a SQL DB, for example).
+    // const tokenQuery = `
+    //   UPDATE oauth2_tokens
+    //     SET
+    //       access_token = $1,
+    //       refresh_token = $2
+    //     WHERE
+    //       id = 1;
+    // `;
+    // pool.query(tokenQuery, [token.data.access_token, token.data.refresh_token])
+    
     tools.saveToken(req.session, token)
 
-    console.log('token', token);
+    console.log('token', token.data);
     
       // this block of code stores returned tokens and expiration times in SQL db. unnecessary, as we are currently relying on browser storage of tokens. this will not pass must
       // ALSO, it might make sense to move this to storage but abandon the time field. we are refreshing automatically based on server responses.

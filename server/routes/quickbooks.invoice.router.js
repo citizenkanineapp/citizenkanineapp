@@ -10,49 +10,54 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   // console.log('in server post invoice',req.body);
-
   const token = tools.getToken(req.session);
-  const query = '/invoice?';
-  const url = config.api_uri + req.session.realmId + query ;
-  console.log('Making API INVOICE call to: ' + url);
-
-  const invoicesList = createInvoiceItems(req.body);
-  // console.log(invoicesList);
-  // invoicesList.map(invoice => console.log(invoice.Line))  
-
-  await Promise.all(invoicesList.map(invoice => {
-    const requestObj = {
-      method: 'POST',
-      url: url,
-      headers: {
-        'Authorization': 'Bearer ' + token.accessToken,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      json: invoice
-    }
-    request(requestObj, function (err, response) {   
-      // checks current access token. If access token is expired, it renews access token with stored refresh token.
-      tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
-          // status code 401 corrosponds to unauthorized request.
-          // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
-        if (response.statusCode === 401 ) {
-          // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
-          res.send('connectToQB')
   
-          // don't know if this second else-if block is necessary, ie, covering non-401 errors.
-        } else if (err || response.statusCode != 200) {
-          console.log('ERROR!', err, response.body, response.body.Fault.Error)
-          return res.json({ error: err, statusCode: response.statusCode })
-        } else {
-          console.log(response.body)
-        }
-      }, function (err) {
-        console.log(err)
-        return res.json(err)
+  if (token) {
+
+    const query = '/invoice?';
+    const url = config.api_uri + req.session.realmId + query ;
+    console.log('Making API INVOICE call to: ' + url);
+
+    const invoicesList = createInvoiceItems(req.body);
+    // console.log(invoicesList);
+    // invoicesList.map(invoice => console.log(invoice.Line))  
+    await Promise.all(invoicesList.map(invoice => {
+      const requestObj = {
+        method: 'POST',
+        url: url,
+        headers: {
+          'Authorization': 'Bearer ' + token.accessToken,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        json: invoice
+      }
+      request(requestObj, function (err, response) {   
+        // checks current access token. If access token is expired, it renews access token with stored refresh token.
+        tools.checkForUnauthorized(req, requestObj, err, response).then(function ({ err, response }) {
+            // status code 401 corrosponds to unauthorized request.
+            // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
+          if (response.statusCode === 401 ) {
+            // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
+            res.send('connectToQB')
+    
+            // don't know if this second else-if block is necessary, ie, covering non-401 errors.
+          } else if (err || response.statusCode != 200) {
+            console.log('ERROR!', err, response.body, response.body.Fault.Error)
+            return res.json({ error: err, statusCode: response.statusCode })
+          } else {
+            console.log(response.session)
+          }
+        }, function (err) {
+          console.log(err)
+          return res.json(err)
+        })
       })
-    }) 
-  }))   
+    }))
+  } else {
+    console.log('null token', token);
+    res.send('connectToQb')
+  }
 })
 
 function createInvoiceItems(invoiceItems) {
@@ -88,6 +93,5 @@ function createInvoiceItems(invoiceItems) {
   })
   return invoicesList;
 }
-  
 
 module.exports = router;

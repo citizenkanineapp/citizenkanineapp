@@ -13,8 +13,7 @@ function* fetchServices (action) {
         if (services.status === 201) {
             swal("Services updated!");
             console.log(services.status)
-        }
-        if (services.data === 'connectToQB'){
+        } else if (services.data === 'connectToQB'){
             location.href = "http://localhost:5000/api/oauth2/connect_handler"
             //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
         }
@@ -35,8 +34,14 @@ function* createQbInvoice (action) {
             url: '/api/qbInvoice',
             data: invoiceItems
         })
-        console.log(invoiceResponse)
-        if (invoiceResponse.data === 'connectToQB'){
+        console.log(invoiceResponse);
+        if (invoiceResponse.data === 'connectToQb') {
+            location.href = "http://localhost:5000/api/oauth2/connect_handler"
+            //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+        } else if (invoiceResponse.status === 201) {
+            //don't knkow how to handle 201 status in router.
+            swal("invoices sent!")
+        } else if (invoiceResponse.data === 'connectToQB'){
             location.href = "http://localhost:5000/api/oauth2/connect_handler"
             //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
         }

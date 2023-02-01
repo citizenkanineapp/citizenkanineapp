@@ -130,31 +130,39 @@ function* updateAllQbCustomers(action){
          to the variable uniqueIds*/
         let initialCustomers = new Set(dbResult.map(({qb_id}) => qb_id))
         let uniqueCustomers = qbResult.filter(({qb_id}) => !initialCustomers.has(qb_id))
-        console.log('Unique customer objects:', uniqueCustomers)
+        console.log('Unique customer objects from QB:', uniqueCustomers)
+
+        let initialDbCustomers = new Set(qbResult.map(({qb_id}) => qb_id))
+        let uniqueDbCustomers = dbResult.filter(({qb_id}) => !initialDbCustomers.has(qb_id))
+        console.log('does it catch extra db client?', uniqueDbCustomers)
 
          /* Post Route to Add Unique Customers to Database*/
 
          if (uniqueCustomers.length === 0){
             yield put ({type: 'FETCH_CLIENTS'});
             console.log('Clients are up to date')
-         } else {
+         } 
         try {
+            if (uniqueCustomers.length > 0) {
             const qbClients = yield axios({
                 method: 'POST',
                 url: '/api/quickbooks/qbcustomers',
                 data: uniqueCustomers
          })
-         
-         //fetches clients from CK database
-        yield put ({type: 'FETCH_CLIENTS'});
-        
-
+        }
+        if(uniqueDbCustomers.length > 1){
+            //delete route goes here.  use drinks code from solo project to send multiple
+            //ids
+        }
     } catch (error) {
         console.log(error);
         alert('Error updating QB customers!');
-    }   
-    } 
-}
+    }  
+            //fetches clients from CK database
+            console.log('finished add clients saga')
+            yield put ({type: 'FETCH_CLIENTS'});
+    }
+
 
 //For checking for updates to existing clients and updating them
 function* quickBooksSync (action) {

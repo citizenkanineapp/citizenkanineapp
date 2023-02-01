@@ -13,6 +13,7 @@ router.get('/customer', (req, res) => {
   // console.log(tools.basicAuth)
 
   if (token) {
+
     const query = encodeURI('/query?query= select * from customer');
     const url = config.api_uri + req.session.realmId + query
     // console.log('Making API Customer call to: ' + url)
@@ -64,7 +65,6 @@ router.get('/customer', (req, res) => {
     console.log('null token');
     res.send('ConnectToQb');
   }
-  
 })
 
   function filterCustomers(customers) {

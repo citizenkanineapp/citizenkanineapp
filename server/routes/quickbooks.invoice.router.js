@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
     }))
   } else {
     console.log('null token', token);
-    res.send('connectToQb')
+    res.send('connectToQb');
   }
 })
 

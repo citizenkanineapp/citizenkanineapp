@@ -120,6 +120,19 @@ function* updateAllQbCustomers(action){
 
 //For checking for updates to existing clients and updating them
 function* quickBooksSync (action) {
+
+    // updates SERVICES.
+
+    const services = yield axios({
+        method: 'GET',
+        url: '/api/qb_services'
+    })
+    if (services.status != 201) {
+        console.log('error updating services', services)
+    } else {
+        console.log(services);
+    }
+
     console.log('arrived in saga for updating qb customers')
     const qbCustomers = yield axios.get('/api/quickbooks/customer')
     const dbCustomers = yield axios.get('/api/clients')

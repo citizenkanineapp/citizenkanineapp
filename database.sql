@@ -17,6 +17,8 @@ DROP TABLE IF EXISTS admin_notes;
 DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS employees;
 DROP TABLE IF EXISTS services;
+DROP TABLE IF EXISTS invoices;
+DROP TABLE IF EXISTS oauth2_tokens;
 
 CREATE TABLE employees (
 	"id" SERIAL PRIMARY KEY,
@@ -129,22 +131,23 @@ VALUES
 
 CREATE TABLE services (
 	"id" SERIAL PRIMARY KEY,
-	"qb_id" INT NOT NULL,
+	"qb_id" INT NULL,
 	"name" VARCHAR (150),
-	"price" INT,
-	"service_id" INT
+	"price" INT
+	-- "service_id" INT
 );
 
--- INSERT INTO services
--- 	("name", "price")
--- VALUES
--- 	('Group Dog Walking: 1 dog - Ad hoc', '35'),
--- 	('Group Dog Walking: 1 dog 2-4x / week', '30'),
--- 	('Group Dog Walking: 1 dog 5x / week', '26'),
--- 	('Group Dog Walking: 2 dogs - Ad hoc', '45'),
--- 	('Group Dog Walking: 2 Dogs 2-4x / week', '42'),
--- 	('Group Dog Walking: 2 dogs 5x / week', '37'),
--- 	('Group Dog Walking: 3 dogs', '54');
+-- service names MUST match names in QB
+INSERT INTO services
+	("name", "price")
+VALUES
+	('Group Dog Walking:Walk 1 dog - Ad hoc', '23'),
+	('Group Dog Walking:Walk 1 dog 2-4x / week', '32'),
+	('Group Dog Walking:Walk 1 dog 5 days / week', '4'),
+	('Group Dog Walking:Walk 2 dogs - Ad hoc', '4'),
+	('Group Dog Walking:Walk 2 dogs 2-4x / week', '5'),
+	('Group Dog Walking:Walk 2 dogs 5 days / week', '342'),
+	('Group Dog Walking:3 dogs', '54');
 
 CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,
@@ -181,7 +184,7 @@ CREATE TABLE dogs (
 	"regular" BOOLEAN -- added this so that if a guest dog (client's daughter) is also being walked, they can be added add-hoc
 	);
 
--
+
 -- ** Changed table name to client_schedule since the days will be set for the client and changes will be made to individual dogs.
 -- ** Changed the weekday column titles from m-f to (1-5) to make using MUI calendar data easier.
 CREATE TABLE clients_schedule (
@@ -240,14 +243,14 @@ VALUES
 	('1', 'Export CSV for November'),
 	('1', 'Buy more leashes for the supply cabinet');
 
--- CREATE TABLE oauth2_access_tokens (
--- 	"id" SERIAL PRIMARY KEY,
--- 	"access_token" VARCHAR(4096),
--- 	"time", TIMESTAMP
--- 	);
+CREATE TABLE oauth2_tokens (
+	"id" SERIAL PRIMARY KEY,
+	"access_token" VARCHAR(4096),
+	"refresh_token" VARCHAR(512)
+	);
 
--- CREATE TABLE oauth2_refresh_token (
--- 	"id" SERIAL PRIMARY KEY,
--- 	"refresh_token" VARCHAR(512),
--- 	"time", TIMESTAMP
--- 	);
+CREATE TABLE invoices (
+	"id" SERIAL PRIMARY KEY,
+	"period" VARCHAR(20),
+	"client_qb_id"
+);

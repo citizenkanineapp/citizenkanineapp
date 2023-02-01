@@ -48,6 +48,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     const queryWalkDetails = `
     SELECT
         clientid,
+        qb_id,
         first_name,
         last_name,
         num_dogs,
@@ -60,6 +61,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     FROM (	
         SELECT
             clients.id AS clientid,
+            clients.qb_id,
             daily_dogs.date,
             COUNT(dogs.id) AS num_dogs,
             daily_dogs.checked_in AS checked_in,
@@ -87,6 +89,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         ) results
     GROUP BY
         clientid,
+        qb_id,
         first_name,
         last_name, 
         num_dogs,
@@ -107,13 +110,13 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         // console.log('schedules', schedules)
 
 
-        const testDailyDogs = await pool.query(`
-            SELECT * FROM daily_dogs
-            WHERE
-            EXTRACT (MONTH FROM daily_dogs.date) = 1 AND
-            EXTRACT (YEAR FROM daily_dogs.date) = 2023 AND
-            (checked_in = true OR no_show = true);
-        `);
+        // const testDailyDogs = await pool.query(`
+        //     SELECT * FROM daily_dogs
+        //     WHERE
+        //     EXTRACT (MONTH FROM daily_dogs.date) = 1 AND
+        //     EXTRACT (YEAR FROM daily_dogs.date) = 2023 AND
+        //     (checked_in = true OR no_show = true);
+        // `);
 
         // console.log(testDailyDogs.rows);
 
@@ -126,6 +129,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         //adds service data to invoice data object. some of this should be done in SQL!
         for (let item of invoiceData) {
             let serviceId
+            // console.log(item);
 
             // adds walks per week to invoice item
             for (let client of schedules) {
@@ -134,42 +138,54 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     const values = Object.values(client);
                     const walks = values.filter(i => i === true).length;
 
-                    // grabs services ID from services list.
-                    // THIS WILL NEED WORK IF QUICKBOOKS API SYNC IS IMPLEMENTED. will 'sync' be able to preserve serivceId? will there need to be another function to grab serviceId by service type?
+                    // grabs services ID from services list. 
+                    // These are equivalent to primary key id value of service in service table.
+                    // If table changes, these will need to be fixed.
+                    // id   Group Dog Walking:{service}
+                    // 1:   Walk 1 dog - Ad hoc
+                    // 2:   Walk 1 dog 2-4x / week
+                    // 3:   Walk 1 dog 5 days / week
+                    // 4:   Walk 2 dogs - Ad hoc
+                    // 5:   Walk 2 dogs - 2-4x / week
+                    // 6:   Walk 2 dogs 5 days / week
+                    // 7:   3 dogs
+
+                    // 8: 
+                
                     if (item.num_dogs === "1") {
                         switch (walks) {
                             case 1:
-                                serviceId = 2;
+                                serviceId = 1;
                                 break;
                             case 2: case 3: case 4:
-                                serviceId = 3;
+                                serviceId = 2;
                                 break;
                             case 5:
-                                serviceId = 4;
+                                serviceId = 3;
                                 break;
                         }
                     } else if (item.num_dogs === "2") {
                         switch (walks) {
                             case 1:
-                                serviceId = 5;
+                                serviceId = 4;
                                 break;
                             case 2: case 3: case 4:
-                                serviceId = 6;
+                                serviceId = 5;
                                 break;
                             case 5:
-                                serviceId = 7;
+                                serviceId = 6;
                                 break;
                         }
                     } else if (item.num_dogs === "3") {
-                        serviceId = 8;
+                        serviceId = 7;
                     } else {
-                        serviceId = 9;
+                        serviceId = 8;
                     }
                 }
 
             }
             // console.log('in walks/week', item.clientid, serviceId);
-
+            
 
             // adds service details to invoice item
             for (let service of services) {
@@ -178,6 +194,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     item.year = searchYear;
                     item.service = {
                         price: service.price,
+                        qb_id: service.qb_id,
                         service
                     }
                     if (item.no_show === true) {
@@ -191,6 +208,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         // console.log(invoiceData);
 
         if (invoiceData[0]) {
+            // console.log(invoiceData)
             res.send(invoiceData);
         } else {
             res.sendStatus(204) //Sam added this

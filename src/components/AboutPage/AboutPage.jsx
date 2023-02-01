@@ -8,11 +8,8 @@ function AboutPage() {
   const dispatch = useDispatch();
 
   const connectQB = ()=>{
-    console.log(location)
     //location.href = "http://localhost:5000/api/oauth2/connect_handler";
     location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
-
-
   }
 
 
@@ -35,12 +32,12 @@ function AboutPage() {
   return (
     <div className="container">
       <h1>AboutPage</h1>
-      <button onClick={connectQB}>Connect to QB</button> 
-      <button id="qb_button" onClick={connectQB}>
-        <img src="Images/qbButton.png" alt="quickbooks logo"/>
-      </button>
-      <button onClick={updateServices}>Sync Services</button>
-      <button onClick={quickbooksSync}>Sync With Quickbooks</button>
+      {/* <button onClick={connectQB}>Connect to QB</button> 
+      <button id="qb_button" onClick={connectQB}> */}
+        {/* <img src="Images/qbButton.png" alt="quickbooks logo"/>
+      </button> */}
+      {/* <button onClick={updateServices}>Sync Services</button>
+      <button onClick={quickbooksSync}>Sync With Quickbooks</button> */}
     </div>
   );
 }

@@ -2,71 +2,28 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import swal from 'sweetalert';
 
-
-// // this standalone connect will be phased out.
-// function* authorizationRequest (action) {
-//     // console.log('arrived in saga for authorization request')
-//     try {
-//         const uri = yield axios({
-//             method: 'GET',
-//             url: '/api/oauth2/connect_handler'
-//         })
-//         console.log('in QB saga', uri);
-//     }
-//     catch {
-//         console.log('error in authorizationRequest');
-//     }
-  
-// }
-
-// //this function fetches all QB clients and then calls post route to add to DB
-// function* fetchQbCustomers (action) {
-//     console.log('arrived in saga for fetching qb customers')
-//     try {
-//         const customers = yield axios({
-//             method: 'GET',
-//             url: '/api/quickbooks/customer'
-//         })
-//         console.log(customers)
-//         if (customers.data === 'connectToQB'){
-//             location.href = "http://localhost:5000/api/oauth2/connect_handler"
-//         }
-//       /* Call function that will be post route to add QB clients to DB */
-//       yield put({
-//         type: 'POST_QB_CLIENTS',
-//         payload: customers.data
-//     })
-
-//     }
-//     catch {
-//         console.log('error in fetchQbCustomers');
-//     }
-// }
-
 //this function fetches all QB Services and then calls post route to add to DB
-function* fetchServices (action) {
-    console.log('arrived in saga for fetching qb services')
-    try {
-        const services = yield axios({
-            method: 'GET',
-            url: '/api/qb_services'
-        })
-        if (services.status === 201) {
-            swal("Services updated!");
-            console.log(services.status)
-        }
-        if (services.data === 'connectToQB'){
-            location.href = "http://localhost:5000/api/oauth2/connect_handler"
-            //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
-
-        }
+// function* fetchServices (action) {
+//     console.log('arrived in saga for fetching qb services')
+//     try {
+//         const services = yield axios({
+//             method: 'GET',
+//             url: '/api/qb_services'
+//         })
+//         if (services.status === 201) {
+//             swal("Services updated!");
+//             console.log(services.status)
+//         } else if (services.data === 'connectToQB'){
+//             location.href = "http://localhost:5000/api/oauth2/connect_handler"
+//             //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+//         }
 
 
-    }
-    catch {
-        console.log('error in services request');
-    }
-}
+//     }
+//     catch {
+//         console.log('error in services request');
+//     }
+// }
 
 function* createQbInvoice (action) {
     // console.log('in createQbInvoice saga');
@@ -77,18 +34,15 @@ function* createQbInvoice (action) {
             url: '/api/qbInvoice',
             data: invoiceItems
         })
-        console.log(invoiceResponse)
-        if (invoiceResponse.data === 'connectToQB'){
+        console.log(invoiceResponse);
+        if (invoiceResponse.data === 'connectToQb') {
             location.href = "http://localhost:5000/api/oauth2/connect_handler"
             //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
-        }
-
-        /* Call function that will be post route to add QB clients to DB */
-        yield put({
-            type: 'POST_QB_CLIENTS',
-            payload: customers.data
-        })
+        } else if (invoiceResponse.status === 201) {
+            //don't knkow how to handle 201 status in router.
+            swal("invoices sent!")
+        } 
     }
     catch {
         console.log('error in createQbInvoice');
@@ -169,6 +123,19 @@ function* updateAllQbCustomers(action){
 
 //For checking for updates to existing clients and updating them
 function* quickBooksSync (action) {
+
+    // updates SERVICES.
+
+    const services = yield axios({
+        method: 'GET',
+        url: '/api/qb_services'
+    })
+    if (services.status != 201) {
+        console.log('error updating services', services)
+    } else {
+        console.log(services);
+    }
+
     console.log('arrived in saga for updating qb customers')
     const qbCustomers = yield axios.get('/api/quickbooks/customer')
     const dbCustomers = yield axios.get('/api/clients')
@@ -181,7 +148,6 @@ function* quickBooksSync (action) {
         console.log('need to connect to qb')
       location.href = "http://localhost:5000/api/oauth2/connect_handler"
         //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
-
     }
 
     /*If there is nothing in the database, proceed with adding all QB
@@ -221,14 +187,11 @@ function* quickBooksSync (action) {
 }
 
 function* quickBooksSaga() {
-    // yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
-    // yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
-    yield takeLatest('GET_QB_SERVICES', fetchServices);
+    // yield takeLatest('GET_QB_SERVICES', fetchServices);
     yield takeLatest('CREATE_QB_INVOICE', createQbInvoice);
     // yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);
     yield takeLatest('UPDATE_ALL_QB_CUSTOMERS', updateAllQbCustomers);
     yield takeLatest('QUICKBOOKS_SYNC', quickBooksSync)
-
 }
 
 export default quickBooksSaga;

@@ -13,56 +13,63 @@ const {
 router.get('/customer', rejectUnauthenticated, (req, res) => {
   console.log('in server fetch customers')
   const token = tools.getToken(req.session)
-  console.log('token?', token.accessToken)
-  console.log('basic auth', tools.basicAuth)
+ // console.log('token?', token.accessToken)
+  //console.log('basic auth', tools.basicAuth)
 
-  const query = encodeURI('/query?query= select * from customer');
-  const url = config.api_uri + req.session.realmId + query
-  console.log('Making API Customer call to: ' + url)
-  
-  // tools.refreshTokensWithToken(token.refreshToken)
+  if (token) {
 
-  const requestObj = {
-    url: url,
-    headers: {
-      'Authorization': 'Bearer ' + token.accessToken,
-      'Accept': 'application/json'
+    const query = encodeURI('/query?query= select * from customer');
+    const url = config.api_uri + req.session.realmId + query
+     console.log('Making API Customer call to: ' + url)
+    // tools.refreshTokensWithToken(token.refreshToken)
+
+    const requestObj = {
+      url: url,
+      headers: {
+        'Authorization': 'Bearer ' + token.accessToken,
+        'Accept': 'application/json'
+      }
     }
-  }
+    
+    request(requestObj, function (err, response) { 
+      // checks current access token. If access token is expired, it renews access token with stored refresh token.
 
-  request(requestObj, function (err, response) { 
-    // checks current access token. If access token is expired, it renews access token with stored refresh token.
+      tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
+          // status code 401 corrosponds to unauthorized request.
+          // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
+        if (response.statusCode === 401 ) {
+        
+          // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
+          res.send('connectToQB')
 
- 
-    tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
-        // status code 401 corrosponds to unauthorized request.
-        // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
-      if (response.statusCode === 401 ) {
-       
-        // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
-        res.send('connectToQB')
-
-        // don't know if this second else-if block is necessary, ie, covering non-401 errors.
-      } else if (err || response.statusCode != 200) {
-        return res.json({ error: err, statusCode: response.statusCode })
-      } else {
-     
-        // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
-        // console.log("response with fresh auth", response)
-        let customers = JSON.parse(response.body)
-        // console.log(customers)
-        // this function starts the process of formatting the customers
-        let filteredCustomers =  filterCustomers(customers)
-        /*  this sucessfully sent back the customers after being processed
-        do we need to worry about timing issues long term?  */
-        res.send(filteredCustomers)
-      }   
-    }, function (err) {
-      console.log(err)
-      return res.json(err)
+          // don't know if this second else-if block is necessary, ie, covering non-401 errors.
+        } else if (err || response.statusCode != 200) {
+          console.log(err)
+          return res.json({ error: err, statusCode: response.statusCode })
+        } else {
+      
+          // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
+          // console.log("response with fresh auth", response)
+          let customers = JSON.parse(response.body)
+          // for (let cust of customers.QueryResponse.Customer) {console.log(cust.Active, cust.FullyQualifiedName)}
+          // console.log(customers.QueryResponse.Customer)
+          // this function starts the process of formatting the customers
+          let filteredCustomers =  filterCustomers(customers)
+          /*  this sucessfully sent back the customers after being processed
+          do we need to worry about timing issues long term?  */
+          res.send(filteredCustomers)
+        }   
+      }, function (err) {
+        console.log(err)
+        return res.json(err)
+      })
     })
-  })
+  } else {
+    console.log('null token');
+    res.send('connectToQb');
+  }
 })
+
 
   function filterCustomers(customers) {
     

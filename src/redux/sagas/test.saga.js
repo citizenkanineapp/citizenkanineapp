@@ -6,16 +6,21 @@ function* testAuthorizationRequest (action) {
     try {
         const uri = yield axios({
             method: 'GET',
-            url: '/api/test/trigger'
+            url: '/api/redirect/test'
         })
+        console.log(uri)
     } catch {
         console.log('error in authorizationRequest');
     }
   
 }
 
+
+
+
 function* testSaga() {
-    yield takeLatest('TEST_AUTHORIZATION', testAuthorizationRequest);
+    yield takeLatest('GET_HEROKU', testAuthorizationRequest);
+    
 }
 
 export default testSaga;

@@ -24,6 +24,7 @@ function ClientList() {
 
   const [search, setSearch] = useState('')
   const [submittedSearch, setSubmittedSearch] = useState('')
+  const [imageSrc, setImageSrc] = useState('Images/qbButtonMed.png')
 
   //this route gets all clients to populate client list //
   useEffect(() => {
@@ -33,9 +34,8 @@ function ClientList() {
 
   //starts OAuth process with QB
   const connectQB = ()=>{
-    console.log(location)
-    location.href = "http://localhost:5000/api/oauth2/connect_handler";
-    //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+   location.href = "http://localhost:5000/api/oauth2/connect_handler";
+   //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
   }
 
   const openModal = (view) => {
@@ -187,7 +187,10 @@ function ClientList() {
         </Grid>
         <Grid item xs={12} sx={{ mr: 5, display: 'flex', justifyContent: 'flex-end' }}>
           <Button onClick={connectQB}>
-              <img src="Images/qbButtonShort.png" alt="quickbooks logo"/>
+              <img 
+              src={imageSrc} alt="quickbooks logo"
+              onMouseEnter={() => setImageSrc('Images/qbButtonMedHover.png')}
+              onMouseOut={() => setImageSrc('Images/qbButtonMed.png')}/>
             </Button>
         </Grid>
       

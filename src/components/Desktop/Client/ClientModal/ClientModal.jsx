@@ -5,7 +5,7 @@ import ClientDetails from '../ClientDetails/ClientDetails';
 import AddClient from '../AddClient/AddClient';
 import EditClientForm from '../EditClient/EditClientForm';
 import ClientSchedule from '../ClientSchedule/ClientSchedule';
-import ClientScheduleChanges from '../ClientScheduleChanges/ClientScheduleChanges';
+// import ClientScheduleChanges from '../ClientScheduleChanges/ClientScheduleChanges';
 import AddDogForm from '../Dog/AddDog/AddDogForm';
 import EditDogForm from '../Dog/EditDog/EditDogForm';
 import DogDetails from '../Dog/DogDetails/DogDetails';
@@ -37,12 +37,12 @@ function ClientModal(){
 
   //chooses which component to view
   const pickView = () => {
-    console.log(modalView)
+    // console.log(modalView)
     switch(modalView){                 //conditionally renders components inside modal
       case "AddClient":  return <AddClient/>
       case "EditClientForm": return <EditClientForm/>
       case "ClientSchedule": return <ClientSchedule/>
-      case "ClientScheduleChanges": return <ClientScheduleChanges/>
+      // case "ClientScheduleChanges": return <ClientScheduleChanges/>
       case "AddDogForm": return <AddDogForm/>
       case "AddDogFromEdit": return <AddDogFromEdit/>
       case "DogDetails": return <DogDetails/>

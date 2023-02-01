@@ -2,7 +2,7 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* getRoutes() {
-    console.log('GETTING DAILY ROUTES');
+    // console.log('GETTING DAILY ROUTES');
 
     try {
         const routes = yield axios.get('/api/mobile/routes');
@@ -110,7 +110,7 @@ function* getRoutes() {
 
     } catch (error) {
         console.log(error);
-        alert('ERROR FETCHING DAILY DOGS');
+        // alert('ERROR FETCHING DAILY DOGS');
     }
 }
 

@@ -127,8 +127,8 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
                 active: true, 
                 regular: true,     //creating a dog object for each dog
                 image: "",
-                vet_name: "",
-                vet_phone: "",
+                // vet_name: "",
+                // vet_phone: "",
                 qb_id: oneCustomer.qb_id
               };
       })
@@ -143,8 +143,8 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
                   active: true, 
                   regular: false,     //creating a dog object for each  ad hoc dog
                   image: "",
-                  vet_name: "",
-                  vet_phone: "",
+                  // vet_name: "",
+                  // vet_phone: "",
                   qb_id: oneCustomer.qb_id
           }
                 dogsArray.push(adHocDog)
@@ -219,12 +219,12 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       await Promise.all(eachCustomer.dogs.map(dog => {
         const dogTxt = `
                             INSERT INTO dogs 
-                                ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag", "regular", "active") 
+                                ("client_id", "name", "image", "notes", "flag", "regular", "active") 
                               VALUES
-                                ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                                ($1, $2, $3, $4, $5, $6, $7)
   
         `
-        const dogValues = [eachCustomer.client_id, dog.name, dog.image, dog.vet_name, dog.vet_phone, dog.dog_notes, dog.flag, dog.regular, dog.active]
+        const dogValues = [eachCustomer.client_id, dog.name, dog.image, dog.dog_notes, dog.flag, dog.regular, dog.active]
         return client.query(dogTxt, dogValues)
       }));
     }

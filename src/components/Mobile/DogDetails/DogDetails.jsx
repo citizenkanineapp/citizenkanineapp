@@ -59,7 +59,7 @@ function DogDetails() {
   // this is a button that allows for an employee to click and prompt for a phone call to a given number
   const clicktoCall = (number) => {
      // removes any symbols and letters from the phone number
-    let nosymbols = number.replace(/[^0-9 ]/g, '');
+    let nosymbols = number.replace(/[^+\d]+/g, "");
     // removes white space from number
     let readyNumber = nosymbols.trim();
     // sends prompt to call number

@@ -166,11 +166,11 @@ function* quickBooksSync (action) {
         console.log('Quickbooks customers:', qbResult)
         console.log('Database customers:', dbResult)
 
-    if (qbResult.data === 'connectToQB'){
+    if (qbResult === 'connectToQB'){
+        console.log('need to connect to qb')
        location.href = "http://localhost:5000/api/oauth2/connect_handler"
         //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
-        console.log('need to connect to qb')
     }
 
 

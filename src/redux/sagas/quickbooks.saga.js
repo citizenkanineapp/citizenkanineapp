@@ -3,27 +3,27 @@ import { put, takeLatest } from 'redux-saga/effects';
 import swal from 'sweetalert';
 
 //this function fetches all QB Services and then calls post route to add to DB
-function* fetchServices (action) {
-    console.log('arrived in saga for fetching qb services')
-    try {
-        const services = yield axios({
-            method: 'GET',
-            url: '/api/qb_services'
-        })
-        if (services.status === 201) {
-            swal("Services updated!");
-            console.log(services.status)
-        } else if (services.data === 'connectToQB'){
-            location.href = "http://localhost:5000/api/oauth2/connect_handler"
-            //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
-        }
+// function* fetchServices (action) {
+//     console.log('arrived in saga for fetching qb services')
+//     try {
+//         const services = yield axios({
+//             method: 'GET',
+//             url: '/api/qb_services'
+//         })
+//         if (services.status === 201) {
+//             swal("Services updated!");
+//             console.log(services.status)
+//         } else if (services.data === 'connectToQB'){
+//             location.href = "http://localhost:5000/api/oauth2/connect_handler"
+//             //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+//         }
 
 
-    }
-    catch {
-        console.log('error in services request');
-    }
-}
+//     }
+//     catch {
+//         console.log('error in services request');
+//     }
+// }
 
 function* createQbInvoice (action) {
     // console.log('in createQbInvoice saga');
@@ -180,7 +180,7 @@ function* quickBooksSync (action) {
 function* quickBooksSaga() {
     // yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
     // yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
-    yield takeLatest('GET_QB_SERVICES', fetchServices);
+    // yield takeLatest('GET_QB_SERVICES', fetchServices);
 
     yield takeLatest('CREATE_QB_INVOICE', createQbInvoice);
     yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);

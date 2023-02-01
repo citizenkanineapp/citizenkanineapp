@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
             console.log('ERROR!', err, response.body, response.body.Fault.Error)
             return res.json({ error: err, statusCode: response.statusCode })
           } else {
-            console.log(response.session)
+            console.log('invoice created')
           }
         }, function (err) {
           console.log(err)

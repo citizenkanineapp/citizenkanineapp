@@ -134,11 +134,11 @@ function Invoicing() {
           <Box component="span">
             <ExportCSV monthsShort={monthsShort} />
           </Box>
-          <Button size="small" variant="contained" color="secondary" sx={{ mx: 1, mt: 1 }}
+          {/* <Button size="small" variant="contained" color="secondary" sx={{ mx: 1, mt: 1 }}
             onClick={updateServices}
           >
             Sync services
-          </Button>
+          </Button> */}
 
         </Grid>
       </Grid>

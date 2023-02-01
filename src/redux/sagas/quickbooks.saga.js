@@ -96,25 +96,25 @@ function* createQbInvoice (action) {
 }
 
 /*This function adds customers to DB from QB*/
-function* addAllQbCustomers(action){
-    console.log('arrived in add QB clients route', action.payload);
+// function* addAllQbCustomers(action){
+//     console.log('arrived in add QB clients route', action.payload);
 
-    try {
-        const qbClients = yield axios({
-            method: 'POST',
-            url: '/api/quickbooks/qbcustomers',
-            data: action.payload
-        })
+//     try {
+//         const qbClients = yield axios({
+//             method: 'POST',
+//             url: '/api/quickbooks/qbcustomers',
+//             data: action.payload
+//         })
         
-        //fetches clients from CK database
-        yield put ({type: 'FETCH_CLIENTS'});
+//         //fetches clients from CK database
+//         yield put ({type: 'FETCH_CLIENTS'});
         
-    } catch (error) {
-        console.log(error);
-        alert('Error adding QB customers');
-    }
+//     } catch (error) {
+//         console.log(error);
+//         alert('Error adding QB customers');
+//     }
     
-}
+// }
 
 function* updateAllQbCustomers(action){
     console.log('arrived in function to compare DB to QB');
@@ -184,7 +184,6 @@ function* quickBooksSync (action) {
 
     }
 
-
     /*If there is nothing in the database, proceed with adding all QB
     customers to the DB */
     else if(dbResult.length === 0){
@@ -225,9 +224,8 @@ function* quickBooksSaga() {
     // yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
     // yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
     yield takeLatest('GET_QB_SERVICES', fetchServices);
-
     yield takeLatest('CREATE_QB_INVOICE', createQbInvoice);
-    yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);
+    // yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);
     yield takeLatest('UPDATE_ALL_QB_CUSTOMERS', updateAllQbCustomers);
     yield takeLatest('QUICKBOOKS_SYNC', quickBooksSync)
 

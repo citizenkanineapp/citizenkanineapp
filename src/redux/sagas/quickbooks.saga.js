@@ -167,16 +167,16 @@ function* quickBooksSync (action) {
         console.log('Database customers:', dbResult)
 
     if (qbResult.data === 'connectToQB'){
-       yield location.href = "http://localhost:5000/api/oauth2/connect_handler"
+       location.href = "http://localhost:5000/api/oauth2/connect_handler"
         //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
-        alert('Connect to QB')
+        console.log('need to connect to qb')
     }
 
 
     /*If there is nothing in the database, proceed with adding all QB
     customers to the DB */
-    if(dbResult.length === 0){
+    else if(dbResult.length === 0){
         console.log('Nothing in the database')
         yield put ({type: 'UPDATE_ALL_QB_CUSTOMERS'});
     } else if (dbResult.length >= 1) {

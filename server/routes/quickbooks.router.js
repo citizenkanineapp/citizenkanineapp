@@ -563,7 +563,26 @@ if(processedCustomerDeleteDogs.length === 0){
     return processedCustomers //returning customers back up to the original route
   }
 
-
-
+/* Route to delete DB customers that are no longer active on QB */
+  router.delete('/delete', async (req, res) => {
+  console.log('does it hit server?')
+  const deleteArray = req.query.ids.split(",")
+  let idsToDelete = deleteArray.map(id => Number(id))
+  const connection = await pool.connect();
+    try {
+      await connection.query('BEGIN');
+      await Promise.all(idsToDelete.map(id => {
+        const queryText = 'DELETE FROM clients WHERE qb_id=$1';
+        console.log(id)
+        return connection.query(queryText, [id])
+      }));
+      await connection.query('COMMIT')
+      res.sendStatus(201);
+    } catch (dbErr) {
+      console.log('Error in delete DB route', dbErr)
+      await connection.query('ROLLBACK');
+      res.sendStatus(500);
+    }
+  });
 
 module.exports = router;

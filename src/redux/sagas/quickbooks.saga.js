@@ -134,7 +134,8 @@ function* updateAllQbCustomers(action){
 
         let initialDbCustomers = new Set(qbResult.map(({qb_id}) => qb_id))
         let uniqueDbCustomers = dbResult.filter(({qb_id}) => !initialDbCustomers.has(qb_id))
-        console.log('does it catch extra db client?', uniqueDbCustomers)
+        let idsToDelete = uniqueDbCustomers.map(client => client.qb_id)
+        console.log('does it catch extra db client?', idsToDelete)
 
          /* Post Route to Add Unique Customers to Database*/
 
@@ -153,13 +154,15 @@ function* updateAllQbCustomers(action){
         if(uniqueDbCustomers.length > 1){
             //delete route goes here.  use drinks code from solo project to send multiple
             //ids
+            let urlQuery = `/api/quickbooks/delete?ids=${idsToDelete}`
+            const deleteClientsFromDB = yield axios.delete(`${urlQuery}`);
         }
     } catch (error) {
         console.log(error);
         alert('Error updating QB customers!');
     }  
             //fetches clients from CK database
-            console.log('finished add clients saga')
+            console.log('finished add/delete clients saga')
             yield put ({type: 'FETCH_CLIENTS'});
     }
 

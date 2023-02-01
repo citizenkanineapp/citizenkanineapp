@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-    json: invoice
+      json: invoice
     }
     request(requestObj, function (err, response) {   
       // checks current access token. If access token is expired, it renews access token with stored refresh token.

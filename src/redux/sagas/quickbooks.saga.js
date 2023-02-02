@@ -187,12 +187,30 @@ function* quickBooksSync (action) {
     }
 }
 
+
+function* checkTokenStatus (action) {
+    // console.log('arrived in saga for authorization request')
+    try {
+        const tokenStatus = yield axios.get('/api/quickbooks/token')
+        console.log('is there a token right now?', tokenStatus.data)
+        if(tokenStatus.data === true) {
+            yield put ({type: 'QUICKBOOKS_SYNC'})
+        } else {
+            location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        }
+    } catch {
+        console.log('error in token route');
+    }
+}
+
+
 function* quickBooksSaga() {
     // yield takeLatest('GET_QB_SERVICES', fetchServices);
     yield takeLatest('CREATE_QB_INVOICE', createQbInvoice);
     yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);
     yield takeLatest('UPDATE_ALL_QB_CUSTOMERS', updateAllQbCustomers);
     yield takeLatest('QUICKBOOKS_SYNC', quickBooksSync)
+    yield takeLatest('CHECK_TOKEN', checkTokenStatus);
 }
 
 export default quickBooksSaga;

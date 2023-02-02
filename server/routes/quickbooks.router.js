@@ -337,7 +337,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
     let customersAddDogs = []
     let customersDeleteDogs = []
     let customerNoDogChange = []
-    
+
     for(let qbCustomer of qbData){
       for (let dbCustomer of dbData){
         // console.log(' are dogs here', dbCustomer.dogs)
@@ -612,5 +612,20 @@ if(processedCustomerDeleteDogs.length === 0){
       res.sendStatus(500);
     }
   });
+
+  router.get('/token', rejectUnauthenticated,  (req, res) => {
+    console.log('gets to server?')
+    const token = tools.getToken(req.session)
+    try{
+      if(token){
+        res.send(true);
+      } else {
+        res.send(false)
+      }
+    }catch(error){
+    console.log(error)
+  }
+
+});
 
 module.exports = router;

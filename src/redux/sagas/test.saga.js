@@ -15,11 +15,23 @@ function* testAuthorizationRequest (action) {
   
 }
 
+// function* checkTokenStatus (action) {
+//     // console.log('arrived in saga for authorization request')
+//     try {
+//         const tokenStatus = yield axios.get('/api/quickbooks/token')
+//         console.log('is there a token right now?', tokenStatus.data)
+//     } catch {
+//         console.log('error in token route');
+//     }
+// }
+
 
 
 
 function* testSaga() {
     yield takeLatest('GET_HEROKU', testAuthorizationRequest);
+    // yield takeLatest('CHECK_TOKEN', checkTokenStatus);
+    
     
 }
 

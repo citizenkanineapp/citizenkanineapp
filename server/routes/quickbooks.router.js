@@ -140,6 +140,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
               };
       })
       if(oneCustomer.hasOwnProperty('adHocDogs')){
+        console.log('do ad hoc dogs make it here?', oneCustomer.adHocDogs )
         let adHocDogsString = oneCustomer.adHocDogs
         let dogsCleaned = adHocDogsString.replace(/[&/]/g, ",")
         let adHocDogsArray = dogsCleaned.split(",").map(function (dogName) {
@@ -172,7 +173,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 
   /*To initially add QB customers to DB */
   router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
-    console.log('arrvied in server?', req.body)
+    // console.log('arrvied in server?', req.body)
 
     const client = await pool.connect();
     const customers = req.body // obj desctructing of QB data
@@ -197,7 +198,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         customer.long = long
         await delay(100);
         customerResult.push(customer)
-        console.log('testing geo stats', customer)
+        // console.log('testing geo stats', customer)
         }
         return customerResult;
       }
@@ -296,6 +297,27 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         customer.wednesday = true
         customer.thursday = true
         customer.friday = true
+      }
+      if(schedule.includes('daily')){
+        customer.monday = true
+        customer.tuesday = true
+        customer.wednesday = true
+        customer.thursday = true
+        customer.friday = true
+      }
+      if(schedule.includes('None')){
+        customer.monday = false
+        customer.tuesday = false
+        customer.wednesday = false
+        customer.thursday = false
+        customer.friday = false
+      }
+      if(schedule.includes('none')){
+        customer.monday = false
+        customer.tuesday = false
+        customer.wednesday = false
+        customer.thursday = false
+        customer.friday = false
   
       }
     }
@@ -315,13 +337,12 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
     let customersAddDogs = []
     let customersDeleteDogs = []
     let customerNoDogChange = []
-
+    
     for(let qbCustomer of qbData){
       for (let dbCustomer of dbData){
         // console.log(' are dogs here', dbCustomer.dogs)
         if (qbCustomer.qb_id === dbCustomer.qb_id) {
           if(qbCustomer.dogs.length > dbCustomer.dogs.length ){
-          // console.log('dogs at this moment?', qbCustomer.dogs)
           customersAddDogs.push(qbCustomer)
           }
           else if(qbCustomer.dogs.length < dbCustomer.dogs.length ){
@@ -465,9 +486,9 @@ await connection.query(scheduleTxt, scheduleValues)
   if(processedCustomersAddDogs.length === 0){
     console.log('No dogs need to be added')
     } else {
-      console.log('dogs at this point?', processedCustomersAddDogs)
+      // console.log('dogs at this point?', processedCustomersAddDogs)
     for(let oneCustomer of processedCustomersAddDogs){
-      console.log(oneCustomer.dogsToAdd)
+      // console.log(oneCustomer.dogsToAdd)
       await Promise.all(oneCustomer.dogsToAdd.map(dog => {
     
       const dogTxt = `
@@ -580,7 +601,7 @@ if(processedCustomerDeleteDogs.length === 0){
       await connection.query('BEGIN');
       await Promise.all(idsToDelete.map(id => {
         const queryText = 'DELETE FROM clients WHERE qb_id=$1';
-        console.log(id)
+        // console.log(id)
         return connection.query(queryText, [id])
       }));
       await connection.query('COMMIT')

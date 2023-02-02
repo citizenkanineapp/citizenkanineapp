@@ -4,8 +4,6 @@ const cors = require('cors');
 require('dotenv').config();
 
 
-// const OAuthClient = require('intuit-oauth');
-
 const app = express();
 
 

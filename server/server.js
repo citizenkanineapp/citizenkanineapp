@@ -1,13 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+// const cors = require('cors');
 require('dotenv').config();
 
-
-// const OAuthClient = require('intuit-oauth');
-
 const app = express();
-
 
 const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');

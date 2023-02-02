@@ -61,7 +61,7 @@ function AdminNotes() {
         <>
             {toggleNotes ?          ////EDIT MODE////
                 <Box>
-                    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', display: { xs: 'none', sm: 'none' }  }}>
                         <Grid item xs={12}>
                             <Card>
                                 <CardContent sx={{width: '27vw', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 4, p: 1, pr: 3, mt: 1.5, ml: 3}}>
@@ -91,7 +91,7 @@ function AdminNotes() {
                 </Box>
                 :               ////DISPLAY MODE////
                 <Box>
-                    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', display: { xs: 'none', sm: 'none' } }}>
                         <Grid item xs={12}>
                             <Card>
                                 <CardContent sx={{width: '27.25vw', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 4, p: 1, pr: 3, mt: 2, ml: 2.5}}>

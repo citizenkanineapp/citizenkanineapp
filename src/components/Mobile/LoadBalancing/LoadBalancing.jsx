@@ -86,7 +86,7 @@ function LoadBalancing() {
       </Grid>
 
       {/*---PORTRAIT DIRECTIONS---*/}
-      <Card sx={{display: { xs: 'flex', sm: 'none' }, flexDirection: 'column', width: '60%', height: '40%' }}>
+      <Card sx={{display: { xs: 'flex', smDD: 'none' }, flexDirection: 'column', width: '60%', height: '40%' }}>
           <CardMedia
             component="img"
             height="50%"
@@ -106,7 +106,7 @@ function LoadBalancing() {
       {/*----LANDSCAPE NAV----*/}
       <Box sx={{ height: '10%',
                  width: '100%',  
-                 display: {xs: 'none', sm: 'flex'},
+                 display: {xs: 'none', smDD: 'flex'},
                  flexDirection: 'row', 
                  justifyContent: 'space-between',
                  bgcolor: '#e0603f' }}>
@@ -140,7 +140,7 @@ function LoadBalancing() {
             sx={{
               height: '90%',
               width: '18%',
-              display: {xs: 'none', sm: 'flex'},
+              display: {xs: 'none', smDD: 'flex'},
               flexDirection: 'column',
               alignItems: 'center',
               flexWrap: 'wrap',

@@ -9,8 +9,6 @@ const router = express.Router();
 router.get('/customer', (req, res) => {
   console.log('in server fetch customers')
   const token = tools.getToken(req.session)
-  // console.log(token.accessToken)
-  // console.log(tools.basicAuth)
 
   if (token) {
 

@@ -127,10 +127,12 @@ function* quickBooksSync (action) {
         method: 'GET',
         url: '/api/qb_services'
     })
-    if (services.status != 201) {
-        console.log('error updating services', services)
-    } else {
-        console.log(services);
+    if (services.status === 201) {
+        // swal("Services updated!");
+        console.log(services.status)
+    } else if (services.data === 'connectToQB'){
+        location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
     }
 
     console.log('arrived in saga for updating qb customers')

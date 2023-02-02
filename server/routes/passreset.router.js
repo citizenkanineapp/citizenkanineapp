@@ -18,7 +18,7 @@ const router = express.Router();
 router.post('/email_reset_link', async (req, res) => {
     
     const email = req.body.email;
-    console.log(email);
+    // console.log(email);
     // queries table if email exists
     const queryTextEmail = `
         SELECT "id", "email"
@@ -94,7 +94,7 @@ router.post('/email_reset_link', async (req, res) => {
                 }
             });
 
-    } else {
+    } else {  
         console.log(userData.rows[0]);
         res.sendStatus(500);//formate error client side!
         return;

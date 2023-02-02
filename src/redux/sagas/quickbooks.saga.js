@@ -37,20 +37,12 @@ function* createQbInvoice (action) {
         console.log(invoiceResponse);
         if (invoiceResponse.data === 'connectToQb') {
             location.href = "http://localhost:5000/api/oauth2/connect_handler"
-            //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+            //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+
         } else if (invoiceResponse.status === 201) {
             //don't knkow how to handle 201 status in router.
             swal("invoices sent!")
-        } else if (invoiceResponse.data === 'connectToQB'){
-            location.href = "http://localhost:5000/api/oauth2/connect_handler"
-            //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
-        }
-
-        /* Call function that will be post route to add QB clients to DB */
-        yield put({
-            type: 'POST_QB_CLIENTS',
-            payload: customers.data
-        })
+        } 
     }
     catch {
         console.log('error in createQbInvoice');
@@ -58,25 +50,25 @@ function* createQbInvoice (action) {
 }
 
 /*This function adds customers to DB from QB*/
-function* addAllQbCustomers(action){
-    console.log('arrived in add QB clients route', action.payload);
+// function* addAllQbCustomers(action){
+//     console.log('arrived in add QB clients route', action.payload);
 
-    try {
-        const qbClients = yield axios({
-            method: 'POST',
-            url: '/api/quickbooks/qbcustomers',
-            data: action.payload
-        })
+//     try {
+//         const qbClients = yield axios({
+//             method: 'POST',
+//             url: '/api/quickbooks/qbcustomers',
+//             data: action.payload
+//         })
         
-        //fetches clients from CK database
-        yield put ({type: 'FETCH_CLIENTS'});
+//         //fetches clients from CK database
+//         yield put ({type: 'FETCH_CLIENTS'});
         
-    } catch (error) {
-        console.log(error);
-        alert('Error adding QB customers');
-    }
+//     } catch (error) {
+//         console.log(error);
+//         alert('Error adding QB customers');
+//     }
     
-}
+// }
 
 function* updateAllQbCustomers(action){
     console.log('arrived in function to compare DB to QB');
@@ -92,31 +84,42 @@ function* updateAllQbCustomers(action){
          to the variable uniqueIds*/
         let initialCustomers = new Set(dbResult.map(({qb_id}) => qb_id))
         let uniqueCustomers = qbResult.filter(({qb_id}) => !initialCustomers.has(qb_id))
-        console.log('Unique customer objects:', uniqueCustomers)
+        console.log('Unique customer objects from QB:', uniqueCustomers)
+
+        let initialDbCustomers = new Set(qbResult.map(({qb_id}) => qb_id))
+        let uniqueDbCustomers = dbResult.filter(({qb_id}) => !initialDbCustomers.has(qb_id))
+        let idsToDelete = uniqueDbCustomers.map(client => client.qb_id)
+        console.log('does it catch extra db client?', idsToDelete)
 
          /* Post Route to Add Unique Customers to Database*/
 
          if (uniqueCustomers.length === 0){
             yield put ({type: 'FETCH_CLIENTS'});
             console.log('Clients are up to date')
-         } else {
+         } 
         try {
+            if (uniqueCustomers.length > 0) {
             const qbClients = yield axios({
                 method: 'POST',
                 url: '/api/quickbooks/qbcustomers',
                 data: uniqueCustomers
          })
-         
-         //fetches clients from CK database
-        yield put ({type: 'FETCH_CLIENTS'});
-        
-
+        }
+        if(uniqueDbCustomers.length > 1){
+            //delete route goes here.  use drinks code from solo project to send multiple
+            //ids
+            let urlQuery = `/api/quickbooks/delete?ids=${idsToDelete}`
+            const deleteClientsFromDB = yield axios.delete(`${urlQuery}`);
+        }
     } catch (error) {
         console.log(error);
         alert('Error updating QB customers!');
-    }   
-    } 
-}
+    }  
+            //fetches clients from CK database
+            console.log('finished add/delete clients saga')
+            yield put ({type: 'FETCH_CLIENTS'});
+    }
+
 
 //For checking for updates to existing clients and updating them
 function* quickBooksSync (action) {
@@ -143,9 +146,15 @@ function* quickBooksSync (action) {
         console.log('Quickbooks customers:', qbResult)
         console.log('Database customers:', dbResult)
 
+    if (qbResult === 'connectToQB'){
+        console.log('need to connect to qb')
+      location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+    }
+
     /*If there is nothing in the database, proceed with adding all QB
     customers to the DB */
-    if(dbResult.length === 0){
+    else if(dbResult.length === 0){
         console.log('Nothing in the database')
         yield put ({type: 'UPDATE_ALL_QB_CUSTOMERS'});
     } else if (dbResult.length >= 1) {
@@ -180,15 +189,11 @@ function* quickBooksSync (action) {
 }
 
 function* quickBooksSaga() {
-    // yield takeLatest('AUTHORIZATION_REQUEST', authorizationRequest);
-    // yield takeLatest('GET_QB_CUSTOMERS', fetchQbCustomers);
     // yield takeLatest('GET_QB_SERVICES', fetchServices);
-
     yield takeLatest('CREATE_QB_INVOICE', createQbInvoice);
-    yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);
+    // yield takeLatest('POST_QB_CLIENTS', addAllQbCustomers);
     yield takeLatest('UPDATE_ALL_QB_CUSTOMERS', updateAllQbCustomers);
     yield takeLatest('QUICKBOOKS_SYNC', quickBooksSync)
-
 }
 
 export default quickBooksSaga;

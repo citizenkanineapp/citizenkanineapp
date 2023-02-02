@@ -70,7 +70,7 @@ var Tools = function () {
           })
         }, function(err) {
           if (err.body.error = 'invalid_grant') {
-            console.log('IN CHECKUNAUTHORIXED!', err.body.error)
+            console.log('IN CHECKUNAUTHORIZED!', err.body.error)
             resolve({err,response})
           } else {
             // Error refreshing the tokens

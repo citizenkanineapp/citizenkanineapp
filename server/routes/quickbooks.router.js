@@ -5,12 +5,14 @@ const tools = require('../modules/tools')
 const request = require('request');
 const router = express.Router();
 
-let config ;
-if (process.env.PORT) {
-  config = require('../../config.json')
-} else {
-  config = require('../../config.dev.json')
-}
+// let config ;
+// if (process.env.PORT) {
+//   config = require('../../config.json')
+// } else {
+//   config = require('../../config.dev.json')
+// }
+
+const config = require('../../config.dev.json');
 
 const {
   rejectUnauthenticated,

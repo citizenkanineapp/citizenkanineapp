@@ -52,6 +52,7 @@ const ExportCSV = ({ monthsShort }) => {
         <Box component="span">
             {invoiceItems && invoiceItems.map &&
             <>
+            <Box sx={{display: 'block'}} >
                 <Button size="small" variant="contained" color="primary" sx={{ mx: 1, mt: 1 }}>
                     <CSVLink
                     headers={headers}
@@ -72,6 +73,7 @@ const ExportCSV = ({ monthsShort }) => {
                     sx={{ mx: 1, mt: 1 }}>
                         EXPORT QB
                 </Button>
+            </Box>
             </>
             }
         </Box>

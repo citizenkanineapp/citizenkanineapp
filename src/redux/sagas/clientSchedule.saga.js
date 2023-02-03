@@ -8,6 +8,7 @@ function* fetchClientScheduleChanges(action){
             method: 'GET',
             url: `/api/clientSchedule/${client_id}`
         })
+        console.log('does it come back from server (client schedule changes', clientChanges.data )
         yield put({
             type: 'SET_CLIENT_SCHEDULE_CHANGES',
             payload: clientChanges.data

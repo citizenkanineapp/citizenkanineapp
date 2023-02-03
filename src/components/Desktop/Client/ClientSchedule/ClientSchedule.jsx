@@ -27,13 +27,16 @@ function ClientSchedule() {
   // console.log(clientSchedule)
   // console.log(updatedSchedule)
   const dogs = client.dogs;
+  const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
+  const clientSchedule = useSelector(store => store.clientScheduleReducer.editClientSchedule)
+  const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
   
   
   useEffect(() => {
     dispatch({ type: 'FETCH_SCHEDULE', payload: client.client_id })
     // Fetch client schedule changes
     dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.client_id })
-
+    console('schedule changes on load?', changes)
      return () => {
       dispatch({
         type: 'CLEAR_SCHEDULE'
@@ -41,11 +44,11 @@ function ClientSchedule() {
     }
   }, []);
   
-  const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
-  const clientSchedule = useSelector(store => store.clientScheduleReducer.editClientSchedule)
-  const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
+  // const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)
+  // const clientSchedule = useSelector(store => store.clientScheduleReducer.editClientSchedule)
+  // const changes = useSelector(store=> store.clientScheduleReducer.clientScheduleChanges)
   // console.log(dayjs(changes[0].date_to_change).$d)
-  ;  //local useState state I am using for this functionality
+    //local useState state I am using for this functionality
   const [dog, setDog] = useState('');
   // console.log(dog);
   const [scheduled, setScheduled] = useState('');

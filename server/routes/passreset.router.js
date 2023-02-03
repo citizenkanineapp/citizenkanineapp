@@ -72,7 +72,7 @@ router.post('/email_reset_link', async (req, res) => {
 
             let resetLink
             if (process.env.PORT) {
-              resetLink = `http://citizen-kanine.herokuapp.com/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
+              resetLink = `https://citizen-kanine.herokuapp.com/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
             } else {
               resetLink = `http://localhost:3000/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
             }

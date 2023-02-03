@@ -255,4 +255,3 @@ CREATE TABLE invoices (
 	"client_qb_id"
 );
 
-test2 

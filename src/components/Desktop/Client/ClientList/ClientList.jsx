@@ -30,7 +30,6 @@ function ClientList() {
   useEffect(() => {
     dispatch({ type: 'FETCH_CLIENTS' })
     dispatch({ type: 'CLEAR_MODALS'})
-    // dispatch({type: 'CHECK_TOKEN'})
   }, []);
 
   //starts OAuth process with QB
@@ -105,7 +104,7 @@ function ClientList() {
 
           <Button onClick={() => searchFunction()} variant="contained" color="secondary">Search</Button>
        }
-          <Button onClick={() => dispatch({ type: 'CHECK_TOKEN'})} variant='contained' color="secondary">QuickBooks Sync</Button>
+          <Button onClick={() => dispatch({ type: 'QUICKBOOKS_SYNC'})} variant='contained' color="secondary">QuickBooks Sync</Button>
        
       </Grid>
       <Grid container spacing={2}>

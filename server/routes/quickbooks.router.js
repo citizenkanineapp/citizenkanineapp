@@ -16,7 +16,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
  // console.log('token?', token.accessToken)
   //console.log('basic auth', tools.basicAuth)
 
-  if (token) {
+  if(token) {
 
     const query = encodeURI('/query?query= select * from customer');
     const url = config.api_uri + req.session.realmId + query
@@ -613,19 +613,5 @@ if(processedCustomerDeleteDogs.length === 0){
     }
   });
 
-  router.get('/token', rejectUnauthenticated,  (req, res) => {
-    console.log('gets to server?')
-    const token = tools.getToken(req.session)
-    try{
-      if(token){
-        res.send(true);
-      } else {
-        res.send(false)
-      }
-    }catch(error){
-    console.log(error)
-  }
-
-});
-
+  
 module.exports = router;

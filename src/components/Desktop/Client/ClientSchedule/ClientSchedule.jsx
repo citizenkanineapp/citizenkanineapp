@@ -63,7 +63,7 @@ function ClientSchedule() {
   
   // THIS handles the change of the date based on the date picker
   const handleDateChange = (newValue) => {
-    console.log(newValue);
+    //console.log(newValue);
     setValue(newValue);
   }
   
@@ -112,7 +112,7 @@ function ClientSchedule() {
   // weekly schedule stuff:
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const [disabled, setDisabled] = useState(true);
-  console.log('disabled', disabled)
+  //console.log('disabled', disabled)
 
   // This object will be dispatched when the weekly schedule has been updated;
 
@@ -222,7 +222,6 @@ function ClientSchedule() {
                     // console.log(JSON.stringify(DayComponentProps.day.$d))
                     let thisDayString = JSON.stringify(DayComponentProps.day.$d)
                     let selectedMUIClass='';
-                    console.log()
                     if (day.$d === dayjs()){
                         selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
                       }
@@ -314,8 +313,6 @@ function ClientSchedule() {
               {/* END of CALENDAR */}
         </Box >
         </Grid>
-
-        
         {/* ADD One-Off Changes Form */}
               {addChange ? 
                 <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center'}}>

@@ -42,7 +42,7 @@ function Invoicing() {
   const fetchInvoiceData = () => {
     //formats month for search query
     const month = months.indexOf(selectedMonth) + 1;
-    console.log("in fetchInvoiceData", selectedId, selectedYear);
+    //console.log("in fetchInvoiceData", selectedId, selectedYear);
 
     dispatch({
       type: 'FETCH_INVOICE_DATA',

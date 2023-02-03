@@ -68,7 +68,7 @@ function DogDetails() {
 
   // function that allows an employee to add notes to a dog
   const submitNote = (action) => {
-    console.log(dog.dog_notes, dog.dog_id);
+    //console.log(dog.dog_notes, dog.dog_id);
     let updatedDog = { id: dog.dog_id, note: dog.dog_notes };
     dispatch({ type: 'UPDATE_DOG_NOTE', payload: updatedDog });
     setEditStatus(false);

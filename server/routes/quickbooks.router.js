@@ -2,9 +2,15 @@ const express = require('express');
 const axios = require('axios');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
-const config = require('../../config.json');
 const request = require('request');
 const router = express.Router();
+
+let config ;
+if (process.env.PORT) {
+  config = require('../../config.json')
+} else {
+  config = require('../../config.dev.json')
+}
 
 const {
   rejectUnauthenticated,
@@ -44,7 +50,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 
           // don't know if this second else-if block is necessary, ie, covering non-401 errors.
         } else if (err || response.statusCode != 200) {
-          console.log(err)
+          console.log('error in customer request', response.statusCode);
           return res.json({ error: err, statusCode: response.statusCode })
         } else {
       
@@ -60,7 +66,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
           res.send(filteredCustomers)
         }   
       }, function (err) {
-        console.log(err)
+        console.log('error in customer request')
         return res.json(err)
       })
     })
@@ -140,7 +146,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
               };
       })
       if(oneCustomer.hasOwnProperty('adHocDogs')){
-        console.log('do ad hoc dogs make it here?', oneCustomer.adHocDogs )
+        // console.log('do ad hoc dogs make it here?', oneCustomer.adHocDogs )
         let adHocDogsString = oneCustomer.adHocDogs
         let dogsCleaned = adHocDogsString.replace(/[&/]/g, ",")
         let adHocDogsArray = dogsCleaned.split(",").map(function (dogName) {

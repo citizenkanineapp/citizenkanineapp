@@ -9,7 +9,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 
-
+/* Note: February 2023 This component has been removed because clients
+    are now generated from Quickbooks and no through CK app */
 
 
 function AddClient(){

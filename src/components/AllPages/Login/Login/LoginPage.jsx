@@ -67,10 +67,6 @@ function LoginPage() {
     }
   }; // end login
 
-  const checkMobile = () => {
-
-  }
-
   return (
     <Box className="login_container">
       <Grid container sx={{ justifyContent: "center", alignItems: "center", display: "flex", height: "80vh" }}>

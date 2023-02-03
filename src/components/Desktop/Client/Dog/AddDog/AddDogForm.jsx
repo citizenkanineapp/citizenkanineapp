@@ -10,6 +10,10 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import ImageUpload from "../../../../AllPages/ImageUpload/ImageUpload";
 
+/* Note: February 2023 This component has been removed because clients
+    are now generated from Quickbooks and no through CK app */
+
+
 function AddDogForm (){
   const dispatch = useDispatch();
 

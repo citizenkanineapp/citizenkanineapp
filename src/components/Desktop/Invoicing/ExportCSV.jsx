@@ -9,7 +9,7 @@ import './CSVLink.css';
 const ExportCSV = ({ monthsShort }) => {
     const dispatch = useDispatch();
     const invoiceItems = useSelector(store => store.invoiceReducer);
-    console.log(invoiceItems);
+   // console.log(invoiceItems);
 
     const headers = [
         { label: 'InvoiceNo', key: 'InvoiceNo' },
@@ -51,16 +51,17 @@ const ExportCSV = ({ monthsShort }) => {
     return (
         <Box component="span">
             {invoiceItems && invoiceItems.map &&
-                // <Button size="small" variant="contained" color="primary" sx={{ mx: 1, mt: 1 }}>
-                //     <CSVLink
-                //         headers={headers}
-                //         data={data}
-                //         filename={`invoice_${data[0].InvoiceDate}.csv` || null}
-                //         id='csvButton'
-                //     >
-                //         EXPORT
-                //     </CSVLink>
-                // </Button>
+            <>
+                <Button size="small" variant="contained" color="primary" sx={{ mx: 1, mt: 1 }}>
+                    <CSVLink
+                    headers={headers}
+                    data={data}
+                    filename={`invoice_${data[0].InvoiceDate}.csv` || null}
+                    id='csvButton'
+                    >
+                        EXPORT CSV
+                   </CSVLink>
+                </Button>
                 <Button 
                     onClick={
                         e=>dispatch({type: 'CREATE_QB_INVOICE', payload: invoiceItems })
@@ -69,8 +70,9 @@ const ExportCSV = ({ monthsShort }) => {
                     variant="contained"
                     color="primary"
                     sx={{ mx: 1, mt: 1 }}>
-                        EXPORT
+                        EXPORT QB
                 </Button>
+            </>
             }
         </Box>
 

@@ -43,7 +43,7 @@ function MobileImageUpload({ id }) {
     }
 
     const uploadImage = (base64EncodedImage, id) => {
-        console.log('DOG ID IS:', id);
+        //console.log('DOG ID IS:', id);
         dispatch({
             type: 'UPDATE_DOG_PHOTO',
             payload: { new_image_url: base64EncodedImage, dogID: id },

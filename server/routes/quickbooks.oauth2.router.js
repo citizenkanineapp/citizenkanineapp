@@ -2,9 +2,15 @@ const express = require('express');
 const axios = require('axios');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
-const config = require('../../config.json');
 const request = require('request');
 const router = express.Router();
+
+let config ;
+if (process.env.PORT) {
+  config = require('../../config.json')
+} else {
+  config = require('../../config.dev.json')
+}
 
 const {
   fixCors,
@@ -76,8 +82,14 @@ router.get('/connect_handler', (req, res) => {
  
     // }
     req.session.realmId = req.query.realmId;
-    res.redirect('http://localhost:3000/#/clients')
-    //res.redirect('https://citizen-kanine.herokuapp.com/#/clients');
+
+    if(process.env.PORT) {
+      res.redirect('https://citizen-kanine.herokuapp.com/#/clients');
+    } else {
+      res.redirect('http://localhost:3000/#/clients')
+    }
+    
+
 
     })
 })

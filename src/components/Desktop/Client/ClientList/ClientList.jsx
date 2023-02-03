@@ -34,8 +34,8 @@ function ClientList() {
 
   //starts OAuth process with QB
   const connectQB = ()=>{
-   location.href = "http://localhost:5000/api/oauth2/connect_handler";
-   //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
+   //location.href = "http://localhost:5000/api/oauth2/connect_handler";
+    location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
   }
 
   const openModal = (view) => {
@@ -44,7 +44,7 @@ function ClientList() {
   }
 
   const fetchOneClient = (client) => {
-    console.log(client)
+    //console.log(client)
     dispatch({type: 'SET_CLIENT', payload: client })
     openModal('ClientDetails')
   }
@@ -65,7 +65,6 @@ function ClientList() {
   }
 
   const clientScheduleView = (client) => {
-    console.log('does it hit?')
     dispatch({ type: 'SET_CLIENT', payload: client })
     openModal('ClientSchedule')
   }
@@ -195,7 +194,6 @@ function ClientList() {
         </Grid>
       
       </Grid>
-      {/* <Button onClick={() => openModal('ClientDetails')}>LISA FRANK - SPIKE, FIDO</Button>  opens client details */}
       <ClientModal /> {/* only open when button is pressed */}
     </Box>
   );

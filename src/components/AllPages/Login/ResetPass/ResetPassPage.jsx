@@ -59,7 +59,7 @@ function ResetPassPage() {
         swal("Password changed!");
         history.push('/home');
       } else {
-        console.log('password input fail!');
+        //console.log('password input fail!');
         dispatch({ type: 'PASSWORD_INPUT_ERROR' });
       }
     }

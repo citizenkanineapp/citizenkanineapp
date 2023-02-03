@@ -70,9 +70,12 @@ router.post('/email_reset_link', async (req, res) => {
                 }
             });
 
-            const resetLink = `http://localhost:3000/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
-            // const resetLink = `http://citizen-kanine.herokuapp.com/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
-
+            let resetLink
+            if (process.env.PORT) {
+              resetLink = `http://citizen-kanine.herokuapp.com/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
+            } else {
+              resetLink = `http://localhost:3000/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
+            }
 
             const mailOptions = {
                 from: process.env.RESETEMAIL, //sender

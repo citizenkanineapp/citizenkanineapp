@@ -28,16 +28,16 @@ function ClientDetails(){
 
   const showDetails = (id, index) => {
     setCardIndex(index);
-    console.log('index of this card?',)
-    console.log(id)
+    //console.log('index of this card?',)
+    //console.log(id)
     // console.log(client)
     const currentDog = client.dogs.filter(dog => {return dog.dog_id === id})
     setFlipCard(!flipCard);
-    console.log(flipCard)
+    //console.log(flipCard)
   }
 
   const deleteClient = (client) => {
-    console.log(client);
+   // console.log(client);
     swal({
       title: "Are you sure?",
       text: "This will permanently delete this client",
@@ -60,7 +60,7 @@ function ClientDetails(){
 
 
   const editDog = (dog) => {
-    console.log('which dog is clicked?', dog)
+    //console.log('which dog is clicked?', dog)
     // const currentDog = client.dogs.filter(dog => {return dog.dog_id === id})
     // console.log('current dog', currentDog)
     const clientDogObj = {
@@ -82,10 +82,10 @@ function ClientDetails(){
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const openMenu = (event, dog) => {
-    console.log(dog);
+    //console.log(dog);
     setAnchorEl(event.currentTarget);
-    console.log(event)
-    console.log(dogToEdit);
+    //console.log(event)
+   // console.log(dogToEdit);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -179,13 +179,6 @@ function ClientDetails(){
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
               />
             }
-              {/* <TextField
-                focused={false}
-                value={client.email} 
-                helperText="Email"  
-                size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
-               /> */}
               <TextField
                 focused={false}
                 value={client.vet_name || ''} 
@@ -213,7 +206,6 @@ function ClientDetails(){
           {/*-------------------- DOG PICTURES --------------------*/}
           <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
           {client.dogs && client.dogs.map && client.dogs.map((dog, index) => 
-                  
                 <Card key={index} sx={{width: '35%', height: '225px', m: 1}}>
                   <CardActions sx={{ justifyContent: 'space-between', ml: 2, p: 0}}>
                     <Typography>{dog.dog_name}</Typography>
@@ -224,43 +216,6 @@ function ClientDetails(){
                         sx={{ py: 1, borderRadius: 0 }}>
                         <CreateOutlinedIcon/>
                       </IconButton>
-                      {/* <Menu
-                        anchorEl={anchorEl}
-                        open={open}
-                        // dog={dog}
-                        onClose={handleClose}
-                        PaperProps={{
-                          elevation: 0,
-                          sx: {
-                            overflow: 'visible',
-                            mt: 1.5,
-                            '& .MuiAvatar-root': {
-                              width: 32,
-                              height: 32,
-                              ml: -0.5,
-                              mr: 1,
-                            },
-                            '&:before': {
-                              content: '""',
-                              display: 'block',
-                              position: 'absolute',
-                              top: 0,
-                              right: 14,
-                              width: 10,
-                              height: 10,
-                              bgcolor: 'background.paper',
-                              transform: 'translateY(-50%) rotate(45deg)',
-                              zIndex: 0,
-                            },
-                          },
-                        }}
-                        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                        >
-                        <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => editDog(dog.dog_id)}>Edit</MenuItem>
-                          <Divider />
-                        <MenuItem sx={{gap: 1, py: 0, m: 0 }} onClick={() => deleteDog(dog)}>Delete</MenuItem>
-                      </Menu> */}
                     </Box>
                   </CardActions>
                   <CardMedia component="img"  
@@ -282,10 +237,10 @@ function ClientDetails(){
             <Box width="22%" display="flex" justifyContent="space-between">
               <Button variant="outlined" color="info"
                 onClick={back}>Back</Button>
-            <Tooltip title="Delete Client" placement="top-end">
+            {/* <Tooltip title="Delete Client" placement="top-end">
               <Button variant="contained"
                 onClick={() => deleteClient(client.client_id)}>Delete</Button> 
-            </Tooltip>
+            </Tooltip> */}
             </Box>
               <Button variant="contained" color="secondary"
                 onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Edit</Button> 

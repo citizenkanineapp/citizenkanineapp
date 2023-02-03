@@ -3,12 +3,17 @@ const axios = require('axios');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
 // const cors = require('cors');
-const config = require('../../config.json');
 const request = require('request');
 const router = express.Router();
+let config ;
+if (process.env.PORT) {
+  config = require('../../config.json')
+} else {
+  config = require('../../config.dev.json')
+}
 
 router.get('/', async (req, res) => {
-  // console.log('in server fetch services')
+  console.log('in server fetch services')
   const token = tools.getToken(req.session)
   // console.log(token.accessToken)
   // console.log(tools.basicAuth)
@@ -38,7 +43,7 @@ router.get('/', async (req, res) => {
 
           // don't know if this second else-if block is necessary, ie, covering non-401 errors.
         } else if (err || response.statusCode != 200) {
-          // console.log(response.statusCode)
+          console.log('error in services request', response.statusCode)
           return res.json({ error: err, statusCode: response.statusCode })
         } else {
       
@@ -59,7 +64,7 @@ router.get('/', async (req, res) => {
           res.sendStatus(201);
         }   
       }, function (err) {
-        console.log(err)
+        console.log('err in services request');
         return res.json(err)
       })
     })
@@ -72,7 +77,7 @@ router.get('/', async (req, res) => {
 
 async function postServices(qbServices) {
   const client = await pool.connect();
-  console.log(qbServices);
+  // console.log(qbServices);
 
       const servicesQuery = `
         UPDATE services

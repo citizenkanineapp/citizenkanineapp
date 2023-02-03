@@ -68,12 +68,12 @@ function DailyRoutes() {
   }
 
   const getDogDetails = (dogID) => {
-    console.log(dogID);
+   // console.log(dogID);
     history.push(`/m/dog/${dogID}`)
   }
 
   const checkIn = (dog) => {
-    console.log('CHECKING IN CLIENT #:', dog.client_id);
+   // console.log('CHECKING IN CLIENT #:', dog.client_id);
     const dogID = dog.dog_id;
     const routeID = dog.route_id;
     const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }

@@ -4,7 +4,7 @@ import { put, takeLatest, all } from 'redux-saga/effects';
 
 
 function* getAllClients(action){
-    console.log('arrived in get clients route');
+  //  console.log('arrived in get clients route');
     try {
         const clients = yield axios.get('/api/clients');
         // console.log(clients.data)
@@ -19,7 +19,7 @@ function* addClient(action){
     // console.log('arrived in add client route', action.payload);
     // yield delay(1000);
     setTimeout(() => {
-        console.log("Delayed for 1 second.");
+       // console.log("Delayed for 1 second.");
       }, "1000")
     try {
         const client = yield axios({
@@ -27,7 +27,7 @@ function* addClient(action){
             url: '/api/clients',
             data: action.payload
         });
-        console.log(client);
+       // console.log(client);
         yield put ({type: 'FETCH_CLIENTS'});
         yield put ({type: 'CLEAR_SCHEDULE'})
         yield put ({type: 'CLEAR_CLIENT'})

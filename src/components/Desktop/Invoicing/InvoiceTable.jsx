@@ -26,7 +26,7 @@ function InvoiceTable({ monthsShort }) {
     month = monthsShort[invoiceItems[0].month - 1];
   }
   dayjs().format('MM/DD/YYYY');
-  console.log(invoiceItems)
+  //console.log(invoiceItems)
 
   return (
     <Grid container spacing={2}>

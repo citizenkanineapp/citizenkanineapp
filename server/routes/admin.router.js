@@ -37,7 +37,7 @@ pool.query(queryText, queryValues)
    
     })
     .catch(err => {
-        console.log('Error getting admin notes', err);
+        console.log('Error getting admin notes');
         res.sendStatus(500);
     })
 });
@@ -76,7 +76,7 @@ pool.query(queryText, queryValues)
     pool.query(queryText, [req.params.id])
       .then(() => { res.sendStatus(200); })
       .catch((err) => {
-        console.log('Error completing delete admin notes', err);
+        console.log('Error completing delete admin notes');
         res.sendStatus(500);
       });
   });

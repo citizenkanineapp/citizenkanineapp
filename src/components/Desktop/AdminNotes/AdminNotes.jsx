@@ -29,7 +29,7 @@ function AdminNotes() {
     const [note, setNote] = useState('');
 
     const toggleMode = () => {
-        console.log('testing')
+       //console.log('testing')
         setToggleNotes(!toggleNotes)
     }
 

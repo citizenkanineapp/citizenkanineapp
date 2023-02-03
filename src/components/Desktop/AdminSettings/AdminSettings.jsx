@@ -8,20 +8,6 @@ import { Button, TextField, Typography, Grid, Avatar } from "@mui/material";
 function AdminSettings(){
   const dispatch = useDispatch();
 
-  // const theme = createTheme({
-  //   overrides: {
-  //     MuiInput: {
-  //       borderColor: 
-  //         'transparent',
-  //       underline: {
-  //         '&:hover:not($disabled):before': {
-  //           backgroundColor: 'rgba(0, 188, 212, 0.7)',
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
-
   return (
       <Grid className="container" height="100%">
         {/*----------------------- HEADER -----------------------*/}

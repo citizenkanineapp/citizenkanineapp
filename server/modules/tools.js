@@ -2,8 +2,13 @@ var Tokens = require('csrf')
 var csrf = new Tokens()
 var ClientOAuth2 = require('client-oauth2')
 var request = require('request') //replace with express/axios (??????)
-var config = require('../../config.json')
 require('dotenv').config();
+
+if (process.env.PORT) {
+  var config = require('../../config.json')
+} else {
+  var config = require('../../config.dev.json')
+}
 
 var Tools = function () {
   var tools = this;
@@ -70,7 +75,7 @@ var Tools = function () {
           })
         }, function(err) {
           if (err.body.error = 'invalid_grant') {
-            console.log('IN CHECKUNAUTHORIXED!', err.body.error)
+            console.log('IN CHECKUNAUTHORIZED!', err.body.error)
             resolve({err,response})
           } else {
             // Error refreshing the tokens

@@ -9,7 +9,6 @@ import { ThemeProvider } from '@mui/material/styles';
 
 //DESKTOP COMPONENTS
 import Nav from '../Desktop/DesktopNav/Nav';
-import AboutPage from '../AboutPage/AboutPage';
 import SplashPage from '../Desktop/SplashPage/SplashPage';
 import LoginPage from '../AllPages/Login/Login/LoginPage';
 import ResetPassPage from '../AllPages/Login/ResetPass/ResetPassPage';
@@ -82,13 +81,8 @@ function App() {
 
             {/* ----------------------- DESKTOP ----------------------- */}
 
-            {/* only needed for presentation */}
-            <Route exact path="/about">
-              <AboutPage />
-            </Route>
-
             <ProtectedRoute exact path="/user">
-              {user.admin ? <SplashPage /> : <Redirect to="/m/user" />}
+              {user.admin && window.innerWidth > 600 ? <SplashPage /> : <Redirect to="/m/user" />}
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/invoice">

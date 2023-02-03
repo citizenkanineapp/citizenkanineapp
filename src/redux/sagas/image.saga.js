@@ -11,14 +11,13 @@ function* uploadImage(action) {
             url: '/api/image',
             data: action.payload
         })
-        console.log(action.payload.index)
-        console.log('what comes back from server', image)
+
         const { data } = image
 
         const newImageObject = { data }
-        console.log('THE OBJECT IS:', newImageObject);
+       // console.log('THE OBJECT IS:', newImageObject);
         newImageObject.index = action.payload.index
-        console.log('testing format', newImageObject)
+       // console.log('testing format', newImageObject)
         //need to decide what type of state the reducer should be
         yield put({ type: 'SET_DOG_PHOTO', payload: newImageObject });
     } catch {
@@ -35,12 +34,12 @@ function* updateDogPhoto(action) {
             url: '/api/image',
             data: action.payload
         })
-        console.log('IMAGE IS:', image);
+        //console.log('IMAGE IS:', image);
         const { data } = image;
         const newImageObject = { data };
         newImageObject.dogID = action.payload.dogID
 
-        console.log('testing format', newImageObject)
+        //console.log('testing format', newImageObject)
 
         yield axios({
             method: 'PUT',

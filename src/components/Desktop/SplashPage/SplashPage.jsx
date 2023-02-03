@@ -37,7 +37,7 @@ function SplashPage() {
             </CardContent>
           </CardActionArea>
           {user.id ?
-            <AdminNotes /> : null}
+            <AdminNotes  /> : null}
         </Card>
       </Grid>
     </Box>

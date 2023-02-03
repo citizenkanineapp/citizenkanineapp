@@ -2,11 +2,11 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* getRoutes() {
-    console.log('GETTING DAILY ROUTES');
+    // console.log('GETTING DAILY ROUTES');
 
     try {
         const routes = yield axios.get('/api/mobile/routes');
-        console.log(routes);
+       // console.log(routes);
 
         //assigns color to dog for grouping purposes
         const colors = (dog) => {
@@ -110,12 +110,12 @@ function* getRoutes() {
 
     } catch (error) {
         console.log(error);
-        alert('ERROR FETCHING DAILY DOGS');
+        // alert('ERROR FETCHING DAILY DOGS');
     }
 }
 
 function* getRouteDetails(action) {
-    console.log('GETTING ROUTE:', action.payload);
+   // console.log('GETTING ROUTE:', action.payload);
     const routeID = Number(action.payload);
 
     try {
@@ -123,7 +123,7 @@ function* getRouteDetails(action) {
             method: 'GET',
             url: `/api/mobile/route/${routeID}`
         })
-        console.log(routeResult);
+        //console.log(routeResult);
 
         yield put({ type: 'SET_ROUTE', payload: routeResult.data })
     } catch (error) {
@@ -134,11 +134,11 @@ function* getRouteDetails(action) {
 
 
 function* updateRoute(action) {
-    console.log('UPDATING ROUTE', action.payload)
+   // console.log('UPDATING ROUTE', action.payload)
     const dogID = Number(action.payload.dogID);
-    console.log('DOG ID IS:', dogID);
+   // console.log('DOG ID IS:', dogID);
     const routeName = action.payload.routeName;
-    console.log('ROUTE NAME IS:', routeName);
+   // console.log('ROUTE NAME IS:', routeName);
     let routeID = null;
 
     switch (routeName) {
@@ -159,7 +159,7 @@ function* updateRoute(action) {
             break;
     }
 
-    console.log('ROUTE NUMBER IS:', routeID);
+   // console.log('ROUTE NUMBER IS:', routeID);
 
 
     try {
@@ -168,7 +168,7 @@ function* updateRoute(action) {
             url: '/api/mobile/routes',
             data: { dogID, routeID }
         })
-        console.log('CHANGED');
+      //  console.log('CHANGED');
 
     } catch (error) {
         console.log('ERROR UPDATING DOG ROUTE', error);
@@ -176,12 +176,12 @@ function* updateRoute(action) {
 }
 
 function* populateDailyDogs(action) {
-    console.log('Populating Todays Dogs');
+    //console.log('Populating Todays Dogs');
 
     try {
         const populatedDogs = yield axios.get('/api/mobile/daily');
     } catch (error) {
-        console.log('Daily Dogs only generates on Weekdays - More than likely that is why you are seeing this error', error);
+        console.log('Daily Dogs only generates on Weekdays - More than likely that is why you are seeing this error or daily dogs have already populated for today!', error);
     }
 }
 
@@ -189,7 +189,7 @@ function* updateStatus(action) {
     // single dog
     let dog = action.payload;
     let routeID = action.payload.routeID;
-    console.log('DOG TO UPDATE IS:', dog, routeID);
+   // console.log('DOG TO UPDATE IS:', dog, routeID);
 
     try {
         yield axios({
@@ -200,7 +200,7 @@ function* updateStatus(action) {
 
         yield put({ type: 'GET_ROUTE_DETAILS', payload: routeID })
 
-        console.log('CHANGED');
+       // console.log('CHANGED');
 
     } catch (error) {
         console.log('ERROR UPDATING DOG STATUS', error);

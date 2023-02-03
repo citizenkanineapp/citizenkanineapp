@@ -28,11 +28,6 @@ function Nav(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  // const connectQB = ()=>{
-  //   console.log('hi')
-  //   console.log(window)
-  //   location.href = "http://localhost:5000/api/oauth2/connect_handler";
-  //  }
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>

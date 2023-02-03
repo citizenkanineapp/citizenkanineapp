@@ -2,9 +2,13 @@ const express = require('express');
 const axios = require('axios');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
-const config = require('../../config.json');
 const request = require('request');
 const router = express.Router();
+
+
+const {
+  fixCors,
+} = require('../modules/cors_middleware');
 
 router.get('/connect_handler', (req, res) => {
     // GET route code here
@@ -22,13 +26,13 @@ router.get('/connect_handler', (req, res) => {
     })
     // Redirect
     console.log('Redirecting to authorization uri: ' + uri)
-    // console.log('after generating CSRF state',req.session)
+    console.log('does it have header', res)
     res.redirect(uri);
   });
 
   router.get('/callback', function (req, res) {
     console.log('in /api/quickbooks/callback');
-    // console.log('do we get req.session.realmId', req.session)
+    console.log('do we get req.session.realmId', req.session)
     // Verify anti-forgery
     if(!tools.verifyAntiForgery(req.session, req.query.state)) {
         return res.sendStatus('Error - invalid anti-forgery CSRF response!')
@@ -38,9 +42,19 @@ router.get('/connect_handler', (req, res) => {
     tools.intuitAuth.code.getToken(req.originalUrl).then(async function (token) {
     // Store token - this would be where tokens would need to be
     // persisted (in a SQL DB, for example).
+    // const tokenQuery = `
+    //   UPDATE oauth2_tokens
+    //     SET
+    //       access_token = $1,
+    //       refresh_token = $2
+    //     WHERE
+    //       id = 1;
+    // `;
+    // pool.query(tokenQuery, [token.data.access_token, token.data.refresh_token])
+    
     tools.saveToken(req.session, token)
 
-    console.log('token', token);
+    console.log('token', token.data);
     
       // this block of code stores returned tokens and expiration times in SQL db. unnecessary, as we are currently relying on browser storage of tokens. this will not pass must
       // ALSO, it might make sense to move this to storage but abandon the time field. we are refreshing automatically based on server responses.
@@ -62,8 +76,15 @@ router.get('/connect_handler', (req, res) => {
  
     // }
     req.session.realmId = req.query.realmId;
-    res.redirect('http://localhost:3000/#/clients')
-  
+
+    if(process.env.PORT) {
+      res.redirect('https://citizen-kanine.herokuapp.com/#/clients');
+    } else {
+      res.redirect('http://localhost:3000/#/clients')
+    }
+    
+
+
     })
 })
 

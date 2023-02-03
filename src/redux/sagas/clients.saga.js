@@ -4,7 +4,7 @@ import { put, takeLatest, all } from 'redux-saga/effects';
 
 
 function* getAllClients(action){
-    console.log('arrived in get clients route');
+  //  console.log('arrived in get clients route');
     try {
         const clients = yield axios.get('/api/clients');
         // console.log(clients.data)
@@ -19,7 +19,7 @@ function* addClient(action){
     // console.log('arrived in add client route', action.payload);
     // yield delay(1000);
     setTimeout(() => {
-        console.log("Delayed for 1 second.");
+       // console.log("Delayed for 1 second.");
       }, "1000")
     try {
         const client = yield axios({
@@ -27,7 +27,7 @@ function* addClient(action){
             url: '/api/clients',
             data: action.payload
         });
-        console.log(client);
+       // console.log(client);
         yield put ({type: 'FETCH_CLIENTS'});
         yield put ({type: 'CLEAR_SCHEDULE'})
         yield put ({type: 'CLEAR_CLIENT'})
@@ -115,7 +115,7 @@ function* deleteDog(action) {
 }
 
 function* updateDog(action){
-    console.log('arrived in edit dog route', action.payload);
+  //  console.log('arrived in edit dog route', action.payload);
 
     try {
         const dog = yield axios({
@@ -134,7 +134,7 @@ function* updateDog(action){
 }
 
 function* fetchSchedule(action){
-    // console.log('arrived in get one client route', action.payload);
+    console.log('arrived in get one client route', action.payload);
     let clientId = action.payload
     try {
         const schedule = yield axios.get(`/api/clients/schedule/${clientId}`);
@@ -149,7 +149,7 @@ function* fetchSchedule(action){
 }
 
 function* oneOffScheduleChange(action){
-    // console.log('arrived in edit one off schedule route', action.payload);
+     console.log('arrived in edit one off schedule route', action.payload);
     const scheduleChange = action.payload
 
     try {

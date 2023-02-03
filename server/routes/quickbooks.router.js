@@ -2,104 +2,126 @@ const express = require('express');
 const axios = require('axios');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
-const config = require('../../config.json');
 const request = require('request');
 const router = express.Router();
 
-router.get('/customer', (req, res) => {
+let config ;
+if (process.env.PORT) {
+  config = require('../../config.json')
+} else {
+  config = require('../../config.dev.json')
+}
+
+//const config = require('../../config.dev.json');
+
+const {
+  rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
+
+router.get('/customer', rejectUnauthenticated, (req, res) => {
   console.log('in server fetch customers')
   const token = tools.getToken(req.session)
-  // console.log(token.accessToken)
-  // console.log(tools.basicAuth)
+ // console.log('token?', token.accessToken)
+  //console.log('basic auth', tools.basicAuth)
 
-  const query = encodeURI('/query?query= select * from customer');
-  const url = config.api_uri + req.session.realmId + query
-  // console.log('Making API Customer call to: ' + url)
-  
-  // tools.refreshTokensWithToken(token.refreshToken)
+  if(token) {
 
-  const requestObj = {
-    url: url,
-    headers: {
-      'Authorization': 'Bearer ' + token.accessToken,
-      'Accept': 'application/json'
+    const query = encodeURI('/query?query= select * from customer');
+    const url = config.api_uri + req.session.realmId + query
+     console.log('Making API Customer call to: ' + url)
+    // tools.refreshTokensWithToken(token.refreshToken)
+
+    const requestObj = {
+      url: url,
+      headers: {
+        'Authorization': 'Bearer ' + token.accessToken,
+        'Accept': 'application/json'
+      }
     }
-  }
+    
+    request(requestObj, function (err, response) { 
+      // checks current access token. If access token is expired, it renews access token with stored refresh token.
 
-  request(requestObj, function (err, response) { 
-    // checks current access token. If access token is expired, it renews access token with stored refresh token.
+      tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
+          // status code 401 corrosponds to unauthorized request.
+          // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
+        if (response.statusCode === 401 ) {
+        
+          // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
+          res.send('connectToQB')
 
-    tools.checkForUnauthorized(req, requestObj, err, response).then(async function ({ err, response }) {
-        // status code 401 corrosponds to unauthorized request.
-        // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
-      if (response.statusCode === 401 ) {
-       
-        // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
-        res.send('connectToQB')
-
-        // don't know if this second else-if block is necessary, ie, covering non-401 errors.
-      } else if (err || response.statusCode != 200) {
-        return res.json({ error: err, statusCode: response.statusCode })
-      } else {
-     
-        // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
-        // console.log("response with fresh auth", response)
-        let customers = JSON.parse(response.body)
-        // console.log(customers)
-        // this function starts the process of formatting the customers
-        let filteredCustomers =  filterCustomers(customers)
-        /*  this sucessfully sent back the customers after being processed
-        do we need to worry about timing issues long term?  */
-        res.send(filteredCustomers)
-      }   
-    }, function (err) {
-      console.log(err)
-      return res.json(err)
+          // don't know if this second else-if block is necessary, ie, covering non-401 errors.
+        } else if (err || response.statusCode != 200) {
+          console.log('error in customer request', response.statusCode);
+          return res.json({ error: err, statusCode: response.statusCode })
+        } else {
+      
+          // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
+          // console.log("response with fresh auth", response)
+          let customers = JSON.parse(response.body)
+          // for (let cust of customers.QueryResponse.Customer) {console.log(cust.Active, cust.FullyQualifiedName)}
+          // console.log(customers.QueryResponse.Customer)
+          // this function starts the process of formatting the customers
+          let filteredCustomers =  filterCustomers(customers)
+          /*  this sucessfully sent back the customers after being processed
+          do we need to worry about timing issues long term?  */
+          res.send(filteredCustomers)
+        }   
+      }, function (err) {
+        console.log('error in customer request')
+        return res.json(err)
+      })
     })
-  })
+  } else {
+    console.log('null token');
+    res.send('connectToQb');
+  }
 })
+
 
   function filterCustomers(customers) {
     
     let customerArray = customers.QueryResponse.Customer //what comes from QB API
     let customersAfterProcessing = []
     for (let oneCustomer of customerArray) {
-      // console.log(oneCustomer)
-      let mobile;
-      let route_id;
-      let vet_name;
-      let vet_phone;
-      if(oneCustomer.hasOwnProperty('Mobile')){
-        mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
-      } else {                                      //this handles undefined errors
-        mobile = ""
-      }
-      if(!oneCustomer.hasOwnProperty('route_id')){
-        route_id = 5      //adds a default route_id of unassigned
-                           //QB doesn't have route data but it is needed 
-      }
       let customer = {
         qb_id: Number(oneCustomer.Id),
         notesObj: oneCustomer.Notes,
         email: oneCustomer.PrimaryEmailAddr.Address,
         first_name: oneCustomer.GivenName,
         last_name: oneCustomer.FamilyName,
-        phone: oneCustomer.PrimaryPhone.FreeFormNumber,
-        mobile: mobile,
         street: oneCustomer.BillAddr.Line1,
         city: oneCustomer.BillAddr.City,
         zip: oneCustomer.BillAddr.PostalCode,
         notes: oneCustomer.ShipAddr.Line1,
-        route_id: route_id
+      }
+
+      //adds keys if they apply to that customer
+      if(oneCustomer.hasOwnProperty('Mobile')){
+        customer.mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
+      } else {                                      //this handles undefined errors
+        customer.mobile = ""
+      }
+      if(oneCustomer.hasOwnProperty('PrimaryPhone')){
+        customer.phone = oneCustomer.PrimaryPhone.FreeFormNumber   //some customers don't have phones
+      } else {                                      //this handles undefined errors
+        customer.phone = ""
+      }
+      if(oneCustomer.ShipAddr.hasOwnProperty('City')){
+        customer.adHocDogs =oneCustomer.ShipAddr.City
+      }
+      if(!oneCustomer.hasOwnProperty('route_id')){
+        customer.route_id = 5      //adds a default route_id of unassigned
+                           //QB doesn't have route data but it is needed 
       }
       customersAfterProcessing.push(customer)
     }
     // this next function deals with dogs' names and schedules 
     let customersWithSchedule = getDogSchedule(customersAfterProcessing)
     //one more filter to remove key no longer needed on object
-    let finalCustomers = customersWithSchedule.filter(customer => delete customer.notesObj);
+    let preFinalCustomers = customersWithSchedule.filter(customer => delete customer.notesObj);
+    let finalCustomers = customersWithSchedule.filter(customer => delete customer.adHocDogs);
     return finalCustomers;
-    //Note: During merge - need to test if the above works
   }
   
   function getDogSchedule(customers) {
@@ -107,27 +129,49 @@ router.get('/customer', (req, res) => {
     let customerArray = []
     for (let oneCustomer of customers) {
       let result = oneCustomer.notesObj.split("-")
-  
+      let dogs = result[0]
+      let schedule = result[1]
+      let dogsCleaned = dogs.replace(/[&/]/g, ",")
+      let scheduleCleaned = schedule.replace(/[&/]/g, ",")
+      
       //this sections gets rid of extra spaces that might be surrounding each string 
-      let dogsArray = result[0].split(",").map(function (dogName) {
+      let dogsArray = dogsCleaned.split(",").map(function (dogName) {
         return {name: dogName.trim(), 
                 notes: "", 
                 flag: false, 
                 active: true, 
                 regular: true,     //creating a dog object for each dog
                 image: "",
-                vet_name: "",
-                vet_phone: "",
+                // vet_name: "",
+                // vet_phone: "",
                 qb_id: oneCustomer.qb_id
               };
       })
-      let scheduleArray = result[1].split(",").map(function (dayName) {
+      if(oneCustomer.hasOwnProperty('adHocDogs')){
+        // console.log('do ad hoc dogs make it here?', oneCustomer.adHocDogs )
+        let adHocDogsString = oneCustomer.adHocDogs
+        let dogsCleaned = adHocDogsString.replace(/[&/]/g, ",")
+        let adHocDogsArray = dogsCleaned.split(",").map(function (dogName) {
+          let adHocDog = {
+            name: dogName.trim(), 
+                  notes: "", 
+                  flag: false, 
+                  active: true, 
+                  regular: false,     //creating a dog object for each  ad hoc dog
+                  image: "",
+                  // vet_name: "",
+                  // vet_phone: "",
+                  qb_id: oneCustomer.qb_id
+          }
+                dogsArray.push(adHocDog)
+        })
+      }
+      let scheduleArray = scheduleCleaned.split(",").map(function (dayName) {
         return dayName.trim();
       })
     
         oneCustomer.dogs = dogsArray,   //adding dogs key to customer object
         oneCustomer.schedule =  scheduleArray, //adding schedule key to customer obj
-      
         customerArray.push(oneCustomer)
       
     }
@@ -136,38 +180,39 @@ router.get('/customer', (req, res) => {
   }
 
   /*To initially add QB customers to DB */
-  router.post('/qbcustomers', async (req, res) => {
+  router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     // console.log('arrvied in server?', req.body)
 
     const client = await pool.connect();
     const customers = req.body // obj desctructing of QB data
-    // const dogsArray = dogs
-    // const scheduleArray = schedule
-
-    
       //geocoding for customers
    
       const api_key = process.env.map_api_key;
       const config = { headers: { Authorization: api_key } };
 
-      let geoStatsResponse = await Promise.all(customers.map(async customer => {
-      
-      const address = customer.street.replace(/ /g, "+");
-      const town = customer.city.replace(/ /g, '');
-      const zip = customer.zip
 
-      const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
-  
-      // console.log('geostats data', geoStats.data)
-      const lat = geoStats.data.addresses[0].latitude;
-      const long = geoStats.data.addresses[0].longitude;
-      // console.log('heres the geoStats!', lat, long);
-      customer.lat = lat
-      customer.long = long
-    return customer
-    }))
-    // console.log(geoStatsResponse)
-    let customersResult = processSchedule(geoStatsResponse)
+      const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+      async function GetGeoStats(customers) {
+       const customerResult = []
+       for(let customer of customers){
+        const address = customer.street.replace(/ /g, "+");
+        const town = customer.city.replace(/ /g, '');
+        const zip = customer.zip
+        const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
+        const lat = geoStats.data.addresses[0].latitude;
+        const long = geoStats.data.addresses[0].longitude;
+        customer.lat = lat
+        customer.long = long
+        await delay(100);
+        customerResult.push(customer)
+        // console.log('testing geo stats', customer)
+        }
+        return customerResult;
+      }
+      let customersWithGeoStats =  await GetGeoStats(customers)
+
+    let customersResult = processSchedule(customersWithGeoStats)
     // console.log('after schedule processing',  customersResult)
 
     try{ 
@@ -190,12 +235,12 @@ router.get('/customer', (req, res) => {
       await Promise.all(eachCustomer.dogs.map(dog => {
         const dogTxt = `
                             INSERT INTO dogs 
-                                ("client_id", "name", "image", "vet_name", "vet_phone", "notes", "flag", "regular", "active") 
+                                ("client_id", "name", "image", "notes", "flag", "regular", "active") 
                               VALUES
-                                ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                                ($1, $2, $3, $4, $5, $6, $7)
   
         `
-        const dogValues = [eachCustomer.client_id, dog.name, dog.image, dog.vet_name, dog.vet_phone, dog.dog_notes, dog.flag, dog.regular, dog.active]
+        const dogValues = [eachCustomer.client_id, dog.name, dog.image, dog.dog_notes, dog.flag, dog.regular, dog.active]
         return client.query(dogTxt, dogValues)
       }));
     }
@@ -260,6 +305,27 @@ router.get('/customer', (req, res) => {
         customer.wednesday = true
         customer.thursday = true
         customer.friday = true
+      }
+      if(schedule.includes('daily')){
+        customer.monday = true
+        customer.tuesday = true
+        customer.wednesday = true
+        customer.thursday = true
+        customer.friday = true
+      }
+      if(schedule.includes('None')){
+        customer.monday = false
+        customer.tuesday = false
+        customer.wednesday = false
+        customer.thursday = false
+        customer.friday = false
+      }
+      if(schedule.includes('none')){
+        customer.monday = false
+        customer.tuesday = false
+        customer.wednesday = false
+        customer.thursday = false
+        customer.friday = false
   
       }
     }
@@ -267,24 +333,24 @@ router.get('/customer', (req, res) => {
   }
 
 
-  router.put('/customer/put', async (req, res) => {
+  router.put('/customer/put', rejectUnauthenticated, async (req, res) => {
     let qbData = req.body.qb
     // console.log('looking for schedule info', qbData)
     let dbData = req.body.db
 
     let customersWithSchedule = processSchedule(qbData)
     qbData = customersWithSchedule
-    // console.log('customers with schedule', qbData)
+  
+    //arrays for customers with regular dog changes (or not)
     let customersAddDogs = []
     let customersDeleteDogs = []
     let customerNoDogChange = []
-    
+
     for(let qbCustomer of qbData){
       for (let dbCustomer of dbData){
         // console.log(' are dogs here', dbCustomer.dogs)
         if (qbCustomer.qb_id === dbCustomer.qb_id) {
           if(qbCustomer.dogs.length > dbCustomer.dogs.length ){
-          // console.log('dogs at this moment?', qbCustomer.dogs)
           customersAddDogs.push(qbCustomer)
           }
           else if(qbCustomer.dogs.length < dbCustomer.dogs.length ){
@@ -297,6 +363,7 @@ router.get('/customer', (req, res) => {
       }
     } //end of outermost for loop
 
+    
     /* These two functions prepare the customer objects for SQL (if dogs were added or deleted) */
     let processedCustomerDeleteDogs = getDogIdToDelete(customersDeleteDogs, dbData)
     let processedCustomersAddDogs =  getDogToAdd(customersAddDogs, dbData)
@@ -427,9 +494,9 @@ await connection.query(scheduleTxt, scheduleValues)
   if(processedCustomersAddDogs.length === 0){
     console.log('No dogs need to be added')
     } else {
-      console.log('dogs at this point?', processedCustomersAddDogs)
+      // console.log('dogs at this point?', processedCustomersAddDogs)
     for(let oneCustomer of processedCustomersAddDogs){
-      console.log(oneCustomer.dogsToAdd)
+      // console.log(oneCustomer.dogsToAdd)
       await Promise.all(oneCustomer.dogsToAdd.map(dog => {
     
       const dogTxt = `
@@ -532,7 +599,27 @@ if(processedCustomerDeleteDogs.length === 0){
     return processedCustomers //returning customers back up to the original route
   }
 
+/* Route to delete DB customers that are no longer active on QB */
+  router.delete('/delete', async (req, res) => {
+  console.log('does it hit server?')
+  const deleteArray = req.query.ids.split(",")
+  let idsToDelete = deleteArray.map(id => Number(id))
+  const connection = await pool.connect();
+    try {
+      await connection.query('BEGIN');
+      await Promise.all(idsToDelete.map(id => {
+        const queryText = 'DELETE FROM clients WHERE qb_id=$1';
+        // console.log(id)
+        return connection.query(queryText, [id])
+      }));
+      await connection.query('COMMIT')
+      res.sendStatus(201);
+    } catch (dbErr) {
+      console.log('Error in delete DB route', dbErr)
+      await connection.query('ROLLBACK');
+      res.sendStatus(500);
+    }
+  });
 
-
-
+  
 module.exports = router;

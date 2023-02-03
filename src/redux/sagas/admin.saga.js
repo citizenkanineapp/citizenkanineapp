@@ -33,7 +33,7 @@ function* fetchAdminNotes(action) {
 
 function* deleteAdminNotes(action) {
     const noteId = action.payload
-    console.log('in saga', noteId)
+    //console.log('in saga', noteId)
     try {
         const note = yield axios.delete(`/api/admin/${noteId}`);
         yield put({ type: 'FETCH_ADMIN_NOTES' });
@@ -53,7 +53,3 @@ function* adminSaga() {
 }
 
 export default adminSaga;
-
-
-//Note to self:  I think I need to just make a put route and
-//get rid of the post route

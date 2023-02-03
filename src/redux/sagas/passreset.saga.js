@@ -1,5 +1,6 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 // worker Saga: will be fired on "REGISTER" actions
 function* resetPass(action) {
@@ -59,13 +60,16 @@ function* emailPassReset(action) {
   try{
     const email = action.payload.email;
     console.log('in saga', email)
-    yield axios({
+    const res = yield axios({
       url:'/api/pass_reset/email_reset_link',
       method: 'POST',
       data: {email}
     });
+      swal("Email sent!");
 
   } catch (error){
+    console.log("error in emailPassRest. Email does not match any on record", error)
+    swal("Incorrect Email")
 
   }
 }

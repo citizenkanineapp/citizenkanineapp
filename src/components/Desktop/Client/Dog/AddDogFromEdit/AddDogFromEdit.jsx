@@ -6,6 +6,10 @@ import { Button, TextField, Grid, Typography, Card, Switch, List, ListItem, List
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
+/* Note: February 2023 This component has been removed because clients
+    are now generated from Quickbooks and no through CK app */
+
+
 function AddDogFromEdit(){
   const dispatch = useDispatch();
   const newDog = useSelector(store => store.newDogReducer)

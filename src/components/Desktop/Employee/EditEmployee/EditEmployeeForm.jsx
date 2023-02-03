@@ -42,10 +42,6 @@ function EmployeeForm() {
           });
         } 
       });
-    // console.log(employee.id);
-    // await dispatch({ type: 'SAGA_DELETE_EMPLOYEE', payload: employeeID })
-
-    // await dispatch({ type: 'SET_MODAL_STATUS' })
   }
 
   const [errorFirst, setErrorFirst] = useState(false);
@@ -57,8 +53,8 @@ function EmployeeForm() {
   const [errorEmail, setErrorEmail] = useState(false)
   const [errorRoute, setErrorRoute] = useState(false)
   const [errorFree, setErrorFree] = useState(true)
-  console.log(errorFree);
-  console.log(errorFirst)
+ // console.log(errorFree);
+  //console.log(errorFirst)
 
 
   const checkInputs = (event) => {
@@ -136,7 +132,7 @@ function EmployeeForm() {
     <Grid className="container" sx={{display: 'flex', flexDirection: 'column', alignContent: 'center', width: '100%', height: '100%', justifyContent: 'center', gap: 2}}>
       <Grid sx={{display: 'flex', flexDirection: 'row', height: "15%",justifyContent: 'space-between', mt: 5, mb: 1, mx: 10 }}>
           <Box sx={{display: 'flex', flexDirection: 'row', width: '78%', my: 1, py: 1, gap: 2}}>
-                  <TextField
+                  {/* <TextField
                     fullWidth
                     value={employee.first_name} helperText="First Name" size="small"
                     onChange={e =>
@@ -155,7 +151,7 @@ function EmployeeForm() {
                         payload: e.target.value
                       })
                     }
-                  />
+                  /> */}
             </Box>
             <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1, mb: 4}}>
               <Switch

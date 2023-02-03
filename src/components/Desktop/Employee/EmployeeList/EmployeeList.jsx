@@ -47,7 +47,7 @@ function EmployeeList() {
       payload: employee.id
     })
     setTimeout(() => {
-      console.log("Delayed for 1 second"); //waits for employee to be set
+      //console.log("Delayed for 1 second"); //waits for employee to be set
       openModal('EmployeeDetails');
       }, "500");
    

@@ -9,6 +9,8 @@ import FlagIcon from '@mui/icons-material/Flag';
 import CancelIcon from '@mui/icons-material/Cancel';
 import RouteSelect from '../RouteSelect/RouteSelect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PinDropIcon from '@mui/icons-material/PinDrop';
+
 
 
 function DailyRoutes() {
@@ -66,12 +68,12 @@ function DailyRoutes() {
   }
 
   const getDogDetails = (dogID) => {
-    console.log(dogID);
+   // console.log(dogID);
     history.push(`/m/dog/${dogID}`)
   }
 
   const checkIn = (dog) => {
-    console.log('CHECKING IN CLIENT #:', dog.client_id);
+   // console.log('CHECKING IN CLIENT #:', dog.client_id);
     const dogID = dog.dog_id;
     const routeID = dog.route_id;
     const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
@@ -105,63 +107,26 @@ function DailyRoutes() {
     <>
       {route[0] ?
         <Grid container spacing={1} sx={{ justifyContent: 'center', alignItems: 'center', mb: 3, mt: 2 }}>
-
           <Grid item xs={8} sx={{ background: () => getRouteColor(route), color: 'white', mt: 3, textAlign: 'center', textTransform: 'uppercase', borderRadius: 2 }}>
             <Typography variant='h5' sx={{ textAlign: 'center' }}>
               {route[0].route}
             </Typography>
           </Grid>
+          <Grid item xs={8} sx={{display: 'flex', flexDirection: 'row-reverse', justifyContent: 'center', mb: 0}}>
+              <IconButton edge="end" 
+                  sx={{border: 1, mt: 1,
+                  flexDirection: 'column', px: 2}} >
+                  <PinDropIcon 
+                      sx={{fontSize: 30, mb: 0}}
+                      onClick={(event) =>  history.push('/m/map') }/>
+                      <Typography>Map</Typography>
+              </IconButton>
+            </Grid>
           <Grid item xs={12} sx={{ mx: 2 }}>
 
 
             <List sx={{ mb: 10 }}>
               {route && route.map && route.map((dog) => (
-
-                // <ListItem sx={{ backgroundColor: () => determineStatus(dog) }}
-                // secondaryAction={
-                //   <>
-                //     {dog.cancelled ?
-
-                //       <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
-                //         <AddCircleIcon sx={{ fill: '#3DA49D' }} />
-                //       </IconButton>
-
-                //       :
-                //       <>
-                //         <IconButton edge="end" onClick={(event) => checkIn(dog)}>
-                //           <CheckBoxIcon sx={{ fill: '#7BCEC8', mr: 2 }} />
-                //         </IconButton>
-                //         <IconButton edge="end" onClick={(event) => noShow(dog)} >
-                //           <EventBusyIcon sx={{ fill: '#F8614D' }} />
-                //         </IconButton>
-                //         {user.admin ?
-                //           <IconButton edge="end" onClick={(event) => cancelWalk(dog)} >
-                //             <CancelIcon sx={{ fill: '#F8614D' }} />
-                //           </IconButton>
-                //           :
-                //           null
-                //         }
-                //       </>
-                //     }
-                //   </>
-                // }
-                // >
-
-                //   <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >
-                //     {dog.image ?
-                //       <Avatar src={dog.image} />
-                //       :
-                //       <Avatar>
-                //         {dog.name[0]}
-                //       </Avatar>
-
-                //     }
-                //   </ListItemAvatar>
-                //   <ListItemText
-                //     primary={dog.name}
-                //     secondary={dog.client_name}
-                //     sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
-                //   />
                 <Accordion expanded={expanded === dog.dog_id} onChange={handleChange(dog.dog_id)} sx={{ backgroundColor: () => determineStatus(dog), mb: 1 }}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <List>

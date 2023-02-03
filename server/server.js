@@ -4,8 +4,6 @@ const cors = require('cors');
 require('dotenv').config();
 
 
-// const OAuthClient = require('intuit-oauth');
-
 const app = express();
 
 
@@ -26,7 +24,7 @@ const oauth2Router = require('./routes/quickbooks.oauth2.router');
 const qbInvoiceRouter = require ('./routes/quickbooks.invoice.router');
 const passReset = require('./routes/passreset.router');
 const qbServicesRouter = require('./routes/quickbooks.services.router');
-
+const redirectSourceRouter = require('./routes/redirect.router')
 
 // Body parser middleware
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -43,6 +41,13 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
+//test middleware
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
+
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/image', imageRouter);
@@ -57,6 +62,8 @@ app.use('/api/quickbooks', quickbooksRouter);
 app.use('/api/oauth2', oauth2Router);
 app.use('/api/qbInvoice', qbInvoiceRouter);
 app.use('/api/qb_services', qbServicesRouter);
+app.use('/api/redirect', redirectSourceRouter);
+
 
 
 

@@ -10,7 +10,7 @@ function DogDetails() {
   const dispatch = useDispatch();
   const dog = useSelector(store => store.dogEdit)
 
-  console.log(dog)
+ // console.log(dog)
 
   const back = event => {
     dispatch({type: 'CLEAR_EDIT_DOG'})
@@ -29,7 +29,7 @@ function DogDetails() {
       {/*-------------------- DETAILS --------------------*/}
       <Box sx={{ display: "flex", flexDirection: "row", height: "90%", width: "100%", justifyContent: "center", alignItems: "center", gap: 5 }}>
         <Card sx={{ width: "40%", height: "50%" }}>  {/*need to figure out aspect ratio and conditional rendering to change into image upload for editing image*/}
-          <CardMedia component='img' image={dog.image ? dog.image : 'images/dogfiller.jpeg'} sx={{ width: '100%' }} />
+          <CardMedia component='img' image={dog.image ? dog.image : 'Images/dogfiller.png'} sx={{ width: '100%' }} />
           {/* <img src={dog.image ? dog.image : 'images/dogfiller.jpeg'}/> */}
         </Card>
 

@@ -3,11 +3,12 @@ import { maptiler } from 'pigeon-maps/providers'
 import MobileTopNav from '../MobileNav/MobileTopNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 
 
 
 //MUI
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, Button, IconButton } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -18,6 +19,8 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import PetsIcon from '@mui/icons-material/Pets';
 import ListItemButton from '@mui/material/ListItemButton';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DirectionsIcon from '@mui/icons-material/Directions';
 
 //style for modal
 const style = {
@@ -32,16 +35,31 @@ const style = {
   p: 4,
 };
 
+const getRouteColor = (route) => {
+  switch (route[0].route) {
+    case 'Tangletown': return '#4a5061';
+    case 'Emerson': return '#539bd1';
+    case 'Far': return '#3DA49D';
+    case 'Misfits': return '#f5a572';
+    case 'Unassigned': return '#f37e2d';
+    default: return '#f8614d';
+  }
+}
+
+
 
 function MapView() {
   
 useEffect(() => {
    populateMarkers()
+
   }, [])
   
   const route = useSelector(store => store.routeReducer)
+  const thisRoute = route[0].route_id
   const maptilerProvider = maptiler('WjRnaGgNsm0nHmNUpFSq', 'bright')
   const [markers, setMarkers] = useState([])
+  const history = useHistory();
 
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState(false);
@@ -98,79 +116,75 @@ useEffect(() => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-Start',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         gap: 1
       }}>
 
-      {/* <MobileTopNav /> */}
-      <Typography variant="h4" sx={{ m: 0 }}> {route[0].route} </Typography>
-      {/* <button onClick={populateMarkers}>Test</button> */}
-        <Grid item sx={{ width: '100%', height: '45rem' }}>
-          <Map provider={maptilerProvider} defaultCenter={[44.914450, -93.304140]} defaultZoom={13}>
-          
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-        <List>
-          <ListItem disablePadding>
-              <ListItemText primary={modalData.client_name} />
-          </ListItem>
-          {modalData && modalData.dogs.map(dog => (
-            <ListItem disablePadding key={dog.dog_id}>
-                <ListItemIcon>
-                  <PetsIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText secondary={dog.dog_name} />
-           </ListItem>
-
-          ))}
-        </List>
-        <Divider />
-        <List>
-        <ListItem disablePadding>
-          <ListItemButton color="primary">
-              <ListItemText secondary="Open Google Maps"
-                onClick={() => openMap(modalData)}
-                secondaryTypographyProps={{
-                  color: 'secondary',
-                  fontWeight: 'medium',
-                  variant: 'body2',
-                }} />
-          </ListItemButton>
-          </ListItem>
-        </List>
-          {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-            {modalData.client_name}
-          </Typography>
-          {modalData && modalData.dogs.map(dog => (
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {dog.dog_name}
-          </Typography>
-          ))}
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}  onClick={() => openMap(modalData)} >
-            Open Google Maps
-          </Typography> */}
-        </Box>
-      </Modal>
-           {markers.map((oneMarker, index) => (
-             
-             <Marker 
-                width={50} 
-                anchor={[Number(oneMarker.lat), Number(oneMarker.long)]}
-                key={index}
-                // onClick={() => openMap(oneMarker)}
-                onClick={() => handleOpen(oneMarker)}
-                // onMouseOver={({event: HTMLMouseEvent, anchor: Point}) => console.log('hiii')}
-                
-                 /> 
-           ))}
-          </Map>
+      <Grid item xs={8} sx={{ background: () => getRouteColor(route), color: 'white', mt: 3, textAlign: 'center', textTransform: 'uppercase', borderRadius: 2 }}>
+        <Typography variant='h5' sx={{ textAlign: 'center', px: 5}}>
+          {route[0].route}
+        </Typography>
+      </Grid>
+      <Grid item xs={8} sx={{display: 'flex', flexDirection: 'row-reverse', mb: 0}}>
+            <IconButton edge="end" 
+                sx={{border: 1, mt: 1,
+                flexDirection: 'column', px: 2}} >
+                <ArrowBackIcon 
+                    sx={{fontSize: 25, mb: 0}}
+                    onClick={(event) => history.push(`/m/route/${thisRoute}`)}/>
+                    <Typography>Back</Typography>
+            </IconButton>
         </Grid>
+      <Grid item sx={{ width: '100%', height: '45rem' }}>
+        <Map provider={maptilerProvider} defaultCenter={[44.914450, -93.304140]} defaultZoom={13}>
+        {/*this modal opens to display more details  */}
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <List>
+                <ListItem disablePadding>
+                    <ListItemText primary={modalData.client_name} />
+                </ListItem>
+                {modalData && modalData.dogs.map(dog => (
+                <ListItem disablePadding key={dog.dog_id}>
+                    <ListItemIcon>
+                      <PetsIcon fontSize="small" />
+                    </ListItemIcon>
+                      <ListItemText secondary={dog.dog_name} />
+                </ListItem>
+                ))}
+              </List>
+                <Divider />
+              <List>
+                <ListItem disablePadding>
+                    <Button 
+                    sx={{mt: 1}}
+                      variant='contained' 
+                      endIcon={<DirectionsIcon />} 
+                      size='small' 
+                      onClick={() => openMap(modalData)}>
+                            Directions
+                    </Button>
+                  </ListItem>
+              </List>
+            </Box>
+          </Modal>
+          {/* this maps through markers and displays them on the map */}
+            {markers.map((oneMarker, index) => (
+              <Marker 
+                  width={50} 
+                  anchor={[Number(oneMarker.lat), Number(oneMarker.long)]}
+                  key={index}
+                  onClick={() => handleOpen(oneMarker)}
+                  /> 
+            ))}
+          </Map>
+          </Grid>
     </Grid>
   );
 }

@@ -59,16 +59,16 @@ function DogDetails() {
   // this is a button that allows for an employee to click and prompt for a phone call to a given number
   const clicktoCall = (number) => {
      // removes any symbols and letters from the phone number
-    let nosymbols = number.replace(/[^0-9 ]/g, '');
+    let nosymbols = number.replace(/[^+\d]+/g, "");
     // removes white space from number
     let readyNumber = nosymbols.trim();
     // sends prompt to call number
-    window.open(`tel:+1${readyNumber}`);
+    location.href = `tel:+1${readyNumber}`;
   }
 
   // function that allows an employee to add notes to a dog
   const submitNote = (action) => {
-    console.log(dog.dog_notes, dog.dog_id);
+    //console.log(dog.dog_notes, dog.dog_id);
     let updatedDog = { id: dog.dog_id, note: dog.dog_notes };
     dispatch({ type: 'UPDATE_DOG_NOTE', payload: updatedDog });
     setEditStatus(false);
@@ -170,6 +170,14 @@ function DogDetails() {
             <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.phone)}>
               Call
             </Button>
+            {dog.mobile? 
+            <>
+                <Typography variant='body2'> Second Number</Typography>
+                <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.mobile)}>
+                  Call
+                </Button>  
+            </>
+          : null}
 
           </AccordionDetails>
         </Accordion>
@@ -198,7 +206,7 @@ function DogDetails() {
 
       </Grid>
       {/* Modal for mobile photo upload */}
-      <Modal open={status} sx={{ mt: 5.5, ml: 4 }} >
+      <Modal open={status} sx={{ mt: 5.5, ml: 4.2 }} >
         <Grid item xs={12}>
           <MobileImageUpload id={dog.dog_id} />
 

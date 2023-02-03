@@ -374,7 +374,7 @@ router.get('/schedule/:id', rejectUnauthenticated, rejectUnauthorized, (req, res
 
 router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 
-  // console.log('one off change', req.body)
+  console.log('one off change', req.body)
 
   const client = await pool.connect();
   // const {date, is_scheduled, dog_id, client_id } = req.body
@@ -408,7 +408,7 @@ router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 // Updating schedule changes
 router.put('/schedule/updated', rejectUnauthenticated, async (req, res) => {
 
-  // console.log('one off change', req.body)
+   console.log('one off change', req.body)
 
   const client = await pool.connect();
   // const {date, is_scheduled, dog_id, client_id } = req.body

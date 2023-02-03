@@ -45,7 +45,7 @@ function LoadBalancing() {
   const [draggingStatus, setDraggingStatus] = useState(true);
   //VIBRATES PHONE WHEN DND UNLOCKED
   const onDragStart = (result) => {
-    console.log('drag start', result)
+    //console.log('drag start', result)
 
     //if(dailyRoutes[SourceBuffer.])
    
@@ -55,7 +55,7 @@ function LoadBalancing() {
   };
   //TRIGGERS DND LOGIC IN REDUCER
   const onDragEnd = (result) => {
-    console.log('drag end');
+    //console.log('drag end');
 
     //prevents being triggered if outside of lists
     if (!result.destination) return; 
@@ -70,7 +70,7 @@ function LoadBalancing() {
   const [doggo, setDoggo] = useState({});
   //DOUBLE CLICK LISTENER FOR DOG DETAILS
   const openDialog = useDoubleTap((event) => {
-    console.log('Double tapped');
+    //console.log('Double tapped');
     if (doggo.flag === true){
       setShowDetails(!showDetails);
     }
@@ -86,7 +86,7 @@ function LoadBalancing() {
       </Grid>
 
       {/*---PORTRAIT DIRECTIONS---*/}
-      <Card sx={{display: { xs: 'flex', sm: 'none' }, flexDirection: 'column', width: '60%', height: '40%' }}>
+      <Card sx={{display: { xs: 'flex', smDD: 'none' }, flexDirection: 'column', width: '60%', height: '40%' }}>
           <CardMedia
             component="img"
             height="50%"
@@ -106,7 +106,7 @@ function LoadBalancing() {
       {/*----LANDSCAPE NAV----*/}
       <Box sx={{ height: '10%',
                  width: '100%',  
-                 display: {xs: 'none', sm: 'flex'},
+                 display: {xs: 'none', smDD: 'flex'},
                  flexDirection: 'row', 
                  justifyContent: 'space-between',
                  bgcolor: '#e0603f' }}>
@@ -140,7 +140,7 @@ function LoadBalancing() {
             sx={{
               height: '90%',
               width: '18%',
-              display: {xs: 'none', sm: 'flex'},
+              display: {xs: 'none', smDD: 'flex'},
               flexDirection: 'column',
               alignItems: 'center',
               flexWrap: 'wrap',

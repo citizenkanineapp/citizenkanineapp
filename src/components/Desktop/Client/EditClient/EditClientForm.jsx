@@ -75,28 +75,34 @@ const handleClose = () => {
                   value={client.street}
                   onChange={(e) => dispatch({type: 'ADD_STREET', payload: e.target.value})}
                   helperText="Street"  
+                  disabled
                   size="small"/>
                 <TextField 
                   value={client.city}
+                  disabled
                   onChange={(e) => dispatch({type: 'ADD_CITY', payload: e.target.value})}
                   helperText="City"  
                   size="small"/>
                 <TextField 
                   value={client.zip}
+                  disabled
                   onChange={(e) => dispatch({type: 'ADD_ZIPCODE', payload: e.target.value})}
                   helperText="Zip Code"  
                   size="small"/>
                 <TextField 
                   value={client.notes || ''} 
+                  disabled
                   onChange={(e) => dispatch({type: 'ADD_NOTES', payload: e.target.value})}
                   helperText="Entry Protocol"  
                   size="small"/>
                 <TextField 
                   value={client.phone}
+                  disabled
                   onChange={(e) => dispatch({type: 'ADD_PHONE', payload: e.target.value})}
                   helperText="Phone"  
                   size="small"/>
                 <TextField
+                  disabled
                   focused={false}
                   value={client.mobile || ''} 
                   helperText="Mobile"  
@@ -104,6 +110,7 @@ const handleClose = () => {
                   InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                 />
                 <TextField 
+                  disabled
                   value={client.email}
                   onChange={(e) => dispatch({type: 'ADD_EMAIL', payload: e.target.value})} 
                   helperText="Email"  
@@ -111,7 +118,7 @@ const handleClose = () => {
                 <TextField 
                   value={client.vet_name || ''} 
                   onChange={(e) => dispatch({type: 'ADD_VET_NAME', payload: e.target.value})}
-                  helperText="Vet"  
+                  helperText="Vet"
                   size="small"/>
                 <TextField 
                   value={client.vet_phone || ''}
@@ -191,7 +198,7 @@ const handleClose = () => {
                     <CardMedia component="img"  
                       width="100%"
                       alt="client dog photo"
-                      src={dog.image ? dog.image : 'images/dogfiller.png'}
+                      src={dog.image ? dog.image : 'Images/dogfiller.png'}
                       sx={{height: '100%'}}
                       />
                   </Card>
@@ -202,9 +209,9 @@ const handleClose = () => {
             {/*-------------------- BUTTONS --------------------*/}
             <Box display="flex" justifyContent="space-between">
               <Button variant="outlined" color="info" onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientDetails'})}>Back</Button>
-              <Box width="23%" display="flex" justifyContent="space-between">
-                <Button variant="contained" color="error"
-                  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogFromEdit'})}>Add Dog</Button>  
+              <Box width="23%" display="flex" justifyContent="flex-end">
+                {/* <Button variant="contained" color="error"
+                  onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogFromEdit'})}>Add Dog</Button>   */}
                  <Button variant="contained" color="secondary"
                   onClick={saveChanges}>Save</Button> 
               </Box>

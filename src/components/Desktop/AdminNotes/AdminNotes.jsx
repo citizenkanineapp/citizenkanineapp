@@ -29,7 +29,7 @@ function AdminNotes() {
     const [note, setNote] = useState('');
 
     const toggleMode = () => {
-        console.log('testing')
+       //console.log('testing')
         setToggleNotes(!toggleNotes)
     }
 
@@ -61,7 +61,7 @@ function AdminNotes() {
         <>
             {toggleNotes ?          ////EDIT MODE////
                 <Box>
-                    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <Grid container sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                         <Grid item xs={12}>
                             <Card>
                                 <CardContent sx={{width: '27vw', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 4, p: 1, pr: 3, mt: 1.5, ml: 3}}>

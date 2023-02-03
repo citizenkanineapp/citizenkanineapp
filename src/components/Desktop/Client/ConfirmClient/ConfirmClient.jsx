@@ -7,6 +7,8 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PetsIcon from '@mui/icons-material/Pets';
 
 
+/* Note: February 2023 This component has been removed because clients
+    are now generated from Quickbooks and no through CK app */
 
 
 function ConfirmClient(){

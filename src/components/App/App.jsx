@@ -88,7 +88,7 @@ function App() {
             </Route>
 
             <ProtectedRoute exact path="/user">
-              {user.admin ? <SplashPage /> : <Redirect to="/m/user" />}
+              {user.admin && window.innerWidth > 600 ? <SplashPage /> : <Redirect to="/m/user" />}
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/invoice">

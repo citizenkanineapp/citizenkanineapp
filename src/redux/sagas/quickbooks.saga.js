@@ -140,7 +140,7 @@ function* quickBooksSync (action) {
         console.log('Quickbooks customers:', qbResult)
         console.log('Database customers:', dbResult)
 
-    if (qbResult === 'connectToQB'){
+    if (qbResult === 'connectToQb'){
         console.log('need to connect to qb')
       location.href = "http://localhost:5000/api/oauth2/connect_handler"
         //location.href = "http://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
@@ -152,7 +152,7 @@ function* quickBooksSync (action) {
     else if(dbResult.length === 0){
         console.log('Nothing in the database')
         yield put ({type: 'POST_QB_CLIENTS', payload: qbResult});
-    } else if (dbResult.length >= 1) {
+    } else if (dbResult.length >= 1 ) {
         console.log('some clients already exist')
         let existingCustomerIds = new Set(dbResult.map(({qb_id}) => qb_id))
         let existingCustomers = qbResult.filter(({qb_id}) => existingCustomerIds.has(qb_id))

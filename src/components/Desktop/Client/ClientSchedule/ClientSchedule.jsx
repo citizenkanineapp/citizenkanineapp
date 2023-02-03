@@ -36,7 +36,7 @@ function ClientSchedule() {
     dispatch({ type: 'FETCH_SCHEDULE', payload: client.client_id })
     // Fetch client schedule changes
     dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.client_id })
-    console('schedule changes on load?', changes)
+    console.log('schedule changes on load?', changes)
      return () => {
       dispatch({
         type: 'CLEAR_SCHEDULE'

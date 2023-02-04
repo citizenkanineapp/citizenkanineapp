@@ -263,7 +263,7 @@ function ClientSchedule() {
                                         let dogChange = changes.filter(change=>{
                                           return change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) === thisDayString
                                         })
-                                        
+                                        console.log('does dog change have no results?', dogChange)
                                         console.log(typeof(dogChange))
                                         // if there is a change for the dog:
                                         if(dogChange.length > 0){

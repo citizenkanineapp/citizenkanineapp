@@ -221,8 +221,8 @@ function ClientSchedule() {
                         }}
                   // renderDay is essentially mapping through each day in the selected month.
                   renderDay={(day, _value, DayComponentProps) => {
-                    console
-                    // console.log(JSON.stringify(DayComponentProps.day.$d))
+                    //removed console here
+                     console.log('does thisDayString work on heroku?', JSON.stringify(DayComponentProps.day.$d))
                     let thisDayString = JSON.stringify(DayComponentProps.day.$d)
                     let selectedMUIClass='';
                     if (day.$d === dayjs()){
@@ -261,6 +261,7 @@ function ClientSchedule() {
                                       if (changes.length > 0){ // Changes on a regularly scheduled day
                                         // returns an object with the change for the day if there is one
                                         let dogChange = changes.filter(change=>{
+                                          console.log('date string from DB to compare to today in dayJS', JSON.stringify(dayjs(change.date_to_change).$d))
                                           return change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) === thisDayString
                                         })
                                         console.log('does dog change have no results?', dogChange)

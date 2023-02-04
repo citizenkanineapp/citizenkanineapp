@@ -50,7 +50,7 @@ function ClientSchedule() {
   // console.log(dayjs(changes[0].date_to_change).$d)
     //local useState state I am using for this functionality
   const [dog, setDog] = useState('');
-  // console.log(dog);
+  console.log('changes on this page', changes);
   const [scheduled, setScheduled] = useState('');
   
   const initialDate =()=> {
@@ -264,10 +264,10 @@ function ClientSchedule() {
                                           return change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) === thisDayString
                                         })
                                         
-                                        // console.log(typeof(dogChange))
+                                        console.log(typeof(dogChange))
                                         // if there is a change for the dog:
                                         if(dogChange.length > 0){
-                                          // console.log('there is a change', dogChange);
+                                          console.log('there is a change', dogChange);
                                           let change = dogChange[0]
                                           if(dog.regular){
                                             if (change.is_scheduled){

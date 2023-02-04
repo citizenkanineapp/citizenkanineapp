@@ -222,7 +222,7 @@ function ClientSchedule() {
                   // renderDay is essentially mapping through each day in the selected month.
                   renderDay={(day, _value, DayComponentProps) => {
                     //removed console here
-                     console.log('does thisDayString work on heroku?', JSON.stringify(DayComponentProps.day.$d))
+                     //console.log('does thisDayString work on heroku?', JSON.stringify(DayComponentProps.day.$d))
                     let thisDayString = JSON.stringify(DayComponentProps.day.$d)
                     let selectedMUIClass='';
                     if (day.$d === dayjs()){
@@ -246,7 +246,7 @@ function ClientSchedule() {
                               <Box key={day.$D} sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                                 <>
                                   {dogs.map((dog, index)=>{
-                                    // console.log(dog.dog_name, dog.regular)
+                                     console.log('dog object', dog.dog_name, dog.regular)
                                     if (clientSchedule[day.$W]){
                                        // Regularly Scheduled Day
                                       // console.log(day.$W)
@@ -261,11 +261,13 @@ function ClientSchedule() {
                                       if (changes.length > 0){ // Changes on a regularly scheduled day
                                         // returns an object with the change for the day if there is one
                                         let dogChange = changes.filter(change=>{
+                                          console.log(change.dog_id)
+                                        //  console.log('thisDaystring now', thisDayString)
                                           console.log('date string from DB to compare to today in dayJS', JSON.stringify(dayjs(change.date_to_change).$d))
                                           return change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) === thisDayString
                                         })
                                         console.log('does dog change have no results?', dogChange)
-                                        console.log(typeof(dogChange))
+                                        // console.log(typeof(dogChange))
                                         // if there is a change for the dog:
                                         if(dogChange.length > 0){
                                           console.log('there is a change', dogChange);

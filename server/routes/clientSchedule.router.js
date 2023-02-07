@@ -26,7 +26,7 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res)=> {
             // console.log(dbRes.rows);
             dbRes.rows.forEach(date => {
               console.log(dayjs.utc(date.date_to_change));
-              date.date_to_change = dayjs.utc(date.date_to_change).$d;
+              date.date_to_change = dayjs.utc(date.date_to_change);
               console.log(date.date_to_change);
             })
             // // console.log(dbRes.rows);

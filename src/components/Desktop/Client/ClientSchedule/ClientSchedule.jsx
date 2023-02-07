@@ -225,11 +225,9 @@ function ClientSchedule() {
                   renderDay={(day, _value, DayComponentProps) => {
                     //removed console here
                     //  console.log('does thisDayString work on heroku?', JSON.stringify(DayComponentProps.day.$d))
-                    //  console.log('pure day',DayComponentProps.day.$d);
-                     console.log('toUTCString', dayjs(DayComponentProps.day).utc(true).format())
                     // let thisDayString = JSON.stringify(DayComponentProps.day.$d);
-                    let thisDayString = dayjs(DayComponentProps.day).utc(true).format()
-                    console.log(thisDayString);
+                    let thisDayString = dayjs(DayComponentProps.day).format('YYYY-MM-DD');
+                    // console.log(thisDayString);
                     let selectedMUIClass='';
                     if (day.$d === dayjs()){
                         selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
@@ -267,14 +265,14 @@ function ClientSchedule() {
                                       if (changes.length > 0){ // Changes on a regularly scheduled day
                                         // returns an object with the change for the day if there is one
                                         let dogChange = changes.filter(change=>{
-                                          console.log('date string from DB to compare to today in dayJS', JSON.stringify(dayjs.utc(change.date_to_change).$d), dayjs(change.date_to_change).utc(true).format())
-                                          return change.dog_id === dog.dog_id && dayjs(change.date_to_change).utc(true).format() === thisDayString
+                                          if(dayjs(change.date_to_change).format('YYYY-MM-DD') === thisDayString) {console.log(thisDayString, 'true for regular day')}
+                                          return change.dog_id === dog.dog_id && dayjs(change.date_to_change).format('YYYY-MM-DD') === thisDayString
                                         })
-                                        console.log('does dog change have no results?', dogChange)
+                                        // console.log('does dog change have no results?', dogChange)
                                         // console.log(typeof(dogChange))
                                         // if there is a change for the dog:
                                         if(dogChange.length > 0){
-                                          console.log('there is a change', dogChange);
+                                          // console.log('there is a change', dogChange);
                                           let change = dogChange[0]
                                           if(dog.regular){
                                             if (change.is_scheduled){
@@ -303,8 +301,9 @@ function ClientSchedule() {
                                       // NOT REGULARLY SCHEDULED DAY
                                       if (changes.length > 0){
                                         for (let thisChange of changes){
+                                          if(dayjs(thisChange.date_to_change).format('YYYY-MM-DD') === thisDayString) {console.log(thisDayString, 'true for irregular day')}
                                           
-                                          if (thisChange.dog_id === dog.dog_id && dayjs(thisChange.date_to_change).utc(true).format() === thisDayString && thisChange.is_scheduled){
+                                          if (thisChange.dog_id === dog.dog_id && dayjs(thisChange.date_to_change).format('YYYY-MM-DD') === thisDayString && thisChange.is_scheduled){
                                             return (
                                               <DogAvatar id={dog.dog_id} index={index} key={dog.dog_id} dog={dog}/>
                                             )

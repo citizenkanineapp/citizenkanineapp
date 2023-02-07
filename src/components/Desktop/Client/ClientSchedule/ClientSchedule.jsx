@@ -265,7 +265,7 @@ function ClientSchedule() {
                                       if (changes.length > 0){ // Changes on a regularly scheduled day
                                         // returns an object with the change for the day if there is one
                                         let dogChange = changes.filter(change=>{
-                                          console.log('date string from DB to compare to today in dayJS', dayjs(change.date_to_change).format('YYYY-MM-DD'), thisDayString, dayjs(change.date_to_change).format('YYYY-MM-DD') === thisDayString);
+                                          if(dayjs(change.date_to_change).format('YYYY-MM-DD') === thisDayString) {console.log(thisDayString, 'true for regular day')}
                                           return change.dog_id === dog.dog_id && dayjs(change.date_to_change).format('YYYY-MM-DD') === thisDayString
                                         })
                                         // console.log('does dog change have no results?', dogChange)
@@ -301,6 +301,7 @@ function ClientSchedule() {
                                       // NOT REGULARLY SCHEDULED DAY
                                       if (changes.length > 0){
                                         for (let thisChange of changes){
+                                          if(dayjs(thisChange.date_to_change).format('YYYY-MM-DD') === thisDayString) {console.log(thisDayString, 'true for irregular day')}
                                           
                                           if (thisChange.dog_id === dog.dog_id && dayjs(thisChange.date_to_change).format('YYYY-MM-DD') === thisDayString && thisChange.is_scheduled){
                                             return (

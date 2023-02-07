@@ -227,7 +227,7 @@ function ClientSchedule() {
                     //  console.log('does thisDayString work on heroku?', JSON.stringify(DayComponentProps.day.$d))
                     // let thisDayString = JSON.stringify(DayComponentProps.day.$d);
                     let thisDayString = dayjs(DayComponentProps.day).format('YYYY-MM-DD');
-                    console.log(thisDayString);
+                    // console.log(thisDayString);
                     let selectedMUIClass='';
                     if (day.$d === dayjs()){
                         selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
@@ -265,7 +265,7 @@ function ClientSchedule() {
                                       if (changes.length > 0){ // Changes on a regularly scheduled day
                                         // returns an object with the change for the day if there is one
                                         let dogChange = changes.filter(change=>{
-                                          // console.log('date string from DB to compare to today in dayJS', dayjs(change.date_to_change).format('YYYY-MM-DD'), thisDayString)
+                                          console.log('date string from DB to compare to today in dayJS', dayjs(change.date_to_change).format('YYYY-MM-DD'), thisDayString, dayjs(change.date_to_change).format('YYYY-MM-DD') === thisDayString);
                                           return change.dog_id === dog.dog_id && dayjs(change.date_to_change).format('YYYY-MM-DD') === thisDayString
                                         })
                                         // console.log('does dog change have no results?', dogChange)

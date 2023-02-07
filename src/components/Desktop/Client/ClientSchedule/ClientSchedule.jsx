@@ -226,7 +226,7 @@ function ClientSchedule() {
                     //removed console here
                     //  console.log('does thisDayString work on heroku?', JSON.stringify(DayComponentProps.day.$d))
                     // let thisDayString = JSON.stringify(DayComponentProps.day.$d);
-                    let thisDayString = dayjs(DayComponentProps.day).format('YYYY-MM-DD');
+                    let thisDayString = dayjs(DayComponentProps.day).utc(true).format('YYYY-MM-DD');
                     // console.log(thisDayString);
                     let selectedMUIClass='';
                     if (day.$d === dayjs()){
@@ -272,7 +272,7 @@ function ClientSchedule() {
                                         // console.log(typeof(dogChange))
                                         // if there is a change for the dog:
                                         if(dogChange.length > 0){
-                                          // console.log('there is a change', dogChange);
+                                          console.log('there is a change', dogChange);
                                           let change = dogChange[0]
                                           if(dog.regular){
                                             if (change.is_scheduled){
@@ -301,7 +301,7 @@ function ClientSchedule() {
                                       // NOT REGULARLY SCHEDULED DAY
                                       if (changes.length > 0){
                                         for (let thisChange of changes){
-                                          if(dayjs(thisChange.date_to_change).format('YYYY-MM-DD') === thisDayString) {console.log(thisDayString, 'true for irregular day')}
+                                          if(dayjs(thisChange.date_to_change).format('YYYY-MM-DD') === thisDayString) {console.log(thisDayString, 'true for irregular day:')}
                                           
                                           if (thisChange.dog_id === dog.dog_id && dayjs(thisChange.date_to_change).format('YYYY-MM-DD') === thisDayString && thisChange.is_scheduled){
                                             return (

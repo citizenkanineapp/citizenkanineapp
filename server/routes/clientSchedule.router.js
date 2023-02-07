@@ -1,7 +1,9 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-
+const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc)
 const {
     rejectUnauthenticated,
   } = require('../modules/authentication-middleware');
@@ -21,6 +23,13 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res)=> {
 
     pool.query(sqlQuery, [client_id])
         .then(dbRes=> {
+            // console.log(dbRes.rows);
+            dbRes.rows.forEach(date => {
+              console.log(dayjs.utc(date.date_to_change));
+              date.date_to_change = dayjs.utc(date.date_to_change).$d;
+              console.log(date.date_to_change);
+            })
+            // // console.log(dbRes.rows);
             res.send(dbRes.rows);
             // console.log(dbRes.rows[0]);
         })

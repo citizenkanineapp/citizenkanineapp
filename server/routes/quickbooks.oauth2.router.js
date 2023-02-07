@@ -78,8 +78,10 @@ router.get('/connect_handler', (req, res) => {
     req.session.realmId = req.query.realmId;
 
     if(process.env.PORT) {
+      console.log('redirecting to citizen-kanine app!');
       res.redirect('https://citizen-kanine.herokuapp.com/#/clients');
     } else {
+      console.log('redirecting to client!');
       res.redirect('http://localhost:3000/#/clients')
     }
     

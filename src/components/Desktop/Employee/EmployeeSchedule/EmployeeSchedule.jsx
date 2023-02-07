@@ -191,7 +191,8 @@ function EmployeeSchedule(){
                         }}
                         // render day loops through the days in the month and performs the given function. 
                         renderDay={(day, _value, DayComponentProps) => {
-                            let thisDayString = JSON.stringify(DayComponentProps.day.$d)
+                            let thisDayString = dayjs(DayComponentProps.day).format('YYYY-MM-DD');
+                            // console.log(thisDayString);
                             // console.log(DayComponentProps );
                             const currentYear = DayComponentProps.day.$y;
                             // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
@@ -214,7 +215,7 @@ function EmployeeSchedule(){
                                           if (employee[day.$W]){
                                             // check to see if there are any changes for this employee on this day
                                             const empChange = changes.filter(change=> {
-                                              return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                              return employee.emp_id === change.emp_id && thisDayString === dayjs(change.date_to_change).format('YYYY-MM-DD')
                                             })
 
                                             
@@ -237,7 +238,7 @@ function EmployeeSchedule(){
                                           if (!employee[day.$W]){
                                             // check to see if there are any changes for this employee on this day
                                             const empChange = changes.filter(change=> {
-                                              return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                              return employee.emp_id === change.emp_id && thisDayString === dayjs(change.date_to_change).format('YYYY-MM-DD')
                                             })
                                             // if there are changes for this emp on this day
                                             if (empChange.length > 0){
@@ -262,7 +263,7 @@ function EmployeeSchedule(){
                                             // check to see if there are any changes for this employee on this day
                                             // console.log(thisDayString);
                                             const empChange = changes.filter(change=> {
-                                              return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                              return employee.emp_id === change.emp_id && thisDayString === dayjs(change.date_to_change).format('YYYY-MM-DD')
                                             })
 
                                             // if there are changes for this emp on this day
@@ -285,7 +286,7 @@ function EmployeeSchedule(){
                                           if (!employee[day.$W]){
                                             // check to see if there are any changes for this employee on this day
                                             const empChange = changes.filter(change=> {
-                                              return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                              return employee.emp_id === change.emp_id && thisDayString === dayjs(change.date_to_change).format('YYYY-MM-DD')
                                             })
                                             // if there are changes for this emp on this day
                                             if (empChange.length > 0){

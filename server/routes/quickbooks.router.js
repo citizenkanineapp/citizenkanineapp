@@ -125,7 +125,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
   //this function processes the string with dog info and schedules and turns
   //it into usable data
   function getDogSchedule(customers) {
-  //  console.log('customers:', customers)
+   console.log('customers:', customers)
     let customerArray = []
     for (let oneCustomer of customers) {
       let result = oneCustomer.notesObj.split("-")

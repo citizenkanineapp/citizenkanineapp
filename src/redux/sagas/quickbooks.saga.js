@@ -16,9 +16,9 @@ function* createQbInvoice (action) {
             //location.href = "http://localhost:5000/api/oauth2/connect_handler"
             location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
-        } else if (invoiceResponse.status === 201) {
-            //don't knkow how to handle 201 status in router.
-            swal("invoices sent!")
+        } else if (invoiceResponse.status === 200) {
+            //don't know how to handle 201 status in router.
+            swal("Invoices sent!")
         } 
     }
     catch {

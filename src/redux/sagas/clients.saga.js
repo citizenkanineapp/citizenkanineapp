@@ -134,7 +134,7 @@ function* updateDog(action){
 }
 
 function* fetchSchedule(action){
-   // console.log('arrived in get one client route', action.payload);
+    console.log('arrived in get one client route', action.payload);
     let clientId = action.payload
     try {
         const schedule = yield axios.get(`/api/clients/schedule/${clientId}`);

@@ -53,6 +53,8 @@ router.post('/', async (req, res) => {
             return res.json({ error: err, statusCode: response.statusCode })
           } else {
             console.log('invoice created')
+            //doesn't work
+            //res.sendStatus(response.statusCode)
           }
         }, function (err) {
           console.log('error in invoice request')

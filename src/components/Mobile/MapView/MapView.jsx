@@ -107,7 +107,7 @@ useEffect(() => {
     // takes in address details and encodes them into URI 
     const destination = encodeURIComponent(`${dog.street} ${dog.zip}`);
     // based off of street address and city it pulls up a google map page
-    const link = `http://maps.google.com/?daddr=${destination}`;
+    const link = `https://maps.google.com/?daddr=${destination}`;
     window.open(link);
   }
 

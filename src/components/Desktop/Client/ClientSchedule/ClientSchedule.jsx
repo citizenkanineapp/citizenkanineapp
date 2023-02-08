@@ -224,7 +224,7 @@ function ClientSchedule() {
                   // renderDay is essentially mapping through each day in the selected month.
                   renderDay={(day, _value, DayComponentProps) => {
                     //removed console here
-                    //  console.log('does thisDayString work on heroku?', JSON.stringify(DayComponentProps.day.$d))
+                     console.log('does thisDayString work on heroku?', dayjs(DayComponentProps.day.$d).utc(true).format('YYYY-MM-DD'), DayComponentProps.day.$d,dayjs(DayComponentProps.day.$d).format('YYYY-MM-DD'))
                     // let thisDayString = JSON.stringify(DayComponentProps.day.$d);
                     let thisDayString = dayjs(DayComponentProps.day).utc(true).format('YYYY-MM-DD');
                     // console.log(thisDayString);
@@ -301,7 +301,7 @@ function ClientSchedule() {
                                       // NOT REGULARLY SCHEDULED DAY
                                       if (changes.length > 0){
                                         for (let thisChange of changes){
-                                          if(dayjs(thisChange.date_to_change).format('YYYY-MM-DD') === thisDayString) {console.log(thisDayString, 'true for irregular day:')}
+                                          if(dayjs(thisChange.date_to_change).format('YYYY-MM-DD') === thisDayString) {console.log(thisDayString, 'true for irregular day:', thisChange)}
                                           
                                           if (thisChange.dog_id === dog.dog_id && dayjs(thisChange.date_to_change).format('YYYY-MM-DD') === thisDayString && thisChange.is_scheduled){
                                             return (

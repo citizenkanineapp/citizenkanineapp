@@ -59,7 +59,7 @@ function EmployeeSchedule() {
 
   const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D'];
 
-  console.log(user.emp_id)
+  //console.log(user.emp_id)
   const empEvenWeek = evenEmpSchedules.filter(emp => {
     return emp.emp_id === user.emp_id
   })
@@ -100,7 +100,8 @@ function EmployeeSchedule() {
                 }}
                 // render day loops through the days in the month and performs the given function. 
                 renderDay={(day, _value, DayComponentProps) => {
-                  let thisDayString = JSON.stringify(DayComponentProps.day.$d)
+                  //let thisDayString = JSON.stringify(DayComponentProps.day.$d)
+                  let thisDayString = dayjs(DayComponentProps.day).utc(true).format('YYYY-MM-DD');
                   // console.log(DayComponentProps );
                   const currentYear = DayComponentProps.day.$y;
                   // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
@@ -124,7 +125,8 @@ function EmployeeSchedule() {
                                 if (employee[day.$W]) {
                                   // check to see if there are any changes for this employee on this day
                                   const empChange = changes.filter(change => {
-                                    return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                    return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
+                                
                                   })
 
 
@@ -146,7 +148,7 @@ function EmployeeSchedule() {
                                 if (!employee[day.$W]) {
                                   // check to see if there are any changes for this employee on this day
                                   const empChange = changes.filter(change => {
-                                    return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                    return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                   })
                                   // if there are changes for this emp on this day
                                   if (empChange.length > 0) {
@@ -171,8 +173,9 @@ function EmployeeSchedule() {
                                   // check to see if there are any changes for this employee on this day
                                   // console.log(thisDayString);
                                   const empChange = changes.filter(change => {
-                                    return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                    return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                   })
+                                
 
                                   // if there are changes for this emp on this day
                                   if (empChange.length > 0) {
@@ -192,7 +195,7 @@ function EmployeeSchedule() {
                                 if (!employee[day.$W]) {
                                   // check to see if there are any changes for this employee on this day
                                   const empChange = changes.filter(change => {
-                                    return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                    return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                   })
                                   // if there are changes for this emp on this day
                                   if (empChange.length > 0) {
@@ -238,7 +241,8 @@ function EmployeeSchedule() {
                 }}
                 // render day loops through the days in the month and performs the given function. 
                 renderDay={(day, _value, DayComponentProps) => {
-                  let thisDayString = JSON.stringify(DayComponentProps.day.$d)
+                  let thisDayString = dayjs(DayComponentProps.day).utc(true).format('YYYY-MM-DD');
+                  //let thisDayString = JSON.stringify(DayComponentProps.day.$d)
                   // console.log(DayComponentProps );
                   const currentYear = DayComponentProps.day.$y;
                   // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
@@ -262,7 +266,7 @@ function EmployeeSchedule() {
                                 if (employee[day.$W]) {
                                   // check to see if there are any changes for this employee on this day
                                   const empChange = changes.filter(change => {
-                                    return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                    return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                   })
 
 
@@ -284,7 +288,7 @@ function EmployeeSchedule() {
                                 if (!employee[day.$W]) {
                                   // check to see if there are any changes for this employee on this day
                                   const empChange = changes.filter(change => {
-                                    return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                    return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                   })
                                   // if there are changes for this emp on this day
                                   if (empChange.length > 0) {
@@ -309,7 +313,7 @@ function EmployeeSchedule() {
                                   // check to see if there are any changes for this employee on this day
                                   // console.log(thisDayString);
                                   const empChange = changes.filter(change => {
-                                    return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                    return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                   })
 
                                   // if there are changes for this emp on this day
@@ -330,7 +334,7 @@ function EmployeeSchedule() {
                                 if (!employee[day.$W]) {
                                   // check to see if there are any changes for this employee on this day
                                   const empChange = changes.filter(change => {
-                                    return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                    return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                   })
                                   // if there are changes for this emp on this day
                                   if (empChange.length > 0) {

@@ -12,7 +12,7 @@ import clientScheduleSaga from './clientSchedule.saga';
 import detailsSaga from './details.saga';
 import adminSaga from './admin.saga';
 import quickBooksSaga from './quickbooks.saga';
-import testSaga from './test.saga';
+
 
 
 // rootSaga is the primary saga.
@@ -37,6 +37,5 @@ export default function* rootSaga() {
     detailsSaga(),
     adminSaga(),
     quickBooksSaga(),
-    testSaga(),
   ]);
 }

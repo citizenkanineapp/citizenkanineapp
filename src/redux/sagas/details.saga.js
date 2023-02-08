@@ -9,7 +9,7 @@ function* fetchDetails(action) {
             method: 'GET',
             url: `/api/mobile/dog/${dogID}`
         })
-        console.log('DOG IS', dog.data);
+        //console.log('DOG IS', dog.data);
 
         yield put({ type: 'SET_DOG_DETAILS', payload: dog.data })
 

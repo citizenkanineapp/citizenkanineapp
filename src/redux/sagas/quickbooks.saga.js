@@ -92,25 +92,31 @@ function* updateAllQbCustomers(action){
 
 
 //For checking for updates to existing clients and updating them
+// most of what happens inside of quickBooksSync AND updateAllQbCustomers should be moved server-side.
+// we had challenges with managing async functions in quickbooks.router.js ;
+// for OAUTH, we relied on the Quickbooks node SDK. (server/modules/tools.js ). We have two hypothesis as to what was not working.
+//  1) the SDK/oauth tool uses 'request' module, not 'axios.' request needs an additional wrapper module in order to handle async. both modules are depreciated, and we did not have time to test async request.
+//  2) the server-side request functions at each endpoint pass all parameters--headers, req, res--through tool.checkForUnauthorized. this nested function made adapting the entire API call to axios very challenging.
+// So, we relied on several descrete axios requests to the server and handled the object manipulation client side. It's ugly but it works.
 function* quickBooksSync (action) {
 
-    // updates SERVICES.
+    // updates SERVICES. This could have been its own saga, but we wanted to minimize buttons and keep the interface simple. So, every time user wants to sync app DB with quickbooks,
+    // it queries quickbooks both for services (item) and client (customer) data thru the API.
 
     const services = yield axios({
         method: 'GET',
         url: '/api/qb_services'
     })
+    // if/else block handles the possibility that browser session.token is NULL (due to cleared cookies, for example), or
+    // if tokens are expired. 
     if (services.status === 201) {
-        //console.log(services.status)
+        console.log(services.status)
     } else if (services.data === 'connectToQB'){
         // console.log('services redirect')
         location.href = "http://localhost:5000/api/oauth2/connect_handler"
         // location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
     }
         
-        
-    
-
    // console.log('arrived in saga for updating qb customers')
     const qbCustomers = yield axios.get('/api/quickbooks/customer')
     const dbCustomers = yield axios.get('/api/clients')
@@ -118,7 +124,9 @@ function* quickBooksSync (action) {
     let dbResult = dbCustomers.data
        // console.log('Quickbooks customers:', qbResult)
        // console.log('Database customers:', dbResult)
-
+    
+    // this duplicates the if/else block of lines 112-118. theoretcally, lines 114 should resolve before lines 121, but we aren't confident
+    // these functions handle the asyncronous functions as we want. 
     if (qbResult === 'connectToQb'){
        // console.log('need to connect to qb')
         location.href = "http://localhost:5000/api/oauth2/connect_handler"

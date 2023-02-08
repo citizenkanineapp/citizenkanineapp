@@ -223,21 +223,23 @@ router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
 
 //route to edit dog
 router.put('/dogs', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
-  // console.log('dogs have id?', req.body)
-  const { dog_name, dog_notes, flag, dog_id } = req.body
+   console.log('dogs have id?', req.body)
+   console.log(typeof(req.body.regular))
+  const { dog_name, dog_notes, flag, regular, dog_id } = req.body
 
   const dogTxt = `
             UPDATE dogs
                 SET
                   name = $1, 
                   notes = $2,
-                  flag = $3
+                  flag = $3,
+                  regular = $4
               
                 WHERE
-                  id = $4;
+                  id = $5;
 
   `
-  const dogValues = [dog_name, dog_notes, flag, dog_id]
+  const dogValues = [dog_name, dog_notes, flag, regular, dog_id]
   try {
     pool.query(dogTxt, dogValues)
     res.sendStatus(201);

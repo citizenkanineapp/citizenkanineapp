@@ -27,7 +27,7 @@ function ClientSchedule() {
   //use selectors and defining dispatch
   const dispatch = useDispatch();
   const client = useSelector(store => store.clientReducer)
-  // console.log(clientSchedule)
+  //console.log('what is client', client)
   // console.log(updatedSchedule)
   const dogs = client.dogs;
   const schedule = useSelector(store => store.clientScheduleReducer.clientSchedule)

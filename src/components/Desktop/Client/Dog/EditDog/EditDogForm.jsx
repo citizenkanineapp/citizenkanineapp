@@ -10,13 +10,14 @@ function EditDogForm(){
   const dispatch = useDispatch();
   const dog = useSelector (store => store.dogEdit)
   const client = useSelector(store => store.clientReducer);
-
+  //console.log(dog)
   const dogObject = {
     dog_id: dog.dog_id,
     client_id: dog.client_id
   }
 
   const saveDogDetails = (event) =>{
+    //console.log(dog)
     dispatch({type: 'UPDATE_DOG', payload: dog})
     dispatch({ type: 'BACK_TO_VIEW' })
   }
@@ -112,6 +113,7 @@ function EditDogForm(){
                         </ListItemText>
                         <Switch
                           edge="end"
+                          disabled
                           size="small"
                           checked={dog.regular ? dog.regular : false}
                           onChange={()=> dispatch({ type:'SET_EDIT_REGULAR', payload: !dog.regular})}/>

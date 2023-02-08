@@ -115,7 +115,7 @@ function* deleteDog(action) {
 }
 
 function* updateDog(action){
-  //  console.log('arrived in edit dog route', action.payload);
+    //console.log('arrived in edit dog route', action.payload);
 
     try {
         const dog = yield axios({

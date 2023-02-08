@@ -156,7 +156,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 */
                 
                     // if one dog is walked "walks" times per week:
-                    if (item.num_dogs === "1") {
+                    if (Number(item.num_dogs) === 1) {
                         switch (walks) {
                             case 1:
                                 serviceId = 1;
@@ -169,7 +169,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                                 break;
                         }
                     // if two dogs are walked "walks" times per week
-                    } else if (item.num_dogs === "2") {
+                    } else if (Number(item.num_dogs) === 2) {
                         switch (walks) {
                             case 1:
                                 serviceId = 4;
@@ -182,7 +182,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                                 break;
                         }
                     // if three dogs are walked. service for three dogs is fixed, regardless of weekly walk frequency
-                    } else if (item.num_dogs === "3") {
+                    } else if (Number(item.num_dogs) >= 3 ) {
                         serviceId = 7;
                     // null; why not?
                     } else {

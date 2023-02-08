@@ -113,7 +113,7 @@ function* quickBooksSync (action) {
     // if/else block handles the possibility that browser session.token is NULL (due to cleared cookies, for example), or
     // if tokens are expired. 
     if (services.status === 201) {
-        console.log(services.status)
+       // console.log(services.status)
     } else if (services.data === 'connectToQB'){
         // console.log('services redirect')
         location.href = "http://localhost:5000/api/oauth2/connect_handler"

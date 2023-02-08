@@ -49,7 +49,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         if (response.statusCode === 401 ) {
         
           // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
-          res.send('connectToQB')
+          res.send('connectToQb')
 
           // don't know if this second else-if block is necessary, ie, covering non-401 errors.
         } else if (err || response.statusCode != 200) {

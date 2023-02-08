@@ -93,7 +93,7 @@ function EmployeeSchedule(){
 // The conditional useState prevents the user from adding an employee to a weekend day
   const [date, setDate] = useState(initialDate);
   const [empChange, setEmpChange] = useState({emp_id:'', date_to_change:`${date.$y}-${date.$M + 1}-${date.$D}`, is_scheduled: ''});
-  console.log('initial change:', empChange)
+ //console.log('initial change:', empChange)
   const handleDateChange=(newValue)=>{
     // console.log(newValue)
     // let changeDate = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
@@ -104,15 +104,15 @@ function EmployeeSchedule(){
 
   const handleSubmit=()=>{
     // dispatch change to be added to database
-    console.log(date)
-    console.log(empChange);
+    //console.log(date)
+    //console.log(empChange);
     dispatch({
       type: 'SAGA_ADD_EMP_CHANGE',
       payload: empChange
     })
     setEmpChange({emp_id:'', date_to_change:`${date.$y}-${date.$M + 1}-${date.$D}`, is_scheduled: ''})
     setDate(initialDate)
-    console.log(empChange);
+    //console.log(empChange);
   }
 
   const handleClick = (employee)=> {

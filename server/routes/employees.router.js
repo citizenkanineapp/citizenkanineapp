@@ -199,6 +199,7 @@ router.put('/schedules', rejectUnauthenticated, async (req, res)=>{
     const client = await pool.connect();
 
     try {
+        await client.query('BEGIN')
         await Promise.all(schedules.map(schedule => {
             const sqlQuery =
                 `
@@ -217,9 +218,13 @@ router.put('/schedules', rejectUnauthenticated, async (req, res)=>{
         }))
     }
     catch (error) {
+        await client.query('ROLLBACK')
         res.sendStatus(500);
         console.log('error in PUT /employees/schedules', error)
     }
+    finally {
+        client.release()
+      }
 })
 
 // POST new employee

@@ -242,7 +242,7 @@ function EmployeeForm() {
           value={employee.email} helperText="Email" size="small"
           onChange={e =>
             dispatch({
-              type: 'UPDATE_EMP_PHONE',
+              type: 'UPDATE_EMP_EMAIL',
               payload: e.target.value
             })
           }

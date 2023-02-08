@@ -91,13 +91,16 @@ function* updateAllQbCustomers(action){
     }
 
 
-//For checking for updates to existing clients and updating them
-// most of what happens inside of quickBooksSync AND updateAllQbCustomers should be moved server-side.
-// we had challenges with managing async functions in quickbooks.router.js ;
-// for OAUTH, we relied on the Quickbooks node SDK. (server/modules/tools.js ). We have two hypothesis as to what was not working.
-//  1) the SDK/oauth tool uses 'request' module, not 'axios.' request needs an additional wrapper module in order to handle async. both modules are depreciated, and we did not have time to test async request.
-//  2) the server-side request functions at each endpoint pass all parameters--headers, req, res--through tool.checkForUnauthorized. this nested function made adapting the entire API call to axios very challenging.
-// So, we relied on several descrete axios requests to the server and handled the object manipulation client side. It's ugly but it works.
+/* See Additional Notes At the Bottom of this File*/
+
+/* Any time a QB sync happens, this function is called first.  The checks are as follows:
+    1. For first sync, it will add all QB clients to DB
+    2. It then checks for unique customers coming from QB
+    3. Put route route for existing clients in both locations for data updates
+    4. The next saga function (above) checks for new customers
+        or customers to be deleted and then runs those routes 
+        Note: Sever side handles the logic for adding and removing dogs*/
+
 function* quickBooksSync (action) {
 
     // updates SERVICES. This could have been its own saga, but we wanted to minimize buttons and keep the interface simple. So, every time user wants to sync app DB with quickbooks,
@@ -122,8 +125,7 @@ function* quickBooksSync (action) {
     const dbCustomers = yield axios.get('/api/clients')
     let qbResult = qbCustomers.data
     let dbResult = dbCustomers.data
-       // console.log('Quickbooks customers:', qbResult)
-       // console.log('Database customers:', dbResult)
+       
     
     // this duplicates the if/else block of lines 112-118. theoretcally, lines 114 should resolve before lines 121, but we aren't confident
     // these functions handle the asyncronous functions as we want. 
@@ -185,3 +187,17 @@ function* quickBooksSaga() {
 }
 
 export default quickBooksSaga;
+
+/*For checking for updates to existing clients and updating them
+    most of what happens inside of quickBooksSync AND updateAllQbCustomers should be moved server-side.
+
+    We decided to handle this complicated object management client-side primarily due to path dependancy-- we started working with one large server script (quickbooks.router.js) which contained multiple endpoints.
+    As we were building out these functions, we didn't realize the thing to do would have been to break out each endpoint into its own module so that we can send horizontal requests.
+
+    We tried to address this at several times during development, but we had challenges with managing async functions in quickbooks.router.js ;
+    for OAUTH, we relied on the Quickbooks node SDK. (server/modules/tools.js ). We have two hypothesis as to what was not working.
+    1) the SDK/oauth tool uses 'request' module, not 'axios.' request needs an additional wrapper module in order to handle async. both modules are depreciated, and we did not have time to test async request.
+    2) the server-side request functions at each endpoint pass all parameters--headers, req, res--through tool.checkForUnauthorized. this nested function made adapting the entire API call to axios very challenging.
+    
+    also, if this ever gets moved server-side, middleware in the /api/clients endpoint would need to be adjusted or removed.
+    */

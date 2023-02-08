@@ -126,7 +126,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
 
 
 
-        //adds service data to invoice data object. some of this should be done in SQL!
+        //adds service data to invoice data object.
         for (let item of invoiceData) {
             let serviceId
             // console.log(item);
@@ -138,20 +138,24 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     const values = Object.values(client);
                     const walks = values.filter(i => i === true).length;
 
-                    // grabs services ID from services list. 
-                    // These are equivalent to primary key id value of service in service table.
-                    // If table changes, these will need to be fixed.
-                    // id   Group Dog Walking:{service}
-                    // 1:   Walk 1 dog - Ad hoc
-                    // 2:   Walk 1 dog 2-4x / week
-                    // 3:   Walk 1 dog 5 days / week
-                    // 4:   Walk 2 dogs - Ad hoc
-                    // 5:   Walk 2 dogs - 2-4x / week
-                    // 6:   Walk 2 dogs 5 days / week
-                    // 7:   3 dogs
+                /*
+                    grabs services ID from services list. 
+                    These areprimary key id value of each service in service table (see: database.sql).
+                    If table changes, these will need to be fixed.
 
-                    // 8: 
+                    id   Group Dog Walking:{service}
+                    1:   Walk 1 dog - Ad hoc
+                    2:   Walk 1 dog 2-4x / week
+                    3:   Walk 1 dog 5 days / week
+                    4:   Walk 2 dogs - Ad hoc
+                    5:   Walk 2 dogs - 2-4x / week
+                    6:   Walk 2 dogs 5 days / week
+                    7:   3 dogs
+                    8: 
+
+                */
                 
+                    // if one dog is walked "walks" times per week:
                     if (item.num_dogs === "1") {
                         switch (walks) {
                             case 1:
@@ -164,6 +168,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                                 serviceId = 3;
                                 break;
                         }
+                    // if two dogs are walked "walks" times per week
                     } else if (item.num_dogs === "2") {
                         switch (walks) {
                             case 1:
@@ -176,8 +181,10 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                                 serviceId = 6;
                                 break;
                         }
+                    // if three dogs are walked. service for three dogs is fixed, regardless of weekly walk frequency
                     } else if (item.num_dogs === "3") {
                         serviceId = 7;
+                    // null; why not?
                     } else {
                         serviceId = 8;
                     }

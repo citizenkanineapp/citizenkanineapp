@@ -141,7 +141,7 @@ function ClientSchedule() {
         key={dog_id}
         sx={{width: '1.25vw', height: '1.25vw', mx: .25, fontSize: 13, border: 2, bgcolor: avatarColors[index], borderColor: avatarColors[index]}}
         alt={dog.dog_name[0]}
-        src={dog.image ? dog.image : null}
+        src={null}
     >
     {dog.dog_name[0]}
     </Avatar>)

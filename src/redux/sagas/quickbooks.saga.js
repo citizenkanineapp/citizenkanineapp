@@ -78,9 +78,6 @@ function* updateAllQbCustomers(action){
          })
         }
         if(idsToDelete.length >= 1){
-            //delete route goes here.  use drinks code from solo project to send multiple
-            //ids
-           // console.log('does it hit delete block')
             let urlQuery = `/api/quickbooks/delete?ids=${idsToDelete}`
             const deleteClientsFromDB = yield axios.delete(`${urlQuery}`);
         }

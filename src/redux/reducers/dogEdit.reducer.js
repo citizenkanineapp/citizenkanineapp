@@ -11,7 +11,7 @@ const dogEdit = (state = {client_id: '', dog_name: '', dog_notes: '', image: '',
         case 'SET_EDIT_REGULAR':
             return{...state, regular: action.payload}
         case 'CLEAR_EDIT_DOG':
-            return {dog_name: '', dog_notes: '', flag: false}
+            return {dog_name: '', dog_notes: '', flag: false, regular: false}
         default:
             return state;
     }

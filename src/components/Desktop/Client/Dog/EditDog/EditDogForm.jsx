@@ -10,13 +10,14 @@ function EditDogForm(){
   const dispatch = useDispatch();
   const dog = useSelector (store => store.dogEdit)
   const client = useSelector(store => store.clientReducer);
-
+  //console.log(dog)
   const dogObject = {
     dog_id: dog.dog_id,
     client_id: dog.client_id
   }
 
   const saveDogDetails = (event) =>{
+    //console.log(dog)
     dispatch({type: 'UPDATE_DOG', payload: dog})
     dispatch({ type: 'BACK_TO_VIEW' })
   }
@@ -55,7 +56,7 @@ function EditDogForm(){
       <Grid item sx={{ height: '85%', width: '100%', display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1}}>
           <Card sx={{width: '35%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1, pt: 4}}>
 
-                    <Box sx={{ width: "90%", height: "80%", display: 'flex', alignItems: 'center', justifyContent: 'center', }}>  {/*need to figure out aspect ratio and conditional rendering to change into image upload for editing image*/}
+                    <Box sx={{ width: "90%", height: "65%", display: 'flex', alignItems: 'center', justifyContent: 'center', }}>  {/*need to figure out aspect ratio and conditional rendering to change into image upload for editing image*/}
                       <Avatar
                         sx={{width: '80%', height: '100%'}}
                         src={dog.image ? dog.image : 'Images/dogfiller.png'}/>
@@ -112,6 +113,7 @@ function EditDogForm(){
                         </ListItemText>
                         <Switch
                           edge="end"
+                          disabled
                           size="small"
                           checked={dog.regular ? dog.regular : false}
                           onChange={()=> dispatch({ type:'SET_EDIT_REGULAR', payload: !dog.regular})}/>

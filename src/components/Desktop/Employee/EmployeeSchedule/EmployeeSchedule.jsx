@@ -5,6 +5,9 @@ import dayjs from 'dayjs';
 // This plugin is needed to get the week number in year:
 var weekOfYear = require('dayjs/plugin/weekOfYear')
 dayjs.extend(weekOfYear)
+const utc = require('dayjs/plugin/utc')
+dayjs.extend(utc);
+
 import './employeeSchedule.css';
 
 // MUI Imports:
@@ -90,7 +93,7 @@ function EmployeeSchedule(){
 // The conditional useState prevents the user from adding an employee to a weekend day
   const [date, setDate] = useState(initialDate);
   const [empChange, setEmpChange] = useState({emp_id:'', date_to_change:`${date.$y}-${date.$M + 1}-${date.$D}`, is_scheduled: ''});
-  console.log('initial change:', empChange)
+ //console.log('initial change:', empChange)
   const handleDateChange=(newValue)=>{
     // console.log(newValue)
     // let changeDate = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
@@ -101,15 +104,15 @@ function EmployeeSchedule(){
 
   const handleSubmit=()=>{
     // dispatch change to be added to database
-    console.log(date)
-    console.log(empChange);
+    //console.log(date)
+    //console.log(empChange);
     dispatch({
       type: 'SAGA_ADD_EMP_CHANGE',
       payload: empChange
     })
     setEmpChange({emp_id:'', date_to_change:`${date.$y}-${date.$M + 1}-${date.$D}`, is_scheduled: ''})
     setDate(initialDate)
-    console.log(empChange);
+    //console.log(empChange);
   }
 
   const handleClick = (employee)=> {
@@ -191,7 +194,10 @@ function EmployeeSchedule(){
                         }}
                         // render day loops through the days in the month and performs the given function. 
                         renderDay={(day, _value, DayComponentProps) => {
-                            let thisDayString = JSON.stringify(DayComponentProps.day.$d)
+                            //let thisDayString = dayjs(DayComponentProps.day).format('YYYY-MM-DD');
+                            let thisDayString = dayjs(DayComponentProps.day).utc(true).format('YYYY-MM-DD');
+
+                           // console.log(thisDayString);
                             // console.log(DayComponentProps );
                             const currentYear = DayComponentProps.day.$y;
                             // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
@@ -214,7 +220,7 @@ function EmployeeSchedule(){
                                           if (employee[day.$W]){
                                             // check to see if there are any changes for this employee on this day
                                             const empChange = changes.filter(change=> {
-                                              return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                              return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                             })
 
                                             
@@ -237,7 +243,7 @@ function EmployeeSchedule(){
                                           if (!employee[day.$W]){
                                             // check to see if there are any changes for this employee on this day
                                             const empChange = changes.filter(change=> {
-                                              return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                              return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                             })
                                             // if there are changes for this emp on this day
                                             if (empChange.length > 0){
@@ -262,7 +268,7 @@ function EmployeeSchedule(){
                                             // check to see if there are any changes for this employee on this day
                                             // console.log(thisDayString);
                                             const empChange = changes.filter(change=> {
-                                              return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                              return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                             })
 
                                             // if there are changes for this emp on this day
@@ -285,7 +291,7 @@ function EmployeeSchedule(){
                                           if (!employee[day.$W]){
                                             // check to see if there are any changes for this employee on this day
                                             const empChange = changes.filter(change=> {
-                                              return employee.emp_id === change.emp_id && thisDayString === JSON.stringify(dayjs(change.date_to_change).$d)
+                                              return employee.emp_id === change.emp_id && change.date_to_change === thisDayString
                                             })
                                             // if there are changes for this emp on this day
                                             if (empChange.length > 0){

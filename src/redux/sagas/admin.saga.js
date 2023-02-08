@@ -13,7 +13,7 @@ function* setAdminNotes(action) {
         yield put({ type: 'FETCH_ADMIN_NOTES' });
     } catch (error) {
         console.log(error);
-        alert('Error adding admin notes');
+        //alert('Error adding admin notes');
     }
 }
 
@@ -25,8 +25,7 @@ function* fetchAdminNotes(action) {
         // console.log('notes structure', notes.data)
     } catch (error) {
         console.log(error);
-        console.log('Admin notes not available when logged out. Please log in to see them again');
-
+        console.log('Admin notes not available when logged out. Please log in to see them again')
     }
 
 }

@@ -13,12 +13,12 @@ function* createQbInvoice (action) {
         })
        // console.log(invoiceResponse);
         if (invoiceResponse.data === 'connectToQb') {
-            // location.href = "http://localhost:5000/api/oauth2/connect_handler"
+            //location.href = "http://localhost:5000/api/oauth2/connect_handler"
             location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
         } else if (invoiceResponse.status === 201) {
-            //don't knkow how to handle 201 status in router.
-            swal("invoices sent!")
+            //don't know how to handle 201 status in router.
+            swal("Invoices sent!")
         } 
     }
     catch {
@@ -78,9 +78,6 @@ function* updateAllQbCustomers(action){
          })
         }
         if(idsToDelete.length >= 1){
-            //delete route goes here.  use drinks code from solo project to send multiple
-            //ids
-           // console.log('does it hit delete block')
             let urlQuery = `/api/quickbooks/delete?ids=${idsToDelete}`
             const deleteClientsFromDB = yield axios.delete(`${urlQuery}`);
         }
@@ -94,37 +91,47 @@ function* updateAllQbCustomers(action){
     }
 
 
-//For checking for updates to existing clients and updating them
+/* See Additional Notes At the Bottom of this File*/
+
+/* Any time a QB sync happens, this function is called first.  The checks are as follows:
+    1. For first sync, it will add all QB clients to DB
+    2. It then checks for unique customers coming from QB
+    3. Put route route for existing clients in both locations for data updates
+    4. The next saga function (above) checks for new customers
+        or customers to be deleted and then runs those routes 
+        Note: Sever side handles the logic for adding and removing dogs*/
+
 function* quickBooksSync (action) {
 
-    // updates SERVICES.
+    // updates SERVICES. This could have been its own saga, but we wanted to minimize buttons and keep the interface simple. So, every time user wants to sync app DB with quickbooks,
+    // it queries quickbooks both for services (item) and client (customer) data thru the API.
 
     const services = yield axios({
         method: 'GET',
         url: '/api/qb_services'
     })
+    // if/else block handles the possibility that browser session.token is NULL (due to cleared cookies, for example), or
+    // if tokens are expired. 
     if (services.status === 201) {
-        //console.log(services.status)
+       // console.log(services.status)
     } else if (services.data === 'connectToQB'){
         // console.log('services redirect')
-        // location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        //location.href = "http://localhost:5000/api/oauth2/connect_handler"
         location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
     }
         
-        
-    
-
    // console.log('arrived in saga for updating qb customers')
     const qbCustomers = yield axios.get('/api/quickbooks/customer')
     const dbCustomers = yield axios.get('/api/clients')
     let qbResult = qbCustomers.data
     let dbResult = dbCustomers.data
-       // console.log('Quickbooks customers:', qbResult)
-       // console.log('Database customers:', dbResult)
-
+       
+    
+    // this duplicates the if/else block of lines 112-118. theoretcally, lines 114 should resolve before lines 121, but we aren't confident
+    // these functions handle the asyncronous functions as we want. 
     if (qbResult === 'connectToQb'){
        // console.log('need to connect to qb')
-        // location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        //location.href = "http://localhost:5000/api/oauth2/connect_handler"
         location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
     }
@@ -180,3 +187,17 @@ function* quickBooksSaga() {
 }
 
 export default quickBooksSaga;
+
+/*For checking for updates to existing clients and updating them
+    most of what happens inside of quickBooksSync AND updateAllQbCustomers should be moved server-side.
+
+    We decided to handle this complicated object management client-side primarily due to path dependancy-- we started working with one large server script (quickbooks.router.js) which contained multiple endpoints.
+    As we were building out these functions, we didn't realize the thing to do would have been to break out each endpoint into its own module so that we can send horizontal requests.
+
+    We tried to address this at several times during development, but we had challenges with managing async functions in quickbooks.router.js ;
+    for OAUTH, we relied on the Quickbooks node SDK. (server/modules/tools.js ). We have two hypothesis as to what was not working.
+    1) the SDK/oauth tool uses 'request' module, not 'axios.' request needs an additional wrapper module in order to handle async. both modules are depreciated, and we did not have time to test async request.
+    2) the server-side request functions at each endpoint pass all parameters--headers, req, res--through tool.checkForUnauthorized. this nested function made adapting the entire API call to axios very challenging.
+    
+    also, if this ever gets moved server-side, middleware in the /api/clients endpoint would need to be adjusted or removed.
+    */

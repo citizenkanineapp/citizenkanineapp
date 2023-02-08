@@ -1,6 +1,9 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
+dayjs.extend(utc);
 
 const {
     rejectUnauthenticated,
@@ -17,7 +20,10 @@ router.get('/changes', (req, res)=>{
     `
     pool.query(sqlQuery)
         .then(dbRes=>{
-            res.send(dbRes.rows);
+            let datesToChange = dbRes.rows
+            let formattedDates = dateFormatFunction(datesToChange)
+            //console.log(formattedDates)
+            res.send(formattedDates);
         })
         .catch(error=>{
             res.sendStatus(500);
@@ -25,6 +31,12 @@ router.get('/changes', (req, res)=>{
         })
 
 })
+
+function dateFormatFunction(dates) {
+    dates.forEach(date => date.date_to_change = dayjs(date.date_to_change).utc(true).format('YYYY-MM-DD'))
+    // console.log('in function', dates)
+    return dates
+  }
 
 // get all employees
 router.get('/', rejectUnauthenticated, (req, res)=> {
@@ -187,6 +199,7 @@ router.put('/schedules', rejectUnauthenticated, async (req, res)=>{
     const client = await pool.connect();
 
     try {
+        await client.query('BEGIN')
         await Promise.all(schedules.map(schedule => {
             const sqlQuery =
                 `
@@ -205,9 +218,13 @@ router.put('/schedules', rejectUnauthenticated, async (req, res)=>{
         }))
     }
     catch (error) {
+        await client.query('ROLLBACK')
         res.sendStatus(500);
         console.log('error in PUT /employees/schedules', error)
     }
+    finally {
+        client.release()
+      }
 })
 
 // POST new employee

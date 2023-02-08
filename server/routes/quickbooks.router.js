@@ -18,6 +18,7 @@ const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
+/*The main route to get QB customers from QB after OAuth is completed */
 router.get('/customer', rejectUnauthenticated, (req, res) => {
   console.log('in server fetch customers')
   const token = tools.getToken(req.session)
@@ -28,7 +29,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 
     const query = encodeURI('/query?query= select * from customer');
     const url = config.api_uri + req.session.realmId + query
-     console.log('Making API Customer call to: ' + url)
+     //console.log('Making API Customer call to: ' + url)
     // tools.refreshTokensWithToken(token.refreshToken)
 
     const requestObj = {
@@ -48,7 +49,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         if (response.statusCode === 401 ) {
         
           // If unauthorized, send this command back to client. if fetchQbCustomers in quickbooks.saga.js recieves command, client redirects to /connect_to_qb route.
-          res.send('connectToQB')
+          res.send('connectToQb')
 
           // don't know if this second else-if block is necessary, ie, covering non-401 errors.
         } else if (err || response.statusCode != 200) {
@@ -56,15 +57,12 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
           return res.json({ error: err, statusCode: response.statusCode })
         } else {
       
-          // we could organize this into to different modules based on the request type; ie, req.body? there will be multiple API calls?git ci
-          // console.log("response with fresh auth", response)
+          //initial response from QB servers
           let customers = JSON.parse(response.body)
-          // for (let cust of customers.QueryResponse.Customer) {console.log(cust.Active, cust.FullyQualifiedName)}
-          // console.log(customers.QueryResponse.Customer)
+      
           // this function starts the process of formatting the customers
           let filteredCustomers =  filterCustomers(customers)
-          /*  this sucessfully sent back the customers after being processed
-          do we need to worry about timing issues long term?  */
+       //sends customers to client side after processing
           res.send(filteredCustomers)
         }   
       }, function (err) {
@@ -78,10 +76,10 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
   }
 })
 
-
+//this function processes the QB customers into a data object that matches our DB object
   function filterCustomers(customers) {
     
-    let customerArray = customers.QueryResponse.Customer //what comes from QB API
+    let customerArray = customers.QueryResponse.Customer 
     let customersAfterProcessing = []
     for (let oneCustomer of customerArray) {
       let customer = {
@@ -107,7 +105,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       } else {                                      //this handles undefined errors
         customer.phone = ""
       }
-      if(oneCustomer.ShipAddr.hasOwnProperty('City')){
+      if(oneCustomer.ShipAddr.hasOwnProperty('City')){   //where Lisa stores ad-hoc dog info
         customer.adHocDogs =oneCustomer.ShipAddr.City
       }
       if(!oneCustomer.hasOwnProperty('route_id')){
@@ -124,8 +122,10 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
     return finalCustomers;
   }
   
+  //this function processes the string with dog info and schedules and turns
+  //it into usable data
   function getDogSchedule(customers) {
-  //  console.log('customers:', customers)
+   console.log('customers:', customers)
     let customerArray = []
     for (let oneCustomer of customers) {
       let result = oneCustomer.notesObj.split("-")
@@ -147,26 +147,29 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
                 qb_id: oneCustomer.qb_id
               };
       })
-      if(oneCustomer.hasOwnProperty('adHocDogs')){
-        // console.log('do ad hoc dogs make it here?', oneCustomer.adHocDogs )
-        let adHocDogsString = oneCustomer.adHocDogs
-        let dogsCleaned = adHocDogsString.replace(/[&/]/g, ",")
-        let adHocDogsArray = dogsCleaned.split(",").map(function (dogName) {
-          let adHocDog = {
-            name: dogName.trim(), 
-                  notes: "", 
-                  flag: false, 
-                  active: true, 
-                  regular: false,     //creating a dog object for each  ad hoc dog
-                  image: "",
-                  // vet_name: "",
-                  // vet_phone: "",
-                  qb_id: oneCustomer.qb_id
-          }
-                dogsArray.push(adHocDog)
-        })
-      }
-      let scheduleArray = scheduleCleaned.split(",").map(function (dayName) {
+
+      //for ad-hoc dogs
+        if(oneCustomer.hasOwnProperty('adHocDogs')){
+          // console.log('do ad hoc dogs make it here?', oneCustomer.adHocDogs )
+          let adHocDogsString = oneCustomer.adHocDogs
+          let dogsCleaned = adHocDogsString.replace(/[&/]/g, ",")
+          let adHocDogsArray = dogsCleaned.split(",").map(function (dogName) {
+            let adHocDog = {
+              name: dogName.trim(), 
+                    notes: "", 
+                    flag: false, 
+                    active: true, 
+                    regular: false,     //creating a dog object for each  ad hoc dog
+                    image: "",
+                    // vet_name: "",
+                    // vet_phone: "",
+                    qb_id: oneCustomer.qb_id
+            }
+              //adds the dogs to the array with regular dogs
+                  dogsArray.push(adHocDog)
+          })
+        }
+        let scheduleArray = scheduleCleaned.split(",").map(function (dayName) {
         return dayName.trim();
       })
     
@@ -175,7 +178,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         customerArray.push(oneCustomer)
       
     }
-   return customerArray
+      return customerArray
   
   }
 
@@ -193,6 +196,8 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 
       const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+      //we had to add this function to slow down requests to radar api
+      //they have a request limit of 10 per second
       async function GetGeoStats(customers) {
        const customerResult = []
        for(let customer of customers){

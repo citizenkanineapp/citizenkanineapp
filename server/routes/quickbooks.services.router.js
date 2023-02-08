@@ -5,6 +5,8 @@ const tools = require('../modules/tools')
 // const cors = require('cors');
 const request = require('request');
 const router = express.Router();
+
+// PROD//DEV configs
 let config ;
 if (process.env.PORT) {
   config = require('../../config.json')
@@ -18,6 +20,8 @@ router.get('/', async (req, res) => {
   const token = tools.getToken(req.session)
   // console.log(token.accessToken)
   // console.log(tools.basicAuth)
+
+  // if sesson token exists, query QB API
   if (token) {
     const query = encodeURI(`/query?query= select * from item where Active = true`);
     const url = config.api_uri + req.session.realmId + query
@@ -69,7 +73,8 @@ router.get('/', async (req, res) => {
         return res.json(err)
       })
     })
-    
+  
+  // if session token is NULL, (due to cleared browser cookies, or first time logging in), client routes to oauth2.router
   } else {
     console.log('null token');
     res.send('connectToQb');

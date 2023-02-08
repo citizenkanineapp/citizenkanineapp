@@ -134,7 +134,6 @@ CREATE TABLE services (
 	"qb_id" INT NULL,
 	"name" VARCHAR (150),
 	"price" INT
-	-- "service_id" INT
 );
 
 -- service names MUST match names in QB
@@ -249,9 +248,9 @@ CREATE TABLE oauth2_tokens (
 	"refresh_token" VARCHAR(512)
 	);
 
-CREATE TABLE invoices (
-	"id" SERIAL PRIMARY KEY,
-	"period" VARCHAR(20),
-	"client_qb_id"
-);
+-- CREATE TABLE invoices (
+-- 	"id" SERIAL PRIMARY KEY,
+-- 	"period" VARCHAR(20),
+-- 	"client_qb_id"
+-- );
 

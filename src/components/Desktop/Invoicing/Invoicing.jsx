@@ -17,7 +17,7 @@ function Invoicing() {
   const monthsShort = dayjs.monthsShort();
   const getYears = () => {
     let max = 2050;
-    let min = 2020;
+    let min = 2023;
     let yearsArr = [];
     for (let i = min; i <= max; i++) {
       yearsArr.push(i)
@@ -36,7 +36,7 @@ function Invoicing() {
     let currentmonth = dayjs().month();
     let currentyear = dayjs().year();
     dispatch({ type: 'FETCH_CLIENTS' });
-    dispatch({ type: 'FETCH_INVOICE_DATA', payload: { clientId: 2, month: currentmonth + 1, year: currentyear } })
+    dispatch({ type: 'FETCH_INVOICE_DATA', payload: { clientId: 0, month: currentmonth + 1, year: currentyear } })
   }, []);
 
   const fetchInvoiceData = () => {

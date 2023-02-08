@@ -30,6 +30,7 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res)=> {
             //console.log(formattedDates)
             res.send(formattedDates);
           
+
         })
         .catch(error=> {
             res.sendStatus(500);

@@ -13,9 +13,9 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import 'react-datepicker/dist/react-datepicker.css';
-
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc);
+
 
 const isWeekend = (date) => {
   const day = date.day();
@@ -305,7 +305,7 @@ function ClientSchedule() {
                                       // NOT REGULARLY SCHEDULED DAY
                                       if (changes.length > 0){
                                         for (let thisChange of changes){
-                                          
+                          
                                           if (thisChange.dog_id === dog.dog_id && thisChange.date_to_change === thisDayString && thisChange.is_scheduled){
                                             return (
                                               <DogAvatar id={dog.dog_id} index={index} key={dog.dog_id} dog={dog}/>

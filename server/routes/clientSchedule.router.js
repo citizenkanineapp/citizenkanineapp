@@ -24,7 +24,7 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res)=> {
 
     pool.query(sqlQuery, [client_id])
         .then(dbRes=> {
-            console.log('before', dbRes.rows);
+            // console.log('before', dbRes.rows);
             let datesToChange = dbRes.rows
             let formattedDates = dateFormatFunction(datesToChange)
             //console.log(formattedDates)

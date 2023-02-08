@@ -39,7 +39,6 @@ function ClientSchedule() {
     dispatch({ type: 'FETCH_SCHEDULE', payload: client.client_id })
     // Fetch client schedule changes
     dispatch({ type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: client.client_id })
-    //console.log('schedule changes on load?', changes)
      return () => {
       dispatch({
         type: 'CLEAR_SCHEDULE'
@@ -222,7 +221,6 @@ function ClientSchedule() {
                   // renderDay is essentially mapping through each day in the selected month.
                   renderDay={(day, _value, DayComponentProps) => {
                     let thisDayString = dayjs(DayComponentProps.day).utc(true).format('YYYY-MM-DD');
-                    //console.log('thisDayString', thisDayString)
                     let selectedMUIClass='';
                     if (day.$d === dayjs()){
                         selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
@@ -245,7 +243,6 @@ function ClientSchedule() {
                               <Box key={day.$D} sx={{display: 'flex', flexDirection: 'row', flexGrow: '8', flexWrap: 'wrap',width: '4.5vw', alignContent: 'flex-start', justifyContent:'center', mb: 0, pt: 1.5}}>
                                 <>
                                   {dogs.map((dog, index)=>{
-                                    // console.log('dog object', dog.dog_name, dog.regular)
                                     if (clientSchedule[day.$W]){
                                        // Regularly Scheduled Day
                                       // console.log(day.$W)
@@ -259,6 +256,7 @@ function ClientSchedule() {
 
                                       if (changes.length > 0){ // Changes on a regularly scheduled day
                                         // returns an object with the change for the day if there is one
+
                                         let dogChange = changes.filter(change => {
                                           return change.dog_id === dog.dog_id && change.date_to_change === thisDayString
                                         })
@@ -266,7 +264,6 @@ function ClientSchedule() {
                                         // console.log(typeof(dogChange))
                                         // if there is a change for the dog:
                                         if(dogChange.length > 0){
-                                          //console.log('there is a change', dogChange);
                                           let change = dogChange[0]
                                           if(dog.regular){
                                             if (change.is_scheduled){

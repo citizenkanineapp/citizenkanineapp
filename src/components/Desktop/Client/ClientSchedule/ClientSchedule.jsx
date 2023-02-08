@@ -14,6 +14,9 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import 'react-datepicker/dist/react-datepicker.css';
 
+const utc = require('dayjs/plugin/utc')
+dayjs.extend(utc);
+
 const isWeekend = (date) => {
   const day = date.day();
 
@@ -223,7 +226,9 @@ function ClientSchedule() {
                   renderDay={(day, _value, DayComponentProps) => {
                     //removed console here
                      //console.log('does thisDayString work on heroku?', JSON.stringify(DayComponentProps.day.$d))
-                    let thisDayString = JSON.stringify(DayComponentProps.day.$d)
+                    let thisDayString = dayjs(DayComponentProps.day).utc(true).format('YYYY-MM-DD');
+                    console.log('thisDayString', thisDayString)
+                    //let thisDayString = JSON.stringify(DayComponentProps.day.$d)
                     let selectedMUIClass='';
                     if (day.$d === dayjs()){
                         selectedMUIClass ="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root";
@@ -261,12 +266,13 @@ function ClientSchedule() {
                                       if (changes.length > 0){ // Changes on a regularly scheduled day
                                         // returns an object with the change for the day if there is one
                                         let dogChange = changes.filter(change=>{
-                                          console.log(change.dog_id)
-                                        //  console.log('thisDaystring now', thisDayString)
-                                          console.log('date string from DB to compare to today in dayJS', JSON.stringify(dayjs(change.date_to_change).$d))
-                                          return change.dog_id === dog.dog_id && JSON.stringify(dayjs(change.date_to_change).$d) === thisDayString
+                                          // console.log('change.dog_id',change.dog_id)
+                                          // console.log('dog.dog_id',dog.dog_id)
+                                          console.log('thisDaystring now', thisDayString)
+                                          console.log('postico date', change.date_to_change)
+                                          return change.dog_id === dog.dog_id && change.date_to_change === thisDayString
                                         })
-                                        console.log('does dog change have no results?', dogChange)
+                                        // console.log('does dog change have no results?', dogChange)
                                         // console.log(typeof(dogChange))
                                         // if there is a change for the dog:
                                         if(dogChange.length > 0){
@@ -300,7 +306,7 @@ function ClientSchedule() {
                                       if (changes.length > 0){
                                         for (let thisChange of changes){
                                           
-                                          if (thisChange.dog_id === dog.dog_id && JSON.stringify(dayjs(thisChange.date_to_change).$d) === thisDayString && thisChange.is_scheduled){
+                                          if (thisChange.dog_id === dog.dog_id && thisChange.date_to_change === thisDayString && thisChange.is_scheduled){
                                             return (
                                               <DogAvatar id={dog.dog_id} index={index} key={dog.dog_id} dog={dog}/>
                                             )

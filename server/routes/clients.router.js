@@ -17,7 +17,7 @@ const {
  * GET all clients and their dogs
  */
 router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
-  // console.log('arrived in server get all route')
+  //console.log('arrived in server get all route')
   const queryText = `
                     SELECT clients.first_name, clients.id as client_id, clients.qb_id, clients.last_name, clients.notes, clients.phone, clients.mobile, clients.email, clients.lat, clients.long, routes.id as route,
 
@@ -374,7 +374,7 @@ router.get('/schedule/:id', rejectUnauthenticated, rejectUnauthorized, (req, res
 
 router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 
-  console.log('one off change', req.body)
+ // console.log('one off change', req.body)
 
   const client = await pool.connect();
   // const {date, is_scheduled, dog_id, client_id } = req.body

@@ -36,7 +36,7 @@ function Invoicing() {
     let currentmonth = dayjs().month();
     let currentyear = dayjs().year();
     dispatch({ type: 'FETCH_CLIENTS' });
-    dispatch({ type: 'FETCH_INVOICE_DATA', payload: { clientId: 2, month: currentmonth + 1, year: currentyear } })
+    dispatch({ type: 'FETCH_INVOICE_DATA', payload: { clientId: 0, month: currentmonth + 1, year: currentyear } })
   }, []);
 
   const fetchInvoiceData = () => {
@@ -132,7 +132,7 @@ function Invoicing() {
           </Button>
 
           <Box component="span">
-            <ExportCSV monthsShort={monthsShort} />
+            {/* <ExportCSV monthsShort={monthsShort} /> */}
           </Box>
           {/* <Button size="small" variant="contained" color="secondary" sx={{ mx: 1, mt: 1 }}
             onClick={updateServices}
@@ -143,7 +143,7 @@ function Invoicing() {
         </Grid>
       </Grid>
 
-      <InvoiceTable monthsShort={monthsShort} />
+      {/* <InvoiceTable monthsShort={monthsShort} /> */}
 
     </Box >
   );

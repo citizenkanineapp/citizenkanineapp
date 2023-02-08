@@ -38,6 +38,11 @@ passport.deserializeUser((id, done) => {
 passport.use(
   'local',
   new LocalStrategy((username, password, done) => {
+
+    // console.log(username);
+    username = username.toLowerCase();
+    // console.log(username);
+
     pool
       .query('SELECT * FROM "user" WHERE username = $1', [username])
       .then((result) => {

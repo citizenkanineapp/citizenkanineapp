@@ -152,7 +152,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
 
                     // 8: 
                 
-                    if (item.num_dogs === "1") {
+                    if (Number(item.num_dogs) === 1) {
                         switch (walks) {
                             case 1:
                                 serviceId = 1;
@@ -164,7 +164,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                                 serviceId = 3;
                                 break;
                         }
-                    } else if (item.num_dogs === "2") {
+                    } else if (Number(item.num_dogs) === 2) {
                         switch (walks) {
                             case 1:
                                 serviceId = 4;
@@ -176,7 +176,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                                 serviceId = 6;
                                 break;
                         }
-                    } else if (item.num_dogs === "3") {
+                    } else if (Number(item.num_dogs) >= 3) {
                         serviceId = 7;
                     } else {
                         serviceId = 8;
@@ -184,7 +184,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 }
 
             }
-            // console.log('in walks/week', item.clientid, serviceId);
+            console.log('in walks/week', item.clientid, serviceId);
             
 
             // adds service details to invoice item
@@ -205,7 +205,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 }
             }
         }
-        // console.log(invoiceData);
+        console.log(invoiceData);
 
         if (invoiceData[0]) {
             // console.log(invoiceData)

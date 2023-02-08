@@ -40,6 +40,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.post('/register/employee', rejectUnauthenticated, rejectUnauthorized, (req, res, next) => {
   const { username, emp_id, admin } = req.body;
 
+  const userName = username.toLowerCase();
   // All new users will have a default password of 'packleader' until the user logs in and updates it.
   const defaultPassword= 'packleader';
   const password = encryptLib.encryptPassword(defaultPassword);
@@ -48,7 +49,7 @@ router.post('/register/employee', rejectUnauthenticated, rejectUnauthorized, (re
   const queryText = `INSERT INTO "user" (emp_id, username, password, admin, email)
     VALUES ($1, $2, $3, $4, $5) RETURNING id`;
 
-  const queryValues = [emp_id, username, password, admin, username]
+  const queryValues = [emp_id, userName, password, admin, userName]
 
   // const queryText = `INSERT INTO "user" (emp_id, username, password, email, admin)
   //   VALUES ($1, $2, $3, $4, $5) RETURNING id`;

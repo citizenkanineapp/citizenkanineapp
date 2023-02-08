@@ -1,14 +1,7 @@
 const express = require('express');
-const axios = require('axios');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
-const request = require('request');
 const router = express.Router();
-
-
-const {
-  fixCors,
-} = require('../modules/cors_middleware');
 
 router.get('/connect_handler', (req, res) => {
     // GET route code here
@@ -26,7 +19,7 @@ router.get('/connect_handler', (req, res) => {
     })
     // Redirect
     console.log('Redirecting to authorization uri: ' + uri)
-    console.log('does it have header', res)
+    // console.log('does it have header', res)
     res.redirect(uri);
   });
 
@@ -40,8 +33,11 @@ router.get('/connect_handler', (req, res) => {
 
     // Exchange auth code for access token
     tools.intuitAuth.code.getToken(req.originalUrl).then(async function (token) {
+      
     // Store token - this would be where tokens would need to be
-    // persisted (in a SQL DB, for example).
+    // persisted (in a SQL DB, for example). This app does not rely on DB token storage: only session.
+
+    
     // const tokenQuery = `
     //   UPDATE oauth2_tokens
     //     SET
@@ -56,25 +52,6 @@ router.get('/connect_handler', (req, res) => {
 
     console.log('token', token.data);
     
-      // this block of code stores returned tokens and expiration times in SQL db. unnecessary, as we are currently relying on browser storage of tokens. this will not pass must
-      // ALSO, it might make sense to move this to storage but abandon the time field. we are refreshing automatically based on server responses.
-    // try {
-    //   const tokensQuery = `
-    //     UPDATE "oauth2_tokens"
-    //       SET
-    //         access_token = $1,
-    //         access_time = NOW() + INTERVAL '3600 seconds',
-    //         refresh_token = $2,
-    //         refresh_time = NOW() + INTERVAL '8726400 seconds'
-    //       WHERE id = 1
-    //       RETURNING access_time, refresh_time;
-    //   `
-    // const accessTime = await pool.query(tokensQuery,[token.accessToken, token.refreshToken]);
-    // console.log(accessTime.rows);
-
-    // } catch(err) {
- 
-    // }
     req.session.realmId = req.query.realmId;
 
     if(process.env.PORT) {
@@ -84,9 +61,6 @@ router.get('/connect_handler', (req, res) => {
       console.log('redirecting to client!');
       res.redirect('http://localhost:3000/#/clients')
     }
-    
-
-
     })
 })
 

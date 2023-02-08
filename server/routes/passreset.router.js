@@ -17,8 +17,8 @@ const router = express.Router();
 // sends password reset email
 router.post('/email_reset_link', async (req, res) => {
     
-    const email = req.body.email;
-    // console.log(email);
+    const email = req.body.email.toLowerCase();
+    console.log(email);
     // queries table if email exists
     const queryTextEmail = `
         SELECT "id", "email"

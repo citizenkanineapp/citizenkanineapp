@@ -55,7 +55,7 @@ function EditDogForm(){
       <Grid item sx={{ height: '85%', width: '100%', display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1}}>
           <Card sx={{width: '35%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1, pt: 4}}>
 
-                    <Box sx={{ width: "90%", height: "80%", display: 'flex', alignItems: 'center', justifyContent: 'center', }}>  {/*need to figure out aspect ratio and conditional rendering to change into image upload for editing image*/}
+                    <Box sx={{ width: "90%", height: "65%", display: 'flex', alignItems: 'center', justifyContent: 'center', }}>  {/*need to figure out aspect ratio and conditional rendering to change into image upload for editing image*/}
                       <Avatar
                         sx={{width: '80%', height: '100%'}}
                         src={dog.image ? dog.image : 'Images/dogfiller.png'}/>

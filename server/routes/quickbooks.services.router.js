@@ -63,7 +63,7 @@ router.get('/', async (req, res) => {
               qbServices.push(service);
             }
           }
-          console.log('all have ids?', services)
+         // console.log('all have ids?', services)
           postServices(qbServices);
           
           res.sendStatus(201);
@@ -83,7 +83,7 @@ router.get('/', async (req, res) => {
 
 async function postServices(qbServices) {
   const client = await pool.connect();
-   console.log('in post route for services', qbServices);
+   //console.log('in post route for services', qbServices);
 try{
       const servicesQuery = `
         UPDATE services

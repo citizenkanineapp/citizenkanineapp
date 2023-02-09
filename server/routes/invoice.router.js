@@ -150,7 +150,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     4:   Walk 2 dogs - Ad hoc
                     5:   Walk 2 dogs - 2-4x / week
                     6:   Walk 2 dogs 5 days / week
-                    7:   3 dogs
+                    7:   Walk 3 dogs
                     8: 
 
                 */

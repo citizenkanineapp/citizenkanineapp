@@ -17,8 +17,8 @@ function* createQbInvoice (action) {
             location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
         } else if (invoiceResponse.status === 201) {
-            //don't knkow how to handle 201 status in router.
-            swal("invoices sent!")
+            //don't know how to handle 201 status in router.
+            swal("Invoices sent!")
         } 
     }
     catch {
@@ -131,8 +131,8 @@ function* quickBooksSync (action) {
     // these functions handle the asyncronous functions as we want. 
     if (qbResult === 'connectToQb'){
        // console.log('need to connect to qb')
-        location.href = "http://localhost:5000/api/oauth2/connect_handler"
-        //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+        //location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
     }
 

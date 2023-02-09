@@ -276,7 +276,7 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   let clientId = req.params.id
   const queryText = `
 
-    SELECT clients.first_name, clients.id, clients.last_name, clients.notes, clients.phone, clients.mobile, clients.email, clients.lat, clients.long, routes.id as route,
+    SELECT clients.first_name, clients.id as client_id, clients.last_name, clients.notes, clients.phone, clients.mobile, clients.email, clients.lat, clients.long, routes.id as route,
     routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, 
     dogs.vet_phone, dogs.notes as dog_notes, dogs.flag, dogs.regular, dogs.active,
    clients_schedule."1", clients_schedule."2", clients_schedule."3", clients_schedule."4", clients_schedule."5"  
@@ -295,14 +295,14 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   const queryValues = [clientId]
   pool.query(queryText, queryValues)
     .then(result => {
-      // console.log('how to target schedule?', result.rows[0])
+       console.log('how to target schedule?', result.rows[0])
       // console.log(result.rows[0][1])
 
       //all IDs from database
       let idArray = [];
       for (let object of result.rows) {
-        // console.log(object.id)
-        idArray.push(object.id)
+         console.log('id here?', object.client_id)
+        idArray.push(object.client_id)
       }
 
       //this filters out duplicate IDs
@@ -310,26 +310,26 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
 
       //this groups result.rows by id
       const group = result.rows.reduce((acc, item) => {
-        if (!acc[item.id]) {
-          acc[item.id] = [];
+        if (!acc[item.client_id]) {
+          acc[item.client_id] = [];
         }
 
-        acc[item.id].push(item);
+        acc[item.client_id].push(item);
         return acc;
       }, {})
       // console.log(result.rows);
-      console.log(group)
+      console.log('group here', group)
       let clients = [];
 
 
       for (let i = 0; i < uniqueIds.length; i++) {
         let forDogMap = group[uniqueIds[i]]
 
-        // const {first_name, last_name, address} = result.rows[0];
+       console.log('id here', forDogMap[0])
 
-        const { first_name, last_name, street, city, zip, id, phone, mobile, email, notes, vet_name, vet_phone, route, route_name, lat, long } = forDogMap[0];
-        const client = { first_name, last_name, street, city, zip, id, phone, mobile, email, notes, vet_name, vet_phone, route, route_name, lat, long }
-      let dogsPreFilter = forDogMap.map(dog => { return ({client_id: id, dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular, active: dog.active}) })
+        const { first_name, last_name, street, city, zip, client_id, phone, mobile, email, notes, vet_name, vet_phone, route, route_name, lat, long } = forDogMap[0];
+        const client = { first_name, last_name, street, city, zip, client_id, phone, mobile, email, notes, vet_name, vet_phone, route, route_name, lat, long }
+        let dogsPreFilter = forDogMap.map(dog => { return ({client_id:client_id, dog_name: dog.dog_name, image: dog.image, dog_id: dog.dog_id, dog_notes: dog.dog_notes, flag: dog.flag, regular: dog.regular, active: dog.active}) })
 
        const dogsResult = dogsPreFilter.filter(dog => dog.active === true)
        console.log ('dogs array?', dogsResult)

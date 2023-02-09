@@ -67,7 +67,7 @@ CREATE TABLE "user" (
 INSERT INTO "user"
 	("username","password","admin", "emp_id","email")
 VALUES
-	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, null,'citizenkanineapp@gmail.com'),
+	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, null,'thecitizenkanine@gmail.com'),
 	-- REMOVE BEFORE DEPLOYMENT
 	-- ('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2,null);
 	
@@ -146,7 +146,7 @@ VALUES
 	('Group Dog Walking:Walk 2 dogs - Ad hoc', '4'),
 	('Group Dog Walking:Walk 2 dogs 2-4x / week', '5'),
 	('Group Dog Walking:Walk 2 dogs 5 days / week', '42'),
-	('Group Dog Walking:3 dogs', '54');
+	('Group Dog Walking:Walk 3 dogs', '54');
 
 CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,

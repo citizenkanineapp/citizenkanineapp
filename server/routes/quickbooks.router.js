@@ -78,7 +78,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 
 //this function processes the QB customers into a data object that matches our DB object
   function filterCustomers(customers) {
-    console.log('customers straight from QB', customers)
+    //console.log('customers straight from QB', customers)
     let customerArray = customers.QueryResponse.Customer 
     let customersAfterProcessing = []
     for (let oneCustomer of customerArray) {
@@ -120,7 +120,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       customersAfterProcessing.push(customer)
     }
     // this next function deals with dogs' names and schedules 
-    console.log('does it add a none-none key?', customersAfterProcessing)
+   // console.log('does it add a none-none key?', customersAfterProcessing)
     let customersWithSchedule = getDogSchedule(customersAfterProcessing)
     //one more filter to remove key no longer needed on object
     let preFinalCustomers = customersWithSchedule.filter(customer => delete customer.notesObj);

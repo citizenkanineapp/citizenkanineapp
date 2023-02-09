@@ -84,7 +84,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
     for (let oneCustomer of customerArray) {
       let customer = {
         qb_id: Number(oneCustomer.Id),
-        notesObj: oneCustomer.Notes,
+       // notesObj: oneCustomer.Notes,
         email: oneCustomer.PrimaryEmailAddr.Address,
         first_name: oneCustomer.GivenName,
         last_name: oneCustomer.FamilyName,
@@ -95,6 +95,11 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       }
 
       //adds keys if they apply to that customer
+      if(oneCustomer.hasOwnProperty('Notes')){
+        customer.notesObj = oneCustomer.Notes  //added this check to handle
+      } else {                                      //customers with only ad-hoc dogs
+        customer.notesObj = "none-none"
+      }
       if(oneCustomer.hasOwnProperty('Mobile')){
         customer.mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
       } else {                                      //this handles undefined errors
@@ -155,7 +160,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
           let dogsCleaned = adHocDogsString.replace(/[&/]/g, ",")
           let adHocDogsArray = dogsCleaned.split(",").map(function (dogName) {
             let adHocDog = {
-              name: dogName.trim(), 
+                    name: dogName.trim(), 
                     notes: "", 
                     flag: false, 
                     active: true, 
@@ -172,8 +177,9 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         let scheduleArray = scheduleCleaned.split(",").map(function (dayName) {
         return dayName.trim();
       })
-    
-        oneCustomer.dogs = dogsArray,   //adding dogs key to customer object
+        let filteredDogs = dogsArray.filter(dog => dog.name != "none")
+        console.log('filtered dogs', filteredDogs)
+        oneCustomer.dogs = filteredDogs,   //adding dogs key to customer object
         oneCustomer.schedule =  scheduleArray, //adding schedule key to customer obj
         customerArray.push(oneCustomer)
       
@@ -272,7 +278,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
   });
   
   function processSchedule (customers) {
-    // console.log(customers)
+     console.log('in function to process schedules', customers)
 
     /* Schedule from QB sample
           ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri' ]

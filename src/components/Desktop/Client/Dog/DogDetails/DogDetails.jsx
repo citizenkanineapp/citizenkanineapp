@@ -10,7 +10,7 @@ function DogDetails() {
   const dispatch = useDispatch();
   const dog = useSelector(store => store.dogEdit)
 
- // console.log(dog)
+  //console.log(dog)
 
   const back = event => {
     dispatch({type: 'CLEAR_EDIT_DOG'})

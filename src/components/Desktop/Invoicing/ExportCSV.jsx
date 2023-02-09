@@ -6,6 +6,9 @@ import './CSVLink.css';
 // let localeData = require('dayjs/plugin/localeData');
 // dayjs.extend(localeData);
 
+// Component creates invoice object.
+//invoice objects can be downloaded as CSV, OR used to create QB invoices directly via the api/qb_services endpoint 
+
 const ExportCSV = ({ monthsShort }) => {
     const dispatch = useDispatch();
     const invoiceItems = useSelector(store => store.invoiceReducer);

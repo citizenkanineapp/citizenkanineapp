@@ -35,7 +35,7 @@ function ClientList() {
   //starts OAuth process with QB
   const connectQB = ()=>{
    location.href = "http://localhost:5000/api/oauth2/connect_handler";
-    // location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
+    //location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
   }
 
   const openModal = (view) => {

@@ -30,7 +30,7 @@ function* resetPass(action) {
 }
 
 function* resetPassFromLink(action){
-  console.log('in resetPassFromLink');
+ // console.log('in resetPassFromLink');
 
   try {
     const { password, token, id } = action.payload;

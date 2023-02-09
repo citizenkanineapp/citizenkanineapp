@@ -141,7 +141,7 @@ function* addEmployee(action) {
         // yield console.log(emp_id);
         // {emp_id: #}
         // ADDING USER:
-        yield console.log('newUser:', newUser)
+       // yield console.log('newUser:', newUser)
         yield put({
             type: 'REGISTER_EMP_USER',
             payload: newUser
@@ -156,7 +156,7 @@ function* addEmployee(action) {
 }
 
 function* deleteEmployee(action) {
-    console.log('Employee ID to delete', action.payload);
+    //console.log('Employee ID to delete', action.payload);
     let employeeID = action.payload;
     try {
         yield axios({
@@ -208,7 +208,7 @@ function* fetchEmpChanges(){
 }
 
 function* employeesSaga() {
-    yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees),
+        yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees),
         yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_ODD', fetchOddEmpSchedules),
         yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_EVEN', fetchEvenEmpSchedules),
         yield takeLatest('SAGA_FETCH_EMP_SCHEDULE', fetchEmpSchedule),

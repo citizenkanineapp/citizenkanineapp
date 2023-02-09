@@ -38,42 +38,42 @@ function Nav(props) {
         <ListItem >
           <ListItemButton sx={{ textAlign: 'center', mt: 2 }} onClick={(event) => history.push('/user')}>
             <DashboardIcon />
-            <ListItemText primary='dashboard' />
+            <ListItemText primary='Dashboard' />
           </ListItemButton>
         </ListItem>
 
         <ListItem >
           <ListItemButton sx={{ textAlign: 'center' }} onClick={() => history.push('/employees')}>
             <BadgeIcon />
-            <ListItemText primary='pack leaders' />
+            <ListItemText primary='Pack Leaders' />
           </ListItemButton>
         </ListItem>
 
         <ListItem >
           <ListItemButton sx={{ textAlign: 'center' }} onClick={() => history.push('/schedule')}>
             <CalendarMonthIcon />
-            <ListItemText primary='employee schedule' />
+            <ListItemText primary='Employee Schedule' />
           </ListItemButton>
         </ListItem>
 
         <ListItem >
           <ListItemButton sx={{ textAlign: 'center' }} onClick={() => history.push('/clients')}>
             <PetsIcon />
-            <ListItemText primary='clients' />
+            <ListItemText primary='Clients' />
           </ListItemButton>
         </ListItem>
 
         <ListItem sx={{ testAlign: 'center' }}>
           <ListItemButton sx={{ textAlign: 'center' }} onClick={() => history.push('/invoice')}>
             <EqualizerIcon sx={{ textAlign: 'flex-end' }} />
-            <ListItemText primary='reports' />
+            <ListItemText primary='Invoice Tool' />
           </ListItemButton>
         </ListItem>
 
         <ListItem sx={{ mb: 4 }}>
           <ListItemButton sx={{ textAlign: 'center' }} onClick={() => history.push('/resetpass')}>
             <SettingsIcon sx={{ textAlign: 'flex-end' }} />
-            <ListItemText primary='account' />
+            <ListItemText primary='Account' />
           </ListItemButton>
         </ListItem>
       </List>

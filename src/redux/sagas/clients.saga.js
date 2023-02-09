@@ -11,7 +11,7 @@ function* getAllClients(action){
         yield put ({type: 'SET_CLIENTS', payload: clients.data});
     } catch (error) {
         console.log(error);
-        alert('Error fetching clients');
+       // alert('Error fetching clients');
     }
 }
 
@@ -35,7 +35,7 @@ function* addClient(action){
 
     } catch (error) {
         console.log(error);
-        alert('Error adding clients');
+       // alert('Error adding clients');
     }
 }
 
@@ -50,7 +50,7 @@ function* editClient(action){
         yield put ({type: 'FETCH_CLIENTS'});
     } catch (error) {
         console.log(error);
-        alert('Error editing clients');
+       // alert('Error editing clients');
     }
     
 }
@@ -68,7 +68,7 @@ function* addDog(action){
         
     } catch (error) {
         console.log(error);
-        alert('Error adding dog');
+        //alert('Error adding dog');
     }
     
 }
@@ -82,14 +82,14 @@ function* fetchOneClient(action){
         yield put ({type: 'SET_CLIENT', payload: client.data[0]});
     } catch (error) {
         console.log(error);
-        alert('Error fetching one client');
+        //alert('Error fetching one client');
     }
     
 }
 
 function* deleteClient(action) {
     const clientId = action.payload
-    console.log(clientId)
+    //console.log(clientId)
     try{
         const client = yield axios.delete(`/api/clients/${clientId}`);
         yield put ({type: 'FETCH_CLIENTS'});
@@ -99,7 +99,7 @@ function* deleteClient(action) {
 }
 //this just makes the dog in-active.  Need to keep in database for invoicing
 function* deleteDog(action) {
-    console.log(action.payload);
+    //console.log(action.payload);
     const dogId = action.payload.dog_id;
     const clientId = action.payload.client_id;
     try{
@@ -115,7 +115,7 @@ function* deleteDog(action) {
 }
 
 function* updateDog(action){
-  //  console.log('arrived in edit dog route', action.payload);
+    //console.log('arrived in edit dog route', action.payload);
 
     try {
         const dog = yield axios({
@@ -128,17 +128,17 @@ function* updateDog(action){
         //probably need to fetch specific client?
     } catch (error) {
         console.log(error);
-        alert('Error editing dog');
+        //alert('Error editing dog');
     }
     
 }
 
 function* fetchSchedule(action){
-    console.log('arrived in get one client route', action.payload);
+   // console.log('arrived in get one client route', action.payload);
     let clientId = action.payload
     try {
         const schedule = yield axios.get(`/api/clients/schedule/${clientId}`);
-        console.log('back to saga', schedule)
+       // console.log('back to saga', schedule)
         yield put ({type: 'SET_SCHEDULE', payload: schedule.data[0]});
         yield put ({type: 'SET_EDIT_CLIENT_SCHEDULE', payload: schedule.data[0]})
     } catch (error) {
@@ -149,28 +149,26 @@ function* fetchSchedule(action){
 }
 
 function* oneOffScheduleChange(action){
-     console.log('arrived in edit one off schedule route', action.payload);
+    // console.log('arrived in edit one off schedule route', action.payload);
     const scheduleChange = action.payload
+        try {
+            const schedule = yield axios({
+                method: 'POST',
+                url: '/api/clients/schedule',
+                data: action.payload
+            })
+        // console.log(scheduleChange[0].client_id)
+            yield put ({type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: scheduleChange[0].client_id});
 
-    try {
-        const schedule = yield axios({
-            method: 'POST',
-            url: '/api/clients/schedule',
-            data: action.payload
-        })
-        console.log(scheduleChange[0].client_id)
-        yield put ({type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: scheduleChange[0].client_id});
-
-    } catch (error) {
-        console.log(error);
-        alert('Error editing one off schedule');
-    }
-    
+        } catch (error) {
+            console.log(error);
+            //alert('Error editing one off schedule');
+        }
 }
 
 
 function* regularScheduleChange(action){
-    console.log('arrived in edit regular schedule', action.payload);
+    //console.log('arrived in edit regular schedule', action.payload);
     try {
         const schedule = yield axios({
             method: 'PUT',
@@ -188,7 +186,7 @@ function* regularScheduleChange(action){
 
 function* updatedScheduleChange(action){
     const updatedChanges = action.payload;
-    console.log('what is sent to server?', action.payload)
+    //console.log('what is sent to server?', action.payload)
     try {
         const changes = yield axios({
             method: 'PUT',
@@ -202,21 +200,6 @@ function* updatedScheduleChange(action){
     }
 }
 
-//I don't think this is being used anymore?
-function* search(action){
-    console.log('search term? ->>>>>>', action.payload)
-    const searchText = action.payload
-    let urlQuery = `/api/clients/search/matches?search=${searchText}`
-    console.log('url queery?', urlQuery)
-        try {
-            const results = yield axios.get(`${urlQuery}`);
-            console.log('results from server' ,results.data)
-            yield put ({type: 'SET_SEARCH_RESULTS', payload: results.data[0]});
-        } catch (error) {
-            console.log(error);
-            alert('Error setting search results');
-        }
-    }
 
 
 function* clientSaga() {
@@ -232,7 +215,6 @@ function* clientSaga() {
     yield takeLatest('SEND_ONE_SCHEDULE_CHANGE', oneOffScheduleChange);
     yield takeLatest('REGULAR_SCHEDULE_CHANGE', regularScheduleChange);
     yield takeLatest('SEND_ONE_SCHEDULE_CHANGE', updatedScheduleChange);
-    yield takeLatest('SEARCH_CLIENTS', search);
 }
 
 export default clientSaga;

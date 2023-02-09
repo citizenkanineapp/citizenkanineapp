@@ -78,13 +78,13 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 
 //this function processes the QB customers into a data object that matches our DB object
   function filterCustomers(customers) {
-    
+    //console.log('customers straight from QB', customers)
     let customerArray = customers.QueryResponse.Customer 
     let customersAfterProcessing = []
     for (let oneCustomer of customerArray) {
       let customer = {
         qb_id: Number(oneCustomer.Id),
-        notesObj: oneCustomer.Notes,
+       // notesObj: oneCustomer.Notes,
         email: oneCustomer.PrimaryEmailAddr.Address,
         first_name: oneCustomer.GivenName,
         last_name: oneCustomer.FamilyName,
@@ -95,6 +95,11 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       }
 
       //adds keys if they apply to that customer
+      if(oneCustomer.hasOwnProperty('Notes')){
+        customer.notesObj = oneCustomer.Notes  //added this check to handle
+      } else {                                      //customers with only ad-hoc dogs
+        customer.notesObj = "none-none"
+      }
       if(oneCustomer.hasOwnProperty('Mobile')){
         customer.mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
       } else {                                      //this handles undefined errors
@@ -115,6 +120,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       customersAfterProcessing.push(customer)
     }
     // this next function deals with dogs' names and schedules 
+   // console.log('does it add a none-none key?', customersAfterProcessing)
     let customersWithSchedule = getDogSchedule(customersAfterProcessing)
     //one more filter to remove key no longer needed on object
     let preFinalCustomers = customersWithSchedule.filter(customer => delete customer.notesObj);
@@ -125,7 +131,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
   //this function processes the string with dog info and schedules and turns
   //it into usable data
   function getDogSchedule(customers) {
-   console.log('customers:', customers)
+   //console.log('customers:', customers)
     let customerArray = []
     for (let oneCustomer of customers) {
       let result = oneCustomer.notesObj.split("-")
@@ -155,7 +161,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
           let dogsCleaned = adHocDogsString.replace(/[&/]/g, ",")
           let adHocDogsArray = dogsCleaned.split(",").map(function (dogName) {
             let adHocDog = {
-              name: dogName.trim(), 
+                    name: dogName.trim(), 
                     notes: "", 
                     flag: false, 
                     active: true, 
@@ -172,8 +178,9 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         let scheduleArray = scheduleCleaned.split(",").map(function (dayName) {
         return dayName.trim();
       })
-    
-        oneCustomer.dogs = dogsArray,   //adding dogs key to customer object
+        let filteredDogs = dogsArray.filter(dog => dog.name != "none")
+        //console.log('filtered dogs', filteredDogs)
+        oneCustomer.dogs = filteredDogs,   //adding dogs key to customer object
         oneCustomer.schedule =  scheduleArray, //adding schedule key to customer obj
         customerArray.push(oneCustomer)
       
@@ -272,7 +279,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
   });
   
   function processSchedule (customers) {
-    // console.log(customers)
+    // console.log('in function to process schedules', customers)
 
     /* Schedule from QB sample
           ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri' ]

@@ -126,8 +126,8 @@ function DailyRoutes() {
 
 
             <List sx={{ mb: 10 }}>
-              {route && route.map && route.map((dog) => (
-                <Accordion expanded={expanded === dog.dog_id} onChange={handleChange(dog.dog_id)} sx={{ backgroundColor: () => determineStatus(dog), mb: 1 }}>
+              {route && route.map && route.map((dog, j) => (
+                <Accordion key={j} expanded={expanded === dog.dog_id} onChange={handleChange(dog.dog_id)} sx={{ backgroundColor: () => determineStatus(dog), mb: 1 }}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <List>
                       <ListItem sx={{ backgroundColor: () => determineStatus(dog) }}>

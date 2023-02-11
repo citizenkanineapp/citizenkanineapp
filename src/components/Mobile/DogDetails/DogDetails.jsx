@@ -167,9 +167,11 @@ function DogDetails() {
           <AccordionDetails>
             <Typography variant='body2'> {dog.first_name} {dog.last_name}</Typography>
             {/* <a href="tel:+16127159132">(612)-715-9132</a> */}
+            {dog.phone? 
             <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.phone)}>
               Call
             </Button>
+            : null}
             {dog.mobile? 
             <>
                 <Typography variant='body2'> Second Number</Typography>

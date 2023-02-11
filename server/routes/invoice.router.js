@@ -14,7 +14,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     console.log('in /api/invoice');
     // console.log(req.query)
     const searchClientId = req.query.clientId;
-    console.log('client id?', searchClientId)
+    //console.log('client id?', searchClientId)
     const searchMonth = req.query.month;
     const searchYear = req.query.year;
     let searchTerms;
@@ -100,14 +100,14 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     try {
         const resServices = await pool.query(queryServices)
         const services = resServices.rows;
-         console.log(services);
+         //console.log(services);
         const resDetails = await pool.query(queryWalkDetails, searchTerms);
         const invoiceData = resDetails.rows;
-         console.log('invoiceData', invoiceData);
+         //console.log('invoiceData', invoiceData);
 
         const resSchedule = await pool.query(querySchedule);
         const schedules = resSchedule.rows;
-         console.log('schedules', schedules)
+         //console.log('schedules', schedules)
 
 
         // const testDailyDogs = await pool.query(`
@@ -129,11 +129,11 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         //adds service data to invoice data object.
         for (let item of invoiceData) {
             let serviceId
-            console.log(item);
+            //console.log(item);
 
             // adds walks per week to invoice item
             for (let client of schedules) {
-                 console.log('client.id: ', client.client_id, "item.clientid: ", item.clientid);
+                // console.log('client.id: ', client.client_id, "item.clientid: ", item.clientid);
                 if (client.client_id === item.clientid) {
                     const values = Object.values(client);
                     const walks = values.filter(i => i === true).length;
@@ -212,7 +212,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 }
             }
         }
-        console.log(invoiceData);
+        //console.log(invoiceData);
 
         if (invoiceData[0]) {
             // console.log(invoiceData)

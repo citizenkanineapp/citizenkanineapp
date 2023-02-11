@@ -50,6 +50,7 @@ router.post('/', async (req, res) => {
             // don't know if this second else-if block is necessary, ie, covering non-401 errors.
           } else if (err || response.statusCode != 200) {
             console.log('ERROR!', err, response.body, response.body.Fault.Error)
+
             //turned off since we don't have handling for it on client side
             //res.sendStatus(403)
           } else {
@@ -58,11 +59,12 @@ router.post('/', async (req, res) => {
           }
         }, function (err) {
           console.log('error in invoice request')
-          return res.json(err)
+          // return res.json(err)
         })
       })
     }))
-    res.sendStatus(201)
+    res.sendStatus(201);
+
   } else {
     console.log('null token', token);
     res.send('connectToQb');

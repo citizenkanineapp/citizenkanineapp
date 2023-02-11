@@ -19,7 +19,7 @@ router.get('/connect_handler', (req, res) => {
     })
     // Redirect
     console.log('Redirecting to authorization uri: ' + uri)
-    console.log('does it have header', res)
+    // console.log('does it have header', res)
     res.redirect(uri);
   });
 
@@ -33,7 +33,9 @@ router.get('/connect_handler', (req, res) => {
 
     // Exchange auth code for access token
     tools.intuitAuth.code.getToken(req.originalUrl).then(async function (token) {
+      
     // Store token - this would be where tokens would need to be
+
     // persisted (in a SQL DB, for example). This app only stores tokens in browser session.
     // const tokenQuery = `
     //   UPDATE oauth2_tokens
@@ -58,9 +60,6 @@ router.get('/connect_handler', (req, res) => {
       console.log('redirecting to client!');
       res.redirect('http://localhost:3000/#/clients')
     }
-    
-
-
     })
 })
 

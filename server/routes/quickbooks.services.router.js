@@ -1,5 +1,4 @@
 const express = require('express');
-const axios = require('axios');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
 // const cors = require('cors');

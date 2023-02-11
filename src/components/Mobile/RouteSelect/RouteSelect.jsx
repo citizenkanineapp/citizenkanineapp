@@ -56,10 +56,10 @@ function RouteSelect() {
                             <AvatarGroup>
                                 {dailyRoutes && dailyRoutes[route].map((dog, index) => (
 
-                                    <div>
+                                    <div key={index}>
                                         {
                                             dog.image ?
-                                                <Avatar src={dog.image} key={index} />
+                                                <Avatar src={dog.image} />
                                                 :
                                                 <Avatar key={index}>
                                                     {dog.name[0]}

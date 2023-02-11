@@ -13,7 +13,7 @@ function* createQbInvoice (action) {
         })
        // console.log(invoiceResponse);
         if (invoiceResponse.data === 'connectToQb') {
-            //location.href = "http://localhost:5000/api/oauth2/connect_handler"
+            // location.href = "http://localhost:5000/api/oauth2/connect_handler"
             location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
         } else if (invoiceResponse.status === 201) {
@@ -116,7 +116,7 @@ function* quickBooksSync (action) {
        // console.log(services.status)
     } else if (services.data === 'connectToQB'){
         // console.log('services redirect')
-        //location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        // location.href = "http://localhost:5000/api/oauth2/connect_handler"
         location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
     }
         
@@ -131,7 +131,7 @@ function* quickBooksSync (action) {
     // these functions handle the asyncronous functions as we want. 
     if (qbResult === 'connectToQb'){
        // console.log('need to connect to qb')
-        //location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        // location.href = "http://localhost:5000/api/oauth2/connect_handler"
         location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
     }

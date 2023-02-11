@@ -36,16 +36,16 @@ CREATE TABLE employees (
 
 --** Employees MOCK DATA **--
 -- REMOVE BEFORE DEPLOYMENT
-insert into employees 
-	(first_name, last_name, email, phone, street, city, "zip", admin) 
-values 
-	('Danny', 'Paolini', 'dpaolini0@paypal.com', '(840)673-2127', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Grant', 'Abels', 'gabels1@weather.com', '(885)747-7091', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Angie', 'Stevens', 'sohickey2@google.ru', '(915)638-0768', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Reeba', 'McEntire', 'rpretswell3@feedburner.com', '(964)688-1625', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Florence', 'Wells', 'fmary4@unesco.org', '(697)209-6190', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Otis', 'Barrand', 'obarrand5@wufoo.com', '(537)159-4107', '2900 W 43rd St', 'Minneapolis',  55410, false),
-	('Lydia', 'Nichols', 'lnichols6@virginia.edu', '(802)528-0961', '2900 W 43rd St', 'Minneapolis',  55410, false);
+-- insert into employees 
+-- 	(first_name, last_name, email, phone, street, city, "zip", admin) 
+-- values 
+-- 	('Danny', 'Paolini', 'dpaolini0@paypal.com', '(840)673-2127', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Grant', 'Abels', 'gabels1@weather.com', '(885)747-7091', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Angie', 'Stevens', 'sohickey2@google.ru', '(915)638-0768', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Reeba', 'McEntire', 'rpretswell3@feedburner.com', '(964)688-1625', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Florence', 'Wells', 'fmary4@unesco.org', '(697)209-6190', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Otis', 'Barrand', 'obarrand5@wufoo.com', '(537)159-4107', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Lydia', 'Nichols', 'lnichols6@virginia.edu', '(802)528-0961', '2900 W 43rd St', 'Minneapolis',  55410, false);
 
 
 -- removed email from user since we no longer need it for password retrieval.
@@ -67,9 +67,9 @@ CREATE TABLE "user" (
 INSERT INTO "user"
 	("username","password","admin", "emp_id","email")
 VALUES
-	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, null,'citizenkanineapp@gmail.com'),
+	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, null,'thecitizenkanine@gmail.com');
 	-- REMOVE BEFORE DEPLOYMENT
-	('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2,null);
+	-- ('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2,null);
 	
 
 CREATE TABLE employees_schedule (
@@ -87,23 +87,23 @@ CREATE TABLE employees_schedule (
 --** Employee Schedule MOCK DATA **--
 -- REMOVE BEFORE DEPLOYMENT
 
-insert into employees_schedule
-	("emp_id", "week", "1", "2", "3", "4", "5") 
-values
-	(1, 1, true, true, false, true, true),
-	(1, 2, false, true, false, false, false),
-	(2, 1, false, true, true, false, false),
-	(2, 2, false, true, true, false, true),
-	(3, 1, false, false, false, false, false),
-	(3, 2, false, false, false, false, false),
-	(4, 1, true, true, true, false, true),
-	(4, 2, true, true, true, false, true),
-	(5, 1, false, false, false, true, true),
-	(5, 2, false, false, false, true, true),
-	(6, 1, false, true, true, true, false),
-	(6, 2, false, true, true, true, false),
-	(7, 1, true, true, true, true, false),
-	(7, 2, true, true, true, true, false);
+-- insert into employees_schedule
+-- 	("emp_id", "week", "1", "2", "3", "4", "5") 
+-- values
+-- 	(1, 1, true, true, false, true, true),
+-- 	(1, 2, false, true, false, false, false),
+-- 	(2, 1, false, true, true, false, false),
+-- 	(2, 2, false, true, true, false, true),
+-- 	(3, 1, false, false, false, false, false),
+-- 	(3, 2, false, false, false, false, false),
+-- 	(4, 1, true, true, true, false, true),
+-- 	(4, 2, true, true, true, false, true),
+-- 	(5, 1, false, false, false, true, true),
+-- 	(5, 2, false, false, false, true, true),
+-- 	(6, 1, false, true, true, true, false),
+-- 	(6, 2, false, true, true, true, false),
+-- 	(7, 1, true, true, true, true, false),
+-- 	(7, 2, true, true, true, true, false);
 
 -- ADDED EMP SCHEDULE CHANGES TABLE (Yani)
 CREATE TABLE employees_schedule_changes (
@@ -145,8 +145,8 @@ VALUES
 	('Group Dog Walking:Walk 1 dog 5 days / week', '4'),
 	('Group Dog Walking:Walk 2 dogs - Ad hoc', '4'),
 	('Group Dog Walking:Walk 2 dogs 2-4x / week', '5'),
-	('Group Dog Walking:Walk 2 dogs 5 days / week', '342'),
-	('Group Dog Walking:3 dogs', '54');
+	('Group Dog Walking:Walk 2 dogs 5 days / week', '42'),
+	('Group Dog Walking:Walk 3 dogs', '54');
 
 CREATE TABLE clients (
 	"id" SERIAL PRIMARY KEY,
@@ -231,16 +231,16 @@ CREATE TABLE admin_notes (
 	"notes" VARCHAR
 	);
 
-INSERT INTO admin_notes
-	("user_id", "notes")
-VALUES
-	('1', 'Grant is swapping shifts with Lydia on the 24th'),
-	('1', 'Remove Florence from employees - she went to attend Prime'),
-	('1', 'Add the new puppy to the Higgins Family'),
-	('1', 'Change protocol for Nick W.'),
-	('1', 'Double check Invoices for October'),
-	('1', 'Export CSV for November'),
-	('1', 'Buy more leashes for the supply cabinet');
+-- INSERT INTO admin_notes
+-- 	("user_id", "notes")
+-- VALUES
+-- 	('1', 'Grant is swapping shifts with Lydia on the 24th'),
+-- 	('1', 'Remove Florence from employees - she went to attend Prime'),
+-- 	('1', 'Add the new puppy to the Higgins Family'),
+-- 	('1', 'Change protocol for Nick W.'),
+-- 	('1', 'Double check Invoices for October'),
+-- 	('1', 'Export CSV for November'),
+-- 	('1', 'Buy more leashes for the supply cabinet');
 
 CREATE TABLE oauth2_tokens (
 	"id" SERIAL PRIMARY KEY,
@@ -253,4 +253,3 @@ CREATE TABLE oauth2_tokens (
 -- 	"period" VARCHAR(20),
 -- 	"client_qb_id"
 -- );
-

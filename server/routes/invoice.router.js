@@ -137,6 +137,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 if (client.client_id === item.clientid) {
                     const values = Object.values(client);
                     const walks = values.filter(i => i === true).length;
+                    if (client.client_id === 19) { console.log(walks)}
 
                 /*
                     grabs services ID from services list. 
@@ -150,7 +151,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     4:   Walk 2 dogs - Ad hoc
                     5:   Walk 2 dogs - 2-4x / week
                     6:   Walk 2 dogs 5 days / week
-                    7:   3 dogs
+                    7:   Walk 3 dogs
                     8: 
 
                 */
@@ -158,7 +159,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     // if one dog is walked "walks" times per week:
                     if (Number(item.num_dogs) === 1) {
                         switch (walks) {
-                            case 1:
+                            case 1: case 0:
                                 serviceId = 1;
                                 break;
                             case 2: case 3: case 4:
@@ -171,7 +172,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     // if two dogs are walked "walks" times per week
                     } else if (Number(item.num_dogs) === 2) {
                         switch (walks) {
-                            case 1:
+                            case 1: case 0:
                                 serviceId = 4;
                                 break;
                             case 2: case 3: case 4:
@@ -191,7 +192,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 }
 
             }
-            // console.log('in walks/week', item.clientid, serviceId);
+            console.log('in walks/week', item.clientid, serviceId);
             
 
             // adds service details to invoice item
@@ -215,7 +216,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         //console.log(invoiceData);
 
         if (invoiceData[0]) {
-            // console.log(invoiceData)
+            console.log(invoiceData)
             res.send(invoiceData);
         } else {
             res.sendStatus(204) //Sam added this

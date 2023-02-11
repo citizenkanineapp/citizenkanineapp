@@ -216,7 +216,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         //console.log(invoiceData);
 
         if (invoiceData[0]) {
-            console.log(invoiceData)
+            //console.log(invoiceData)
             res.send(invoiceData);
         } else {
             res.sendStatus(204) //Sam added this

@@ -107,7 +107,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
 
         const resSchedule = await pool.query(querySchedule);
         const schedules = resSchedule.rows;
-        // console.log('schedules', schedules)
+        console.log('schedules', schedules)
 
 
         // const testDailyDogs = await pool.query(`
@@ -129,14 +129,15 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         //adds service data to invoice data object.
         for (let item of invoiceData) {
             let serviceId
-            // console.log(item);
+            console.log(item);
 
             // adds walks per week to invoice item
             for (let client of schedules) {
-                // console.log('client.id: ', client.client_id, "item.clientid: ", item.clientid);
+                console.log('client.id: ', client.client_id, "item.clientid: ", item.clientid);
                 if (client.client_id === item.clientid) {
                     const values = Object.values(client);
                     const walks = values.filter(i => i === true).length;
+                    if (client.client_id === 19) { console.log(walks)}
 
                 /*
                     grabs services ID from services list. 
@@ -158,7 +159,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     // if one dog is walked "walks" times per week:
                     if (Number(item.num_dogs) === 1) {
                         switch (walks) {
-                            case 1:
+                            case 1: case 0:
                                 serviceId = 1;
                                 break;
                             case 2: case 3: case 4:
@@ -171,7 +172,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     // if two dogs are walked "walks" times per week
                     } else if (Number(item.num_dogs) === 2) {
                         switch (walks) {
-                            case 1:
+                            case 1: case 0:
                                 serviceId = 4;
                                 break;
                             case 2: case 3: case 4:
@@ -215,7 +216,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         console.log(invoiceData);
 
         if (invoiceData[0]) {
-            // console.log(invoiceData)
+            console.log(invoiceData)
             res.send(invoiceData);
         } else {
             res.sendStatus(204) //Sam added this

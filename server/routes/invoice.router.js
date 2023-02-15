@@ -107,7 +107,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
 
         const resSchedule = await pool.query(querySchedule);
         const schedules = resSchedule.rows;
-        console.log('schedules', schedules)
+        // console.log('schedules', schedules)
 
 
         // const testDailyDogs = await pool.query(`
@@ -129,11 +129,11 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         //adds service data to invoice data object.
         for (let item of invoiceData) {
             let serviceId
-            console.log(item);
+            // console.log(item);
 
             // adds walks per week to invoice item
             for (let client of schedules) {
-                console.log('client.id: ', client.client_id, "item.clientid: ", item.clientid);
+                // console.log('client.id: ', client.client_id, "item.clientid: ", item.clientid);
                 if (client.client_id === item.clientid) {
                     const values = Object.values(client);
                     const walks = values.filter(i => i === true).length;

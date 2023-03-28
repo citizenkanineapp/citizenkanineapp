@@ -31,7 +31,7 @@ function Home() {
   }
 
   return (
-    <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', width: '100%' }}>
+    <Grid container spacing={2} wrap="nowrap" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', width: '100%' }}>
 
       <MobileNav />
 

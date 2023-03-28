@@ -43,7 +43,7 @@ function Home() {
           WELCOME {user.username.toUpperCase()}:
         </Paper>
       </Grid>
-      <Grid item >
+      <Grid item sx={{ pb: '200px'}} >
         <Stack direction="column" divider={<Divider orientation="vertical" flexItem />} spacing={0.5}>
           {user.admin ?
             <Button color='secondary' variant='outlined' onClick={(event) => adminTime()}>Routes</Button>

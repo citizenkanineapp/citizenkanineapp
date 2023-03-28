@@ -151,7 +151,7 @@ function DogDetails() {
         </Card>
       </Grid>
       {/* ACCESS INFORMATION */}
-      <Grid item xs={10} sx={{pb="100px"}}>
+      <Grid item xs={10} sx={{pb: '100px'}}>
         <Card sx={{ mb: 1 }}>
           <Typography align='center'>{dog.client_protocol || 'No protocol on File'}</Typography>
         </Card>

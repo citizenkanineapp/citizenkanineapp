@@ -5,6 +5,7 @@ import { Modal, Accordion, AccordionSummary, AccordionDetails, Fab, CardMedia, C
 import EditIcon from '@mui/icons-material/Edit';
 import FlagIcon from '@mui/icons-material/Flag';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import SendToMobile from '@mui/icons-material/SendToMobile';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MobileImageUpload from './MobileImageUpload';
@@ -64,6 +65,16 @@ function DogDetails() {
     let readyNumber = nosymbols.trim();
     // sends prompt to call number
     location.href = `tel:+1${readyNumber}`;
+  }
+
+    // this is a button that allows for an employee to click and prompt for a phone call to a given number
+  const clicktoText = (number) => {
+     // removes any symbols and letters from the phone number
+    let nosymbols = number.replace(/[^+\d]+/g, "");
+    // removes white space from number
+    let readyNumber = nosymbols.trim();
+    // sends prompt to text number
+    location.href = `sms:+1${readyNumber}`;
   }
 
   // function that allows an employee to add notes to a dog
@@ -170,11 +181,17 @@ function DogDetails() {
             <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.phone)}>
               Call
             </Button>
+            <Button endIcon={<SendToMobile fontSize='small' />} onClick={(event) => clicktoText(dog.phone)}>
+              Text
+            </Button>
             {dog.mobile? 
             <>
                 <Typography variant='body2'> Second Number</Typography>
                 <Button endIcon={<LocalPhoneIcon fontSize='small' />} onClick={(event) => clicktoCall(dog.mobile)}>
                   Call
+                </Button>
+                <Button endIcon={<SendToMobile fontSize='small' />} onClick={(event) => clicktoText(dog.mobile)}>
+                 Text
                 </Button>  
             </>
           : null}

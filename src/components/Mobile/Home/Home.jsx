@@ -31,7 +31,7 @@ function Home() {
   }
 
   return (
-    <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', width: '100%' }}>
+    <Grid container spacing={2} wrap="nowrap" sx={{ pb: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', width: '100%' }}>
 
       <MobileNav />
 
@@ -43,7 +43,7 @@ function Home() {
           WELCOME {user.username.toUpperCase()}:
         </Paper>
       </Grid>
-      <Grid item >
+      <Grid item sx={{ pb: '100px'}} >
         <Stack direction="column" divider={<Divider orientation="vertical" flexItem />} spacing={0.5}>
           {user.admin ?
             <Button color='secondary' variant='outlined' onClick={(event) => adminTime()}>Routes</Button>

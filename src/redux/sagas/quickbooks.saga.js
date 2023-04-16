@@ -13,8 +13,8 @@ function* createQbInvoice (action) {
         })
        // console.log(invoiceResponse);
         if (invoiceResponse.data === 'connectToQb') {
-            // location.href = "http://localhost:5000/api/oauth2/connect_handler"
-            location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+            location.href = "http://localhost:5000/api/oauth2/connect_handler"
+            // location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
         } else if (invoiceResponse.status === 201) {
             //don't know how to handle 201 status in router.
@@ -76,18 +76,18 @@ function* updateAllQbCustomers(action){
                 url: '/api/quickbooks/qbcustomers',
                 data: uniqueCustomers
          })
-        }
-        if(idsToDelete.length >= 1){
-            let urlQuery = `/api/quickbooks/delete?ids=${idsToDelete}`
-            const deleteClientsFromDB = yield axios.delete(`${urlQuery}`);
-        }
-    } catch (error) {
-       // console.log(error);
-        alert('Error updating QB customers!');
-    }  
-            //fetches clients from CK database
-           // console.log('finished add/delete clients saga')
-            yield put ({type: 'FETCH_CLIENTS'});
+            }
+            if(idsToDelete.length >= 1){
+                let urlQuery = `/api/quickbooks/delete?ids=${idsToDelete}`
+                const deleteClientsFromDB = yield axios.delete(`${urlQuery}`);
+            }
+        } catch (error) {
+            console.log(error);
+            alert('Error updating QB customers!');
+        }  
+        //fetches clients from CK database
+        // console.log('finished add/delete clients saga')
+        yield put ({type: 'FETCH_CLIENTS'});
     }
 
 
@@ -116,8 +116,8 @@ function* quickBooksSync (action) {
        // console.log(services.status)
     } else if (services.data === 'connectToQB'){
         // console.log('services redirect')
-        // location.href = "http://localhost:5000/api/oauth2/connect_handler"
-        location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+        location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        // location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
     }
         
    // console.log('arrived in saga for updating qb customers')
@@ -131,8 +131,8 @@ function* quickBooksSync (action) {
     // these functions handle the asyncronous functions as we want. 
     if (qbResult === 'connectToQb'){
        // console.log('need to connect to qb')
-        // location.href = "http://localhost:5000/api/oauth2/connect_handler"
-        location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+        location.href = "http://localhost:5000/api/oauth2/connect_handler"
+        // location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 
     }
 

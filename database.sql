@@ -216,7 +216,7 @@ CREATE TABLE daily_dogs (
 	"date" DATE DEFAULT CURRENT_DATE,
 	"dog_id" INT NOT NULL REFERENCES dogs(id),
 	"route_id" INT NOT NULL REFERENCES routes(id),
-	"client_id" INT NOT NULL REFERENCES clients(id),
+	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
 	"checked_in" BOOLEAN DEFAULT NULL,
 	"no_show" BOOLEAN DEFAULT NULL,
 	"cancelled" BOOLEAN DEFAULT NULL,

@@ -127,7 +127,7 @@ function ClientDetails(){
                 size="small" 
                 InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
                />
-          {client.notes.length > 40 ?
+          {client.notes && client.notes.length > 40 ?
               
               <TextField
                 focused={false}

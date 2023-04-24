@@ -13,6 +13,7 @@ const {
 router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     console.log('in /api/invoice');
     const client = await pool.connect();
+
     // console.log(req.query)
     const searchClientId = req.query.clientId;
     //console.log('client id?', searchClientId)
@@ -226,6 +227,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         console.log('Error GET /api/invoice', error);
         res.sendStatus(500);
     } finally {
+        console.log ('release invoice pool')
         client.release();
     }
 });

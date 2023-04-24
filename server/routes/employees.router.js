@@ -271,9 +271,9 @@ router.post('/', rejectUnauthenticated, async (req, res)=> {
         res.sendStatus(500);
         console.log('error in POST /employees', error)
     }
-    // finally {
-    //     res.send(emp_id);
-    // }
+    finally {
+        client.release();
+    }
 })
 
 // add employee schedule changes

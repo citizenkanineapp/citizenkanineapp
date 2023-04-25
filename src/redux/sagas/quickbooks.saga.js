@@ -2,7 +2,7 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import swal from 'sweetalert';
 
-let redirect;
+let redirect ;
 if (process.env.NODE_ENV === "development") {
     redirect = "http://localhost:5000/api/oauth2/connect_handler";
 } else {

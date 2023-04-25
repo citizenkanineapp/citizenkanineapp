@@ -18,6 +18,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+let redirect;
+if (process.env.NODE_ENV === "development") {
+  redirect = "http://localhost:5000/api/oauth2/connect_handler";
+} else {
+  redirect = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
+}
+
 function ClientList() {
   const clientList = useSelector(store => store.clientsReducer);
   const dispatch = useDispatch();
@@ -34,8 +41,7 @@ function ClientList() {
 
   //starts OAuth process with QB
   const connectQB = ()=>{
-    location.href = "http://localhost:5000/api/oauth2/connect_handler";
-   // location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
+    location.href = redirect;
   }
 
   const openModal = (view) => {

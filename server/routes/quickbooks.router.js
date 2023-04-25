@@ -189,160 +189,160 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
   
   }
 
-  /*To initially add QB customers to DB */
-  router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
-    // console.log('arrvied in server?', req.body)
+/*To initially add QB customers to DB */
+router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
+  console.log('in quickbooks/qbcustomer');
 
-    const client = await pool.connect();
-    const customers = req.body // obj desctructing of QB data
-      //geocoding for customers
-   
-      const api_key = process.env.map_api_key;
-      const config = { headers: { Authorization: api_key } };
-
-
-      const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-      //we had to add this function to slow down requests to radar api
-      //they have a request limit of 10 per second
-      async function GetGeoStats(customers) {
-       const customerResult = []
-       for(let customer of customers){
-        const address = customer.street.replace(/ /g, "+");
-        const town = customer.city.replace(/ /g, '');
-        const zip = customer.zip
-        const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
-        const lat = geoStats.data.addresses[0].latitude;
-        const long = geoStats.data.addresses[0].longitude;
-        customer.lat = lat
-        customer.long = long
-        await delay(100);
-        customerResult.push(customer)
-        // console.log('testing geo stats', customer)
-        }
-        return customerResult;
-      }
-      let customersWithGeoStats =  await GetGeoStats(customers)
-
-    let customersResult = processSchedule(customersWithGeoStats)
-    // console.log('after schedule processing',  customersResult)
-
-    try{ 
-      await client.query('BEGIN')
-      for (let eachCustomer of customersResult){
-        const clientTxt = await client.query( `
-                            INSERT INTO clients 
-                              ("qb_id", "first_name", "last_name", "street", "city", "zip", "route_id", "phone", "mobile", "email", "notes", "lat", "long") 
-                              VALUES
-                              ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-                              RETURNING "id";
-    ` , [eachCustomer.qb_id, eachCustomer.first_name, eachCustomer.last_name, 
-                            eachCustomer.street, eachCustomer.city, eachCustomer.zip, eachCustomer.route_id, eachCustomer.phone, eachCustomer.mobile,
-                            eachCustomer.email, eachCustomer.notes, eachCustomer.lat, eachCustomer.long])
-      const customerId = clientTxt.rows[0].id
-      eachCustomer.client_id = customerId
-    }
-    // console.log('does it add client_id', customersResult)
-    for(let eachCustomer of customersResult){
-      await Promise.all(eachCustomer.dogs.map(dog => {
-        const dogTxt = `
-                            INSERT INTO dogs 
-                                ("client_id", "name", "image", "notes", "flag", "regular", "active") 
-                              VALUES
-                                ($1, $2, $3, $4, $5, $6, $7)
+  const client = await pool.connect();
+  const customers = req.body // obj desctructing of QB data
+    //geocoding for customers
   
-        `
-        const dogValues = [eachCustomer.client_id, dog.name, dog.image, dog.dog_notes, dog.flag, dog.regular, dog.active]
-        return client.query(dogTxt, dogValues)
-      }));
+  const api_key = process.env.map_api_key;
+  const config = { headers: { Authorization: api_key } };
+
+
+  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  //we had to add this function to slow down requests to radar api
+  //they have a request limit of 10 per second
+  async function GetGeoStats(customers) {
+    const customerResult = []
+    for(let customer of customers){
+    const address = customer.street.replace(/ /g, "+");
+    const town = customer.city.replace(/ /g, '');
+    const zip = customer.zip
+    const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
+    const lat = geoStats.data.addresses[0].latitude;
+    const long = geoStats.data.addresses[0].longitude;
+    customer.lat = lat
+    customer.long = long
+    await delay(100);
+    customerResult.push(customer)
+    // console.log('testing geo stats', customer)
     }
-    for(let eachCustomer of customersResult) {
-        const scheduleTxt = `
-                              INSERT INTO clients_schedule
-                              ("client_id", "qb_id", "1", "2", "3", "4", "5")  
-                              VALUES
+    return customerResult;
+  }
+  let customersWithGeoStats =  await GetGeoStats(customers)
+
+  let customersResult = processSchedule(customersWithGeoStats)
+  // console.log('after schedule processing',  customersResult)
+
+  try{ 
+    await client.query('BEGIN')
+    for (let eachCustomer of customersResult){
+      const clientTxt = await client.query( `
+                          INSERT INTO clients 
+                            ("qb_id", "first_name", "last_name", "street", "city", "zip", "route_id", "phone", "mobile", "email", "notes", "lat", "long") 
+                            VALUES
+                            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+                            RETURNING "id";
+  ` , [eachCustomer.qb_id, eachCustomer.first_name, eachCustomer.last_name, 
+                          eachCustomer.street, eachCustomer.city, eachCustomer.zip, eachCustomer.route_id, eachCustomer.phone, eachCustomer.mobile,
+                          eachCustomer.email, eachCustomer.notes, eachCustomer.lat, eachCustomer.long])
+    const customerId = clientTxt.rows[0].id
+    eachCustomer.client_id = customerId
+  }
+  // console.log('does it add client_id', customersResult)
+  for(let eachCustomer of customersResult){
+    await Promise.all(eachCustomer.dogs.map(dog => {
+      const dogTxt = `
+                          INSERT INTO dogs 
+                              ("client_id", "name", "image", "notes", "flag", "regular", "active") 
+                            VALUES
                               ($1, $2, $3, $4, $5, $6, $7)
-  `
-        const dayValues = [eachCustomer.client_id, eachCustomer.qb_id, eachCustomer.monday, eachCustomer.tuesday, 
-                            eachCustomer.wednesday, eachCustomer.thursday, eachCustomer.friday]
-        await client.query(scheduleTxt, dayValues)
-    }
-      await client.query('COMMIT')
-      res.sendStatus(201);
-    } catch (error) {
-      await client.query('ROLLBACK')
-      console.log('Error in post route for add clients from QB', error);
-      res.sendStatus(500);
-    } finally {
-      client.release()
-    }
-  });
+
+      `
+      const dogValues = [eachCustomer.client_id, dog.name, dog.image, dog.dog_notes, dog.flag, dog.regular, dog.active]
+      return client.query(dogTxt, dogValues)
+    }));
+  }
+  for(let eachCustomer of customersResult) {
+      const scheduleTxt = `
+                            INSERT INTO clients_schedule
+                            ("client_id", "qb_id", "1", "2", "3", "4", "5")  
+                            VALUES
+                            ($1, $2, $3, $4, $5, $6, $7)
+`
+      const dayValues = [eachCustomer.client_id, eachCustomer.qb_id, eachCustomer.monday, eachCustomer.tuesday, 
+                          eachCustomer.wednesday, eachCustomer.thursday, eachCustomer.friday]
+      await client.query(scheduleTxt, dayValues)
+  }
+    await client.query('COMMIT')
+    res.sendStatus(201);
+  } catch (error) {
+    await client.query('ROLLBACK')
+    console.log('Error in post route for add clients from QB', error);
+    res.sendStatus(500);
+  } finally {
+    client.release()
+  }
+});
+
+function processSchedule (customers) {
+  // console.log('in function to process schedules', customers)
+
+  /* Schedule from QB sample
+        ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri' ]
   
-  function processSchedule (customers) {
-    // console.log('in function to process schedules', customers)
+  */
 
-    /* Schedule from QB sample
-          ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri' ]
-    
-    */
+  for (let customer of customers){
+    let schedule = customer.schedule
+    //default values for each schedule
+    customer.monday = false
+    customer.tuesday = false
+    customer.wednesday = false
+    customer.thursday = false
+    customer.friday = false
 
-    for (let customer of customers){
-      let schedule = customer.schedule
-      //default values for each schedule
+    // console.log(schedule)
+    if(schedule.includes('Mon')){
+      customer.monday = true
+    }
+    if(schedule.includes('Tues')){
+      customer.tuesday = true
+    }
+    if(schedule.includes('Wed')){
+      customer.wednesday = true
+    }
+    if(schedule.includes('Thurs')){
+      customer.thursday = true
+    }
+    if(schedule.includes('Fri')){
+      customer.friday = true
+    }
+    if(schedule.includes('Daily')){
+      customer.monday = true
+      customer.tuesday = true
+      customer.wednesday = true
+      customer.thursday = true
+      customer.friday = true
+    }
+    if(schedule.includes('daily')){
+      customer.monday = true
+      customer.tuesday = true
+      customer.wednesday = true
+      customer.thursday = true
+      customer.friday = true
+    }
+    if(schedule.includes('None')){
+      customer.monday = false
+      customer.tuesday = false
+      customer.wednesday = false
+      customer.thursday = false
+      customer.friday = false
+    }
+    if(schedule.includes('none')){
       customer.monday = false
       customer.tuesday = false
       customer.wednesday = false
       customer.thursday = false
       customer.friday = false
 
-      // console.log(schedule)
-      if(schedule.includes('Mon')){
-        customer.monday = true
-      }
-      if(schedule.includes('Tues')){
-        customer.tuesday = true
-      }
-      if(schedule.includes('Wed')){
-        customer.wednesday = true
-      }
-      if(schedule.includes('Thurs')){
-        customer.thursday = true
-      }
-      if(schedule.includes('Fri')){
-        customer.friday = true
-      }
-      if(schedule.includes('Daily')){
-        customer.monday = true
-        customer.tuesday = true
-        customer.wednesday = true
-        customer.thursday = true
-        customer.friday = true
-      }
-      if(schedule.includes('daily')){
-        customer.monday = true
-        customer.tuesday = true
-        customer.wednesday = true
-        customer.thursday = true
-        customer.friday = true
-      }
-      if(schedule.includes('None')){
-        customer.monday = false
-        customer.tuesday = false
-        customer.wednesday = false
-        customer.thursday = false
-        customer.friday = false
-      }
-      if(schedule.includes('none')){
-        customer.monday = false
-        customer.tuesday = false
-        customer.wednesday = false
-        customer.thursday = false
-        customer.friday = false
-  
-      }
     }
-    return customers
   }
+  return customers
+}
 
 
   router.put('/customer/put', rejectUnauthenticated, async (req, res) => {
@@ -549,6 +549,7 @@ if(processedCustomerDeleteDogs.length === 0){
     res.sendStatus(500);
   }  finally {
     connection.release()
+    console.log('connection release');
   }
   });
 
@@ -612,7 +613,7 @@ if(processedCustomerDeleteDogs.length === 0){
   }
 
 /* Route to delete DB customers that are no longer active on QB */
-  router.delete('/delete', async (req, res) => {
+router.delete('/delete', async (req, res) => {
   console.log('does it hit server?')
   const deleteArray = req.query.ids.split(",")
   let idsToDelete = deleteArray.map(id => Number(id))
@@ -630,8 +631,10 @@ if(processedCustomerDeleteDogs.length === 0){
       console.log('Error in delete DB route', dbErr)
       await connection.query('ROLLBACK');
       res.sendStatus(500);
+    } finally {
+      connection.release();
+      console.log('connection release');
     }
   });
 
-  
 module.exports = router;

@@ -2,6 +2,13 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import swal from 'sweetalert';
 
+let redirect ;
+if (process.env.NODE_ENV === "development") {
+    redirect = "http://localhost:5000/api/oauth2/connect_handler";
+} else {
+    redirect = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
+}
+
 function* createQbInvoice (action) {
     // console.log('in createQbInvoice saga');
     const invoiceItems = action.payload;
@@ -13,8 +20,7 @@ function* createQbInvoice (action) {
         })
        // console.log(invoiceResponse);
         if (invoiceResponse.data === 'connectToQb') {
-            // location.href = "http://localhost:5000/api/oauth2/connect_handler"
-            location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+            location.href = redirect
 
         } else if (invoiceResponse.status === 201) {
             //don't know how to handle 201 status in router.
@@ -116,8 +122,7 @@ function* quickBooksSync (action) {
        // console.log(services.status)
     } else if (services.data === 'connectToQB'){
         // console.log('services redirect')
-        // location.href = "http://localhost:5000/api/oauth2/connect_handler"
-        location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+        location.href = redirect
     }
         
    // console.log('arrived in saga for updating qb customers')
@@ -131,8 +136,7 @@ function* quickBooksSync (action) {
     // these functions handle the asyncronous functions as we want. 
     if (qbResult === 'connectToQb'){
        // console.log('need to connect to qb')
-        // location.href = "http://localhost:5000/api/oauth2/connect_handler"
-        location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
+        location.href = redirect
 
     }
 

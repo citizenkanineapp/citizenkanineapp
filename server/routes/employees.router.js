@@ -84,6 +84,10 @@ router.delete('/:id', (req, res) => {
             console.log('successfully deleted employee');
             res.sendStatus(200);
         })
+        .catch(error => {
+            res.sendStatus(500);
+            console.log('error delete employees', error);
+        })
 })
 
 // gets all employee with schedule data for odd week;
@@ -267,9 +271,9 @@ router.post('/', rejectUnauthenticated, async (req, res)=> {
         res.sendStatus(500);
         console.log('error in POST /employees', error)
     }
-    // finally {
-    //     res.send(emp_id);
-    // }
+    finally {
+        client.release();
+    }
 })
 
 // add employee schedule changes

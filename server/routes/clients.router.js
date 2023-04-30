@@ -92,7 +92,16 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
 router.post('/', rejectUnauthenticated, async (req, res) => {
   // console.log(req.body);
   // console.log(req.user);
-  const client = await pool.connect();
+  const client = await pool.connect()
+  
+  // necessary for SSL/bitio stuff?
+    // .then(client => {
+    //   console.log('connected')
+    //   client.release()
+    // })
+    // .catch(err=> console.error('error connecting'), err.stack)
+    // .then(()=> pool.end());
+
   const { first_name, last_name, street, city, zip, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone, flag } = req.body
   // const customer = {first_name, last_name, address, phone, email, route_id}
   const dogArray = dogs

@@ -83,25 +83,25 @@ router.get('/', async (req, res) => {
 async function postServices(qbServices) {
   const client = await pool.connect();
    //console.log('in post route for services', qbServices);
-try{
-      const servicesQuery = `
-        UPDATE services
-          SET
-            qb_id = $1,
-            price = $2
-          WHERE
-            name = $3;
-      `;
+  try {
+        const servicesQuery = `
+          UPDATE services
+            SET
+              qb_id = $1,
+              price = $2
+            WHERE
+              name = $3;
+        `;
 
-      await Promise.all(qbServices.map(service => {
-        const values = [service.Id, service.UnitPrice, service.FullyQualifiedName];
-        client.query(servicesQuery, values);
-      }))
-    } catch (error){
-      console.log('error adding services', error)
-    } finally{
-      client.release()
-    }
+        await Promise.all(qbServices.map(service => {
+          const values = [service.Id, service.UnitPrice, service.FullyQualifiedName];
+          client.query(servicesQuery, values);
+        }))
+      } catch (error){
+        console.log('error adding services', error)
+      } finally{
+        client.release()
+      }
 }
 
 

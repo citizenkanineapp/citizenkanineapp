@@ -22,7 +22,7 @@ let redirect;
 if (process.env.NODE_ENV === "development") {
   redirect = "http://localhost:5000/api/oauth2/connect_handler";
 } else {
-  redirect = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
+  redirect = "https://ck-staging.herokuapp.com/api/oauth2/connect_handler";
 }
 
 function ClientList() {

@@ -1,5 +1,5 @@
 {
-  "redirectUri": "https://citizen-kanine.herokuapp.com/api/oauth2/callback",
+  "redirectUri": "https://ck-staging.herokuapp.com/api/oauth2/callback",
   "configurationEndpoint": "https://developer.api.intuit.com/.well-known/openid_configuration",
   "api_uri": "https://quickbooks.api.intuit.com/v3/company/",
   "scopes": {

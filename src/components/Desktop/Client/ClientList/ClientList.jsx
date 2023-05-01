@@ -18,12 +18,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-let redirect;
-if (process.env.NODE_ENV === "development") {
-  redirect = "http://localhost:5000/api/oauth2/connect_handler";
-} else {
-  redirect = "https://ck-staging.herokuapp.com/api/oauth2/connect_handler";
+const envir = {
+  "development": "http://localhost:5000/api/oauth2/connect_handler",
+  "staging": "https://ck-staging.herokuapp.com/api/oauth2/connect_handler",
+  "production": "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
 }
+
+const redirect = envir[process.env.NODE_ENV];
+// if (process.env.NODE_ENV === "development" ) {
+//   redirect = "http://localhost:5000/api/oauth2/connect_handler";
+// } else if (process.env.NODE_ENV === "staging" ) {
+//   redirect = "https://ck-staging.herokuapp.com/api/oauth2/connect_handler";
+// } else if (process.env.NODE_ENV === "development" ) {
+//   redirect = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
+// }
+console.log(redirect);
+
 
 function ClientList() {
   const clientList = useSelector(store => store.clientsReducer);

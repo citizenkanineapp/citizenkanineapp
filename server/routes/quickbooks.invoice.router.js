@@ -5,13 +5,19 @@ const tools = require('../modules/tools')
 // const cors = require('cors');
 const request = require('request');
 const router = express.Router();
-let config ;
-if (process.env.PORT) {
-  config = require('../../config.json')
-} else {
-  config = require('../../config.dev.json')
+
+const envir = {
+  "development": "../../config.dev.json",
+  "staging": "../../config.stage.json",
+  "production": "../../config.json"
 }
-//const config = require('../../config.dev.json');
+
+if (process.env.PORT) {
+  var config = require(envir[process.env.NODE_ENV])
+} else {
+  var config = require(envir.development)
+}
+
 
 
 router.post('/', async (req, res) => {

@@ -6,13 +6,18 @@ const request = require('request');
 const router = express.Router();
 
 // PROD//DEV configs
-let config ;
-if (process.env.PORT) {
-  config = require('../../config.json')
-} else {
-  config = require('../../config.dev.json')
+const envir = {
+  "development": "../../config.dev.json",
+  "staging": "../../config.stage.json",
+  "production": "../../config.json"
 }
-// const config = require('../../config.dev.json');
+
+if (process.env.PORT) {
+  var config = require(envir[process.env.NODE_ENV])
+} else {
+  var config = require(envir.development)
+}
+
 
 router.get('/', async (req, res) => {
   console.log('in server fetch services')

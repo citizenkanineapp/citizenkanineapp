@@ -4,11 +4,20 @@ var ClientOAuth2 = require('client-oauth2')
 var request = require('request') //replace with express/axios (??????)
 require('dotenv').config();
 
-if (process.env.PORT) {
-  var config = require('../../config.json')
-} else {
-  var config = require('../../config.dev.json')
+const envir = {
+  "development": "../../config.dev.json",
+  "staging": "../../config.stage.json",
+  "production": "../../config.json"
 }
+
+if (process.env.PORT) {
+  var config = require(envir[process.env.NODE_ENV])
+} else {
+  var config = require(envir.development)
+}
+
+// 
+
 
 var Tools = function () {
   var tools = this;

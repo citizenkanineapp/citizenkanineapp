@@ -33,6 +33,7 @@ const redirect = envir[process.env.NODE_ENV];
 //   redirect = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
 // }
 console.log(redirect);
+console.log('node_env: ', process.env)
 
 
 function ClientList() {

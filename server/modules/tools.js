@@ -15,7 +15,8 @@ if (process.env.PORT) {
 } else {
   var config = require(envir.development)
 }
-
+console.log('config', config);
+console.log('node_env: ',process.env.NODE_ENV);
 // 
 
 

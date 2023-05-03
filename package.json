@@ -18,7 +18,6 @@
     "client-oauth2": "^4.3.3",
     "cloudinary": "^1.32.0",
     "cookie-session": "^2.0.0",
-    "cors": "^2.8.5",
     "csrf": "^3.1.0",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.6",
@@ -55,13 +54,18 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "client": "react-scripts start",
+    "client": "env-cmd -e development react-scripts start",
     "server": "nodemon --watch server server/server.js",
-    "build": "REACT_APP_ENV=staging react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "build-dev": "env-cmd -e development npm run-script build",
+    "build-staging": "env-cmd -e staging npm run-script build",
+    "build-prod": "env-cmd -e production npm run-script build",
+    "heroku-postbuild": "build-staging",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "nodemon": "^2.0.4"
   },
   "browserslist": [

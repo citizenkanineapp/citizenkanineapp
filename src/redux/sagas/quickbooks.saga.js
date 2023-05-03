@@ -2,13 +2,7 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import swal from 'sweetalert';
 
-const envir = {
-    "development": "http://localhost:5000/api/oauth2/connect_handler",
-    "staging": "https://ck-staging.herokuapp.com/api/oauth2/connect_handler",
-    "production": "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
-  }
-  
-const redirect = envir[process.env.NODE_ENV];
+const redirect = process.env.REACT_APP_REDIRECT;
 
 function* createQbInvoice (action) {
     // console.log('in createQbInvoice saga');

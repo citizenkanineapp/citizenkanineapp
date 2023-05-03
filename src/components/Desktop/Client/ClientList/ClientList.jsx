@@ -17,20 +17,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// const envir = {
-//   "development": "http://localhost:5000/api/oauth2/connect_handler",
-//   "staging": "https://ck-staging.herokuapp.com/api/oauth2/connect_handler",
-//   "production": "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler"
-// }
 
 const redirect = process.env.REACT_APP_REDIRECT;
-// if (process.env.NODE_ENV === "development" ) {
-//   redirect = "http://localhost:5000/api/oauth2/connect_handler";
-// } else if (process.env.NODE_ENV === "staging" ) {
-//   redirect = "https://ck-staging.herokuapp.com/api/oauth2/connect_handler";
-// } else if (process.env.NODE_ENV === "development" ) {
-//   redirect = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
-// }
 console.log(redirect);
 console.log(process.env)
 

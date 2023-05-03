@@ -3,25 +3,8 @@ var csrf = new Tokens()
 var ClientOAuth2 = require('client-oauth2')
 var request = require('request') //replace with express/axios (??????)
 require('dotenv').config();
+const config = require('./config');
 
-const envir = {
-  "development": "../../config.dev.json",
-  "staging": "../../config.stage.json",
-  "production": "../../config.json"
-}
-
-const config = require(envir[process.env.NODE_ENV]);
-
-// if (process.env.PORT) {
-//   var config = require(envir[process.env.NODE_ENV])
-// } else {
-//   var config = require(envir.development)
-// }
-// console.log('config', config);
-console.log('node_env: ', process.env.NODE_ENV);
-// 
-
- 
 var Tools = function () {
   var tools = this;
   var authConfig = {

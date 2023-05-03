@@ -1,24 +1,9 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
-// const cors = require('cors');
+const config = require('../modules/config');
 const request = require('request');
 const router = express.Router();
-
-// PROD//DEV configs
-const envir = {
-  "development": "../../config.dev.json",
-  "staging": "../../config.stage.json",
-  "production": "../../config.json"
-}
-
-var config = require(envir[process.env.NODE_ENV]);
-
-// if (process.env.PORT) {
-//   var config = require(envir[process.env.NODE_ENV])
-// } else {
-//   var config = require(envir.development)
-// }
 
 
 router.get('/', async (req, res) => {

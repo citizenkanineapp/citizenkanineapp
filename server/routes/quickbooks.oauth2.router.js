@@ -1,21 +1,9 @@
 const express = require('express');
 const pool = require('../modules/pool');
-const tools = require('../modules/tools')
+const tools = require('../modules/tools');
+const config = require('../modules/config');
 
 const router = express.Router();
-
-const envir = {
-  "development": "../../config.dev.json",
-  "staging": "../../config.stage.json",
-  "production": "../../config.json"
-}
-const config = require(envir[process.env.NODE_ENV])
-
-// if (process.env.PORT) {
-//   var config = require(envir[process.env.NODE_ENV])
-// } else {
-//   var config = require(envir.development)
-// }
 
 router.get('/connect_handler', (req, res) => {
     // GET route code here

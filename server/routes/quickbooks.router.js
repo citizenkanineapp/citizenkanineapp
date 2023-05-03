@@ -1,23 +1,10 @@
 const express = require('express');
 const axios = require('axios');
 const pool = require('../modules/pool');
-const tools = require('../modules/tools')
+const tools = require('../modules/tools');
+const config = require('../modules/config');
 const request = require('request');
 const router = express.Router();
-
-const envir = {
-  "development": "../../config.dev.json",
-  "staging": "../../config.stage.json",
-  "production": "../../config.json"
-}
-
-const config = require(envir[process.env.NODE_ENV]);
-
-// if (process.env.PORT) {
-//   var config = require(envir[process.env.NODE_ENV])
-// } else {
-//   var config = require(envir.development)
-// }
 
 const {
   rejectUnauthenticated,

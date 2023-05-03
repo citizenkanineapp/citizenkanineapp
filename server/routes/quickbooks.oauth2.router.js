@@ -1,14 +1,28 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const tools = require('../modules/tools')
+
 const router = express.Router();
+
+const envir = {
+  "development": "../../config.dev.json",
+  "staging": "../../config.stage.json",
+  "production": "../../config.json"
+}
+const config = require(envir[process.env.NODE_ENV])
+
+// if (process.env.PORT) {
+//   var config = require(envir[process.env.NODE_ENV])
+// } else {
+//   var config = require(envir.development)
+// }
 
 router.get('/connect_handler', (req, res) => {
     // GET route code here
     console.log('in api/oauth2/connect_handler');
     console.log(req.session.data)
     // console.log(req)
-   
+  
     // Set  Accounting scopes
     tools.setScopes('connect_handler')
 
@@ -53,13 +67,14 @@ router.get('/connect_handler', (req, res) => {
     
     req.session.realmId = req.query.realmId;
 
-    if(process.env.PORT) {
-      console.log('redirecting to citizen-kanine app!');
-      res.redirect('https://citizen-kanine.herokuapp.com/#/clients');
-    } else {
-      console.log('redirecting to client!');
-      res.redirect('http://localhost:3000/#/clients')
-    }
+    // if(process.env.PORT) {
+    //   console.log('redirecting to citizen-kanine app!');
+    //   res.redirect('https://citizen-kanine.herokuapp.com/#/clients');
+    // } else {
+    //   console.log('redirecting to client!');
+    //   res.redirect('http://localhost:3000/#/clients')
+    // }
+    res.redirect(config.oauthRedirect)
     })
 })
 

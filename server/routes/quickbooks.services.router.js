@@ -12,11 +12,13 @@ const envir = {
   "production": "../../config.json"
 }
 
-if (process.env.PORT) {
-  var config = require(envir[process.env.NODE_ENV])
-} else {
-  var config = require(envir.development)
-}
+var config = require(envir[process.env.NODE_ENV]);
+
+// if (process.env.PORT) {
+//   var config = require(envir[process.env.NODE_ENV])
+// } else {
+//   var config = require(envir.development)
+// }
 
 
 router.get('/', async (req, res) => {

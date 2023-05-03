@@ -2,6 +2,7 @@
   "redirectUri": "https://ck-staging.herokuapp.com/api/oauth2/callback",
   "configurationEndpoint": "https://developer.api.intuit.com/.well-known/openid_sandbox_configuration/",
   "api_uri": "https://sandbox-quickbooks.api.intuit.com/v3/company/",
+  "oauthRedirect": "https://ck-staging.herokuapp.com/#/clients", 
   "scopes": {
     "connect_handler": [
       "com.intuit.quickbooks.accounting"

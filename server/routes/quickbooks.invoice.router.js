@@ -11,12 +11,12 @@ const envir = {
   "staging": "../../config.stage.json",
   "production": "../../config.json"
 }
-
-if (process.env.PORT) {
-  var config = require(envir[process.env.NODE_ENV])
-} else {
-  var config = require(envir.development)
-}
+const config = require(envir[process.env.NODE_ENV]);
+// if (process.env.PORT) {
+//   var config = require(envir[process.env.NODE_ENV])
+// } else {
+//   var config = require(envir.development)
+// }
 
 
 

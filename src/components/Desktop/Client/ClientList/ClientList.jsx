@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import '../../Desktop.css';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
-
 //COMPONENTS
 import ClientModal from '../ClientModal/ClientModal';
 

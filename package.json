@@ -55,7 +55,7 @@
   "scripts": {
     "start": "node server/server.js",
     "client": "env-cmd -e development react-scripts start",
-    "server": "nodemon --watch server server/server.js",
+    "server": "NODE_ENV=development nodemon --watch server server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "build-dev": "env-cmd -e development npm run-script build",

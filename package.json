@@ -61,7 +61,7 @@
     "build-dev": "env-cmd -e development npm run-script build",
     "build-staging": "env-cmd -e staging npm run-script build",
     "build-prod": "env-cmd -e production npm run-script build",
-    "heroku-postbuild": "build-staging",
+    "heroku-postbuild": "npm run-script build-staging",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

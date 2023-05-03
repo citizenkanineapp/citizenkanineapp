@@ -2,6 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { DateTime } = require("luxon");
+const config = require('../modules/config');
 require('dotenv').config();
 
 const {
@@ -70,12 +71,7 @@ router.post('/email_reset_link', async (req, res) => {
               }
           });
 
-          let resetLink
-          if (process.env.PORT) {
-            resetLink = `https://citizen-kanine.herokuapp.com/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
-          } else {
-            resetLink = `http://localhost:3000/#/resetpass/${userData.rows[0].id}/${tokenParam}`;
-          }
+          const resetLink = config.redirectClientUri + `#/resetpass/${userData.rows[0].id}/${tokenParam}`
 
           const mailOptions = {
               from: process.env.RESETEMAIL, //sender

@@ -1,14 +1,13 @@
 import { Map, Marker, Overlay } from "pigeon-maps"
 import { maptiler } from 'pigeon-maps/providers'
-import MobileTopNav from '../MobileNav/MobileTopNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 
-
+import DogCheckIn from '../Route/CheckIn';
 
 //MUI
-import { Typography, Grid, Button, IconButton } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Collapse, ListItemAvatar, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, IconButton, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -21,6 +20,8 @@ import PetsIcon from '@mui/icons-material/Pets';
 import ListItemButton from '@mui/material/ListItemButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DirectionsIcon from '@mui/icons-material/Directions';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 //style for modal
 const style = {
@@ -49,11 +50,15 @@ const getRouteColor = (route) => {
 
 
 function MapView() {
-  
-useEffect(() => {
-   populateMarkers()
+  useEffect(() => {
+    populateMarkers()
 
-  }, [])
+    }, [])
+  
+  const [expanded, setExpanded] = useState(false);
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
   
   const route = useSelector(store => store.routeReducer)
   const thisRoute = route[0].route_id
@@ -119,11 +124,6 @@ useEffect(() => {
         gap: 1
       }}>
 
-        <Grid item xs={8} sx={{ background: () => getRouteColor(route), color: 'white', mt: 3, textAlign: 'center', textTransform: 'uppercase', borderRadius: 2 }}>
-          <Typography variant='h5' sx={{ textAlign: 'center', px: 5}}>
-            {route[0].route}
-          </Typography>
-        </Grid>
         <Grid item xs={8} sx={{display: 'flex', flexDirection: 'row-reverse', mb: 0}}>
               <IconButton edge="end" 
                   sx={{border: 1, mt: 1,
@@ -149,12 +149,58 @@ useEffect(() => {
                         <ListItemText primary={modalData.client_name} />
                     </ListItem>
                     {modalData && modalData.dogs.map(dog => (
-                    <ListItem disablePadding key={dog.dog_id}>
-                        <ListItemIcon>
+                    // <ListItem disablePadding key={dog.dog_id}>
+                    //     <ListItemIcon>
+                    //       <PetsIcon fontSize="small" />
+                    //     </ListItemIcon>
+                    //     <ListItemText secondary={dog.dog_name} />
+                    //     <DogCheckIn dog={dog} config="map"/>
+                    // </ListItem>
+
+                  <Accordion
+                    key={dog.dog_id}
+                    expanded={expanded === dog.dog_id}
+                    // onChange={handleChange(dog.dog_id)}
+                    // sx={{ backgroundColor: () => determineStatus(dog), mb: 1 }}
+                    >
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <List>
+                      <ListItem 
+                      // sx={{ backgroundColor: () => determineStatus(dog) }}
+                      >
+
+                        <ListItemAvatar>
                           <PetsIcon fontSize="small" />
-                        </ListItemIcon>
-                          <ListItemText secondary={dog.dog_name} />
-                    </ListItem>
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={dog.name}
+                          sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
+                        />
+                        {dog.flag ?
+                          <IconButton edge="end">
+                            <FlagIcon sx={{ fill: '#F8614D', ml: 6 }} />
+                          </IconButton>
+                          :
+                          null
+                        }
+                      </ListItem>
+                    </List>
+
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Stack direction='row' spacing={1}>
+                        <DogCheckIn
+                          dog={dog}
+                          config="routes"
+                        />
+                    </Stack>
+
+                  </AccordionDetails>
+
+                </Accordion>
+
+
+
                     ))}
                   </List>
                     <Divider />
@@ -169,17 +215,13 @@ useEffect(() => {
                                 Directions
                         </Button>
                       </ListItem>
-                      <ListItem disablePadding>
-                        <Button 
-                        sx={{mt: 1}}
-                          variant='contained' 
-                          endIcon={<DirectionsIcon />} 
-                          size='small' 
-                          onClick={() => openMap(modalData)}>
-                                CHECK-IN
-                        </Button>
-                      </ListItem>
                   </List>
+
+
+
+
+
+
                 </Box>
             </Modal>
             {/* this maps through markers and displays them on the map */}

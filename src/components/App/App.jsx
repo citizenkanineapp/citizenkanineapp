@@ -125,11 +125,6 @@ function App() {
               <Home />
             </ProtectedRoute>
 
-            <ProtectedRoute exact path="/m/map">
-              <MobileTopNav />
-              <Map />
-            </ProtectedRoute>
-
             <ProtectedRoute exact path="/m/schedule">
               <MobileTopNav />
               <WalkerSchedule />
@@ -159,6 +154,20 @@ function App() {
               <ResetPassPage />
             </ProtectedRoute>
 
+          </Switch>
+          {user.id ?
+            <MobileNav />
+
+            :
+            null
+          }
+          <Switch>
+            <ProtectedRoute exact path="/m/map">
+              <MobileTopNav />
+              <Map />
+            </ProtectedRoute>
+          </Switch>
+
 
             {/* ----------------------------------------------------- */}
 
@@ -167,13 +176,7 @@ function App() {
               <h1>404</h1>
             </Route>
 
-          </Switch>
-          {user.id ?
-            <MobileNav />
 
-            :
-            null
-          }
         </div>
       </ThemeProvider>
     </Router>

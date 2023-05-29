@@ -11,6 +11,8 @@ import RouteSelect from '../RouteSelect/RouteSelect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PinDropIcon from '@mui/icons-material/PinDrop';
 
+import DogCheckIn from './CheckIn';
+
 
 
 function DailyRoutes() {
@@ -72,36 +74,36 @@ function DailyRoutes() {
     history.push(`/m/dog/${dogID}`)
   }
 
-  const checkIn = (dog) => {
-   // console.log('CHECKING IN CLIENT #:', dog.client_id);
-    const dogID = dog.dog_id;
-    const routeID = dog.route_id;
-    const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
-    dispatch({ type: 'CHECK_IN', payload: updatedDog });
+  // const checkIn = (dog) => {
+  //  // console.log('CHECKING IN CLIENT #:', dog.client_id);
+  //   const dogID = dog.dog_id;
+  //   const routeID = dog.route_id;
+  //   const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
+  //   dispatch({ type: 'CHECK_IN', payload: updatedDog });
 
-  }
+  // }
 
-  const noShow = (dog) => {
-    const dogID = dog.dog_id;
-    const routeID = dog.route_id;
-    const updatedDog = { id: dogID, checked_in: false, no_show: true, cancelled: false, routeID: routeID }
-    dispatch({ type: 'NO_SHOW', payload: updatedDog });
-  }
+  // const noShow = (dog) => {
+  //   const dogID = dog.dog_id;
+  //   const routeID = dog.route_id;
+  //   const updatedDog = { id: dogID, checked_in: false, no_show: true, cancelled: false, routeID: routeID }
+  //   dispatch({ type: 'NO_SHOW', payload: updatedDog });
+  // }
 
-  const cancelWalk = (dog) => {
-    const dogID = dog.dog_id;
-    const routeID = dog.route_id;
-    let updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
+  // const cancelWalk = (dog) => {
+  //   const dogID = dog.dog_id;
+  //   const routeID = dog.route_id;
+  //   let updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
 
-    if (dog.cancelled) {
-      updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: false, routeID: routeID }
+  //   if (dog.cancelled) {
+  //     updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: false, routeID: routeID }
 
-    } else {
-      updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
+  //   } else {
+  //     updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
 
-    }
-    dispatch({ type: 'CANCEL_WALK', payload: updatedDog });
-  }
+  //   }
+  //   dispatch({ type: 'CANCEL_WALK', payload: updatedDog });
+  // }
 
   return (
     <>
@@ -162,41 +164,10 @@ function DailyRoutes() {
                   </AccordionSummary>
                   <AccordionDetails>
                     <Stack direction='row' spacing={1}>
-
-                      {dog.cancelled ?
-                        <>
-
-                          {user.admin ?
-                            <Button edge="end" variant='contained' color='info' onClick={(event) => cancelWalk(dog)} >
-                              <AddCircleIcon sx={{ mr: 2, p: 1 }} />
-                              ADD DOG
-                            </Button>
-
-                            :
-                            null
-                          }
-                        </>
-
-                        :
-                        <>
-
-                          <Button edge="end" onClick={(event) => checkIn(dog)} variant='contained' color='success' sx={{ mr: 1 }} size='small'>
-                            <CheckBoxIcon sx={{ mr: 2 }} />
-                            CHECK IN
-                          </Button>
-                          <Button edge="end" onClick={(event) => noShow(dog)} variant='contained' color='error' size='small'>
-                            <EventBusyIcon sx={{ mr: 2 }} />
-                            NO SHOW
-                          </Button>
-                          {user.admin ?
-                            <Button edge="end" onClick={(event) => cancelWalk(dog)} variant='contained' color='info' sx={{ mr: 1 }} size='small'>
-                              <CancelIcon sx={{ mr: 2 }} />
-                              CANCEL WALK
-                            </Button>
-                            :
-                            null
-                          }
-                        </>}
+                        <DogCheckIn
+                          dog={dog}
+                          config="routes"
+                        />
                     </Stack>
 
                   </AccordionDetails>

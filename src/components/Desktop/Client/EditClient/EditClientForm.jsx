@@ -56,7 +56,7 @@ const handleClose = () => {
 
 
   return (
-        <Box sx={{ m:2, p:2,  height: '90%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
+        <Box sx={{ m:2, p:2,  height: '95%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 1.5 }}>
 
               {/*----------------------- HEADER -----------------------*/}
               <Grid sx={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>  
@@ -150,7 +150,7 @@ const handleClose = () => {
             <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
               {client.dogs.map((dog, index) => (
                   <Card key={index} sx={{width: '35%', height: '225px', m: 1}}>
-                    <CardActions sx={{ justifyContent: 'space-between', ml: 1, py: 0, pr: 0}}>
+                    <CardActions sx={{ justifyContent: 'space-between', ml: 2, py: 0, pr: 0}}>
                       <Typography>{dog.dog_name}</Typography>
                       <IconButton
                         onClick={() => editDog(dog)}
@@ -199,7 +199,7 @@ const handleClose = () => {
                       width="100%"
                       alt="client dog photo"
                       src={dog.image ? dog.image : 'Images/dogfiller.png'}
-                      sx={{height: '100%'}}
+                      sx={{height: 175, '&:hover': {filter: 'brightness(90%)'}}}
                       />
                   </Card>
                 ))}
@@ -208,12 +208,16 @@ const handleClose = () => {
 
             {/*-------------------- BUTTONS --------------------*/}
             <Box display="flex" justifyContent="space-between">
-              <Button variant="outlined" color="info" onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientDetails'})}>Back</Button>
+             
+              <Button variant="outlined" color="info"
+                onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientDetails'})}>Back</Button>
               <Box width="23%" display="flex" justifyContent="flex-end">
+                
+                <Button variant="contained" color="secondary"
+                      onClick={saveChanges}>Save</Button> 
                 {/* <Button variant="contained" color="error"
                   onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'AddDogFromEdit'})}>Add Dog</Button>   */}
-                 <Button variant="contained" color="secondary"
-                  onClick={saveChanges}>Save</Button> 
+                 
               </Box>
             </Box>
       </Box>

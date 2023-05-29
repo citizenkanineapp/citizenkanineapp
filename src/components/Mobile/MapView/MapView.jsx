@@ -169,6 +169,16 @@ useEffect(() => {
                                 Directions
                         </Button>
                       </ListItem>
+                      <ListItem disablePadding>
+                        <Button 
+                        sx={{mt: 1}}
+                          variant='contained' 
+                          endIcon={<DirectionsIcon />} 
+                          size='small' 
+                          onClick={() => openMap(modalData)}>
+                                CHECK-IN
+                        </Button>
+                      </ListItem>
                   </List>
                 </Box>
             </Modal>

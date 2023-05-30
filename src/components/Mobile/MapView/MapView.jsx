@@ -105,6 +105,18 @@ function MapView() {
       }
       setMarkers(clientMarkers);
   }
+  
+  const determineStatus = (dog) => {
+    if (dog.checked_in) {
+      return '#B5E3E0';
+    }
+    else if (dog.no_show) {
+      return '#FBA89D';
+    } else if (dog.cancelled) {
+      return 'lightgrey';
+    }
+  }
+
 
     const openMap = async (dog) => {
     // takes in address details and encodes them into URI 
@@ -148,7 +160,7 @@ function MapView() {
                     <ListItem disablePadding>
                         <ListItemText primary={modalData.client_name} />
                     </ListItem>
-                    {modalData && modalData.dogs.map(dog => (
+                    {modalData && modalData.dogs.map((dog,i) => (
                     // <ListItem disablePadding key={dog.dog_id}>
                     //     <ListItemIcon>
                     //       <PetsIcon fontSize="small" />
@@ -158,31 +170,29 @@ function MapView() {
                     // </ListItem>
 
                   <Accordion
-                    key={dog.dog_id}
+                    key={i}
                     expanded={expanded === dog.dog_id}
-                    // onChange={handleChange(dog.dog_id)}
-                    // sx={{ backgroundColor: () => determineStatus(dog), mb: 1 }}
+                    onChange={handleChange(dog.dog_id)}
+                    sx={{ backgroundColor: () => determineStatus(dog), mb: 1 }}
                     >
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <List>
                       <ListItem 
-                      // sx={{ backgroundColor: () => determineStatus(dog) }}
+                        sx={{ backgroundColor: () => determineStatus(dog) }}
+                        disablePaddig
+                        key={dog.dog_id}
                       >
-
-                        <ListItemAvatar>
-                          <PetsIcon fontSize="small" />
-                        </ListItemAvatar>
                         <ListItemText
-                          primary={dog.name}
-                          sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
+                          primary={dog.dog_name}
+                          // sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
                         />
-                        {dog.flag ?
+                        {/* {dog.flag ?
                           <IconButton edge="end">
                             <FlagIcon sx={{ fill: '#F8614D', ml: 6 }} />
                           </IconButton>
                           :
                           null
-                        }
+                        } */}
                       </ListItem>
                     </List>
 

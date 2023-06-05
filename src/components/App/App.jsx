@@ -49,7 +49,14 @@ function App() {
         <div className="app_body">
 
           <Nav />
+
           <Switch>
+            <ProtectedRoute exact path="/m/map">
+              <MobileTopNav />
+              <Map />
+            </ProtectedRoute>
+          {/* </Switch>
+          <Switch> */}
 
             {/* --------------------- REDIRECTIONS -------------------- */}
 
@@ -154,6 +161,13 @@ function App() {
               <ResetPassPage />
             </ProtectedRoute>
 
+            {/* ----------------------------------------- */}
+            
+            {/* No matching routes: return 404. */}
+            <Route>
+              <h1>404</h1>
+            </Route>
+
           </Switch>
           {user.id ?
             <MobileNav />
@@ -161,20 +175,7 @@ function App() {
             :
             null
           }
-          <Switch>
-            <ProtectedRoute exact path="/m/map">
-              <MobileTopNav />
-              <Map />
-            </ProtectedRoute>
-          </Switch>
 
-
-            {/* ----------------------------------------------------- */}
-
-            {/* No matching routes: return 404. */}
-            <Route>
-              <h1>404</h1>
-            </Route>
 
 
         </div>

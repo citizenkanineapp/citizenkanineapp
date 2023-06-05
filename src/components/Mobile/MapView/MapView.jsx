@@ -29,7 +29,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 120,
+  width: 250,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -178,8 +178,12 @@ function MapView() {
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <List>
                       <ListItem 
-                        sx={{ backgroundColor: () => determineStatus(dog) }}
-                        disablePaddig
+                        sx={{
+                          height: 2,
+                          
+                          backgroundColor: () => determineStatus(dog)
+                        }}
+                        disablePadding
                         key={dog.dog_id}
                       >
                         <ListItemText
@@ -226,10 +230,6 @@ function MapView() {
                         </Button>
                       </ListItem>
                   </List>
-
-
-
-
 
 
                 </Box>

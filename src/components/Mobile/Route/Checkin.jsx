@@ -59,17 +59,17 @@ function DogCheckIn ({dog, config}) {
         
                     :
                     <>
-                        <Button edge="end" onClick={(event) => checkIn(dog)} variant='contained' color='success' sx={{ mr: 1 }} size='small'>
-                        <CheckBoxIcon sx={{ mr: 2 }} />
+                        <Button edge="end" onClick={(event) => checkIn(dog)} variant='contained' color='success' sx={{ mr: 1, fontSize: 10 }} size='small'>
+                        <CheckBoxIcon sx={{ mr: .5 }} />
                         CHECK IN
                         </Button>
-                        <Button edge="end" onClick={(event) => noShow(dog)} variant='contained' color='error' size='small'>
-                        <EventBusyIcon sx={{ mr: 2 }} />
+                        <Button edge="end" onClick={(event) => noShow(dog)} variant='contained' color='error' sx={{ fontSize: 10 }} size='small'>
+                        <EventBusyIcon sx={{ mr: .5 }} />
                         NO SHOW
                         </Button>
                         {user.admin ?
-                            <Button edge="end" onClick={(event) => cancelWalk(dog)} variant='contained' color='info' sx={{ mr: 1 }} size='small'>
-                                <CancelIcon sx={{ mr: 2 }} />
+                            <Button edge="end" onClick={(event) => cancelWalk(dog)} variant='contained' color='info' sx={{ mr: 1, fontSize: 10 }} size='small'>
+                                <CancelIcon sx={{ mr: .5}} />
                                 CANCEL WALK
                             </Button>
                             

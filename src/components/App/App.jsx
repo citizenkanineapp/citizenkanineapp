@@ -154,6 +154,10 @@ function App() {
               <MobileTopNav />
               <ResetPassPage />
             </ProtectedRoute>
+{/* 
+            <Route>
+              <h1>404</h1>
+            </Route> */}
 
           </Switch>
           {user.id ?
@@ -162,7 +166,7 @@ function App() {
             :
             null
           }
-          <Switch >
+          <Switch>
           <ProtectedRoute exact path="/m/map">
               <MobileTopNav />
               <Map />
@@ -172,13 +176,11 @@ function App() {
             
             {/* No matching routes: return 404. */}
 
-            <Route>
+            {/* <Route>
               <h1>404</h1>
-            </Route>
-            
+            </Route> */}
+
           </Switch>
-
-
 
         </div>
       </ThemeProvider>

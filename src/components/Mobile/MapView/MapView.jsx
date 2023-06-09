@@ -52,6 +52,7 @@ const getRouteColor = (route) => {
 function MapView() {
   useEffect(() => {
     populateMarkers()
+    // console.log('mapview useeffect')
 
     }, [])
   
@@ -98,15 +99,16 @@ function MapView() {
         let preClient= group[uniqueIds[i]]
           const { client_name,  street, zip, client_id, lat, long } = preClient[0];
           const client = {client_name, street, zip, client_id, lat, long}
-          let dogsPreFilter = preClient.map(dog => { return ({dog_name: dog.name, dog_id: dog.dog_id }) })
+          let dogsPreFilter = preClient.map(dog => { return ({dog_name: dog.name, dog_id: dog.dog_id, checked_in: true, no_show: false, cancelled: false}) })
           client.dogs = dogsPreFilter
-        // console.log('clients after filter', client)
+          // console.log('clients after filter', client)
           clientMarkers.push(client)
       }
       setMarkers(clientMarkers);
   }
   
   const determineStatus = (dog) => {
+    // console.log('determine dog status', dog);
     if (dog.checked_in) {
       return '#B5E3E0';
     }
@@ -160,27 +162,19 @@ function MapView() {
                     <ListItem disablePadding>
                         <ListItemText primary={modalData.client_name} />
                     </ListItem>
-                    {modalData && modalData.dogs.map((dog,i) => (
-                    // <ListItem disablePadding key={dog.dog_id}>
-                    //     <ListItemIcon>
-                    //       <PetsIcon fontSize="small" />
-                    //     </ListItemIcon>
-                    //     <ListItemText secondary={dog.dog_name} />
-                    //     <DogCheckIn dog={dog} config="map"/>
-                    // </ListItem>
+                    {modalData && modalData.dogs.map((dog,j) => (
 
                   <Accordion
-                    key={i}
+                    key={j}
                     expanded={expanded === dog.dog_id}
                     onChange={handleChange(dog.dog_id)}
                     sx={{ backgroundColor: () => determineStatus(dog), mb: 1 }}
-                    >
+                  >
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <List>
                       <ListItem 
                         sx={{
                           height: 2,
-                          
                           backgroundColor: () => determineStatus(dog)
                         }}
                         disablePadding
@@ -188,32 +182,20 @@ function MapView() {
                       >
                         <ListItemText
                           primary={dog.dog_name}
-                          // sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
+                          sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
                         />
-                        {/* {dog.flag ?
-                          <IconButton edge="end">
-                            <FlagIcon sx={{ fill: '#F8614D', ml: 6 }} />
-                          </IconButton>
-                          :
-                          null
-                        } */}
                       </ListItem>
                     </List>
 
                   </AccordionSummary>
                   <AccordionDetails>
                     <Stack direction='row' spacing={1}>
-                        <DogCheckIn
-                          dog={dog}
-                          config="routes"
-                        />
+                        <DogCheckIn dog={dog} config="maps" modalData={modalData} setModalData={setModalData} />
                     </Stack>
 
                   </AccordionDetails>
 
                 </Accordion>
-
-
 
                     ))}
                   </List>

@@ -160,7 +160,7 @@ router.get('/daily', async (req, res) => {
     } catch (error) {
         await client.query('ROLLBACK')
         // alert('Error Getting Daily Dogs - Could be due to attempted duplicate entries.')
-        console.log('Error in Generating / Getting Daily Dogs', error);
+        console.log('Error in Generating / Getting Daily Dogs', error.detail);
         res.sendStatus(500);
     } finally {
         client.release()

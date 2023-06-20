@@ -49,9 +49,7 @@ const style = {
     }
   }
 
-function DogCheckinModal ({modalData, open, setOpen, setModalData, route}) {
-  // console.log('fitered route data', route.filter( dog => dog.client_id === modalData.client_id).map( dog => console.log(dog)) )
-  route.filter( dog => dog.client_id === modalData.client_id).map( dog => console.log('filtered and mapped',dog))
+function DogCheckinModal ({modalData, open, setOpen, route}) {
   const dispatch = useDispatch();
 
   const [expanded, setExpanded] = useState(false);
@@ -69,12 +67,6 @@ function DogCheckinModal ({modalData, open, setOpen, setModalData, route}) {
         const routeID = dog.route_id;
         const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
         dispatch({ type: 'CHECK_IN', payload: updatedDog });
-  
-        console.log('in maps checkIn', modalData)
-        setModalData({
-          ...modalData,
-          dogs: [{ dog_id: dog.dog_id, dog_name: dog.dog_name, checked_in: true, no_show: false, cancelled: false} ]
-        });
       }
     
       const noShow = (dog) => {
@@ -83,30 +75,21 @@ function DogCheckinModal ({modalData, open, setOpen, setModalData, route}) {
         const updatedDog = { id: dogID, checked_in: false, no_show: true, cancelled: false, routeID: routeID }
         dispatch({ type: 'NO_SHOW', payload: updatedDog });
 
-        setModalData({
-          ...modalData,
-          dogs: [{ dog_id: dog.dog_id, dog_name: dog.dog_name, checked_in: false, no_show: true, cancelled: false} ]
-        });
       }
     
       const cancelWalk = (dog) => {
+        console.log('cancelWalk')
         const dogID = dog.dog_id;
         const routeID = dog.route_id;
-        // let updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
+        let updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
     
         if (dog.cancelled) {
           updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: false, routeID: routeID }
-    
         } else {
           updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
-    
         }
         //correct this for abvoe if/else
         dispatch({ type: 'CANCEL_WALK', payload: updatedDog });
-        setModalData({
-          ...modalData,
-          dogs: [{ dog_id: dog.dog_id, dog_name: dog.dog_name, checked_in: false, no_show: false, cancelled: true} ]
-        });
       }
 
 
@@ -223,15 +206,6 @@ function DogCheckinModal ({modalData, open, setOpen, setModalData, route}) {
 
                 </Box>
             </Modal>
-            {/* this maps through markers and displays them on the map
-              {markers.map((oneMarker, index) => (
-                <Marker 
-                    width={50} 
-                    anchor={[Number(oneMarker.lat), Number(oneMarker.long)]}
-                    key={index}
-                    onClick={() => handleOpen(oneMarker)}
-                    /> 
-                ))} */}
     </>
     )
 }

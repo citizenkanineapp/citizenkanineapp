@@ -16,15 +16,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 function MapView() {
   useEffect(() => {
     populateMarkers()
-
-    }, [])
+  }, [])
 
   // const dispatch = useDispatch();
   // const user = useSelector(store => store.user);
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState(false);
   const handleOpen = (text) => {
-    // console.log(text)
+    console.log(text)
     setModalData(text)
     setOpen(true);
   } 
@@ -61,21 +60,33 @@ function MapView() {
         let dogsPreFilter = preClient.map(dog => { return ({dog_name: dog.name, dog_id: dog.dog_id, checked_in: dog.checked_in, no_show: dog.no_show, cancelled: dog.cancelled}) })
         client.dogs = dogsPreFilter;
           
-          // assigns initial checkin status; determines if all dogs are cancelled.
-          // let checkinArray = [];
-          // for (let dog of client.dogs) {
-          //   checkinArray.push(dog.cancelled)
-          // }
-          // if (checkinArray.some(!false)) {
-          //   client.checkinStatus = 'cancelled'
-          // } else {
-          //   client.checkinStatus = 'incomplete'
-          // }
+        // assigns initial checkin status; determines if all dogs are cancelled.
+        let checkinArray = [];
+          for (let dog of client.dogs) {
+            checkinArray.push(dog.cancelled)
+          }
+          //returns TRUE if any of the dog status is either FALSE (already checked in) or NULL (auto-populated and not-checked in)
+          if (checkinArray.some((status) => status != true )) {
+            client.checkinStatus = 'incomplete'
+          } else {
+            client.checkinStatus = 'cancelled'
+          }
 
-        clientMarkers.push(client)
+          clientMarkers.push(client)
       }
       setMarkers(clientMarkers);
-      console.log("markers",markers)
+      console.log("markers",clientMarkers)
+  }
+
+
+  const setMarkerColor = (status)=> {
+    // console.log(status);
+    if (status === 'incomplete') {
+      return 'rgb(79, 6, 214)';
+    } else if (status === 'complete') {
+      return 'rgb(83, 79, 82)';
+    }
+
   }
 
     const openMap = async (dog) => {
@@ -97,30 +108,31 @@ function MapView() {
       }}>
 
         <Grid item xs={8} sx={{display: 'flex', flexDirection: 'row-reverse', mb: 0}}>
-              <IconButton edge="end" 
-                  sx={{border: 1, mt: 1,
-                  flexDirection: 'column', px: 2}} >
-                  <ArrowBackIcon 
-                      sx={{fontSize: 25, mb: 0}}
-                      onClick={(event) => history.push(`/m/route/${thisRoute}`)}/>
-                      <Typography>Back</Typography>
-              </IconButton>
+          <IconButton edge="end" 
+            sx={{border: 1, mt: 1,
+            flexDirection: 'column', px: 2}}
+            onClick={(event) => history.push(`/m/route/${thisRoute}`)}
+          >
+            <ArrowBackIcon sx={{fontSize: 25, mb: 0}} />
+            <Typography>Back</Typography>
+          </IconButton>
         </Grid>
         <Grid item sx={{ width: '100%', height: '45rem' }}>
           <Map provider={maptilerProvider} defaultCenter={[44.914450, -93.304140]} defaultZoom={13}>
             {/*this modal opens to display more details  */}
-            <DogCheckinModal route={route} modalData={modalData} setModalData={setModalData} open={open} setOpen={setOpen}/>
-            {markers.map((oneMarker, index) => (
-                <Marker 
-                    width={50} 
-                    anchor={[Number(oneMarker.lat), Number(oneMarker.long)]}
-                    key={index}
-                    onClick={() => handleOpen(oneMarker)}
-                    /> 
-                ))}
+            <DogCheckinModal route={route} modalData={modalData} setModalData={setModalData} setMarkers={setMarkers} markers={markers} open={open} setOpen={setOpen}/>
+            {markers.filter(marker => marker.checkinStatus != 'cancelled').map((oneMarker, i) => (
+              <Marker 
+                width={50} 
+                anchor={[Number(oneMarker.lat), Number(oneMarker.long)]}
+                key={i}
+                color={setMarkerColor(oneMarker.checkinStatus)}
+                onClick={() => handleOpen(oneMarker)}
+              />   
+            ))}
               
           </Map>
-            </Grid>
+        </Grid>
     </Grid>
   );
 }

@@ -59,7 +59,7 @@ function DailyRoutes() {
   }
 
   const determineStatus = (dog) => {
-    console.log(dog);
+    // console.log(dog);
     if (dog.checked_in) {
       return '#B5E3E0';
     }
@@ -86,12 +86,14 @@ function DailyRoutes() {
           </Grid>
           <Grid item xs={8} sx={{display: 'flex', flexDirection: 'row-reverse', justifyContent: 'center', mb: 0}}>
               <IconButton edge="end" 
-                  sx={{border: 1, mt: 1,
-                  flexDirection: 'column', px: 2}} >
-                  <PinDropIcon 
-                      sx={{fontSize: 30, mb: 0}}
-                      onClick={(event) =>  history.push('/m/map') }/>
-                      <Typography>Map</Typography>
+                sx={{border: 1, mt: 1,
+                flexDirection: 'column', px: 2}}
+                onClick={(event) =>  history.push('/m/map')}
+              >
+                <PinDropIcon 
+                  sx={{fontSize: 30, mb: 0}}
+                />
+                <Typography>Map</Typography>
               </IconButton>
             </Grid>
           <Grid item xs={12} sx={{ mx: 2 }}>

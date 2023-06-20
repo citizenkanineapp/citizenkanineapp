@@ -11,19 +11,19 @@ function DogCheckIn ({ dog, config, modalData, setModalData }) {
     const dispatch = useDispatch();
     const user = useSelector(store => store.user);
     
-      const checkIn = (dog) => {
-        const dogID = dog.dog_id;
-        const routeID = dog.route_id;
-        const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
-        dispatch({ type: 'CHECK_IN', payload: updatedDog });
+    const checkIn = (dog) => {
+      const dogID = dog.dog_id;
+      const routeID = dog.route_id;
+      const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
+      dispatch({ type: 'CHECK_IN', payload: updatedDog });
 
-        // if (config="maps"){
-        //   console.log('in maps checkIn', modalData)
-        //   setModalData()
-        //   console.log('second checkin', modalData);
-        // }
-    
-      }
+      // if (config="maps"){
+      //   console.log('in maps checkIn', modalData)
+      //   setModalData()
+      //   console.log('second checkin', modalData);
+      // }
+
+    }
     
       const noShow = (dog) => {
         const dogID = dog.dog_id;

@@ -56,15 +56,26 @@ function MapView() {
     let clientMarkers = []
       for (let i = 0; i < uniqueIds.length; i++) {
         let preClient= group[uniqueIds[i]]
-          const { client_name,  street, zip, client_id, lat, long } = preClient[0];
-          const client = {client_name, street, zip, client_id, lat, long}
-          let dogsPreFilter = preClient.map(dog => { return ({dog_name: dog.name, dog_id: dog.dog_id, checked_in: dog.checked_in, no_show: dog.no_show, cancelled: dog.cancelled}) })
-          client.dogs = dogsPreFilter
-          // console.log('clients after filter', client)
-          clientMarkers.push(client)
+        const { client_name,  street, zip, client_id, lat, long } = preClient[0];
+        const client = {client_name, street, zip, client_id, lat, long}
+        let dogsPreFilter = preClient.map(dog => { return ({dog_name: dog.name, dog_id: dog.dog_id, checked_in: dog.checked_in, no_show: dog.no_show, cancelled: dog.cancelled}) })
+        client.dogs = dogsPreFilter;
+          
+          // assigns initial checkin status; determines if all dogs are cancelled.
+          // let checkinArray = [];
+          // for (let dog of client.dogs) {
+          //   checkinArray.push(dog.cancelled)
+          // }
+          // if (checkinArray.some(!false)) {
+          //   client.checkinStatus = 'cancelled'
+          // } else {
+          //   client.checkinStatus = 'incomplete'
+          // }
+
+        clientMarkers.push(client)
       }
       setMarkers(clientMarkers);
-      // console.log("markers",markers)
+      console.log("markers",markers)
   }
 
     const openMap = async (dog) => {

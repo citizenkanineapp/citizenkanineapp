@@ -1,6 +1,8 @@
 const express = require('express');
 const pool = require('../modules/pool');
-const tools = require('../modules/tools')
+const tools = require('../modules/tools');
+const config = require('../modules/config');
+
 const router = express.Router();
 
 router.get('/connect_handler', (req, res) => {
@@ -8,7 +10,7 @@ router.get('/connect_handler', (req, res) => {
     console.log('in api/oauth2/connect_handler');
     console.log(req.session.data)
     // console.log(req)
-   
+  
     // Set  Accounting scopes
     tools.setScopes('connect_handler')
 
@@ -53,13 +55,7 @@ router.get('/connect_handler', (req, res) => {
     
     req.session.realmId = req.query.realmId;
 
-    if(process.env.PORT) {
-      console.log('redirecting to citizen-kanine app!');
-      res.redirect('https://citizen-kanine.herokuapp.com/#/clients');
-    } else {
-      console.log('redirecting to client!');
-      res.redirect('http://localhost:3000/#/clients')
-    }
+    res.redirect(config.redirectClientUri + '#/clients')
     })
 })
 

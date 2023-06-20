@@ -111,21 +111,21 @@ function ClientDetails(){
                 value={client.street} 
                 helperText="Street"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px"}}}
               />
               <TextField
                 focused={false}
                 value={client.city} 
                 helperText="City"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px"}}}
                 />
               <TextField
                 focused={false}
                 value={client.zip} 
                 helperText="Zip"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px"}}}
                />
           {client.notes && client.notes.length > 40 ?
               
@@ -136,14 +136,14 @@ function ClientDetails(){
                 size="small" 
                 multiline
                 rows={2}
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px" }}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px" }}}
                />: 
                <TextField
                 focused={false}
                 value={client.notes || ''} 
                 helperText="Entry Protocol"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px" }}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px" }}}
                />
           }
               <TextField
@@ -151,14 +151,14 @@ function ClientDetails(){
                 value={client.phone} 
                 helperText="Phone"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px"}}}
                 />
               <TextField
                 focused={false}
                 value={client.mobile || ''} 
                 helperText="Mobile"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px"}}}
                 />
               {client.email.includes(',') ?
                 <TextField
@@ -168,7 +168,7 @@ function ClientDetails(){
                 size="small" 
                 multiline
                 rows={2}
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px"}}}
                 />
             :  
                 <TextField
@@ -176,7 +176,7 @@ function ClientDetails(){
                 value={client.email} 
                 helperText="Email"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px"}}}
               />
             }
               <TextField
@@ -184,21 +184,21 @@ function ClientDetails(){
                 value={client.vet_name || ''} 
                 helperText="Vet Name"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px"}}}
              />
               <TextField
                 focused={false}
                 value={client.vet_phone || ''} 
                 helperText="Vet Phone"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px"}}}
               />
               <TextField
                 focused={false}
                 value={client.route_name || ''} 
                 helperText="Default Route"  
                 size="small" 
-                InputProps={{readOnly: true, style: {fontWeight: '800', fontSize: "16px"}}}
+                InputProps={{readOnly: true, style: {fontWeight: '700', fontSize: "16px"}}}
                 />
             </Grid> {/* value is what you see in the field, read only*/}
 
@@ -207,13 +207,13 @@ function ClientDetails(){
           <Grid sx={{ display: 'flex', justifyContent: "center", flexDirection: 'row', gap: 1 }}>
           {client.dogs && client.dogs.map && client.dogs.map((dog, index) => 
                 <Card key={index} sx={{width: '35%', height: '225px', m: 1}}>
-                  <CardActions sx={{ justifyContent: 'space-between', ml: 2, p: 0}}>
+                  <CardActions sx={{ justifyContent: 'space-between', ml: 2, p: 0, pr: 0}}>
                     <Typography>{dog.dog_name}</Typography>
                     <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                     <IconButton
                         onClick={() => editDog(dog)}
                         size="small"
-                        sx={{ py: 1, borderRadius: 0 }}>
+                        sx={{ ml: 2, py: 1, borderRadius: 0 }}>
                         <CreateOutlinedIcon/>
                       </IconButton>
                     </Box>
@@ -235,15 +235,15 @@ function ClientDetails(){
           {/*-------------------- BUTTONS --------------------*/}
           <Box display="flex" justifyContent="space-between">
             <Box width="22%" display="flex" justifyContent="space-between">
-              <Button variant="outlined" color="info"
-                onClick={back}>Back</Button>
+              <Button variant="contained" color="secondary"
+                onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Edit</Button> 
             {/* <Tooltip title="Delete Client" placement="top-end">
               <Button variant="contained"
                 onClick={() => deleteClient(client.client_id)}>Delete</Button> 
             </Tooltip> */}
             </Box>
-              <Button variant="contained" color="secondary"
-                onClick={() => dispatch({ type: 'SET_CLIENT_MODAL', payload: 'EditClientForm'})}>Edit</Button> 
+             <Button variant="outlined" color="info"
+                onClick={back}>Back</Button>
           </Box>
 
       </Box>

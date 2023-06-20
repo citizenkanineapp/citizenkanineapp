@@ -17,7 +17,7 @@ const checkAuthTokens = async (req, res, next) => {
             return res.json({ error: err, statusCode: response.statusCode })
           } else {
     
-            console.log(response)
+            console.log('check auth tokens', response)
           }
     }, (error)=> {
             console.log(error)

@@ -38,16 +38,7 @@ const style = {
     p: 4,
   };
 
-  const getRouteColor = (route) => {
-    switch (route[0].route) {
-      case 'Tangletown': return '#4a5061';
-      case 'Emerson': return '#539bd1';
-      case 'Far': return '#3DA49D';
-      case 'Misfits': return '#f5a572';
-      case 'Unassigned': return '#f37e2d';
-      default: return '#f8614d';
-    }
-  }
+
 
 function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}) {
   const dispatch = useDispatch();
@@ -106,8 +97,8 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}
 
   //chat GPT came through with how to handle this--creating a copy of markers in order to update!
   const updateMarkers = (modalData) => {
-    console.log('checkinStatus')
-    modalData.checkinStatus = 'complete'
+    // console.log('checkinStatus')
+    modalData.checkinStatus = !modalData.checkinStatus;
     setMarkers((markers) => {
       const updatedMarkers = markers.map((client) => {
         if (client.client_id === modalData.client_id) {
@@ -203,14 +194,24 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}
           <Divider />
         <List>
           <ListItem disablePadding>
+            {/* <Button 
+              sx={{mt: 1,ml:-3}}
+              variant='contained' 
+              endIcon={<DirectionsIcon />} 
+              size='small' 
+              onClick={() => openMap(modalData)}>
+                    Directions
+            </Button> */}
+            { !modalData.checkinStatus ?
               <Button 
                 sx={{mt: 1}}
-                variant='contained' 
-                endIcon={<DirectionsIcon />} 
+                variant='contained'
                 size='small' 
-                onClick={() => openMap(modalData)}>
-                      Directions
+                onClick={() => updateMarkers(modalData)}
+              >
+                      Check in all dogs
               </Button>
+            :
               <Button 
                 sx={{mt: 1}}
                 variant='contained'
@@ -218,9 +219,10 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}
                 size='small' 
                 onClick={() => updateMarkers(modalData)}
               >
-                      Complete Check In?
+                      All dogs checked in
               </Button>
-            </ListItem>
+            }
+          </ListItem>
         </List>
 
 

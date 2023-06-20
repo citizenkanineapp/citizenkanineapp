@@ -17,7 +17,7 @@ const {
  * GET all clients and their dogs
  */
 router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
-  //console.log('arrived in server get all route')
+  console.log('in GET api/clients')
   const queryText = `
                     SELECT clients.first_name, clients.id as client_id, clients.qb_id, clients.last_name, clients.notes, clients.phone, clients.mobile, clients.email, clients.lat, clients.long, routes.id as route,
 
@@ -90,9 +90,11 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
  * POST route for initially adding a client
  */
 router.post('/', rejectUnauthenticated, async (req, res) => {
+  console.log('in POST api/clients')
   // console.log(req.body);
   // console.log(req.user);
-  const client = await pool.connect();
+  const client = await pool.connect()
+
   const { first_name, last_name, street, city, zip, email, route_id, phone, dogs, schedule, notes, vet_name, vet_phone, flag } = req.body
   // const customer = {first_name, last_name, address, phone, email, route_id}
   const dogArray = dogs
@@ -154,12 +156,13 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
     res.sendStatus(500);
   } finally {
     client.release()
+    console.log('release pool');
   }
 });
 
 //route to edit client
 router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
-  // console.log('client in put route:', req.body)
+  console.log('in PUT api/client client:', req.body)
   const connection = await pool.connect();
   let { first_name, last_name, street, city, zip, client_id, phone, email, notes, vet_name, vet_phone, route, route_name, dogs } = req.body
   //  console.log('dogs array?', dogs)
@@ -218,6 +221,9 @@ router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     console.log('Error in PUT route', dbErr)
     await connection.query('ROLLBACK');
     res.sendStatus(500);
+  } finally {
+    connection.release();
+    console.log('release connection');
   }
 });
 
@@ -350,7 +356,7 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
 });
 
 router.get('/schedule/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
-  // console.log('arrived in server get schedule route', req.params.id)
+  console.log('in api/clients/schedule', req.params.id)
   let clientId = req.params.id
   const queryText = `
             SELECT * FROM clients_schedule
@@ -376,7 +382,7 @@ router.get('/schedule/:id', rejectUnauthenticated, rejectUnauthorized, (req, res
 
 router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 
- // console.log('one off change', req.body)
+  console.log('in api/clients/schedule', req.body)
 
   const client = await pool.connect();
   // const {date, is_scheduled, dog_id, client_id } = req.body
@@ -404,6 +410,7 @@ router.post('/schedule', rejectUnauthenticated, async (req, res) => {
     res.sendStatus(500);
   } finally {
     client.release()
+    console.log('client release')
   }
 });
 
@@ -439,7 +446,7 @@ router.put('/schedule/updated', rejectUnauthenticated, async (req, res) => {
 
 
 router.delete('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
-  // console.log(req.params.id)
+  console.log('in DELETE api/client', req.params.id)
 
   const queryText = 'DELETE FROM clients WHERE id=$1';
   pool.query(queryText, [req.params.id])
@@ -451,7 +458,7 @@ router.delete('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
 });
 
 router.put('/dogs/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
-  // console.log(req.params.id)
+  console.log('in PUT api/client/dogs/:',req.params.id)
 
   const queryText = `
                 UPDATE dogs
@@ -468,7 +475,7 @@ router.put('/dogs/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) =>
 
 //route to edit regular schedule
 router.put('/schedule', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
-  // console.log('schedule as it arrives in server: ', req.body["1"])
+  console.log('schedule as it arrives in server: ', req.body["1"])
 
   const scheduleTxt = `
             UPDATE clients_schedule
@@ -492,9 +499,5 @@ router.put('/schedule', rejectUnauthenticated, rejectUnauthorized, async (req, r
     res.sendStatus(500);
   }
 });
-
-
-
-
 
 module.exports = router;

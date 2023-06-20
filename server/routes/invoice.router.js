@@ -12,6 +12,8 @@ const {
 
 router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     console.log('in /api/invoice');
+    const client = await pool.connect();
+
     // console.log(req.query)
     const searchClientId = req.query.clientId;
     //console.log('client id?', searchClientId)
@@ -98,14 +100,14 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     `;
 
     try {
-        const resServices = await pool.query(queryServices)
+        const resServices = await client.query(queryServices)
         const services = resServices.rows;
          //console.log(services);
-        const resDetails = await pool.query(queryWalkDetails, searchTerms);
+        const resDetails = await client.query(queryWalkDetails, searchTerms);
         const invoiceData = resDetails.rows;
          //console.log('invoiceData', invoiceData);
 
-        const resSchedule = await pool.query(querySchedule);
+        const resSchedule = await client.query(querySchedule);
         const schedules = resSchedule.rows;
          //console.log('schedules', schedules)
 
@@ -224,6 +226,9 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     } catch (error) {
         console.log('Error GET /api/invoice', error);
         res.sendStatus(500);
+    } finally {
+        console.log ('release invoice pool')
+        client.release();
     }
 });
 

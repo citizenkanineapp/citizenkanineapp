@@ -1,18 +1,11 @@
 const express = require('express');
 const axios = require('axios');
 const pool = require('../modules/pool');
-const tools = require('../modules/tools')
+const tools = require('../modules/tools');
+const config = require('../modules/config');
 // const cors = require('cors');
 const request = require('request');
 const router = express.Router();
-let config ;
-if (process.env.PORT) {
-  config = require('../../config.json')
-} else {
-  config = require('../../config.dev.json')
-}
-//const config = require('../../config.dev.json');
-
 
 router.post('/', async (req, res) => {
   // console.log('in server post invoice',req.body);

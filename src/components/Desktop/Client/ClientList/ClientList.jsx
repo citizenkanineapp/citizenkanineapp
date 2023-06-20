@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import '../../Desktop.css';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
-
 //COMPONENTS
 import ClientModal from '../ClientModal/ClientModal';
 
@@ -17,6 +16,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: '#accad5' ,
   },
 }));
+
+
+const redirect = process.env.REACT_APP_REDIRECT;
+console.log(redirect);
+console.log(process.env)
+
 
 function ClientList() {
   const clientList = useSelector(store => store.clientsReducer);
@@ -34,8 +39,7 @@ function ClientList() {
 
   //starts OAuth process with QB
   const connectQB = ()=>{
-  // location.href = "http://localhost:5000/api/oauth2/connect_handler";
-    location.href = "https://citizen-kanine.herokuapp.com/api/oauth2/connect_handler";
+    location.href = redirect;
   }
 
   const openModal = (view) => {

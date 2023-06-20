@@ -176,9 +176,9 @@ console.log('client right now', client)
           {/*-------------------- BUTTONS --------------------*/}
           <Box sx={{mt: 2, display: 'flex', justifyContent: 'space-between' }}>
             <Button variant="outlined" color="info"
-              onClick={back}>Back</Button>  {/*goes back to dog form*/}
+                onClick={back}>Back</Button>  goes back to dog form
             <Button variant="contained" color="success"
-              onClick={saveClient}>Save</Button> 
+                onClick={saveClient}>Save</Button> 
           </Box>
       </Box>
     );

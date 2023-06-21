@@ -7,6 +7,7 @@
     "connect_handler": [
       "com.intuit.quickbooks.accounting"
     ]
-    }
+    },
+    "SCHEMA":"ck_prod"
   }
   

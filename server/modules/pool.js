@@ -3,7 +3,7 @@ const config = require('../modules/config');
 
 let configPool = {};
 
-if (process.env.DB_PASS) {
+if (process.env.DATABASE_URL) {
   configPool = {
     connectionString: process.env.DATABASE_URL,
     ssl: {

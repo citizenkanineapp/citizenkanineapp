@@ -13,8 +13,7 @@ DROP TABLE IF EXISTS ck_prod.admin_notes;
 DROP TABLE IF EXISTS ck_prod."user";
 DROP TABLE IF EXISTS ck_prod.employees;
 DROP TABLE IF EXISTS ck_prod.services;
-DROP TABLE IF EXISTS ck_prod.invoices;
-DROP TABLE IF EXISTS ck_prod.oauth2_tokens;
+
 
 CREATE TABLE ck_prod.employees (
 	"id" SERIAL PRIMARY KEY,

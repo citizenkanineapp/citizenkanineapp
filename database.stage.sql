@@ -13,8 +13,7 @@ DROP TABLE IF EXISTS ck_stage.admin_notes;
 DROP TABLE IF EXISTS ck_stage."user";
 DROP TABLE IF EXISTS ck_stage.employees;
 DROP TABLE IF EXISTS ck_stage.services;
-DROP TABLE IF EXISTS ck_stage.invoices;
-DROP TABLE IF EXISTS ck_stage.oauth2_tokens;
+
 
 CREATE TABLE ck_stage.employees (
 	"id" SERIAL PRIMARY KEY,

@@ -1,26 +1,22 @@
--- DATABASE NAME: citizen_kanine
--- USER is a reserved keyword with Postgres
--- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
+CREATE SCHEMA IF NOT EXISTS ck_dev;
 
 -- ORDERING BASED ON DEPENDENT COLUMNS/SECTIONS:
-DROP TABLE IF EXISTS daily_dogs;
-DROP TABLE IF EXISTS dogs_schedule_changes;
-DROP TABLE IF EXISTS clients_schedule;
-DROP TABLE IF EXISTS dogs;
-DROP TABLE IF EXISTS clients;
-DROP TABLE IF EXISTS routes;
-DROP TABLE IF EXISTS employees_schedule;
-DROP TABLE IF EXISTS employees_schedule_changes;
-DROP TABLE IF EXISTS admin_notes;
-DROP TABLE IF EXISTS "user";
-DROP TABLE IF EXISTS employees;
-DROP TABLE IF EXISTS services;
-DROP TABLE IF EXISTS invoices;
-DROP TABLE IF EXISTS oauth2_tokens;
+DROP TABLE IF EXISTS ck_dev.daily_dogs;
+DROP TABLE IF EXISTS ck_dev.dogs_schedule_changes;
+DROP TABLE IF EXISTS ck_dev.clients_schedule;
+DROP TABLE IF EXISTS ck_dev.dogs;
+DROP TABLE IF EXISTS ck_dev.clients;
+DROP TABLE IF EXISTS ck_dev.routes;
+DROP TABLE IF EXISTS ck_dev.employees_schedule;
+DROP TABLE IF EXISTS ck_dev.employees_schedule_changes;
+DROP TABLE IF EXISTS ck_dev.admin_notes;
+DROP TABLE IF EXISTS ck_dev."user";
+DROP TABLE IF EXISTS ck_dev.employees;
+DROP TABLE IF EXISTS ck_dev.services;
+DROP TABLE IF EXISTS ck_dev.invoices;
+DROP TABLE IF EXISTS ck_dev.oauth2_tokens;
 
-CREATE TABLE employees (
+CREATE TABLE ck_dev.employees (
 	"id" SERIAL PRIMARY KEY,
 	"first_name" VARCHAR(150) NOT NULL,
 	"last_name" VARCHAR(150), 
@@ -36,7 +32,7 @@ CREATE TABLE employees (
 
 --** Employees MOCK DATA **--
 -- REMOVE BEFORE DEPLOYMENT
--- insert into employees 
+-- insert into ck_dev.employees 
 -- 	(first_name, last_name, email, phone, street, city, "zip", admin) 
 -- values 
 -- 	('Danny', 'Paolini', 'dpaolini0@paypal.com', '(840)673-2127', '2900 W 43rd St', 'Minneapolis',  55410, false),
@@ -49,9 +45,9 @@ CREATE TABLE employees (
 
 
 -- removed email from user since we no longer need it for password retrieval.
-CREATE TABLE "user" (
+CREATE TABLE ck_dev."user" (
 	"id" SERIAL PRIMARY KEY,
-	"emp_id" INT REFERENCES employees(id) ON DELETE CASCADE,
+	"emp_id" INT REFERENCES ck_dev.employees(id) ON DELETE CASCADE,
 	"username" VARCHAR(150),
 	"password" VARCHAR(150) NOT NULL,
 	"admin" BOOLEAN DEFAULT FALSE,
@@ -64,7 +60,7 @@ CREATE TABLE "user" (
 --** USER INITIALIZATION DATA **--
 --** USERNAME: 'admin'
 --** PASSWORD: 'admin'
-INSERT INTO "user"
+INSERT INTO ck_dev."user"
 	("username","password","admin", "emp_id","email")
 VALUES
 	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, null,'thecitizenkanine@gmail.com');
@@ -72,9 +68,9 @@ VALUES
 	-- ('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2,null);
 	
 
-CREATE TABLE employees_schedule (
+CREATE TABLE ck_dev.employees_schedule (
 	"id" SERIAL PRIMARY KEY,
-	"emp_id" INT NOT NULL REFERENCES employees(id) ON DELETE CASCADE ,
+	"emp_id" INT NOT NULL REFERENCES ck_dev.employees(id) ON DELETE CASCADE ,
 	"week" INT NOT NULL,
 	"1" BOOLEAN DEFAULT FALSE,
 	"2" BOOLEAN DEFAULT FALSE,
@@ -105,22 +101,22 @@ CREATE TABLE employees_schedule (
 -- 	(7, 1, true, true, true, true, false),
 -- 	(7, 2, true, true, true, true, false);
 
--- ADDED EMP SCHEDULE CHANGES TABLE (Yani)
-CREATE TABLE employees_schedule_changes (
+-- ADDED EMP SCHEDULE CHANGES TABLE ck_dev.(Yani)
+CREATE TABLE ck_dev.employees_schedule_changes (
 	"id" SERIAL PRIMARY KEY,
-	"emp_id" INT NOT NULL,   --REFERENCES clients(id) ON DELETE CASCADE--
+	"emp_id" INT NOT NULL,   --REFERENCES ck_dev.clients(id) ON DELETE CASCADE--
 	"date_to_change" DATE NOT NULL,
 	"is_scheduled" BOOLEAN,
 	"date" DATE DEFAULT CURRENT_DATE,
 	UNIQUE("emp_id", "date_to_change")
 	);
 
-CREATE TABLE routes (
+CREATE TABLE ck_dev.routes (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(150)
 	);
 
-INSERT INTO routes
+INSERT INTO ck_dev.routes
 	("name")
 VALUES
 	('Tangletown'),
@@ -129,7 +125,7 @@ VALUES
 	('Misfits'),
 	('Unassigned');
 
-CREATE TABLE services (
+CREATE TABLE ck_dev.services (
 	"id" SERIAL PRIMARY KEY,
 	"qb_id" INT NULL,
 	"name" VARCHAR (150),
@@ -137,7 +133,7 @@ CREATE TABLE services (
 );
 
 -- service names MUST match names in QB
-INSERT INTO services
+INSERT INTO ck_dev.services
 	("name", "price")
 VALUES
 	('Group Dog Walking:Walk 1 dog - Ad hoc', '23'),
@@ -148,7 +144,7 @@ VALUES
 	('Group Dog Walking:Walk 2 dogs 5 days / week', '42'),
 	('Group Dog Walking:Walk 3 dogs', '54');
 
-CREATE TABLE clients (
+CREATE TABLE ck_dev.clients (
 	"id" SERIAL PRIMARY KEY,
 	"qb_id" INT NOT NULL,
 	"first_name" VARCHAR(150) NOT NULL,
@@ -157,7 +153,7 @@ CREATE TABLE clients (
 	"city" VARCHAR(150),
 	"zip" INT,
 --	"service_id" INT NOT NULL REFERENCES,
-	"route_id" INT REFERENCES routes(id),
+	"route_id" INT REFERENCES ck_dev.routes(id),
 	"phone" VARCHAR(150),
 	"mobile" VARCHAR(150),
 	"email" VARCHAR(150) NOT NULL,
@@ -169,9 +165,9 @@ CREATE TABLE clients (
 
 
 
-CREATE TABLE dogs (
+CREATE TABLE ck_dev.dogs (
 	"id" SERIAL PRIMARY KEY,
-	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+	"client_id" INT NOT NULL REFERENCES ck_dev.clients(id) ON DELETE CASCADE,
 	"name" VARCHAR(150),
 	"image" VARCHAR,
 	"vet_name" VARCHAR(150),
@@ -184,12 +180,12 @@ CREATE TABLE dogs (
 	);
 
 
--- ** Changed table name to client_schedule since the days will be set for the client and changes will be made to individual dogs.
+-- ** Changed table ck_dev.name to client_schedule since the days will be set for the client and changes will be made to individual dogs.
 -- ** Changed the weekday column titles from m-f to (1-5) to make using MUI calendar data easier.
-CREATE TABLE clients_schedule (
+CREATE TABLE ck_dev.clients_schedule (
 	"id" SERIAL PRIMARY KEY,
 	"qb_id" INT NOT NULL,
-	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+	"client_id" INT NOT NULL REFERENCES ck_dev.clients(id) ON DELETE CASCADE,
 	"1" BOOLEAN DEFAULT FALSE,
 	"2" BOOLEAN DEFAULT FALSE,
 	"3" BOOLEAN DEFAULT FALSE,
@@ -198,10 +194,10 @@ CREATE TABLE clients_schedule (
 	);
 
 	
-CREATE TABLE dogs_schedule_changes (
+CREATE TABLE ck_dev.dogs_schedule_changes (
 	"id" SERIAL PRIMARY KEY,
-	"dog_id" INT NOT NULL REFERENCES dogs(id) ON DELETE CASCADE,
-	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+	"dog_id" INT NOT NULL REFERENCES ck_dev.dogs(id) ON DELETE CASCADE,
+	"client_id" INT NOT NULL REFERENCES ck_dev.clients(id) ON DELETE CASCADE,
 	"date_to_change" DATE NOT NULL,
 	"is_scheduled" BOOLEAN,
 	"date" DATE DEFAULT CURRENT_DATE,
@@ -210,46 +206,21 @@ CREATE TABLE dogs_schedule_changes (
 	
 -- ** added "week_of_year" to daily_dogs for purposes of invoice query.
 -- ** week_of_year added to each data row in mobile.router PUT request	
-CREATE TABLE daily_dogs (
+CREATE TABLE ck_dev.daily_dogs (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(150) NOT NULL,
 	"date" DATE DEFAULT CURRENT_DATE,
-	"dog_id" INT NOT NULL REFERENCES dogs(id),
-	"route_id" INT NOT NULL REFERENCES routes(id),
-	"client_id" INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+	"dog_id" INT NOT NULL REFERENCES ck_dev.dogs(id),
+	"route_id" INT NOT NULL REFERENCES ck_dev.routes(id),
+	"client_id" INT NOT NULL REFERENCES ck_dev.clients(id) ON DELETE CASCADE,
 	"checked_in" BOOLEAN DEFAULT NULL,
 	"no_show" BOOLEAN DEFAULT NULL,
 	"cancelled" BOOLEAN DEFAULT NULL,
 	UNIQUE ("dog_id", "date")
 	);
 
-
-
-CREATE TABLE admin_notes (
+CREATE TABLE ck_dev.admin_notes (
 	"id" SERIAL PRIMARY KEY,
-	"user_id" INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+	"user_id" INT NOT NULL REFERENCES ck_dev."user"(id) ON DELETE CASCADE,
 	"notes" VARCHAR
 	);
-
--- INSERT INTO admin_notes
--- 	("user_id", "notes")
--- VALUES
--- 	('1', 'Grant is swapping shifts with Lydia on the 24th'),
--- 	('1', 'Remove Florence from employees - she went to attend Prime'),
--- 	('1', 'Add the new puppy to the Higgins Family'),
--- 	('1', 'Change protocol for Nick W.'),
--- 	('1', 'Double check Invoices for October'),
--- 	('1', 'Export CSV for November'),
--- 	('1', 'Buy more leashes for the supply cabinet');
-
-CREATE TABLE oauth2_tokens (
-	"id" SERIAL PRIMARY KEY,
-	"access_token" VARCHAR(4096),
-	"refresh_token" VARCHAR(512)
-	);
-
--- CREATE TABLE invoices (
--- 	"id" SERIAL PRIMARY KEY,
--- 	"period" VARCHAR(20),
--- 	"client_qb_id"
--- );

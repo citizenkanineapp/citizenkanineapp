@@ -17,12 +17,6 @@ function DogCheckIn ({ dog, config, modalData, setModalData }) {
       const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
       dispatch({ type: 'CHECK_IN', payload: updatedDog });
 
-      // if (config="maps"){
-      //   console.log('in maps checkIn', modalData)
-      //   setModalData()
-      //   console.log('second checkin', modalData);
-      // }
-
     }
     
       const noShow = (dog) => {

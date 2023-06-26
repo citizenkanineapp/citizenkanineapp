@@ -62,7 +62,8 @@
     "build-staging": "env-cmd -e staging npm run-script build",
     "build-prod": "env-cmd -e production npm run-script build",
     "heroku-postbuild": "npm run-script build-prod",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean": "rm -rf node_modules"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",

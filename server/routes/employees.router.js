@@ -198,9 +198,8 @@ router.put('/details', rejectUnauthenticated, (req, res)=>{
 
 // Update selected employee schedules simultaneously:
 router.put('/schedules', rejectUnauthenticated, async (req, res)=>{
-    const schedules = req.body;
-
     const client = await pool.connect();
+    const schedules = req.body;
 
     try {
         await client.query('BEGIN')
@@ -219,7 +218,8 @@ router.put('/schedules', rejectUnauthenticated, async (req, res)=>{
 
             const sqlValues = [schedule[1], schedule[2], schedule[3], schedule[4], schedule[5], schedule['id']];
             return client.query(sqlQuery, sqlValues);
-        }))
+        }));
+        await client.query('COMMIT');
     }
     catch (error) {
         await client.query('ROLLBACK')

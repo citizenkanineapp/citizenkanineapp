@@ -259,6 +259,7 @@ function EmployeeForm() {
                 onClick={() => {
 
                   if (!week1[index + 1]) {
+                    console.log('update_emp_schedule1 change true')
                     dispatch({
                       type: 'UPDATE_EMP_SCHEDULE1',
                       payload: { day: index + 1, change: true }
@@ -266,6 +267,7 @@ function EmployeeForm() {
                     })
                   }
                   else {
+                    console.log('update_emp_schedule1 change true')
                     dispatch({
                       type: 'UPDATE_EMP_SCHEDULE1',
                       payload: { day: index + 1, change: false }
@@ -297,6 +299,7 @@ function EmployeeForm() {
               <CardActionArea component={Button}
                 onClick={() => {
                   if (!week2[index + 1]) {
+                    console.log('update_emp_schedule2 change true')
                     dispatch({
                       type: 'UPDATE_EMP_SCHEDULE2',
                       payload: { day: index + 1, change: true }
@@ -304,6 +307,7 @@ function EmployeeForm() {
                     })
                   }
                   else {
+                    console.log('update_emp_schedule2 change true')
                     dispatch({
                       type: 'UPDATE_EMP_SCHEDULE2',
                       payload: { day: index + 1, change: false }

@@ -114,6 +114,7 @@ function* updateEmpSchedule(action) {
     const updatedEmpSchedules = action.payload;
     // [{week1 schedule}, {week2 schedule}]
     try {
+        console.log('in SAGA updateEmpSchedule')
         const empSchedule = yield axios({
             method: 'PUT',
             url: '/api/employees/schedules',

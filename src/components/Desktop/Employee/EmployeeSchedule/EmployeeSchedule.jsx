@@ -80,6 +80,8 @@ function EmployeeSchedule(){
   // {1: true, 2: true, 3: false, 4: true, 5: true, id: 1, week: 2, first_name: 'Den', last_name: 'Paolini', email: 'dpaolini0@paypal.com', phone: '(840)6732127', …}
 
   const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
+  const avatarColors2 = ['#808590', '#87b8df', '#a3ddd9', '#fbdba1', '#f9c8aa', '#f7a56c', '#fa9082', '#808590', '#87b8df', '#a3ddd9', '#fbdba1', '#f9c8aa', '#f7a56c', '#FA9082' ];
+
   // console.log(dayjs());
 
 
@@ -273,7 +275,7 @@ function EmployeeSchedule(){
 
                                             // if there are changes for this emp on this day
                                             if (empChange.length > 0){
-                                              let bgColor = avatarColors[index];
+                                              let bgColor = avatarColors2[index];
                                               if(empChange[0].is_scheduled){
                                                 return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5, alignSelf:'flex-start' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
@@ -283,7 +285,7 @@ function EmployeeSchedule(){
                                             }
                                             //  no changes for this employee and is a regularly scheduled day
                                             else{
-                                              let bgColor = avatarColors[index];
+                                              let bgColor = avatarColors2[index];
                                               return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5, alignSelf:'flex-start' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                             }
                                             
@@ -298,7 +300,7 @@ function EmployeeSchedule(){
                                               
                                               // console.log('there is a change on', thisDayString)
                                               if(empChange[0].is_scheduled){
-                                                let bgColor = avatarColors[index];
+                                                let bgColor = avatarColors2[index];
                                                 return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5, alignSelf:'flex-start' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
                                               else{

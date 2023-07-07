@@ -220,6 +220,7 @@ router.put('/schedules', rejectUnauthenticated, async (req, res)=>{
             return client.query(sqlQuery, sqlValues);
         }));
         await client.query('COMMIT');
+        res.sendStatus(201);
     }
     catch (error) {
         await client.query('ROLLBACK')

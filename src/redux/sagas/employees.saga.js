@@ -39,6 +39,7 @@ function* fetchOddEmpSchedules() {
 
 // This function gets all the employee schedule data for week2 to autofill the employee schedule calendar. 
 function* fetchEvenEmpSchedules() {
+    // console.log('in fetchEvenEmpSchedules')
     try {
         const empSchedule = yield axios({
             method: 'GET',
@@ -85,11 +86,13 @@ function* fetchEmpSchedule(action) {
 function* updateEmpDetails(action) {
     const updatedEmp = action.payload;
     try {
+        console.log('in updateEmpDetails')
         const empDetails = yield axios({
             method: 'PUT',
             url: '/api/employees/details',
             data: updatedEmp
         })
+        console.log('post axiosPUT')
         // updates the user's admin status after employee details are updated.
         yield axios({
             method: 'PUT',
@@ -114,11 +117,18 @@ function* updateEmpSchedule(action) {
     const updatedEmpSchedules = action.payload;
     // [{week1 schedule}, {week2 schedule}]
     try {
-        console.log('in SAGA updateEmpSchedule')
+        // console.log('in updateEmpSchedule)')
         const empSchedule = yield axios({
             method: 'PUT',
             url: '/api/employees/schedules',
             data: updatedEmpSchedules
+        })
+        // updates schedules reducer so calender view renders with changed schedule
+        yield put({
+            type: 'SAGA_FETCH_EMP_SCHEDULES_ODD'
+        })
+        yield put({
+            type: 'SAGA_FETCH_EMP_SCHEDULES_EVEN'
         })
     }
     catch {

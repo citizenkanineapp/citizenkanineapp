@@ -81,7 +81,6 @@ function createInvoiceItems(invoiceItems) {
         invoice.Line.push({
           "Description": item.description,
           "Amount":item.service.price * item.dates.length,
-      
           "DetailType":"SalesItemLineDetail",
           "SalesItemLineDetail": {
             "Qty": item.dates.length,

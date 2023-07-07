@@ -86,13 +86,13 @@ function* fetchEmpSchedule(action) {
 function* updateEmpDetails(action) {
     const updatedEmp = action.payload;
     try {
-        console.log('in updateEmpDetails')
+        // console.log('in updateEmpDetails')
         const empDetails = yield axios({
             method: 'PUT',
             url: '/api/employees/details',
             data: updatedEmp
         })
-        console.log('post axiosPUT')
+        // console.log('post axiosPUT')
         // updates the user's admin status after employee details are updated.
         yield axios({
             method: 'PUT',

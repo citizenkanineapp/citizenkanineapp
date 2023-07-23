@@ -106,13 +106,13 @@ router.get('/daily', async (req, res) => {
         // find the dogs default scheduled for the day
         const scheduledDogsResponse = await client.query(searchQuery);
         const scheduledDogs = scheduledDogsResponse.rows;
-        console.log(scheduledDogs);
+        // console.log(scheduledDogs);
         // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
 
         // find the schedule changes for the day
         const scheduleAdjustmentsResults = await client.query(scheduleQuery);
         const scheduleAdjustments = scheduleAdjustmentsResults.rows;
-        console.log(scheduleAdjustments);
+        // console.log(scheduleAdjustments);
 
         // if there are no changes - add original array to daily_dogs
         if (scheduleAdjustments.length < 1) {

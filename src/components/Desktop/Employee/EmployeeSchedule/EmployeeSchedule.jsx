@@ -303,7 +303,7 @@ function EmployeeSchedule(){
                                                 let bgColor = avatarColors2[index];
                                                 return <Avatar key={employee.emp_id} sx={{ display: 'flex', bgcolor: bgColor, height: '2.25vw' , width: '2.25vw', fontSize: 10, mx: .25, mb: .5, alignSelf:'flex-start' }}>{employee.first_name[0]}{employee.last_name[0]}</Avatar>
                                               }
-                                              else{
+                                              else {
                                                 return null
                                               }
                                             }

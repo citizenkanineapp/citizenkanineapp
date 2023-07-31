@@ -274,8 +274,7 @@ router.put('/daily', async (req, res) => {
     const noShow = req.body.no_show;
     const cancelled = req.body.cancelled;
 
-
-    console.log('UPDATED DOG', dogID, checkedIn, noShow, cancelled);
+    // console.log('UPDATED DOG', dogID, checkedIn, noShow, cancelled);
 
     const updateQuery = `UPDATE daily_dogs SET "checked_in" = $1, "no_show" = $2, "cancelled" = $3 WHERE "dog_id" = $4 AND daily_dogs.date = CURRENT_DATE`;
     const updateValues = [checkedIn, noShow, cancelled, dogID];
@@ -296,7 +295,7 @@ router.put('/notes', async (req, res) => {
     const dogID = req.body.id;
     const note = req.body.note;
 
-    console.log('UPDATED DOG', dogID, note);
+    // console.log('UPDATED DOG', dogID, note);
 
     const updateQuery = `UPDATE dogs SET "notes" = $2 WHERE "id" = $1`;
     const updateValues = [dogID, note];
@@ -318,7 +317,7 @@ router.put('/photos', async (req, res) => {
     const dogID = req.body.dogID;
     const photo = req.body.data;
 
-    console.log('UPDATED DOG', dogID, photo);
+    // console.log('UPDATED DOG', dogID, photo);
 
     const updateQuery = `UPDATE dogs SET "image" = $2 WHERE "id" = $1`;
     const updateValues = [dogID, photo];

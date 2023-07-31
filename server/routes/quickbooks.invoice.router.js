@@ -70,6 +70,7 @@ function createInvoiceItems(invoiceItems) {
   const invoicesList = [];
   clients.forEach((client)=>{
     const invoice = {};
+    invoice.AllowOnlineACHPayment=true;
     invoice.CustomerRef = {
       "value": client
     }
@@ -93,6 +94,7 @@ function createInvoiceItems(invoiceItems) {
         })
       }
     }
+    console.log('new invoice', invoice)
   })
   return invoicesList;
 }

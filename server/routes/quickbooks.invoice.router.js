@@ -98,7 +98,7 @@ function createInvoiceItems(invoiceItems) {
         }
       }
     }
-    console.log('new invoice', invoice)
+    // console.log('new invoice', invoice)
   })
   return invoicesList;
 }

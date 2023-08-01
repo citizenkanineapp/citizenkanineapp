@@ -58,17 +58,18 @@ router.post('/', async (req, res) => {
     }))
     res.sendStatus(201);
 
-  } else {
-    console.log('null token', token);
-    res.send('connectToQb');
-  }
-})
+    } else {
+      console.log('null token', token);
+      res.send('connectToQb');
+    }
+  })
 
 function createInvoiceItems(invoiceItems) {
   const clients = new Set(invoiceItems.map(({qb_id}) => qb_id));
-  // console.log(clients);
+  // console.log('cliens', clients);
   const invoicesList = [];
   clients.forEach((client)=>{
+    console.log(client)
     const invoice = {};
     invoice.AllowOnlineACHPayment=true;
     invoice.CustomerRef = {
@@ -91,10 +92,13 @@ function createInvoiceItems(invoiceItems) {
               "name": item.service.service
             }
           }      
-        })
+        });
+        invoice.BillEmail = {
+          "Address": item.email
+        }
       }
     }
-    // console.log('new invoice', invoice)
+    console.log('new invoice', invoice)
   })
   return invoicesList;
 }

@@ -7,6 +7,7 @@ function* fetchInvoiceData(action) {
         const invoiceItems = yield axios.get(`/api/invoice`, {
             params: {
                 clientId: action.payload.clientId,
+                email: action.payload.email,
                 month: action.payload.month,
                 year: action.payload.year
             }

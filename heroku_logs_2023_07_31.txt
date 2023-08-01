@@ -1,0 +1,1500 @@
+2023-07-28T18:00:44.640908+00:00 app[web.1]: {
+2023-07-28T18:00:44.640908+00:00 app[web.1]: id: 258,
+2023-07-28T18:00:44.640909+00:00 app[web.1]: dog_id: 69,
+2023-07-28T18:00:44.640909+00:00 app[web.1]: client_id: 56,
+2023-07-28T18:00:44.640909+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:44.640909+00:00 app[web.1]: is_scheduled: false,
+2023-07-28T18:00:44.640909+00:00 app[web.1]: date: 2023-07-10T00:00:00.000Z,
+2023-07-28T18:00:44.640910+00:00 app[web.1]: name: 'Clarice'
+2023-07-28T18:00:44.640910+00:00 app[web.1]: }
+2023-07-28T18:00:44.640910+00:00 app[web.1]: ]
+2023-07-28T18:00:44.641039+00:00 app[web.1]: Good to Go with adjustments!
+2023-07-28T18:00:44.684367+00:00 app[web.1]: Error in Generating / Getting Daily Dogs Key (dog_id, date)=(46, 2023-07-28) already exists.
+2023-07-28T18:00:46.776847+00:00 app[web.1]: NUMBER IS: 5
+2023-07-28T18:00:46.776873+00:00 app[web.1]: Friday
+2023-07-28T18:00:46.780692+00:00 app[web.1]: [
+2023-07-28T18:00:46.780693+00:00 app[web.1]: {
+2023-07-28T18:00:46.780693+00:00 app[web.1]: id: 38,
+2023-07-28T18:00:46.780694+00:00 app[web.1]: monday: false,
+2023-07-28T18:00:46.780694+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780695+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780695+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780695+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780696+00:00 app[web.1]: client_id: 38,
+2023-07-28T18:00:46.780696+00:00 app[web.1]: route_id: 1,
+2023-07-28T18:00:46.780696+00:00 app[web.1]: name: 'Maude',
+2023-07-28T18:00:46.780696+00:00 app[web.1]: dog_id: 46
+2023-07-28T18:00:46.780697+00:00 app[web.1]: },
+2023-07-28T18:00:46.780697+00:00 app[web.1]: {
+2023-07-28T18:00:46.780697+00:00 app[web.1]: id: 14,
+2023-07-28T18:00:46.780697+00:00 app[web.1]: monday: false,
+2023-07-28T18:00:46.780698+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780698+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780698+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780699+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780699+00:00 app[web.1]: client_id: 14,
+2023-07-28T18:00:46.780699+00:00 app[web.1]: route_id: 1,
+2023-07-28T18:00:46.780699+00:00 app[web.1]: name: 'Snowflake',
+2023-07-28T18:00:46.780700+00:00 app[web.1]: dog_id: 18
+2023-07-28T18:00:46.780700+00:00 app[web.1]: },
+2023-07-28T18:00:46.780701+00:00 app[web.1]: {
+2023-07-28T18:00:46.780701+00:00 app[web.1]: id: 48,
+2023-07-28T18:00:46.780701+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780701+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780701+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780702+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780702+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780702+00:00 app[web.1]: client_id: 48,
+2023-07-28T18:00:46.780702+00:00 app[web.1]: route_id: 1,
+2023-07-28T18:00:46.780703+00:00 app[web.1]: name: 'Dani',
+2023-07-28T18:00:46.780703+00:00 app[web.1]: dog_id: 59
+2023-07-28T18:00:46.780704+00:00 app[web.1]: },
+2023-07-28T18:00:46.780704+00:00 app[web.1]: {
+2023-07-28T18:00:46.780704+00:00 app[web.1]: id: 34,
+2023-07-28T18:00:46.780704+00:00 app[web.1]: monday: false,
+2023-07-28T18:00:46.780704+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780704+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780704+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780705+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780705+00:00 app[web.1]: client_id: 34,
+2023-07-28T18:00:46.780705+00:00 app[web.1]: route_id: 1,
+2023-07-28T18:00:46.780705+00:00 app[web.1]: name: 'Kippy',
+2023-07-28T18:00:46.780705+00:00 app[web.1]: dog_id: 41
+2023-07-28T18:00:46.780705+00:00 app[web.1]: },
+2023-07-28T18:00:46.780706+00:00 app[web.1]: {
+2023-07-28T18:00:46.780706+00:00 app[web.1]: id: 20,
+2023-07-28T18:00:46.780706+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780706+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780706+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780706+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780707+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780707+00:00 app[web.1]: client_id: 20,
+2023-07-28T18:00:46.780707+00:00 app[web.1]: route_id: 1,
+2023-07-28T18:00:46.780707+00:00 app[web.1]: name: 'Hank',
+2023-07-28T18:00:46.780707+00:00 app[web.1]: dog_id: 24
+2023-07-28T18:00:46.780708+00:00 app[web.1]: },
+2023-07-28T18:00:46.780708+00:00 app[web.1]: {
+2023-07-28T18:00:46.780708+00:00 app[web.1]: id: 44,
+2023-07-28T18:00:46.780708+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780708+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780709+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780709+00:00 app[web.1]: thursday: true,
+2023-07-28T18:00:46.780709+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780709+00:00 app[web.1]: client_id: 44,
+2023-07-28T18:00:46.780709+00:00 app[web.1]: route_id: 1,
+2023-07-28T18:00:46.780709+00:00 app[web.1]: name: 'Luna',
+2023-07-28T18:00:46.780710+00:00 app[web.1]: dog_id: 55
+2023-07-28T18:00:46.780710+00:00 app[web.1]: },
+2023-07-28T18:00:46.780710+00:00 app[web.1]: {
+2023-07-28T18:00:46.780710+00:00 app[web.1]: id: 38,
+2023-07-28T18:00:46.780710+00:00 app[web.1]: monday: false,
+2023-07-28T18:00:46.780710+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780710+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780711+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780711+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780711+00:00 app[web.1]: client_id: 38,
+2023-07-28T18:00:46.780711+00:00 app[web.1]: route_id: 1,
+2023-07-28T18:00:46.780711+00:00 app[web.1]: name: 'Toby',
+2023-07-28T18:00:46.780712+00:00 app[web.1]: dog_id: 45
+2023-07-28T18:00:46.780712+00:00 app[web.1]: },
+2023-07-28T18:00:46.780712+00:00 app[web.1]: {
+2023-07-28T18:00:46.780713+00:00 app[web.1]: id: 27,
+2023-07-28T18:00:46.780713+00:00 app[web.1]: monday: false,
+2023-07-28T18:00:46.780713+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780713+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780714+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780714+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780714+00:00 app[web.1]: client_id: 27,
+2023-07-28T18:00:46.780714+00:00 app[web.1]: route_id: 2,
+2023-07-28T18:00:46.780715+00:00 app[web.1]: name: 'Vivian',
+2023-07-28T18:00:46.780715+00:00 app[web.1]: dog_id: 34
+2023-07-28T18:00:46.780715+00:00 app[web.1]: },
+2023-07-28T18:00:46.780715+00:00 app[web.1]: {
+2023-07-28T18:00:46.780716+00:00 app[web.1]: id: 15,
+2023-07-28T18:00:46.780716+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780716+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780716+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780716+00:00 app[web.1]: thursday: true,
+2023-07-28T18:00:46.780716+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780716+00:00 app[web.1]: client_id: 15,
+2023-07-28T18:00:46.780717+00:00 app[web.1]: route_id: 2,
+2023-07-28T18:00:46.780717+00:00 app[web.1]: name: 'Brooklyn',
+2023-07-28T18:00:46.780717+00:00 app[web.1]: dog_id: 19
+2023-07-28T18:00:46.780717+00:00 app[web.1]: },
+2023-07-28T18:00:46.780717+00:00 app[web.1]: {
+2023-07-28T18:00:46.780718+00:00 app[web.1]: id: 42,
+2023-07-28T18:00:46.780718+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780718+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780718+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780718+00:00 app[web.1]: thursday: true,
+2023-07-28T18:00:46.780718+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780718+00:00 app[web.1]: client_id: 42,
+2023-07-28T18:00:46.780718+00:00 app[web.1]: route_id: 2,
+2023-07-28T18:00:46.780719+00:00 app[web.1]: name: 'Penny',
+2023-07-28T18:00:46.780719+00:00 app[web.1]: dog_id: 52
+2023-07-28T18:00:46.780719+00:00 app[web.1]: },
+2023-07-28T18:00:46.780719+00:00 app[web.1]: {
+2023-07-28T18:00:46.780719+00:00 app[web.1]: id: 6,
+2023-07-28T18:00:46.780719+00:00 app[web.1]: monday: false,
+2023-07-28T18:00:46.780720+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780720+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780720+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780720+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780720+00:00 app[web.1]: client_id: 6,
+2023-07-28T18:00:46.780720+00:00 app[web.1]: route_id: 2,
+2023-07-28T18:00:46.780721+00:00 app[web.1]: name: 'Ouli',
+2023-07-28T18:00:46.780721+00:00 app[web.1]: dog_id: 8
+2023-07-28T18:00:46.780721+00:00 app[web.1]: },
+2023-07-28T18:00:46.780721+00:00 app[web.1]: {
+2023-07-28T18:00:46.780721+00:00 app[web.1]: id: 31,
+2023-07-28T18:00:46.780721+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780722+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780722+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780722+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780722+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780722+00:00 app[web.1]: client_id: 31,
+2023-07-28T18:00:46.780723+00:00 app[web.1]: route_id: 2,
+2023-07-28T18:00:46.780723+00:00 app[web.1]: name: 'Bucky',
+2023-07-28T18:00:46.780723+00:00 app[web.1]: dog_id: 38
+2023-07-28T18:00:46.780723+00:00 app[web.1]: },
+2023-07-28T18:00:46.780724+00:00 app[web.1]: {
+2023-07-28T18:00:46.780724+00:00 app[web.1]: id: 35,
+2023-07-28T18:00:46.780724+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780724+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780724+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780724+00:00 app[web.1]: thursday: true,
+2023-07-28T18:00:46.780724+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780725+00:00 app[web.1]: client_id: 35,
+2023-07-28T18:00:46.780725+00:00 app[web.1]: route_id: 2,
+2023-07-28T18:00:46.780725+00:00 app[web.1]: name: 'Nalle',
+2023-07-28T18:00:46.780725+00:00 app[web.1]: dog_id: 42
+2023-07-28T18:00:46.780725+00:00 app[web.1]: },
+2023-07-28T18:00:46.780725+00:00 app[web.1]: {
+2023-07-28T18:00:46.780726+00:00 app[web.1]: id: 19,
+2023-07-28T18:00:46.780726+00:00 app[web.1]: monday: false,
+2023-07-28T18:00:46.780726+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780726+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780726+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780726+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780726+00:00 app[web.1]: client_id: 19,
+2023-07-28T18:00:46.780727+00:00 app[web.1]: route_id: 2,
+2023-07-28T18:00:46.780727+00:00 app[web.1]: name: 'Baxter',
+2023-07-28T18:00:46.780727+00:00 app[web.1]: dog_id: 23
+2023-07-28T18:00:46.780727+00:00 app[web.1]: },
+2023-07-28T18:00:46.780728+00:00 app[web.1]: {
+2023-07-28T18:00:46.780728+00:00 app[web.1]: id: 42,
+2023-07-28T18:00:46.780728+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780728+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780729+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780729+00:00 app[web.1]: thursday: true,
+2023-07-28T18:00:46.780729+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780729+00:00 app[web.1]: client_id: 42,
+2023-07-28T18:00:46.780730+00:00 app[web.1]: route_id: 2,
+2023-07-28T18:00:46.780730+00:00 app[web.1]: name: 'Olive',
+2023-07-28T18:00:46.780730+00:00 app[web.1]: dog_id: 53
+2023-07-28T18:00:46.780731+00:00 app[web.1]: },
+2023-07-28T18:00:46.780731+00:00 app[web.1]: {
+2023-07-28T18:00:46.780731+00:00 app[web.1]: id: 43,
+2023-07-28T18:00:46.780731+00:00 app[web.1]: monday: false,
+2023-07-28T18:00:46.780731+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780731+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780732+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780732+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780732+00:00 app[web.1]: client_id: 43,
+2023-07-28T18:00:46.780732+00:00 app[web.1]: route_id: 2,
+2023-07-28T18:00:46.780732+00:00 app[web.1]: name: 'Nigel',
+2023-07-28T18:00:46.780732+00:00 app[web.1]: dog_id: 54
+2023-07-28T18:00:46.780733+00:00 app[web.1]: },
+2023-07-28T18:00:46.780733+00:00 app[web.1]: {
+2023-07-28T18:00:46.780733+00:00 app[web.1]: id: 27,
+2023-07-28T18:00:46.780733+00:00 app[web.1]: monday: false,
+2023-07-28T18:00:46.780733+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780733+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780733+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780734+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780734+00:00 app[web.1]: client_id: 27,
+2023-07-28T18:00:46.780734+00:00 app[web.1]: route_id: 2,
+2023-07-28T18:00:46.780734+00:00 app[web.1]: name: 'Mr B',
+2023-07-28T18:00:46.780734+00:00 app[web.1]: dog_id: 33
+2023-07-28T18:00:46.780734+00:00 app[web.1]: },
+2023-07-28T18:00:46.780735+00:00 app[web.1]: {
+2023-07-28T18:00:46.780735+00:00 app[web.1]: id: 25,
+2023-07-28T18:00:46.780735+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780735+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780736+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780736+00:00 app[web.1]: thursday: true,
+2023-07-28T18:00:46.780736+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780736+00:00 app[web.1]: client_id: 25,
+2023-07-28T18:00:46.780736+00:00 app[web.1]: route_id: 3,
+2023-07-28T18:00:46.780737+00:00 app[web.1]: name: 'Cedar',
+2023-07-28T18:00:46.780737+00:00 app[web.1]: dog_id: 31
+2023-07-28T18:00:46.780737+00:00 app[web.1]: },
+2023-07-28T18:00:46.780737+00:00 app[web.1]: {
+2023-07-28T18:00:46.780737+00:00 app[web.1]: id: 7,
+2023-07-28T18:00:46.780737+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780737+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780738+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780738+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780738+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780738+00:00 app[web.1]: client_id: 7,
+2023-07-28T18:00:46.780738+00:00 app[web.1]: route_id: 3,
+2023-07-28T18:00:46.780738+00:00 app[web.1]: name: 'Newmin',
+2023-07-28T18:00:46.780739+00:00 app[web.1]: dog_id: 10
+2023-07-28T18:00:46.780739+00:00 app[web.1]: },
+2023-07-28T18:00:46.780739+00:00 app[web.1]: {
+2023-07-28T18:00:46.780739+00:00 app[web.1]: id: 56,
+2023-07-28T18:00:46.780739+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780739+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780739+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780740+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780740+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780740+00:00 app[web.1]: client_id: 56,
+2023-07-28T18:00:46.780740+00:00 app[web.1]: route_id: 4,
+2023-07-28T18:00:46.780740+00:00 app[web.1]: name: 'Clarice',
+2023-07-28T18:00:46.780740+00:00 app[web.1]: dog_id: 69
+2023-07-28T18:00:46.780741+00:00 app[web.1]: },
+2023-07-28T18:00:46.780741+00:00 app[web.1]: {
+2023-07-28T18:00:46.780741+00:00 app[web.1]: id: 8,
+2023-07-28T18:00:46.780741+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780741+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780741+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780741+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780742+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780742+00:00 app[web.1]: client_id: 8,
+2023-07-28T18:00:46.780742+00:00 app[web.1]: route_id: 4,
+2023-07-28T18:00:46.780742+00:00 app[web.1]: name: 'Baker',
+2023-07-28T18:00:46.780742+00:00 app[web.1]: dog_id: 11
+2023-07-28T18:00:46.780742+00:00 app[web.1]: },
+2023-07-28T18:00:46.780743+00:00 app[web.1]: {
+2023-07-28T18:00:46.780743+00:00 app[web.1]: id: 36,
+2023-07-28T18:00:46.780743+00:00 app[web.1]: monday: false,
+2023-07-28T18:00:46.780743+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780743+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780744+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780744+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780748+00:00 app[web.1]: client_id: 36,
+2023-07-28T18:00:46.780748+00:00 app[web.1]: route_id: 4,
+2023-07-28T18:00:46.780748+00:00 app[web.1]: name: 'RosieP',
+2023-07-28T18:00:46.780749+00:00 app[web.1]: dog_id: 43
+2023-07-28T18:00:46.780749+00:00 app[web.1]: },
+2023-07-28T18:00:46.780749+00:00 app[web.1]: {
+2023-07-28T18:00:46.780749+00:00 app[web.1]: id: 23,
+2023-07-28T18:00:46.780750+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780750+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780750+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780750+00:00 app[web.1]: thursday: true,
+2023-07-28T18:00:46.780751+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780751+00:00 app[web.1]: client_id: 23,
+2023-07-28T18:00:46.780751+00:00 app[web.1]: route_id: 5,
+2023-07-28T18:00:46.780751+00:00 app[web.1]: name: 'Olllie',
+2023-07-28T18:00:46.780752+00:00 app[web.1]: dog_id: 28
+2023-07-28T18:00:46.780752+00:00 app[web.1]: },
+2023-07-28T18:00:46.780752+00:00 app[web.1]: {
+2023-07-28T18:00:46.780752+00:00 app[web.1]: id: 45,
+2023-07-28T18:00:46.780752+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780752+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780752+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780753+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780753+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780753+00:00 app[web.1]: client_id: 45,
+2023-07-28T18:00:46.780753+00:00 app[web.1]: route_id: 5,
+2023-07-28T18:00:46.780753+00:00 app[web.1]: name: 'Vita',
+2023-07-28T18:00:46.780753+00:00 app[web.1]: dog_id: 56
+2023-07-28T18:00:46.780754+00:00 app[web.1]: },
+2023-07-28T18:00:46.780754+00:00 app[web.1]: {
+2023-07-28T18:00:46.780754+00:00 app[web.1]: id: 46,
+2023-07-28T18:00:46.780754+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780754+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780754+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780754+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780755+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780755+00:00 app[web.1]: client_id: 46,
+2023-07-28T18:00:46.780755+00:00 app[web.1]: route_id: 5,
+2023-07-28T18:00:46.780755+00:00 app[web.1]: name: 'Sully',
+2023-07-28T18:00:46.780755+00:00 app[web.1]: dog_id: 57
+2023-07-28T18:00:46.780755+00:00 app[web.1]: },
+2023-07-28T18:00:46.780755+00:00 app[web.1]: {
+2023-07-28T18:00:46.780756+00:00 app[web.1]: id: 47,
+2023-07-28T18:00:46.780756+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780756+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780756+00:00 app[web.1]: wednesday: false,
+2023-07-28T18:00:46.780756+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780756+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780757+00:00 app[web.1]: client_id: 47,
+2023-07-28T18:00:46.780757+00:00 app[web.1]: route_id: 5,
+2023-07-28T18:00:46.780757+00:00 app[web.1]: name: 'Basil',
+2023-07-28T18:00:46.780757+00:00 app[web.1]: dog_id: 58
+2023-07-28T18:00:46.780758+00:00 app[web.1]: },
+2023-07-28T18:00:46.780758+00:00 app[web.1]: {
+2023-07-28T18:00:46.780758+00:00 app[web.1]: id: 33,
+2023-07-28T18:00:46.780758+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780758+00:00 app[web.1]: tuesday: false,
+2023-07-28T18:00:46.780759+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780759+00:00 app[web.1]: thursday: false,
+2023-07-28T18:00:46.780759+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780759+00:00 app[web.1]: client_id: 33,
+2023-07-28T18:00:46.780759+00:00 app[web.1]: route_id: 5,
+2023-07-28T18:00:46.780760+00:00 app[web.1]: name: 'RosieO',
+2023-07-28T18:00:46.780760+00:00 app[web.1]: dog_id: 40
+2023-07-28T18:00:46.780760+00:00 app[web.1]: },
+2023-07-28T18:00:46.780760+00:00 app[web.1]: {
+2023-07-28T18:00:46.780760+00:00 app[web.1]: id: 49,
+2023-07-28T18:00:46.780760+00:00 app[web.1]: monday: true,
+2023-07-28T18:00:46.780760+00:00 app[web.1]: tuesday: true,
+2023-07-28T18:00:46.780761+00:00 app[web.1]: wednesday: true,
+2023-07-28T18:00:46.780761+00:00 app[web.1]: thursday: true,
+2023-07-28T18:00:46.780761+00:00 app[web.1]: friday: true,
+2023-07-28T18:00:46.780761+00:00 app[web.1]: client_id: 49,
+2023-07-28T18:00:46.780761+00:00 app[web.1]: route_id: 5,
+2023-07-28T18:00:46.780761+00:00 app[web.1]: name: 'HazelS',
+2023-07-28T18:00:46.780762+00:00 app[web.1]: dog_id: 60
+2023-07-28T18:00:46.780762+00:00 app[web.1]: }
+2023-07-28T18:00:46.780762+00:00 app[web.1]: ]
+2023-07-28T18:00:46.782292+00:00 app[web.1]: [
+2023-07-28T18:00:46.782293+00:00 app[web.1]: {
+2023-07-28T18:00:46.782294+00:00 app[web.1]: id: 352,
+2023-07-28T18:00:46.782294+00:00 app[web.1]: dog_id: 9,
+2023-07-28T18:00:46.782295+00:00 app[web.1]: client_id: 6,
+2023-07-28T18:00:46.782296+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782296+00:00 app[web.1]: is_scheduled: true,
+2023-07-28T18:00:46.782296+00:00 app[web.1]: date: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782296+00:00 app[web.1]: name: 'Frankie'
+2023-07-28T18:00:46.782297+00:00 app[web.1]: },
+2023-07-28T18:00:46.782297+00:00 app[web.1]: {
+2023-07-28T18:00:46.782297+00:00 app[web.1]: id: 325,
+2023-07-28T18:00:46.782297+00:00 app[web.1]: dog_id: 28,
+2023-07-28T18:00:46.782298+00:00 app[web.1]: client_id: 23,
+2023-07-28T18:00:46.782298+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782298+00:00 app[web.1]: is_scheduled: false,
+2023-07-28T18:00:46.782299+00:00 app[web.1]: date: 2023-07-24T00:00:00.000Z,
+2023-07-28T18:00:46.782299+00:00 app[web.1]: name: 'Olllie'
+2023-07-28T18:00:46.782299+00:00 app[web.1]: },
+2023-07-28T18:00:46.782300+00:00 app[web.1]: {
+2023-07-28T18:00:46.782300+00:00 app[web.1]: id: 351,
+2023-07-28T18:00:46.782300+00:00 app[web.1]: dog_id: 35,
+2023-07-28T18:00:46.782300+00:00 app[web.1]: client_id: 28,
+2023-07-28T18:00:46.782301+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782301+00:00 app[web.1]: is_scheduled: false,
+2023-07-28T18:00:46.782302+00:00 app[web.1]: date: 2023-07-27T00:00:00.000Z,
+2023-07-28T18:00:46.782302+00:00 app[web.1]: name: 'Zuri'
+2023-07-28T18:00:46.782302+00:00 app[web.1]: },
+2023-07-28T18:00:46.782302+00:00 app[web.1]: {
+2023-07-28T18:00:46.782302+00:00 app[web.1]: id: 326,
+2023-07-28T18:00:46.782302+00:00 app[web.1]: dog_id: 38,
+2023-07-28T18:00:46.782303+00:00 app[web.1]: client_id: 31,
+2023-07-28T18:00:46.782303+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782303+00:00 app[web.1]: is_scheduled: false,
+2023-07-28T18:00:46.782303+00:00 app[web.1]: date: 2023-07-24T00:00:00.000Z,
+2023-07-28T18:00:46.782303+00:00 app[web.1]: name: 'Bucky'
+2023-07-28T18:00:46.782303+00:00 app[web.1]: },
+2023-07-28T18:00:46.782303+00:00 app[web.1]: {
+2023-07-28T18:00:46.782304+00:00 app[web.1]: id: 307,
+2023-07-28T18:00:46.782304+00:00 app[web.1]: dog_id: 41,
+2023-07-28T18:00:46.782304+00:00 app[web.1]: client_id: 34,
+2023-07-28T18:00:46.782304+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782304+00:00 app[web.1]: is_scheduled: false,
+2023-07-28T18:00:46.782305+00:00 app[web.1]: date: 2023-07-21T00:00:00.000Z,
+2023-07-28T18:00:46.782305+00:00 app[web.1]: name: 'Kippy'
+2023-07-28T18:00:46.782305+00:00 app[web.1]: },
+2023-07-28T18:00:46.782305+00:00 app[web.1]: {
+2023-07-28T18:00:46.782305+00:00 app[web.1]: id: 319,
+2023-07-28T18:00:46.782305+00:00 app[web.1]: dog_id: 43,
+2023-07-28T18:00:46.782306+00:00 app[web.1]: client_id: 36,
+2023-07-28T18:00:46.782306+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782306+00:00 app[web.1]: is_scheduled: false,
+2023-07-28T18:00:46.782306+00:00 app[web.1]: date: 2023-07-23T00:00:00.000Z,
+2023-07-28T18:00:46.782306+00:00 app[web.1]: name: 'RosieP'
+2023-07-28T18:00:46.782307+00:00 app[web.1]: },
+2023-07-28T18:00:46.782307+00:00 app[web.1]: {
+2023-07-28T18:00:46.782307+00:00 app[web.1]: id: 330,
+2023-07-28T18:00:46.782307+00:00 app[web.1]: dog_id: 44,
+2023-07-28T18:00:46.782307+00:00 app[web.1]: client_id: 37,
+2023-07-28T18:00:46.782308+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782308+00:00 app[web.1]: is_scheduled: true,
+2023-07-28T18:00:46.782308+00:00 app[web.1]: date: 2023-07-24T00:00:00.000Z,
+2023-07-28T18:00:46.782308+00:00 app[web.1]: name: 'StevieP'
+2023-07-28T18:00:46.782309+00:00 app[web.1]: },
+2023-07-28T18:00:46.782309+00:00 app[web.1]: {
+2023-07-28T18:00:46.782309+00:00 app[web.1]: id: 315,
+2023-07-28T18:00:46.782309+00:00 app[web.1]: dog_id: 57,
+2023-07-28T18:00:46.782309+00:00 app[web.1]: client_id: 46,
+2023-07-28T18:00:46.782309+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782309+00:00 app[web.1]: is_scheduled: false,
+2023-07-28T18:00:46.782310+00:00 app[web.1]: date: 2023-07-23T00:00:00.000Z,
+2023-07-28T18:00:46.782310+00:00 app[web.1]: name: 'Sully'
+2023-07-28T18:00:46.782310+00:00 app[web.1]: },
+2023-07-28T18:00:46.782310+00:00 app[web.1]: {
+2023-07-28T18:00:46.782310+00:00 app[web.1]: id: 294,
+2023-07-28T18:00:46.782311+00:00 app[web.1]: dog_id: 67,
+2023-07-28T18:00:46.782311+00:00 app[web.1]: client_id: 55,
+2023-07-28T18:00:46.782311+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782311+00:00 app[web.1]: is_scheduled: false,
+2023-07-28T18:00:46.782311+00:00 app[web.1]: date: 2023-07-18T00:00:00.000Z,
+2023-07-28T18:00:46.782312+00:00 app[web.1]: name: 'Sherlock'
+2023-07-28T18:00:46.782312+00:00 app[web.1]: },
+2023-07-28T18:00:46.782312+00:00 app[web.1]: {
+2023-07-28T18:00:46.782312+00:00 app[web.1]: id: 293,
+2023-07-28T18:00:46.782312+00:00 app[web.1]: dog_id: 68,
+2023-07-28T18:00:46.782312+00:00 app[web.1]: client_id: 55,
+2023-07-28T18:00:46.782313+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782313+00:00 app[web.1]: is_scheduled: false,
+2023-07-28T18:00:46.782313+00:00 app[web.1]: date: 2023-07-18T00:00:00.000Z,
+2023-07-28T18:00:46.782313+00:00 app[web.1]: name: 'Gnocchi'
+2023-07-28T18:00:46.782314+00:00 app[web.1]: },
+2023-07-28T18:00:46.782314+00:00 app[web.1]: {
+2023-07-28T18:00:46.782314+00:00 app[web.1]: id: 258,
+2023-07-28T18:00:46.782314+00:00 app[web.1]: dog_id: 69,
+2023-07-28T18:00:46.782315+00:00 app[web.1]: client_id: 56,
+2023-07-28T18:00:46.782315+00:00 app[web.1]: date_to_change: 2023-07-28T00:00:00.000Z,
+2023-07-28T18:00:46.782315+00:00 app[web.1]: is_scheduled: false,
+2023-07-28T18:00:46.782316+00:00 app[web.1]: date: 2023-07-10T00:00:00.000Z,
+2023-07-28T18:00:46.782316+00:00 app[web.1]: name: 'Clarice'
+2023-07-28T18:00:46.782316+00:00 app[web.1]: }
+2023-07-28T18:00:46.782316+00:00 app[web.1]: ]
+2023-07-28T18:00:46.782338+00:00 app[web.1]: Good to Go with adjustments!
+2023-07-28T18:00:46.809780+00:00 app[web.1]: Error in Generating / Getting Daily Dogs Key (dog_id, date)=(46, 2023-07-28) already exists.
+2023-07-28T18:00:46.810758+00:00 heroku[router]: at=info method=GET path="/api/mobile/daily" host=citizen-kanine.herokuapp.com request_id=884039a2-042e-4117-902e-68637dfa34a0 fwd="68.168.169.144" dyno=web.1 connect=0ms service=36ms status=500 bytes=273 protocol=http
+2023-07-28T18:00:46.823637+00:00 heroku[router]: at=info method=GET path="/api/mobile/routes" host=citizen-kanine.herokuapp.com request_id=65385a52-eb6e-4424-a288-90d628781817 fwd="68.168.169.144" dyno=web.1 connect=0ms service=5ms status=304 bytes=184 protocol=http
+2023-07-28T19:08:01.327927+00:00 heroku[web.1]: Idling
+2023-07-28T19:08:01.333016+00:00 heroku[web.1]: State changed from up to down
+2023-07-28T19:08:02.585829+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2023-07-28T19:08:02.780514+00:00 heroku[web.1]: Process exited with status 143
+2023-07-28T20:45:53.980000+00:00 heroku[web.1]: Unidling
+2023-07-28T20:45:54.042494+00:00 heroku[web.1]: State changed from down to starting
+2023-07-28T20:46:04.374572+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-28T20:46:05.993216+00:00 app[web.1]: 
+2023-07-28T20:46:05.993243+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-28T20:46:05.993244+00:00 app[web.1]: > node server/server.js
+2023-07-28T20:46:05.993244+00:00 app[web.1]: 
+2023-07-28T20:46:06.094300+00:00 app[web.1]: node_env:  production
+2023-07-28T20:46:06.312978+00:00 app[web.1]: Listening on port: 50333, connecting to db schema ck_prod
+2023-07-28T20:46:06.495671+00:00 heroku[web.1]: State changed from starting to up
+2023-07-28T20:46:08.153856+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=cb82f49a-cea3-4c99-bb7a-ffc8883996d7 fwd="68.168.180.201" dyno=web.1 connect=0ms service=7ms status=304 bytes=269 protocol=https
+2023-07-28T20:46:08.245706+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=1372e82b-463b-4788-973c-5871b6cc82ca fwd="68.168.180.201" dyno=web.1 connect=0ms service=14ms status=200 bytes=969939 protocol=https
+2023-07-28T20:46:08.249081+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=e268d81e-5b9a-4d62-ab8b-000c69eb9894 fwd="68.168.180.201" dyno=web.1 connect=0ms service=1ms status=304 bytes=270 protocol=https
+2023-07-28T20:46:08.652468+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=a9db401d-f1de-49b1-a5c4-8892b2311717 fwd="68.168.180.201" dyno=web.1 connect=0ms service=2ms status=403 bytes=247 protocol=https
+2023-07-28T20:46:08.671084+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=a5b6a1d9-f4ab-4b79-8fb6-9bcec169b927 fwd="68.168.180.201" dyno=web.1 connect=0ms service=7ms status=200 bytes=316030 protocol=https
+2023-07-28T20:46:08.700430+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=33d64183-755d-411d-905d-fdb489c1c777 fwd="68.168.180.201" dyno=web.1 connect=0ms service=7ms status=200 bytes=316030 protocol=https
+2023-07-28T20:46:08.911773+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=1c018718-d02b-44fc-a0a8-6bdcc0594471 fwd="68.168.180.201" dyno=web.1 connect=0ms service=2ms status=200 bytes=626 protocol=https
+2023-07-28T20:46:47.357404+00:00 heroku[router]: at=info method=POST path="/api/user/login" host=citizen-kanine.herokuapp.com request_id=24a1a895-75cc-421b-8b3f-1f604cd9b669 fwd="68.168.180.201" dyno=web.1 connect=0ms service=141ms status=200 bytes=454 protocol=https
+2023-07-28T20:46:47.403870+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=cccf21df-d4b5-433d-8f24-234772bdcbc1 fwd="68.168.180.201" dyno=web.1 connect=0ms service=5ms status=200 bytes=423 protocol=https
+2023-07-28T20:46:47.484527+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=68d678ef-0bb0-463f-ac9c-fd3e90ea6bd2 fwd="68.168.180.201" dyno=web.1 connect=0ms service=13ms status=200 bytes=489127 protocol=https
+2023-07-28T20:46:47.496243+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=0f8034e0-d821-411e-b5a2-7bf9e0350e50 fwd="68.168.180.201" dyno=web.1 connect=0ms service=24ms status=304 bytes=182 protocol=https
+2023-07-28T20:46:55.860122+00:00 app[web.1]: in GET api/clients
+2023-07-28T20:46:55.869539+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=5257bbd0-14b9-4ee4-82b3-6c4eb95712e1 fwd="68.168.180.201" dyno=web.1 connect=0ms service=13ms status=304 bytes=184 protocol=https
+2023-07-28T20:46:55.870085+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=d38e9d4c-963f-421b-8870-0d175ce918fb fwd="68.168.180.201" dyno=web.1 connect=0ms service=10ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:04.724128+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=bbeefb19-5574-47d0-ace0-025b3228af6a fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:05.011711+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-28T20:47:05.012047+00:00 app[web.1]: undefined
+2023-07-28T20:47:05.012730+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=ALXRsndj-b9J9RKzu5SGL6oG8AxKs8EfDr2g&scope=com.intuit.quickbooks.accounting
+2023-07-28T20:47:05.014652+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=a20ba6c9-b82a-4b0d-adce-be677e5236a5 fwd="68.168.180.201" dyno=web.1 connect=3ms service=6ms status=302 bytes=1426 protocol=https
+2023-07-28T20:47:13.418315+00:00 app[web.1]: in /api/quickbooks/callback
+2023-07-28T20:47:13.419563+00:00 app[web.1]: do we get req.session.realmId Session { passport: { user: 1 }, secret: 'NzEnuN5-Taz6LOu9M6E-Q-gN' }
+2023-07-28T20:47:13.735947+00:00 app[web.1]: token {
+2023-07-28T20:47:13.735980+00:00 app[web.1]: access_token: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..Jhe0YcqW9ALVyEymb7kgVg.MVBTRWwVAKVg0O40QZkAkbTXkXuSZxk5o9BgEGSqEsIwn00Rrh_hUHQffA4_5Lfv-E0eM0UvmQnkZ1ORHfqvuwwcGFWPBvkD6UpY5LAw6wPB5WxoXkTKOAVE0zEmhSEtEU19Zq1JkgNfaN_QiucpY77XAzsR-oLX8nLJudfc_VEbaxMu-XdiJvsADlKHCgOsYEK7jj0ARKlXtamZT2joDN3w6e6O_B1dtn92cOFmi9nYJhCjZ5wBAFWY4pTvUlafsLPLjTZyXZu9iwvO5300Ej_mBZlYQESlH3xaxp1ibVBAYGb0Sd80KgPz86vpQqvBwV6A9cauvMkAWH6JYNBLyNYWzPiZirLqMFtt--Wygh8OLsagMF4zMseiAa_JCeVEZ4oj37k5PCO4ocsIHUwLVmo4xbm6LtqVBw4_Neq7iYmOk07le4vFCgU1jbCECDEsq5vZaC8c6G2lyOd5wlNcQFcsW_szgmGHieb7iuqYxTOxHwGOHgKejIkBcRKvV-tQaSo_bVSlKD387nvDo-SCAHMHKWN6GSeuVpm7gQQ6dOv_9RvUNakeKUqUU86rPy9GDOzhjtbfk_LgXYptZzkonL3IvJqghXWA-fTCxJ9MFYRv0Z-4srKk8vqfgtNXd3QK6rAQlnPHS1w7n9kOMCg1pFDlt3BM_3XW0Gzg2cCwydU5VXisb7B0uePCKyE5Iwc2l1GulyPjMqn7yYd7rWEBDvSWAe3ETKM88vyQ3Us4jeo.59jakCzt4V0SL_FHLKYAQQ',
+2023-07-28T20:47:13.735982+00:00 app[web.1]: token_type: 'bearer',
+2023-07-28T20:47:13.735982+00:00 app[web.1]: x_refresh_token_expires_in: 8726400,
+2023-07-28T20:47:13.735983+00:00 app[web.1]: refresh_token: 'AB11699303633sOFjQqkU3jT9LZyfiqGPUXIrEWlHDmhYsYjXP',
+2023-07-28T20:47:13.735983+00:00 app[web.1]: expires_in: 3600
+2023-07-28T20:47:13.735983+00:00 app[web.1]: }
+2023-07-28T20:47:13.736962+00:00 heroku[router]: at=info method=GET path="/api/oauth2/callback?code=AB11690577533BWz7gz1JEYddHTHhHBDtxCRGMlCZ9KIb2K5xV&state=ALXRsndj-b9J9RKzu5SGL6oG8AxKs8EfDr2g&realmId=193514451072484" host=citizen-kanine.herokuapp.com request_id=7d465faf-9e83-4f9d-b411-4490e1ebcfea fwd="68.168.180.201" dyno=web.1 connect=0ms service=322ms status=302 bytes=3327 protocol=https
+2023-07-28T20:47:13.785452+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=52584855-c5ee-4c91-aeaf-9f83af4eee64 fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:13.852729+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=4468c27d-fe6e-4017-823a-a440988c5dc9 fwd="68.168.180.201" dyno=web.1 connect=0ms service=5ms status=304 bytes=271 protocol=https
+2023-07-28T20:47:13.873935+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=3b35b1b7-088e-4133-9110-628a439f4370 fwd="68.168.180.201" dyno=web.1 connect=2ms service=23ms status=304 bytes=270 protocol=https
+2023-07-28T20:47:14.019740+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=bf92393a-2d4a-4024-986f-1f5d5b52316e fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=182 protocol=https
+2023-07-28T20:47:14.035825+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=3c0978f4-c73f-483a-8866-0a27505dacf9 fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-28T20:47:14.063787+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=507e93a3-6a2e-46d5-8d4c-7174fdd55afb fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-28T20:47:14.087451+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=be13979a-ea5a-4d27-948b-951a61771684 fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:14.106560+00:00 app[web.1]: in GET api/clients
+2023-07-28T20:47:14.115156+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=51460442-9771-45d3-899d-6e7d287584dd fwd="68.168.180.201" dyno=web.1 connect=0ms service=11ms status=304 bytes=184 protocol=https
+2023-07-28T20:47:16.186439+00:00 app[web.1]: in server fetch services
+2023-07-28T20:47:16.186519+00:00 app[web.1]: Making API Customer call to: https://quickbooks.api.intuit.com/v3/company/193514451072484/query?query=%20select%20*%20from%20item%20where%20Active%20=%20true
+2023-07-28T20:47:16.626604+00:00 heroku[router]: at=info method=GET path="/api/qb_services" host=citizen-kanine.herokuapp.com request_id=dd77ca44-775c-41af-97e1-ee5533bb04cf fwd="68.168.180.201" dyno=web.1 connect=0ms service=443ms status=201 bytes=243 protocol=https
+2023-07-28T20:47:16.676699+00:00 app[web.1]: in server fetch customers
+2023-07-28T20:47:17.139331+00:00 heroku[router]: at=info method=GET path="/api/quickbooks/customer" host=citizen-kanine.herokuapp.com request_id=c4020525-3ad6-4622-9a9e-488c450e0bce fwd="68.168.180.201" dyno=web.1 connect=0ms service=465ms status=200 bytes=24170 protocol=https
+2023-07-28T20:47:17.225767+00:00 app[web.1]: in GET api/clients
+2023-07-28T20:47:17.233145+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=6df021e5-e894-47c7-82ec-75ec4462f9cf fwd="68.168.180.201" dyno=web.1 connect=0ms service=10ms status=304 bytes=184 protocol=https
+2023-07-28T20:47:17.474128+00:00 app[web.1]: No dogs need to be added
+2023-07-28T20:47:17.474242+00:00 app[web.1]: No dogs need to be deleted
+2023-07-28T20:47:17.477239+00:00 app[web.1]: connection release
+2023-07-28T20:47:17.478292+00:00 heroku[router]: at=info method=PUT path="/api/quickbooks/customer/put" host=citizen-kanine.herokuapp.com request_id=da84a67e-81cd-467a-9692-b81a35732fde fwd="68.168.180.201" dyno=web.1 connect=0ms service=197ms status=201 bytes=243 protocol=https
+2023-07-28T20:47:17.526044+00:00 app[web.1]: in quickbooks/qbcustomer
+2023-07-28T20:47:17.527010+00:00 app[web.1]: /app/server/routes/quickbooks.router.js:204
+2023-07-28T20:47:17.527010+00:00 app[web.1]: const town = customer.city.replace(/ /g, '');
+2023-07-28T20:47:17.527011+00:00 app[web.1]: ^
+2023-07-28T20:47:17.527011+00:00 app[web.1]: 
+2023-07-28T20:47:17.527011+00:00 app[web.1]: TypeError: Cannot read properties of undefined (reading 'replace')
+2023-07-28T20:47:17.527012+00:00 app[web.1]: at GetGeoStats (/app/server/routes/quickbooks.router.js:204:32)
+2023-07-28T20:47:17.527012+00:00 app[web.1]: at /app/server/routes/quickbooks.router.js:217:38
+2023-07-28T20:47:17.527012+00:00 app[web.1]: at processTicksAndRejections (node:internal/process/task_queues:96:5)
+2023-07-28T20:47:17.530766+00:00 heroku[router]: at=error code=H13 desc="Connection closed without response" method=POST path="/api/quickbooks/qbcustomers" host=citizen-kanine.herokuapp.com request_id=4d41c1cf-baaf-4718-bc6e-3a754ef87b36 fwd="68.168.180.201" dyno=web.1 connect=0ms service=8ms status=503 bytes=0 protocol=https
+2023-07-28T20:47:17.647903+00:00 heroku[web.1]: Process exited with status 1
+2023-07-28T20:47:17.676606+00:00 heroku[web.1]: State changed from up to crashed
+2023-07-28T20:47:17.679168+00:00 heroku[web.1]: State changed from crashed to starting
+2023-07-28T20:47:29.088383+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-28T20:47:30.761822+00:00 app[web.1]: 
+2023-07-28T20:47:30.761844+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-28T20:47:30.761845+00:00 app[web.1]: > node server/server.js
+2023-07-28T20:47:30.761845+00:00 app[web.1]: 
+2023-07-28T20:47:30.884134+00:00 app[web.1]: node_env:  production
+2023-07-28T20:47:31.164887+00:00 app[web.1]: Listening on port: 7177, connecting to db schema ck_prod
+2023-07-28T20:47:31.258881+00:00 heroku[web.1]: State changed from starting to up
+2023-07-28T20:47:31.771334+00:00 app[web.1]: in GET api/clients
+2023-07-28T20:47:31.783336+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=b7eb5be9-8ac6-4601-b4c9-36cca33ba526 fwd="68.168.180.201" dyno=web.1 connect=0ms service=40ms status=304 bytes=184 protocol=https
+2023-07-28T20:47:33.362568+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=a82e21fc-6ad1-41c7-8720-4e1cfac84878 fwd="68.168.180.201" dyno=web.1 connect=0ms service=7ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:33.422315+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=e1f86c02-55c9-4477-8f73-d24f470d1ed7 fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=304 bytes=271 protocol=https
+2023-07-28T20:47:33.429291+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=ca50980b-09de-4749-a1fd-bd78a9b5eb58 fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=270 protocol=https
+2023-07-28T20:47:33.506067+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=e80c45a8-b432-492e-8e1c-980a07be65c1 fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=304 bytes=182 protocol=https
+2023-07-28T20:47:33.523170+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=22679fe7-af12-4809-b6a8-ff3c2374f8f1 fwd="68.168.180.201" dyno=web.1 connect=0ms service=19ms status=304 bytes=271 protocol=https
+2023-07-28T20:47:33.527754+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=b6a9d0fd-e870-4a0d-959e-6f1b46046ae1 fwd="68.168.180.201" dyno=web.1 connect=0ms service=6ms status=304 bytes=271 protocol=https
+2023-07-28T20:47:33.569886+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=68fae8b1-4bf6-48dc-9d0a-79fd91882637 fwd="68.168.180.201" dyno=web.1 connect=0ms service=5ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:33.570288+00:00 app[web.1]: in GET api/clients
+2023-07-28T20:47:33.577151+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=8ee2576d-7238-46ce-b0fb-1a88242d8857 fwd="68.168.180.201" dyno=web.1 connect=0ms service=9ms status=304 bytes=184 protocol=https
+2023-07-28T20:47:33.614481+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=a52223b1-9039-4bd2-b80b-056100ea2e0a fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:40.848771+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=83b682be-75cd-44a6-8376-53fd0eeccd11 fwd="68.168.180.201" dyno=web.1 connect=0ms service=12ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:41.194976+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-28T20:47:41.197053+00:00 app[web.1]: {
+2023-07-28T20:47:41.197060+00:00 app[web.1]: access_token: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..Jhe0YcqW9ALVyEymb7kgVg.MVBTRWwVAKVg0O40QZkAkbTXkXuSZxk5o9BgEGSqEsIwn00Rrh_hUHQffA4_5Lfv-E0eM0UvmQnkZ1ORHfqvuwwcGFWPBvkD6UpY5LAw6wPB5WxoXkTKOAVE0zEmhSEtEU19Zq1JkgNfaN_QiucpY77XAzsR-oLX8nLJudfc_VEbaxMu-XdiJvsADlKHCgOsYEK7jj0ARKlXtamZT2joDN3w6e6O_B1dtn92cOFmi9nYJhCjZ5wBAFWY4pTvUlafsLPLjTZyXZu9iwvO5300Ej_mBZlYQESlH3xaxp1ibVBAYGb0Sd80KgPz86vpQqvBwV6A9cauvMkAWH6JYNBLyNYWzPiZirLqMFtt--Wygh8OLsagMF4zMseiAa_JCeVEZ4oj37k5PCO4ocsIHUwLVmo4xbm6LtqVBw4_Neq7iYmOk07le4vFCgU1jbCECDEsq5vZaC8c6G2lyOd5wlNcQFcsW_szgmGHieb7iuqYxTOxHwGOHgKejIkBcRKvV-tQaSo_bVSlKD387nvDo-SCAHMHKWN6GSeuVpm7gQQ6dOv_9RvUNakeKUqUU86rPy9GDOzhjtbfk_LgXYptZzkonL3IvJqghXWA-fTCxJ9MFYRv0Z-4srKk8vqfgtNXd3QK6rAQlnPHS1w7n9kOMCg1pFDlt3BM_3XW0Gzg2cCwydU5VXisb7B0uePCKyE5Iwc2l1GulyPjMqn7yYd7rWEBDvSWAe3ETKM88vyQ3Us4jeo.59jakCzt4V0SL_FHLKYAQQ',
+2023-07-28T20:47:41.197061+00:00 app[web.1]: token_type: 'bearer',
+2023-07-28T20:47:41.197063+00:00 app[web.1]: x_refresh_token_expires_in: 8726400,
+2023-07-28T20:47:41.197063+00:00 app[web.1]: refresh_token: 'AB11699303633sOFjQqkU3jT9LZyfiqGPUXIrEWlHDmhYsYjXP',
+2023-07-28T20:47:41.197063+00:00 app[web.1]: expires_in: 3600
+2023-07-28T20:47:41.197064+00:00 app[web.1]: }
+2023-07-28T20:47:41.198244+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=QlXrRRCi-eAlJ9Fv09eRsarJc8V_7SIIoRyc&scope=com.intuit.quickbooks.accounting
+2023-07-28T20:47:41.201807+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=b7b546ce-3807-4800-922a-334a35b6b766 fwd="68.168.180.201" dyno=web.1 connect=0ms service=13ms status=302 bytes=4082 protocol=https
+2023-07-28T20:47:42.472894+00:00 app[web.1]: in /api/quickbooks/callback
+2023-07-28T20:47:42.473151+00:00 app[web.1]: do we get req.session.realmId Session {
+2023-07-28T20:47:42.473152+00:00 app[web.1]: passport: { user: 1 },
+2023-07-28T20:47:42.473153+00:00 app[web.1]: secret: 'Z4gnd4EAvoNbQoZLDZJ6aZnY',
+2023-07-28T20:47:42.473153+00:00 app[web.1]: accessToken: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..Jhe0YcqW9ALVyEymb7kgVg.MVBTRWwVAKVg0O40QZkAkbTXkXuSZxk5o9BgEGSqEsIwn00Rrh_hUHQffA4_5Lfv-E0eM0UvmQnkZ1ORHfqvuwwcGFWPBvkD6UpY5LAw6wPB5WxoXkTKOAVE0zEmhSEtEU19Zq1JkgNfaN_QiucpY77XAzsR-oLX8nLJudfc_VEbaxMu-XdiJvsADlKHCgOsYEK7jj0ARKlXtamZT2joDN3w6e6O_B1dtn92cOFmi9nYJhCjZ5wBAFWY4pTvUlafsLPLjTZyXZu9iwvO5300Ej_mBZlYQESlH3xaxp1ibVBAYGb0Sd80KgPz86vpQqvBwV6A9cauvMkAWH6JYNBLyNYWzPiZirLqMFtt--Wygh8OLsagMF4zMseiAa_JCeVEZ4oj37k5PCO4ocsIHUwLVmo4xbm6LtqVBw4_Neq7iYmOk07le4vFCgU1jbCECDEsq5vZaC8c6G2lyOd5wlNcQFcsW_szgmGHieb7iuqYxTOxHwGOHgKejIkBcRKvV-tQaSo_bVSlKD387nvDo-SCAHMHKWN6GSeuVpm7gQQ6dOv_9RvUNakeKUqUU86rPy9GDOzhjtbfk_LgXYptZzkonL3IvJqghXWA-fTCxJ9MFYRv0Z-4srKk8vqfgtNXd3QK6rAQlnPHS1w7n9kOMCg1pFDlt3BM_3XW0Gzg2cCwydU5VXisb7B0uePCKyE5Iwc2l1GulyPjMqn7yYd7rWEBDvSWAe3ETKM88vyQ3Us4jeo.59jakCzt4V0SL_FHLKYAQQ',
+2023-07-28T20:47:42.473154+00:00 app[web.1]: refreshToken: 'AB11699303633sOFjQqkU3jT9LZyfiqGPUXIrEWlHDmhYsYjXP',
+2023-07-28T20:47:42.473154+00:00 app[web.1]: tokenType: 'bearer',
+2023-07-28T20:47:42.473155+00:00 app[web.1]: data: {
+2023-07-28T20:47:42.473156+00:00 app[web.1]: access_token: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..Jhe0YcqW9ALVyEymb7kgVg.MVBTRWwVAKVg0O40QZkAkbTXkXuSZxk5o9BgEGSqEsIwn00Rrh_hUHQffA4_5Lfv-E0eM0UvmQnkZ1ORHfqvuwwcGFWPBvkD6UpY5LAw6wPB5WxoXkTKOAVE0zEmhSEtEU19Zq1JkgNfaN_QiucpY77XAzsR-oLX8nLJudfc_VEbaxMu-XdiJvsADlKHCgOsYEK7jj0ARKlXtamZT2joDN3w6e6O_B1dtn92cOFmi9nYJhCjZ5wBAFWY4pTvUlafsLPLjTZyXZu9iwvO5300Ej_mBZlYQESlH3xaxp1ibVBAYGb0Sd80KgPz86vpQqvBwV6A9cauvMkAWH6JYNBLyNYWzPiZirLqMFtt--Wygh8OLsagMF4zMseiAa_JCeVEZ4oj37k5PCO4ocsIHUwLVmo4xbm6LtqVBw4_Neq7iYmOk07le4vFCgU1jbCECDEsq5vZaC8c6G2lyOd5wlNcQFcsW_szgmGHieb7iuqYxTOxHwGOHgKejIkBcRKvV-tQaSo_bVSlKD387nvDo-SCAHMHKWN6GSeuVpm7gQQ6dOv_9RvUNakeKUqUU86rPy9GDOzhjtbfk_LgXYptZzkonL3IvJqghXWA-fTCxJ9MFYRv0Z-4srKk8vqfgtNXd3QK6rAQlnPHS1w7n9kOMCg1pFDlt3BM_3XW0Gzg2cCwydU5VXisb7B0uePCKyE5Iwc2l1GulyPjMqn7yYd7rWEBDvSWAe3ETKM88vyQ3Us4jeo.59jakCzt4V0SL_FHLKYAQQ',
+2023-07-28T20:47:42.473156+00:00 app[web.1]: token_type: 'bearer',
+2023-07-28T20:47:42.473156+00:00 app[web.1]: x_refresh_token_expires_in: 8726400,
+2023-07-28T20:47:42.473156+00:00 app[web.1]: refresh_token: 'AB11699303633sOFjQqkU3jT9LZyfiqGPUXIrEWlHDmhYsYjXP',
+2023-07-28T20:47:42.473157+00:00 app[web.1]: expires_in: 3600
+2023-07-28T20:47:42.473157+00:00 app[web.1]: },
+2023-07-28T20:47:42.473157+00:00 app[web.1]: realmId: '193514451072484'
+2023-07-28T20:47:42.473157+00:00 app[web.1]: }
+2023-07-28T20:47:42.782561+00:00 app[web.1]: token {
+2023-07-28T20:47:42.782585+00:00 app[web.1]: access_token: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..G-GDl_q16GB165x-d6g5Lg.71zGGQl_vn-Q3eS3il9adYyOfAKq2aQRSwx-FyLBKDvbVZw2ftw92KH_afLPI2USRZwsIVOyCg_6PN5spdsDdzBLdAMrmaXUiD3VGhy5bRHvnrt9Awo1Zl1Yh1Vc_hYo1pW-tjFYRT2AiQ-AaoxqaaFlQMeX8eDIXrnlY0_ImU79MsKcizEFUC13ll8itL1TD5Ht0HSuCV-1nTOp3CLszhPncp-PziymM8vz89oMJeC-QxQxj6yzcQxAwjs-5J56Ptm8EN5YBL184EIdy0hCQCCl2oN2xbMrinDE3EUbdQBupqHhsmNkkHPYtlMegffTt6Zj9-enAk-sv9EDeZxetx1iuG4pSmi8KhBUg-qsgxr_MRU6ESMSzAZ73jIeJejwGe7mQZb_Ssq-khLb-kXQqEckCtZgfaDyPMkedo6TPL3uiZsMufpCyzNsnvcovE-mNsyJH_Na_aBdH3Kg8oLeGwyOSMCwzRk7bDGkzRyEIGbZsSCE9Nqy98mOrPXr1WMa6036aRPiSf0rEQYAlItgvvWeo38Ten4CEaZCijlyEea1mCv-REyNWUpIoqkUIQBiuTP2NL4d_C37-6joUXbEhe3WnukV1JO2hY4feaflrbwEo8ubgMn3xgqogo3IpWOxY0CzKRORRJhoOeIR2ExH_HsaTElPwHa_1JC5ftrtKVnO9LKj4nKZHAgvx3AT6erX7OSEV8JEonlIoEvLLikrOLPKY_WFPdSh9nGsg3mMoDc.59r-UzYThMF2ENZmYG7Kag',
+2023-07-28T20:47:42.782586+00:00 app[web.1]: token_type: 'bearer',
+2023-07-28T20:47:42.782587+00:00 app[web.1]: x_refresh_token_expires_in: 8726400,
+2023-07-28T20:47:42.782587+00:00 app[web.1]: refresh_token: 'AB11699303662pd5iCmVJe0gMptfDAQ1Ft9ztnwbGFyCd7dvSQ',
+2023-07-28T20:47:42.782588+00:00 app[web.1]: expires_in: 3600
+2023-07-28T20:47:42.782588+00:00 app[web.1]: }
+2023-07-28T20:47:42.783916+00:00 heroku[router]: at=info method=GET path="/api/oauth2/callback?code=AB11690577562BZqxzc2pzhMJdhqDSlIjsQ3UiI2LlFbCkARMy&state=QlXrRRCi-eAlJ9Fv09eRsarJc8V_7SIIoRyc&realmId=193514451072484" host=citizen-kanine.herokuapp.com request_id=5a4dc08f-2984-4a3e-a2b4-363f32a5abd1 fwd="68.168.180.201" dyno=web.1 connect=0ms service=314ms status=302 bytes=3327 protocol=https
+2023-07-28T20:47:42.830768+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=03469884-7ea7-4cc3-b307-546db1c16a66 fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:42.894553+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=0de9b25c-b560-40d4-b551-c74fdc307ce6 fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-28T20:47:42.901448+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=cf05482a-71cd-42db-bea1-b59d07ef77c5 fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=270 protocol=https
+2023-07-28T20:47:43.053855+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=335a8898-ccc2-4dff-830e-54283e980edb fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=304 bytes=182 protocol=https
+2023-07-28T20:47:43.068996+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=2b937846-139e-46d6-a22c-9ece0ab6a4b7 fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-28T20:47:43.089412+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=51e75cfc-ffe0-4ec8-86c5-4705192d887e fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-28T20:47:43.122616+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=dfa3aeff-25ed-4f32-8b96-6d43ed57f919 fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:43.152030+00:00 app[web.1]: in GET api/clients
+2023-07-28T20:47:43.160451+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=f46e479e-7436-4858-97e3-cf5f55e21db9 fwd="68.168.180.201" dyno=web.1 connect=0ms service=11ms status=304 bytes=184 protocol=https
+2023-07-28T20:47:43.170561+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=e4ecd4f3-e4bc-46c2-b663-7d67051a19c1 fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:43.822192+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=4d3e3ab8-fa11-4cab-babc-1f32547134cb fwd="68.168.180.201" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-28T20:47:44.870002+00:00 app[web.1]: in server fetch services
+2023-07-28T20:47:44.870092+00:00 app[web.1]: Making API Customer call to: https://quickbooks.api.intuit.com/v3/company/193514451072484/query?query=%20select%20*%20from%20item%20where%20Active%20=%20true
+2023-07-28T20:47:45.184524+00:00 heroku[router]: at=info method=GET path="/api/qb_services" host=citizen-kanine.herokuapp.com request_id=46501948-0f10-4be8-ae5d-3d566974a46e fwd="68.168.180.201" dyno=web.1 connect=0ms service=317ms status=201 bytes=243 protocol=https
+2023-07-28T20:47:45.230063+00:00 app[web.1]: in server fetch customers
+2023-07-28T20:47:45.644613+00:00 heroku[router]: at=info method=GET path="/api/quickbooks/customer" host=citizen-kanine.herokuapp.com request_id=861ceeaa-1f3e-41ea-93f1-035c509f7af8 fwd="68.168.180.201" dyno=web.1 connect=0ms service=418ms status=304 bytes=184 protocol=https
+2023-07-28T20:47:45.688616+00:00 app[web.1]: in GET api/clients
+2023-07-28T20:47:45.693687+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=b6ba82ed-35f7-4ee9-bbff-5c9bd29e819e fwd="68.168.180.201" dyno=web.1 connect=0ms service=7ms status=304 bytes=184 protocol=https
+2023-07-28T20:47:45.901107+00:00 app[web.1]: No dogs need to be added
+2023-07-28T20:47:45.901141+00:00 app[web.1]: No dogs need to be deleted
+2023-07-28T20:47:45.903912+00:00 app[web.1]: connection release
+2023-07-28T20:47:45.904223+00:00 heroku[router]: at=info method=PUT path="/api/quickbooks/customer/put" host=citizen-kanine.herokuapp.com request_id=0c571fb2-9d2d-4fd9-90bb-e20249babe87 fwd="68.168.180.201" dyno=web.1 connect=0ms service=167ms status=201 bytes=243 protocol=https
+2023-07-28T20:47:45.951025+00:00 app[web.1]: in quickbooks/qbcustomer
+2023-07-28T20:47:45.952383+00:00 app[web.1]: /app/server/routes/quickbooks.router.js:204
+2023-07-28T20:47:45.952384+00:00 app[web.1]: const town = customer.city.replace(/ /g, '');
+2023-07-28T20:47:45.952384+00:00 app[web.1]: ^
+2023-07-28T20:47:45.952385+00:00 app[web.1]: 
+2023-07-28T20:47:45.952385+00:00 app[web.1]: TypeError: Cannot read properties of undefined (reading 'replace')
+2023-07-28T20:47:45.952386+00:00 app[web.1]: at GetGeoStats (/app/server/routes/quickbooks.router.js:204:32)
+2023-07-28T20:47:45.952388+00:00 app[web.1]: at /app/server/routes/quickbooks.router.js:217:38
+2023-07-28T20:47:45.952388+00:00 app[web.1]: at processTicksAndRejections (node:internal/process/task_queues:96:5)
+2023-07-28T20:47:45.957846+00:00 heroku[router]: at=error code=H13 desc="Connection closed without response" method=POST path="/api/quickbooks/qbcustomers" host=citizen-kanine.herokuapp.com request_id=515616d0-80b0-4f10-9162-d5d89da4184e fwd="68.168.180.201" dyno=web.1 connect=0ms service=10ms status=503 bytes=0 protocol=https
+2023-07-28T20:47:46.121422+00:00 heroku[web.1]: Process exited with status 1
+2023-07-28T20:47:46.152580+00:00 heroku[web.1]: State changed from up to crashed
+2023-07-28T20:47:51.916328+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=b595834d-ab07-4415-a22c-cb8f52c641ac fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-28T20:58:27.598179+00:00 heroku[web.1]: State changed from crashed to starting
+2023-07-28T20:58:38.614816+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-28T20:58:39.981692+00:00 app[web.1]: 
+2023-07-28T20:58:39.981709+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-28T20:58:39.981710+00:00 app[web.1]: > node server/server.js
+2023-07-28T20:58:39.981710+00:00 app[web.1]: 
+2023-07-28T20:58:40.078951+00:00 app[web.1]: node_env:  production
+2023-07-28T20:58:40.298916+00:00 app[web.1]: Listening on port: 50906, connecting to db schema ck_prod
+2023-07-28T20:58:40.723481+00:00 heroku[web.1]: State changed from starting to up
+2023-07-28T22:06:31.713233+00:00 heroku[web.1]: Idling
+2023-07-28T22:06:31.715355+00:00 heroku[web.1]: State changed from up to down
+2023-07-28T22:06:32.379303+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2023-07-28T22:06:32.606263+00:00 heroku[web.1]: Process exited with status 143
+2023-07-28T23:19:35.801806+00:00 heroku[web.1]: Unidling
+2023-07-28T23:19:35.854207+00:00 heroku[web.1]: Unidling
+2023-07-28T23:19:35.866276+00:00 heroku[web.1]: State changed from down to starting
+2023-07-28T23:19:35.915783+00:00 heroku[web.1]: State changed from down to starting
+2023-07-28T23:19:45.498596+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-28T23:19:46.844228+00:00 app[web.1]: 
+2023-07-28T23:19:46.844245+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-28T23:19:46.844245+00:00 app[web.1]: > node server/server.js
+2023-07-28T23:19:46.844245+00:00 app[web.1]: 
+2023-07-28T23:19:46.943232+00:00 app[web.1]: node_env:  production
+2023-07-28T23:19:47.163304+00:00 app[web.1]: Listening on port: 31473, connecting to db schema ck_prod
+2023-07-28T23:19:47.656095+00:00 heroku[web.1]: State changed from starting to up
+2023-07-28T23:19:50.002243+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=6031c15f-5ee6-410c-b298-59f6a07b1b75 fwd="73.94.40.202" dyno=web.1 connect=0ms service=28ms status=304 bytes=271 protocol=http
+2023-07-28T23:19:50.017331+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=4e16957d-064d-406b-9da2-0c37bd6d80da fwd="73.94.40.202" dyno=web.1 connect=0ms service=4ms status=304 bytes=270 protocol=http
+2023-07-28T23:19:51.706039+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=163fb957-43e0-4696-84db-524626530e41 fwd="73.94.40.202" dyno=web.1 connect=0ms service=4ms status=304 bytes=182 protocol=http
+2023-07-28T23:19:52.014292+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=00a86dc9-31d4-4d27-b925-0b2c74c1ac04 fwd="73.94.40.202" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=http
+2023-07-28T23:19:52.128168+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=d5f0990b-0229-413f-ad2b-cdccb8bcfa8e fwd="73.94.40.202" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=http
+2023-07-28T23:19:52.579981+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker3.png" host=citizen-kanine.herokuapp.com request_id=4bbd322f-2590-4171-93e1-96c22c77c4ac fwd="73.94.40.202" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=http
+2023-07-29T00:24:33.946796+00:00 heroku[web.1]: Idling
+2023-07-29T00:24:33.948611+00:00 heroku[web.1]: State changed from up to down
+2023-07-29T00:24:34.505287+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2023-07-29T00:24:34.807969+00:00 app[web.1]: Error waiting for process to terminate: No child processes
+2023-07-29T00:24:34.937690+00:00 heroku[web.1]: Process exited with status 22
+2023-07-29T20:52:04.230933+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=c0fa3c85-049a-4ac1-8e04-e11d0fe00b9a fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-29T20:52:04.902130+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=1287934e-0022-4417-9a8b-84f6a1e364e7 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-29T20:54:38.158494+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=05d6f40a-cd56-4da3-b817-c7bb0c4157db fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-29T20:54:38.890831+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=cfed0ebb-d79f-485b-97d5-fa8f08199939 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-29T20:57:49.414434+00:00 heroku[web.1]: State changed from down to starting
+2023-07-29T20:58:01.082436+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-29T20:58:03.538211+00:00 app[web.1]: 
+2023-07-29T20:58:03.538245+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-29T20:58:03.538245+00:00 app[web.1]: > node server/server.js
+2023-07-29T20:58:03.538246+00:00 app[web.1]: 
+2023-07-29T20:58:03.702465+00:00 app[web.1]: node_env:  production
+2023-07-29T20:58:04.059160+00:00 app[web.1]: Listening on port: 19707, connecting to db schema ck_prod
+2023-07-29T20:58:04.373229+00:00 heroku[web.1]: State changed from starting to up
+2023-07-29T21:03:25.078132+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=303e7a50-05a6-4097-ac61-9bb2c657bb8c fwd="73.94.40.90" dyno=web.1 connect=0ms service=9ms status=200 bytes=781 protocol=https
+2023-07-29T21:03:25.180925+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=49e70bf6-06a8-4989-affd-22976336c37b fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=200 bytes=29623 protocol=https
+2023-07-29T21:03:25.185229+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=a0f0271b-598d-4f08-9b18-0ae84c6d9072 fwd="73.94.40.90" dyno=web.1 connect=0ms service=9ms status=200 bytes=969939 protocol=https
+2023-07-29T21:03:25.728278+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=4c1eb679-5a54-48be-a776-5bd802cd8666 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=403 bytes=247 protocol=https
+2023-07-29T21:03:25.814975+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=555600b5-9197-4f26-8aca-a0c66a4d3ab5 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=200 bytes=316030 protocol=https
+2023-07-29T21:03:25.825319+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=7d04f7b1-cfd3-400e-be6f-c170157d1eb2 fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=200 bytes=316030 protocol=https
+2023-07-29T21:03:27.313830+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=10ee1c99-7999-40b0-9bc1-a28ba0e79e5d fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=626 protocol=https
+2023-07-29T21:03:35.010269+00:00 heroku[router]: at=info method=POST path="/api/user/login" host=citizen-kanine.herokuapp.com request_id=6f280303-14cd-49a9-b589-980d5fe9ed1a fwd="73.94.40.90" dyno=web.1 connect=0ms service=152ms status=200 bytes=454 protocol=https
+2023-07-29T21:03:35.065515+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=d39748b0-c158-4b16-b3af-df52ccb4dece fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=200 bytes=425 protocol=https
+2023-07-29T21:03:35.334263+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=72f1536c-eca5-457a-becb-7cb1fe91b704 fwd="73.94.40.90" dyno=web.1 connect=0ms service=13ms status=200 bytes=239 protocol=https
+2023-07-29T21:03:35.361724+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=47d54235-f017-46f4-b6b7-4b2da73b2050 fwd="73.94.40.90" dyno=web.1 connect=0ms service=39ms status=200 bytes=489127 protocol=https
+2023-07-29T21:03:37.216039+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=2fb44e51-ccec-465c-b31f-13cad21ef4a9 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-29T21:03:44.063600+00:00 app[web.1]: in GET api/clients
+2023-07-29T21:03:44.069931+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=14ba0db4-ebb5-4d90-8fff-54df523b9901 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=2958 protocol=https
+2023-07-29T21:03:44.094906+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=ffa7a34e-96bf-4f1b-86e5-b7f9e243697c fwd="73.94.40.90" dyno=web.1 connect=0ms service=34ms status=200 bytes=41005 protocol=https
+2023-07-29T21:03:46.244701+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=5d122023-3f62-4ac5-b8e0-02c09786e714 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=200 bytes=2871 protocol=https
+2023-07-29T21:03:47.314227+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-29T21:03:47.314726+00:00 app[web.1]: undefined
+2023-07-29T21:03:47.315642+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=e29EgFhe-X0oMVQZs35bGTDUSdXcFKA8-w_w&scope=com.intuit.quickbooks.accounting
+2023-07-29T21:03:47.318002+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=1417cf9b-f6d7-496c-af95-a5100f43322f fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=302 bytes=1426 protocol=https
+2023-07-29T21:04:38.332022+00:00 app[web.1]: in server fetch services
+2023-07-29T21:04:38.332102+00:00 app[web.1]: null token
+2023-07-29T21:04:38.332820+00:00 heroku[router]: at=info method=GET path="/api/qb_services" host=citizen-kanine.herokuapp.com request_id=e484f9c4-3462-46c5-bc68-9db7d637456f fwd="73.94.40.90" dyno=web.1 connect=0ms service=22ms status=200 bytes=242 protocol=https
+2023-07-29T21:04:38.385953+00:00 app[web.1]: in server fetch customers
+2023-07-29T21:04:38.385995+00:00 app[web.1]: null token
+2023-07-29T21:04:38.386372+00:00 heroku[router]: at=info method=GET path="/api/quickbooks/customer" host=citizen-kanine.herokuapp.com request_id=8d375bb3-bdde-4549-a8d9-136c394996b7 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=242 protocol=https
+2023-07-29T21:04:38.439629+00:00 app[web.1]: in GET api/clients
+2023-07-29T21:04:38.448918+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=fc5b2573-5616-4cbf-a871-3d853d65a886 fwd="73.94.40.90" dyno=web.1 connect=0ms service=12ms status=304 bytes=184 protocol=https
+2023-07-29T21:04:38.514130+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-29T21:04:38.514181+00:00 app[web.1]: undefined
+2023-07-29T21:04:38.514434+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=PUACy2c6-vqLr1psJ6YP3NGOVvEa2uGveiow&scope=com.intuit.quickbooks.accounting
+2023-07-29T21:04:38.515282+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=5b2622ae-4d21-4af3-a2e9-96bed16c85ff fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=302 bytes=1426 protocol=https
+2023-07-29T21:05:20.354188+00:00 app[web.1]: in /api/quickbooks/callback
+2023-07-29T21:05:20.355485+00:00 app[web.1]: do we get req.session.realmId Session { passport: { user: 8 }, secret: 'SpVnCqop-Vlqfqz8AZhU5eM3' }
+2023-07-29T21:05:20.357182+00:00 app[web.1]: /app/node_modules/client-oauth2/src/client-oauth2.js:122
+2023-07-29T21:05:20.357183+00:00 app[web.1]: var err = new Error(message)
+2023-07-29T21:05:20.357184+00:00 app[web.1]: ^
+2023-07-29T21:05:20.357184+00:00 app[web.1]: 
+2023-07-29T21:05:20.357185+00:00 app[web.1]: Error: The resource owner or authorization server denied the request.
+2023-07-29T21:05:20.357186+00:00 app[web.1]: at getAuthError (/app/node_modules/client-oauth2/src/client-oauth2.js:122:15)
+2023-07-29T21:05:20.357186+00:00 app[web.1]: at CodeFlow.getToken (/app/node_modules/client-oauth2/src/client-oauth2.js:618:13)
+2023-07-29T21:05:20.357186+00:00 app[web.1]: at /app/server/routes/quickbooks.oauth2.router.js:37:27
+2023-07-29T21:05:20.357186+00:00 app[web.1]: at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+2023-07-29T21:05:20.357187+00:00 app[web.1]: at next (/app/node_modules/express/lib/router/route.js:144:13)
+2023-07-29T21:05:20.357187+00:00 app[web.1]: at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+2023-07-29T21:05:20.357187+00:00 app[web.1]: at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+2023-07-29T21:05:20.357187+00:00 app[web.1]: at /app/node_modules/express/lib/router/index.js:284:15
+2023-07-29T21:05:20.357187+00:00 app[web.1]: at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+2023-07-29T21:05:20.357187+00:00 app[web.1]: at next (/app/node_modules/express/lib/router/index.js:280:10) {
+2023-07-29T21:05:20.357188+00:00 app[web.1]: body: [Object: null prototype] {
+2023-07-29T21:05:20.357188+00:00 app[web.1]: error: 'access_denied',
+2023-07-29T21:05:20.357188+00:00 app[web.1]: state: 'PUACy2c6-vqLr1psJ6YP3NGOVvEa2uGveiow'
+2023-07-29T21:05:20.357189+00:00 app[web.1]: },
+2023-07-29T21:05:20.357189+00:00 app[web.1]: code: 'EAUTH'
+2023-07-29T21:05:20.357189+00:00 app[web.1]: }
+2023-07-29T21:05:20.361090+00:00 heroku[router]: at=error code=H13 desc="Connection closed without response" method=GET path="/api/oauth2/callback?error=access_denied&state=PUACy2c6-vqLr1psJ6YP3NGOVvEa2uGveiow" host=citizen-kanine.herokuapp.com request_id=2e825c95-49d6-48b7-8138-33592dc97de4 fwd="73.94.40.90" dyno=web.1 connect=0ms service=26ms status=503 bytes=0 protocol=https
+2023-07-29T21:05:20.488261+00:00 heroku[web.1]: Process exited with status 1
+2023-07-29T21:05:20.522013+00:00 heroku[web.1]: State changed from up to crashed
+2023-07-29T21:05:20.526146+00:00 heroku[web.1]: State changed from crashed to starting
+2023-07-29T21:05:32.336076+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-29T21:05:33.736230+00:00 app[web.1]: 
+2023-07-29T21:05:33.736247+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-29T21:05:33.736248+00:00 app[web.1]: > node server/server.js
+2023-07-29T21:05:33.736248+00:00 app[web.1]: 
+2023-07-29T21:05:33.832267+00:00 app[web.1]: node_env:  production
+2023-07-29T21:05:34.049083+00:00 app[web.1]: Listening on port: 54934, connecting to db schema ck_prod
+2023-07-29T21:05:34.485068+00:00 heroku[web.1]: State changed from starting to up
+2023-07-29T21:05:35.719859+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=a6ef73b1-ce98-4c04-b4a0-1a0e2f84253d fwd="73.94.40.90" dyno=web.1 connect=0ms service=36ms status=304 bytes=269 protocol=https
+2023-07-29T21:05:35.890915+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=7e8a102b-f011-4b91-a60c-9a8c90b68646 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=304 bytes=270 protocol=https
+2023-07-29T21:05:35.904975+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=ac7a7e85-fef6-4920-b5ca-1154c429bbe5 fwd="73.94.40.90" dyno=web.1 connect=0ms service=18ms status=304 bytes=271 protocol=https
+2023-07-29T21:05:36.209907+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=2fb3cdf1-0b5d-4be0-9f6b-567727577abc fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=182 protocol=https
+2023-07-29T21:05:36.276012+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=79a90894-1a55-4c17-8962-3ca0f778b78a fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-29T21:05:36.279599+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=28aff627-b1ff-4644-b7f8-c6a89f0eca07 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-29T21:05:36.414030+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=d41af743-0c64-4c8d-ade8-1e28b4bfea23 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=271 protocol=https
+2023-07-29T21:05:36.414788+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=7a38f999-717f-441f-a2db-a3c1820a95f9 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=304 bytes=181 protocol=https
+2023-07-29T21:05:39.729447+00:00 app[web.1]: in GET api/clients
+2023-07-29T21:05:39.740321+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=d160bcbb-57d9-4eab-a1d1-da3190b1534a fwd="73.94.40.90" dyno=web.1 connect=0ms service=12ms status=304 bytes=184 protocol=https
+2023-07-29T21:05:39.742155+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=701406bd-0a99-4edf-96d7-a9fb63317406 fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=304 bytes=269 protocol=https
+2023-07-29T21:05:42.586090+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=1cc26081-52bb-4d42-bf36-c41c70d65293 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=269 protocol=https
+2023-07-29T21:05:47.428617+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-29T21:05:47.429517+00:00 app[web.1]: undefined
+2023-07-29T21:05:47.430387+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=KPaHnUjo-OZ_G1pSR_wrGA2Yu-ZfPPMjRTHI&scope=com.intuit.quickbooks.accounting
+2023-07-29T21:05:47.434603+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=82a863ff-c952-486f-8de3-0c984fb54ede fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=302 bytes=1426 protocol=https
+2023-07-29T21:07:38.416021+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=96b8a0c8-861d-489d-8791-369f258eda0e fwd="73.94.40.90" dyno=web.1 connect=0ms service=19ms status=304 bytes=269 protocol=https
+2023-07-29T21:07:38.537118+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-29T21:07:38.537148+00:00 app[web.1]: undefined
+2023-07-29T21:07:38.537411+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=neRNKcGT-_1dKXS2ggeWOYucOCSWJtohYN_g&scope=com.intuit.quickbooks.accounting
+2023-07-29T21:07:38.540095+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=d75077f2-f2da-4277-b74b-f7aa2f859499 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=302 bytes=1426 protocol=https
+2023-07-29T22:09:09.063575+00:00 heroku[web.1]: Idling
+2023-07-29T22:09:09.065809+00:00 heroku[web.1]: State changed from up to down
+2023-07-29T22:09:10.279481+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2023-07-29T22:09:10.340266+00:00 app[web.1]: Error waiting for process to terminate: No child processes
+2023-07-29T22:09:10.502823+00:00 heroku[web.1]: Process exited with status 22
+2023-07-30T17:58:51.181703+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=145a6c8e-953b-4a27-bfa1-8b0c5a96757d fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-30T17:59:33.596965+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=a791483d-aea5-4d2f-ba44-180cf8087d77 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-30T17:59:33.816161+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=e905713f-b8bb-4807-ab8e-48d92df4a36e fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-30T18:01:50.161106+00:00 heroku[web.1]: State changed from down to starting
+2023-07-30T18:02:04.936914+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-30T18:02:07.743648+00:00 app[web.1]: 
+2023-07-30T18:02:07.743668+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-30T18:02:07.743669+00:00 app[web.1]: > node server/server.js
+2023-07-30T18:02:07.743669+00:00 app[web.1]: 
+2023-07-30T18:02:07.876532+00:00 app[web.1]: node_env:  production
+2023-07-30T18:02:08.147600+00:00 app[web.1]: Listening on port: 40323, connecting to db schema ck_prod
+2023-07-30T18:02:08.508299+00:00 heroku[web.1]: State changed from starting to up
+2023-07-30T18:03:43.418949+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=e685644f-5936-480d-858b-4f91936e4271 fwd="73.94.40.90" dyno=web.1 connect=0ms service=49ms status=200 bytes=781 protocol=https
+2023-07-30T18:03:43.524108+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=bdfdfa48-fa5c-449f-a7ac-4fb1cca4c7c8 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=304 bytes=270 protocol=https
+2023-07-30T18:03:43.527620+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=a9761254-ca8c-4945-b985-4311db84af4c fwd="73.94.40.90" dyno=web.1 connect=0ms service=14ms status=200 bytes=969939 protocol=https
+2023-07-30T18:03:43.969498+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=a5605907-01dd-4910-afa5-809d0162c3a7 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=182 protocol=https
+2023-07-30T18:03:44.028057+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=f1417b71-d2b3-4407-ab76-a27812a7f04c fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=200 bytes=316030 protocol=https
+2023-07-30T18:03:44.034272+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=cc2c759c-10e1-4568-9668-9576d5b80f43 fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=200 bytes=316030 protocol=https
+2023-07-30T18:03:44.178856+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=7526e389-6869-4e65-a2ae-8e1ea4d60924 fwd="73.94.40.90" dyno=web.1 connect=0ms service=9ms status=200 bytes=489127 protocol=https
+2023-07-30T18:03:44.238817+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=31eb729e-6138-48b9-a247-bf81a618f07e fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=304 bytes=181 protocol=https
+2023-07-30T18:03:44.445493+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=4b78d17c-dcdc-4fd1-8640-32d33ee7a2bd fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=200 bytes=626 protocol=https
+2023-07-30T18:03:57.921966+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=101e12fc-933a-4b0a-86ff-ae4552bf28d6 fwd="73.94.40.90" dyno=web.1 connect=0ms service=22ms status=304 bytes=269 protocol=https
+2023-07-30T18:03:58.003902+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=3fb5794b-b305-48de-8e84-f2a396c20f52 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=271 protocol=https
+2023-07-30T18:03:58.005741+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=0b6516cf-679c-4109-940b-1d02bab728af fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=270 protocol=https
+2023-07-30T18:03:58.141833+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=2b7b2cba-081c-4d2b-8e60-c141c13e99f2 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=182 protocol=https
+2023-07-30T18:03:58.148883+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=396d1e0e-08eb-4d3d-bfd7-ce6c0c2e3ae5 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-30T18:03:58.173188+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=59c7b70a-d7f0-4586-a259-68b51b299776 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-30T18:03:58.285796+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=fe36b8dd-4467-405a-99c2-a74cd97b80e0 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-30T18:03:58.355030+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=566710cc-9b2b-4bde-9fb2-82d899f4646c fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=181 protocol=https
+2023-07-30T18:03:58.455471+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=ce5f727b-9f9e-4f60-8e15-da886c5165cc fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-30T18:16:49.526062+00:00 app[web.1]: in GET api/clients
+2023-07-30T18:16:49.539511+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=5220577b-7bc1-4f07-bb8a-f43b653f3b1b fwd="73.94.40.90" dyno=web.1 connect=0ms service=31ms status=304 bytes=269 protocol=https
+2023-07-30T18:16:49.556760+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=672adf23-9dc5-4a26-8a5f-f0b6ad5f8678 fwd="73.94.40.90" dyno=web.1 connect=0ms service=63ms status=304 bytes=184 protocol=https
+2023-07-30T19:14:06.974545+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=c6c54e13-bca7-40cb-9280-9fc15d1d17a8 fwd="73.94.40.90" dyno=web.1 connect=0ms service=23ms status=304 bytes=269 protocol=https
+2023-07-30T19:14:07.064352+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=9f41cfec-82c8-4292-90c8-5160c701f1a6 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=271 protocol=https
+2023-07-30T19:14:07.066157+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=7f799fd3-e14b-4dc3-afa4-2c2eafecd883 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=270 protocol=https
+2023-07-30T19:14:07.395205+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=d4200764-70f1-4cff-b354-0dfdab632232 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-30T19:14:07.398493+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=b4a49bca-d5b7-4575-a12b-8d5945bee7c1 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=182 protocol=https
+2023-07-30T19:14:07.470464+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=4396b405-e1ee-41a3-b963-ba04d81b81fb fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-30T19:14:07.532805+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=87d7395b-0b6c-4b18-bad2-6969c0e28aed fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-30T19:14:07.591065+00:00 app[web.1]: in GET api/clients
+2023-07-30T19:14:07.601232+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=64d6e1b3-7bd8-4c07-8b46-9e35e46fdc8e fwd="73.94.40.90" dyno=web.1 connect=0ms service=13ms status=304 bytes=184 protocol=https
+2023-07-30T19:14:07.630262+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=fc1bdb2c-5dc8-4feb-9a39-a2f75de3389c fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-30T19:36:42.916415+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=2fa021ca-b072-4a2d-be6f-c2f2bc0b7c6e fwd="98.97.9.241" dyno=web.1 connect=0ms service=1ms status=200 bytes=781 protocol=http
+2023-07-30T19:36:43.053883+00:00 heroku[router]: at=info method=GET path="/apple-touch-icon-120x120-precomposed.png" host=citizen-kanine.herokuapp.com request_id=25283901-b4ae-44fd-b119-3ec91aae9a4e fwd="98.97.9.241" dyno=web.1 connect=0ms service=2ms status=404 bytes=455 protocol=http
+2023-07-30T19:36:43.121315+00:00 heroku[router]: at=info method=GET path="/apple-touch-icon-120x120.png" host=citizen-kanine.herokuapp.com request_id=0607ee06-f358-47bb-b5bd-e6c2a7b4a640 fwd="98.97.9.241" dyno=web.1 connect=0ms service=1ms status=404 bytes=443 protocol=http
+2023-07-30T19:36:43.261564+00:00 heroku[router]: at=info method=GET path="/apple-touch-icon-precomposed.png" host=citizen-kanine.herokuapp.com request_id=6b4c5d67-161c-485d-8d96-f65117ea8a8e fwd="98.97.9.241" dyno=web.1 connect=0ms service=1ms status=404 bytes=447 protocol=http
+2023-07-30T19:36:43.351518+00:00 heroku[router]: at=info method=GET path="/apple-touch-icon.png" host=citizen-kanine.herokuapp.com request_id=60036193-be98-40e0-858f-8909e28f0e3f fwd="98.97.9.241" dyno=web.1 connect=0ms service=1ms status=404 bytes=435 protocol=http
+2023-07-30T19:36:43.442238+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=55f72be0-e060-4c93-b133-c6b6f64a0af5 fwd="98.97.9.241" dyno=web.1 connect=0ms service=1ms status=200 bytes=626 protocol=http
+2023-07-30T19:43:22.663648+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=de4eb186-73b5-491d-a1fb-c16f7c57e0d0 fwd="73.94.40.90" dyno=web.1 connect=0ms service=17ms status=304 bytes=269 protocol=https
+2023-07-30T19:43:22.750209+00:00 heroku[router]: at=info method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=f8ca7c24-303c-4085-b034-a123e4183748 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-30T19:43:22.753041+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=6fb1ae5f-554f-49e0-b54e-3241fa7bab4c fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=270 protocol=https
+2023-07-30T19:43:23.430178+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=8b68426f-758b-412b-b4bd-88df86979786 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-30T19:43:23.445850+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=de881b26-5a55-4799-b283-6f02b88da913 fwd="73.94.40.90" dyno=web.1 connect=0ms service=18ms status=304 bytes=182 protocol=https
+2023-07-30T19:43:23.546209+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=acafe8f8-d369-4d53-a460-3f75d2ab1b42 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-30T19:43:23.654672+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=a7eec669-2294-4107-a13f-f83f21b2989d fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=269 protocol=https
+2023-07-30T19:43:23.811908+00:00 app[web.1]: in GET api/clients
+2023-07-30T19:43:23.820448+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=a2e22395-34fc-41f3-914d-d72e646cdde2 fwd="73.94.40.90" dyno=web.1 connect=0ms service=10ms status=304 bytes=184 protocol=https
+2023-07-30T19:43:23.848322+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=952c34de-9ec9-4365-9258-a67c296c4d6c fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=269 protocol=https
+2023-07-30T20:05:59.070066+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=0f3b7fae-fc82-491f-9630-db095444a8ec fwd="73.94.40.90" dyno=web.1 connect=0ms service=19ms status=304 bytes=269 protocol=https
+2023-07-30T20:06:10.470405+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-30T20:06:10.470795+00:00 app[web.1]: undefined
+2023-07-30T20:06:10.471548+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=DVh12BID-MzMPFJHmoDOWj27HNhY5HmO-EmM&scope=com.intuit.quickbooks.accounting
+2023-07-30T20:06:10.474294+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=352dffc2-c80b-42c2-bbc1-9ad519b7f047 fwd="73.94.40.90" dyno=web.1 connect=0ms service=21ms status=302 bytes=1426 protocol=https
+2023-07-30T20:24:23.000000+00:00 app[api]: Build started by user danieltraskin@gmail.com
+2023-07-30T20:25:56.243298+00:00 app[api]: Release v131 created by user danieltraskin@gmail.com
+2023-07-30T20:25:56.243298+00:00 app[api]: Deploy b83bf5d9 by user danieltraskin@gmail.com
+2023-07-30T20:25:57.009835+00:00 heroku[web.1]: Restarting
+2023-07-30T20:25:57.074111+00:00 heroku[web.1]: State changed from up to starting
+2023-07-30T20:25:57.768951+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2023-07-30T20:25:59.010246+00:00 app[web.1]: Error waiting for process to terminate: No child processes
+2023-07-30T20:25:59.167188+00:00 heroku[web.1]: Process exited with status 22
+2023-07-30T20:26:07.000000+00:00 app[api]: Build succeeded
+2023-07-30T20:26:22.084729+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-30T20:26:23.482490+00:00 app[web.1]: 
+2023-07-30T20:26:23.482519+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-30T20:26:23.482519+00:00 app[web.1]: > node server/server.js
+2023-07-30T20:26:23.482520+00:00 app[web.1]: 
+2023-07-30T20:26:23.586293+00:00 app[web.1]: node_env:  production
+2023-07-30T20:26:23.829416+00:00 app[web.1]: Listening on port: 43396, connecting to db schema ck_prod
+2023-07-30T20:26:24.225434+00:00 heroku[web.1]: State changed from starting to up
+2023-07-30T20:28:17.169433+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=26ffd074-bfc0-4650-aa35-07da835afc02 fwd="73.94.40.90" dyno=web.1 connect=0ms service=37ms status=200 bytes=781 protocol=https
+2023-07-30T20:28:17.252822+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=6afbcf3a-0d05-4586-b026-1f6651a31fc2 fwd="73.94.40.90" dyno=web.1 connect=0ms service=9ms status=200 bytes=970417 protocol=https
+2023-07-30T20:28:17.274292+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=ac8ec010-b266-4602-9c3c-20e174ccf305 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=200 bytes=29623 protocol=https
+2023-07-30T20:28:17.742477+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=90a39d8a-53a4-4291-b7dc-3771ac650a26 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=182 protocol=https
+2023-07-30T20:28:17.808343+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=150872a6-f6f4-40ac-8ece-73650b9fdd26 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=200 bytes=316030 protocol=https
+2023-07-30T20:28:17.813486+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=717adea4-6c59-43cc-9ae0-5bc04c9fac20 fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=200 bytes=316030 protocol=https
+2023-07-30T20:28:17.976304+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=71bb84c4-81fc-432b-ac8f-73e282168ed8 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=304 bytes=181 protocol=https
+2023-07-30T20:28:18.029089+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=4289d896-7bfb-4eef-a9ba-d21f27c6c0a1 fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=200 bytes=489127 protocol=https
+2023-07-30T20:28:22.720352+00:00 app[web.1]: in GET api/clients
+2023-07-30T20:28:22.730486+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=2b199df6-5fb9-4996-80e4-f38104254fd5 fwd="73.94.40.90" dyno=web.1 connect=0ms service=14ms status=304 bytes=184 protocol=https
+2023-07-30T20:28:22.745623+00:00 app[web.1]: in /api/invoice
+2023-07-30T20:28:22.769328+00:00 app[web.1]: in walks/week 1 5
+2023-07-30T20:28:22.769418+00:00 app[web.1]: in walks/week 3 2
+2023-07-30T20:28:22.769473+00:00 app[web.1]: in walks/week 4 2
+2023-07-30T20:28:22.769628+00:00 app[web.1]: in walks/week 5 2
+2023-07-30T20:28:22.769673+00:00 app[web.1]: in walks/week 6 2
+2023-07-30T20:28:22.769711+00:00 app[web.1]: in walks/week 6 5
+2023-07-30T20:28:22.769812+00:00 app[web.1]: in walks/week 7 2
+2023-07-30T20:28:22.769899+00:00 app[web.1]: in walks/week 8 2
+2023-07-30T20:28:22.769925+00:00 app[web.1]: in walks/week 10 1
+2023-07-30T20:28:22.769946+00:00 app[web.1]: in walks/week 11 2
+2023-07-30T20:28:22.769973+00:00 app[web.1]: in walks/week 13 2
+2023-07-30T20:28:22.769995+00:00 app[web.1]: in walks/week 13 2
+2023-07-30T20:28:22.770018+00:00 app[web.1]: in walks/week 14 2
+2023-07-30T20:28:22.770038+00:00 app[web.1]: in walks/week 15 3
+2023-07-30T20:28:22.770055+00:00 app[web.1]: in walks/week 16 1
+2023-07-30T20:28:22.770072+00:00 app[web.1]: in walks/week 18 2
+2023-07-30T20:28:22.770091+00:00 app[web.1]: 2
+2023-07-30T20:28:22.770106+00:00 app[web.1]: in walks/week 19 2
+2023-07-30T20:28:22.770123+00:00 app[web.1]: in walks/week 20 2
+2023-07-30T20:28:22.770142+00:00 app[web.1]: in walks/week 21 4
+2023-07-30T20:28:22.770163+00:00 app[web.1]: in walks/week 23 3
+2023-07-30T20:28:22.770180+00:00 app[web.1]: in walks/week 24 5
+2023-07-30T20:28:22.770197+00:00 app[web.1]: in walks/week 25 3
+2023-07-30T20:28:22.770215+00:00 app[web.1]: in walks/week 26 2
+2023-07-30T20:28:22.770233+00:00 app[web.1]: in walks/week 27 2
+2023-07-30T20:28:22.770249+00:00 app[web.1]: in walks/week 27 5
+2023-07-30T20:28:22.770317+00:00 app[web.1]: in walks/week 28 2
+2023-07-30T20:28:22.770341+00:00 app[web.1]: in walks/week 29 2
+2023-07-30T20:28:22.770359+00:00 app[web.1]: in walks/week 30 2
+2023-07-30T20:28:22.770376+00:00 app[web.1]: in walks/week 31 2
+2023-07-30T20:28:22.770392+00:00 app[web.1]: in walks/week 32 2
+2023-07-30T20:28:22.770410+00:00 app[web.1]: in walks/week 33 2
+2023-07-30T20:28:22.770426+00:00 app[web.1]: in walks/week 34 2
+2023-07-30T20:28:22.770442+00:00 app[web.1]: in walks/week 35 2
+2023-07-30T20:28:22.770460+00:00 app[web.1]: in walks/week 36 2
+2023-07-30T20:28:22.770476+00:00 app[web.1]: in walks/week 37 2
+2023-07-30T20:28:22.770494+00:00 app[web.1]: in walks/week 38 5
+2023-07-30T20:28:22.770513+00:00 app[web.1]: in walks/week 39 2
+2023-07-30T20:28:22.770531+00:00 app[web.1]: in walks/week 40 5
+2023-07-30T20:28:22.770548+00:00 app[web.1]: in walks/week 41 1
+2023-07-30T20:28:22.770568+00:00 app[web.1]: in walks/week 42 6
+2023-07-30T20:28:22.770586+00:00 app[web.1]: in walks/week 43 1
+2023-07-30T20:28:22.770603+00:00 app[web.1]: in walks/week 44 3
+2023-07-30T20:28:22.770622+00:00 app[web.1]: in walks/week 45 2
+2023-07-30T20:28:22.770638+00:00 app[web.1]: in walks/week 47 2
+2023-07-30T20:28:22.770656+00:00 app[web.1]: in walks/week 48 2
+2023-07-30T20:28:22.770730+00:00 app[web.1]: in walks/week 49 3
+2023-07-30T20:28:22.770751+00:00 app[web.1]: in walks/week 50 2
+2023-07-30T20:28:22.770769+00:00 app[web.1]: in walks/week 51 2
+2023-07-30T20:28:22.771147+00:00 app[web.1]: in walks/week 52 2
+2023-07-30T20:28:22.771174+00:00 app[web.1]: in walks/week 53 2
+2023-07-30T20:28:22.771201+00:00 app[web.1]: in walks/week 54 1
+2023-07-30T20:28:22.771224+00:00 app[web.1]: in walks/week 55 4
+2023-07-30T20:28:22.771241+00:00 app[web.1]: in walks/week 57 5
+2023-07-30T20:28:22.771257+00:00 app[web.1]: in walks/week 58 2
+2023-07-30T20:28:22.771748+00:00 app[web.1]: release invoice pool
+2023-07-30T20:28:22.772594+00:00 heroku[router]: at=info method=GET path="/api/invoice?clientId=0&month=7&year=2023" host=citizen-kanine.herokuapp.com request_id=e96a57e8-e21c-4c22-9ff1-e99bb5418d7e fwd="73.94.40.90" dyno=web.1 connect=0ms service=55ms status=200 bytes=14551 protocol=https
+2023-07-30T20:28:40.401232+00:00 app[web.1]: in /api/invoice
+2023-07-30T20:28:40.411426+00:00 app[web.1]: in walks/week 36 2
+2023-07-30T20:28:40.412314+00:00 app[web.1]: release invoice pool
+2023-07-30T20:28:40.412814+00:00 heroku[router]: at=info method=GET path="/api/invoice?clientId=36&month=7&year=2023" host=citizen-kanine.herokuapp.com request_id=498f1a65-6d4f-4706-9128-d48da01191a8 fwd="73.94.40.90" dyno=web.1 connect=0ms service=35ms status=200 bytes=501 protocol=https
+2023-07-30T20:29:19.151881+00:00 app[web.1]: null token null
+2023-07-30T20:29:19.152710+00:00 heroku[router]: at=info method=POST path="/api/qbInvoice" host=citizen-kanine.herokuapp.com request_id=3bf31f60-0704-429d-8e79-90677d9e51d6 fwd="73.94.40.90" dyno=web.1 connect=0ms service=26ms status=200 bytes=242 protocol=https
+2023-07-30T20:29:19.211981+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-30T20:29:19.212002+00:00 app[web.1]: undefined
+2023-07-30T20:29:19.212814+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=VVfROgJH-j6u_X7IJo6IxqqKXDPw6XIXop-Q&scope=com.intuit.quickbooks.accounting
+2023-07-30T20:29:19.215354+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=b8eac3ac-b6e4-4f06-8987-d2cf9476e94c fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=302 bytes=1426 protocol=https
+2023-07-30T20:29:30.938685+00:00 app[web.1]: in /api/quickbooks/callback
+2023-07-30T20:29:30.939820+00:00 app[web.1]: do we get req.session.realmId Session { passport: { user: 8 }, secret: '9uFLxfF_ranQHU1oSwy3GKiZ' }
+2023-07-30T20:29:30.941407+00:00 app[web.1]: /app/node_modules/client-oauth2/src/client-oauth2.js:122
+2023-07-30T20:29:30.941407+00:00 app[web.1]: var err = new Error(message)
+2023-07-30T20:29:30.941408+00:00 app[web.1]: ^
+2023-07-30T20:29:30.941408+00:00 app[web.1]: 
+2023-07-30T20:29:30.941409+00:00 app[web.1]: Error: The resource owner or authorization server denied the request.
+2023-07-30T20:29:30.941409+00:00 app[web.1]: at getAuthError (/app/node_modules/client-oauth2/src/client-oauth2.js:122:15)
+2023-07-30T20:29:30.941409+00:00 app[web.1]: at CodeFlow.getToken (/app/node_modules/client-oauth2/src/client-oauth2.js:618:13)
+2023-07-30T20:29:30.941410+00:00 app[web.1]: at /app/server/routes/quickbooks.oauth2.router.js:37:27
+2023-07-30T20:29:30.941410+00:00 app[web.1]: at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+2023-07-30T20:29:30.941410+00:00 app[web.1]: at next (/app/node_modules/express/lib/router/route.js:144:13)
+2023-07-30T20:29:30.941410+00:00 app[web.1]: at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+2023-07-30T20:29:30.941411+00:00 app[web.1]: at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+2023-07-30T20:29:30.941411+00:00 app[web.1]: at /app/node_modules/express/lib/router/index.js:284:15
+2023-07-30T20:29:30.941411+00:00 app[web.1]: at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+2023-07-30T20:29:30.941411+00:00 app[web.1]: at next (/app/node_modules/express/lib/router/index.js:280:10) {
+2023-07-30T20:29:30.941412+00:00 app[web.1]: body: [Object: null prototype] {
+2023-07-30T20:29:30.941412+00:00 app[web.1]: error: 'access_denied',
+2023-07-30T20:29:30.941415+00:00 app[web.1]: state: 'VVfROgJH-j6u_X7IJo6IxqqKXDPw6XIXop-Q'
+2023-07-30T20:29:30.941415+00:00 app[web.1]: },
+2023-07-30T20:29:30.941415+00:00 app[web.1]: code: 'EAUTH'
+2023-07-30T20:29:30.941415+00:00 app[web.1]: }
+2023-07-30T20:29:30.945600+00:00 heroku[router]: at=error code=H13 desc="Connection closed without response" method=GET path="/api/oauth2/callback?error=access_denied&state=VVfROgJH-j6u_X7IJo6IxqqKXDPw6XIXop-Q" host=citizen-kanine.herokuapp.com request_id=406d6f07-62a5-482c-8b42-8823538f9878 fwd="73.94.40.90" dyno=web.1 connect=0ms service=24ms status=503 bytes=0 protocol=https
+2023-07-30T20:29:31.081894+00:00 heroku[web.1]: Process exited with status 1
+2023-07-30T20:29:31.111793+00:00 heroku[web.1]: State changed from up to crashed
+2023-07-30T20:29:31.116484+00:00 heroku[web.1]: State changed from crashed to starting
+2023-07-30T20:30:03.123444+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-30T20:30:04.488168+00:00 app[web.1]: 
+2023-07-30T20:30:04.488182+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-30T20:30:04.488182+00:00 app[web.1]: > node server/server.js
+2023-07-30T20:30:04.488183+00:00 app[web.1]: 
+2023-07-30T20:30:04.598496+00:00 app[web.1]: node_env:  production
+2023-07-30T20:30:04.826396+00:00 app[web.1]: Listening on port: 4832, connecting to db schema ck_prod
+2023-07-30T20:30:05.224662+00:00 heroku[web.1]: State changed from starting to up
+2023-07-30T20:30:06.722934+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=961b7919-da61-4496-a94a-5415c6f26d82 fwd="73.94.40.90" dyno=web.1 connect=0ms service=29ms status=200 bytes=781 protocol=https
+2023-07-30T20:30:06.832017+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=f6d2117a-7d00-4034-b413-333b8b7bd4a1 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=304 bytes=270 protocol=https
+2023-07-30T20:30:06.846939+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=310add14-dde3-46ea-bda9-3572b0da883c fwd="73.94.40.90" dyno=web.1 connect=0ms service=17ms status=304 bytes=271 protocol=https
+2023-07-30T20:30:07.103304+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=e6cb1a6f-3056-414b-8ae9-14f2b03c9f15 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=182 protocol=https
+2023-07-30T20:30:07.140890+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=08917e67-4364-4cf7-b11a-f887fce9f800 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-30T20:30:07.153795+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=53bca5c9-6741-474e-9c6d-b53070ae2e27 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-30T20:30:07.285311+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=6cfb6beb-5fca-4511-9601-3825ff183c36 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-30T20:30:07.297539+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=d611ab33-55d3-4c4b-b448-969b79884ffd fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=181 protocol=https
+2023-07-30T20:30:07.299999+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=a2eeadbb-2f11-41c4-b1d8-2b83c50d90aa fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-30T20:30:11.685153+00:00 app[web.1]: in GET api/clients
+2023-07-30T20:30:11.694122+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=7c46dadc-9c35-421b-9167-a6ac3c6bb650 fwd="73.94.40.90" dyno=web.1 connect=0ms service=12ms status=304 bytes=184 protocol=https
+2023-07-30T20:30:11.697694+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=8cfe2137-4f04-4bdc-8ca1-99139d44e542 fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=200 bytes=2958 protocol=https
+2023-07-30T20:30:18.042111+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=9f33b400-ff86-495c-a8a6-e176a8018c13 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=200 bytes=2871 protocol=https
+2023-07-30T20:30:29.783022+00:00 app[web.1]: in GET api/clients
+2023-07-30T20:30:29.784582+00:00 app[web.1]: in /api/invoice
+2023-07-30T20:30:29.798772+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=7b0cef97-6212-4010-bd54-caad1b715bac fwd="73.94.40.90" dyno=web.1 connect=0ms service=41ms status=304 bytes=184 protocol=https
+2023-07-30T20:30:29.802088+00:00 app[web.1]: in walks/week 1 5
+2023-07-30T20:30:29.802166+00:00 app[web.1]: in walks/week 3 2
+2023-07-30T20:30:29.802217+00:00 app[web.1]: in walks/week 4 2
+2023-07-30T20:30:29.802405+00:00 app[web.1]: in walks/week 5 2
+2023-07-30T20:30:29.802457+00:00 app[web.1]: in walks/week 6 2
+2023-07-30T20:30:29.802498+00:00 app[web.1]: in walks/week 6 5
+2023-07-30T20:30:29.802597+00:00 app[web.1]: in walks/week 7 2
+2023-07-30T20:30:29.802688+00:00 app[web.1]: in walks/week 8 2
+2023-07-30T20:30:29.802717+00:00 app[web.1]: in walks/week 10 1
+2023-07-30T20:30:29.802747+00:00 app[web.1]: in walks/week 11 2
+2023-07-30T20:30:29.802774+00:00 app[web.1]: in walks/week 13 2
+2023-07-30T20:30:29.802799+00:00 app[web.1]: in walks/week 13 2
+2023-07-30T20:30:29.802822+00:00 app[web.1]: in walks/week 14 2
+2023-07-30T20:30:29.802843+00:00 app[web.1]: in walks/week 15 3
+2023-07-30T20:30:29.802865+00:00 app[web.1]: in walks/week 16 1
+2023-07-30T20:30:29.802888+00:00 app[web.1]: in walks/week 18 2
+2023-07-30T20:30:29.802910+00:00 app[web.1]: 2
+2023-07-30T20:30:29.802928+00:00 app[web.1]: in walks/week 19 2
+2023-07-30T20:30:29.802949+00:00 app[web.1]: in walks/week 20 2
+2023-07-30T20:30:29.802973+00:00 app[web.1]: in walks/week 21 4
+2023-07-30T20:30:29.802992+00:00 app[web.1]: in walks/week 23 3
+2023-07-30T20:30:29.803014+00:00 app[web.1]: in walks/week 24 5
+2023-07-30T20:30:29.803035+00:00 app[web.1]: in walks/week 25 3
+2023-07-30T20:30:29.803056+00:00 app[web.1]: in walks/week 26 2
+2023-07-30T20:30:29.803078+00:00 app[web.1]: in walks/week 27 2
+2023-07-30T20:30:29.803099+00:00 app[web.1]: in walks/week 27 5
+2023-07-30T20:30:29.803173+00:00 app[web.1]: in walks/week 28 2
+2023-07-30T20:30:29.803200+00:00 app[web.1]: in walks/week 29 2
+2023-07-30T20:30:29.803222+00:00 app[web.1]: in walks/week 30 2
+2023-07-30T20:30:29.803243+00:00 app[web.1]: in walks/week 31 2
+2023-07-30T20:30:29.803263+00:00 app[web.1]: in walks/week 32 2
+2023-07-30T20:30:29.803285+00:00 app[web.1]: in walks/week 33 2
+2023-07-30T20:30:29.803305+00:00 app[web.1]: in walks/week 34 2
+2023-07-30T20:30:29.803326+00:00 app[web.1]: in walks/week 35 2
+2023-07-30T20:30:29.803347+00:00 app[web.1]: in walks/week 36 2
+2023-07-30T20:30:29.803367+00:00 app[web.1]: in walks/week 37 2
+2023-07-30T20:30:29.803389+00:00 app[web.1]: in walks/week 38 5
+2023-07-30T20:30:29.803413+00:00 app[web.1]: in walks/week 39 2
+2023-07-30T20:30:29.803434+00:00 app[web.1]: in walks/week 40 5
+2023-07-30T20:30:29.803455+00:00 app[web.1]: in walks/week 41 1
+2023-07-30T20:30:29.803479+00:00 app[web.1]: in walks/week 42 6
+2023-07-30T20:30:29.803500+00:00 app[web.1]: in walks/week 43 1
+2023-07-30T20:30:29.803520+00:00 app[web.1]: in walks/week 44 3
+2023-07-30T20:30:29.803544+00:00 app[web.1]: in walks/week 45 2
+2023-07-30T20:30:29.803564+00:00 app[web.1]: in walks/week 47 2
+2023-07-30T20:30:29.803584+00:00 app[web.1]: in walks/week 48 2
+2023-07-30T20:30:29.803668+00:00 app[web.1]: in walks/week 49 3
+2023-07-30T20:30:29.803693+00:00 app[web.1]: in walks/week 50 2
+2023-07-30T20:30:29.803715+00:00 app[web.1]: in walks/week 51 2
+2023-07-30T20:30:29.803735+00:00 app[web.1]: in walks/week 52 2
+2023-07-30T20:30:29.803755+00:00 app[web.1]: in walks/week 53 2
+2023-07-30T20:30:29.803775+00:00 app[web.1]: in walks/week 54 1
+2023-07-30T20:30:29.803796+00:00 app[web.1]: in walks/week 55 4
+2023-07-30T20:30:29.803816+00:00 app[web.1]: in walks/week 57 5
+2023-07-30T20:30:29.803836+00:00 app[web.1]: in walks/week 58 2
+2023-07-30T20:30:29.804198+00:00 app[web.1]: release invoice pool
+2023-07-30T20:30:29.804418+00:00 heroku[router]: at=info method=GET path="/api/invoice?clientId=0&month=7&year=2023" host=citizen-kanine.herokuapp.com request_id=6cb0a351-9dfe-4a9f-80d2-4683a66e2997 fwd="73.94.40.90" dyno=web.1 connect=0ms service=48ms status=304 bytes=184 protocol=https
+2023-07-30T20:30:36.654167+00:00 app[web.1]: in /api/invoice
+2023-07-30T20:30:36.658499+00:00 app[web.1]: in walks/week 36 2
+2023-07-30T20:30:36.658823+00:00 app[web.1]: release invoice pool
+2023-07-30T20:30:36.658998+00:00 heroku[router]: at=info method=GET path="/api/invoice?clientId=36&month=7&year=2023" host=citizen-kanine.herokuapp.com request_id=9d5a09cf-3464-41a4-8100-e6b020f81224 fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=304 bytes=183 protocol=https
+2023-07-30T20:30:38.868978+00:00 app[web.1]: null token null
+2023-07-30T20:30:38.869545+00:00 heroku[router]: at=info method=POST path="/api/qbInvoice" host=citizen-kanine.herokuapp.com request_id=36196dc4-ce3e-4e19-9acf-52e7501b84d1 fwd="73.94.40.90" dyno=web.1 connect=0ms service=9ms status=200 bytes=242 protocol=https
+2023-07-30T20:30:39.137596+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-30T20:30:39.137619+00:00 app[web.1]: undefined
+2023-07-30T20:30:39.138399+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=RFK4tTqa-mTI4hg5mQRef9Guv6VMexqlb3OY&scope=com.intuit.quickbooks.accounting
+2023-07-30T20:30:39.140715+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=49d777aa-92f2-49cc-a644-687896041daf fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=302 bytes=1426 protocol=https
+2023-07-30T20:32:22.176165+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=67b83b6f-d836-4d9a-b461-ae871043369b fwd="73.94.40.90" dyno=web.1 connect=0ms service=19ms status=304 bytes=269 protocol=https
+2023-07-30T20:32:22.279281+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=9d7ab3e4-570e-41e6-b262-c32b35dacc5b fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=270 protocol=https
+2023-07-30T20:32:22.282289+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=4c782aed-eca2-48fa-a3ad-e0f5e5894aac fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-30T20:32:22.669457+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=2d033a7e-0652-4b3c-b506-6873ebef3a38 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=182 protocol=https
+2023-07-30T20:32:22.728346+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=a6029b6e-ccd4-44a0-8116-8a33aad0657a fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=271 protocol=https
+2023-07-30T20:32:22.750197+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=0b503f6e-6ce8-4f1c-b6c1-df6d645dd187 fwd="73.94.40.90" dyno=web.1 connect=0ms service=26ms status=304 bytes=271 protocol=https
+2023-07-30T20:32:22.861022+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=d63fc6a4-036f-40ba-af43-7b4c979f7e3a fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-30T20:32:22.861736+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=df5907a8-764c-4f35-be16-add095a15d31 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=181 protocol=https
+2023-07-30T20:32:29.397171+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=f07f4020-bc3e-443d-a63b-f4a68d2c49b1 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-30T20:32:29.402313+00:00 app[web.1]: in GET api/clients
+2023-07-30T20:32:29.410809+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=138c4ddb-38f7-42f4-a750-c105f5cbe26c fwd="73.94.40.90" dyno=web.1 connect=0ms service=10ms status=304 bytes=184 protocol=https
+2023-07-30T20:32:30.859872+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=9d3af002-4e39-4130-b810-477ee277426f fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-30T20:32:31.443537+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-30T20:32:31.443576+00:00 app[web.1]: undefined
+2023-07-30T20:32:31.443835+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=xwFqTX0E-HWaozyRv228im2k-0FHxVfNkroU&scope=com.intuit.quickbooks.accounting
+2023-07-30T20:32:31.445355+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=679280d9-19d0-4cb7-a463-18a8e160678f fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=302 bytes=1426 protocol=https
+2023-07-30T20:32:48.002146+00:00 app[web.1]: in /api/quickbooks/callback
+2023-07-30T20:32:48.003316+00:00 app[web.1]: do we get req.session.realmId Session { passport: { user: 8 }, secret: '5Au0sip0ww4vNx0VhQqJ10GT' }
+2023-07-30T20:32:48.005004+00:00 app[web.1]: /app/node_modules/client-oauth2/src/client-oauth2.js:122
+2023-07-30T20:32:48.005005+00:00 app[web.1]: var err = new Error(message)
+2023-07-30T20:32:48.005005+00:00 app[web.1]: ^
+2023-07-30T20:32:48.005006+00:00 app[web.1]: 
+2023-07-30T20:32:48.005007+00:00 app[web.1]: Error: The resource owner or authorization server denied the request.
+2023-07-30T20:32:48.005007+00:00 app[web.1]: at getAuthError (/app/node_modules/client-oauth2/src/client-oauth2.js:122:15)
+2023-07-30T20:32:48.005007+00:00 app[web.1]: at CodeFlow.getToken (/app/node_modules/client-oauth2/src/client-oauth2.js:618:13)
+2023-07-30T20:32:48.005008+00:00 app[web.1]: at /app/server/routes/quickbooks.oauth2.router.js:37:27
+2023-07-30T20:32:48.005008+00:00 app[web.1]: at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+2023-07-30T20:32:48.005008+00:00 app[web.1]: at next (/app/node_modules/express/lib/router/route.js:144:13)
+2023-07-30T20:32:48.005008+00:00 app[web.1]: at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+2023-07-30T20:32:48.005009+00:00 app[web.1]: at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+2023-07-30T20:32:48.005009+00:00 app[web.1]: at /app/node_modules/express/lib/router/index.js:284:15
+2023-07-30T20:32:48.005009+00:00 app[web.1]: at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+2023-07-30T20:32:48.005009+00:00 app[web.1]: at next (/app/node_modules/express/lib/router/index.js:280:10) {
+2023-07-30T20:32:48.005009+00:00 app[web.1]: body: [Object: null prototype] {
+2023-07-30T20:32:48.005009+00:00 app[web.1]: error: 'access_denied',
+2023-07-30T20:32:48.005010+00:00 app[web.1]: state: 'xwFqTX0E-HWaozyRv228im2k-0FHxVfNkroU'
+2023-07-30T20:32:48.005010+00:00 app[web.1]: },
+2023-07-30T20:32:48.005010+00:00 app[web.1]: code: 'EAUTH'
+2023-07-30T20:32:48.005010+00:00 app[web.1]: }
+2023-07-30T20:32:48.009463+00:00 heroku[router]: at=error code=H13 desc="Connection closed without response" method=GET path="/api/oauth2/callback?error=access_denied&state=xwFqTX0E-HWaozyRv228im2k-0FHxVfNkroU" host=citizen-kanine.herokuapp.com request_id=973c1a09-f161-4b10-becc-9951b80f3623 fwd="73.94.40.90" dyno=web.1 connect=0ms service=24ms status=503 bytes=0 protocol=https
+2023-07-30T20:32:48.147669+00:00 heroku[web.1]: Process exited with status 1
+2023-07-30T20:32:48.172977+00:00 heroku[web.1]: State changed from up to crashed
+2023-07-30T20:34:52.738678+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=0d2f3503-21fc-4fa4-b035-8de83234b735 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-30T20:36:35.570242+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=e2a4b076-af10-4056-ad5c-182df679f330 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-30T20:36:37.987923+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=79fa1731-0059-4fc3-b1eb-509dccbb7aa0 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-30T20:36:38.204530+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=ec9f3218-db9b-45bc-92b9-9f263c37a854 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-30T20:36:47.256386+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=ff521dff-2770-4a26-89de-426f95282602 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-30T20:36:47.460911+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=d8efe164-3981-4f5f-aecc-8d81b4aaa138 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-30T20:37:03.544749+00:00 heroku[web.1]: State changed from crashed to starting
+2023-07-30T20:37:13.032435+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-30T20:37:14.322842+00:00 app[web.1]: 
+2023-07-30T20:37:14.322852+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-30T20:37:14.322853+00:00 app[web.1]: > node server/server.js
+2023-07-30T20:37:14.322853+00:00 app[web.1]: 
+2023-07-30T20:37:14.424925+00:00 app[web.1]: node_env:  production
+2023-07-30T20:37:14.642652+00:00 app[web.1]: Listening on port: 6604, connecting to db schema ck_prod
+2023-07-30T20:37:14.728745+00:00 heroku[web.1]: State changed from starting to up
+2023-07-30T20:37:45.201473+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=3762ac32-bcf2-4aca-9e46-6cc4b00048c4 fwd="73.94.40.90" dyno=web.1 connect=0ms service=29ms status=200 bytes=781 protocol=https
+2023-07-30T20:37:45.281948+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=22c762f7-d62b-4306-b3df-a09d171b25e1 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=304 bytes=271 protocol=https
+2023-07-30T20:37:45.283030+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=2b7451cc-7011-4b19-a54e-17f8034496d6 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=270 protocol=https
+2023-07-30T20:37:45.579820+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=b2035722-3804-4ced-83bf-fcb04f491917 fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=304 bytes=182 protocol=https
+2023-07-30T20:37:45.636644+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=4364ce62-abca-4dcc-a707-ecf9c620382f fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-30T20:37:45.643533+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=e95b1c0f-f423-47de-bfe8-9f54d2e0c2f5 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-30T20:37:45.761048+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=7acae62d-c353-4dac-8a93-1ff5253b5e61 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=181 protocol=https
+2023-07-30T20:37:45.775699+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=cbc5a6ff-f5ef-476d-9137-70a7e251dcae fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-30T20:37:45.844103+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=71676dce-c2fd-47b0-8160-77ba4bdd7f6e fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=626 protocol=https
+2023-07-30T20:37:48.540850+00:00 app[web.1]: in GET api/clients
+2023-07-30T20:37:48.549583+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=e6ede436-cca5-4d3d-a801-9b545dfba78b fwd="73.94.40.90" dyno=web.1 connect=0ms service=13ms status=304 bytes=184 protocol=https
+2023-07-30T20:37:48.570156+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=ecaaa6a1-a12a-4760-a337-a064adf63dd7 fwd="73.94.40.90" dyno=web.1 connect=0ms service=26ms status=304 bytes=269 protocol=https
+2023-07-30T20:37:49.971771+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=88a66374-ddd1-47c1-b573-4cea20c309b6 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-30T20:37:50.226590+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-30T20:37:50.226938+00:00 app[web.1]: undefined
+2023-07-30T20:37:50.227612+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=ckOedeBR-iyR_l3c5C8KDyJ_N3ht48gllXlk&scope=com.intuit.quickbooks.accounting
+2023-07-30T20:37:50.229072+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=e36170b7-ae62-4c77-9806-ca0714d5999c fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=302 bytes=1426 protocol=https
+2023-07-30T20:38:34.031036+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=5212601c-eaca-4a27-990b-1a16f5c20d64 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=200 bytes=781 protocol=http
+2023-07-30T20:38:34.265617+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=e99cfe6f-cc21-4232-8405-1ff8584300e5 fwd="73.94.40.90" dyno=web.1 connect=0ms service=8ms status=200 bytes=970417 protocol=http
+2023-07-30T20:38:34.311780+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=fe45ebce-9ecd-49a3-9cf2-66fb1f5048ed fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=200 bytes=29623 protocol=http
+2023-07-30T20:38:34.778262+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=59b7eeb2-6bf9-4baa-a8ed-e687e77df14a fwd="73.94.40.90" dyno=web.1 connect=0ms service=1ms status=403 bytes=247 protocol=http
+2023-07-30T20:38:34.797214+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=129d10b1-5cb9-4606-8876-0bca35818a59 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=200 bytes=316030 protocol=http
+2023-07-30T20:38:34.837652+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=65982b6f-45fd-4576-96d3-72150ba2e6f5 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=200 bytes=316030 protocol=http
+2023-07-30T20:38:35.088970+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=fe513e37-beb0-489e-8f96-0a3f1b61ea3e fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=200 bytes=626 protocol=http
+2023-07-30T20:38:45.300395+00:00 heroku[router]: at=info method=POST path="/api/user/login" host=citizen-kanine.herokuapp.com request_id=7f2280aa-05d8-405f-a670-c3ee35ba8200 fwd="73.94.40.90" dyno=web.1 connect=0ms service=118ms status=200 bytes=454 protocol=http
+2023-07-30T20:38:45.368907+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=6047d6c4-1fbe-4ff4-adea-3974cc5d8d5e fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=425 protocol=http
+2023-07-30T20:38:45.566380+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=354f1974-d2fb-4fce-a5bb-5ac106b9b455 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=200 bytes=239 protocol=http
+2023-07-30T20:38:45.576800+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=19a3ed90-d4eb-4ca2-968d-15a5ba789729 fwd="73.94.40.90" dyno=web.1 connect=0ms service=8ms status=200 bytes=489127 protocol=http
+2023-07-30T20:38:50.329898+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=39ed900c-a965-45b1-893f-239982e38fcd fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=2958 protocol=http
+2023-07-30T20:38:50.350702+00:00 app[web.1]: in GET api/clients
+2023-07-30T20:38:50.358848+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=d40c2839-e7fb-462a-9d64-a0c38bd14782 fwd="73.94.40.90" dyno=web.1 connect=0ms service=11ms status=200 bytes=41005 protocol=http
+2023-07-30T20:38:51.888390+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=16bf99f9-5f9a-4fb5-a21b-0a20bc8f771d fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=200 bytes=2871 protocol=http
+2023-07-30T20:38:52.443308+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-30T20:38:52.443364+00:00 app[web.1]: undefined
+2023-07-30T20:38:52.443603+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=8Cgh0Seu--caoGjldIASellmBt0mXTg-3pCQ&scope=com.intuit.quickbooks.accounting
+2023-07-30T20:38:52.443688+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=543cf623-0faf-440e-b6ab-e46db4c0f285 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=302 bytes=1426 protocol=https
+2023-07-30T20:39:14.049163+00:00 app[web.1]: in /api/quickbooks/callback
+2023-07-30T20:39:14.050335+00:00 app[web.1]: do we get req.session.realmId Session { passport: { user: 8 }, secret: 'NOdHOUfNcsBmcTbfzsKpITcA' }
+2023-07-30T20:39:14.351842+00:00 app[web.1]: token {
+2023-07-30T20:39:14.351867+00:00 app[web.1]: access_token: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..-es2ocoPLwkwCWVhdcn4fw.nP7oBVzsbAgXidDKA_XN10KlpY_gWoL9KJmka3JFQ98TfI4DcqOIowDKc7M6jYCPj46OCUl4qrb67RgkYtY6tFHYSQqqQPnC3IdMZR-Qev0i_bdQNBzmHpbgN1ocusl9zYOKwYNvQwfokAQW4fTmfVKAN12lCrEdfAPQCazKZYggiDsBcdbgYGZAt84AAVE3Uua3oSgIaKlwNNye2Wc680YZF9ImuKN7ZCbfQuYlwwYWt_1dPt6tvlQxmJDNClQ69qcOHUoxwYAJtV8m0JtTeJYVACZ6JfL9-VQTBEvVi3U0w1CvMxP0_cbJlvj4GbEZqubY1wh8Gghdz4_maiIx8IyHa-XU7SPcyi2rjfCo8DuHLgZ8XDjqeE34MbJ7s5Z0aym15N9XXoJzm_-yHVta42Ryud1yaYOoRNMcpcSxSHR_EXSz8i-HbfQMHdMX2dV21N25nFsSWVGnNRjO6AYrmOax0mYrd8euBdRyo8UTBLeGsctG3bpkisthLdFxsBz6lfpYRrbpRIWnydJCqEwXflT3PH72ClTQq4ucmgut-HrKDvH-2SqB0gFwS2CbVP4IBaR4_fuV8pM8njZvYijGcOAZEk7AcPRgPR7YDQBvrU0DZCdvUqsoRS0tulXHIYSSQ3naH-SWhrv_TJMk7XcKDtefApBotRyJu7fYYSclJy899BEueWM3j4BpPiNp5Ryim9V7TO4RIsbxZiWO5CgNFtfZPaO559t1RhzBdjzhoZ4.9NW7mToRVQht_AL3m4d2BQ',
+2023-07-30T20:39:14.351867+00:00 app[web.1]: token_type: 'bearer',
+2023-07-30T20:39:14.351868+00:00 app[web.1]: x_refresh_token_expires_in: 8726400,
+2023-07-30T20:39:14.351868+00:00 app[web.1]: refresh_token: 'AB11699475954itmEl3lAB1vTlSM1rAXLJLxmZ7kmt7aYn9uH8',
+2023-07-30T20:39:14.351868+00:00 app[web.1]: expires_in: 3600
+2023-07-30T20:39:14.351868+00:00 app[web.1]: }
+2023-07-30T20:39:14.352097+00:00 heroku[router]: at=info method=GET path="/api/oauth2/callback?code=AB11690749853hQbV006dlOM1rbAbAaeEGRSvwpvH4ENx36X2j&state=8Cgh0Seu--caoGjldIASellmBt0mXTg-3pCQ&realmId=193514451072484" host=citizen-kanine.herokuapp.com request_id=b25b719f-05f0-4ce5-a684-a0e2773ea352 fwd="73.94.40.90" dyno=web.1 connect=0ms service=324ms status=302 bytes=3327 protocol=https
+2023-07-30T20:39:14.425181+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=9c1233b2-e1e6-4a08-ab74-3e93208226a5 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=781 protocol=https
+2023-07-30T20:39:14.713902+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=d67eb705-897f-4cb3-8ae0-c333b1efe27e fwd="73.94.40.90" dyno=web.1 connect=0ms service=11ms status=200 bytes=970417 protocol=https
+2023-07-30T20:39:14.811210+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=ae56a932-cb0b-47d3-83b0-9e7ab0f462e3 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=29623 protocol=https
+2023-07-30T20:39:15.227421+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=223cd4de-98ea-4a16-87ad-e4c1d047ff34 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=425 protocol=https
+2023-07-30T20:39:15.242777+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=9fe0568e-96a1-4590-b729-8c7782a3aeb9 fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=200 bytes=316030 protocol=https
+2023-07-30T20:39:15.282399+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=f01fc55d-e410-4ab6-b2d5-45ed69fd8d62 fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=200 bytes=316030 protocol=https
+2023-07-30T20:39:15.490619+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=463ca336-d7d8-4aa0-8ce4-281d08456a83 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=626 protocol=https
+2023-07-30T20:39:15.572530+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=3bb896e4-a3a0-4301-85b1-6d9b2dae8050 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=2958 protocol=https
+2023-07-30T20:39:15.677230+00:00 app[web.1]: in GET api/clients
+2023-07-30T20:39:15.685425+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=e09abfaa-a9cb-4167-83ea-5d6ad4ddb39f fwd="73.94.40.90" dyno=web.1 connect=0ms service=11ms status=200 bytes=41005 protocol=https
+2023-07-30T20:39:26.095758+00:00 app[web.1]: in GET api/clients
+2023-07-30T20:39:26.096665+00:00 app[web.1]: in /api/invoice
+2023-07-30T20:39:26.101026+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=811b8bdf-63a4-491f-9627-00fb6a56ca69 fwd="73.94.40.90" dyno=web.1 connect=0ms service=25ms status=304 bytes=184 protocol=https
+2023-07-30T20:39:26.107386+00:00 app[web.1]: in walks/week 1 5
+2023-07-30T20:39:26.107450+00:00 app[web.1]: in walks/week 3 2
+2023-07-30T20:39:26.107490+00:00 app[web.1]: in walks/week 4 2
+2023-07-30T20:39:26.107651+00:00 app[web.1]: in walks/week 5 2
+2023-07-30T20:39:26.107783+00:00 app[web.1]: in walks/week 6 2
+2023-07-30T20:39:26.107812+00:00 app[web.1]: in walks/week 6 5
+2023-07-30T20:39:26.107832+00:00 app[web.1]: in walks/week 7 2
+2023-07-30T20:39:26.107850+00:00 app[web.1]: in walks/week 8 2
+2023-07-30T20:39:26.107870+00:00 app[web.1]: in walks/week 10 1
+2023-07-30T20:39:26.107888+00:00 app[web.1]: in walks/week 11 2
+2023-07-30T20:39:26.107906+00:00 app[web.1]: in walks/week 13 2
+2023-07-30T20:39:26.107926+00:00 app[web.1]: in walks/week 13 2
+2023-07-30T20:39:26.107943+00:00 app[web.1]: in walks/week 14 2
+2023-07-30T20:39:26.107960+00:00 app[web.1]: in walks/week 15 3
+2023-07-30T20:39:26.107978+00:00 app[web.1]: in walks/week 16 1
+2023-07-30T20:39:26.107996+00:00 app[web.1]: in walks/week 18 2
+2023-07-30T20:39:26.108013+00:00 app[web.1]: 2
+2023-07-30T20:39:26.108022+00:00 app[web.1]: in walks/week 19 2
+2023-07-30T20:39:26.108041+00:00 app[web.1]: in walks/week 20 2
+2023-07-30T20:39:26.108059+00:00 app[web.1]: in walks/week 21 4
+2023-07-30T20:39:26.108077+00:00 app[web.1]: in walks/week 23 3
+2023-07-30T20:39:26.108094+00:00 app[web.1]: in walks/week 24 5
+2023-07-30T20:39:26.108113+00:00 app[web.1]: in walks/week 25 3
+2023-07-30T20:39:26.108130+00:00 app[web.1]: in walks/week 26 2
+2023-07-30T20:39:26.108147+00:00 app[web.1]: in walks/week 27 2
+2023-07-30T20:39:26.108217+00:00 app[web.1]: in walks/week 27 5
+2023-07-30T20:39:26.108240+00:00 app[web.1]: in walks/week 28 2
+2023-07-30T20:39:26.108258+00:00 app[web.1]: in walks/week 29 2
+2023-07-30T20:39:26.108291+00:00 app[web.1]: in walks/week 30 2
+2023-07-30T20:39:26.108313+00:00 app[web.1]: in walks/week 31 2
+2023-07-30T20:39:26.108332+00:00 app[web.1]: in walks/week 32 2
+2023-07-30T20:39:26.108349+00:00 app[web.1]: in walks/week 33 2
+2023-07-30T20:39:26.108369+00:00 app[web.1]: in walks/week 34 2
+2023-07-30T20:39:26.108386+00:00 app[web.1]: in walks/week 35 2
+2023-07-30T20:39:26.108403+00:00 app[web.1]: in walks/week 36 2
+2023-07-30T20:39:26.108420+00:00 app[web.1]: in walks/week 37 2
+2023-07-30T20:39:26.108438+00:00 app[web.1]: in walks/week 38 5
+2023-07-30T20:39:26.108455+00:00 app[web.1]: in walks/week 39 2
+2023-07-30T20:39:26.108532+00:00 app[web.1]: in walks/week 40 5
+2023-07-30T20:39:26.108556+00:00 app[web.1]: in walks/week 41 1
+2023-07-30T20:39:26.108581+00:00 app[web.1]: in walks/week 42 6
+2023-07-30T20:39:26.108599+00:00 app[web.1]: in walks/week 43 1
+2023-07-30T20:39:26.108616+00:00 app[web.1]: in walks/week 44 3
+2023-07-30T20:39:26.108634+00:00 app[web.1]: in walks/week 45 2
+2023-07-30T20:39:26.108650+00:00 app[web.1]: in walks/week 47 2
+2023-07-30T20:39:26.108667+00:00 app[web.1]: in walks/week 48 2
+2023-07-30T20:39:26.108683+00:00 app[web.1]: in walks/week 49 3
+2023-07-30T20:39:26.108701+00:00 app[web.1]: in walks/week 50 2
+2023-07-30T20:39:26.108717+00:00 app[web.1]: in walks/week 51 2
+2023-07-30T20:39:26.108733+00:00 app[web.1]: in walks/week 52 2
+2023-07-30T20:39:26.108751+00:00 app[web.1]: in walks/week 53 2
+2023-07-30T20:39:26.108768+00:00 app[web.1]: in walks/week 54 1
+2023-07-30T20:39:26.109120+00:00 heroku[router]: at=info method=GET path="/api/invoice?clientId=0&month=7&year=2023" host=citizen-kanine.herokuapp.com request_id=babfe5b0-b2d8-4959-a5c8-104b64ab09f0 fwd="73.94.40.90" dyno=web.1 connect=0ms service=30ms status=200 bytes=14551 protocol=https
+2023-07-30T20:39:26.109132+00:00 app[web.1]: in walks/week 55 4
+2023-07-30T20:39:26.109186+00:00 app[web.1]: in walks/week 57 5
+2023-07-30T20:39:26.109211+00:00 app[web.1]: in walks/week 58 2
+2023-07-30T20:39:26.109685+00:00 app[web.1]: release invoice pool
+2023-07-30T20:39:39.126848+00:00 app[web.1]: in /api/invoice
+2023-07-30T20:39:39.137642+00:00 heroku[router]: at=info method=GET path="/api/invoice?clientId=36&month=7&year=2023" host=citizen-kanine.herokuapp.com request_id=7cd21e75-e6a9-43a4-ba10-b59018258c40 fwd="73.94.40.90" dyno=web.1 connect=0ms service=34ms status=200 bytes=501 protocol=https
+2023-07-30T20:39:39.138046+00:00 app[web.1]: in walks/week 36 2
+2023-07-30T20:39:39.138497+00:00 app[web.1]: release invoice pool
+2023-07-30T20:39:41.022872+00:00 app[web.1]: Making API INVOICE call to: https://quickbooks.api.intuit.com/v3/company/193514451072484/invoice?
+2023-07-30T20:39:41.022923+00:00 heroku[router]: at=info method=POST path="/api/qbInvoice" host=citizen-kanine.herokuapp.com request_id=972a0008-513e-48d8-9f2c-e97c0717cf6e fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=201 bytes=243 protocol=https
+2023-07-30T20:39:41.969393+00:00 app[web.1]: invoice created
+2023-07-30T20:46:06.803249+00:00 app[web.1]: in /api/invoice
+2023-07-30T20:46:06.811456+00:00 heroku[router]: at=info method=GET path="/api/invoice?clientId=36&month=6&year=2023" host=citizen-kanine.herokuapp.com request_id=eda1d0dc-ed5a-4854-a78c-f965114fe17e fwd="73.94.40.90" dyno=web.1 connect=0ms service=35ms status=200 bytes=504 protocol=https
+2023-07-30T20:46:06.811873+00:00 app[web.1]: in walks/week 36 2
+2023-07-30T20:46:06.812355+00:00 app[web.1]: release invoice pool
+2023-07-30T20:46:10.255675+00:00 heroku[router]: at=info method=POST path="/api/qbInvoice" host=citizen-kanine.herokuapp.com request_id=c85f0735-e5d0-4304-96e4-506b8dca9b84 fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=201 bytes=243 protocol=https
+2023-07-30T20:46:10.255791+00:00 app[web.1]: Making API INVOICE call to: https://quickbooks.api.intuit.com/v3/company/193514451072484/invoice?
+2023-07-30T20:46:11.006312+00:00 app[web.1]: invoice created
+2023-07-30T21:49:09.066208+00:00 heroku[web.1]: Idling
+2023-07-30T21:49:09.068107+00:00 heroku[web.1]: State changed from up to down
+2023-07-30T21:49:12.041819+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2023-07-30T21:49:13.478074+00:00 heroku[web.1]: Process exited with status 143
+2023-07-31T01:16:47.037472+00:00 heroku[web.1]: Unidling
+2023-07-31T01:16:47.103125+00:00 heroku[web.1]: State changed from down to starting
+2023-07-31T01:17:00.146960+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-31T01:17:04.290416+00:00 app[web.1]: 
+2023-07-31T01:17:04.290446+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-31T01:17:04.290446+00:00 app[web.1]: > node server/server.js
+2023-07-31T01:17:04.290447+00:00 app[web.1]: 
+2023-07-31T01:17:04.449392+00:00 app[web.1]: node_env:  production
+2023-07-31T01:17:04.699944+00:00 app[web.1]: Listening on port: 57968, connecting to db schema ck_prod
+2023-07-31T01:17:04.848003+00:00 heroku[web.1]: State changed from starting to up
+2023-07-31T01:17:07.241013+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=9b8ba0fd-0bb1-404c-964f-91fd1fa52f39 fwd="68.168.180.201" dyno=web.1 connect=1ms service=35ms status=200 bytes=781 protocol=https
+2023-07-31T01:17:07.334414+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=a698e4d3-29f3-44b7-bfc1-2edd8ba5a129 fwd="68.168.180.201" dyno=web.1 connect=0ms service=12ms status=200 bytes=970417 protocol=https
+2023-07-31T01:17:07.377071+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=33d28351-a33f-4c2e-a07d-682504f86e87 fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=200 bytes=29623 protocol=https
+2023-07-31T01:17:07.951092+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=783ff822-5834-48cb-a421-43e53e53704d fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=304 bytes=182 protocol=https
+2023-07-31T01:17:07.971878+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=bd7e0712-f327-4e04-ba70-968d1582202a fwd="68.168.180.201" dyno=web.1 connect=0ms service=8ms status=200 bytes=316030 protocol=https
+2023-07-31T01:17:07.995428+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=e38a626c-5a5d-449c-96b1-2cbb3ca26a16 fwd="68.168.180.201" dyno=web.1 connect=0ms service=9ms status=200 bytes=316030 protocol=https
+2023-07-31T01:17:08.065752+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=dc385e44-0124-4d60-8b90-7d21542a2044 fwd="68.168.180.201" dyno=web.1 connect=0ms service=5ms status=304 bytes=182 protocol=https
+2023-07-31T01:17:08.102163+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=87f26284-80ad-419a-a700-8b50f7256757 fwd="68.168.180.201" dyno=web.1 connect=0ms service=10ms status=200 bytes=489127 protocol=https
+2023-07-31T01:17:10.687244+00:00 app[web.1]: in GET api/clients
+2023-07-31T01:17:10.701059+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=ef794444-3255-4918-a6a6-d99c24ba9a28 fwd="68.168.180.201" dyno=web.1 connect=0ms service=17ms status=200 bytes=41005 protocol=https
+2023-07-31T01:17:10.719467+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=3a5f090c-5f55-473e-9cee-26ddbe757330 fwd="68.168.180.201" dyno=web.1 connect=0ms service=30ms status=200 bytes=2958 protocol=https
+2023-07-31T01:17:15.778255+00:00 app[web.1]: in api/clients/schedule 36
+2023-07-31T01:17:15.779034+00:00 app[web.1]: get route 36
+2023-07-31T01:17:15.780602+00:00 heroku[router]: at=info method=GET path="/api/clients/schedule/36" host=citizen-kanine.herokuapp.com request_id=699d8b76-f6da-4be8-9281-197bf8cebfbc fwd="68.168.180.201" dyno=web.1 connect=0ms service=6ms status=200 bytes=325 protocol=https
+2023-07-31T01:17:15.787040+00:00 heroku[router]: at=info method=GET path="/api/clientSchedule/36" host=citizen-kanine.herokuapp.com request_id=27637753-8f28-4256-813c-9b4947eb4ed6 fwd="68.168.180.201" dyno=web.1 connect=0ms service=12ms status=200 bytes=1125 protocol=https
+2023-07-31T01:17:22.790975+00:00 app[web.1]: in api/clients/schedule [
+2023-07-31T01:17:22.790998+00:00 app[web.1]: {
+2023-07-31T01:17:22.790999+00:00 app[web.1]: dog_id: 43,
+2023-07-31T01:17:22.791000+00:00 app[web.1]: client_id: 36,
+2023-07-31T01:17:22.791000+00:00 app[web.1]: date_to_change: '2023-7-31',
+2023-07-31T01:17:22.791001+00:00 app[web.1]: is_scheduled: true
+2023-07-31T01:17:22.791001+00:00 app[web.1]: }
+2023-07-31T01:17:22.791001+00:00 app[web.1]: ]
+2023-07-31T01:17:22.791707+00:00 app[web.1]: one off change [
+2023-07-31T01:17:22.791707+00:00 app[web.1]: {
+2023-07-31T01:17:22.791707+00:00 app[web.1]: dog_id: 43,
+2023-07-31T01:17:22.791707+00:00 app[web.1]: client_id: 36,
+2023-07-31T01:17:22.791708+00:00 app[web.1]: date_to_change: '2023-7-31',
+2023-07-31T01:17:22.791708+00:00 app[web.1]: is_scheduled: true
+2023-07-31T01:17:22.791708+00:00 app[web.1]: }
+2023-07-31T01:17:22.791708+00:00 app[web.1]: ]
+2023-07-31T01:17:22.797765+00:00 heroku[router]: at=info method=PUT path="/api/clients/schedule/updated" host=citizen-kanine.herokuapp.com request_id=816c51f8-ca30-4313-a1c1-7e89cfadf35b fwd="68.168.180.201" dyno=web.1 connect=0ms service=17ms status=201 bytes=243 protocol=https
+2023-07-31T01:17:22.800856+00:00 app[web.1]: client release
+2023-07-31T01:17:22.801366+00:00 heroku[router]: at=info method=POST path="/api/clients/schedule" host=citizen-kanine.herokuapp.com request_id=36200d31-5046-4bb9-903f-06eb8510f894 fwd="68.168.180.201" dyno=web.1 connect=0ms service=21ms status=201 bytes=243 protocol=https
+2023-07-31T01:17:22.842831+00:00 app[web.1]: get route 36
+2023-07-31T01:17:22.845786+00:00 heroku[router]: at=info method=GET path="/api/clientSchedule/36" host=citizen-kanine.herokuapp.com request_id=a06c01b8-d20e-4c45-8cba-94f171649404 fwd="68.168.180.201" dyno=web.1 connect=0ms service=5ms status=200 bytes=1213 protocol=https
+2023-07-31T01:17:22.887133+00:00 app[web.1]: get route 36
+2023-07-31T01:17:22.889295+00:00 heroku[router]: at=info method=GET path="/api/clientSchedule/36" host=citizen-kanine.herokuapp.com request_id=522b55ee-203f-422e-8ef3-a7f103dd74e4 fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=304 bytes=183 protocol=https
+2023-07-31T01:17:26.498321+00:00 app[web.1]: in GET api/clients
+2023-07-31T01:17:26.505600+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=fd23ccb6-f524-4f74-8645-a854f7ca69ff fwd="68.168.180.201" dyno=web.1 connect=0ms service=9ms status=304 bytes=184 protocol=https
+2023-07-31T01:17:31.251044+00:00 app[web.1]: in api/clients/schedule 54
+2023-07-31T01:17:31.251746+00:00 app[web.1]: get route 54
+2023-07-31T01:17:31.252984+00:00 heroku[router]: at=info method=GET path="/api/clients/schedule/54" host=citizen-kanine.herokuapp.com request_id=4df7864d-5fc1-4806-ae26-6187c55a1fee fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=200 bytes=325 protocol=https
+2023-07-31T01:17:31.253982+00:00 heroku[router]: at=info method=GET path="/api/clientSchedule/54" host=citizen-kanine.herokuapp.com request_id=7807ccf6-b432-4cf1-a373-8190a9c5ad44 fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=200 bytes=1565 protocol=https
+2023-07-31T01:17:46.062118+00:00 app[web.1]: one off change [
+2023-07-31T01:17:46.062132+00:00 app[web.1]: {
+2023-07-31T01:17:46.062133+00:00 app[web.1]: dog_id: 65,
+2023-07-31T01:17:46.062133+00:00 app[web.1]: client_id: 54,
+2023-07-31T01:17:46.062134+00:00 app[web.1]: date_to_change: '2023-8-1',
+2023-07-31T01:17:46.062134+00:00 app[web.1]: is_scheduled: false
+2023-07-31T01:17:46.062135+00:00 app[web.1]: }
+2023-07-31T01:17:46.062135+00:00 app[web.1]: ]
+2023-07-31T01:17:46.063477+00:00 app[web.1]: in api/clients/schedule [
+2023-07-31T01:17:46.063477+00:00 app[web.1]: {
+2023-07-31T01:17:46.063477+00:00 app[web.1]: dog_id: 65,
+2023-07-31T01:17:46.063478+00:00 app[web.1]: client_id: 54,
+2023-07-31T01:17:46.063478+00:00 app[web.1]: date_to_change: '2023-8-1',
+2023-07-31T01:17:46.063478+00:00 app[web.1]: is_scheduled: false
+2023-07-31T01:17:46.063478+00:00 app[web.1]: }
+2023-07-31T01:17:46.063478+00:00 app[web.1]: ]
+2023-07-31T01:17:46.067791+00:00 heroku[router]: at=info method=PUT path="/api/clients/schedule/updated" host=citizen-kanine.herokuapp.com request_id=6459817b-d841-4c21-91e6-3768dc363b4c fwd="68.168.180.201" dyno=web.1 connect=0ms service=24ms status=201 bytes=243 protocol=https
+2023-07-31T01:17:46.070345+00:00 app[web.1]: client release
+2023-07-31T01:17:46.070478+00:00 heroku[router]: at=info method=POST path="/api/clients/schedule" host=citizen-kanine.herokuapp.com request_id=48d59f52-352c-4ade-b51a-f304bf2a1600 fwd="68.168.180.201" dyno=web.1 connect=0ms service=26ms status=201 bytes=243 protocol=https
+2023-07-31T01:17:46.113487+00:00 app[web.1]: get route 54
+2023-07-31T01:17:46.115750+00:00 heroku[router]: at=info method=GET path="/api/clientSchedule/54" host=citizen-kanine.herokuapp.com request_id=f6c65651-35a4-4e5d-8aae-fce0fc50f8b4 fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=200 bytes=1654 protocol=https
+2023-07-31T01:17:46.157891+00:00 app[web.1]: get route 54
+2023-07-31T01:17:46.160291+00:00 heroku[router]: at=info method=GET path="/api/clientSchedule/54" host=citizen-kanine.herokuapp.com request_id=a011053b-e6e6-4079-82cc-588908bca9d8 fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=304 bytes=183 protocol=https
+2023-07-31T01:18:23.878380+00:00 app[web.1]: in GET api/clients
+2023-07-31T01:18:23.886280+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=4eccbd93-9925-411c-b52e-56ebc6b67c75 fwd="68.168.180.201" dyno=web.1 connect=0ms service=25ms status=304 bytes=184 protocol=https
+2023-07-31T01:18:28.480256+00:00 app[web.1]: in api/clients/schedule 5
+2023-07-31T01:18:28.482441+00:00 heroku[router]: at=info method=GET path="/api/clients/schedule/5" host=citizen-kanine.herokuapp.com request_id=c8be4d83-d79b-4f13-9164-4b4959d44bad fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=200 bytes=323 protocol=https
+2023-07-31T01:18:28.505586+00:00 app[web.1]: get route 5
+2023-07-31T01:18:28.508073+00:00 heroku[router]: at=info method=GET path="/api/clientSchedule/5" host=citizen-kanine.herokuapp.com request_id=0acc309d-669f-4b94-b545-bb4e47ef6428 fwd="68.168.180.201" dyno=web.1 connect=0ms service=30ms status=200 bytes=590 protocol=https
+2023-07-31T01:18:36.268015+00:00 app[web.1]: in api/clients/schedule [
+2023-07-31T01:18:36.268045+00:00 app[web.1]: {
+2023-07-31T01:18:36.268045+00:00 app[web.1]: dog_id: 7,
+2023-07-31T01:18:36.268046+00:00 app[web.1]: client_id: 5,
+2023-07-31T01:18:36.268046+00:00 app[web.1]: date_to_change: '2023-8-1',
+2023-07-31T01:18:36.268046+00:00 app[web.1]: is_scheduled: false
+2023-07-31T01:18:36.268046+00:00 app[web.1]: }
+2023-07-31T01:18:36.268047+00:00 app[web.1]: ]
+2023-07-31T01:18:36.268504+00:00 app[web.1]: one off change [
+2023-07-31T01:18:36.268504+00:00 app[web.1]: {
+2023-07-31T01:18:36.268505+00:00 app[web.1]: dog_id: 7,
+2023-07-31T01:18:36.268505+00:00 app[web.1]: client_id: 5,
+2023-07-31T01:18:36.268505+00:00 app[web.1]: date_to_change: '2023-8-1',
+2023-07-31T01:18:36.268505+00:00 app[web.1]: is_scheduled: false
+2023-07-31T01:18:36.268505+00:00 app[web.1]: }
+2023-07-31T01:18:36.268505+00:00 app[web.1]: ]
+2023-07-31T01:18:36.272558+00:00 heroku[router]: at=info method=PUT path="/api/clients/schedule/updated" host=citizen-kanine.herokuapp.com request_id=9796df88-ca52-4533-b1db-47d43afd65e0 fwd="68.168.180.201" dyno=web.1 connect=0ms service=8ms status=201 bytes=243 protocol=https
+2023-07-31T01:18:36.277963+00:00 app[web.1]: client release
+2023-07-31T01:18:36.278116+00:00 heroku[router]: at=info method=POST path="/api/clients/schedule" host=citizen-kanine.herokuapp.com request_id=eec6ab94-53df-4042-ac70-6d89c59b78f3 fwd="68.168.180.201" dyno=web.1 connect=0ms service=14ms status=201 bytes=243 protocol=https
+2023-07-31T01:18:36.316594+00:00 app[web.1]: get route 5
+2023-07-31T01:18:36.318788+00:00 heroku[router]: at=info method=GET path="/api/clientSchedule/5" host=citizen-kanine.herokuapp.com request_id=596a41f8-af85-4c9d-9fd2-135d8db8bb87 fwd="68.168.180.201" dyno=web.1 connect=0ms service=5ms status=200 bytes=677 protocol=https
+2023-07-31T01:18:36.360208+00:00 app[web.1]: get route 5
+2023-07-31T01:18:36.362085+00:00 heroku[router]: at=info method=GET path="/api/clientSchedule/5" host=citizen-kanine.herokuapp.com request_id=5af9c569-64da-48d4-a33f-4118d58e9875 fwd="68.168.180.201" dyno=web.1 connect=0ms service=4ms status=304 bytes=183 protocol=https
+2023-07-31T02:25:39.422586+00:00 heroku[web.1]: Idling
+2023-07-31T02:25:39.426073+00:00 heroku[web.1]: State changed from up to down
+2023-07-31T02:25:40.389029+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2023-07-31T02:25:40.608324+00:00 heroku[web.1]: Process exited with status 143
+2023-07-31T13:05:59.383044+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=7dba0e67-cf8a-4a1c-a437-cf06e44a2d8f fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T13:06:43.381676+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=9df03e9a-c619-4adf-b1f6-5697ed1edfc8 fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T13:06:51.368084+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=f4eaf664-da88-4daa-9b22-0a01b190e1e7 fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T13:08:07.957677+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=a260afcc-29bf-4e2a-9421-2a787dd402d3 fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T13:19:45.804358+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=6fb311b0-6a59-463c-8b67-d0b0d7283e30 fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T13:41:27.726907+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=aacea2a3-12e4-4af0-97de-a5451ab909db fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T13:41:28.230290+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=9820b760-4a21-4d61-9e50-3007b56ad792 fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T13:47:20.678038+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=29086ab2-4ad0-4c4f-ad6c-a78c3d0daaa7 fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T13:47:20.936326+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=b47105f7-a5d4-4eab-9813-830d64fcd588 fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T13:47:29.575864+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/apple-touch-icon.png" host=citizen-kanine.herokuapp.com request_id=146830e4-71bb-4f7b-87aa-d643f8ef6c45 fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T13:47:29.577638+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=0132e44a-cc99-4ab1-9a95-f268ef5b122d fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T13:47:29.578531+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/apple-touch-icon-precomposed.png" host=citizen-kanine.herokuapp.com request_id=38c798a3-7cc6-4113-8c00-696ad8b479bf fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T14:02:56.462080+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=d358ef02-37fc-452b-92cf-89fe5191ed2c fwd="172.58.86.158" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T14:02:56.932238+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=57198878-1e73-4a85-81b6-d1a9007a7e59 fwd="172.58.86.158" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T14:03:03.401331+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=66d024c6-8178-4fbb-b2a7-575cb170da93 fwd="172.58.83.18" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T14:12:56.679649+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=c0af5537-010d-4781-bccf-f79226b06dc2 fwd="172.58.80.35" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T14:12:56.772389+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=fc3f141e-cf5d-45ba-b47c-c22c92dfbc2c fwd="172.58.80.35" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T14:12:56.773382+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=c52e1c5f-ca06-444b-95fb-5e3191ac319b fwd="172.58.80.35" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T14:12:56.774385+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=35013f42-4a67-4d19-b47b-b854fa2262f1 fwd="172.58.80.35" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T14:12:56.774486+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=a3a1affa-89b3-4f60-b467-72ae80fb23ef fwd="172.58.80.35" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T14:40:29.840536+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/static/js/main.f0b89cad.js" host=citizen-kanine.herokuapp.com request_id=c1fb6a23-a703-4ffb-8503-e6bb84075060 fwd="172.58.86.140" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T14:40:29.840975+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=b5f8d435-3885-4525-a689-24b19abb9465 fwd="172.58.86.140" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T14:40:34.073052+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=a607274b-b5b4-4208-bdf8-7360da8aa5c5 fwd="172.58.86.140" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T14:40:34.457182+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=44c576bb-7254-45b6-8301-7b9b5d825540 fwd="172.58.86.140" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T15:53:33.482681+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=30990b22-3a76-45cf-834a-8acb7567e935 fwd="68.168.180.201" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T15:53:56.194851+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=a7822ac4-a8ac-4c72-981f-4302ba89bf7d fwd="107.77.83.24" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T16:34:50.928845+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=0ec656c8-2369-4eaa-ac80-6046acf861d0 fwd="107.77.83.24" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T17:33:25.666004+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=8a7da216-c74e-4907-8921-a65f8737a1a7 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T17:33:26.364408+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=7b1bbc85-8c2d-4ee5-a4d9-5ac0cd7d5e66 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T18:45:28.347616+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=655a1994-6419-49ff-a5ec-dd0e52e1090a fwd="107.77.83.24" dyno= connect= service= status=503 bytes= protocol=http
+2023-07-31T18:47:22.868327+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=9c6afd0d-6dd3-418b-8b1c-c73203df2c2c fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T18:47:23.558491+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=citizen-kanine.herokuapp.com request_id=07c1f3a9-ac1a-4edc-9c51-5e49fd77a367 fwd="73.94.40.90" dyno= connect= service= status=503 bytes= protocol=https
+2023-07-31T18:47:50.918903+00:00 heroku[web.1]: State changed from down to starting
+2023-07-31T18:48:05.559148+00:00 heroku[web.1]: Starting process with command `npm start`
+2023-07-31T18:48:07.213263+00:00 app[web.1]: 
+2023-07-31T18:48:07.213287+00:00 app[web.1]: > prime-solo-project@0.1.0 start
+2023-07-31T18:48:07.213288+00:00 app[web.1]: > node server/server.js
+2023-07-31T18:48:07.213288+00:00 app[web.1]: 
+2023-07-31T18:48:07.358328+00:00 app[web.1]: node_env:  production
+2023-07-31T18:48:07.585852+00:00 app[web.1]: Listening on port: 58770, connecting to db schema ck_prod
+2023-07-31T18:48:07.765402+00:00 heroku[web.1]: State changed from starting to up
+2023-07-31T18:48:24.274474+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=9cb1ca06-8c70-4376-966c-1dc379edaa01 fwd="73.94.40.90" dyno=web.1 connect=0ms service=46ms status=200 bytes=781 protocol=https
+2023-07-31T18:48:24.358075+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=5f1adf42-b611-4f98-8b2a-cbb13e6e0eb9 fwd="73.94.40.90" dyno=web.1 connect=0ms service=15ms status=200 bytes=970417 protocol=https
+2023-07-31T18:48:24.456313+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=c02ed32e-4b20-40d4-98e4-5a3dccfe18aa fwd="73.94.40.90" dyno=web.1 connect=0ms service=8ms status=304 bytes=270 protocol=https
+2023-07-31T18:48:24.847695+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=40264c45-4578-4e9c-924c-e581cf57a0e3 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=182 protocol=https
+2023-07-31T18:48:24.906972+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=db520f56-3e3b-4263-ba73-68ae359d2cd6 fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=200 bytes=316030 protocol=https
+2023-07-31T18:48:24.909642+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=b17732d7-0cd8-460c-ae65-e6a89c026213 fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=200 bytes=316030 protocol=https
+2023-07-31T18:48:25.066010+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=1c7b7c12-2fb1-4be7-91c6-1140b91d7df2 fwd="73.94.40.90" dyno=web.1 connect=0ms service=9ms status=200 bytes=489127 protocol=https
+2023-07-31T18:48:25.143098+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=ed02915c-f635-4f02-8608-7381ad8d21b2 fwd="73.94.40.90" dyno=web.1 connect=0ms service=20ms status=304 bytes=181 protocol=https
+2023-07-31T18:55:59.515594+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=57db4300-c15e-4f29-974f-da718753ac27 fwd="73.94.40.90" dyno=web.1 connect=0ms service=20ms status=304 bytes=269 protocol=https
+2023-07-31T18:55:59.607516+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=b922672d-49e4-4aaf-905a-87db4fffbb4a fwd="73.94.40.90" dyno=web.1 connect=0ms service=6ms status=304 bytes=270 protocol=https
+2023-07-31T18:55:59.644106+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=7cc0df9c-c780-4a49-a5e2-fbe66557196e fwd="73.94.40.90" dyno=web.1 connect=0ms service=39ms status=304 bytes=271 protocol=https
+2023-07-31T18:55:59.772994+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=33483092-dbc9-48f6-b915-ed2e24a22d4f fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=182 protocol=https
+2023-07-31T18:55:59.775678+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=cb91bd17-3228-4f8f-9d65-08e6dff1e1e7 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:55:59.834942+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=18ba5ac0-a57e-49e5-9aa4-c90d19ae4dfc fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:55:59.950771+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=f0182725-a4b1-430f-8d00-57c1d8405ab6 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:00.013037+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=2f4f4a85-e783-4b30-8004-2cda253a7948 fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=304 bytes=181 protocol=https
+2023-07-31T18:56:00.080166+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=7de2d044-aecf-4a8f-bbed-e170f9fc54cd fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-31T18:56:03.292052+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=af2dd6ca-ace5-4ba8-9c90-0659b30dde56 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-31T18:56:03.377820+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=dbe182a5-69c4-48c8-8cde-4dd238068034 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=270 protocol=https
+2023-07-31T18:56:03.379402+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=52f3864f-75a0-492d-8f05-3833d3a28804 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:03.502406+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=14250d3d-a764-4098-9bf7-62c7f8b7e3bf fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=182 protocol=https
+2023-07-31T18:56:03.508682+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=e0a4d422-e1ac-4c99-bb28-ce12acc8c4d2 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:03.532458+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=f7228df0-1a2a-4696-b240-6583078cb4d1 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:03.701010+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=d949b1fd-2c8b-45c6-b09f-136d07041a4d fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:03.702624+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=898e8cc2-0bb4-483a-81c5-7de2b0daf904 fwd="73.94.40.90" dyno=web.1 connect=3ms service=4ms status=304 bytes=181 protocol=https
+2023-07-31T18:56:04.356206+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=b9fdda33-21c3-4a21-936f-2f97138f2fa3 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=269 protocol=https
+2023-07-31T18:56:05.139830+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=a2db650d-d050-4de7-9ca2-364c49e10968 fwd="73.94.40.90" dyno=web.1 connect=0ms service=12ms status=304 bytes=269 protocol=https
+2023-07-31T18:56:05.225798+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=3f23d021-7c63-452a-a674-0024abb7ed1a fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:05.228863+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=00b03ae0-857d-4833-9b77-0d9828a3086a fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=270 protocol=https
+2023-07-31T18:56:05.341314+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=ef5e0570-9670-4f8f-b91b-0206b1979f8b fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=182 protocol=https
+2023-07-31T18:56:05.343165+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=079f9107-c1dd-4afe-be1d-afeaae48adcd fwd="73.94.40.90" dyno=web.1 connect=0ms service=1ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:05.379942+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=822e5dd6-4261-448e-be51-818af3eeb910 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:05.475927+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=cde631e8-5418-4ece-af40-eb2caac671b2 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=181 protocol=https
+2023-07-31T18:56:05.476715+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=0db7d832-8abe-4562-a00a-031f94bc3339 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:06.108116+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=45907f10-77bc-4439-b4da-fcc296fee68b fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=269 protocol=https
+2023-07-31T18:56:06.891284+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=d69b6bf4-aa21-41da-be36-852680e76196 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=269 protocol=https
+2023-07-31T18:56:06.973317+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=5a7431f6-2cda-469a-964e-2eeeca8062a9 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=270 protocol=https
+2023-07-31T18:56:06.976073+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=61c19641-d0c2-4cc5-85b3-44911b5d1296 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:07.088393+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=d8e72987-945b-4d2d-a765-7b414b4563a6 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=182 protocol=https
+2023-07-31T18:56:07.092657+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=9a2612fb-6102-4c0c-8dce-ed72fccc1205 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:07.112671+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=9709ab3b-358b-4168-a6c4-781a20843939 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:07.220338+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=32ee3b46-2d9a-4bbb-871f-c6941ef58634 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=181 protocol=https
+2023-07-31T18:56:07.220963+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=102d0d98-f6fa-46ca-adee-5e05d606d796 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:07.781670+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=0d71168b-3586-4eef-a6a7-0288e056387c fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=269 protocol=https
+2023-07-31T18:56:23.709853+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=66c494b4-2f07-43ae-a73c-42c41417e970 fwd="73.94.40.90" dyno=web.1 connect=0ms service=17ms status=200 bytes=781 protocol=http
+2023-07-31T18:56:23.937200+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=f0948974-a0b9-410d-af1a-c1004d1b5504 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=http
+2023-07-31T18:56:23.980884+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=c38b2a25-268d-4b4d-9c38-ddb43d7a10d5 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=29623 protocol=http
+2023-07-31T18:56:24.412901+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=362ab070-b273-4af2-b76f-6bc693f9cb19 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=200 bytes=425 protocol=http
+2023-07-31T18:56:24.423206+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=5d349483-8ab8-4b73-8973-e0911c9281ce fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=http
+2023-07-31T18:56:24.509174+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=775d2cde-2df8-40e0-9ce2-95d82faf6698 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=http
+2023-07-31T18:56:24.605694+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=a5404223-d8f6-4c8e-aa4e-3e487f3ba899 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=626 protocol=http
+2023-07-31T18:56:24.794241+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=98768b92-ea11-4bbf-95b7-ab19e2664a2f fwd="73.94.40.90" dyno=web.1 connect=0ms service=4ms status=200 bytes=239 protocol=http
+2023-07-31T18:56:24.872658+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=bb76354e-98a9-41e2-9f44-72af03f3375a fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=http
+2023-07-31T18:56:27.965027+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=39845f0d-2c3d-4ef3-bbea-21cbb096b70f fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=2958 protocol=http
+2023-07-31T18:56:27.999164+00:00 app[web.1]: in GET api/clients
+2023-07-31T18:56:28.044408+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=df8a43b2-ba06-4040-8b8f-0b576169e666 fwd="73.94.40.90" dyno=web.1 connect=0ms service=46ms status=200 bytes=41005 protocol=http
+2023-07-31T18:56:30.421356+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMedHover.png" host=citizen-kanine.herokuapp.com request_id=fe402939-4221-47d6-a111-6657aa0522e8 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=200 bytes=2871 protocol=http
+2023-07-31T18:56:31.314502+00:00 app[web.1]: in api/oauth2/connect_handler
+2023-07-31T18:56:31.316205+00:00 app[web.1]: {
+2023-07-31T18:56:31.316206+00:00 app[web.1]: access_token: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..-es2ocoPLwkwCWVhdcn4fw.nP7oBVzsbAgXidDKA_XN10KlpY_gWoL9KJmka3JFQ98TfI4DcqOIowDKc7M6jYCPj46OCUl4qrb67RgkYtY6tFHYSQqqQPnC3IdMZR-Qev0i_bdQNBzmHpbgN1ocusl9zYOKwYNvQwfokAQW4fTmfVKAN12lCrEdfAPQCazKZYggiDsBcdbgYGZAt84AAVE3Uua3oSgIaKlwNNye2Wc680YZF9ImuKN7ZCbfQuYlwwYWt_1dPt6tvlQxmJDNClQ69qcOHUoxwYAJtV8m0JtTeJYVACZ6JfL9-VQTBEvVi3U0w1CvMxP0_cbJlvj4GbEZqubY1wh8Gghdz4_maiIx8IyHa-XU7SPcyi2rjfCo8DuHLgZ8XDjqeE34MbJ7s5Z0aym15N9XXoJzm_-yHVta42Ryud1yaYOoRNMcpcSxSHR_EXSz8i-HbfQMHdMX2dV21N25nFsSWVGnNRjO6AYrmOax0mYrd8euBdRyo8UTBLeGsctG3bpkisthLdFxsBz6lfpYRrbpRIWnydJCqEwXflT3PH72ClTQq4ucmgut-HrKDvH-2SqB0gFwS2CbVP4IBaR4_fuV8pM8njZvYijGcOAZEk7AcPRgPR7YDQBvrU0DZCdvUqsoRS0tulXHIYSSQ3naH-SWhrv_TJMk7XcKDtefApBotRyJu7fYYSclJy899BEueWM3j4BpPiNp5Ryim9V7TO4RIsbxZiWO5CgNFtfZPaO559t1RhzBdjzhoZ4.9NW7mToRVQht_AL3m4d2BQ',
+2023-07-31T18:56:31.316207+00:00 app[web.1]: token_type: 'bearer',
+2023-07-31T18:56:31.316208+00:00 app[web.1]: x_refresh_token_expires_in: 8726400,
+2023-07-31T18:56:31.316208+00:00 app[web.1]: refresh_token: 'AB11699475954itmEl3lAB1vTlSM1rAXLJLxmZ7kmt7aYn9uH8',
+2023-07-31T18:56:31.316209+00:00 app[web.1]: expires_in: 3600
+2023-07-31T18:56:31.316209+00:00 app[web.1]: }
+2023-07-31T18:56:31.316886+00:00 app[web.1]: Redirecting to authorization uri: https://appcenter.intuit.com/connect/oauth2?client_id=ABYKI2DARZyeD9MN1LKbt8kYy3RkGgidfw3OrTmzLxNftvJhE0&redirect_uri=https%3A%2F%2Fcitizen-kanine.herokuapp.com%2Fapi%2Foauth2%2Fcallback&response_type=code&state=oQedEfbn-gkiVAIqkM2qRzE_4tv1gvx_UIgs&scope=com.intuit.quickbooks.accounting
+2023-07-31T18:56:31.319624+00:00 heroku[router]: at=info method=GET path="/api/oauth2/connect_handler" host=citizen-kanine.herokuapp.com request_id=7e0437c1-7d04-48b4-a275-0ee862e629b4 fwd="73.94.40.90" dyno=web.1 connect=0ms service=7ms status=302 bytes=4082 protocol=https
+2023-07-31T18:56:45.919779+00:00 app[web.1]: in /api/quickbooks/callback
+2023-07-31T18:56:45.920032+00:00 app[web.1]: do we get req.session.realmId Session {
+2023-07-31T18:56:45.920032+00:00 app[web.1]: passport: { user: 8 },
+2023-07-31T18:56:45.920032+00:00 app[web.1]: secret: 'aszEmU9cpyTVVzd3SojB_bGE',
+2023-07-31T18:56:45.920038+00:00 app[web.1]: accessToken: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..-es2ocoPLwkwCWVhdcn4fw.nP7oBVzsbAgXidDKA_XN10KlpY_gWoL9KJmka3JFQ98TfI4DcqOIowDKc7M6jYCPj46OCUl4qrb67RgkYtY6tFHYSQqqQPnC3IdMZR-Qev0i_bdQNBzmHpbgN1ocusl9zYOKwYNvQwfokAQW4fTmfVKAN12lCrEdfAPQCazKZYggiDsBcdbgYGZAt84AAVE3Uua3oSgIaKlwNNye2Wc680YZF9ImuKN7ZCbfQuYlwwYWt_1dPt6tvlQxmJDNClQ69qcOHUoxwYAJtV8m0JtTeJYVACZ6JfL9-VQTBEvVi3U0w1CvMxP0_cbJlvj4GbEZqubY1wh8Gghdz4_maiIx8IyHa-XU7SPcyi2rjfCo8DuHLgZ8XDjqeE34MbJ7s5Z0aym15N9XXoJzm_-yHVta42Ryud1yaYOoRNMcpcSxSHR_EXSz8i-HbfQMHdMX2dV21N25nFsSWVGnNRjO6AYrmOax0mYrd8euBdRyo8UTBLeGsctG3bpkisthLdFxsBz6lfpYRrbpRIWnydJCqEwXflT3PH72ClTQq4ucmgut-HrKDvH-2SqB0gFwS2CbVP4IBaR4_fuV8pM8njZvYijGcOAZEk7AcPRgPR7YDQBvrU0DZCdvUqsoRS0tulXHIYSSQ3naH-SWhrv_TJMk7XcKDtefApBotRyJu7fYYSclJy899BEueWM3j4BpPiNp5Ryim9V7TO4RIsbxZiWO5CgNFtfZPaO559t1RhzBdjzhoZ4.9NW7mToRVQht_AL3m4d2BQ',
+2023-07-31T18:56:45.920043+00:00 app[web.1]: refreshToken: 'AB11699475954itmEl3lAB1vTlSM1rAXLJLxmZ7kmt7aYn9uH8',
+2023-07-31T18:56:45.920044+00:00 app[web.1]: tokenType: 'bearer',
+2023-07-31T18:56:45.920044+00:00 app[web.1]: data: {
+2023-07-31T18:56:45.920045+00:00 app[web.1]: access_token: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..-es2ocoPLwkwCWVhdcn4fw.nP7oBVzsbAgXidDKA_XN10KlpY_gWoL9KJmka3JFQ98TfI4DcqOIowDKc7M6jYCPj46OCUl4qrb67RgkYtY6tFHYSQqqQPnC3IdMZR-Qev0i_bdQNBzmHpbgN1ocusl9zYOKwYNvQwfokAQW4fTmfVKAN12lCrEdfAPQCazKZYggiDsBcdbgYGZAt84AAVE3Uua3oSgIaKlwNNye2Wc680YZF9ImuKN7ZCbfQuYlwwYWt_1dPt6tvlQxmJDNClQ69qcOHUoxwYAJtV8m0JtTeJYVACZ6JfL9-VQTBEvVi3U0w1CvMxP0_cbJlvj4GbEZqubY1wh8Gghdz4_maiIx8IyHa-XU7SPcyi2rjfCo8DuHLgZ8XDjqeE34MbJ7s5Z0aym15N9XXoJzm_-yHVta42Ryud1yaYOoRNMcpcSxSHR_EXSz8i-HbfQMHdMX2dV21N25nFsSWVGnNRjO6AYrmOax0mYrd8euBdRyo8UTBLeGsctG3bpkisthLdFxsBz6lfpYRrbpRIWnydJCqEwXflT3PH72ClTQq4ucmgut-HrKDvH-2SqB0gFwS2CbVP4IBaR4_fuV8pM8njZvYijGcOAZEk7AcPRgPR7YDQBvrU0DZCdvUqsoRS0tulXHIYSSQ3naH-SWhrv_TJMk7XcKDtefApBotRyJu7fYYSclJy899BEueWM3j4BpPiNp5Ryim9V7TO4RIsbxZiWO5CgNFtfZPaO559t1RhzBdjzhoZ4.9NW7mToRVQht_AL3m4d2BQ',
+2023-07-31T18:56:45.920045+00:00 app[web.1]: token_type: 'bearer',
+2023-07-31T18:56:45.920045+00:00 app[web.1]: x_refresh_token_expires_in: 8726400,
+2023-07-31T18:56:45.920046+00:00 app[web.1]: refresh_token: 'AB11699475954itmEl3lAB1vTlSM1rAXLJLxmZ7kmt7aYn9uH8',
+2023-07-31T18:56:45.920054+00:00 app[web.1]: expires_in: 3600
+2023-07-31T18:56:45.920054+00:00 app[web.1]: },
+2023-07-31T18:56:45.920054+00:00 app[web.1]: realmId: '193514451072484'
+2023-07-31T18:56:45.920055+00:00 app[web.1]: }
+2023-07-31T18:56:46.238619+00:00 app[web.1]: token {
+2023-07-31T18:56:46.238651+00:00 app[web.1]: access_token: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..Ii6jp4ypP_Aiddz7jUizYg.R8HeK_UOsfNyjfCtceeaVZggLjQ1Qtdbp_Rn34J-J_wibkD0FTZn4BKHmAmalLrdbS9rVoMpcStvTo7KhdNFBVF8i4wTspjZbD8BMlZdpd63BJUx5O66DyF8V5v9u466kjBSs5LARZ5VBpAq20uySyTG26rrXILZTBy6aTo_0g8stJxTS206BNgXnznbrlDAXwfzDihcuwDvbTm7-FHmB2V0cIaJFKfHgUTwuNoEu6QhCy25nIcbbHSdt3U_9br-iJ3ulBvSdKJjqGmumgQjPVVmKGYL805-mrRVbXl5xgrujzN7HoKHMS1AKELgBe-TzoxzXM3Xi0l87uuy0IrZCyO0vDSUJGR-BkxZw9djDu5b-ckl06PapykHutYGHyHRXtYlcupfJpuSNNJ02ZtkWRLSD9gjpHzVlJEDmRuwCUe-dUZj45T4o9HPxMxfSeZlvdQPo933DHTqsO8uAk5kRNZMDu34jejSCq3sPAQ4xMGEhcZFWFMP6lxLxTtB83ZtvSY6H37u__VfDv_0vbKn_VziEITu00zIqspJZcSjfS3MxBMpZ08QiHONjv41rQK_T_588mR8TzrpWCpGhJQ1FByRrREYbndGgXFqO2RXO49gllqzCCT7sY8eAYU70yn3bJU7-yTYExhbMDTME19-WT183JXneYE8dFnS5AHPPMMA0lhFDVmKD_RN5ee7U6gayCgig3d6YxgV5XiR2PEzuUtoR3PCOSMQZeSOiUtLxW8.PWj3j0ztDkFTX4EQh8GylA',
+2023-07-31T18:56:46.238652+00:00 app[web.1]: token_type: 'bearer',
+2023-07-31T18:56:46.238652+00:00 app[web.1]: x_refresh_token_expires_in: 8726400,
+2023-07-31T18:56:46.238653+00:00 app[web.1]: refresh_token: 'AB11699556206FOveEbBopuqZKzkh8R3T5AES5bJBHUNhBzpa2',
+2023-07-31T18:56:46.238653+00:00 app[web.1]: expires_in: 3600
+2023-07-31T18:56:46.238653+00:00 app[web.1]: }
+2023-07-31T18:56:46.240795+00:00 heroku[router]: at=info method=GET path="/api/oauth2/callback?code=AB11690830105xfLYIYXo9nIE2ev8kGP1m1gzNAnt1xJs69NFw&state=oQedEfbn-gkiVAIqkM2qRzE_4tv1gvx_UIgs&realmId=193514451072484" host=citizen-kanine.herokuapp.com request_id=acb04297-005a-4c08-abd5-a2817130b977 fwd="73.94.40.90" dyno=web.1 connect=0ms service=339ms status=302 bytes=3327 protocol=https
+2023-07-31T18:56:46.312267+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=6f6ef2c8-6805-4495-8473-c0930fee64ac fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=781 protocol=https
+2023-07-31T18:56:46.632715+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=93a72957-8888-4702-81c0-d26604ddc2f8 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:46.739530+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=3743c6b3-4d8c-45a7-97a4-62be2062eb45 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=29623 protocol=https
+2023-07-31T18:56:46.980187+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=03ed44fc-9206-45fe-8d7a-277b281e0658 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=200 bytes=425 protocol=https
+2023-07-31T18:56:46.995152+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=ea912790-f268-41d0-8dd1-99318f3a8e2a fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:47.050930+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=b64fa267-1b7f-472b-a9a0-cde886d73f86 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=https
+2023-07-31T18:56:47.145974+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=94359fd9-3ecb-47cd-a6d3-0cedaed9f465 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=626 protocol=https
+2023-07-31T18:56:47.221764+00:00 heroku[router]: at=info method=GET path="/Images/qbButtonMed.png" host=citizen-kanine.herokuapp.com request_id=b1ecee8e-0eab-4149-b65c-01cc1af03e1d fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=2958 protocol=https
+2023-07-31T18:56:47.283198+00:00 app[web.1]: in GET api/clients
+2023-07-31T18:56:47.289143+00:00 heroku[router]: at=info method=GET path="/api/clients" host=citizen-kanine.herokuapp.com request_id=ff84f168-40f1-4ce1-9928-9a807d824bb0 fwd="73.94.40.90" dyno=web.1 connect=0ms service=8ms status=200 bytes=41005 protocol=https
+2023-07-31T18:59:28.353686+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=a02ee0f5-77bc-4d65-93c0-17a041781677 fwd="73.94.40.90" dyno=web.1 connect=0ms service=1ms status=200 bytes=781 protocol=http
+2023-07-31T18:59:28.442032+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=72984af4-346f-4caf-91c9-7c92097ece74 fwd="73.94.40.90" dyno=web.1 connect=0ms service=13ms status=200 bytes=970417 protocol=http
+2023-07-31T18:59:28.587922+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=3fcf3802-d7be-44fd-8aae-5b294a1bfcd3 fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=200 bytes=29623 protocol=http
+2023-07-31T18:59:28.967474+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=3d8154a9-fbd6-4c0b-8a4b-8b2ed41646dc fwd="73.94.40.90" dyno=web.1 connect=0ms service=1ms status=403 bytes=247 protocol=http
+2023-07-31T18:59:28.992618+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=d27b743b-0d47-4a12-a022-b97efb3acc64 fwd="73.94.40.90" dyno=web.1 connect=0ms service=5ms status=200 bytes=316030 protocol=http
+2023-07-31T18:59:29.055966+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=8213a0e8-6175-4703-9acd-1cda3df8a2c2 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=316030 protocol=http
+2023-07-31T19:43:09.504252+00:00 heroku[router]: at=info method=GET path="/" host=citizen-kanine.herokuapp.com request_id=6882c317-53bc-4c01-84fa-823ef211ccbd fwd="73.94.40.90" dyno=web.1 connect=0ms service=32ms status=200 bytes=781 protocol=http
+2023-07-31T19:43:09.884241+00:00 heroku[router]: at=info method=GET path="/static/js/main.5b2fb2b7.js" host=citizen-kanine.herokuapp.com request_id=3de3e69b-3b18-410a-a87a-343a22dd4394 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=http
+2023-07-31T19:43:09.896567+00:00 heroku[router]: at=info method=GET path="/static/css/main.597245fe.css" host=citizen-kanine.herokuapp.com request_id=0ff22f9c-fea1-48e3-9dd1-93b70f75b659 fwd="73.94.40.90" dyno=web.1 connect=0ms service=15ms status=200 bytes=29623 protocol=http
+2023-07-31T19:43:10.327475+00:00 heroku[router]: at=info method=GET path="/api/user" host=citizen-kanine.herokuapp.com request_id=ec2764c7-e9ed-4f53-be10-115ebea76051 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=425 protocol=http
+2023-07-31T19:43:10.350336+00:00 heroku[router]: at=info method=GET path="/Images/dogwalker.png" host=citizen-kanine.herokuapp.com request_id=13f7c868-0c0a-43a8-8d4c-e94e433475aa fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=304 bytes=271 protocol=http
+2023-07-31T19:43:10.439407+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker.862cfe9fe41ff97da14e.png" host=citizen-kanine.herokuapp.com request_id=3384e0bf-57f1-4058-bae2-d54845034c7f fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=http
+2023-07-31T19:43:10.563251+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=citizen-kanine.herokuapp.com request_id=bec05ad5-cd36-4338-809b-8828c276cb5c fwd="73.94.40.90" dyno=web.1 connect=0ms service=2ms status=200 bytes=626 protocol=http
+2023-07-31T19:43:10.978154+00:00 heroku[router]: at=info method=GET path="/api/admin" host=citizen-kanine.herokuapp.com request_id=1f86d576-0b80-4bfa-b7b0-ee85d4c1f8a2 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=200 bytes=239 protocol=http
+2023-07-31T19:43:11.077136+00:00 heroku[router]: at=info method=GET path="/static/media/dogwalker2.2994e526fca050775f9f.png" host=citizen-kanine.herokuapp.com request_id=82a1a45a-f81f-490f-ae9e-2fbbc9ba7a88 fwd="73.94.40.90" dyno=web.1 connect=0ms service=3ms status=304 bytes=271 protocol=http

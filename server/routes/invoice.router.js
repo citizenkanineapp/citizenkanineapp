@@ -53,6 +53,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         qb_id,
         first_name,
         last_name,
+        email,
         num_dogs,
         ARRAY_AGG (
             EXTRACT (DAY FROM date)
@@ -64,6 +65,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         SELECT
             clients.id AS clientid,
             clients.qb_id,
+            clients.email AS email,
             daily_dogs.date,
             COUNT(dogs.id) AS num_dogs,
             daily_dogs.checked_in AS checked_in,
@@ -82,6 +84,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 daily_dogs.date,
                 checked_in,
                 no_show,
+                email,
                 last_name,
                 first_name,
                 clientid
@@ -94,6 +97,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         qb_id,
         first_name,
         last_name, 
+        email,
         num_dogs,
         checked_in,
         no_show;

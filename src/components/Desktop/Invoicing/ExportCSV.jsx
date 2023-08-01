@@ -35,6 +35,7 @@ const ExportCSV = ({ monthsShort }) => {
                 {
                     "InvoiceNo": item.clientid,
                     "Customer": item.first_name + ' ' + item.last_name,
+                    "Email": item.email,
                     "InvoiceDate": dayjs().format('MM/DD/YYYY'),
                     "DueDate": dayjs().add(1, 'month').format('MM/DD/YYYY'),
                     "Item(Product/Service)": item.service.service,

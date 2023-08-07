@@ -199,7 +199,7 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
   //they have a request limit of 10 per second
   async function GetGeoStats(customers) {
     const customerResult = []
-    for(let customer of customers){
+    for (let customer of customers){
     const address = customer.street.replace(/ /g, "+");
     const town = customer.city.replace(/ /g, '');
     const zip = customer.zip
@@ -214,7 +214,21 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     }
     return customerResult;
   }
-  let customersWithGeoStats =  await GetGeoStats(customers)
+  
+  // returns TRUE if a address or town field is empty
+  const checkCustomerAddressFields = (customers) => {
+      return customers.some(customer => !customer.street || !customer.city );
+  }
+
+  let customersWithGeoStats
+  
+  if (!checkCustomerAddressFields(customers)) {
+    console.log('no fields empty')
+    customersWithGeoStats = await GetGeoStats(customers)
+  } else {
+    console.log('some fields empty')
+    return res.status(500).send({message:'Error! Missing customer address fields'});
+  }
 
   let customersResult = processSchedule(customersWithGeoStats)
   // console.log('after schedule processing',  customersResult)

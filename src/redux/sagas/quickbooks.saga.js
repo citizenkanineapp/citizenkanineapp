@@ -42,7 +42,7 @@ function* addAllQbCustomers(action){
         yield put ({type: 'FETCH_CLIENTS'});
         
     } catch (error) {
-       // console.log(error);
+        // console.log(error);
         alert('Error adding QB customers. Try connecting to QB again');
     }
     
@@ -83,8 +83,12 @@ function* updateAllQbCustomers(action){
                 const deleteClientsFromDB = yield axios.delete(`${urlQuery}`);
             }
         } catch (error) {
-            console.log(error);
-            alert('Error updating QB customers!');
+            console.log('response data', error.response.data);
+            if (error.response.data.message) {
+                alert(error.response.data.message)
+            } else {
+                alert('Error updating QB customers!');
+            }
         }  
         //fetches clients from CK database
         // console.log('finished add/delete clients saga')

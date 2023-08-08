@@ -70,8 +70,9 @@ router.get('/daily', async (req, res) => {
 
     // SQL to grab schedule adjustments table
     const scheduleQuery = `
-    SELECT dogs_schedule_changes.*, dogs.name from dogs_schedule_changes
+    SELECT dogs_schedule_changes.*, dogs.name, clients.route_id from dogs_schedule_changes
 		JOIN dogs ON dogs_schedule_changes.dog_id = dogs.id
+        JOIN clients ON dogs.client_id = clients.id
 	    WHERE dogs_schedule_changes.date_to_change = CURRENT_DATE
 	ORDER BY dogs_schedule_changes.dog_id;
     `
@@ -119,12 +120,13 @@ router.get('/daily', async (req, res) => {
             console.log('Good to Go no adjustments!');
             // insert into daily_dogs
             await Promise.all(scheduledDogs.map(dog => {
-                const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4);`;
+                // const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4);`;
                 const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name];
                 return client.query(insertSQL, insertValues);
             }));
 
-            await client.query('COMMIT')
+            await client.query('COMMIT');
+            console.log('daily dogs committed');
             res.send({ scheduledDogs });
         } else {
 
@@ -133,27 +135,33 @@ router.get('/daily', async (req, res) => {
                 .filter(item => item.is_scheduled === false)
                 .map(item => item.dog_id);
 
-            // adjusted dogs is the original dog array MINUS the canceled dogs for the day
+            // adjustedDogs is the original dog array MINUS the canceled dogs for the day. there is a possibility for duplicate values to end up in additions!
             const adjustedDogs = scheduledDogs.filter(item => !cancellations.includes(item.dog_id));
 
             // here are the dogs that were added for the day that typically might not be scheduled
             const additions = scheduleAdjustments.filter(item => item.is_scheduled === true);
 
+            // returns TRUE if id matches dog.dog_id in adjustedDogs
+            const checkDogId = (id, array) => {
+                return array.some(dog => dog.dog_id === id);
+            }
+
             for (let item of additions) {
-                // hard code route to be 'unassigned'
-                item.route_id = 5;
-                adjustedDogs.push(item);
+                if (!checkDogId(item.dog_id,adjustedDogs)) {
+                    adjustedDogs.push(item);
+                }
             }
 
             console.log('Good to Go with adjustments!');
             // insert into daily_dogs
             await Promise.all(adjustedDogs.map(dog => {
-                const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4)`;
+                // const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4)`;
                 const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name];
                 return client.query(insertSQL, insertValues);
             }));
 
-            await client.query('COMMIT')
+            await client.query('COMMIT');
+            console.log('daily dogs committed');
             res.send({ adjustedDogs });
 
         }

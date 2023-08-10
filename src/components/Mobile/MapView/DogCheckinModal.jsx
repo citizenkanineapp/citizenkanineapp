@@ -50,6 +50,15 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}
 
   const user = useSelector(store => store.user);
 
+  const checkinAllDogs = (modalData) => {
+    console.log('in checkinAllDogs');
+    for ( let dog of modalData.dogs ) {
+      checkIn(dog);
+    }
+    updateMarkers(modalData)
+    setOpen(false);
+  }
+
   const checkIn = (dog) => {
       const dogID = dog.dog_id;
       const routeID = dog.route_id;
@@ -204,7 +213,7 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}
               sx={{mt: 1}}
               variant='contained'
               size='small' 
-              onClick={() => updateMarkers(modalData)}
+              onClick={() => checkinAllDogs(modalData)}
             >
               Check in all dogs
             </Button>
@@ -214,7 +223,7 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}
               variant='contained'
               color='success'
               size='small' 
-              onClick={() => updateMarkers(modalData)}
+              onClick={() => checkinAllDogs(modalData)}
             >
               All dogs checked in
             </Button>

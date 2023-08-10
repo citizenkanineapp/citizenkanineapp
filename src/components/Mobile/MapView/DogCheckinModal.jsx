@@ -6,19 +6,16 @@ import { maptiler } from 'pigeon-maps/providers'
 
 
 //MUI
-import { Accordion, AccordionSummary, AccordionDetails, Collapse, ListItemAvatar, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, IconButton, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Stack, Button } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import DirectionsIcon from '@mui/icons-material/Directions';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import PetsIcon from '@mui/icons-material/Pets';
-import ListItemButton from '@mui/material/ListItemButton';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import DirectionsIcon from '@mui/icons-material/Directions';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -110,6 +107,15 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}
     });
   };
 
+  // while we were not able to get map display functionality, clicking this should open either the google maps app or a webpage 
+  const openMap = async (dog) => {
+    // takes in address details and encodes them into URI 
+    const destination = encodeURIComponent(`${dog.street} ${dog.zip}`);
+    // based off of street address and city it pulls up a google map page
+    const link = `https://maps.google.com/?daddr=${destination}`;
+    window.open(link);
+  }
+
   return (
   <>
     <Modal
@@ -192,40 +198,37 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}
           ))}
         </List>
           <Divider />
-        <List>
-          <ListItem disablePadding>
-            {/* <Button 
-              sx={{mt: 1,ml:-3}}
-              variant='contained' 
-              endIcon={<DirectionsIcon />} 
+        <Stack spacing={2}>
+          { !modalData.checkinStatus ?
+            <Button 
+              sx={{mt: 1}}
+              variant='contained'
               size='small' 
-              onClick={() => openMap(modalData)}>
-                    Directions
-            </Button> */}
-            { !modalData.checkinStatus ?
-              <Button 
-                sx={{mt: 1}}
-                variant='contained'
-                size='small' 
-                onClick={() => updateMarkers(modalData)}
-              >
-                      Check in all dogs
-              </Button>
-            :
-              <Button 
-                sx={{mt: 1}}
-                variant='contained'
-                color='success'
-                size='small' 
-                onClick={() => updateMarkers(modalData)}
-              >
-                      All dogs checked in
-              </Button>
-            }
-          </ListItem>
-        </List>
-
-
+              onClick={() => updateMarkers(modalData)}
+            >
+              Check in all dogs
+            </Button>
+          :
+            <Button 
+              sx={{mt: 1}}
+              variant='contained'
+              color='success'
+              size='small' 
+              onClick={() => updateMarkers(modalData)}
+            >
+              All dogs checked in
+            </Button>
+          }
+          <Button 
+            sx={{mt: 1}}
+            variant='contained' 
+            endIcon={<DirectionsIcon />} 
+            size='small' 
+            onClick={() => openMap(modalData)}
+          >
+              Directions
+          </Button>
+        </Stack>
       </Box>
     </Modal>
   </>

@@ -37,7 +37,7 @@ const style = {
 
 
 
-function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}) {
+function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, setModalData}) {
   const dispatch = useDispatch();
 
   const [expanded, setExpanded] = useState(false);
@@ -51,19 +51,31 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}
   const user = useSelector(store => store.user);
 
   const checkinAllDogs = (modalData) => {
-    console.log('in checkinAllDogs');
-    for ( let dog of modalData.dogs ) {
-      checkIn(dog);
+    console.log('in checkinAllDogs', modalData.checkinStatus);
+      for ( let dog of modalData.dogs ) {
+        if ( !modalData.checkinStatus ) {
+          checkIn(dog);
+      } else {
+        dog.cancelled=true;
+        cancelWalk(dog)
+      }
+      updateMarkers(modalData);
+      setOpen(false);
     }
-    updateMarkers(modalData)
-    setOpen(false);
   }
+
+  // const uncheckAllDogs = (modalData) => {
+  //   for ( let dog of modalData.dogs) {
+
+  //   }
+  // }
 
   const checkIn = (dog) => {
       const dogID = dog.dog_id;
       const routeID = dog.route_id;
       const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
       dispatch({ type: 'CHECK_IN', payload: updatedDog });
+      resetModalStatus(updatedDog);
     }
   
   const noShow = (dog) => {
@@ -100,6 +112,15 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, markers}
       return 'lightgrey';
     }
   }
+
+  const resetModalStatus = (updatedDog) => {
+    // console.log('resetModalStatusssssss',updatedDog);
+    // setModalData()
+    // setModalData({...updatedDog})
+    // setModalData({})
+    console.log('resetModalData',modalData);
+  }
+
 
   //chat GPT came through with how to handle this--creating a copy of markers in order to update!
   const updateMarkers = (modalData) => {

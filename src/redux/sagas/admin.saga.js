@@ -41,13 +41,22 @@ function* deleteAdminNotes(action) {
     }
 }
 
-
+function* sendNoteToPack(action) {
+    const noteId = action.payload;
+    console.log('in sendNoteToPack saga', noteId);
+    try {
+        const note = yield axios.put(`/api/admin/send/${noteId}`);
+    } catch (err) {
+        console.log('error sending note to packleaders, err')
+    }
+}
 
 
 function* adminSaga() {
     yield takeLatest('ADD_ADMIN_NOTES', setAdminNotes);
     yield takeLatest('FETCH_ADMIN_NOTES', fetchAdminNotes);
     yield takeLatest('DELETE_ADMIN_NOTES', deleteAdminNotes);
+    yield takeLatest('SEND_NOTE_TO_PACK', sendNoteToPack);
 
 }
 

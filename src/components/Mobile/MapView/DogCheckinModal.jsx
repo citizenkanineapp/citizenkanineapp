@@ -35,9 +35,7 @@ const style = {
     p: 4,
   };
 
-
-
-function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, setModalData}) {
+function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
   const dispatch = useDispatch();
 
   const [expanded, setExpanded] = useState(false);
@@ -45,19 +43,28 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, setModal
     setExpanded(isExpanded ? panel : false);
   };
 
-
   const handleClose = () => setOpen(false);
 
   const user = useSelector(store => store.user);
 
+  // this handles check-in for all dogs of a given client.
   const checkinAllDogs = (modalData) => {
-    console.log('in checkinAllDogs', modalData.checkinStatus);
-      for ( let dog of modalData.dogs ) {
-        if ( !modalData.checkinStatus ) {
-          checkIn(dog);
+    // console.log('in checkinAllDogs', modalData.checkinStatus);
+    for ( let dog of modalData.dogs ) {
+      // if client's dogs are not yet *all* checked in (FALSE) checks in each
+      if ( !modalData.checkinStatus ) {
+        checkIn(dog);
+        console.log(dog)
+        // dog.checked_in=true;
+      // if client's dogs are *all* checked in (TRUE), sets each dog to cancalled and then calls cancelwalk.
       } else {
         dog.cancelled=true;
         cancelWalk(dog)
+        console.log(dog)
+
+        // dog.checked_in=false;
+        // dog.cancelled=false;
+        // dog.no_show=false;
       }
       updateMarkers(modalData);
       setOpen(false);
@@ -75,7 +82,6 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, setModal
       const routeID = dog.route_id;
       const updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
       dispatch({ type: 'CHECK_IN', payload: updatedDog });
-      resetModalStatus(updatedDog);
     }
   
   const noShow = (dog) => {
@@ -83,9 +89,10 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, setModal
     const routeID = dog.route_id;
     const updatedDog = { id: dogID, checked_in: false, no_show: true, cancelled: false, routeID: routeID }
     dispatch({ type: 'NO_SHOW', payload: updatedDog });
-
   }
 
+  // two steps here: if dog is already cancelled, 'resets' dog with no check-in status. If dog is not cancelled, sets cancelled to true.
+  // only admin accounts can cancel dogs using mobile view.
   const cancelWalk = (dog) => {
     console.log('cancelWalk')
     const dogID = dog.dog_id;
@@ -101,8 +108,9 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, setModal
     dispatch({ type: 'CANCEL_WALK', payload: updatedDog });
   }
 
+  // function now determines color of modal list item based on modalData check_in status, which is set in 'checkinalldogs'
   const determineStatus = (dog) => {
-    // console.log('determine dog status', dog);
+    // console.log('determine dog status', dog.checked_in);
     if (dog.checked_in) {
       return '#B5E3E0';
     }
@@ -111,16 +119,23 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers, setModal
     } else if (dog.cancelled) {
       return 'lightgrey';
     }
-  }
+    // for ( let modalDog of modalData.dogs ) {
+    //   // console.log('modalDog', modalDog)
+    //   if ( modalDog.dog_id === dog.dog_id ) {
+    //     if (modalDog.checked_in) {
+    //       return '#B5E3E0';
+    //     }
+    //     else if (modalDog.no_show) {
+    //       return '#FBA89D';
+    //     } else if (modalDog.cancelled) {
+    //       return 'lightgrey';
+    //     } else {
+    //       return 'white';
+    //     }
+    //   }
+    // }
 
-  const resetModalStatus = (updatedDog) => {
-    // console.log('resetModalStatusssssss',updatedDog);
-    // setModalData()
-    // setModalData({...updatedDog})
-    // setModalData({})
-    console.log('resetModalData',modalData);
   }
-
 
   //chat GPT came through with how to handle this--creating a copy of markers in order to update!
   const updateMarkers = (modalData) => {

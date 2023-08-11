@@ -59,7 +59,7 @@ function LoadBalancing() {
 
     //prevents being triggered if outside of lists
     if (!result.destination) return; 
-    
+    // console.log('onDragEnd');
     dispatch({ type: 'MOVE_DOG', payload: result });
     dispatch({ type: 'UPDATE_ROUTE', payload: { routeName: result.destination.droppableId, dogID: result.draggableId } });
   };

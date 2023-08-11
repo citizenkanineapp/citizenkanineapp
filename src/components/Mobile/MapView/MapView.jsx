@@ -23,13 +23,14 @@ function MapView() {
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState(false);
   const handleOpen = (text) => {
-    console.log(text)
+    console.log('inHandleOpen', text)
     setModalData(text)
     setOpen(true);
   } 
   
   const route = useSelector(store => store.routeReducer)
   const thisRoute = route[0].route_id
+  // console.log('thisRoute', thisRoute);
   //May need to update the below map key in the future 
   const maptilerProvider = maptiler('WjRnaGgNsm0nHmNUpFSq', 'bright') 
   const [markers, setMarkers] = useState([])
@@ -57,7 +58,7 @@ function MapView() {
         let preClient= group[uniqueIds[i]]
         const { client_name,  street, zip, client_id, lat, long } = preClient[0];
         const client = {client_name, street, zip, client_id, lat, long}
-        let dogsPreFilter = preClient.map(dog => { return ({dog_name: dog.name, dog_id: dog.dog_id, checked_in: dog.checked_in, no_show: dog.no_show, cancelled: dog.cancelled}) })
+        let dogsPreFilter = preClient.map(dog => { return ({route_id: thisRoute, dog_name: dog.name, dog_id: dog.dog_id, checked_in: dog.checked_in, no_show: dog.no_show, cancelled: dog.cancelled}) })
         client.dogs = dogsPreFilter;
           
         // assigns initial checkin status; determines if all dogs are cancelled.

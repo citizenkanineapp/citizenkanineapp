@@ -117,7 +117,7 @@ function* getRoutes() {
 function* getRouteDetails(action) {
    // console.log('GETTING ROUTE:', action.payload);
     const routeID = Number(action.payload);
-    console.log('route id in getRouteDetails saga', action.payload, routeID)
+    // console.log('route id in getRouteDetails saga', action.payload, routeID)
     try {
         const routeResult = yield axios({
             method: 'GET',
@@ -197,7 +197,6 @@ function* updateStatus(action) {
             url: `/api/mobile/daily`,
             data: dog
         })
-        console.log('updateStatus', routeID)
         yield put({ type: 'GET_ROUTE_DETAILS', payload: routeID })
 
        // console.log('CHANGED');

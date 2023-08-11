@@ -82,7 +82,6 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
   // two steps here: if dog is already cancelled, 'resets' dog with no check-in status. If dog is not cancelled, sets cancelled to true.
   // only admin accounts can cancel dogs using mobile view.
   const cancelWalk = (dog) => {
-    console.log('cancelWalk')
     const dogID = dog.dog_id;
     const routeID = dog.route_id;
     let updatedDog = { }

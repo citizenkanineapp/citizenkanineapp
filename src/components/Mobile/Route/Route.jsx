@@ -23,6 +23,7 @@ function DailyRoutes() {
 
   // on page load - fetch routes, and also fetch specifc route data according to URL route ID
   useEffect(() => {
+    // console.log("DailyRoutes useEffect", params.id)
     dispatch({ type: 'GET_DAILY_ROUTES' });
     dispatch({ type: 'GET_ROUTE_DETAILS', payload: params.id })
 

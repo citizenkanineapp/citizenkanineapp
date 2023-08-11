@@ -54,28 +54,16 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
       // if client's dogs are not yet *all* checked in (FALSE) checks in each
       if ( !modalData.checkinStatus ) {
         checkIn(dog);
-        console.log(dog)
-        // dog.checked_in=true;
       // if client's dogs are *all* checked in (TRUE), sets each dog to cancalled and then calls cancelwalk.
       } else {
         dog.cancelled=true;
         cancelWalk(dog)
-        console.log(dog)
-
-        // dog.checked_in=false;
-        // dog.cancelled=false;
-        // dog.no_show=false;
       }
-      updateMarkers(modalData);
-      setOpen(false);
     }
+    updateMarkers(modalData);
+    // setOpen(false);
   }
 
-  // const uncheckAllDogs = (modalData) => {
-  //   for ( let dog of modalData.dogs) {
-
-  //   }
-  // }
 
   const checkIn = (dog) => {
       const dogID = dog.dog_id;
@@ -97,7 +85,7 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
     console.log('cancelWalk')
     const dogID = dog.dog_id;
     const routeID = dog.route_id;
-    let updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
+    let updatedDog = { }
 
     if (dog.cancelled) {
       updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: false, routeID: routeID }
@@ -108,7 +96,6 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
     dispatch({ type: 'CANCEL_WALK', payload: updatedDog });
   }
 
-  // function now determines color of modal list item based on modalData check_in status, which is set in 'checkinalldogs'
   const determineStatus = (dog) => {
     // console.log('determine dog status', dog.checked_in);
     if (dog.checked_in) {
@@ -119,22 +106,6 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
     } else if (dog.cancelled) {
       return 'lightgrey';
     }
-    // for ( let modalDog of modalData.dogs ) {
-    //   // console.log('modalDog', modalDog)
-    //   if ( modalDog.dog_id === dog.dog_id ) {
-    //     if (modalDog.checked_in) {
-    //       return '#B5E3E0';
-    //     }
-    //     else if (modalDog.no_show) {
-    //       return '#FBA89D';
-    //     } else if (modalDog.cancelled) {
-    //       return 'lightgrey';
-    //     } else {
-    //       return 'white';
-    //     }
-    //   }
-    // }
-
   }
 
   //chat GPT came through with how to handle this--creating a copy of markers in order to update!

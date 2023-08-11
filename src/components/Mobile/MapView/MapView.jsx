@@ -22,9 +22,9 @@ function MapView() {
   // const user = useSelector(store => store.user);
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState(false);
-  const handleOpen = (text) => {
-    console.log('inHandleOpen', text)
-    setModalData(text)
+  
+  const handleOpen = (data) => {
+    setModalData(data)
     setOpen(true);
   } 
   

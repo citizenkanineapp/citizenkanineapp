@@ -54,9 +54,9 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
       // if client's dogs are not yet *all* checked in (FALSE) checks in each
       if ( !modalData.checkinStatus ) {
         checkIn(dog);
-      // if client's dogs are *all* checked in (TRUE), sets each dog to cancalled and then calls cancelwalk.
+      // if client's dogs are *all* checked in (TRUE), sets each dog to cancelled and then calls cancelwalk.
       } else {
-        dog.cancelled=true;
+        dog.cancelled = true;
         cancelWalk(dog)
       }
     }

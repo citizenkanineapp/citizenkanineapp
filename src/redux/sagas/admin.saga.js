@@ -46,6 +46,7 @@ function* sendNoteToPack(action) {
     console.log('in sendNoteToPack saga', noteId);
     try {
         const note = yield axios.put(`/api/admin/send/${noteId}`);
+        yield put({ type: 'FETCH_ADMIN_NOTES' });
     } catch (err) {
         console.log('error sending note to packleaders, err')
     }

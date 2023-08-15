@@ -53,11 +53,11 @@ pool.query(queryText)
     try{
     const noteTxt = `
               INSERT INTO admin_notes 
-                ("user_id", "notes") 
+                ("user_id", "notes", "note_type") 
                 VALUES
-                ($1, $2) ;
+                ($1, $2, $3) ;
     `
-    const notesValues = [user, notes]
+    const notesValues = [user, notes.notes, notes.note_type]
     pool.query(noteTxt, notesValues)
     res.sendStatus(201);
     } catch (error) {

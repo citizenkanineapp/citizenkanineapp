@@ -40,7 +40,9 @@ function AdminNotes() {
     const onEnterSubmit = (e) => {
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
-            dispatch({ type: 'ADD_ADMIN_NOTES', payload: note });
+            console.log('note is:', note)
+            const noteObject = {notes: note, note_type: 'admin'}
+            dispatch({ type: 'ADD_ADMIN_NOTES', payload: noteObject });
             setNote('');
             setToggleNotes(!toggleNotes);
         };
@@ -131,7 +133,6 @@ function AdminNotes() {
                                                 sx={{
                                                     width: '100%', 
                                                     backgroundColor: () => noteType(notes.note_type),
-                                                    
                                                 }}
                                                 secondaryAction={
                                                     <IconButton onClick={() => deleteNote(notes.id)} edge="end">
@@ -139,10 +140,21 @@ function AdminNotes() {
                                                     </IconButton>}
                                                 dense
                                                 >
-                                                {/* conditional rendering for button. let's start onClick */}
-                                                <IconButton onClick={() => sendNoteToPackLeaders(notes.id)} edge="start" >
-                                                    <SendIcon sx={{ fontSize: 20, color: '#341341' }} />
-                                                </IconButton>
+                                                    {/* conditional rendering. send icon only appears if notes are created by admin (note_type: admin)
+                                                    or sent to admin by a single packleader (note_type:) */}
+                                                { notes.note_type != 'topack' ?
+                                                    <IconButton onClick={() => sendNoteToPackLeaders(notes.id)} edge="start" >
+                                                        <SendIcon sx={{ fontSize: 20, color: '#341341' }} />
+                                                    </IconButton>
+                                                :
+                                                    <IconButton edge="start" disabled >
+                                                        <SendIcon sx={{
+                                                            fontSize: 20,
+                                                            color: () => noteType(notes.note_type)
+                                                            }}
+                                                        />
+                                                    </IconButton>
+                                                }
                                                 <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}:      {notes.notes}</ListItemText>
                                             </ListItem>
                                         ))}

@@ -23,18 +23,19 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
 // console.log('arrived in server get admin notes route')
 let adminId = req.user.id
   const queryText = `
-            SELECT * FROM admin_notes
-                WHERE user_id = $1;
+    SELECT * FROM admin_notes
+      ORDER BY date DESC
+    ;
   `
-const queryValues = [adminId]
-pool.query(queryText, queryValues)
+  //no reason to filter admin notes by user
+  // const queryText = `
+  //           SELECT * FROM admin_notes
+  //               WHERE user_id = $1;
+  // `
+// const queryValues = [adminId]
+pool.query(queryText)
     .then(result => {
-   
-    // console.log('result from query?', result.rows)
-
-
-        res.send(result.rows);
-   
+      res.send(result.rows);
     })
     .catch(err => {
         console.log('Error getting admin notes');
@@ -50,15 +51,15 @@ pool.query(queryText, queryValues)
     // console.log('who is user?', req.user.id)
     const {notes} = req.body
     const user = req.user.id
-
+    console.log('in /admin/', notes);
     try{
     const noteTxt = `
               INSERT INTO admin_notes 
-                ("user_id", "notes") 
+                ("user_id", "notes", "note_type") 
                 VALUES
-                ($1, $2) ;
+                ($1, $2, $3) ;
     `
-    const notesValues = [user, notes]
+    const notesValues = [user, notes.notes, notes.note_type]
     pool.query(noteTxt, notesValues)
     res.sendStatus(201);
     } catch (error) {
@@ -79,6 +80,19 @@ pool.query(queryText, queryValues)
         console.log('Error completing delete admin notes');
         res.sendStatus(500);
       });
+  });
+
+  // sending not to packleaders
+
+  router.put('/send/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+  
+    const queryText = `UPDATE admin_notes SET note_type = 'topack' WHERE id=$1`
+    pool.query(queryText, [req.params.id])
+      .then(()=> { res.sendStatus(200); })
+      .catch((err) => {
+        console.log('Error changing note type in order to send note to packleaders');
+        res.sendStatus(500);
+      })
   });
 
 

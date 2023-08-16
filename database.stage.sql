@@ -220,6 +220,8 @@ CREATE TABLE ck_stage.daily_dogs (
 
 CREATE TABLE ck_stage.admin_notes (
 	"id" SERIAL PRIMARY KEY,
-	"user_id" INT NOT NULL REFERENCES ck_stage."user"(id) ON DELETE CASCADE,
-	"notes" VARCHAR
+	"user_id" INT NOT NULL REFERENCES ck_dev."user"(id) ON DELETE CASCADE,
+	"notes" VARCHAR,
+	"date" DATE DEFAULT CURRENT_DATE,
+	"note_type" VARCHAR(8)
 	);

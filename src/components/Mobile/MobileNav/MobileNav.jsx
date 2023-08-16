@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import HomeIcon from '@mui/icons-material/Home';
-import PinDropIcon from '@mui/icons-material/PinDrop';
+import NotesIcon from '@mui/icons-material/Notes';
+// import PinDropIcon from '@mui/icons-material/Pindrop';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 function MobileNav() {
@@ -45,7 +46,7 @@ function MobileNav() {
 
         <BottomNavigationAction label="Routes" icon={<ListAltIcon />} onClick={(event) => { history.push('/m/routes') }} />
       }
-      {/* <BottomNavigationAction label="Map" icon={<PinDropIcon />} onClick={(event) => { history.push('/m/map') }} /> */}
+      <BottomNavigationAction label="Notes" icon={<NotesIcon />} onClick={(event) => { history.push('/m/notes') }} />
       <BottomNavigationAction label="Schedule" icon={<CalendarMonthIcon />} onClick={(event) => { history.push('/m/schedule') }} />
     </BottomNavigation>
   );

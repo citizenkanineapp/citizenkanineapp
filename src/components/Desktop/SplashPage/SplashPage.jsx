@@ -17,9 +17,9 @@ function SplashPage() {
 
   return (
     <Box className="splash_container" sx={{width: '100%', height: '80vh'}}>
-      <Grid container sx={{ justifyContent: "start", alignItems: "center", display: "flex", pl: '20vw', mt: 5 }}>
+      <Grid container sx={{ justifyContent: "start", alignItems: "center", display: "flex", pl: '5vw', mt: 5}}>
 
-        <Card sx={{ width: "40%", pb: 2, mb: 5 }}>
+        <Card sx={{ width: "45%", pb: 2, mb: 5 }}>
           <CardActionArea>
             <CardMedia
               component="img"
@@ -28,7 +28,7 @@ function SplashPage() {
               alt="dog with glasses on"
             />
             <CardContent sx={{ justifyContent: "center", alignItems: "center", height: '100%' }}>
-              <Typography gutterBottom variant="h5" fontStyle="italic">
+              <Typography variant="h5" fontStyle="italic">
                 WELCOME BACK, {user.username.toUpperCase()}!
               </Typography>
               {/* <Typography variant="body2" color="text.secondary">

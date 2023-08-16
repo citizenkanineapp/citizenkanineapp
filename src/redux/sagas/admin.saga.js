@@ -27,7 +27,6 @@ function* fetchAdminNotes(action) {
         console.log(error);
         console.log('Admin notes not available when logged out. Please log in to see them again')
     }
-
 }
 
 function* deleteAdminNotes(action) {
@@ -41,13 +40,24 @@ function* deleteAdminNotes(action) {
     }
 }
 
-
+function* sendNoteToPack(action) {
+    const noteId = action.payload;
+    console.log('in sendNoteToPack saga', noteId);
+    try {
+        const note = yield axios.put(`/api/admin/send/${noteId}`);
+        yield put({ type: 'FETCH_ADMIN_NOTES' });
+    } catch (err) {
+        console.log('error sending note to packleaders, err')
+    }
+}
 
 
 function* adminSaga() {
     yield takeLatest('ADD_ADMIN_NOTES', setAdminNotes);
     yield takeLatest('FETCH_ADMIN_NOTES', fetchAdminNotes);
     yield takeLatest('DELETE_ADMIN_NOTES', deleteAdminNotes);
+    yield takeLatest('SEND_NOTE_TO_PACK', sendNoteToPack);
+    // yield takeLatest('FETCH_ALL_NOTES', fetchAllNotes); 
 
 }
 

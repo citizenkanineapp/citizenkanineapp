@@ -80,9 +80,9 @@ function DogDetails() {
   // function that allows an employee to add notes to a dog
   const submitNote = (action) => {
     //console.log(dog.dog_notes, dog.dog_id);
-    let updatedDog = { id: dog.dog_id, note: dog.dog_notes };
-    dispatch({ type: 'UPDATE_DOG_NOTE', payload: updatedDog });
-    dispatch({ type: 'ADD_ADMIN_NOTES', payload: dog.dog_notes });
+    let updatedDog = { id: dog.dog_id, note: dog.dog_notes};
+    dispatch({ type: 'UPDATE_DOG_NOTE', payload: updatedDog});
+    dispatch({ type: 'ADD_ADMIN_NOTES', payload: {notes: dog.dog_notes, note_type:'frompack'} });
     setEditStatus(false);
   }
 

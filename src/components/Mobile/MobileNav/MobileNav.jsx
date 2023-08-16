@@ -45,7 +45,7 @@ function MobileNav() {
 
         <BottomNavigationAction label="Routes" icon={<ListAltIcon />} onClick={(event) => { history.push('/m/routes') }} />
       }
-      {/* <BottomNavigationAction label="Map" icon={<PinDropIcon />} onClick={(event) => { history.push('/m/map') }} /> */}
+      <BottomNavigationAction label="Notes" icon={<PinDropIcon />} onClick={(event) => { history.push('/m/notes') }} />
       <BottomNavigationAction label="Schedule" icon={<CalendarMonthIcon />} onClick={(event) => { history.push('/m/schedule') }} />
     </BottomNavigation>
   );

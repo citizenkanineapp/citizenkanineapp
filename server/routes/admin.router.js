@@ -23,7 +23,9 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
 // console.log('arrived in server get admin notes route')
 let adminId = req.user.id
   const queryText = `
-    SELECT * FROM admin_notes;
+    SELECT * FROM admin_notes
+      ORDER BY date DESC
+    ;
   `
   //no reason to filter admin notes by user
   // const queryText = `

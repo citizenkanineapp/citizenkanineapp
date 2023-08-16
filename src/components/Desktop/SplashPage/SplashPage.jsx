@@ -28,7 +28,7 @@ function SplashPage() {
               alt="dog with glasses on"
             />
             <CardContent sx={{ justifyContent: "center", alignItems: "center", height: '100%' }}>
-              <Typography gutterBottom variant="h5" fontStyle="italic">
+              <Typography variant="h5" fontStyle="italic">
                 WELCOME BACK, {user.username.toUpperCase()}!
               </Typography>
               {/* <Typography variant="body2" color="text.secondary">

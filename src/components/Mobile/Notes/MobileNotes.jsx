@@ -51,7 +51,7 @@ function MobileNotes() {
             >
               Notes to packleaders
             </Typography>
-            <List sx={{ mt:1, height: '55vh', overflow: 'auto', border:'solid', borderColor:'gray', borderSize:'1px'}}>
+            <List sx={{ mt:1, height: '50vh', overflow: 'auto', border:'solid', borderColor:'gray', borderSize:'1px'}}>
               {adminNotes.map((notes) => (
                 <ListItem
                   className="notes"
@@ -73,7 +73,7 @@ function MobileNotes() {
                   label='Send note to admin?'
                   fullWidth
                   multiline
-                  Rows={5}
+                  maxRows={2}
                   InputProps={{ margin: 'dense' }}
                   />
                 <Button onClick={(e) => submitNote(e) }>Submit</Button>

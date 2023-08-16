@@ -47,11 +47,11 @@ function MobileNotes() {
         <Box sx={{ height: '80vh'}}>
           <Stack direction="column" spacing={2} alignItems="center">
             <Typography
-              sx={{display: 'flex', alignItems: 'start', ml: 2.5, fontSize: '1.75em', fontWeight: '800', pt: 2}}
+              sx={{display: 'flex', alignItems: 'start', ml: 1, fontSize: '1.75em', fontWeight: '800', pt: 2}}
             >
               Notes to packleaders
             </Typography>
-            <List sx={{ mt:1, height: '50vh', overflow: 'auto', border:'solid', borderColor:'gray', borderSize:'1px'}}>
+            <List sx={{ mt:1, height: '50vh', width: '80vw', overflow: 'auto', border:'solid', borderColor:'gray', borderSize:'1px'}}>
               {adminNotes.map((notes) => (
                 <ListItem
                   className="notes"
@@ -66,7 +66,7 @@ function MobileNotes() {
             </List>
             {/* {editStatus ? */}
             <>
-              <Stack spacing={2} direction='row' alignItems='center' justifyContent='flex-end'  sx={{ pt: 2, width: '86%'}}>                      
+              <Stack spacing={2} direction='row' alignItems='center' justifyContent='flex-end'  sx={{ pt: 2, width: '80vw'}}>                      
                 <TextField
                   value={note}
                   onChange={(event) => setNote(event.target.value)}

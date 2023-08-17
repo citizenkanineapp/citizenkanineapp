@@ -23,7 +23,7 @@ router.get('/daily', async (req, res) => {
     // hit the route
     // logic to populate daily dogs if there is nothing for the day?
     var today = new Date()
-    // today.setUTCHours(today.getUTCHours() - 5)
+    today.setUTCHours(today.getUTCHours() - 5)
     console.log(today)
     var weekday = {};
     weekday.number = today.getDay();

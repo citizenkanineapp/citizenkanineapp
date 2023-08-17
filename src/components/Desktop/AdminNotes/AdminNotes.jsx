@@ -25,6 +25,7 @@ function AdminNotes() {
 
     const dispatch = useDispatch();
     const adminNotes = useSelector(store => store.adminNotesReducer)
+    console.log(adminNotes);
 
     const [toggleNotes, setToggleNotes] = useState(false);
     const [note, setNote] = useState('');

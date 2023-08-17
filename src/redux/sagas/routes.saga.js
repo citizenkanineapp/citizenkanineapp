@@ -207,9 +207,6 @@ function* updateStatus(action) {
 
 }
 
-
-
-
 function* RouteSaga() {
     yield takeLatest('GET_DAILY_ROUTES', getRoutes);
     yield takeLatest('UPDATE_ROUTE', updateRoute);

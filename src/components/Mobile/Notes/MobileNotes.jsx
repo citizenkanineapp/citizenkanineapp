@@ -44,7 +44,7 @@ function MobileNotes() {
 
     return (
       <>
-        <Box sx={{ height: '80vh'}}>
+        <Box sx={{ height: '80vh',pb: 20}}>
           <Stack direction="column" spacing={2} alignItems="center">
             <Typography
               sx={{display: 'flex', alignItems: 'start', ml: 1, fontSize: '1.75em', fontWeight: '800', pt: 2}}
@@ -73,7 +73,7 @@ function MobileNotes() {
                   label='Send note to admin?'
                   fullWidth
                   multiline
-                  maxRows={2}
+                  maxRows={5}
                   InputProps={{ margin: 'dense' }}
                   />
                 <Button onClick={(e) => submitNote(e) }>Submit</Button>

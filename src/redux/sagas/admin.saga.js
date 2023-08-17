@@ -22,7 +22,7 @@ function* fetchAdminNotes(action) {
     try {
         const notes = yield axios.get('/api/admin');
         yield put({ type: 'SET_NOTES', payload: notes.data });
-        // console.log('notes structure', notes.data)
+        console.log('notes structure', notes.data)
     } catch (error) {
         console.log(error);
         console.log('Admin notes not available when logged out. Please log in to see them again')

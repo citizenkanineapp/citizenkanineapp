@@ -73,8 +73,8 @@ function AdminNotes() {
             return '#a3ddd9';
         } else if (type === 'frompack') {
             return '#87b8df'
-        } else {
-            return '#4A5061'
+        } else if (type === 'dognote') {
+            return '#fbdba1'
         }
     }
 
@@ -125,11 +125,13 @@ function AdminNotes() {
                                     </Fab>
                                 </CardContent>
                                 <CardContent>
-                                <Stack direction="row" justifyContent='space-between' sx={{width:'70%'}}>
+                                <Stack direction="row" justifyContent='space-between' >
                                     <Box sx={{ height:'20px', width: '20px', backgroundColor: '#a3ddd9'}} />
-                                    <Typography>To packleaders</Typography>
+                                    <Typography sx={{ fontSize: 14}}>To packleaders</Typography>
                                     <Box sx={{ height:'20px', width: '20px', backgroundColor: '#87b8df'}} />
-                                    <Typography>From packleaders</Typography>
+                                    <Typography sx={{ fontSize: 14}}>From packleaders</Typography>
+                                    <Box sx={{ height:'20px', width: '20px', backgroundColor: '#fbdba1'}} />
+                                    <Typography sx={{ fontSize: 14}}>Updated dog note</Typography>
                                 </Stack>
                                 </CardContent>
                                 <CardContent sx={{pt: 0}}>
@@ -163,7 +165,7 @@ function AdminNotes() {
                                                         />
                                                     </IconButton>
                                                 }
-                                                { notes.name != undefined ? 
+                                                { notes.note_type === 'dognote' ? 
                                                     <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}: {notes.notes}<br /> {"("}{notes.name}--{notes.last_name}{")"} </ListItemText>
                                                     :
                                                     <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}: {notes.notes}</ListItemText>

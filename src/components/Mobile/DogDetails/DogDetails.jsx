@@ -82,7 +82,7 @@ function DogDetails() {
     //console.log(dog.dog_notes, dog.dog_id);
     let updatedDog = { id: dog.dog_id, note: dog.dog_notes};
     dispatch({ type: 'UPDATE_DOG_NOTE', payload: updatedDog});
-    dispatch({ type: 'ADD_ADMIN_NOTES', payload: {notes: dog.dog_notes, note_type:'frompack', dog_id: dog.dog_id} });
+    dispatch({ type: 'ADD_ADMIN_NOTES', payload: {notes: dog.dog_notes, note_type:'dognote', dog_id: dog.dog_id} });
     setEditStatus(false);
   }
 

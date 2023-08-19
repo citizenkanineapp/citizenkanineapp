@@ -222,5 +222,6 @@ CREATE TABLE ck_dev.admin_notes (
 	"user_id" INT NOT NULL REFERENCES ck_dev."user"(id) ON DELETE CASCADE,
 	"notes" VARCHAR,
 	"date" DATE DEFAULT CURRENT_DATE,
-	"note_type" VARCHAR(8)
+	"note_type" VARCHAR(8),
+	"dog_id" INT REFERENCES ck_dev.dogs(id) ON DELETE CASCADE
 	);

@@ -162,7 +162,11 @@ function AdminNotes() {
                                                         />
                                                     </IconButton>
                                                 }
-                                                <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}:      {notes.notes}</ListItemText>
+                                                { notes.name ? 
+                                                    <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}: {notes.notes}<br /> {"("}{notes.name}--{notes.last_name}{")"} </ListItemText>
+                                                    :
+                                                    <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}: {notes.notes}</ListItemText>
+                                                }
                                             </ListItem>
                                         ))}
                                     </List>

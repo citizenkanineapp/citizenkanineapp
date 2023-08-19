@@ -23,8 +23,12 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
 // console.log('arrived in server get admin notes route')
 let adminId = req.user.id
   const queryText = `
-    SELECT * FROM admin_notes
-      ORDER BY date DESC
+    SELECT admin_notes.id, admin_notes.user_id, admin_notes.notes, admin_notes.date, admin_notes.note_type, dogs.name, clients.last_name FROM admin_notes
+      LEFT JOIN dogs
+      ON admin_notes.dog_id = dogs.id
+      LEFT JOIN clients
+      ON dogs.client_id = clients.id
+        ORDER BY date DESC
     ;
   `
   //no reason to filter admin notes by user
@@ -35,10 +39,11 @@ let adminId = req.user.id
 // const queryValues = [adminId]
 pool.query(queryText)
     .then(result => {
+      console.log(result.rows);
       res.send(result.rows);
     })
     .catch(err => {
-        console.log('Error getting admin notes');
+        console.log('Error getting admin notes', err);
         res.sendStatus(500);
     })
 });
@@ -55,11 +60,11 @@ pool.query(queryText)
     try{
     const noteTxt = `
               INSERT INTO admin_notes 
-                ("user_id", "notes", "note_type") 
+                ("user_id", "notes", "note_type", "dog_id") 
                 VALUES
-                ($1, $2, $3) ;
+                ($1, $2, $3,$4) ;
     `
-    const notesValues = [user, notes.notes, notes.note_type]
+    const notesValues = [user, notes.notes, notes.note_type, notes.dog_id]
     pool.query(noteTxt, notesValues)
     res.sendStatus(201);
     } catch (error) {

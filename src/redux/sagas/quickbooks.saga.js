@@ -42,8 +42,12 @@ function* addAllQbCustomers(action){
         yield put ({type: 'FETCH_CLIENTS'});
         
     } catch (error) {
-        // console.log(error);
-        alert('Error adding QB customers. Try connecting to QB again');
+        console.log(error.response);
+        if (error.response.data.message) {
+            alert (error.response.data.message)
+        } else {
+            alert('Error adding QB customers. Try connecting to QB again')
+        }
     }
     
 }

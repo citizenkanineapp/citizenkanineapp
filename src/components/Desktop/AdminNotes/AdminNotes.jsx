@@ -21,6 +21,7 @@ import { ListItemButton, Stack, Fab, Card, CardContent, List, ListItem, ListItem
 function AdminNotes() {
     useEffect(() => {
         dispatch({ type: 'FETCH_ADMIN_NOTES' })
+        console.log(adminNotes)
     }, []);
 
     const dispatch = useDispatch();
@@ -162,7 +163,11 @@ function AdminNotes() {
                                                         />
                                                     </IconButton>
                                                 }
-                                                <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}:      {notes.notes}</ListItemText>
+                                                { notes.name != undefined ? 
+                                                    <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}: {notes.notes}<br /> {"("}{notes.name}--{notes.last_name}{")"} </ListItemText>
+                                                    :
+                                                    <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}: {notes.notes}</ListItemText>
+                                                }
                                             </ListItem>
                                         ))}
                                     </List>

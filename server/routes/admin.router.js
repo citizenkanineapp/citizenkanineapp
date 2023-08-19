@@ -24,9 +24,9 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
 let adminId = req.user.id
   const queryText = `
     SELECT admin_notes.id, admin_notes.user_id, admin_notes.notes, admin_notes.date, admin_notes.note_type, dogs.name, clients.last_name FROM admin_notes
-      JOIN dogs
+      LEFT JOIN dogs
       ON admin_notes.dog_id = dogs.id
-      JOIN clients
+      LEFT JOIN clients
       ON dogs.client_id = clients.id
         ORDER BY date DESC
     ;
@@ -39,7 +39,7 @@ let adminId = req.user.id
 // const queryValues = [adminId]
 pool.query(queryText)
     .then(result => {
-      // console.log(result.rows);
+      console.log(result.rows);
       res.send(result.rows);
     })
     .catch(err => {

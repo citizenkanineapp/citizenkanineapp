@@ -4,12 +4,12 @@ CREATE SCHEMA IF NOT EXISTS ck_prod;
 DROP TABLE IF EXISTS ck_prod.daily_dogs;
 DROP TABLE IF EXISTS ck_prod.dogs_schedule_changes;
 DROP TABLE IF EXISTS ck_prod.clients_schedule;
+DROP TABLE IF EXISTS ck_prod.admin_notes;
 DROP TABLE IF EXISTS ck_prod.dogs;
 DROP TABLE IF EXISTS ck_prod.clients;
 DROP TABLE IF EXISTS ck_prod.routes;
 DROP TABLE IF EXISTS ck_prod.employees_schedule;
 DROP TABLE IF EXISTS ck_prod.employees_schedule_changes;
-DROP TABLE IF EXISTS ck_prod.admin_notes;
 DROP TABLE IF EXISTS ck_prod."user";
 DROP TABLE IF EXISTS ck_prod.employees;
 DROP TABLE IF EXISTS ck_prod.services;
@@ -220,8 +220,9 @@ CREATE TABLE ck_prod.daily_dogs (
 
 CREATE TABLE ck_prod.admin_notes (
 	"id" SERIAL PRIMARY KEY,
-	"user_id" INT NOT NULL REFERENCES ck_dev."user"(id) ON DELETE CASCADE,
+	"user_id" INT NOT NULL REFERENCES ck_prod."user"(id) ON DELETE CASCADE,
 	"notes" VARCHAR,
 	"date" DATE DEFAULT CURRENT_DATE,
-	"note_type" VARCHAR(8)
+	"note_type" VARCHAR(8),
+	"dog_id" INT REFERENCES ck_prod.dogs(id) ON DELETE CASCADE
 	);

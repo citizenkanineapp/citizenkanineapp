@@ -233,7 +233,7 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     console.log('no fields empty')
     customersWithGeoStats = await GetGeoStats(customers)
   } else {
-    // console.log('some fields empty', missingList)
+    console.log('some fields empty', missingList)
     const message = {message: `Error! The following customers are missing address fields: ${missingList.join(' ')}`}
     return res.status(500).send(message);
   }

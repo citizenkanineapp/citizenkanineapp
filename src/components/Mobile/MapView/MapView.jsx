@@ -12,29 +12,30 @@ import {IconButton, Typography, Grid,} from '@mui/material';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-
+  
 function MapView() {
+  const history = useHistory();
+
   useEffect(() => {
     populateMarkers()
   }, [])
 
   // const dispatch = useDispatch();
   // const user = useSelector(store => store.user);
+  const route = useSelector(store => store.routeReducer)
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState(false);
+  const [markers, setMarkers] = useState([])
   
   const handleOpen = (data) => {
     setModalData(data)
     setOpen(true);
   } 
   
-  const route = useSelector(store => store.routeReducer)
   const thisRoute = route[0].route_id
   // console.log('thisRoute', thisRoute);
   //May need to update the below map key in the future 
   const maptilerProvider = maptiler('WjRnaGgNsm0nHmNUpFSq', 'bright') 
-  const [markers, setMarkers] = useState([])
-  const history = useHistory();
   
   /*This function handles the logic to populate markers */
   const populateMarkers = () => {

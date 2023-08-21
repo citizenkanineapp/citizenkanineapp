@@ -214,10 +214,31 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     }
     return customerResult;
   }
-  let customersWithGeoStats =  await GetGeoStats(customers)
+
+  // returns TRUE if a address or town field is empty
+  let missingList = [];
+  const checkCustomerAddressFields = (customers) => {
+  for (let client of customers) {
+    if (!client.street || !client.city) {
+      const name = `${client.first_name} ${client.last_name}`;
+      missingList.push(name);
+    }
+  }
+  return customers.some(customer => !customer.street || !customer.city);
+  }
+
+  let customersWithGeoStats
+  if (!checkCustomerAddressFields(customers)) {
+    console.log('no fields empty')
+    customersWithGeoStats = await GetGeoStats(customers)
+  } else {
+    // console.log('some fields empty', missingList)
+    const message = {message: `Error! The following customers are missing address fields: ${missingList.join(' ')}`}
+    return res.status(500).send(message);
+  }
 
   let customersResult = processSchedule(customersWithGeoStats)
-  // console.log('after schedule processing',  customersResult)
+// console.log('after schedule processing',  customersResult)
 
   try{ 
     await client.query('BEGIN')

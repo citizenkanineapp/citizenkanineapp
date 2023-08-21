@@ -64,7 +64,6 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
     // setOpen(false);
   }
 
-
   const checkIn = (dog) => {
       const dogID = dog.dog_id;
       const routeID = dog.route_id;

@@ -188,7 +188,6 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
   const client = await pool.connect();
   const customers = req.body // obj desctructing of QB data
     //geocoding for customers
-    // console.log('customers: ', customers)
   
   const api_key = process.env.map_api_key;
   const config = { headers: { Authorization: api_key } };
@@ -200,7 +199,7 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
   //they have a request limit of 10 per second
   async function GetGeoStats(customers) {
     const customerResult = []
-    for (let customer of customers){
+    for(let customer of customers){
     const address = customer.street.replace(/ /g, "+");
     const town = customer.city.replace(/ /g, '');
     const zip = customer.zip
@@ -215,28 +214,7 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     }
     return customerResult;
   }
-  
-  // returns TRUE if a address or town field is empty
-  let missingList = [];
-  const checkCustomerAddressFields = (customers) => {
-    for (let client of customers) {
-      if (!client.street || !client.city) {
-        const name = `${client.first_name} ${client.last_name}`;
-        missingList.push(name);
-      }
-    }
-    return customers.some(customer => !customer.street || !customer.city);
-  }
-
-  let customersWithGeoStats
-  if (!checkCustomerAddressFields(customers)) {
-    console.log('no fields empty')
-    customersWithGeoStats = await GetGeoStats(customers)
-  } else {
-    // console.log('some fields empty', missingList)
-    const message = {message: `Error! The following customers are missing address fields: ${missingList.join(' ')}`}
-    return res.status(500).send(message);
-  }
+  let customersWithGeoStats =  await GetGeoStats(customers)
 
   let customersResult = processSchedule(customersWithGeoStats)
   // console.log('after schedule processing',  customersResult)

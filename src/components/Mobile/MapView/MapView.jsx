@@ -149,7 +149,7 @@ function MapView() {
         <Grid item sx={{ width: '100%', height: '45rem' }}>
           <Map provider={maptilerProvider} defaultCenter={[44.914450, -93.304140]} defaultZoom={13}>
             {/*this modal opens to display more details  */}
-            <DogCheckinModal route={route} modalData={modalData} setModalData={setModalData} setMarkers={setMarkers} markers={markers} open={open} setOpen={setOpen}/>
+            <DogCheckinModal route={route} modalData={modalData} setMarkers={setMarkers} open={open} setOpen={setOpen}/>
             {markers.filter(marker => marker.checkinStatus != null).map((oneMarker, i) => (
               <Marker 
                 width={50} 

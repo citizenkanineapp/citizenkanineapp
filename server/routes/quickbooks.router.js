@@ -220,7 +220,7 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
   let missingList = [];
   const checkCustomerAddressFields = (customers) => {
     for (let client of customers) {
-      if (!client.street || !client.city) {
+      if (!client.street || !client.citygit ) {
         const name = `${client.first_name} ${client.last_name}`;
         missingList.push(name);
       }

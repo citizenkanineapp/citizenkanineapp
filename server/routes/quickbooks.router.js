@@ -222,9 +222,9 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     if (!client.street || !client.city) {
       const name = `${client.first_name} ${client.last_name}`;
       missingList.push(name);
+      }
     }
-  }
-  return customers.some(customer => !customer.street || !customer.city);
+    return customers.some(customer => !customer.street || !customer.city);
   }
 
   let customersWithGeoStats

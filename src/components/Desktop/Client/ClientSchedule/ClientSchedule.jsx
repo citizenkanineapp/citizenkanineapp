@@ -3,14 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 import './ClientSchedule.css';
 
 //MUI
-import { Card, CardContent, FormControl, InputLabel, MenuItem, Select, Paper, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField, CardActionArea } from '@mui/material';
+import { Card, CardContent, FormControl, InputLabel, MenuItem, Select, Fab, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField, CardActionArea } from '@mui/material';
 import dayjs from 'dayjs';
+// styles for customdatepicker
+import { styled } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
-import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import 'react-datepicker/dist/react-datepicker.css';
 const utc = require('dayjs/plugin/utc')
@@ -22,6 +24,23 @@ const isWeekend = (date) => {
 
   return day === 0 || day === 6;
 };
+
+const CustomPickersDay = styled(PickersDay, {
+  shouldForwardProp: (prop) => prop !== "selected"
+})(({ theme, selected }) => ({
+  ...(selected && {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    "&:hover, &:focus": {
+      backgroundColor: theme.palette.primary.dark
+    },
+    borderTopLeftRadius: "50%",
+    borderBottomLeftRadius: "50%",
+    borderTopRightRadius: "50%",
+    borderBottomRightRadius: "50%"
+  })
+}));
+
 
 function ClientSchedule() {
   //use selectors and defining dispatch
@@ -58,13 +77,45 @@ function ClientSchedule() {
       return dayjs();
   }}
   
-  const [value, setValue] = useState(initialDate);
-  
+  const [dateValues, setDateValues] = useState([initialDate()]);
+  // console.log(initialDate())
+  console.log('selected Date Values: ',dateValues);
+
+  const findDate = (dates, date) => {
+
+    return dates.find((item) => (item.$y === date.$y) && (item.$M === date.$M) && (item.$D === date.$D));
+  };
+
+  // const findIndexDate = (dates, date) => {
+  //   const dateTime = date.getTime();
+  //   return dates.findIndex((item) => item.getTime() === dateTime);
+  // };
+
+
+  const renderPickerDay = (date, selectedDates, pickersDayProps) => {
+    if (!dateValues) {
+      return <PickersDay {...pickersDayProps} />;
+    }
+
+    const selected = findDate(dateValues, date);
+    if (selected){console.log('selected', selected)}
+
+    return (
+      <CustomPickersDay
+        {...pickersDayProps}
+        disableMargin
+        selected={selected}
+      />
+    );
+  };
   
   // THIS handles the change of the date based on the date picker
   const handleDateChange = (newValue) => {
-    //console.log(newValue);
-    setValue(newValue);
+    console.log(dateValues)
+    const valueArray = [...dateValues, newValue];
+    console.log(valueArray);
+    // const selectedDates = [...value, newValue]
+    setDateValues(valueArray);
   }
   
   //This is for the submit button for the one off changes
@@ -98,7 +149,7 @@ function ClientSchedule() {
      // need to reset local states:
     setDog('');
     setScheduled('');
-    setValue (dayjs());
+    setDateValues([dayjs()]);
     // console.log('newChanges', newChanges)
 
   }
@@ -147,7 +198,7 @@ function ClientSchedule() {
 
   return (
     <>
-      <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', xs: 12 }}>
+      <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', xs: 12}}>
         <Grid item xs={12} sx={{mt: 2}}>
           <Typography variant="h2" sx={{ display: 'flex', alignSelf: 'left'}}>{client.first_name} {client.last_name}</Typography>
         </Grid>
@@ -333,15 +384,36 @@ function ClientSchedule() {
                             <MenuItem value={false}>Cancel Walk</MenuItem>
                           </Select>
                         </FormControl>
-                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                        {/* <LocalizationProvider dateAdapter={AdapterDayjs} >
                             <DesktopDatePicker
                               shouldDisableDate={isWeekend}
-                              label="Date desktop"
+                              label="Dates"
                               inputFormat="MM/DD/YYYY"
-                              value={value}
+                              value={dateValues}
                               onChange={handleDateChange}
-                              renderInput={(params) => <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />}
-                          />
+                              renderInput={(params) => {
+                                // console.log(params);
+                                return <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />
+                              }}
+                              renderDay={renderPickerDay}
+                              disableCloseOnSelect={true}
+                            />
+                        </LocalizationProvider> */}
+                          <LocalizationProvider dateAdapter={AdapterDayjs} >
+                            <StaticDatePicker
+                              displayStaticWrapperAs="desktop"
+                              shouldDisableDate={isWeekend}
+                              label="Dates"
+                              inputFormat="MM/DD/YYYY"
+                              value={dateValues}
+                              onChange={handleDateChange}
+                              renderInput={(params) => {
+                                // console.log(params);
+                                return <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />
+                              }}
+                              renderDay={renderPickerDay}
+                              disableCloseOnSelect={true}
+                            />
                         </LocalizationProvider>
                       <Grid sx={{mt: 2, display:'flex', justifyContent: 'center'}}>
                           <Button variant='contained' color='secondary' onClick={handleSubmit}> Submit</Button>

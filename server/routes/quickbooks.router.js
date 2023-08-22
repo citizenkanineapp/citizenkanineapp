@@ -218,10 +218,10 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
   // returns TRUE if a address or town field is empty
   let missingList = [];
   const checkCustomerAddressFields = (customers) => {
-  for (let client of customers) {
-    if (!client.street || !client.city) {
-      const name = `${client.first_name} ${client.last_name}`;
-      missingList.push(name);
+    for (let client of customers) {
+      if (!client.street || !client.citygit ) {
+        const name = `${client.first_name} ${client.last_name}`;
+        missingList.push(name);
       }
     }
     return customers.some(customer => !customer.street || !customer.city);
@@ -232,7 +232,7 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     console.log('no fields empty')
     customersWithGeoStats = await GetGeoStats(customers)
   } else {
-    // console.log('some fields empty', missingList)
+    console.log('some fields empty', missingList)
     const message = {message: `Error! The following customers are missing address fields: ${missingList.join(' ')}`}
     return res.status(500).send(message);
   }

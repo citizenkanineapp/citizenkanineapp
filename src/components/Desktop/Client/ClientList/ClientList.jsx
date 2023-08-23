@@ -105,10 +105,9 @@ function ClientList() {
        {submittedSearch ?
         <Button onClick={() => clearResults()} variant="contained" color="secondary">Clear</Button> :
 
-          <Button onClick={() => searchFunction()} variant="contained" color="secondary">Search</Button>
+        <Button onClick={() => searchFunction()} variant="contained" color="secondary">Search</Button>
        }
-          <Button onClick={() => dispatch({ type: 'QUICKBOOKS_SYNC'})} variant='contained' color="secondary">QuickBooks Sync</Button>
-       
+          <Button onClick={() => dispatch({ type: 'QUICKBOOKS_SYNC'})} variant='contained' color="secondary">QuickBooks Sync</Button>  
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12} 

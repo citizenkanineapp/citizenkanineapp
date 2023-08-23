@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Modal, Accordion, AccordionSummary, AccordionDetails, Fab, CardMedia, Card, CardActions, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { Modal, CardActionArea, Accordion, AccordionSummary, AccordionDetails, Fab, CardMedia, Card, CardActions, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import FlagIcon from '@mui/icons-material/Flag';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
@@ -21,6 +21,7 @@ function DogDetails() {
 
   // specific dog details - fetched by the useEffect
   const dog = useSelector(store => store.details);
+  // const client = useSelector(store=> store.clients)
   const route = useSelector(store => store.routeReducer);
   // modal open and close status
   const status = useSelector(store => store.modal.status);
@@ -39,8 +40,18 @@ function DogDetails() {
     }
   }, [params.id])
 
-  
-//this routes the user back to the route for the day
+  const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  const clientSchedule = [];
+  if (dog) {
+    clientSchedule.push(dog.mon);
+    clientSchedule.push(dog.tue);
+    clientSchedule.push(dog.wed);
+    clientSchedule.push(dog.thu);
+    clientSchedule.push(dog.fri);
+    console.log(clientSchedule)
+  }
+
+  //this routes the user back to the route for the day
   const backFunction = (event) => {
     const currentRoute  = route.filter(thisDog => thisDog.dog_id === dog.dog_id)
     const currentRouteId = currentRoute[0].route_id
@@ -163,7 +174,7 @@ function DogDetails() {
         </Card>
       </Grid>
       {/* ACCESS INFORMATION */}
-      <Grid item xs={10} sx={{pb: '100px'}}>
+      <Grid item xs={10} sx={{}}>
         <Card sx={{ mb: 1 }}>
           <Typography align='center'>{dog.client_protocol || 'No protocol on File'}</Typography>
         </Card>
@@ -227,6 +238,22 @@ function DogDetails() {
         </Accordion>
 
       </Grid>
+      <Typography sx={{mt:2, fontSize:'16px'}}>WEEKLY SCHEDULE</Typography>
+      <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', pb: '100px'}} >
+        {daysOfWeek.map((day, index) => (
+          <Grid key={index} item xs={2} sx={{ mt: 2, mb: 2 }} >
+            <Card raised>
+              <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', 
+                backgroundColor: clientSchedule[index] ? '#4A5061' : 'none',
+                color: clientSchedule[index] ? 'white' : 'black', 
+                height: '3vh', alignItems: 'center'}}
+              >
+                <Typography variant="h7" sx={{ textTransform: 'capitalize' }}>{day}</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </ Grid>
       {/* Modal for mobile photo upload */}
       <Modal open={status} sx={{ mt: 5.5, ml: 4.2 }} >
         <Grid item xs={12}>

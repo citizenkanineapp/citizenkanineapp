@@ -28,7 +28,9 @@ function MobileNotes() {
 
     const [note, setNote] = useState('');
 
-
+    const timeZoneAdjust = (date) => {
+      return dayjs(date.split('T')[0]).format('MM/DD');
+    }
 
     //sends notes to DB via button
     const submitNote = (e) => {
@@ -60,7 +62,7 @@ function MobileNotes() {
       
                   dense
                 >
-                  <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}:      {notes.notes}</ListItemText>
+                  <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{timeZoneAdjust(notes.date)}:      {notes.notes}</ListItemText>
                 </ListItem>
               ))}
             </List>

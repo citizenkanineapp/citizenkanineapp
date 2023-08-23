@@ -21,7 +21,7 @@ import { ListItemButton, Stack, Fab, Card, CardContent, List, ListItem, ListItem
 function AdminNotes() {
     useEffect(() => {
         dispatch({ type: 'FETCH_ADMIN_NOTES' })
-        console.log(adminNotes)
+        // console.log(adminNotes)
     }, []);
 
     const dispatch = useDispatch();
@@ -33,6 +33,12 @@ function AdminNotes() {
     const toggleMode = () => {
        //console.log('testing')
         setToggleNotes(!toggleNotes)
+    }
+
+
+    // dayjs adjusts time to CST. when dates from Heroku postgresql
+    const timeZoneAdjust = (date) => {
+        return dayjs(date.split('T')[0]).format('MM/DD');
     }
 
     //sends notes to DB via 'Enter'
@@ -165,9 +171,9 @@ function AdminNotes() {
                                                     </IconButton>
                                                 }
                                                 { notes.note_type === 'dognote' ? 
-                                                    <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}: {notes.notes}<br /> {"("}{notes.name}--{notes.last_name}{")"} </ListItemText>
+                                                    <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{timeZoneAdjust(notes.date)}: {notes.notes}<br /> {"("}{notes.name}--{notes.last_name}{")"} </ListItemText>
                                                     :
-                                                    <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{dayjs(notes.date).format('MM/DD')}: {notes.notes}</ListItemText>
+                                                    <ListItemText sx={{mr: 2, fontSize: '1rem' }}>{timeZoneAdjust(notes.date)}: {notes.notes}</ListItemText>
                                                 }
                                             </ListItem>
                                         ))}

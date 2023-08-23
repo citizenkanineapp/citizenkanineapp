@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
+import dayjs from 'dayjs'
 
 function* setAdminNotes(action) {
     // console.log('Admin Notes', action.payload);
@@ -23,6 +24,7 @@ function* fetchAdminNotes(action) {
         const notes = yield axios.get('/api/admin');
         yield put({ type: 'SET_NOTES', payload: notes.data });
         console.log('notes structure', notes.data)
+        console.log('a date', dayjs(notes.data[0].date));
     } catch (error) {
         console.log(error);
         console.log('Admin notes not available when logged out. Please log in to see them again')

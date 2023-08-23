@@ -417,6 +417,9 @@ function ClientSchedule() {
                       label="Dates"
                       onChange={handleDateChange}
                       renderDay={renderPickersDay}
+                      renderInput={(params) => {
+                        return <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />
+                      }}
                     />
                 </LocalizationProvider>
               <Grid sx={{mt: 2, display:'flex', justifyContent: 'center', ml:15, mt:-5}}>

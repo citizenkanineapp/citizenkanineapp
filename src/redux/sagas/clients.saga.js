@@ -184,21 +184,21 @@ function* regularScheduleChange(action){
     
 }
 
-function* updatedScheduleChange(action){
-    const updatedChanges = action.payload;
-    console.log('what is sent to server?', action.payload)
-    try {
-        const changes = yield axios({
-            method: 'PUT',
-            url: '/api/clients/schedule/updated',
-            data: updatedChanges
-        })
-        yield put ({type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: action.payload[0].client_id});
-        //probably need to fetch specific client?
-    } catch (error) {
-        console.log('error updating schedule changes',error);
-    }
-}
+// function* updatedScheduleChange(action){
+//     const updatedChanges = action.payload;
+//     console.log('what is sent to server?', action.payload)
+//     try {
+//         const changes = yield axios({
+//             method: 'PUT',
+//             url: '/api/clients/schedule/updated',
+//             data: updatedChanges
+//         })
+//         yield put ({type: 'SAGA_FETCH_CLIENT_SCHEDULE_CHANGES', payload: action.payload[0].client_id});
+//         //probably need to fetch specific client?
+//     } catch (error) {
+//         console.log('error updating schedule changes',error);
+//     }
+// }
 
 
 
@@ -214,7 +214,7 @@ function* clientSaga() {
     yield takeLatest('FETCH_SCHEDULE', fetchSchedule);
     yield takeLatest('SEND_ONE_SCHEDULE_CHANGE', oneOffScheduleChange);
     yield takeLatest('REGULAR_SCHEDULE_CHANGE', regularScheduleChange);
-    yield takeLatest('SEND_ONE_SCHEDULE_CHANGE', updatedScheduleChange);
+    // yield takeLatest('SEND_ONE_SCHEDULE_CHANGE', updatedScheduleChange);
 }
 
 export default clientSaga;

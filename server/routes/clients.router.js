@@ -382,7 +382,7 @@ router.get('/schedule/:id', rejectUnauthenticated, rejectUnauthorized, (req, res
 
 router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 
-  console.log('in api/clients/schedule', req.body)
+  console.log('in api/clients/schedule')
 
   const client = await pool.connect();
   // const {date, is_scheduled, dog_id, client_id } = req.body
@@ -415,34 +415,35 @@ router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 });
 
 // Updating schedule changes
-router.put('/schedule/updated', rejectUnauthenticated, async (req, res) => {
+// No This is a duplicate function to /schedule. ON CONFLICT handled the same situation.
+// router.put('/schedule/updated', rejectUnauthenticated, async (req, res) => {
 
-   console.log('one off change', req.body)
+//    console.log('in api/client/sschedule/updated for one off change')
 
-  const client = await pool.connect();
-  // const {date, is_scheduled, dog_id, client_id } = req.body
-  // const schedule = req.body
-  try {
-    await client.query('BEGIN')
-    await Promise.all(req.body.map(change => {
-      const scheduleTxt = `
-                          UPDATE dogs_schedule_changes
-                          SET is_scheduled = $1
-                          WHERE dog_id = $2 AND date_to_change = $3;
-                          `
-      const scheduleValues = [change.is_scheduled, change.dog_id, change.date_to_Change]
-      return client.query(scheduleTxt, scheduleValues)
-    }));
-    await client.query('COMMIT')
-    res.sendStatus(201);
-  } catch (error) {
-    await client.query('ROLLBACK')
-    console.log('Error in post route for schedule changes', error);
-    res.sendStatus(500);
-  } finally {
-    client.release()
-  }
-});
+  // const client = await pool.connect();
+  // // const {date, is_scheduled, dog_id, client_id } = req.body
+  // // const schedule = req.body
+  // try {
+  //   await client.query('BEGIN')
+  //   await Promise.all(req.body.map(change => {
+  //     const scheduleTxt = `
+  //                         UPDATE dogs_schedule_changes
+  //                         SET is_scheduled = $1
+  //                         WHERE dog_id = $2 AND date_to_change = $3;
+  //                         `
+  //     const scheduleValues = [change.is_scheduled, change.dog_id, change.date_to_Change]
+  //     return client.query(scheduleTxt, scheduleValues)
+  //   }));
+  //   await client.query('COMMIT')
+  //   res.sendStatus(201);
+  // } catch (error) {
+  //   await client.query('ROLLBACK')
+  //   console.log('Error in post route for schedule changes', error);
+  //   res.sendStatus(500);
+  // } finally {
+  //   client.release()
+  // }
+// });
 
 
 router.delete('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {

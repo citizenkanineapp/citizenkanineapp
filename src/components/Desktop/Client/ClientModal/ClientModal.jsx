@@ -68,7 +68,7 @@ function ClientModal(){
             }} 
           >
             
-          <Box sx={{ ...style, width:  '80vw', height: '92vh', outline: 'none', borderRadius: '5px', display: 'flex', alignContent: 'center', justifyContent: 'left' }}>
+          <Box sx={{ ...style, width:  '80vw', height: '92vh', outline: 'none', borderRadius: '5px', display: 'flex', alignContent: 'center', justifyContent: 'left',pb:10 }}>
             {pickView()}
           </Box>
       </Modal>

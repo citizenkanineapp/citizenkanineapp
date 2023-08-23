@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 
     const invoicesList = createInvoiceItems(req.body);
     // console.log(invoicesList);
-    // invoicesList.map(invoice => console.log(invoice.Line))  
+    // invoicesList.map(invoice => console.log(invoice.Line))  `
     await Promise.all(invoicesList.map(invoice => {
       const requestObj = {
         method: 'POST',
@@ -66,10 +66,10 @@ router.post('/', async (req, res) => {
 
 function createInvoiceItems(invoiceItems) {
   const clients = new Set(invoiceItems.map(({qb_id}) => qb_id));
-  // console.log('cliens', clients);
+  console.log('clients qbID: ', clients);
   const invoicesList = [];
   clients.forEach((client)=>{
-    console.log(client)
+    // console.log(client)
     const invoice = {};
     invoice.AllowOnlineACHPayment=true;
     invoice.CustomerRef = {

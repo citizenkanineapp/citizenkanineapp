@@ -149,7 +149,7 @@ function* fetchSchedule(action){
 }
 
 function* oneOffScheduleChange(action){
-    // console.log('arrived in edit one off schedule route', action.payload);
+    console.log('arrived in edit one off schedule route', action.payload);
     const scheduleChange = action.payload
         try {
             const schedule = yield axios({
@@ -186,7 +186,7 @@ function* regularScheduleChange(action){
 
 function* updatedScheduleChange(action){
     const updatedChanges = action.payload;
-    //console.log('what is sent to server?', action.payload)
+    console.log('what is sent to server?', action.payload)
     try {
         const changes = yield axios({
             method: 'PUT',

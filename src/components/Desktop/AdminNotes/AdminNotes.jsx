@@ -26,7 +26,7 @@ function AdminNotes() {
 
     const dispatch = useDispatch();
     const adminNotes = useSelector(store => store.adminNotesReducer)
-    console.log(adminNotes);
+    console.log('admin notes:', dayjs(adminNotes[0].date));
 
     const [toggleNotes, setToggleNotes] = useState(false);
     const [note, setNote] = useState('');

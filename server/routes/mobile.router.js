@@ -238,9 +238,11 @@ router.get('/dog/:dogID', async (req, res) => {
     const dogID = req.params.dogID;
 
     const dogDetailsQuery = `
-    SELECT dogs.*, dogs.notes AS dog_notes, dogs.id AS dog_id, clients.*, clients.notes AS client_protocol from dogs
+    SELECT dogs.*, dogs.notes AS dog_notes, dogs.id AS dog_id, clients.*, clients_schedule."1" AS mon, clients_schedule."2" AS tue, clients_schedule."3" AS wed, clients_schedule."4" AS thu, clients_schedule."5" AS fri, clients.notes AS client_protocol from dogs
 	    JOIN clients
 		    ON dogs.client_id = clients.id
+        JOIN clients_schedule
+            ON dogs.client_id = clients_schedule.client_id
 	    WHERE dogs.id = $1;
     `
     const dogDetailsValue = [dogID];
@@ -248,6 +250,7 @@ router.get('/dog/:dogID', async (req, res) => {
     pool.query(dogDetailsQuery, dogDetailsValue)
         .then(detailsResults => {
             const dogDetails = detailsResults.rows[0];
+            console.log(dogDetails)
             res.send(dogDetails);
         }).catch((error => {
             console.log('/dog/:id error getting dog details:', error);

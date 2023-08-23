@@ -86,7 +86,7 @@ function ClientSchedule() {
 
   // renderPickersDay is called by 'renderDay' prop on StaticDatePicker. iterates over displayed dates and renders a styled PickersDay componentfor each date.
   // I don't quite understand props, but 'selected' targets dates in dateValues array and applies CustomPickersDay styling to them.
-  // selectedDates is apparently required, otherwise all dates are rendered as current day (on 8/22, a month of 8/22s)
+  // selectedDates is apparently a required prop, otherwise all dates are rendered as current day (on 8/22, a month of 8/22s)
   const renderPickersDay = (date, selectedDates, pickersDayProps) => {
     if (!dateValues) {
       return <CustomPickersDay {...pickersDayProps} />
@@ -102,13 +102,16 @@ function ClientSchedule() {
   };
   
 
-  // THIS handles the change of the date based on the date picker
+  // adds or removes dates to the dateValues array.
   const handleDateChange = (date) => {
+    console.log('in handleDateChange')
     console.log(date.$M, date.$D)
     const valueArray = [...dateValues];
 
     const index = valueArray.findIndex((item) => (item.$y === date.$y) && (item.$M === date.$M) && (item.$D === date.$D));
 
+    // if current date matches existing date at index >=0, remove date from array.
+    // else, add date to array.
     if (index >=0) {
       valueArray.splice(index, 1);
       console.log(index, valueArray);
@@ -121,22 +124,30 @@ function ClientSchedule() {
   
   //This is for the submit button for the one off changes
   // NEED to not be able to add the dog if is is regularly scheduled
+  // value field in 'StaticDatePicker' is undefined; for some reason, value field prevents emptying the 'dateValues' array.
   const handleSubmit = () => {
     // need to add date_to_change and is_selected to each one
-    let changeDate = `${value.$y}-${value.$M + 1}-${value.$D}`;
-    // console.log(changeDate)
+    console.log(dateValues)
+    
+    const changeDates = [];
+    dateValues.forEach(date => changeDates.push(`${date.$y}-${date.$M + 1}-${date.$D}`));
+    console.log(changeDates)
 
     let newChanges = [];
     if (dog === "all") {
       client.dogs.map(singleDog => {
-        let thisChange = { dog_id: singleDog.dog_id, client_id: client.client_id, date_to_change: changeDate, is_scheduled: scheduled }
-        newChanges.push(thisChange)
+        changeDates.map(date => {
+          let thisChange = { dog_id: singleDog.dog_id, client_id: client.client_id, date_to_change: date, is_scheduled: scheduled }
+          newChanges.push(thisChange);
+        })
       })
     }
     else {
-      let thisChange = { dog_id: dog, client_id: client.client_id, date_to_change: changeDate, is_scheduled: scheduled }
+      let thisChange = { dog_id: dog, client_id: client.client_id, date_to_change: changeDates, is_scheduled: scheduled }
       newChanges.push(thisChange)
     }
+
+    console.log(newChanges);
 
     // if there are new changes, then post changes.
     if (newChanges.length > 0){
@@ -150,7 +161,7 @@ function ClientSchedule() {
      // need to reset local states:
     setDog('');
     setScheduled('');
-    setDateValues([dayjs()]);
+    setDateValues([initialDate()]);
     // console.log('newChanges', newChanges)
 
   }
@@ -406,14 +417,13 @@ function ClientSchedule() {
                               shouldDisableDate={isWeekend}
                               label="Dates"
                               inputFormat="MM/DD/YYYY"
-                              value={dateValues}
+                              // value={dateValues}
                               onChange={handleDateChange}
                               renderInput={(params) => {
                                 // console.log(params);
                                 return <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />
                               }}
                               renderDay={renderPickersDay}
-                              // disableCloseOnSelect={true}
                             />
                         </LocalizationProvider>
                       <Grid sx={{mt: 2, display:'flex', justifyContent: 'center'}}>

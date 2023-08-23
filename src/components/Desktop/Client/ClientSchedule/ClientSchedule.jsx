@@ -25,6 +25,11 @@ const isWeekend = (date) => {
   return day === 0 || day === 6;
 };
 
+// this is boilerplate MUI styled utility
+// constructing a custom PickersDay comonent
+// https://mui.com/system/styled/
+// this solution from this stack overflow: https://stackoverflow.com/questions/46762199/material-ui-select-multiple-dates-with-calendar
+
 const CustomPickersDay = styled(PickersDay, {
   shouldForwardProp: (prop) => prop !== "selected"
 })(({ theme, selected }) => ({
@@ -78,43 +83,39 @@ function ClientSchedule() {
   }}
   
   const [dateValues, setDateValues] = useState([initialDate()]);
-  // console.log(initialDate())
-  console.log('selected Date Values: ',dateValues);
 
-  const findDate = (dates, date) => {
-
-    return dates.find((item) => (item.$y === date.$y) && (item.$M === date.$M) && (item.$D === date.$D));
-  };
-
-  // const findIndexDate = (dates, date) => {
-  //   const dateTime = date.getTime();
-  //   return dates.findIndex((item) => item.getTime() === dateTime);
-  // };
-
-
-  const renderPickerDay = (date, selectedDates, pickersDayProps) => {
+  // renderPickersDay is called by 'renderDay' prop on StaticDatePicker. iterates over displayed dates and renders a styled PickersDay componentfor each date.
+  // I don't quite understand props, but 'selected' targets dates in dateValues array and applies CustomPickersDay styling to them.
+  // selectedDates is apparently required, otherwise all dates are rendered as current day (on 8/22, a month of 8/22s)
+  const renderPickersDay = (date, selectedDates, pickersDayProps) => {
     if (!dateValues) {
-      return <PickersDay {...pickersDayProps} />;
+      return <CustomPickersDay {...pickersDayProps} />
     }
-
-    const selected = findDate(dateValues, date);
-    if (selected){console.log('selected', selected)}
-
+    const selected = dateValues.find((item) => (item.$y === date.$y) && (item.$M === date.$M) && (item.$D === date.$D));
+    // if (selected){console.log('selected', selected)}
     return (
       <CustomPickersDay
         {...pickersDayProps}
-        disableMargin
         selected={selected}
       />
     );
   };
   
+
   // THIS handles the change of the date based on the date picker
-  const handleDateChange = (newValue) => {
-    console.log(dateValues)
-    const valueArray = [...dateValues, newValue];
-    console.log(valueArray);
-    // const selectedDates = [...value, newValue]
+  const handleDateChange = (date) => {
+    console.log(date.$M, date.$D)
+    const valueArray = [...dateValues];
+
+    const index = valueArray.findIndex((item) => (item.$y === date.$y) && (item.$M === date.$M) && (item.$D === date.$D));
+
+    if (index >=0) {
+      valueArray.splice(index, 1);
+      console.log(index, valueArray);
+    } else {
+      valueArray.push(date);
+      console.log(index, valueArray);
+    }
     setDateValues(valueArray);
   }
   
@@ -395,7 +396,7 @@ function ClientSchedule() {
                                 // console.log(params);
                                 return <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />
                               }}
-                              renderDay={renderPickerDay}
+                              renderDay={renderPickersDay}
                               disableCloseOnSelect={true}
                             />
                         </LocalizationProvider> */}
@@ -411,8 +412,8 @@ function ClientSchedule() {
                                 // console.log(params);
                                 return <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />
                               }}
-                              renderDay={renderPickerDay}
-                              disableCloseOnSelect={true}
+                              renderDay={renderPickersDay}
+                              // disableCloseOnSelect={true}
                             />
                         </LocalizationProvider>
                       <Grid sx={{mt: 2, display:'flex', justifyContent: 'center'}}>

@@ -31,6 +31,7 @@ import MobileNav from '../Mobile/MobileNav/MobileNav';
 import DogDetails from '../Mobile/DogDetails/DogDetails';
 import MobileTopNav from '../Mobile/MobileNav/MobileTopNav';
 import MobileNotes from '../Mobile/Notes/MobileNotes';
+import MobileDogSearch from '../Mobile/Search/MobileDogSearch';
 //MISC COMPONENTS
 import ImageUpload from '../AllPages/ImageUpload/ImageUpload';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
@@ -135,6 +136,11 @@ function App() {
             <ProtectedRoute exact path="/m/notes">
               <MobileTopNav />
               <MobileNotes />
+            </ProtectedRoute>
+
+            <ProtectedRoute exact path="/m/search">
+              <MobileTopNav />
+              <MobileDogSearch />
             </ProtectedRoute>
 
             <ProtectedRoute exact path="/m/routes">

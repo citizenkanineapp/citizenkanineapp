@@ -39,12 +39,6 @@ export default function MobileDogSearch() {
     setSubmittedSearch(search.toLowerCase())
   }
 
-  const onEnterSubmit = (e) => {
-    if(e.keyCode == 13 && e.shiftKey == false) {
-      searchFunction();
-    };
-  };
-
   const clearResults = (event) => {
     setSubmittedSearch('');
     setSearch('');
@@ -72,7 +66,6 @@ export default function MobileDogSearch() {
         <TextField
           value={search || ''}
           onChange={(e) => setSearch(e.target.value)}
-          // onKeyDown={(e) => onEnterSubmit(e)}
           label="Search Clients & Dogs"
           variant="filled"
           size="small"
@@ -108,28 +101,32 @@ export default function MobileDogSearch() {
               </TableHead>
             {submittedSearch ?
               <TableBody>
-                {dogList
-                  .filter((dog) => {
-                    const firstName = dog.client_firstname.toLowerCase();
-                    const lastName = dog.client_lastname.toLowerCase();
-                    const dogName = dog.dog_name.toLowerCase()
+                {dogList.filter((dog) => {
+                  const firstName = dog.client_firstname.toLowerCase();
+                  const lastName = dog.client_lastname.toLowerCase();
+                  const dogName = dog.dog_name.toLowerCase()
 
-                    //loop through array of dog names and check those
-                    if (firstName.includes(submittedSearch) || lastName.includes(submittedSearch) || dogName.includes(submittedSearch) ) {
-                      return true;
-                    }
-                  })
-                  .map((dog ) => (
-                    <StyledTableRow key={dog.dog_id} hover> 
-                      <TableCell>{dog.dog_name}</TableCell>
-                      <TableCell>{dog.client_firstname} {dog.client_lastname}</TableCell>
-                    </StyledTableRow>
+                  //loop through array of dog names and check those
+                  if (firstName.includes(submittedSearch) || lastName.includes(submittedSearch) || dogName.includes(submittedSearch) ) {
+                    return true;
+                  }
+                }).map((dog ) => (
+                  <StyledTableRow key={dog.dog_id}> 
+                    <TableCell>{dog.dog_name}</TableCell>
+                    <TableCell>{dog.client_firstname} {dog.client_lastname}</TableCell>
+                  </StyledTableRow>
                 ))}
               </TableBody>
               :
-              <div>psych!</div>
+              <TableBody>
+                {dogList.map((dog) => (
+                  <StyledTableRow key={dog.dog_id}> 
+                    <TableCell>{dog.dog_name}</TableCell>
+                    <TableCell>{dog.client_firstname} {dog.client_lastname}</TableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
             }
-
             </Table>
           </TableContainer >
         </Grid>

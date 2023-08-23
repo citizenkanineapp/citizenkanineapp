@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import './ClientSchedule.css';
 
 //MUI
-import { Card, CardContent, FormControl, InputLabel, MenuItem, Select, Fab, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField, CardActionArea } from '@mui/material';
+import { Card, CardContent, FormControl, Stack, InputLabel, MenuItem, Select, Fab, Avatar, Box,Typography, Button, Grid, TextField, CardActionArea } from '@mui/material';
 import dayjs from 'dayjs';
 // styles for customdatepicker
 import { styled } from '@mui/material/styles';
@@ -230,15 +230,12 @@ function ClientSchedule() {
                         type: 'EDIT_CLIENT_WEEK_SCHEDULE',
                         payload: { day: index + 1, change: true }
   
-                      })
-                      
+                      }) 
                     }
-
                     else {
                       dispatch({
                         type: 'EDIT_CLIENT_WEEK_SCHEDULE',
                         payload: { day: index + 1, change: false }
-  
                       })
                     }
                   }}
@@ -270,7 +267,7 @@ function ClientSchedule() {
       {/* Grid containing calendar and form */}
           {/* Calendar */}
           <Grid item xs={6}>
-              <Box className="clientSchedule" sx={{display: 'flex', height: '53vh', width: '40vw',max_height:'55vh', border: 1, borderColor: 'black', justifyContent: 'center', alignContent: 'center'}}>
+              <Box className="clientSchedule" sx={{display: 'flex', height: '55vh', width: '40vw',max_height:'55vh', border: 1, borderColor: 'black', justifyContent: 'center', alignContent: 'center'}}>
                   {/* <h1>Client Name</h1> */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <CalendarPicker 
@@ -375,85 +372,81 @@ function ClientSchedule() {
         </Box >
         </Grid>
         {/* ADD One-Off Changes Form */}
-              {addChange ? 
-                <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center'}}>
-                    <h2 >Month View / Adjust Schedule</h2>
-                    <FormControl  sx={{ mr: 4, pb: 1, mb:2, width: '20vw' }}>
-                          <InputLabel>Dog</InputLabel>
-                          <Select value={dog} onChange={(event) => setDog(event.target.value)}>
-                              <MenuItem value="all">All Dogs</MenuItem>
-                                {client.dogs && client.dogs.map(singleDog => {
-                                  return (
-                                      <MenuItem key={singleDog.dog_id} value={singleDog.dog_id}>{singleDog.dog_name}</MenuItem>
-                                      )
-                                })}
-                          </Select>
-                        </FormControl>
-                        <FormControl  sx={{ mr: 4, pb: 1, width: '20vw' }}>
-                          <InputLabel>Action</InputLabel>
-                          <Select value={scheduled} onChange={(event) => setScheduled(event.target.value)}>
-                            <MenuItem value={true}>Add Walk</MenuItem>
-                            <MenuItem value={false}>Cancel Walk</MenuItem>
-                          </Select>
-                        </FormControl>
-                        {/* <LocalizationProvider dateAdapter={AdapterDayjs} >
-                            <DesktopDatePicker
-                              shouldDisableDate={isWeekend}
-                              label="Dates"
-                              inputFormat="MM/DD/YYYY"
-                              value={dateValues}
-                              onChange={handleDateChange}
-                              renderInput={(params) => {
-                                // console.log(params);
-                                return <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />
-                              }}
-                              renderDay={renderPickersDay}
-                              disableCloseOnSelect={true}
-                            />
-                        </LocalizationProvider> */}
-                          <LocalizationProvider dateAdapter={AdapterDayjs} >
-                            <StaticDatePicker
-                              displayStaticWrapperAs="desktop"
-                              shouldDisableDate={isWeekend}
-                              label="Dates"
-                              inputFormat="MM/DD/YYYY"
-                              // value={dateValues}
-                              onChange={handleDateChange}
-                              renderInput={(params) => {
-                                // console.log(params);
-                                return <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />
-                              }}
-                              renderDay={renderPickersDay}
-                            />
-                        </LocalizationProvider>
-                      <Grid sx={{mt: 2, display:'flex', justifyContent: 'center'}}>
-                          <Button variant='contained' color='secondary' onClick={handleSubmit}> Submit</Button>
-                          <Button variant="outlined" color="info" sx={{ml:3}} onClick={() => setAddChange(!addChange)}>Cancel</Button>
-                      </Grid>
-                </Grid>
-              :
-              <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center', mt: 10}}>
-                <Typography variant='h5' sx={{mb: 4}}>Add A Schedule Change</Typography>
-                  <Fab color="secondary" aria-label="add" onClick={()=> setAddChange(!addChange)}>
-                    <AddIcon />
-                  </Fab>
-                  
+        {addChange ? 
+          <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center'}}>
+            <Stack sx={{display: 'flex', flexDirection:'row', alignItems:'center'}}>
+              <FormControl  sx={{ ml: 5, pb: 1, width: '15vw' }}>
+                <InputLabel>Dog</InputLabel>
+                <Select value={dog} onChange={(event) => setDog(event.target.value)}>
+                    <MenuItem value="all">All Dogs</MenuItem>
+                      {client.dogs && client.dogs.map(singleDog => {
+                        return (
+                            <MenuItem key={singleDog.dog_id} value={singleDog.dog_id}>{singleDog.dog_name}</MenuItem>
+                            )
+                      })}
+                </Select>
+              </FormControl>
+              <FormControl  sx={{ mr: 4, pb: 1, width: '15vw' }}>
+                <InputLabel>Action</InputLabel>
+                <Select value={scheduled} onChange={(event) => setScheduled(event.target.value)}>
+                  <MenuItem value={true}>Add Walk</MenuItem>
+                  <MenuItem value={false}>Cancel Walk</MenuItem>
+                </Select>
+              </FormControl>
+            </Stack>
+                {/* KEEPING OLD DATEPICKER AS A REFERENCE JUST IN CASE FUTURE DEVELOPMENT REQURIES UPDATING MUI. this date picker is from a now-old MUI version.
+                    <LocalizationProvider dateAdapter={AdapterDayjs} >
+                    <DesktopDatePicker
+                      shouldDisableDate={isWeekend}
+                      label="Dates"
+                      inputFormat="MM/DD/YYYY"
+                      value={dateValues}
+                      onChange={handleDateChange}
+                      renderInput={(params) => {
+                        // console.log(params);
+                        return <TextField {...params} sx={{ mt: 2 ,mr: 4, pb: 1, width: '20vw' }} />
+                      }}
+                      renderDay={renderPickersDay}
+                      disableCloseOnSelect={true}
+                    />
+                </LocalizationProvider> */}
+                {/* This StaticDatePicker setup is a custom solution to allowing a multi-select feature. MUI daterangepicker requires a monthly fee.
+                 required CSS changes to fit on clientschedule modal: mainly, L and T margins to the submit and cancel buttons below */}
+                  <LocalizationProvider dateAdapter={AdapterDayjs} >
+                    <StaticDatePicker
+                      displayStaticWrapperAs="desktop"
+                      shouldDisableDate={isWeekend}
+                      label="Dates"
+                      onChange={handleDateChange}
+                      renderDay={renderPickersDay}
+                    />
+                </LocalizationProvider>
+              <Grid sx={{mt: 2, display:'flex', justifyContent: 'center', ml:15, mt:-5}}>
+                  <Button variant='contained' color='secondary' onClick={handleSubmit}> Submit</Button>
+                  <Button variant="outlined" color="info" sx={{ml:3}} onClick={() => setAddChange(!addChange)}>Cancel</Button>
               </Grid>
-              }
-          <Grid item xs={11} sx={{display: 'flex', justifyContent: 'right', pb: 3}}>
-            <Button 
-              variant="outlined" color="info"
-              onClick={() => {
-                dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientDetails' });}}>
-              Back
-            </Button>
           </Grid>
+        :
+        <Grid item xs={5} sx={{display: 'flex', flexDirection:'column', alignItems:'center', mt: 10}}>
+          <Typography variant='h5' sx={{mb: 4}}>Add A Schedule Change</Typography>
+            <Fab color="secondary" aria-label="add" onClick={()=> setAddChange(!addChange)}>
+              <AddIcon />
+            </Fab>
+            
         </Grid>
+        }
+        <Grid item xs={11} sx={{display: 'flex', justifyContent: 'right', pb: 3}}>
+          <Button 
+            variant="outlined" color="info"
+            onClick={() => {
+              dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientDetails' });}}>
+            Back
+          </Button>
+        </Grid>
+      </Grid>
     </>
-
   )
 }
-
 
 export default ClientSchedule;
 

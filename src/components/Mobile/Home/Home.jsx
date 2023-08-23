@@ -37,7 +37,7 @@ function Home() {
 
       <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifySelf: 'center', gap: 1, m: 0 }}>
 
-        <img src="Images/dogwalker3.png" height="300px" width="300px" />
+        <img src="Images/dogwalker3.png" height="250px" width="250px" />
 
         <Paper sx={{ p: 2, borderRadius: 5, textAlign: 'center', backgroundColor: '#539BD1', color: 'white' }}>
           WELCOME {user.username.toUpperCase()}:
@@ -50,6 +50,7 @@ function Home() {
             :
             <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/routes')}>ROUTES</Button>
           }
+          <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/search')}>Search Dogs</Button>
           <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/schedule')}>Schedule</Button>
           <Button color='secondary' variant='outlined' onClick={(event) => history.push('/m/resetpass')}>Account</Button>
           <LogOutButton />

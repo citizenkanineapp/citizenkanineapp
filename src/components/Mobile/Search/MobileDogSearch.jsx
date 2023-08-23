@@ -1,5 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { useHistory, Link, useParams } from 'react-router-dom';
+
 
 //MUI
 import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
@@ -15,6 +17,8 @@ export default function MobileDogSearch() {
 
   const clientList = useSelector(store => store.clientsReducer);
   const dispatch = useDispatch();
+  const history = useHistory();
+  const params = useParams();
   const [search, setSearch] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState('');
   // const [dogList, setDogList] = useState(clientList ? createDogList : [])
@@ -43,6 +47,10 @@ export default function MobileDogSearch() {
     setSubmittedSearch('');
     setSearch('');
   }
+
+  const getDogDetails = (dogID) => {
+     history.push(`/m/dog/${dogID}`)
+   }
 
   return (
     <Box className="mobile_container"
@@ -112,8 +120,8 @@ export default function MobileDogSearch() {
                   }
                 }).map((dog ) => (
                   <StyledTableRow key={dog.dog_id}> 
-                    <TableCell>{dog.dog_name}</TableCell>
-                    <TableCell>{dog.client_firstname} {dog.client_lastname}</TableCell>
+                    <TableCell onClick={()=>getDogDetails(dog.dog_id)}>{dog.dog_name}</TableCell>
+                    <TableCell onClick={()=>getDogDetails(dog.dog_id)}>{dog.client_firstname} {dog.client_lastname}</TableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
@@ -121,8 +129,8 @@ export default function MobileDogSearch() {
               <TableBody>
                 {dogList.map((dog) => (
                   <StyledTableRow key={dog.dog_id}> 
-                    <TableCell>{dog.dog_name}</TableCell>
-                    <TableCell>{dog.client_firstname} {dog.client_lastname}</TableCell>
+                    <TableCell onClick={()=>getDogDetails(dog.dog_id)}>{dog.dog_name}</TableCell>
+                    <TableCell onClick={()=>getDogDetails(dog.dog_id)}>{dog.client_firstname} {dog.client_lastname}</TableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>

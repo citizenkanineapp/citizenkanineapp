@@ -114,10 +114,10 @@ function ClientSchedule() {
     // else, add date to array.
     if (index >=0) {
       valueArray.splice(index, 1);
-      console.log(index, valueArray);
+      // console.log(index, valueArray);
     } else {
       valueArray.push(date);
-      console.log(index, valueArray);
+      // console.log(index, valueArray);
     }
     setDateValues(valueArray);
   }
@@ -126,28 +126,26 @@ function ClientSchedule() {
   // NEED to not be able to add the dog if is is regularly scheduled
   // value field in 'StaticDatePicker' is undefined; for some reason, value field prevents emptying the 'dateValues' array.
   const handleSubmit = () => {
-    // need to add date_to_change and is_selected to each one
-    console.log(dateValues)
+    // console.log(dateValues)
     
     const changeDates = [];
     dateValues.forEach(date => changeDates.push(`${date.$y}-${date.$M + 1}-${date.$D}`));
-    console.log(changeDates)
+    // console.log('DOG', dog, typeof scheduled)
 
     let newChanges = [];
-    if (dog === "all") {
+    if (dog === "all" && typeof scheduled === 'boolean') {
       client.dogs.map(singleDog => {
         changeDates.map(date => {
           let thisChange = { dog_id: singleDog.dog_id, client_id: client.client_id, date_to_change: date, is_scheduled: scheduled }
           newChanges.push(thisChange);
         })
       })
+    } else if (dog && typeof scheduled === 'boolean') {
+      changeDates.map(date => {
+        let thisChange = { dog_id: dog, client_id: client.client_id, date_to_change: date, is_scheduled: scheduled }
+        newChanges.push(thisChange);
+      })
     }
-    else {
-      let thisChange = { dog_id: dog, client_id: client.client_id, date_to_change: changeDates, is_scheduled: scheduled }
-      newChanges.push(thisChange)
-    }
-
-    console.log(newChanges);
 
     // if there are new changes, then post changes.
     if (newChanges.length > 0){

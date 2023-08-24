@@ -9,7 +9,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function ResultsDogByDay({dogList, weekSearch}) {
+export default function ResultsDogByDay({dogList, weekSearch, view}) {
   const history = useHistory();
   const getDogDetails = (dogID) => {
     history.push(`/m/dog/${dogID}`)
@@ -22,6 +22,10 @@ export default function ResultsDogByDay({dogList, weekSearch}) {
         <StyledTableRow key={dog.dog_id}> 
           <TableCell onClick={()=>getDogDetails(dog.dog_id)}>{dog.dog_name}</TableCell>
           <TableCell onClick={()=>getDogDetails(dog.dog_id)}>{dog.client_firstname} {dog.client_lastname}</TableCell>
+          { view==='desktop' ?
+            <TableCell onClick={()=>getDogDetails(dog.dog_id)}> {dog.days.join(', ').toUpperCase()} </TableCell>
+            :null
+          }
         </StyledTableRow>
       ))}
     </TableBody>

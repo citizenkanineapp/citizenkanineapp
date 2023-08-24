@@ -7,6 +7,9 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ClientModal from '../ClientModal/ClientModal';
 import ResultsSearchClients from '../../../AllPages/SearchResults/ResultsSearchClients';
 import ResultsAllClients from '../../../AllPages/SearchResults/ResultsAllClients';
+import ResultsSearchDogs from '../../../AllPages/SearchResults/ResultsSearchDogs';
+import ResultsAllDogs from '../../../AllPages/SearchResults/ResultsAllDogs';
+import ResultsDogByDay from '../../../AllPages/SearchResults/ResultsDogByDay';
 
 
 //MUI
@@ -22,6 +25,7 @@ export default function ClientList() {
 
   const [search, setSearch] = useState('')
   const [searchType, setSearchType] = useState('clients');
+  const [weekSearch, setWeekSearch] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState('')
   const [imageSrc, setImageSrc] = useState('Images/qbButtonMed.png')
 
@@ -31,22 +35,27 @@ export default function ClientList() {
     dispatch({ type: 'CLEAR_MODALS'})
   }, []);
 
+  const daysOfWeek = ['mon','tue','wed','thu','fri'];
 
   // creates flat list of all dogs for dog search feature
   const dogList = [...new Set(clientList.flatMap((client) =>
-    client.dogs.map((dog) => ({
-      dog_name: dog.dog_name,
-      dog_id: dog.dog_id,
-      client_firstname: client.first_name,
-      client_lastname: client.last_name,
-      client_id: client.client_id,
-      mon: client.monday,
-      tue: client.tuesday,
-      wed: client.wednesday,
-      thu: client.thursday,
-      fri: client.friday
-    }))
-  ))];
+    client.dogs.map((dog) => {
+      const dogObj = {
+        dog_name: dog.dog_name,
+        dog_id: dog.dog_id,
+        client_firstname: client.first_name,
+        client_lastname: client.last_name,
+        client_id: client.client_id,
+        mon: client.monday,
+        tue: client.tuesday,
+        wed: client.wednesday,
+        thu: client.thursday,
+        fri: client.friday
+      }
+      dogObj.days = daysOfWeek.filter((day) => dogObj[day]);
+      return dogObj;
+      }
+  )))]
 
   //starts OAuth process with QB
   const connectQB = ()=>{
@@ -58,7 +67,11 @@ export default function ClientList() {
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
   }
 
-
+  const searchDogByDay = (day) => {
+    setSearch('');
+    setSubmittedSearch('');
+    setWeekSearch(day);
+  }
 
   const searchFunction = (event) => {
     setSubmittedSearch(search.toLowerCase())
@@ -87,13 +100,13 @@ export default function ClientList() {
               }}>
      
       { searchType === 'clients' ?
-      <Button sx={{pt: 2, fontWeight: '800'}} onClick={()=>setSearchType('dogs')}>Order by dog</Button>
+      <Button sx={{pt: 2, fontWeight: '800'}} onClick={()=>setSearchType('dogs')}>Order by client</Button>
       :
-      <Button sx={{pt: 2, fontWeight: '800'}} onClick={()=>setSearchType('clients')}>Order by client</Button>
+      <Button sx={{pt: 2, fontWeight: '800'}} onClick={()=>setSearchType('clients')}>Order by dog</Button>
       }
       
       <Grid container 
-          sx={{ mb: 2, mx: 4, 
+          sx={{ mx: 4, 
                 // pt: 2,
                 display: 'flex', 
                 flexDirection: 'row', 
@@ -118,6 +131,14 @@ export default function ClientList() {
        }
           <Button onClick={() => dispatch({ type: 'QUICKBOOKS_SYNC'})} variant='contained' color="secondary">QuickBooks Sync</Button>  
       </Grid>
+      { searchType==='dogs' ?
+        <Stack sx={{display:'flex', flexDirection:'row'}}>
+          {daysOfWeek.map((day,i) => (
+            <Button key={i} onClick={()=>searchDogByDay(day)}>{day}</Button>
+          ))}
+        </Stack>
+        : null
+      }
       <Grid container spacing={2}>
         <Grid item xs={12} 
             sx={{ mx: 5, 
@@ -130,26 +151,39 @@ export default function ClientList() {
             <Table stickyHeader size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{fontWeight: '800'}}>Name:</TableCell>
-                  <TableCell sx={{fontWeight: '800'}}>Dogs:</TableCell>
-                  <TableCell sx={{fontWeight: '800'}}>Phone</TableCell>
-                  <TableCell sx={{fontWeight: '800'}}>Email</TableCell>
+                  { searchType==='clients' ? 
+                    <>
+                      <TableCell sx={{fontWeight: '800'}}>Name:</TableCell>
+                      <TableCell sx={{fontWeight: '800'}}>Dogs:</TableCell>
+                      <TableCell sx={{fontWeight: '800'}}>Phone</TableCell>
+                      <TableCell sx={{fontWeight: '800'}}>Email</TableCell>
+                    </>
+                    : 
+                    <>
+                      <TableCell sx={{fontWeight: '800'}}>Name:</TableCell>
+                      <TableCell sx={{fontWeight: '800'}}>Client:</TableCell>
+                      <TableCell sx={{fontWeight: '800'}}>Schedule:</TableCell>
+                    </>
+                  }
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               { searchType==='clients' ? 
                 (
-                  (submittedSearch) ?
-                  <ResultsSearchClients clientList={clientList} openModal={openModal} />
+                  (submittedSearch ) ?
+                  <ResultsSearchClients clientList={clientList} openModal={openModal} submittedSearch={submittedSearch} />
                   :
                   <ResultsAllClients clientList={clientList} openModal={openModal} />
                 ) : (searchType === 'dogs') ?
                 (
-                  (submittedSearch) ?
-                  <div>PSYCH!</div>
-                  :
-                  <div>PSYCH OUT!</div>
-                ) : <div>you're missing something</div>
+                  (submittedSearch && dogList.length>0) ?
+                  <ResultsSearchDogs dogList={dogList} view='desktop' submittedSearch={submittedSearch}/>
+                  : ( weekSearch && dogList.length>0) ?
+                  <ResultsDogByDay dogList={dogList} weekSearch={weekSearch} view='desktop' />
+                  : dogList.length>0 ?
+                  <ResultsAllDogs dogList={dogList} view='desktop' />
+                : null
+                ) : null
 
               }
             </Table>

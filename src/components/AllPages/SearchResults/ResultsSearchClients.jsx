@@ -10,7 +10,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function ResultsSearchClients({clientList, openModal}) {
+export default function ResultsSearchClients({clientList, openModal, submittedSearch}) {
   const dispatch = useDispatch();
 
   const clientScheduleView = (client) => {

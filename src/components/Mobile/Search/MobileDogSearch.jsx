@@ -125,7 +125,7 @@ export default function MobileDogSearch() {
                 <ResultsDogByDay dogList={dogList} weekSearch={weekSearch} />
                 : (dogList.length > 0 ) ?
                 <ResultsAllDogs dogList={dogList} />
-                : <></>
+                : null
             }
             </Table>
           </TableContainer >

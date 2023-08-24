@@ -4,7 +4,7 @@ import { useHistory, Link, useParams } from 'react-router-dom';
 
 
 //MUI
-import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { TableFooter, Paper, Stack, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -21,12 +21,16 @@ export default function MobileDogSearch() {
   const params = useParams();
   const [search, setSearch] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState('');
+  const [weekSearch, setWeekSearch] = useState('')
   // const [dogList, setDogList] = useState(clientList ? createDogList : [])
 
   useEffect(() => {
     dispatch({ type: 'FETCH_CLIENTS' });
     },[]
   );
+
+  const daysOfWeek = ['mon','tue','wed','thu','fri'];
+  console.log(daysOfWeek)
 
   const dogList = [...new Set(clientList.flatMap((client) =>
       client.dogs.map((dog) => ({
@@ -35,6 +39,11 @@ export default function MobileDogSearch() {
         client_firstname: client.first_name,
         client_lastname: client.last_name,
         client_id: client.client_id,
+        mon: client.monday,
+        tue: client.tuesday,
+        wed: client.wednesday,
+        thu: client.thursday,
+        fri: client.friday
       }))
     ))]
     console.log('doglist',dogList)
@@ -44,8 +53,15 @@ export default function MobileDogSearch() {
   }
 
   const clearResults = (event) => {
+    setWeekSearch('');
     setSubmittedSearch('');
     setSearch('');
+  }
+
+  const searchDogByDay = (day) => {
+    setSearch('');
+    setSubmittedSearch('');
+    setWeekSearch(day);
   }
 
   const getDogDetails = (dogID) => {
@@ -64,7 +80,7 @@ export default function MobileDogSearch() {
       }}>
       <Grid container 
         sx={{
-          m: 2, mx: 4, 
+          mt: 1, mb:1, mx: 4, 
           pt: 2,
           display: 'flex', 
           flexDirection: 'row', 
@@ -82,11 +98,14 @@ export default function MobileDogSearch() {
         />
         {submittedSearch ?
         <Button onClick={() => clearResults()} variant="contained" color="secondary">Clear</Button> :
-
         <Button onClick={() => searchFunction()} variant="contained" color="secondary">Search</Button>
        }
-          
       </Grid>
+      <Stack sx={{display:'flex', flexDirection:'row'}}>
+        {daysOfWeek.map((day,i) => (
+          <Button key={i} onClick={()=>searchDogByDay(day)}>{day}</Button>
+        ))}
+      </Stack>
       <Grid container spacing={2}>
         <Grid item xs={12}
           sx={{
@@ -107,7 +126,7 @@ export default function MobileDogSearch() {
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
-            {submittedSearch ?
+            { submittedSearch ?
               <TableBody>
                 {dogList.filter((dog) => {
                   const firstName = dog.client_firstname.toLowerCase();
@@ -125,6 +144,15 @@ export default function MobileDogSearch() {
                   </StyledTableRow>
                 ))}
               </TableBody>
+              : (weekSearch) ?
+                <TableBody>
+                  {dogList.filter((dog)=> dog[weekSearch]).map((dog) => (
+                    <StyledTableRow key={dog.dog_id}> 
+                      <TableCell onClick={()=>getDogDetails(dog.dog_id)}>{dog.dog_name}</TableCell>
+                      <TableCell onClick={()=>getDogDetails(dog.dog_id)}>{dog.client_firstname} {dog.client_lastname}</TableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
               :
               <TableBody>
                 {dogList.map((dog) => (

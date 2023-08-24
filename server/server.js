@@ -72,7 +72,10 @@ if (!process.env.PORT) {process.env.TZ = 'Etc/GMT'};
 /** Listen * */
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}, connecting to db schema ${config.SCHEMA}`);
-  console.log('timzone is: ', process.env.TZ)
-  console.log(`Current Sever Time: ${new Date().toString()}`);
-  console.log(`Current client time: ${new Date().toLocaleString('en-US', { timeZone: 'Etc/GMT+5' })}`);
+  // logs for confirming timezone issues in development
+  if (!process.env.PORT) {
+    console.log('timzone is: ', process.env.TZ)
+    console.log(`Current Sever Time: ${new Date().toString()}`);
+    console.log(`Current client time: ${new Date().toLocaleString('en-US', { timeZone: 'Etc/GMT+5' })}`);
+  }
 });

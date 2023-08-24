@@ -5,29 +5,23 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 //COMPONENTS
 import ClientModal from '../ClientModal/ClientModal';
+import ResultsSearchClients from '../../../AllPages/SearchResults/ResultsSearchClients';
+import ResultsAllClients from '../../../AllPages/SearchResults/ResultsAllClients';
+
 
 //MUI
-import { TableFooter, Paper, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
-import { styled } from '@mui/material/styles';
-
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&.MuiTableRow-root:hover':{
-    backgroundColor: '#accad5' ,
-  },
-}));
-
+import { Paper, Table, Switch, TableBody, TableContainer, Stack, TableHead, TableRow, TableCell, Box,  IconButton, Typography, Button, Grid, TextField } from '@mui/material';
 
 const redirect = process.env.REACT_APP_REDIRECT;
 console.log(redirect);
 console.log(process.env)
 
-
-function ClientList() {
+export default function ClientList() {
   const clientList = useSelector(store => store.clientsReducer);
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState('')
+  const [searchType, setSearchType] = useState('clients');
   const [submittedSearch, setSubmittedSearch] = useState('')
   const [imageSrc, setImageSrc] = useState('Images/qbButtonMed.png')
 
@@ -36,6 +30,23 @@ function ClientList() {
     dispatch({ type: 'FETCH_CLIENTS' })
     dispatch({ type: 'CLEAR_MODALS'})
   }, []);
+
+
+  // creates flat list of all dogs for dog search feature
+  const dogList = [...new Set(clientList.flatMap((client) =>
+    client.dogs.map((dog) => ({
+      dog_name: dog.dog_name,
+      dog_id: dog.dog_id,
+      client_firstname: client.first_name,
+      client_lastname: client.last_name,
+      client_id: client.client_id,
+      mon: client.monday,
+      tue: client.tuesday,
+      wed: client.wednesday,
+      thu: client.thursday,
+      fri: client.friday
+    }))
+  ))];
 
   //starts OAuth process with QB
   const connectQB = ()=>{
@@ -47,11 +58,7 @@ function ClientList() {
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
   }
 
-  const fetchOneClient = (client) => {
-    //console.log(client)
-    dispatch({type: 'SET_CLIENT', payload: client })
-    openModal('ClientDetails')
-  }
+
 
   const searchFunction = (event) => {
     setSubmittedSearch(search.toLowerCase())
@@ -68,11 +75,6 @@ function ClientList() {
     setSearch('');
   }
 
-  const clientScheduleView = (client) => {
-    dispatch({ type: 'SET_CLIENT', payload: client })
-    openModal('ClientSchedule')
-  }
-
 
   return (
     <Box className="desktop_container" 
@@ -83,9 +85,16 @@ function ClientList() {
               alignItems: 'center',
               gap: 2 
               }}>
+     
+      { searchType === 'clients' ?
+      <Button sx={{pt: 2, fontWeight: '800'}} onClick={()=>setSearchType('dogs')}>Order by dog</Button>
+      :
+      <Button sx={{pt: 2, fontWeight: '800'}} onClick={()=>setSearchType('clients')}>Order by client</Button>
+      }
+      
       <Grid container 
-          sx={{ m: 2, mx: 4, 
-                pt: 6,
+          sx={{ mb: 2, mx: 4, 
+                // pt: 2,
                 display: 'flex', 
                 flexDirection: 'row', 
                 justifyContent: 'center', 
@@ -117,7 +126,7 @@ function ClientList() {
                   alignItems: 'center' 
                   }}>
           {/* TABLE OPTION */}
-          <TableContainer component={Paper} sx={{width: '70%', height: '65vh'}}>
+          <TableContainer component={Paper} sx={{width: '80%', height: '65vh'}}>
             <Table stickyHeader size="small">
               <TableHead>
                 <TableRow>
@@ -128,62 +137,21 @@ function ClientList() {
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
-              {submittedSearch ? 
-                <TableBody
-                    >  
-                    {clientList
-                      .filter((client) => {
-                        const firstName = client.first_name.toLowerCase()
-                        const lastName = client.last_name.toLowerCase()
+              { searchType==='clients' ? 
+                (
+                  (submittedSearch) ?
+                  <ResultsSearchClients clientList={clientList} openModal={openModal} />
+                  :
+                  <ResultsAllClients clientList={clientList} openModal={openModal} />
+                ) : (searchType === 'dogs') ?
+                (
+                  (submittedSearch) ?
+                  <div>PSYCH!</div>
+                  :
+                  <div>PSYCH OUT!</div>
+                ) : <div>you're missing something</div>
 
-                        //loop through array of dog names and check those
-                        if (firstName.includes(submittedSearch)) {
-                          return true;
-                        }
-                        if (lastName.includes(submittedSearch)) {
-                          return true;
-                        }
-                        for(let dog of client.dogs){
-                          const dogName = dog.dog_name.toLowerCase()
-                          if(dogName.includes(submittedSearch)){
-                            return true;
-                          }
-                        }
-                      })
-                      .map((client ) => (
-                        <StyledTableRow key={client.client_id} hover> 
-                          <TableCell onClick={() => fetchOneClient(client)}>{client.first_name} {client.last_name}</TableCell>
-                          <TableCell onClick={() => fetchOneClient(client)}>{client.dogs.map(dog => (dog.dog_name + ' '))}</TableCell>
-                          <TableCell onClick={() => fetchOneClient(client)}>{client.phone}</TableCell>
-                          <TableCell onClick={() => fetchOneClient(client)}>{client.email}</TableCell>
-                          <TableCell>
-                            <IconButton onClick={() => clientScheduleView(client)}>
-                              <CalendarMonthIcon sx={{ fontSize: 20, color: '#341341' }}/> 
-                            </IconButton>
-                          </TableCell>
-                        </StyledTableRow>
-                    ))}
-                  </TableBody>
-                :
-                  <TableBody>
-                    {clientList.map((client ) => (
-                        <StyledTableRow key={client.client_id} hover> 
-                          <TableCell onClick={() => fetchOneClient(client)}>{client.first_name} {client.last_name}</TableCell>
-                          <TableCell onClick={() => fetchOneClient(client)}>{client.dogs.map(
-                           (dog, i) => (i === client.dogs.length-1 ? dog.dog_name : dog.dog_name + ' • '))}</TableCell>
-                          <TableCell onClick={() => fetchOneClient(client)}>{client.phone}</TableCell>
-                          <TableCell onClick={() => fetchOneClient(client)}>{client.email}</TableCell>
-                          <TableCell>
-                            <IconButton onClick={() => clientScheduleView(client)}>
-                              <CalendarMonthIcon sx={{ fontSize: 20, color: '#341341' }}/> 
-                            </IconButton>
-                          </TableCell>
-                        </StyledTableRow>
-                    ))}
-                
-                </TableBody>
-
-            }
+              }
             </Table>
           </TableContainer>
         </Grid>
@@ -200,8 +168,5 @@ function ClientList() {
       <ClientModal /> {/* only open when button is pressed */}
     </Box>
   );
-
 }
-
-export default ClientList;
 

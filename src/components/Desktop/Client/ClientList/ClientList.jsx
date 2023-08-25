@@ -86,6 +86,7 @@ export default function ClientList() {
   const clearResults = (event) => {
     setSubmittedSearch('');
     setSearch('');
+    setWeekSearch('');
   }
 
 
@@ -132,9 +133,13 @@ export default function ClientList() {
         }
         { searchType==='dogs' ?
           <Stack sx={{display:'flex', flexDirection:'row'}}>
-            {daysOfWeek.map((day,i) => { console.log(day===weekSearch); return (
-              <Button key={i} onClick={()=>searchDogByDay(day)} sx={{backgroundColor: (day===weekSearch) ? '#4A5061' : 'none', color: (day===weekSearch) ? 'white' : 'black'}}>{day}</Button>
-            )})}
+            {daysOfWeek.map((day,i) => (
+              <Button key={i} 
+                onClick={()=>{ (day===weekSearch) ? setWeekSearch('') : searchDogByDay(day)}}
+                sx={{backgroundColor: (day===weekSearch) ? '#4A5061' : 'none', color: (day===weekSearch) ? 'white' : 'black'}}
+              >{day}
+              </Button>
+            ))}
           </Stack>
           : null
         }

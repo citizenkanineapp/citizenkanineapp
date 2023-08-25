@@ -42,7 +42,6 @@ export default function ResultsDogByDay({dogList, clientList,openModal, weekSear
           { view==='desktop' ?
           <>
             <TableCell onClick={()=>getDogDetails(dog)}> {dog.days.join(', ').toUpperCase()} </TableCell>
-            <TableCell onClick={()=>getDogDetails(dog)}> {dog.days.join(', ').toUpperCase()} </TableCell>
             <TableCell>
               <IconButton onClick={() => clientScheduleView(dog)}>
                 <CalendarMonthIcon sx={{ fontSize: 20, color: '#341341' }}/> 

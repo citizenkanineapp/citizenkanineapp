@@ -2,11 +2,8 @@ import { useEffect, useState, useRef, MouseEvent } from 'react';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Accordion, AccordionSummary, AccordionDetails, Collapse, ListItemAvatar, ListItemIcon, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import EventBusyIcon from '@mui/icons-material/EventBusy';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FlagIcon from '@mui/icons-material/Flag';
-import CancelIcon from '@mui/icons-material/Cancel';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import RouteSelect from '../RouteSelect/RouteSelect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PinDropIcon from '@mui/icons-material/PinDrop';
@@ -27,7 +24,6 @@ function DailyRoutes() {
     dispatch({ type: 'GET_DAILY_ROUTES' });
     dispatch({ type: 'GET_ROUTE_DETAILS', payload: params.id })
 
-
     // return () => {
     //   dispatch({
     //     type: 'CLEAR_ROUTE'
@@ -41,12 +37,16 @@ function DailyRoutes() {
     setExpanded(isExpanded ? panel : false);
   };
 
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+    dispatch ({ type: 'MOVE_DOG_ROUTE', payload: result });
+    dispatch({ type: 'UPDATE_ROUTE', payload: { routeName: result.destination.droppableId, dogID: result.draggableId } });
+  }
 
   const user = useSelector(store => store.user);
   // reducer getting filled with a specific routes dogs
   const route = useSelector(store => store.routeReducer);
   // const routeName = route[0].route;
-
 
   const getRouteColor = (route) => {
     switch (route[0].route) {
@@ -77,7 +77,7 @@ function DailyRoutes() {
   }
 
   return (
-    <>
+    <DragDropContext onDragEnd={onDragEnd}> 
       {route[0] ?
         <Grid container spacing={1} sx={{ justifyContent: 'center', alignItems: 'center', mb: 3, mt: 2 }}>
           <Grid item xs={8} sx={{ background: () => getRouteColor(route), color: 'white', mt: 3, textAlign: 'center', textTransform: 'uppercase', borderRadius: 2 }}>
@@ -97,56 +97,63 @@ function DailyRoutes() {
                 <Typography>Map</Typography>
               </IconButton>
             </Grid>
-          <Grid item xs={12} sx={{ mx: 2 }}>
-
-
-            <List sx={{ mb: 10 }}>
-              {route && route.map && route.map((dog, j) => (
-                <Accordion key={j} expanded={expanded === dog.dog_id} onChange={handleChange(dog.dog_id)} sx={{ backgroundColor: () => determineStatus(dog), mb: 1 }}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <List>
-                      <ListItem sx={{ backgroundColor: () => determineStatus(dog) }}>
-
-                        <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >
-                          {dog.image ?
-                            <Avatar src={dog.image} />
-                            :
-                            <Avatar>
-                              {dog.name[0]}
-                            </Avatar>
-
-                          }
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={dog.name}
-                          secondary={dog.client_name}
-                          sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
-                        />
-                        {dog.flag ?
-                          <IconButton edge="end">
-                            <FlagIcon sx={{ fill: '#F8614D', ml: 6 }} />
-                          </IconButton>
-                          :
-                          null
-                        }
-                      </ListItem>
-                    </List>
-
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Stack direction='row' spacing={1}>
-                        <DogCheckIn dog={dog} config="routes"/>
-                    </Stack>
-
-                  </AccordionDetails>
-
-                </Accordion>
-
-              ))}
-            </List>
-
-
-          </Grid>
+              <Droppable droppableId={`${route[0].route}`}>
+                {(provided, snapshot) => (
+                <Grid {...provided.droppableProps} ref={provided.innerRef} 
+                  item xs={12} sx={{ mx: 2 }}>
+                  <List sx={{ mb: 10 }}>
+                    {route && route.map && route.map((dog, j) => (
+                      <Draggable draggableId={`${dog.dog_id}`} index={j} key={dog.dog_id} >
+                        {(provided, snapshot) => (
+                          <Box 
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}   
+                          >
+                            <Accordion expanded={expanded === dog.dog_id} onChange={handleChange(dog.dog_id)} sx={{ backgroundColor: () => determineStatus(dog), mb: 1 }}>
+                            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                              <List>
+                                <ListItem sx={{ backgroundColor: () => determineStatus(dog) }}>
+                                  <ListItemAvatar onClick={(event) => getDogDetails(dog.dog_id)} >
+                                    {dog.image ?
+                                      <Avatar src={dog.image} />
+                                      :
+                                      <Avatar>
+                                        {dog.name[0]}
+                                      </Avatar>
+                                    }
+                                  </ListItemAvatar>
+                                  <ListItemText
+                                    primary={dog.name}
+                                    secondary={dog.client_name}
+                                    sx={{ textDecoration: dog.cancelled ? 'line-through' : null }}
+                                    />
+                                  {dog.flag ?
+                                    <IconButton edge="end">
+                                      <FlagIcon sx={{ fill: '#F8614D', ml: 6 }} />
+                                    </IconButton>
+                                    :
+                                    null
+                                  }
+                                </ListItem>
+                              </List>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                              <Stack direction='row' spacing={1}>
+                                  <DogCheckIn dog={dog} config="routes"/>
+                              </Stack>
+                            </AccordionDetails>
+                          </Accordion>
+                          </Box>
+                        )}
+                      </Draggable>
+                    ))}
+                  {/* creates space for possible new chip */}
+                  {provided.placeholder}
+                  </List>
+                </Grid>
+              )}
+              </Droppable>       
         </Grid>
 
 
@@ -154,8 +161,7 @@ function DailyRoutes() {
 
         <RouteSelect />
       }
-
-    </>
+    </DragDropContext>
   );
 }
 

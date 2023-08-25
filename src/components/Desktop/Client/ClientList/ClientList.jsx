@@ -91,39 +91,32 @@ export default function ClientList() {
 
   return (
     <Box className="desktop_container" 
-        sx={{ height: '88%', 
-              display: 'flex', 
-              flexDirection: 'column', 
-              justifyContent: 'flex-start', 
-              alignItems: 'center',
-              gap: 2 
-              }}>
-     
-      { searchType === 'clients' ?
-      <Button sx={{pt: 2, fontWeight: '800'}} onClick={()=>setSearchType('dogs')}>Order by client</Button>
-      :
-      <Button sx={{pt: 2, fontWeight: '800'}} onClick={()=>setSearchType('clients')}>Order by dog</Button>
-      }
-      
+      sx={{ height: '88%', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'flex-start', 
+        alignItems: 'center',
+        gap: 2 
+    }}>
       <Grid container 
-          sx={{ mx: 4, 
-                // pt: 2,
-                display: 'flex', 
-                flexDirection: 'row', 
-                justifyContent: 'center', 
-                width:'80%', gap: 2 
-                }}>
+        sx={{ mt:3, mx: 4, 
+          // pt: 2,
+          display: 'flex', 
+          flexDirection: 'row', 
+          justifyContent: 'center', 
+          width:'80%', gap: 2 
+      }}>
        
-          <TextField
-            value={search || ''}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e) => onEnterSubmit(e)}
-            label="Search Clients & Dogs"
-            variant="filled"
-            size="small"
-            color="secondary"
-            sx={{width: '60%'}}
-          />
+      <TextField
+        value={search || ''}
+        onChange={(e) => setSearch(e.target.value)}
+        onKeyDown={(e) => onEnterSubmit(e)}
+        label="Search Clients & Dogs"
+        variant="filled"
+        size="small"
+        color="secondary"
+        sx={{width: '60%'}}
+      />
        {submittedSearch ?
         <Button onClick={() => clearResults()} variant="contained" color="secondary">Clear</Button> :
 
@@ -131,14 +124,23 @@ export default function ClientList() {
        }
           <Button onClick={() => dispatch({ type: 'QUICKBOOKS_SYNC'})} variant='contained' color="secondary">QuickBooks Sync</Button>  
       </Grid>
-      { searchType==='dogs' ?
-        <Stack sx={{display:'flex', flexDirection:'row'}}>
-          {daysOfWeek.map((day,i) => (
-            <Button key={i} onClick={()=>searchDogByDay(day)}>{day}</Button>
-          ))}
-        </Stack>
-        : null
-      }
+      <Stack sx={{width: '70%',display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+        { searchType === 'clients' ?
+        <Button sx={{fontWeight: '800'}} onClick={()=>setSearchType('dogs')}>Order by client</Button>
+        :
+        <Button sx={{fontWeight: '800'}} onClick={()=>setSearchType('clients')}>Order by dog</Button>
+        }
+        { searchType==='dogs' ?
+          <Stack sx={{display:'flex', flexDirection:'row'}}>
+            {daysOfWeek.map((day,i) => { console.log(day===weekSearch); return (
+              <Button key={i} onClick={()=>searchDogByDay(day)} sx={{backgroundColor: (day===weekSearch) ? '#4A5061' : 'none', color: (day===weekSearch) ? 'white' : 'black'}}>{day}</Button>
+            )})}
+          </Stack>
+          : null
+        }
+        <Stack sx={{width:'30%'}}></Stack>
+      </Stack>
+
       <Grid container spacing={2}>
         <Grid item xs={12} 
             sx={{ mx: 5, 

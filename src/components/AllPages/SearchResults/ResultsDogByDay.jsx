@@ -14,7 +14,6 @@ export default function ResultsDogByDay({dogList, weekSearch, view}) {
   const getDogDetails = (dogID) => {
     history.push(`/m/dog/${dogID}`)
   }
-  console.log(weekSearch)
 
   return (
     <TableBody>

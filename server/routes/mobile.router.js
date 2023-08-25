@@ -24,7 +24,8 @@ router.get('/daily', async (req, res) => {
     // logic to populate daily dogs if there is nothing for the day?
     var today = new Date()
     today.setUTCHours(today.getUTCHours() - 5)
-    console.log(today)
+    console.log('server time is', new Date().toString())
+    console.log('client time is',today)
     var weekday = {};
     weekday.number = today.getDay();
     console.log('NUMBER IS:', weekday.number);
@@ -93,9 +94,9 @@ router.get('/daily', async (req, res) => {
         // add client ID 
         const insertSQL = `
         INSERT INTO daily_dogs
-            ("dog_id", "route_id", "client_id", "name")
+            ("dog_id", "route_id", "client_id", "name", "date")
         VALUES
-            ($1, $2, $3, $4)
+            ($1, $2, $3, $4, $5)
        
         `
 
@@ -158,7 +159,7 @@ router.get('/daily', async (req, res) => {
             // insert into daily_dogs
             await Promise.all(adjustedDogs.map(dog => {
                 // const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4)`;
-                const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name];
+                const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name, today];
                 return client.query(insertSQL, insertValues);
             }));
 

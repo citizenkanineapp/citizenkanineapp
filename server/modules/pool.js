@@ -26,7 +26,7 @@ const pool = new pg.Pool(configPool);
 pool.on('connect',async (client)=> {
   client.query(`SET search_path TO ${configPool.schema}, public`);
   // for development testing!
-  if (!process.env.PORT) {
+  if (!process.env.NODE_ENV) {
     client.query(`SET TIMEZONE='UTC'`);
   }
 });

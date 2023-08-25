@@ -52,6 +52,8 @@ pool.query(queryText)
  * POST route for admin notes
  */
  router.post('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+  const today = new Date()
+  today.setUTCHours(today.getUTCHours() - 5)
     // console.log('does this get to server?', req.body)
     // console.log('who is user?', req.user.id)
     const {notes} = req.body
@@ -60,11 +62,11 @@ pool.query(queryText)
     try{
     const noteTxt = `
               INSERT INTO admin_notes 
-                ("user_id", "notes", "note_type", "dog_id") 
+                ("user_id", "notes", "note_type", "dog_id", "date") 
                 VALUES
-                ($1, $2, $3,$4) ;
+                ($1, $2, $3, $4, $5) ;
     `
-    const notesValues = [user, notes.notes, notes.note_type, notes.dog_id]
+    const notesValues = [user, notes.notes, notes.note_type, notes.dog_id, today]
     pool.query(noteTxt, notesValues)
     res.sendStatus(201);
     } catch (error) {

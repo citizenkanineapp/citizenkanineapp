@@ -4,7 +4,6 @@ const dailyDogz = (state = {}, action) => {
     switch (action.type) {
         case 'SET_DAILY_ROUTES':
             return action.payload;
-
         case 'MOVE_DOG':
             const dogID = Number(action.payload.draggableId);
             const oldRouteName = action.payload.source.droppableId;
@@ -16,11 +15,9 @@ const dailyDogz = (state = {}, action) => {
 
             //movement in the same route
             if (oldRouteName === newRouteName) {
-
                 const reorderedRoute = Array.from(oldRouteArray); //creates shallow copy of array
                 const [dogToReorder] = reorderedRoute.splice(oldIndex, 1); //removes dog from original index
                 reorderedRoute.splice(newIndex, 0, dogToReorder); //adds dog to new index
-
                 return { ...state, [oldRouteName]: reorderedRoute };
             }
 

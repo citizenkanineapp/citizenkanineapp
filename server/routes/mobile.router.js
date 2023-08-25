@@ -22,11 +22,11 @@ router.get('/daily', async (req, res) => {
 
     // hit the route
     // logic to populate daily dogs if there is nothing for the day?
-    var today = new Date()
+    const today = new Date()
     today.setUTCHours(today.getUTCHours() - 5)
     console.log('server time is', new Date().toString())
     console.log('client time is',today)
-    var weekday = {};
+    const weekday = {};
     weekday.number = today.getDay();
     console.log('NUMBER IS:', weekday.number);
     // weekday = "Saturday"
@@ -76,7 +76,7 @@ router.get('/daily', async (req, res) => {
     SELECT dogs_schedule_changes.*, dogs.name, clients.route_id from dogs_schedule_changes
 		JOIN dogs ON dogs_schedule_changes.dog_id = dogs.id
         JOIN clients ON dogs.client_id = clients.id
-	    WHERE dogs_schedule_changes.date_to_change = CURRENT_DATE
+	    WHERE dogs_schedule_changes.date_to_change = $1
 	ORDER BY dogs_schedule_changes.dog_id;
     `
 
@@ -114,7 +114,7 @@ router.get('/daily', async (req, res) => {
         // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
 
         // find the schedule changes for the day
-        const scheduleAdjustmentsResults = await client.query(scheduleQuery);
+        const scheduleAdjustmentsResults = await client.query(scheduleQuery,[today]);
         const scheduleAdjustments = scheduleAdjustmentsResults.rows;
         // console.log(scheduleAdjustments);
 
@@ -180,6 +180,8 @@ router.get('/daily', async (req, res) => {
 
 // GET ROUTE FOR EMPLOYEE ROUTES
 router.get('/route/:route_id', async (req, res) => {
+    const today = new Date()
+    today.setUTCHours(today.getUTCHours() - 5)
     let route = req.params.route_id;
 
     // routes need to be arrays of dog objects ...
@@ -192,11 +194,11 @@ router.get('/route/:route_id', async (req, res) => {
 		ON daily_dogs.route_id = routes.id
 	JOIN clients
 		ON daily_dogs.client_id = clients.id
-	    WHERE daily_dogs.date = CURRENT_DATE AND daily_dogs.route_id = $1
+	    WHERE daily_dogs.date = $2 AND daily_dogs.route_id = $1
 	ORDER BY clients.id;
     `
 
-    const routeValue = [route];
+    const routeValue = [route, today];
 
     pool.query(routeQuery, routeValue)
         .then(routeResponse => {
@@ -211,6 +213,8 @@ router.get('/route/:route_id', async (req, res) => {
 });
 
 router.get('/routes', async (req, res) => {
+    const today = new Date()
+    today.setUTCHours(today.getUTCHours() - 5)
     const routesQuery = `
     SELECT daily_dogs.*, dogs.flag, dogs.notes, dogs.image, routes.name AS route, clients.lat, clients.long, clients.street, clients.zip from daily_dogs
 	JOIN dogs
@@ -219,11 +223,11 @@ router.get('/routes', async (req, res) => {
 		ON daily_dogs.route_id = routes.id
     JOIN clients
         ON daily_dogs.client_id = clients.id
-	WHERE daily_dogs.date = CURRENT_DATE
+	WHERE daily_dogs.date = $1
     ORDER BY dogs.client_id;
     `
 
-    pool.query(routesQuery)
+    pool.query(routesQuery,[today])
         .then(allRoutesRes => {
             let dailyRoutes = allRoutesRes.rows;
             // console.log('daily routes test', dailyRoutes)
@@ -260,6 +264,8 @@ router.get('/dog/:dogID', async (req, res) => {
 
 
 router.put('/routes', async (req, res) => {
+    const today = new Date()
+    today.setUTCHours(today.getUTCHours() - 5)
     // expect an object being sent over for the put request?
     // pull out relevant dog ID and route ID
     const dogID = req.body.dogID;
@@ -267,8 +273,8 @@ router.put('/routes', async (req, res) => {
 
     console.log('DOG ID & ROUTE ID', dogID, routeID);
 
-    const updateQuery = `UPDATE daily_dogs SET "route_id" = $1 WHERE "dog_id" = $2 AND daily_dogs.date = CURRENT_DATE`;
-    const updateValues = [routeID, dogID];
+    const updateQuery = `UPDATE daily_dogs SET "route_id" = $1 WHERE "dog_id" = $2 AND daily_dogs.date = $3`;
+    const updateValues = [routeID, dogID, today];
 
     pool.query(updateQuery, updateValues)
         .then(changeResults => {
@@ -281,6 +287,8 @@ router.put('/routes', async (req, res) => {
 
 // UPDATE A DOG's STATUS
 router.put('/daily', async (req, res) => {
+    const today = new Date()
+    today.setUTCHours(today.getUTCHours() - 5)
     // expect an object being sent over for the put request?
     // pull out relevant dog ID and route ID
     const dogID = req.body.id;
@@ -290,8 +298,8 @@ router.put('/daily', async (req, res) => {
 
     // console.log('UPDATED DOG', dogID, checkedIn, noShow, cancelled);
 
-    const updateQuery = `UPDATE daily_dogs SET "checked_in" = $1, "no_show" = $2, "cancelled" = $3 WHERE "dog_id" = $4 AND daily_dogs.date = CURRENT_DATE`;
-    const updateValues = [checkedIn, noShow, cancelled, dogID];
+    const updateQuery = `UPDATE daily_dogs SET "checked_in" = $1, "no_show" = $2, "cancelled" = $3 WHERE "dog_id" = $4 AND daily_dogs.date = $5`;
+    const updateValues = [checkedIn, noShow, cancelled, dogID, today];
 
     pool.query(updateQuery, updateValues)
         .then(changeResults => {

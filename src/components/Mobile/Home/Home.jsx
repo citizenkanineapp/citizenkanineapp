@@ -13,15 +13,15 @@ function Home() {
   const dispatch = useDispatch();
 
   // on page load - populate the daily dogs table using day of the week and the scheduled dogs for the day
-  useEffect(() => {
-    if (user.admin) {
-      dispatch({
-        type: 'POPULATE_DAILY_DOGS'
-      })
-    }
+  // useEffect(() => {
+  //   if (user.admin) {
+  //     dispatch({
+  //       type: 'POPULATE_DAILY_DOGS'
+  //     })
+  //   }
 
 
-  }, [])
+  // }, [])
 
   // in case the on page load fails - this runs on navigation to the routes page so that the daily dogs
   // should be accessible 

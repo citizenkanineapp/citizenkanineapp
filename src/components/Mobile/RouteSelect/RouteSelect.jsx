@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AvatarGroup, Card, CardContent, Avatar, Typography, Grid, Button } from '@mui/material';
+import { AvatarGroup, Card, CardContent, Avatar, Typography, Grid, Stack, Button } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import FlagIcon from '@mui/icons-material/Flag';
@@ -14,8 +14,6 @@ function RouteSelect() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({ type: 'GET_DAILY_ROUTES' });
-
-
     }, []);
 
     // reducer getting filled with a specific routes dogs
@@ -78,8 +76,11 @@ function RouteSelect() {
             ))}
 
             {user.admin ?
-                <Grid item xs={12} sx={{ justifyContent: 'space-around', alignItems: 'center', mb: 15 }}>
-                    <Button variant='contained' color='info' onClick={() => history.push('/m/routes/admin')} sx={{ position: 'absolute', left: '31%' }}>Load Balancing</Button>
+                <Grid item xs={12} sx={{ justifyContent: 'space-around', alignItems: 'center', mb: 15,mt:5}}>
+                    <Stack sx={{ justifyContent: 'space-around', alignItems: 'center', display:'flex', flexDirection:'row' }}>
+                        <Button variant='contained' color='info' onClick={() => history.push('/m/routes/admin')} sx={{ width: '40%', position: 'absolute', left: '5%' }}>Load Balancing</Button>
+                        <Button variant='contained' color='info' onClick={() => dispatch({ type: 'POPULATE_DAILY_DOGS' })} sx={{ width: '40%', position: 'absolute', right: '5%' }}>Generate Daily Dogs</Button>
+                    </Stack>
                 </Grid>
                 :
                 null

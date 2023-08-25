@@ -205,7 +205,42 @@ function* updateStatus(action) {
     } catch (error) {
         console.log('ERROR UPDATING DOG STATUS', error);
     }
+    
+}
 
+function* updateDogOrderInRoute(action) {
+    // called by onDrageEnd() in Route.jsx
+    //accepts results from dragndrop and a copy of route state.
+    const result = action.payload.result;
+    const state = action.payload.route;
+    
+    //this function might be dirty dirty extra. pulled from dailyDogz.js reducer function 'MOVE_DOG', which modifies state.
+    const oldRouteName = result.source.droppableId;
+    const oldRouteArray = state;
+    const oldIndex = result.source.index;
+    const newIndex = result.destination.index;
+
+    console.log(result);
+    console.log(oldRouteName, oldRouteArray,  oldIndex, newIndex);
+
+    const reorderedRoute = Array.from(oldRouteArray); //creates shallow copy of array
+    const [dogToReorder] = reorderedRoute.splice(oldIndex, 1); //removes dog from original index
+    reorderedRoute.splice(newIndex, 0, dogToReorder); //adds dog to new index
+    reorderedRoute.forEach((dog, i) => dog.index = i);
+    reorderedRoute.sort((a,b)=>a.index - b.index);
+    console.log('reordered', reorderedRoute);
+
+    try {
+        yield axios({
+            method: 'PUT',
+            url: `/api/mobile/allDogs`,
+            data: reorderedRoute
+        })
+        yield put({ type: 'GET_ROUTE_DETAILS', payload: state[0].route_id })
+
+    } catch (error) {
+        console.log('ERROR UPDATING DOG ORDER', error);
+    }
 }
 
 function* RouteSaga() {
@@ -216,6 +251,7 @@ function* RouteSaga() {
     yield takeLatest('NO_SHOW', updateStatus);
     yield takeLatest('CHECK_IN', updateStatus);
     yield takeLatest('CANCEL_WALK', updateStatus);
+    yield takeLatest('UPDATE_DOG_ORDER', updateDogOrderInRoute);
 }
 
 export default RouteSaga;

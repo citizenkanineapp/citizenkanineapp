@@ -23,7 +23,7 @@ function DailyRoutes() {
     // console.log("DailyRoutes useEffect", params.id)
     // i don't think it's necessary to get daily routes?
     dispatch({ type: 'GET_DAILY_ROUTES' });
-    dispatch({ type: 'GET_ROUTE_DETAILS', payload: params.id })
+    // dispatch({ type: 'GET_ROUTE_DETAILS', payload: params.id })
 
     // return () => {
     //   dispatch({
@@ -40,7 +40,10 @@ function DailyRoutes() {
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
-    dispatch ({ type: 'MOVE_DOG_ROUTE', payload: result });
+    //first dispatch sets state so there's no page lag
+    dispatch ({ type: 'SET_DOG_ORDER', payload: result });
+    // second dispatch posts to mobile/allDogs with new indices
+    dispatch({ type: 'UPDATE_DOG_ORDER', payload: {result, route}});
     // dispatch({ type: 'UPDATE_ROUTE', payload: { routeName: result.destination.droppableId, dogID: result.draggableId } });
   }
 

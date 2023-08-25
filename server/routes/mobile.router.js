@@ -45,23 +45,23 @@ router.get('/daily', async (req, res) => {
             break;
         case 1:
             console.log('Monday');
-            searchQuery += 'WHERE "1" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "1" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
             break;
         case 2:
             console.log('Tuesday');
-            searchQuery += 'WHERE "2" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "2" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
             break;
         case 3:
             console.log('Wednesday');
-            searchQuery += 'WHERE "3" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "3" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
             break;
         case 4:
             console.log('Thursday');
-            searchQuery += 'WHERE "4" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "4" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
             break;
         case 5:
             console.log('Friday');
-            searchQuery += 'WHERE "5" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "5" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
             break;
         case 6:
             searchQuery = null;
@@ -195,7 +195,7 @@ router.get('/route/:route_id', async (req, res) => {
 	JOIN clients
 		ON daily_dogs.client_id = clients.id
 	    WHERE daily_dogs.date = $2 AND daily_dogs.route_id = $1
-	ORDER BY clients.id;
+	ORDER BY daily_dogs.index;
     `
 
     const routeValue = [route, today];

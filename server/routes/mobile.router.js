@@ -45,23 +45,23 @@ router.get('/daily', async (req, res) => {
             break;
         case 1:
             console.log('Monday');
-            searchQuery += 'WHERE "1" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "1" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
             break;
         case 2:
             console.log('Tuesday');
-            searchQuery += 'WHERE "2" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "2" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
             break;
         case 3:
             console.log('Wednesday');
-            searchQuery += 'WHERE "3" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "3" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
             break;
         case 4:
             console.log('Thursday');
-            searchQuery += 'WHERE "4" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "4" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
             break;
         case 5:
             console.log('Friday');
-            searchQuery += 'WHERE "5" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id;';
+            searchQuery += 'WHERE "5" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
             break;
         case 6:
             searchQuery = null;
@@ -195,7 +195,7 @@ router.get('/route/:route_id', async (req, res) => {
 	JOIN clients
 		ON daily_dogs.client_id = clients.id
 	    WHERE daily_dogs.date = $2 AND daily_dogs.route_id = $1
-	ORDER BY clients.id;
+	ORDER BY daily_dogs.index;
     `
 
     const routeValue = [route, today];
@@ -224,7 +224,7 @@ router.get('/routes', async (req, res) => {
     JOIN clients
         ON daily_dogs.client_id = clients.id
 	WHERE daily_dogs.date = $1
-    ORDER BY dogs.client_id;
+    ORDER BY daily_dogs.index;
     `
 
     pool.query(routesQuery,[today])
@@ -354,56 +354,15 @@ router.put('/photos', async (req, res) => {
 })
 
 
-
-
-
-// PUT ROUTE TO UPDATE DOG ROUTES FOR THE DAY
-// if it's a put per move it's this:
+// PUT ROUTE TO UPDATE DOG INDICES IN DAILY DOG FOR ROUTE REORDERING
 router.put('/allDogs', async (req, res) => {
     const client = await pool.connect();
-
-    // what is the req.body?
-    console.log(req.body);
-
-    // example SQL query for an update ... this would only be for one dog, and would have two separate values we change
-    // in the route_id and the dog_id ... i figured the dog_id is more easily accessible than the actual table row key
-
-    // Need to look into a DB connection promises thing
-    // const sqlQuery = `
-    // UPDATE daily_dogs
-    // SET 
-    // 	"route_id" = 3
-    // WHERE "dog_id" = 3;
-    // `
-
-    // TAKES IN AN ARRAY THAT LOOKS LIKE THIS
-    //    {
-    //     "dogs": [
-    //         {
-    //             "dog_id":3,
-    //             "route_id":2
-    //         },
-    //          {
-    //             "dog_id":5,
-    //             "route_id":2
-    //         },
-    //         {
-    //             "dog_id":18,
-    //             "route_id":2
-    //         }
-    //     ]
-    //     }
-
     try {
-        // expect req.body to be an array of dogs 
-        // inner objects should be {dog_id: #, route_id: #}
-        const dogs = req.body.dogs;
-
         await client.query('BEGIN')
 
-        await Promise.all(dogs.map(dog => {
-            const updateQuery = `UPDATE daily_dogs SET "route_id" = $1 WHERE "dog_id" = $2`;
-            const updateValues = [dog.route_id, dog.dog_id];
+        await Promise.all(req.body.map(dog => {
+            const updateQuery = `UPDATE daily_dogs SET "index" = $1 WHERE "dog_id" = $2 AND "date" = $3` ;
+            const updateValues = [dog.index, dog.dog_id, dog.date];
             return client.query(updateQuery, updateValues);
         }));
 

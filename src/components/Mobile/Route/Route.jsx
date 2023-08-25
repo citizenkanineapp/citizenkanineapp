@@ -103,7 +103,7 @@ function DailyRoutes() {
                   item xs={12} sx={{ mx: 2 }}>
                   <List sx={{ mb: 10 }}>
                     {route && route.map && route.map((dog, j) => (
-                      <Draggable draggableId={`${dog.dog_id}`} index={j} key={j} >
+                      <Draggable draggableId={`${dog.dog_id}`} index={j} key={dog.dog_id} >
                         {(provided, snapshot) => (
                           <Box 
                             {...provided.draggableProps}

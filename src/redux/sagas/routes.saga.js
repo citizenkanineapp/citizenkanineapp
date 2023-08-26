@@ -180,6 +180,7 @@ function* populateDailyDogs(action) {
 
     try {
         const populatedDogs = yield axios.get('/api/mobile/daily');
+        yield put({type: 'GET_DAILY_ROUTES' });
     } catch (error) {
         console.log('Daily Dogs only generates on Weekdays - More than likely that is why you are seeing this error or daily dogs have already populated for today!', error);
     }

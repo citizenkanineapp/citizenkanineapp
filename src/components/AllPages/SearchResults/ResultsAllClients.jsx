@@ -1,4 +1,4 @@
-import { TableBody, TableRow, TableCell, IconButton,  } from '@mui/material';
+import { TableBody, TableRow, TableCell, IconButton } from '@mui/material';
 import { styled } from '@mui/system';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import {useDispatch} from 'react-redux';
@@ -19,7 +19,7 @@ export default function ResultsAllClients({clientList, openModal}) {
   }
 
   const fetchOneClient = (client) => {
-    //console.log(client)
+    // console.log('client',client)
     dispatch({type: 'SET_CLIENT', payload: client })
     openModal('ClientDetails')
   }

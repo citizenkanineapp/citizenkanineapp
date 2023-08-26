@@ -179,11 +179,11 @@ export default function ClientList() {
                 ) : (searchType === 'dogs') ?
                 (
                   (submittedSearch && dogList.length>0) ?
-                  <ResultsSearchDogs dogList={dogList} view='desktop' submittedSearch={submittedSearch}/>
+                  <ResultsSearchDogs clientList={clientList} openModal={openModal} dogList={dogList} view='desktop' submittedSearch={submittedSearch}/>
                   : ( weekSearch && dogList.length>0) ?
-                  <ResultsDogByDay dogList={dogList} weekSearch={weekSearch} view='desktop' />
+                  <ResultsDogByDay clientList={clientList} openModal={openModal}  dogList={dogList} weekSearch={weekSearch} view='desktop' />
                   : dogList.length>0 ?
-                  <ResultsAllDogs dogList={dogList} view='desktop' />
+                  <ResultsAllDogs clientList={clientList} openModal={openModal} dogList={dogList} view='desktop' />
                 : null
                 ) : null
 

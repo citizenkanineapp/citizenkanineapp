@@ -54,8 +54,14 @@ function DogDetails() {
   //this routes the user back to the route for the day
   const backFunction = (event) => {
     const currentRoute  = route.filter(thisDog => thisDog.dog_id === dog.dog_id)
+    if (currentRoute.length>0) {
     const currentRouteId = currentRoute[0].route_id
-    history.push(`/m/route/${currentRouteId}`)
+      history.push(`/m/route/${currentRouteId}`)
+      console.log(route)
+    }
+    else {
+      history.push('/m/search');
+    }
   }
 
   // while we were not able to get map display functionality, clicking this should open either the google maps app or a webpage 

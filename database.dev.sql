@@ -214,6 +214,7 @@ CREATE TABLE ck_dev.daily_dogs (
 	"checked_in" BOOLEAN DEFAULT NULL,
 	"no_show" BOOLEAN DEFAULT NULL,
 	"cancelled" BOOLEAN DEFAULT NULL,
+	"index" SERIAL,
 	UNIQUE ("dog_id", "date")
 	);
 

@@ -121,7 +121,7 @@ router.get('/daily', async (req, res) => {
         if (scheduleAdjustments.length < 1) {
             console.log('Good to Go no adjustments!');
             // insert into daily_dogs
-            console.log(scheduledDogs);
+            // console.log(scheduledDogs);
             await Promise.all(scheduledDogs.map(dog => {
                 const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4);`;
                 const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name];

@@ -16,7 +16,7 @@ const {
 /**
  * GET all clients and their dogs
  */
-router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
   console.log('in GET api/clients')
   const queryText = `
                     SELECT clients.first_name, clients.id as client_id, clients.qb_id, clients.last_name, clients.notes, clients.phone, clients.mobile, clients.email, clients.lat, clients.long, routes.id as route,
@@ -229,8 +229,8 @@ router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
 
 //route to edit dog
 router.put('/dogs', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
-   console.log('dogs have id?', req.body)
-   console.log(typeof(req.body.regular))
+  //  console.log('dogs have id?', req.body)
+  //  console.log(typeof(req.body.regular))
   const { dog_name, dog_notes, flag, regular, dog_id } = req.body
 
   const dogTxt = `
@@ -301,7 +301,7 @@ router.get('/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   const queryValues = [clientId]
   pool.query(queryText, queryValues)
     .then(result => {
-       console.log('how to target schedule?', result.rows[0])
+      //  console.log('how to target schedule?', result.rows[0])
       // console.log(result.rows[0][1])
 
       //all IDs from database

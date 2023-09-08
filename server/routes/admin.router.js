@@ -51,7 +51,7 @@ pool.query(queryText)
 /**
  * POST route for admin notes
  */
- router.post('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+ router.post('/', rejectUnauthenticated, (req, res) => {
   const today = new Date()
   today.setUTCHours(today.getUTCHours() - 5)
     // console.log('does this get to server?', req.body)
@@ -89,7 +89,7 @@ pool.query(queryText)
       });
   });
 
-  // sending not to packleaders
+  // sending note to packleaders
 
   router.put('/send/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
   

@@ -162,8 +162,6 @@ CREATE TABLE ck_stage.clients (
 	"long" VARCHAR (100)
 	);
 
-
-
 CREATE TABLE ck_stage.dogs (
 	"id" SERIAL PRIMARY KEY,
 	"client_id" INT NOT NULL REFERENCES ck_stage.clients(id) ON DELETE CASCADE,
@@ -215,6 +213,7 @@ CREATE TABLE ck_stage.daily_dogs (
 	"checked_in" BOOLEAN DEFAULT NULL,
 	"no_show" BOOLEAN DEFAULT NULL,
 	"cancelled" BOOLEAN DEFAULT NULL,
+	"index" SERIAL,
 	UNIQUE ("dog_id", "date")
 	);
 

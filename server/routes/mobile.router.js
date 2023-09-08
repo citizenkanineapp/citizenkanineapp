@@ -92,13 +92,12 @@ router.get('/daily', async (req, res) => {
         //     };
         // })
         // add client ID 
-        const insertSQL = `
-        INSERT INTO daily_dogs
-            ("dog_id", "route_id", "client_id", "name", "date")
-        VALUES
-            ($1, $2, $3, $4, $5)
-       
-        `
+        // const insertSQL = `
+        // INSERT INTO daily_dogs
+        //     ("dog_id", "route_id", "client_id", "name")
+        // VALUES
+        //     ($1, $2, $3, $4);
+        // `
 
         // ON CONFLICT ("dog_id", "date")
         // DO UPDATE 
@@ -122,10 +121,11 @@ router.get('/daily', async (req, res) => {
         if (scheduleAdjustments.length < 1) {
             console.log('Good to Go no adjustments!');
             // insert into daily_dogs
+            console.log(scheduledDogs);
             await Promise.all(scheduledDogs.map(dog => {
-                // const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4);`;
+                const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4);`;
                 const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name];
-                return client.query(insertSQL, insertValues);
+                return client.query(insertQuery, insertValues);
             }));
 
             await client.query('COMMIT');
@@ -158,9 +158,9 @@ router.get('/daily', async (req, res) => {
             console.log('Good to Go with adjustments!');
             // insert into daily_dogs
             await Promise.all(adjustedDogs.map(dog => {
-                // const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name") VALUES ($1, $2, $3, $4)`;
+                const insertQuery = `INSERT INTO daily_dogs ("dog_id", "route_id", "client_id", "name", "date") VALUES ($1, $2, $3, $4, $5)`;
                 const insertValues = [dog.dog_id, dog.route_id, dog.client_id, dog.name, today];
-                return client.query(insertSQL, insertValues);
+                return client.query(insertQuery, insertValues);
             }));
 
             await client.query('COMMIT');

@@ -19,9 +19,9 @@ const {
 /**
  * GET route for admin notes
  */
-router.get('/', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
 // console.log('arrived in server get admin notes route')
-let adminId = req.user.id
+// let adminId = req.user.id
   const queryText = `
     SELECT admin_notes.id, admin_notes.user_id, admin_notes.notes, admin_notes.date, admin_notes.note_type, dogs.name, clients.last_name FROM admin_notes
       LEFT JOIN dogs

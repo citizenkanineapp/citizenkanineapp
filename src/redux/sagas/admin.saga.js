@@ -57,8 +57,6 @@ function* adminSaga() {
     yield takeLatest('FETCH_ADMIN_NOTES', fetchAdminNotes);
     yield takeLatest('DELETE_ADMIN_NOTES', deleteAdminNotes);
     yield takeLatest('SEND_NOTE_TO_PACK', sendNoteToPack);
-    // yield takeLatest('FETCH_ALL_NOTES', fetchAllNotes); 
-
 }
 
 export default adminSaga;

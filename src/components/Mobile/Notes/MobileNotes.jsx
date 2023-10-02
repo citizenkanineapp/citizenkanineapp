@@ -25,7 +25,7 @@ function MobileNotes() {
 
     const dispatch = useDispatch();
     const adminNotes = useSelector(store => store.adminNotesReducer).filter(note=> note.note_type==='topack');
-
+    const user = useSelector(store => store.user);
     const [note, setNote] = useState('');
 
     const timeZoneAdjust = (date) => {
@@ -33,9 +33,9 @@ function MobileNotes() {
     }
 
     //sends notes to DB via button
-    const submitNote = (e) => {
+    const submitNote = (e, notetype) => {
       e.preventDefault();
-      const noteToSend = {notes: note, note_type:'frompack'};
+      const noteToSend = {notes: note, note_type:notetype};
       dispatch({
         type: 'ADD_ADMIN_NOTES', 
         payload: noteToSend
@@ -66,36 +66,27 @@ function MobileNotes() {
                 </ListItem>
               ))}
             </List>
-            {/* {editStatus ? */}
             <>
               <Stack spacing={2} direction='row' alignItems='center' justifyContent='flex-end'  sx={{ pt: 2, width: '80vw'}}>                      
                 <TextField
                   value={note}
                   onChange={(event) => setNote(event.target.value)}
-                  label='Send note to admin?'
+                  label='Send note?'
                   fullWidth
                   multiline
                   maxRows={5}
                   InputProps={{ margin: 'dense' }}
                   />
-                <Button onClick={(e) => submitNote(e) }>Submit</Button>
-
-                {/* :
-                <TextField
-                value={''}
-                label='Dog Notes'
-                fullWidth
-                multiline
-                Rows={5}
-                helperText="click to edit notes"
-                InputProps={{ readOnly: true }}
-                sx={{ fieldset: { borderColor: 'transparent', border: '0' } }}
-                // onClick={(event) => setEditStatus(true)}
-                />
-              } */}
-            </Stack>
-          </>
-        </Stack>
+                { user.admin ? 
+                <Stack direction='column' alignItems='center' justifyContent='center'  sx={{width: '20vw'}}>                      
+                  <Button onClick={(e) => submitNote(e,'topack') }>Pack</Button>
+                  <Button onClick={(e) => submitNote(e,'frompack') }>Admin</Button>
+                </Stack> :
+                  <Button onClick={(e) => submitNote(e,'frompack') }>Submit</Button>
+                }
+              </ Stack>
+            </>
+          </Stack>
         </Box>
           {/* } */}
       </>

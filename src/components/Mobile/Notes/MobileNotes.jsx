@@ -1,26 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
-import Checkbox from '@mui/material/Checkbox';
-import SendIcon from '@mui/icons-material/Send';
-import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
-import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-// import '../../Desktop/AdminNotes/AdminNotes.css'
 import dayjs from 'dayjs'
 
-
-
 //MUI
-import { ListItemButton, Fab, Card, CardContent, List, ListItem, ListItemText, ListItemIcon, Button, Stack, TextField, Typography, Grid, Avatar, Box } from "@mui/material";
+import { List, ListItem, ListItemText,  Button, Stack, TextField, Typography, Box } from "@mui/material";
 
 function MobileNotes() {
     useEffect(() => {
         dispatch({ type: 'FETCH_ADMIN_NOTES' })
+        user ? dispatch({ type: 'SET_NOTIFICATION_STATUS', payload: user.id }) : null ;
     }, []);
 
     const dispatch = useDispatch();
@@ -36,8 +24,14 @@ function MobileNotes() {
     const submitNote = (e, notetype) => {
       e.preventDefault();
       const noteToSend = {notes: note, note_type:notetype};
+      let type;
+      if (notetype === 'topack') {
+        type = 'SEND_NOTE_TO_PACK_MOBILE';
+      } else if (notetype === 'frompack') {
+        type = 'ADD_ADMIN_NOTES';
+      }
       dispatch({
-        type: 'ADD_ADMIN_NOTES', 
+        type: type, 
         payload: noteToSend
       })
       setNote('');
@@ -94,7 +88,3 @@ function MobileNotes() {
 }
 
 export default MobileNotes;
-
-//get rid of edit. 
-//have plus and input
-//delete from main view

@@ -60,15 +60,22 @@ pool.query(queryText)
     const user = req.user.id
     console.log('in /admin/', notes);
     try{
-    const noteTxt = `
-              INSERT INTO admin_notes 
-                ("user_id", "notes", "note_type", "dog_id", "date") 
-                VALUES
-                ($1, $2, $3, $4, $5) ;
-    `
-    const notesValues = [user, notes.notes, notes.note_type, notes.dog_id, today]
-    pool.query(noteTxt, notesValues)
-    res.sendStatus(201);
+      const noteTxt = `
+        INSERT INTO admin_notes 
+          ("user_id", "notes", "note_type", "dog_id", "date") 
+          VALUES
+          ($1, $2, $3, $4, $5) ;
+      `;
+      const notesValues = [user, notes.notes, notes.note_type, notes.dog_id, today]
+      pool.query(noteTxt, notesValues)
+
+      if (notes.note_type === 'topack') {
+        const setNotificationStatus =  `UPDATE "user" SET notes = 'new';`;
+        pool.query(setNotificationStatus);
+      };
+
+      res.sendStatus(201);
+
     } catch (error) {
       console.log('Error adding new admin note', error)
       res.sendStatus(500);
@@ -89,18 +96,37 @@ pool.query(queryText)
       });
   });
 
-  // sending note to packleaders
+  // sending note to packleaders via existing note ID
 
   router.put('/send/:id', rejectUnauthenticated, rejectUnauthorized, (req, res) => {
-  
-    const queryText = `UPDATE admin_notes SET note_type = 'topack' WHERE id=$1`
-    pool.query(queryText, [req.params.id])
-      .then(()=> { res.sendStatus(200); })
-      .catch((err) => {
-        console.log('Error changing note type in order to send note to packleaders');
-        res.sendStatus(500);
-      })
+    const queryText = `UPDATE admin_notes SET note_type = 'topack' WHERE id=$1;`;
+    const setNotificationStatus =  `UPDATE "user" SET notes = 'new';`;
+    try {
+      pool.query(setNotificationStatus);
+      pool.query(queryText, [req.params.id]);
+      res.sendStatus(200); 
+    } catch (error) {
+      console.log('Error changing note type in order to send note to packleaders');
+      res.sendStatus(500);
+    }
   });
+
+  router.get('/status/:id', rejectUnauthenticated, async (req, res) => {
+    console.log('GET api/admin/status/:id');
+    res.sendStatus(200);
+  })
+
+  router.put('/status/:id', rejectUnauthenticated, async (req, res) => {
+    const queryText = `UPDATE "user" SET notes='seen' WHERE id=$1 RETURNING notes;`;
+    try {
+      const noteStatus = await pool.query(queryText, [req.params.id]);
+      // console.log(noteStatus.rows[0]);
+      res.send(noteStatus);
+    } catch (err) {
+      console.log('Error in admin/status/:id', err );
+      res.sendStatus(500);
+    }
+  })
 
 
 module.exports = router;

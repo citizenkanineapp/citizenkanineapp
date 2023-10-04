@@ -16,6 +16,7 @@ import routeReducer from './route.reducer';
 import details from './details.reducer';
 import adminNotesReducer from './adminNotes.reducer';
 import qbClientsReducer from './qbClients.reducer';
+import notificationsReducer from './notifications.reducer';
 
 
 const rootReducer = combineReducers({
@@ -35,7 +36,8 @@ const rootReducer = combineReducers({
   adminNotesReducer,
   details,
   invoiceReducer,
-  qbClientsReducer
+  qbClientsReducer,
+  notificationsReducer
 });
 
 export default rootReducer;

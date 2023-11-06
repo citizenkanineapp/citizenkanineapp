@@ -129,8 +129,16 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       let result = oneCustomer.notesObj.split("-")
       let dogs = result[0]
       let schedule = result[1]
-      let dogsCleaned = dogs.replace(/[&/]/g, ",")
-      let scheduleCleaned = schedule.replace(/[&/]/g, ",")
+      // console.log('dogs: ',oneCustomer.first_name, dogs);
+      let dogsCleaned = dogs.replace(/[&/]/g, ",");
+        
+      // console.log('schedule', schedule)
+      let scheduleCleaned;
+      if (scheduleCleaned) {
+        scheduleCleaned = schedule.replace(/[&/]/g, ",");
+      } else {
+        scheduleCleaned = '';
+      }
       
       //this sections gets rid of extra spaces that might be surrounding each string 
       let dogsArray = dogsCleaned.split(",").map(function (dogName) {
@@ -177,6 +185,8 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         customerArray.push(oneCustomer)
       
     }
+      console.log(customerArray)
+
       return customerArray
   
   }

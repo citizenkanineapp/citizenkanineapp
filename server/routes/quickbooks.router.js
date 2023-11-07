@@ -134,7 +134,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         
       // console.log('schedule', schedule)
       let scheduleCleaned;
-      if (scheduleCleaned) {
+      if (schedule) {
         scheduleCleaned = schedule.replace(/[&/]/g, ",");
       } else {
         scheduleCleaned = '';

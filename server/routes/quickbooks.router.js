@@ -182,12 +182,9 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
         //console.log('filtered dogs', filteredDogs)
         oneCustomer.dogs = filteredDogs,   //adding dogs key to customer object
         oneCustomer.schedule =  scheduleArray, //adding schedule key to customer obj
-        customerArray.push(oneCustomer)
-      
+        customerArray.push(oneCustomer)  
     }
-      console.log(customerArray)
-
-      return customerArray
+    return customerArray
   
   }
 

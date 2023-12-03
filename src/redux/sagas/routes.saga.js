@@ -129,9 +129,7 @@ function* getRouteDetails(action) {
     } catch (error) {
         console.log('ERROR GETTING ROUTE', error);
     }
-
 }
-
 
 function* updateRoute(action) {
    // console.log('UPDATING ROUTE', action.payload)
@@ -160,7 +158,6 @@ function* updateRoute(action) {
     }
 
    // console.log('ROUTE NUMBER IS:', routeID);
-
 
     try {
         const updatedDog = yield axios({
@@ -248,9 +245,7 @@ function* RouteSaga() {
     yield takeLatest('UPDATE_ROUTE', updateRoute);
     yield takeLatest('GET_ROUTE_DETAILS', getRouteDetails);
     yield takeLatest('POPULATE_DAILY_DOGS', populateDailyDogs);
-    yield takeLatest('NO_SHOW', updateStatus);
     yield takeLatest('CHECK_IN', updateStatus);
-    yield takeLatest('CANCEL_WALK', updateStatus);
     yield takeLatest('UPDATE_DOG_ORDER', updateDogOrderInRoute);
 }
 

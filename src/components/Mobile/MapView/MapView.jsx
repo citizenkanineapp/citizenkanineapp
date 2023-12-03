@@ -1,40 +1,42 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect, useRef } from "react";
+// imports
+
+import { useSelector } from 'react-redux';
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Map, Marker, Overlay } from "pigeon-maps"
+import { Map, Marker } from "pigeon-maps"
 import { maptiler } from 'pigeon-maps/providers'
 
-
+// import component
 import DogCheckinModal from './DogCheckinModal';
 
 //MUI
 import {IconButton, Typography, Grid,} from '@mui/material';
-
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
   
 function MapView() {
-  const history = useHistory();
 
+  // populates markers on component load
   useEffect(() => {
     populateMarkers()
   }, [])
 
-  // const dispatch = useDispatch();
-  // const user = useSelector(store => store.user);
-  const route = useSelector(store => store.routeReducer)
+  // function, state, and reducer definitions
+  const history = useHistory(); // for page routing
+  const route = useSelector(store => store.routeReducer) // grabs route data from route reducer
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState(false);
   const [markers, setMarkers] = useState([])
   
+  // sets modal data and opens client marker modal
   const handleOpen = (data) => {
     setModalData(data)
     setOpen(true);
   } 
   
-  const thisRoute = route[0].route_id
-  // console.log('thisRoute', thisRoute);
-  //May need to update the below map key in the future 
+  const thisRoute = route[0].route_id 
+
+  //May need to update the below map key in the future, probably should not be hard-coded in here.
   const maptilerProvider = maptiler('WjRnaGgNsm0nHmNUpFSq', 'bright') 
   
   /*This function handles the logic to populate markers */
@@ -149,7 +151,7 @@ function MapView() {
         </Grid>
         <Grid item sx={{ width: '100%', height: '45rem' }}>
           <Map provider={maptilerProvider} defaultCenter={[44.914450, -93.304140]} defaultZoom={13}>
-            {/*this modal opens to display more details  */}
+            {/* this modal opens to display more details  */}
             <DogCheckinModal route={route} modalData={modalData} setMarkers={setMarkers} open={open} setOpen={setOpen}/>
             {markers.filter(marker => marker.checkinStatus != null).map((oneMarker, i) => (
               <Marker 

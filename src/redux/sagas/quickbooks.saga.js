@@ -2,6 +2,9 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import swal from 'sweetalert';
 
+// redirect URL is env variable (.env-cmdrc) set during the build process;
+// this differentiates client-side redirects between different development environments
+
 const redirect = process.env.REACT_APP_REDIRECT;
 
 function* createQbInvoice (action) {

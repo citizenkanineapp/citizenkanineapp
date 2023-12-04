@@ -1,9 +1,6 @@
 const express = require('express');
-const axios = require('axios');
-const pool = require('../modules/pool');
 const tools = require('../modules/tools');
 const config = require('../modules/config');
-// const cors = require('cors');
 const request = require('request');
 const router = express.Router();
 

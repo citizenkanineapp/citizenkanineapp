@@ -8,13 +8,14 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 // This react component was *originally* a part of Route.jsx.
-// broke it into separate component for code readibility and modularity.
+// I broke it into a separate component for code readibility and modularity.
 
 function DogCheckIn ({ dog }) {
 
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
 
+  // this was originally three different functions, one for each possible check-in status. 
   const checkInDog = (dog, status) => {
     const dogID = dog.dog_id;
     const routeID = dog.route_id;
@@ -23,10 +24,12 @@ function DogCheckIn ({ dog }) {
       updatedDog = { id: dogID, checked_in: true, no_show: false, cancelled: false, routeID: routeID }
     } else if (status === 'status_no_show') {
       updatedDog = { id: dogID, checked_in: false, no_show: true, cancelled: false, routeID: routeID }
-     } else if (status === 'status_cancelled') {
+     } else if (status === 'status_cancel') {
       if (dog.cancelled) {
+        // if dog is currently cancelled, (TRUE), sets alll status fields to false. this allows user to set any status
         updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: false, routeID: routeID }
       } else {
+        // if dog is not currently cancelled (FALSE), set dog.cancelled to TRUE. this removes dog from modal view for non-admin users, and disallows setting status to 'checked in' or 'no-show' for admin users.
         updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
       }
      }
@@ -56,8 +59,9 @@ function DogCheckIn ({ dog }) {
             <EventBusyIcon sx={{ mr: .5 }} />
             NO SHOW
           </Button>
+          {/* only admin has privileges to alter cancellation status */}
             {user.admin ?
-              <Button edge="end" onClick={(event) => checkInDog(dog, 'status_cancelled')} variant='contained' color='info' sx={{ mr: 1, fontSize: 10 }} size='small'>
+              <Button edge="end" onClick={(event) => checkInDog(dog, 'status_cancel')} variant='contained' color='info' sx={{ mr: 1, fontSize: 10 }} size='small'>
                 <CancelIcon sx={{ mr: .5}} />
                 CANCEL WALK
               </Button>

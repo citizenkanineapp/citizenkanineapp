@@ -15,7 +15,7 @@ function DogCheckIn ({ dog }) {
   const user = useSelector(store => store.user); //gets admin status
   const dispatch = useDispatch();
 
-  // this was originally three different functions, one for each possible check-in status. 
+  // this was originally three different functions, one for each possible check-in status.
   const checkInDog = (dog, status) => {
     const dogID = dog.dog_id;
     const routeID = dog.route_id;

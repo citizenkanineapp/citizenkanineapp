@@ -1,15 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect, useRef } from "react";
+// imports
+
+import { useSelector } from 'react-redux';
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Map, Marker, Overlay } from "pigeon-maps"
+import { Map, Marker } from "pigeon-maps"
 import { maptiler } from 'pigeon-maps/providers'
 
-
+// import component
 import DogCheckinModal from './DogCheckinModal';
 
 //MUI
 import {IconButton, Typography, Grid,} from '@mui/material';
-
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
   

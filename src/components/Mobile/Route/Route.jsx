@@ -145,7 +145,7 @@ function DailyRoutes() {
                             </AccordionSummary>
                             <AccordionDetails>
                               <Stack direction='row' spacing={1}>
-                                  <DogCheckIn dog={dog} config="routes"/>
+                                  <DogCheckIn dog={dog} />
                               </Stack>
                             </AccordionDetails>
                           </Accordion>

@@ -12,7 +12,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 function DogCheckIn ({ dog }) {
 
-  const user = useSelector(store => store.user);
+  const user = useSelector(store => store.user); //gets admin status
   const dispatch = useDispatch();
 
   // this was originally three different functions, one for each possible check-in status. 
@@ -33,6 +33,8 @@ function DogCheckIn ({ dog }) {
         updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
       }
      }
+    // dispatches to routes.saga.js
+    // where an Axios PUT request is sent to server to update postgres database
     dispatch({ type: 'CHECK_IN', payload: updatedDog });
   }
   

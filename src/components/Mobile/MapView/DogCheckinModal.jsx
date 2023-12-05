@@ -42,10 +42,7 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
 
   const handleClose = () => setOpen(false);
 
-  // this function checks-in all dogs of a given client via the maps view. This finalized a major feature improvement,
-  // allowing employees/users to use the interactive maps view to keep track of dogs they have checked in fo the day.
-  // duplicates some of the logic of the 'checkInDog()' function in the imported DogCheckIn component
-
+  // this function checks-in all dogs of a given client via the maps view.
   const checkinAllDogs = (modalData) => {
     // console.log('in checkinAllDogs', modalData.checkinStatus);
     for ( let dog of modalData.dogs ) {

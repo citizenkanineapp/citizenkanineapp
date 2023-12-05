@@ -68,3 +68,7 @@ typings/
 package-lock.json
 
 NonDevReadMe.md
+
+# misc
+ck-bitio*
+heroku_logs*

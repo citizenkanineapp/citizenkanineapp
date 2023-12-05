@@ -62,9 +62,9 @@ I knew I wanted to refactor some of the existing code into a child component and
 - child of [Route](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Route/Route.jsx) and [DogCheckinModal](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/DogCheckinModal.jsx)
 - lines 19-39: function sets dog status and dispatches to saga function. Saga function updates database.
 - lines 41-76: resuable UI
-- CheckIn refactored from [Route](https://github.com/citizenkanineapp/citizenkanineapp/blob/OAuth2-setup-sam/src/components/Mobile/Route/Route.jsx) (see this older branch for comparison)
-- ^^^ lines 73-102: set dog status functions
-- ^^^ lines 202-235: old UI
+- CheckIn refactored from Route (see [this older branch](https://github.com/citizenkanineapp/citizenkanineapp/blob/OAuth2-setup-sam/src/components/Mobile/Route/Route.jsx) for comparison)
+- ^^^ (old branch) lines 73-102: three separate 'set dog status' functions
+- ^^^ (old branch) lines 202-235: old UI integrated into component
 
 #### [DogCheckinModal](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/DogCheckinModal.jsx)
 - Child component of [MapView](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/MapView.jsx). In Mapview, user selects a location pin hovering over client loation on map. This populates a pop-up 'modal' component, DogCheckinModal, which displays dogs in that client's household.

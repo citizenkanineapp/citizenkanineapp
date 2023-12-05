@@ -43,7 +43,7 @@ function DogCheckIn ({ dog }) {
       {dog.cancelled ?
         <>
           {user.admin ?
-            <Button edge="end" variant='contained' color='info' onClick={(event) => cancelWalk(dog)} >
+            <Button edge="end" variant='contained' color='info' onClick={(event) => checkInDog(dog, 'status_cancel')} >
               <AddCircleIcon sx={{ mr: 2, p: 1 }} />
               ADD DOG
             </Button>

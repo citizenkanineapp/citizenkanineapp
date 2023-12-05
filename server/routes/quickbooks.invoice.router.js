@@ -93,6 +93,11 @@ function createInvoiceItems(invoiceItems) {
     const invoice = {};
 
     // Force-allows online payments in Quickbooks billing; see quickbooks API reference
+    // This was a surprise issue that came up after the first month of production.
+    // My client alerted me that some of *her* clients did not receive any online-payment options in their monthy
+    // billing email. I had to reinvestigate the QB online API/invoice object to diagnose this problem and 
+    // then discover how to force this option to TRUE.
+    
     invoice.AllowOnlineACHPayment=true;
     invoice.CustomerRef = {
       "value": client

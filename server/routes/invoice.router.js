@@ -1,3 +1,5 @@
+// module imports
+
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
@@ -10,11 +12,17 @@ const {
     rejectUnauthorized,
 } = require('../modules/authorization-middleware');
 
+// API endpoint https://this_app/api/invoice/
+// get client data by clientId, month and year
 router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     console.log('in /api/invoice');
+    // connect to postgres database pool
+    // this is confusing: this 'client' object refers to postgres database connection;
+    // otherwise, 'client' refers to citizen kanine clients.
     const client = await pool.connect();
-
     // console.log(req.query)
+    
+    // extract search parameters from request
     const searchClientId = req.query.clientId;
     //console.log('client id?', searchClientId)
     const searchMonth = req.query.month;
@@ -24,8 +32,9 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     const querySchedule = `SELECT * FROM clients_schedule`;
     const queryServices = `SELECT * FROM services`;
 
-    // use in case of client ALL
+    // set searchQuery
     if (searchClientId != 0) {
+        // use in case of client ALL
         searchQuery = `
             WHERE
                 clients.id = $1 AND
@@ -46,7 +55,8 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
 
     // console.log(searchQuery);
 
-    // query returns data object of each walk instance by customer-date
+    // expanded SQL query
+    // query returns data object of each walk instance by customer-date query parameters
     const queryWalkDetails = `
     SELECT
         clientid,
@@ -104,50 +114,38 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     `;
 
     try {
+        // get list of SERVICES (walk frequencies and their rates) from database
         const resServices = await client.query(queryServices)
         const services = resServices.rows;
          //console.log(services);
+
+         // get all client service history from 'daily_dogs' table by customer-date query parameters
         const resDetails = await client.query(queryWalkDetails, searchTerms);
         const invoiceData = resDetails.rows;
          //console.log('invoiceData', invoiceData);
 
+        // get clients' schedules
         const resSchedule = await client.query(querySchedule);
         const schedules = resSchedule.rows;
          //console.log('schedules', schedules)
-
-
-        // const testDailyDogs = await pool.query(`
-        //     SELECT * FROM daily_dogs
-        //     WHERE
-        //     EXTRACT (MONTH FROM daily_dogs.date) = 1 AND
-        //     EXTRACT (YEAR FROM daily_dogs.date) = 2023 AND
-        //     (checked_in = true OR no_show = true);
-        // `);
-
-        // console.log(testDailyDogs.rows);
-
-
-
-
-
-
 
         //adds service data to invoice data object.
         for (let item of invoiceData) {
             let serviceId
             //console.log(item);
 
-            // adds walks per week to invoice item
+            // this for loop evaluates the services *actually* provided to each client
             for (let client of schedules) {
                 // console.log('client.id: ', client.client_id, "item.clientid: ", item.clientid);
                 if (client.client_id === item.clientid) {
                     const values = Object.values(client);
+                    // walks is the number of times clients' dogs have been walked per week.
                     const walks = values.filter(i => i === true).length;
-                    if (client.client_id === 19) { console.log(walks)}
 
                 /*
                     grabs services ID from services list. 
-                    These areprimary key id value of each service in service table (see: database.sql).
+                    These are primary key id value of each service in service table
+                    (see: database.sql).
                     If table changes, these will need to be fixed.
 
                     id   Group Dog Walking:{service}
@@ -159,7 +157,6 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                     6:   Walk 2 dogs 5 days / week
                     7:   Walk 3 dogs
                     8: 
-
                 */
                 
                     // if one dog is walked "walks" times per week:
@@ -200,7 +197,6 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
             }
             console.log('in walks/week', item.clientid, serviceId);
             
-
             // adds service details to invoice item
             for (let service of services) {
                 if (service.id === serviceId) {
@@ -222,10 +218,11 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
         //console.log(invoiceData);
 
         if (invoiceData[0]) {
+            //sends invoice data if there are any invoices
             //console.log(invoiceData)
             res.send(invoiceData);
         } else {
-            res.sendStatus(204) //Sam added this
+            res.sendStatus(204)
         }
     } catch (error) {
         console.log('Error GET /api/invoice', error);

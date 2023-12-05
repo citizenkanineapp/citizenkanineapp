@@ -1,16 +1,17 @@
-import { useEffect, useState, useRef, MouseEvent } from 'react';
-import { useHistory, Link, useParams } from 'react-router-dom';
+// imports
+
+import { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Accordion, AccordionSummary, AccordionDetails, Collapse, ListItemAvatar, ListItemIcon, Fab, CardMedia, Card, Paper, Stack, CardContent, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, ListItemAvatar, Stack, Avatar, Box, IconButton, List, ListItem, ListItemText, Typography, Grid } from '@mui/material';
 import FlagIcon from '@mui/icons-material/Flag';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import RouteSelect from '../RouteSelect/RouteSelect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PinDropIcon from '@mui/icons-material/PinDrop';
 
+// module import
 import DogCheckIn from './CheckIn';
-
-
+import RouteSelect from '../RouteSelect/RouteSelect';
 
 function DailyRoutes() {
   // this is the 'to-do' list for a walker ... showing the dogs they need to pick up each day and their status
@@ -23,13 +24,7 @@ function DailyRoutes() {
     // console.log("DailyRoutes useEffect", params.id)
     // i don't think it's necessary to get daily routes?
     dispatch({ type: 'GET_DAILY_ROUTES' });
-    // dispatch({ type: 'GET_ROUTE_DETAILS', payload: params.id })
 
-    // return () => {
-    //   dispatch({
-    //     type: 'CLEAR_ROUTE'
-    //   })
-    // }
   }, [params.id]);
 
   const [expanded, setExpanded] = useState(false);

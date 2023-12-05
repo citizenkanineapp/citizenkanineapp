@@ -13,8 +13,10 @@ import PinDropIcon from '@mui/icons-material/PinDrop';
 import DogCheckIn from './CheckIn';
 import RouteSelect from '../RouteSelect/RouteSelect';
 
+// this is the 'to-do' list for a walker ... showing the dogs they need to pick up each day and their status
 function DailyRoutes() {
-  // this is the 'to-do' list for a walker ... showing the dogs they need to pick up each day and their status
+
+  // redefine imported functions
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
@@ -22,17 +24,23 @@ function DailyRoutes() {
   // on page load - fetch routes, and also fetch specifc route data according to URL route ID
   useEffect(() => {
     // console.log("DailyRoutes useEffect", params.id)
-    // i don't think it's necessary to get daily routes?
     dispatch({ type: 'GET_DAILY_ROUTES' });
 
   }, [params.id]);
 
+  // state and reducer definitions
   const [expanded, setExpanded] = useState(false);
+  const user = useSelector(store => store.user);
+  // reducer getting filled with a specific routes dogs
+  const route = useSelector(store => store.routeReducer);
+  // const routeName = route[0].route;
 
+  // expands accordion
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  //implementation of drag-n-drop feature
   const onDragEnd = (result) => {
     if (!result.destination) return;
     //first dispatch sets state so there's no page lag
@@ -42,11 +50,7 @@ function DailyRoutes() {
     // dispatch({ type: 'UPDATE_ROUTE', payload: { routeName: result.destination.droppableId, dogID: result.draggableId } });
   }
 
-  const user = useSelector(store => store.user);
-  // reducer getting filled with a specific routes dogs
-  const route = useSelector(store => store.routeReducer);
-  // const routeName = route[0].route;
-
+  // sets display color based on route
   const getRouteColor = (route) => {
     switch (route[0].route) {
       case 'Tangletown': return '#4a5061';
@@ -58,6 +62,7 @@ function DailyRoutes() {
     }
   }
 
+  // sets display color based on dog status
   const determineStatus = (dog) => {
     // console.log(dog);
     if (dog.checked_in) {
@@ -70,6 +75,7 @@ function DailyRoutes() {
     }
   }
 
+  // push to individual dog details
   const getDogDetails = (dogID) => {
    // console.log(dogID);
     history.push(`/m/dog/${dogID}`)
@@ -154,10 +160,7 @@ function DailyRoutes() {
               )}
               </Droppable>       
         </Grid>
-
-
         :
-
         <RouteSelect />
       }
     </DragDropContext>

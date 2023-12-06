@@ -1,6 +1,6 @@
 ## Citizen Kanine App Code samples
 ### Project Overview
-I am submitting several segments of code to review that demonstrate the range of my contributions production business application. The Citizen Kanine web app is a custom business application built in three phases.
+I am submitting several segments of code to review that demonstrate the range of my contributions to a production business application. The Citizen Kanine app is a custom web application built in three phases.
 - In the first phase, a team of five (myself included) scoped, designed, and developed the application as a viable business product.
 - In the second phase, I worked with a colleague to expand key features of the application and take it into a live production environment. The two features we worked on were integration with the Intuit Quickbooks API, and an interactive maps view.
 - In the third phase, I have maintained the application and provided additional feature improvements as the sole developer
@@ -14,24 +14,30 @@ The features I am sharing are spread across multiple files. Below is a simplifie
 │   ├── modules
 │   │   ├── pool.js
 │   │   ├── tools.js
+│   │   ├── . . .
 │   ├── routes
 │   │   ├── quickbooks.invoice.router.js *****
 │   │   ├── quickbooks.oauth2.router.js ****
 │   │   ├── invoice.router.js *****
-│   ├── server.js   
+│   │   ├── . . .
+│   ├── server.js
+│   ├── . . .   
 ├── src
-│   ├── components
-│   │   ├── Mobile
-│   │   │   ├── MapView
-│   │   │   │   ├── MapView.jsx
-│   │   │   │   ├── DogCheckinModal.jsx *****
-│   │   │   ├── Route
-│   │   │       ├── CheckIn.jsx *****
-│   │   │       ├── Route.jsx *****
-│   │   ├── Redux
-│   │   │   ├── sagas
-│   │   │   │   ├── routes.saga.js
-│   ├── index.js
+    ├── components
+    │   ├── Mobile
+    │   │   ├── MapView
+    │   │   │   ├── MapView.jsx
+    │   │   │   ├── DogCheckinModal.jsx *****
+    │   │   ├── Route
+    │   │   │   ├── CheckIn.jsx *****
+    │   │   │   ├── Route.jsx *****
+    │   │   ├── . . .
+    │   ├── . . .
+    ├── Redux
+    │       ├── sagas
+    │           ├── routes.saga.js
+    │           ├── . . .   
+    ├── index.js
 ```
 
 ## Express Backend

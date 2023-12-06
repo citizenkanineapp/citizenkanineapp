@@ -1,12 +1,14 @@
 ## Citizen Kanine App Code samples
 ### Project Overview
-This Citizen Kanine web application is a custom business applicationas built in three phases.
+I am submitting several segments of code to review that demonstrate the range of my contributions production business application. The Citizen Kanine web app is a custom business application built in three phases.
 - In the first phase, a team of five (myself included) scoped, designed, and developed the application as a viable business product.
 - In the second phase, I worked with a colleague to expand key features of the application and take it into a live production environment. The two features we worked on were integration with the Intuit Quickbooks API, and an interactive maps view.
 - In the third phase, I have maintained the application and provided additional feature improvements as the sole developer
 - The application uses a Node.js/Express/postgreSQL backend and a React (Saga/Redux) fronted.
 
-I am submitting several segments of code to review that demonstrate the range of my contributions to this project. The features I am highlighting are spread across multiple files. Below is a simplified directory structure. I have included files mentioned in my descriptions below or in the code notes. The specific files submitted for review are marked with ******.
+During the interview, I will be prepared to talk about any of the following features. However, I think that the segments of code highlighted in the React components DogCheckinModal/CheckIn/Route best represent my approach to problem solving.
+<br /> <br />
+The features I am sharing are spread across multiple files. Below is a simplified directory structure. I have included files mentioned in my descriptions below or in the code notes. The specific files submitted for review are marked with ******.
 ```
 ├── server
 │   ├── modules

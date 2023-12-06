@@ -240,11 +240,26 @@ function* updateDogOrderInRoute(action) {
     }
 }
 
+function* checkDogSchedules(action){
+    const date = action.payload
+    console.log(date)
+    try {
+        const dogsScheduled = yield axios({
+            method: 'GET',
+            url: `/api/mobile/checkDogSchedule/${date}`,
+        });
+        console.log(dogsScheduled.data)
+    } catch (error) {
+        console.log('ERROR GETTING DOG SCHEDULE');
+    }
+}
+
 function* RouteSaga() {
     yield takeLatest('GET_DAILY_ROUTES', getRoutes);
     yield takeLatest('UPDATE_ROUTE', updateRoute);
     yield takeLatest('GET_ROUTE_DETAILS', getRouteDetails);
     yield takeLatest('POPULATE_DAILY_DOGS', populateDailyDogs);
+    yield takeLatest('CHECK_DOG_SCHEDULE', checkDogSchedules);
     yield takeLatest('CHECK_IN', updateStatus);
     yield takeLatest('UPDATE_DOG_ORDER', updateDogOrderInRoute);
 }

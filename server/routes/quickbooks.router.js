@@ -52,9 +52,9 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
           //initial response from QB servers
           let customers = JSON.parse(response.body)
       
-          // this function starts the process of formatting the customers
+          // this function starts the process of formatting the customer data
           let filteredCustomers =  filterCustomers(customers)
-       //sends customers to client side after processing
+          //sends customers to client side after processing
           res.send(filteredCustomers)
         }   
       }, function (err) {
@@ -111,6 +111,7 @@ function filterCustomers(customers) {
     }
     customersAfterProcessing.push(customer)
   }
+
   // this next function deals with dogs' names and schedules 
   // console.log('does it add a none-none key?', customersAfterProcessing)
   let customersWithSchedule = getDogSchedule(customersAfterProcessing)
@@ -132,7 +133,7 @@ function getDogSchedule(customers) {
     // console.log('dogs: ',oneCustomer.first_name, dogs);
     let dogsCleaned = dogs.replace(/[&/]/g, ",");
       
-    // console.log('schedule', schedule)
+    // input validation on dog schedule;
     let scheduleCleaned;
     if (schedule) {
       scheduleCleaned = schedule.replace(/[&/]/g, ",");
@@ -222,10 +223,9 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     return customerResult;
   }
 
-
-  // I FORGET ALL OF WHAT I DID HERE
-  // returns TRUE if a address or town field is empty
-  let missingList = [];
+  // ADDRESS FIELD INPUT VALIDATION.
+  // city and street fields must defined in order to get coordinate data via geocoder api (lines 208-222,243)
+  let missingList = []; // array is used to send pop-up error message with list of customers that need updating in quickbooks
   const checkCustomerAddressFields = (customers) => {
     for (let client of customers) {
       if (!client.street || !client.city ) {

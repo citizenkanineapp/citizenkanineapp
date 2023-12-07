@@ -14,7 +14,7 @@ The code samples I am sharing below demonstrate several types of contributions t
 4. Working with and implementing 3rd party services
 5. Collaborative process and design
 
-Sections 1, 2, and 5 showcase how I've worked with other peoples' code. The base code in sections 1 and 2 were initially written by colleagues during phases 1 and 2 of development. Sections 3 and 4 showcase my sole authorship and implementation.
+Sections 1, 2, and 5 showcase ways I've worked with legacy code. The base code in sections 1 and 2 were initially written by colleagues during phases 1 and 2 of development. Sections 3 and 4 showcase my sole authorship and implementation. Section 5 is a brief example from a separate project.
 
 ## 1. Refactoring legacy code and frontend feature development
 My client asked to me reproduce a function originally performed in the [Route component](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/Route/Route.jsx) in the [MapView component](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/MapView.jsx). I knew I wanted to refactor some of the existing code into a child component and impliment in the MapView. The UI of MapView involves a suite of interacting component state variables. At first I struggled to allocate awareness of these component state variables between MapsView, DogCheckinModal and CheckIn components. My solutions involved refactored existing code for DRY principles and modularity, and writing original functionality that properly handles both the data layer and the component state layer.
@@ -63,11 +63,11 @@ During the second development phase, I led the App's integration with quickbooks
 
 ## 5. Collaborative Process and Design
 
-This section is related to a different project; [Air Quality Spike Alerts](https://github.com/SpikeAlerts). My contributions to this project have been the implementation of cloud hosting solutions and, importantly, project organization. Most of the code displayed here was written by the main developer. However, the structural changes that have been made between the [development repo](https://github.com/SpikeAlerts/SpikeAlerts_Dev) and the current [production version](https://github.com/SpikeAlerts/SpikeAlerts_Heroku) followed directly from my approach setting the project up for production.
+This section is related to a different project; [Air Quality Spike Alerts](https://github.com/SpikeAlerts). My contributions to this project have been the implementation of cloud hosting solutions and, importantly, project organization. Most of the code displayed here was written by the main developer. However, the structural changes that have been made between the [development repo](https://github.com/SpikeAlerts/SpikeAlerts_Dev) and the current [production version](https://github.com/SpikeAlerts/SpikeAlerts_Heroku) followed directly from my approach to setting the project up for production.
 
 ### [Initiate database functions](https://github.com/SpikeAlerts/SpikeAlerts_Heroku/blob/main/App/modules/db_init.py)
 When I joined the project, the functions that seeded the database with geographic boundaries were organized in [jupyter notebook files](https://github.com/SpikeAlerts/SpikeAlerts_Dev/tree/main/Notebooks/1_Initialize_Database), which are used for data analysis and visualization, not production processes. 
-- I organized notebooke function into separate module
+- I re-organized notebook functions into separate module
 - lines 94-105: evalutes whether database needs initialization
-- [main script](https://github.com/SpikeAlerts/SpikeAlerts_Heroku/blob/main/App/aq_spikealerts.py) initializes database and runs [main project loop](https://github.com/SpikeAlerts/SpikeAlerts_Heroku/blob/main/App/modules/MAIN.py)
+- [project initialization script](https://github.com/SpikeAlerts/SpikeAlerts_Heroku/blob/main/App/aq_spikealerts.py) initializes database and runs [main project script](https://github.com/SpikeAlerts/SpikeAlerts_Heroku/blob/main/App/modules/MAIN.py) as a while loop.
 

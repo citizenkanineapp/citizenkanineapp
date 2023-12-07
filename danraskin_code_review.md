@@ -6,43 +6,40 @@ I am submitting several segments of code to review that demonstrate the range of
 - In the third phase, I have maintained the application and provided additional feature improvements as the sole developer
 - The application uses a Node.js/Express/postgreSQL backend and a React (Saga/Redux) fronted.
 
-During the interview, I will be prepared to talk about any of the following features. However, I think that the segments of code highlighted in the React components DogCheckinModal/CheckIn/Route best represent my approach to problem solving.
-<br /> <br />
-The features I am sharing are spread across multiple files. Below is a simplified directory structure. I have included files mentioned in my descriptions below or in the code notes. The specific files submitted for review are marked with ******.
-```
-├── server
-│   ├── modules
-│   │   ├── pool.js
-│   │   ├── tools.js
-│   │   ├── . . .
-│   ├── routes
-│   │   ├── quickbooks.invoice.router.js *****
-│   │   ├── quickbooks.oauth2.router.js ****
-│   │   ├── invoice.router.js *****
-│   │   ├── . . .
-│   ├── server.js
-│   ├── . . .   
-├── src
-    ├── components
-    │   ├── Mobile
-    │   │   ├── MapView
-    │   │   │   ├── MapView.jsx
-    │   │   │   ├── DogCheckinModal.jsx *****
-    │   │   ├── Route
-    │   │   │   ├── CheckIn.jsx *****
-    │   │   │   ├── Route.jsx *****
-    │   │   ├── . . .
-    │   ├── . . .
-    ├── Redux
-    │       ├── sagas
-    │           ├── routes.saga.js
-    │           ├── . . .   
-    ├── index.js
-```
+The code samples I am sharing below demonstrate several types of contributions to the project I'd like to highlight:
+1. Frontend feature development
+2. Bugfixes in legacy code
+3. db/sql-related backend
+4. working with and implementing 3rd party services
+5. collaborative process/design
+
+## Legacy code.
+These sections showcase how I've worked with other peoples' code. The base code in these sections were initially written by colleagues during phases 1 and 2 of development.
+
+## 1. Refactoring legacy code and frontend feature development
+My client asked to me reproduce a function originally performed in the [Route component](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/Route/Route.jsx) in the [MapView component](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/MapView.jsx). I knew I wanted to refactor some of the existing code into a child component and impliment in the MapView. The UI of MapView involves a suite of interacting component state variables. At first I struggled to allocate awareness of these component state variables between MapsView, DogCheckinModal and CheckIn components. My solutions involved refactored existing code for DRY principles and modularity, and writing original functionality that properly handles both the data layer and the component state layer.
+
+#### [CheckIn](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/Route/CheckIn.jsx)
+- resuable component.
+- child of [Route](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/Route/Route.jsx) and [DogCheckinModal](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/DogCheckinModal.jsx)
+- lines 19-39: function sets dog status and dispatches to saga function. Saga function updates database.
+- lines 41-76: resuable UI
+- CheckIn refactored from Route (see [this older branch](https://github.com/citizenkanineapp/citizenkanineapp/blob/OAuth2-setup-sam/src/components/Mobile/Route/Route.jsx) for comparison)
+- ^^^ (old branch) lines 73-102: three separate 'set dog status' functions
+- ^^^ (old branch) lines 202-235: old UI integrated into component
+
+#### [DogCheckinModal](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/DogCheckinModal.jsx)
+- Child component of [MapView](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/MapView.jsx). In Mapview, user selects a location pin hovering over client loation on map. This populates a pop-up 'modal' component, DogCheckinModal, which displays dogs in that client's household.
+- Imports [Checkin](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/Route/CheckIn.jsx) component
+- lines 48-65: function updates checkin status in database for all dogs dispayed in modal.
+- lines 67-81: function for responsive UI: changes map-marker icon color based on dog check-in status.
+- These two features rely on awareness of React-component state variables passed from MapView.
+
+## 2. Bugfixes in legacy code
 
 ## Express Backend
-This section showcases my sole authorship of several backend features.  
-### SQL query
+These sections showcases my sole authorship of several backend features.  
+### 2. DB/SQL-related backend
 During initial team development phase of this application, I wrote the backend logic that queried the postgres database for clients' service record (which dogs walked on which days) and formatted this data into an invoice. I worked closely with my client to understand their formatting requirements.
 
 #### [invoice.router](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/server/routes/invoice.router.js)
@@ -59,24 +56,4 @@ During the second development phase, I led the App's integration with quickbooks
 #### [quickbooks.oauth2.router](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/server/routes/quickbooks.oauth2.router.js)
 - lines 12-57: more implementation of OAUTH2.0 protocols--updating authentiation and refresh tokens.
 
-## React Frontend
-This section showcases how I've worked with other peoples' code. The base code in these sections were initially written by colleagues during phases 1 and 2 of development. I began working on these components after my client requested a number of feature improvements in the maps and dog check-in views. I have written some original functions, but mostly adapted and refactored existing code for modularity, functionality, and readability/cleanliness.
 
-### Refactoring for modularity
-My client asked to me reproduce a function originally performed in the [Route component](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Route/Route.jsx) in the [MapView component](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/MapView.jsx). I was not the original author of the code in this part of the application.
-I knew I wanted to refactor some of the existing code into a child component and impliment in the MapView. The UI of MapView involves a suite of interacting state variables. At first I struggled to allocate awareness of these state variables between MapsView, DogCheckinModal and CheckIn components.
-#### [CheckIn](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Route/CheckIn.jsx)
-- resuable component.
-- child of [Route](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Route/Route.jsx) and [DogCheckinModal](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/DogCheckinModal.jsx)
-- lines 19-39: function sets dog status and dispatches to saga function. Saga function updates database.
-- lines 41-76: resuable UI
-- CheckIn refactored from Route (see [this older branch](https://github.com/citizenkanineapp/citizenkanineapp/blob/OAuth2-setup-sam/src/components/Mobile/Route/Route.jsx) for comparison)
-- ^^^ (old branch) lines 73-102: three separate 'set dog status' functions
-- ^^^ (old branch) lines 202-235: old UI integrated into component
-
-#### [DogCheckinModal](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/DogCheckinModal.jsx)
-- Child component of [MapView](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/MapView/MapView.jsx). In Mapview, user selects a location pin hovering over client loation on map. This populates a pop-up 'modal' component, DogCheckinModal, which displays dogs in that client's household.
-- Imports [Checkin](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/components/Mobile/Route/CheckIn.jsx) component
-- lines 48-65: function changes checkin status all dogs for given client.
-- lines 67-81: function for responsive UI: changes map-marker icon color based on dog check-in status.
-- These two features rely on awareness of React state variables passed from MapView.

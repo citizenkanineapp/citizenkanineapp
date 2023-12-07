@@ -42,7 +42,8 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
 
   const handleClose = () => setOpen(false);
 
-  // this function checks-in all dogs of a given client via the maps view.
+  // this function is my solution to the challenge of bringing this new feature to the MapsView component while leveraging React's modularity.
+  // function checks-in all dogs of a given client via the maps view.
   // replicates some functionality of checkInDog() in DogCheckIn component (lines 58-64)
   // However, this function must be aware of the state variables
   // 'modalData' and 'setMarkers' that are passed as props from parent component MapView.
@@ -67,7 +68,8 @@ function DogCheckinModal ({modalData, open, setOpen, route, setMarkers}) {
     // setOpen(false);
   }
 
-  // Creates a copy of map markers data and resets using new status
+  // This is the second component of the solution.
+  // function creates a copy of map markers data and resets component state data using new checkin status
   // resetting markers based on new satus changes color, providing responsive UI
   const updateMarkers = (modalData) => {
     // switches modal checkin status (all checked in or not all checked-in)

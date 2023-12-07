@@ -11,8 +11,10 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   // console.log('in server post invoice',req.body);
 
-  // tools module creates OAUTH token object
+  // tools module is an implementation of Quickbooks Online OAuth2.0 SDK/toolkit.
+  // Module creates OAUTH token object
   // from client's session data sent to this endpoint as part of HTTP request;
+  // https://github.com/citizenkanineapp/citizenkanineapp/blob/main/server/modules/tools.js
 
   const token = tools.getToken(req.session);
   

@@ -68,7 +68,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
   }
 })
 
-//this function processes the QB customers into a data object that matches our DB object
+  //this function processes the QB customers into a data object that matches our DB object
   function filterCustomers(customers) {
     //console.log('customers straight from QB', customers)
     let customerArray = customers.QueryResponse.Customer 
@@ -107,7 +107,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       }
       if(!oneCustomer.hasOwnProperty('route_id')){
         customer.route_id = 5      //adds a default route_id of unassigned
-                           //QB doesn't have route data but it is needed 
+                           //Lisa does to use QB customer field to store 'assigned' route data, but we needed this 
       }
       customersAfterProcessing.push(customer)
     }
@@ -222,11 +222,13 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     return customerResult;
   }
 
+
+  // I FORGET ALL OF WHAT I DID HERE
   // returns TRUE if a address or town field is empty
   let missingList = [];
   const checkCustomerAddressFields = (customers) => {
     for (let client of customers) {
-      if (!client.street || !client.citygit ) {
+      if (!client.street || !client.city ) {
         const name = `${client.first_name} ${client.last_name}`;
         missingList.push(name);
       }

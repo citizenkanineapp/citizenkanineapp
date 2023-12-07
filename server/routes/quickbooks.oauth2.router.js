@@ -6,6 +6,7 @@ const config = require('../modules/config');
 const router = express.Router();
 
 // These endpoint functions are implementations from the Quickbooks OAuth2.0 SDK/toolkit
+// https://github.com/citizenkanineapp/citizenkanineapp/blob/main/server/modules/tools.js
 
 // API endpoint https://this_app/api/oauth2/connect_handler
 

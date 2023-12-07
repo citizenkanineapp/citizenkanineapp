@@ -33,7 +33,7 @@ function DogCheckIn ({ dog }) {
         updatedDog = { id: dogID, checked_in: false, no_show: false, cancelled: true, routeID: routeID }
       }
      }
-    // dispatches to routes.saga.js
+    // dispatches to routes.saga.js https://github.com/citizenkanineapp/citizenkanineapp/blob/main/src/redux/sagas/routes.saga.js
     // where an Axios PUT request is sent to server to update postgres database
     dispatch({ type: 'CHECK_IN', payload: updatedDog });
   }

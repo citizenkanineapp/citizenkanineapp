@@ -69,124 +69,124 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 })
 
   //this function processes the QB customers into a data object that matches our DB object
-  function filterCustomers(customers) {
-    //console.log('customers straight from QB', customers)
-    let customerArray = customers.QueryResponse.Customer 
-    let customersAfterProcessing = []
-    for (let oneCustomer of customerArray) {
-      let customer = {
-        qb_id: Number(oneCustomer.Id),
-       // notesObj: oneCustomer.Notes,
-        email: oneCustomer.PrimaryEmailAddr.Address,
-        first_name: oneCustomer.GivenName,
-        last_name: oneCustomer.FamilyName,
-        street: oneCustomer.BillAddr.Line1,
-        city: oneCustomer.BillAddr.City,
-        zip: oneCustomer.BillAddr.PostalCode,
-        notes: oneCustomer.ShipAddr.Line1,
-      }
-
-      //adds keys if they apply to that customer
-      if(oneCustomer.hasOwnProperty('Notes')){
-        customer.notesObj = oneCustomer.Notes  //added this check to handle
-      } else {                                      //customers with only ad-hoc dogs
-        customer.notesObj = "none-none"
-      }
-      if(oneCustomer.hasOwnProperty('Mobile')){
-        customer.mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
-      } else {                                      //this handles undefined errors
-        customer.mobile = ""
-      }
-      if(oneCustomer.hasOwnProperty('PrimaryPhone')){
-        customer.phone = oneCustomer.PrimaryPhone.FreeFormNumber   //some customers don't have phones
-      } else {                                      //this handles undefined errors
-        customer.phone = ""
-      }
-      if(oneCustomer.ShipAddr.hasOwnProperty('City')){   //where Lisa stores ad-hoc dog info
-        customer.adHocDogs =oneCustomer.ShipAddr.City
-      }
-      if(!oneCustomer.hasOwnProperty('route_id')){
-        customer.route_id = 5      //adds a default route_id of unassigned
-                           //Lisa does to use QB customer field to store 'assigned' route data, but we needed this 
-      }
-      customersAfterProcessing.push(customer)
+function filterCustomers(customers) {
+  //console.log('customers straight from QB', customers)
+  let customerArray = customers.QueryResponse.Customer 
+  let customersAfterProcessing = []
+  for (let oneCustomer of customerArray) {
+    let customer = {
+      qb_id: Number(oneCustomer.Id),
+      // notesObj: oneCustomer.Notes,
+      email: oneCustomer.PrimaryEmailAddr.Address,
+      first_name: oneCustomer.GivenName,
+      last_name: oneCustomer.FamilyName,
+      street: oneCustomer.BillAddr.Line1,
+      city: oneCustomer.BillAddr.City,
+      zip: oneCustomer.BillAddr.PostalCode,
+      notes: oneCustomer.ShipAddr.Line1,
     }
-    // this next function deals with dogs' names and schedules 
-   // console.log('does it add a none-none key?', customersAfterProcessing)
-    let customersWithSchedule = getDogSchedule(customersAfterProcessing)
-    //one more filter to remove key no longer needed on object
-    let preFinalCustomers = customersWithSchedule.filter(customer => delete customer.notesObj);
-    let finalCustomers = customersWithSchedule.filter(customer => delete customer.adHocDogs);
-    return finalCustomers;
+
+    //adds keys if they apply to that customer
+    if(oneCustomer.hasOwnProperty('Notes')){
+      customer.notesObj = oneCustomer.Notes  //added this check to handle
+    } else {                                      //customers with only ad-hoc dogs
+      customer.notesObj = "none-none"
+    }
+    if(oneCustomer.hasOwnProperty('Mobile')){
+      customer.mobile = oneCustomer.Mobile.FreeFormNumber   //some customers don't have mobile
+    } else {                                      //this handles undefined errors
+      customer.mobile = ""
+    }
+    if(oneCustomer.hasOwnProperty('PrimaryPhone')){
+      customer.phone = oneCustomer.PrimaryPhone.FreeFormNumber   //some customers don't have phones
+    } else {                                      //this handles undefined errors
+      customer.phone = ""
+    }
+    if(oneCustomer.ShipAddr.hasOwnProperty('City')){   //where Lisa stores ad-hoc dog info
+      customer.adHocDogs =oneCustomer.ShipAddr.City
+    }
+    if(!oneCustomer.hasOwnProperty('route_id')){
+      customer.route_id = 5      //adds a default route_id of unassigned
+                          //Lisa does to use QB customer field to store 'assigned' route data, but we needed this 
+    }
+    customersAfterProcessing.push(customer)
   }
+  // this next function deals with dogs' names and schedules 
+  // console.log('does it add a none-none key?', customersAfterProcessing)
+  let customersWithSchedule = getDogSchedule(customersAfterProcessing)
+  //one more filter to remove key no longer needed on object
+  let preFinalCustomers = customersWithSchedule.filter(customer => delete customer.notesObj);
+  let finalCustomers = customersWithSchedule.filter(customer => delete customer.adHocDogs);
+  return finalCustomers;
+}
   
-  //this function processes the string with dog info and schedules and turns
-  //it into usable data
-  function getDogSchedule(customers) {
-   //console.log('customers:', customers)
-    let customerArray = []
-    for (let oneCustomer of customers) {
-      let result = oneCustomer.notesObj.split("-")
-      let dogs = result[0]
-      let schedule = result[1]
-      // console.log('dogs: ',oneCustomer.first_name, dogs);
-      let dogsCleaned = dogs.replace(/[&/]/g, ",");
-        
-      // console.log('schedule', schedule)
-      let scheduleCleaned;
-      if (schedule) {
-        scheduleCleaned = schedule.replace(/[&/]/g, ",");
-      } else {
-        scheduleCleaned = '';
-      }
+//this function processes the string with dog info and schedules and turns
+//it into usable data
+function getDogSchedule(customers) {
+  //console.log('customers:', customers)
+  let customerArray = []
+  for (let oneCustomer of customers) {
+    let result = oneCustomer.notesObj.split("-")
+    let dogs = result[0]
+    let schedule = result[1]
+    // console.log('dogs: ',oneCustomer.first_name, dogs);
+    let dogsCleaned = dogs.replace(/[&/]/g, ",");
       
-      //this sections gets rid of extra spaces that might be surrounding each string 
-      let dogsArray = dogsCleaned.split(",").map(function (dogName) {
-        return {name: dogName.trim(), 
-                notes: "", 
-                flag: false, 
-                active: true, 
-                regular: true,     //creating a dog object for each dog
-                image: "",
-                // vet_name: "",
-                // vet_phone: "",
-                qb_id: oneCustomer.qb_id
-              };
-      })
-
-      //for ad-hoc dogs
-        if(oneCustomer.hasOwnProperty('adHocDogs')){
-          // console.log('do ad hoc dogs make it here?', oneCustomer.adHocDogs )
-          let adHocDogsString = oneCustomer.adHocDogs
-          let dogsCleaned = adHocDogsString.replace(/[&/]/g, ",")
-          let adHocDogsArray = dogsCleaned.split(",").map(function (dogName) {
-            let adHocDog = {
-                    name: dogName.trim(), 
-                    notes: "", 
-                    flag: false, 
-                    active: true, 
-                    regular: false,     //creating a dog object for each  ad hoc dog
-                    image: "",
-                    // vet_name: "",
-                    // vet_phone: "",
-                    qb_id: oneCustomer.qb_id
-            }
-              //adds the dogs to the array with regular dogs
-                  dogsArray.push(adHocDog)
-          })
-        }
-        let scheduleArray = scheduleCleaned.split(",").map(function (dayName) {
-        return dayName.trim();
-      })
-        let filteredDogs = dogsArray.filter(dog => dog.name != "none")
-        //console.log('filtered dogs', filteredDogs)
-        oneCustomer.dogs = filteredDogs,   //adding dogs key to customer object
-        oneCustomer.schedule =  scheduleArray, //adding schedule key to customer obj
-        customerArray.push(oneCustomer)  
+    // console.log('schedule', schedule)
+    let scheduleCleaned;
+    if (schedule) {
+      scheduleCleaned = schedule.replace(/[&/]/g, ",");
+    } else {
+      scheduleCleaned = '';
     }
-    return customerArray
-  
+    
+    //this sections gets rid of extra spaces that might be surrounding each string 
+    let dogsArray = dogsCleaned.split(",").map(function (dogName) {
+      return {name: dogName.trim(), 
+              notes: "", 
+              flag: false, 
+              active: true, 
+              regular: true,     //creating a dog object for each dog
+              image: "",
+              // vet_name: "",
+              // vet_phone: "",
+              qb_id: oneCustomer.qb_id
+            };
+    })
+
+    //for ad-hoc dogs
+      if(oneCustomer.hasOwnProperty('adHocDogs')){
+        // console.log('do ad hoc dogs make it here?', oneCustomer.adHocDogs )
+        let adHocDogsString = oneCustomer.adHocDogs
+        let dogsCleaned = adHocDogsString.replace(/[&/]/g, ",")
+        let adHocDogsArray = dogsCleaned.split(",").map(function (dogName) {
+          let adHocDog = {
+                  name: dogName.trim(), 
+                  notes: "", 
+                  flag: false, 
+                  active: true, 
+                  regular: false,     //creating a dog object for each  ad hoc dog
+                  image: "",
+                  // vet_name: "",
+                  // vet_phone: "",
+                  qb_id: oneCustomer.qb_id
+          }
+            //adds the dogs to the array with regular dogs
+                dogsArray.push(adHocDog)
+        })
+      }
+      let scheduleArray = scheduleCleaned.split(",").map(function (dayName) {
+      return dayName.trim();
+    })
+      let filteredDogs = dogsArray.filter(dog => dog.name != "none")
+      //console.log('filtered dogs', filteredDogs)
+      oneCustomer.dogs = filteredDogs,   //adding dogs key to customer object
+      oneCustomer.schedule =  scheduleArray, //adding schedule key to customer obj
+      customerArray.push(oneCustomer)  
   }
+  return customerArray
+
+}
 
 /*To initially add QB customers to DB */
 router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {

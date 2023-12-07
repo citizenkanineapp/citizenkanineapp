@@ -52,9 +52,9 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
           //initial response from QB servers
           let customers = JSON.parse(response.body)
       
-          // this function starts the process of formatting the customers
+          // this function starts the process of formatting the customer data
           let filteredCustomers =  filterCustomers(customers)
-       //sends customers to client side after processing
+          //sends customers to client side after processing
           res.send(filteredCustomers)
         }   
       }, function (err) {
@@ -111,6 +111,29 @@ function filterCustomers(customers) {
     }
     customersAfterProcessing.push(customer)
   }
+
+  // ADDRESS FIELD INPUT VALIDATION.
+  // THIS HAPPENS AFTER customer array is complete so that error message contains full list of customers.
+  // city and street fields must defined in order to get coordinate data via geocoder api (lines 230-245)
+  let missingList = []; // array is used to send pop-up error message with list of customers that need updating in quickbooks
+  const checkCustomerAddressFields = (customers) => {
+    for (let client of customers) {
+      if (!client.street || !client.city ) {
+        const name = `${client.first_name} ${client.last_name}`;
+        missingList.push(name);
+      }
+    }
+    return customers.some(customer => !customer.street || !customer.city);
+  }
+
+  if (!checkCustomerAddressFields(customers)) {
+    console.log('no fields empty')
+  } else {
+    console.log('some fields empty', missingList)
+    const message = {message: `Error! The following customers are missing address fields: ${missingList.join(' ')}`}
+    return res.status(500).send(message);
+  }
+
   // this next function deals with dogs' names and schedules 
   // console.log('does it add a none-none key?', customersAfterProcessing)
   let customersWithSchedule = getDogSchedule(customersAfterProcessing)
@@ -132,7 +155,7 @@ function getDogSchedule(customers) {
     // console.log('dogs: ',oneCustomer.first_name, dogs);
     let dogsCleaned = dogs.replace(/[&/]/g, ",");
       
-    // console.log('schedule', schedule)
+    // input validation on dog schedule;
     let scheduleCleaned;
     if (schedule) {
       scheduleCleaned = schedule.replace(/[&/]/g, ",");
@@ -225,26 +248,26 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
 
   // I FORGET ALL OF WHAT I DID HERE
   // returns TRUE if a address or town field is empty
-  let missingList = [];
-  const checkCustomerAddressFields = (customers) => {
-    for (let client of customers) {
-      if (!client.street || !client.city ) {
-        const name = `${client.first_name} ${client.last_name}`;
-        missingList.push(name);
-      }
-    }
-    return customers.some(customer => !customer.street || !customer.city);
-  }
+  // let missingList = [];
+  // const checkCustomerAddressFields = (customers) => {
+  //   for (let client of customers) {
+  //     if (!client.street || !client.city ) {
+  //       const name = `${client.first_name} ${client.last_name}`;
+  //       missingList.push(name);
+  //     }
+  //   }
+  //   return customers.some(customer => !customer.street || !customer.city);
+  // }
 
-  let customersWithGeoStats
-  if (!checkCustomerAddressFields(customers)) {
-    console.log('no fields empty')
+  // let customersWithGeoStats
+  // if (!checkCustomerAddressFields(customers)) {
+  //   console.log('no fields empty')
     customersWithGeoStats = await GetGeoStats(customers)
-  } else {
-    console.log('some fields empty', missingList)
-    const message = {message: `Error! The following customers are missing address fields: ${missingList.join(' ')}`}
-    return res.status(500).send(message);
-  }
+  // } else {
+  //   console.log('some fields empty', missingList)
+  //   const message = {message: `Error! The following customers are missing address fields: ${missingList.join(' ')}`}
+  //   return res.status(500).send(message);
+  // }
 
   let customersResult = processSchedule(customersWithGeoStats)
 // console.log('after schedule processing',  customersResult)

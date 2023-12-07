@@ -139,6 +139,7 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
 
     const client = await pool.connect();
     const date = new Date(req.params.date);
+    console.log('date is', date);
     const [ searchQuery, scheduleQuery ] = getDailyDogsSearchQuery(date);
 
     // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
@@ -151,10 +152,12 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
     const scheduleAdjustments = scheduleAdjustmentsResponse.rows;
 
     if (scheduleAdjustments < 1 ) {
-        res.send({scheduledDogs});
+        const dogsScheduledForDay = scheduledDogs.length;
+        res.send({dogsScheduledForDay});
     } else {
         const adjustedDogs = getAdjustedSchedule(scheduledDogs,scheduleAdjustments)
-        res.send({adjustedDogs})
+        const dogsScheduledForDay = adjustedDogs.length;
+        res.send({dogsScheduledForDay});
     }
 });
 

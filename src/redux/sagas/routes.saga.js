@@ -248,7 +248,8 @@ function* checkDogSchedules(action){
             method: 'GET',
             url: `/api/mobile/checkDogSchedule/${date}`,
         });
-        console.log(dogsScheduled.data)
+        console.log(dogsScheduled.data.dogsScheduledForDay);
+        // console.log(dogsScheduled.data.adjustedDogs.length)
     } catch (error) {
         console.log('ERROR GETTING DOG SCHEDULE');
     }
@@ -259,7 +260,7 @@ function* RouteSaga() {
     yield takeLatest('UPDATE_ROUTE', updateRoute);
     yield takeLatest('GET_ROUTE_DETAILS', getRouteDetails);
     yield takeLatest('POPULATE_DAILY_DOGS', populateDailyDogs);
-    yield takeLatest('CHECK_DOG_SCHEDULE', checkDogSchedules);
+    yield takeLatest('CHECK_DOG_SCHEDULES', checkDogSchedules);
     yield takeLatest('CHECK_IN', updateStatus);
     yield takeLatest('UPDATE_DOG_ORDER', updateDogOrderInRoute);
 }

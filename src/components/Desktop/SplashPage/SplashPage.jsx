@@ -31,6 +31,12 @@ function SplashPage() {
     dispatch({ type: 'CHECK_DOG_SCHEDULES', payload: dayjs(date).format('YYYY-MM-DD') });
   }
 
+  const isWeekend = (date) => {
+    const day = date.day();
+  
+    return day === 0 || day === 6;
+  };
+
   return (
     <Box className="splash_container" sx={{width: '100%', height: '80vh'}}>
       <Grid container spacing={2} sx={{ alignItems: "center", display: "flex", pl: '5vw', mt: 5}}>
@@ -52,14 +58,15 @@ function SplashPage() {
         </Grid>
         <Grid item xs={1}/>
         <Grid item xs={4}>
-          <Card sx={{display: "flex", flexDirection: "column", alignItems:"center"}}>
-            <Typography sx={{mt: 1}}> Dogs scheduled for {dayjs(date).format('MM/DD')}: {dogCount} </Typography>
+          <Card sx={{mx: 5, display: "flex", flexDirection: "column", alignItems:"center"}}>
+            <Typography sx={{mt: 1}}> Dogs scheduled for {dayjs(date).format('MM/DD')}: <b>{dogCount}</b> </Typography>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
+                shouldDisableDate={isWeekend}
                 onChange={handleDateChange}
                 value={date}
                 renderInput={(params) => {
-                  return <TextField {...params} sx={{ mt: 2 ,mx: 2, pb: 1, width: '20vw' }} />
+                  return <TextField {...params} sx={{ mt: 2 ,mx: 2, pb: 1, width: '15vw' }} />
                 }}
               />
             </LocalizationProvider>

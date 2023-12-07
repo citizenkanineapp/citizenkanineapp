@@ -139,7 +139,7 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
 
     const client = await pool.connect();
     const date = new Date(req.params.date);
-    console.log('date is', date);
+    // console.log('date is', date);
     const [ searchQuery, scheduleQuery ] = getDailyDogsSearchQuery(date);
 
     // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.

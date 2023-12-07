@@ -38,7 +38,6 @@ const dailyDogz = (state = {}, action) => {
         case 'CLEAR_DAILY_ROUTES':
             return state;
 
-
         default:
             return state;
     }

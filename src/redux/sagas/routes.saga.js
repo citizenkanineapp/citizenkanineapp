@@ -249,7 +249,10 @@ function* checkDogSchedules(action){
             url: `/api/mobile/checkDogSchedule/${date}`,
         });
         console.log(dogsScheduled.data.dogsScheduledForDay);
-        // console.log(dogsScheduled.data.adjustedDogs.length)
+        yield put ({
+            type: 'DOGS_SCHEDULE_COUNT',
+            payload: dogsScheduled.data.dogsScheduledForDay
+        });
     } catch (error) {
         console.log('ERROR GETTING DOG SCHEDULE');
     }

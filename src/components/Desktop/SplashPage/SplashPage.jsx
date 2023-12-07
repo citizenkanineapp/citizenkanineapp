@@ -21,6 +21,7 @@ function SplashPage() {
 
   const user = useSelector((store) => store.user);
   const [date, setDate] = useState(today);
+  const dogCount = useSelector(store => store.scheduledDogs);
   useEffect(() => {
     handleDateChange(today);
   }, []);
@@ -52,7 +53,7 @@ function SplashPage() {
         <Grid item xs={1}/>
         <Grid item xs={4}>
           <Card sx={{display: "flex", flexDirection: "column", alignItems:"center"}}>
-            <Typography sx={{mt: 1}}> Dogs scheduled {dayjs(date).format('MM/DD')} </Typography>
+            <Typography sx={{mt: 1}}> Dogs scheduled for {dayjs(date).format('MM/DD')}: {dogCount} </Typography>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 onChange={handleDateChange}

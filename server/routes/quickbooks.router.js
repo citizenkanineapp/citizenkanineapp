@@ -112,28 +112,6 @@ function filterCustomers(customers) {
     customersAfterProcessing.push(customer)
   }
 
-  // ADDRESS FIELD INPUT VALIDATION.
-  // THIS HAPPENS AFTER customer array is complete so that error message contains full list of customers.
-  // city and street fields must defined in order to get coordinate data via geocoder api (lines 230-245)
-  let missingList = []; // array is used to send pop-up error message with list of customers that need updating in quickbooks
-  const checkCustomerAddressFields = (customers) => {
-    for (let client of customers) {
-      if (!client.street || !client.city ) {
-        const name = `${client.first_name} ${client.last_name}`;
-        missingList.push(name);
-      }
-    }
-    return customers.some(customer => !customer.street || !customer.city);
-  }
-
-  if (!checkCustomerAddressFields(customers)) {
-    console.log('no fields empty')
-  } else {
-    console.log('some fields empty', missingList)
-    const message = {message: `Error! The following customers are missing address fields: ${missingList.join(' ')}`}
-    return res.status(500).send(message);
-  }
-
   // this next function deals with dogs' names and schedules 
   // console.log('does it add a none-none key?', customersAfterProcessing)
   let customersWithSchedule = getDogSchedule(customersAfterProcessing)
@@ -245,29 +223,28 @@ router.post('/qbcustomers', rejectUnauthenticated, async (req, res) => {
     return customerResult;
   }
 
+  // ADDRESS FIELD INPUT VALIDATION.
+  // city and street fields must defined in order to get coordinate data via geocoder api (lines 208-222,243)
+  let missingList = []; // array is used to send pop-up error message with list of customers that need updating in quickbooks
+  const checkCustomerAddressFields = (customers) => {
+    for (let client of customers) {
+      if (!client.street || !client.city ) {
+        const name = `${client.first_name} ${client.last_name}`;
+        missingList.push(name);
+      }
+    }
+    return customers.some(customer => !customer.street || !customer.city);
+  }
 
-  // I FORGET ALL OF WHAT I DID HERE
-  // returns TRUE if a address or town field is empty
-  // let missingList = [];
-  // const checkCustomerAddressFields = (customers) => {
-  //   for (let client of customers) {
-  //     if (!client.street || !client.city ) {
-  //       const name = `${client.first_name} ${client.last_name}`;
-  //       missingList.push(name);
-  //     }
-  //   }
-  //   return customers.some(customer => !customer.street || !customer.city);
-  // }
-
-  // let customersWithGeoStats
-  // if (!checkCustomerAddressFields(customers)) {
-  //   console.log('no fields empty')
+  let customersWithGeoStats
+  if (!checkCustomerAddressFields(customers)) {
+    console.log('no fields empty')
     customersWithGeoStats = await GetGeoStats(customers)
-  // } else {
-  //   console.log('some fields empty', missingList)
-  //   const message = {message: `Error! The following customers are missing address fields: ${missingList.join(' ')}`}
-  //   return res.status(500).send(message);
-  // }
+  } else {
+    console.log('some fields empty', missingList)
+    const message = {message: `Error! The following customers are missing address fields: ${missingList.join(' ')}`}
+    return res.status(500).send(message);
+  }
 
   let customersResult = processSchedule(customersWithGeoStats)
 // console.log('after schedule processing',  customersResult)

@@ -40,9 +40,9 @@ This app syncs its database to our client's Quickbooks Online account. My custom
 
 ### [quickbooks.router](https://github.com/citizenkanineapp/citizenkanineapp/blob/main/server/routes/quickbooks.router.js)
 - line 56: function filters customer data in to return to client
-- lines 115-134: input validation in after recieving customer data via quickbooks api
-- lines 133-13: custom error message sent to [do i even have this file?](https://blah.org)
-- lines 230-246: input validation is necessary to get coordinate data via geocoder api
+- lines 226-247: input validation in after recieving customer data via quickbooks api
+- lines 244-245: custom error message sent to [do i even have this file?](https://blah.org)
+- lines 208-222, 243: input validation is necessary to get coordinate data via geocoder api
 
 ## 3. DB/SQL-related backend
 During development phase 1, I wrote the backend logic that queries the postgres database for clients' service record (ie, which dogs were walked on which days) and formatted this data into an invoice. I worked closely with my client to understand their formatting requirements.

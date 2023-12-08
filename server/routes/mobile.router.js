@@ -4,6 +4,7 @@ const router = express.Router();
 const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
+const { Day } = require('react-big-calendar');
 
 
 // ADMIN ONLY:
@@ -17,6 +18,54 @@ const {
 // /dog/:id for GETTING a specific dogs details
 
 // GET ROUTE FOR DAILY DOGS SCHEDULE
+
+// getDailyDogsSearchQuery generates search query that is used by both /mobile/daily and /mobile/checkDogsSchedule endpoints
+const getDailyDogsSearchQuery = (day) => {
+
+    const weekdayNumber = day.getDay();
+
+    // SQL to grab dogs scheduled for given weekday
+    let searchQuery = `
+    SELECT clients_schedule.id, clients_schedule."1" AS Monday,  clients_schedule."2" AS Tuesday,  clients_schedule."3" AS Wednesday,  clients_schedule."4" AS Thursday,  clients_schedule."5" AS Friday, dogs.client_id, clients.route_id, dogs.name, dogs.id AS dog_id from clients_schedule
+        JOIN "dogs" ON clients_schedule.client_id = dogs.client_id
+        JOIN "clients" ON clients_schedule.client_id = clients.id
+        WHERE "${weekdayNumber}" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;
+    `;
+
+    // SQL to grab schedule adjustments table
+    const scheduleQuery = `
+    SELECT dogs_schedule_changes.*, dogs.name, clients.route_id from dogs_schedule_changes
+        JOIN dogs ON dogs_schedule_changes.dog_id = dogs.id
+        JOIN clients ON dogs.client_id = clients.id
+        WHERE dogs_schedule_changes.date_to_change = $1
+    ORDER BY dogs_schedule_changes.dog_id;
+    `;
+
+    return [searchQuery, scheduleQuery];
+}
+
+// getAdjustedSchedule is used by both /mobile/daily and /mobile/checkDogsSchedule endpoints
+const getAdjustedSchedule = (scheduledDogs, scheduleAdjustments) => {
+    // taking out the dog_id's from the cancellations to quickly find the dogs that need to be removed.
+    const cancellations = scheduleAdjustments
+        .filter(item => item.is_scheduled === false)
+        .map(item => item.dog_id);
+    // adjustedDogs is the original dog array MINUS the canceled dogs for the day. there is a possibility for duplicate values to end up in additions!
+    const adjustedDogs = scheduledDogs.filter(item => !cancellations.includes(item.dog_id));
+    // here are the dogs that were added for the day that typically might not be scheduled
+    const additions = scheduleAdjustments.filter(item => item.is_scheduled === true);
+    // returns TRUE if id matches dog.dog_id in adjustedDogs
+    const checkDogId = (id, array) => {
+        return array.some(dog => dog.dog_id === id);
+    }
+    for (let item of additions) {
+        if (!checkDogId(item.dog_id,adjustedDogs)) {
+            adjustedDogs.push(item);
+        }
+    }
+    return adjustedDogs;
+}
+
 router.get('/daily', async (req, res) => {
     const client = await pool.connect();
 
@@ -26,59 +75,9 @@ router.get('/daily', async (req, res) => {
     today.setUTCHours(today.getUTCHours() - 5)
     console.log('server time is', new Date().toString())
     console.log('client time is',today)
-    const weekday = {};
-    weekday.number = today.getDay();
-    console.log('NUMBER IS:', weekday.number);
-    // weekday = "Saturday"
 
-    // the switch below this adds the necessary last two lines of the SQL Query to be Run
-    // thus only grabbing dogs with the given day status 
-    let searchQuery = `
-    SELECT clients_schedule.id, clients_schedule."1" AS Monday,  clients_schedule."2" AS Tuesday,  clients_schedule."3" AS Wednesday,  clients_schedule."4" AS Thursday,  clients_schedule."5" AS Friday, dogs.client_id, clients.route_id, dogs.name, dogs.id AS dog_id from clients_schedule
-        JOIN "dogs" ON clients_schedule.client_id = dogs.client_id
-        JOIN "clients" ON clients_schedule.client_id = clients.id
-    `
-
-    switch (weekday.number) {
-        case 0:
-            searchQuery = null;
-            break;
-        case 1:
-            console.log('Monday');
-            searchQuery += 'WHERE "1" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
-            break;
-        case 2:
-            console.log('Tuesday');
-            searchQuery += 'WHERE "2" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
-            break;
-        case 3:
-            console.log('Wednesday');
-            searchQuery += 'WHERE "3" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
-            break;
-        case 4:
-            console.log('Thursday');
-            searchQuery += 'WHERE "4" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
-            break;
-        case 5:
-            console.log('Friday');
-            searchQuery += 'WHERE "5" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;';
-            break;
-        case 6:
-            searchQuery = null;
-            break;
-        case 7:
-            searchQuery = null;
-            break;
-    }
-
-    // SQL to grab schedule adjustments table
-    const scheduleQuery = `
-    SELECT dogs_schedule_changes.*, dogs.name, clients.route_id from dogs_schedule_changes
-		JOIN dogs ON dogs_schedule_changes.dog_id = dogs.id
-        JOIN clients ON dogs.client_id = clients.id
-	    WHERE dogs_schedule_changes.date_to_change = $1
-	ORDER BY dogs_schedule_changes.dog_id;
-    `
+    const [ searchQuery, scheduleQuery ] = getDailyDogsSearchQuery(today);
+    // console.log(searchQuery, scheduleQuery)
 
     try {
         await client.query('BEGIN');
@@ -110,27 +109,7 @@ router.get('/daily', async (req, res) => {
             res.send({ scheduledDogs });
         } else {
 
-            // taking out the dog_id's from the cancellations to quickly find the dogs that need to be removed.
-            const cancellations = scheduleAdjustments
-                .filter(item => item.is_scheduled === false)
-                .map(item => item.dog_id);
-
-            // adjustedDogs is the original dog array MINUS the canceled dogs for the day. there is a possibility for duplicate values to end up in additions!
-            const adjustedDogs = scheduledDogs.filter(item => !cancellations.includes(item.dog_id));
-
-            // here are the dogs that were added for the day that typically might not be scheduled
-            const additions = scheduleAdjustments.filter(item => item.is_scheduled === true);
-
-            // returns TRUE if id matches dog.dog_id in adjustedDogs
-            const checkDogId = (id, array) => {
-                return array.some(dog => dog.dog_id === id);
-            }
-
-            for (let item of additions) {
-                if (!checkDogId(item.dog_id,adjustedDogs)) {
-                    adjustedDogs.push(item);
-                }
-            }
+           const adjustedDogs = getAdjustedSchedule(scheduledDogs, scheduleAdjustments);
 
             console.log('Good to Go with adjustments!');
             // insert into daily_dogs
@@ -151,7 +130,43 @@ router.get('/daily', async (req, res) => {
         console.log('Error in Generating / Getting Daily Dogs', error.detail);
         res.sendStatus(500);
     } finally {
-        client.release()
+        client.release();
+    }
+});
+
+// router returns number of dogs scheduled for given day
+router.get('/checkDogSchedule/:date', async (req, res) => {
+    console.log('in /checkDogSchedule', req.params.date)
+    const client = await pool.connect();
+    const date = new Date(req.params.date);
+    // console.log('date is', date);
+    const [ searchQuery, scheduleQuery ] = getDailyDogsSearchQuery(date);
+
+    try {
+        // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
+        // find the dogs default scheduled for the day
+        const scheduledDogsResponse = await client.query(searchQuery);
+        const scheduledDogs = scheduledDogsResponse.rows;
+    
+        // find the schedule changes for the day
+        const scheduleAdjustmentsResponse = await client.query(scheduleQuery,[date]);
+        const scheduleAdjustments = scheduleAdjustmentsResponse.rows;
+    
+        if (scheduleAdjustments < 1 ) {
+            const dogsScheduledForDay = scheduledDogs.length;
+            // console.log('no adjust: ', dogsScheduledForDay)
+            res.send({dogsScheduledForDay});
+        } else {
+            const adjustedDogs = getAdjustedSchedule(scheduledDogs,scheduleAdjustments)
+            const dogsScheduledForDay = adjustedDogs.length;
+            // console.log('adjust: ', dogsScheduledForDay)
+            res.send({dogsScheduledForDay});
+        }
+    } catch (error) {
+        console.log('error checking scheduled dogs', error.detail);
+        res.sendStatus(500);
+    } finally {
+        client.release();
     }
 });
 

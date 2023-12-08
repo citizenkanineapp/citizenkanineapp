@@ -1,22 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-import Checkbox from '@mui/material/Checkbox';
 import SendIcon from '@mui/icons-material/Send';
-import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
-import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import './AdminNotes.css'
 import dayjs from 'dayjs'
 
-
-
 //MUI
-import { ListItemButton, Stack, Fab, Card, CardContent, List, ListItem, ListItemText, ListItemIcon, Button, TextField, Typography, Grid, Avatar, Box } from "@mui/material";
+import { Stack, Fab, Card, CardContent, List, ListItem, ListItemText, TextField, Typography, Grid, Box } from "@mui/material";
 
 function AdminNotes() {
     useEffect(() => {
@@ -189,7 +182,3 @@ function AdminNotes() {
 }
 
 export default AdminNotes;
-
-//get rid of edit. 
-//have plus and input
-//delete from main view

@@ -77,7 +77,7 @@ router.get('/daily', async (req, res) => {
     console.log('client time is',today)
 
     const [ searchQuery, scheduleQuery ] = getDailyDogsSearchQuery(today);
-    console.log(searchQuery, scheduleQuery)
+    // console.log(searchQuery, scheduleQuery)
 
     try {
         await client.query('BEGIN');
@@ -130,34 +130,43 @@ router.get('/daily', async (req, res) => {
         console.log('Error in Generating / Getting Daily Dogs', error.detail);
         res.sendStatus(500);
     } finally {
-        client.release()
+        client.release();
     }
 });
 
 // router returns number of dogs scheduled for given day
 router.get('/checkDogSchedule/:date', async (req, res) => {
-
+    console.log('in /checkDogSchedule', req.params.date)
     const client = await pool.connect();
     const date = new Date(req.params.date);
     // console.log('date is', date);
     const [ searchQuery, scheduleQuery ] = getDailyDogsSearchQuery(date);
 
-    // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
-    // find the dogs default scheduled for the day
-    const scheduledDogsResponse = await client.query(searchQuery);
-    const scheduledDogs = scheduledDogsResponse.rows;
-
-    // find the schedule changes for the day
-    const scheduleAdjustmentsResponse = await client.query(scheduleQuery,[date]);
-    const scheduleAdjustments = scheduleAdjustmentsResponse.rows;
-
-    if (scheduleAdjustments < 1 ) {
-        const dogsScheduledForDay = scheduledDogs.length;
-        res.send({dogsScheduledForDay});
-    } else {
-        const adjustedDogs = getAdjustedSchedule(scheduledDogs,scheduleAdjustments)
-        const dogsScheduledForDay = adjustedDogs.length;
-        res.send({dogsScheduledForDay});
+    try {
+        // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
+        // find the dogs default scheduled for the day
+        const scheduledDogsResponse = await client.query(searchQuery);
+        const scheduledDogs = scheduledDogsResponse.rows;
+    
+        // find the schedule changes for the day
+        const scheduleAdjustmentsResponse = await client.query(scheduleQuery,[date]);
+        const scheduleAdjustments = scheduleAdjustmentsResponse.rows;
+    
+        if (scheduleAdjustments < 1 ) {
+            const dogsScheduledForDay = scheduledDogs.length;
+            // console.log('no adjust: ', dogsScheduledForDay)
+            res.send({dogsScheduledForDay});
+        } else {
+            const adjustedDogs = getAdjustedSchedule(scheduledDogs,scheduleAdjustments)
+            const dogsScheduledForDay = adjustedDogs.length;
+            // console.log('adjust: ', dogsScheduledForDay)
+            res.send({dogsScheduledForDay});
+        }
+    } catch (error) {
+        console.log('error checking scheduled dogs', error.detail);
+        res.sendStatus(500);
+    } finally {
+        client.release();
     }
 });
 

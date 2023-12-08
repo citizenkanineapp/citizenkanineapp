@@ -242,7 +242,7 @@ function* updateDogOrderInRoute(action) {
 
 function* checkDogSchedules(action){
     const date = action.payload
-    console.log(date)
+    // console.log(date)
     try {
         const dogsScheduled = yield axios({
             method: 'GET',

@@ -23,7 +23,11 @@ function DogCount() {
   let today = new Date().toISOString();
 
   const [date, setDate] = useState(today);
-  const dogCount = useSelector(store => store.scheduledDogs);
+  const scheduledDogs = useSelector(store => store.scheduledDogs);
+  const dogCount = scheduledDogs[0] ? scheduledDogs.reduce((acc, obj) => {
+      return acc + obj.dogs.length;
+    }, 0) : 0;
+
   useEffect(() => {
     handleDateChange(today);
   }, []);
@@ -40,9 +44,9 @@ function DogCount() {
   };
 
   return (
-    <Grid item xs={4}>
-      <Card sx={{mx: 5, display: "flex", flexDirection: "column", alignItems:"center"}}>
-        {/* <Typography sx={{mt: 1}}> Dogs scheduled for {dayjs(date).format('MM/DD')}: <b>{dogCount}</b> </Typography> */}
+    <Grid item xs={6} >
+      <Card sx={{mx: 5, mb: 5, display: "flex", flexDirection: "column", alignItems:"center", maxHeight: "75vh" }}>
+        <Typography sx={{mt: 1}}> Dogs scheduled for {dayjs(date).format('MM/DD')}: <b>{dogCount}</b> </Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             shouldDisableDate={isWeekend}
@@ -53,22 +57,22 @@ function DogCount() {
             }}
           />
         </LocalizationProvider>
-        <TableContainer component={Paper}>
-          <Table stickyHeader size="small">
+        <TableContainer component={Paper} >
+          <Table stickyHeader size="small" sx={{overflow:'auto'}}>
             <TableHead>
               <TableRow>
                   <TableCell sx={{fontWeight: '800'}}>Client:</TableCell>
-                  <TableCell sx={{fontWeight: '800'}}>Client:</TableCell>
+                  <TableCell sx={{fontWeight: '800'}}>Route:</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Dogs:</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-            {dogCount && dogCount[0] && dogCount.map((dog) => (
+            <TableBody >
+            {scheduledDogs && scheduledDogs[0] && scheduledDogs.map((dog) => (
               <StyledTableRow key={dog.client_id}> 
-                <TableCell >{dog.client_first_name}, {dog.client_last_name}</TableCell>
+                <TableCell >{dog.client_last_name}, {dog.client_first_name}</TableCell>
                 <TableCell >{dog.route_name}</TableCell>
-                <TableCell >{dog.dogs.map(d => (d.name + ' '))}</TableCell>
+                <TableCell >{dog.dogs.map(d => (d.name + ', '))}</TableCell>
               </StyledTableRow>
             ))}
             </TableBody>

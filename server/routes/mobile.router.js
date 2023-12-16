@@ -21,14 +21,33 @@ const {
 const getDailyDogsSearchQuery = (day) => {
 
     const weekdayNumber = day.getDay();
-
     // SQL to grab dogs scheduled for given weekday
     let searchQuery = `
-    SELECT clients_schedule.id, clients_schedule."1" AS Monday,  clients_schedule."2" AS Tuesday,  clients_schedule."3" AS Wednesday,  clients_schedule."4" AS Thursday,  clients_schedule."5" AS Friday, dogs.client_id, clients.route_id, clients.first_name, clients.last_name, dogs."name", routes."name" AS route_name, dogs.id AS dog_id from clients_schedule
+    SELECT clients_schedule.id, 
+        CASE WHEN ${weekdayNumber} BETWEEN 1 AND 5 THEN clients_schedule."1" ELSE NULL END AS Monday,  
+        CASE WHEN ${weekdayNumber} BETWEEN 1 AND 5 THEN clients_schedule."2" ELSE NULL END AS Tuesday,  
+        CASE WHEN ${weekdayNumber} BETWEEN 1 AND 5 THEN clients_schedule."3" ELSE NULL END AS Wednesday,  
+        CASE WHEN ${weekdayNumber} BETWEEN 1 AND 5 THEN clients_schedule."4" ELSE NULL END AS Thursday,  
+        CASE WHEN ${weekdayNumber} BETWEEN 1 AND 5 THEN clients_schedule."5" ELSE NULL END AS Friday, 
+        dogs.client_id,
+        clients.route_id,
+        clients.first_name,
+        clients.last_name, 
+        dogs."name",
+        routes."name" AS route_name,
+        dogs.id AS dog_id
+    FROM 
+        clients_schedule
         JOIN "dogs" ON clients_schedule.client_id = dogs.client_id
         JOIN "clients" ON clients_schedule.client_id = clients.id
         JOIN "routes" ON clients.route_id = routes.id
-        WHERE "${weekdayNumber}" = TRUE AND dogs.active = TRUE AND dogs.regular = TRUE ORDER BY route_id, client_id;
+    WHERE
+        ${weekdayNumber} BETWEEN 1 AND 5
+        AND dogs.active = TRUE
+        AND dogs.regular = TRUE
+    ORDER BY 
+        route_id,
+        client_id;
     `;
 
     // SQL to grab schedule adjustments table
@@ -188,20 +207,22 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
         // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
         // find the dogs default scheduled for the day
         const scheduledDogsResponse = await client.query(searchQuery);
+
         const scheduledDogs = scheduledDogsResponse.rows;
     
         // find the schedule changes for the day
         const scheduleAdjustmentsResponse = await client.query(scheduleQuery,[date]);
         const scheduleAdjustments = scheduleAdjustmentsResponse.rows;
 
-    
+        if (!scheduledDogs) {
+            console.log('no dogs')
+        }
         if (scheduleAdjustments < 1 ) {
             const dogsScheduledForDay = fillScheduled(scheduledDogs)
             res.send({dogsScheduledForDay});
         } else {
             const adjustedDogs = getAdjustedSchedule(scheduledDogs,scheduleAdjustments)
             dogsScheduledForDay = fillScheduled(adjustedDogs);
-
             res.send({dogsScheduledForDay});
         }
     } catch (error) {

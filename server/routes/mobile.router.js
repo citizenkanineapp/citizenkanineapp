@@ -23,10 +23,13 @@ const getDailyDogsSearchQuery = (day) => {
     const weekdayNumber = day.getDay();
     // SQL to grab dogs scheduled for given weekday
     let searchQuery;
-    if ( 0 < weekdayNumber < 6) {
+    if ( weekdayNumber === 0 || weekdayNumber === 6) {
+        console.log('hi')
+        searchQuery = `SELECT NULL AS dogs;`;
+    } else {
         searchQuery = `
         SELECT clients_schedule.id,
-            clients_schedule."1" AS Monday , 
+            clients_schedule."1" AS Monday ,    
             clients_schedule."2" AS Tuesday,
             clients_schedule."3" AS Wednesday,
             clients_schedule."4" AS Thursday, 
@@ -50,9 +53,8 @@ const getDailyDogsSearchQuery = (day) => {
             route_id,
             client_id;
         `;
-    } else {
-        searchQuery = `SELECT NULL AS result;`
     }
+    
         
         // SQL to grab schedule adjustments table
     const scheduleQuery = `
@@ -219,7 +221,8 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
         const scheduleAdjustments = scheduleAdjustmentsResponse.rows;
 
         if (scheduleAdjustments < 1 ) {
-            const dogsScheduledForDay = fillScheduled(scheduledDogs)
+            const dogsScheduledForDay = fillScheduled(scheduledDogs);
+            // console.log(dogsScheduledForDay[0].dogs)
             res.send({dogsScheduledForDay});
         } else {
             const adjustedDogs = getAdjustedSchedule(scheduledDogs,scheduleAdjustments)

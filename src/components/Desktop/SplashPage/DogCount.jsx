@@ -24,7 +24,11 @@ function DogCount() {
 
   const [date, setDate] = useState(today);
   const scheduledDogs = useSelector(store => store.scheduledDogs);
+  // kinda screwy here; if page opens on weekend, response object is single client with undefined fields. returns count 0 if dog id = undefined.
   const dogCount = scheduledDogs[0] ? scheduledDogs.reduce((acc, obj) => {
+      if (obj.dogs[0].id === undefined) {
+        return 0;
+      }
       return acc + obj.dogs.length;
     }, 0) : 0;
 
@@ -68,7 +72,7 @@ function DogCount() {
               </TableRow>
             </TableHead>
             <TableBody >
-            {scheduledDogs && scheduledDogs[0] && scheduledDogs.map((dog) => (
+            {scheduledDogs && scheduledDogs[0] && scheduledDogs[0].dogs[0].id != undefined && scheduledDogs.map((dog) => (
               <StyledTableRow key={dog.client_id}> 
                 <TableCell >{dog.client_last_name}, {dog.client_first_name}</TableCell>
                 <TableCell >{dog.route_name}</TableCell>

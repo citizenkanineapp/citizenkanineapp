@@ -24,7 +24,9 @@ function DogCount() {
 
   const [date, setDate] = useState(today);
   const scheduledDogs = useSelector(store => store.scheduledDogs);
-  // kinda screwy here; if page opens on weekend, response object is single client with undefined fields. returns count 0 if dog id = undefined.
+  // kinda screwy here; if page opens on weekend, response object is single client with undefined fields.
+  // returns count 0 if dog id = undefined.
+  // this edge case is also addressed for mapping in line 77.
   const dogCount = scheduledDogs[0] ? scheduledDogs.reduce((acc, obj) => {
       if (obj.dogs[0].id === undefined) {
         return 0;

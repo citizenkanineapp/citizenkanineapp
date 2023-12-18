@@ -248,7 +248,7 @@ function* checkDogSchedules(action){
             method: 'GET',
             url: `/api/mobile/checkDogSchedule/${date}`,
         });
-        console.log(dogsScheduled.data.dogsScheduledForDay);
+        // console.log(dogsScheduled.data.dogsScheduledForDay);
         yield put ({
             type: 'DOGS_SCHEDULE_COUNT',
             payload: dogsScheduled.data.dogsScheduledForDay

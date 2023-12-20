@@ -302,7 +302,7 @@ router.post('/schedule', rejectUnauthenticated, async (req, res) => {
 });
 
 // packleader route history
-router.post('/history', rejectUnauthenticated, async (req, res) => {
+router.post('/history', async (req, res) => {
     const { emp_id, route_id } = req.body;
     const sqlQuery = `
     INSERT INTO route_history
@@ -325,7 +325,7 @@ router.post('/history', rejectUnauthenticated, async (req, res) => {
 
 
 // can 
-router.delete('/history', rejectUnauthenticated, async (req, res) => {
+router.delete('/history', async (req, res) => {
     const { emp_id } = req.body;
     const sqlQuery = `
     DELETE FROM route_history
@@ -333,7 +333,7 @@ router.delete('/history', rejectUnauthenticated, async (req, res) => {
         WHERE "emp_id" = $1;
     `;
 
-    pool.query(sqlQuery, emp_id)
+    pool.query(sqlQuery, [emp_id])
         .then(dbRes => {
             res.sendStatus(201);
         })
@@ -343,9 +343,8 @@ router.delete('/history', rejectUnauthenticated, async (req, res) => {
         });
 })
 
-router.get('/history/:date', rejectUnauthenticated, async (req, res) => {
-    const date = params.date;
-    
+router.get('/history/:date', async (req, res) => {
+    const date = new Date(req.params.date);
     const sqlQuery = `
         SELECT
             first_name,
@@ -353,12 +352,14 @@ router.get('/history/:date', rejectUnauthenticated, async (req, res) => {
             phone,
             emp_id,
             route_id,
-            routes.name AS route_name
+            routes.name AS route_name,
+            route_history.date AS date
         FROM route_history
             JOIN employees ON route_history.emp_id = employees.id
-            JOIN routes ON route_history.route_id = routes.id;
+            JOIN routes ON route_history.route_id = routes.id
+        WHERE route_history.date = $1;
     `;
-    pool.query(sqlQuery, date)
+    pool.query(sqlQuery, [date])
         .then(dbRes => {
             res.send(dbRes.rows)
         })

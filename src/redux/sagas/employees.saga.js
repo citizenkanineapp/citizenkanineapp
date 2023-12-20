@@ -236,6 +236,8 @@ function* getRouteHistory(){
             method: 'GET',
             url: 'api/employees/history'
         })
+    } catch (err) {
+        console.log ('error in getting route history', err);
     }
 }
 

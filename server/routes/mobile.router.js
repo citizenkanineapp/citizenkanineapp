@@ -163,6 +163,7 @@ router.get('/daily', async (req, res) => {
 // router returns number of dogs scheduled for given day
 router.get('/checkDogSchedule/:date', async (req, res) => {
     // console.log('in /checkDogSchedule', req.params.date)
+    console.log(req);
     const client = await pool.connect();
     const date = new Date(req.params.date);
     // console.log('date is', date);

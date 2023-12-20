@@ -218,6 +218,27 @@ function* fetchEmpChanges(){
     }
 }
 
+function* selectRouteForToday(){
+    try {
+        yield axios({
+            method: 'POST',
+            url: '/api/employees/history',
+            data: action.payload
+        })
+    } catch (err) {
+        console.log('error setting packleader route for today', err);
+    }
+}
+
+function* getRouteHistory(){
+    try {
+        const routeHistory = yield axios ({
+            method: 'GET',
+            url: 'api/employees/history'
+        })
+    }
+}
+
 function* employeesSaga() {
         yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees),
         yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_ODD', fetchOddEmpSchedules),
@@ -228,7 +249,8 @@ function* employeesSaga() {
         yield takeLatest('SAGA_ADD_EMPLOYEE', addEmployee),
         yield takeLatest('SAGA_DELETE_EMPLOYEE', deleteEmployee),
         yield takeLatest('SAGA_ADD_EMP_CHANGE', addEmpScheduleChange),
-        yield takeLatest('SAGA_FETCH_CHANGES', fetchEmpChanges)
+        yield takeLatest('SAGA_FETCH_CHANGES', fetchEmpChanges),
+        yield takeLatest('SAGA_SELECT_ROUTE', selectRouteForToday)
 }
 
 export default employeesSaga;

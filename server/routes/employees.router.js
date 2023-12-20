@@ -314,8 +314,59 @@ router.post('/history', rejectUnauthenticated, async (req, res) => {
     `;
 
     pool.query(sqlQuery, [emp_id, route_id])
+        .then(dbRes => {
+            res.sendStatus(201);
+        })
+        .catch(err => {
+            res.sendStatus(500);
+            console.log('error in POST /employees/history: ', err);
+        });
 })
 
+
+// can 
+router.delete('/history', rejectUnauthenticated, async (req, res) => {
+    const { emp_id } = req.body;
+    const sqlQuery = `
+    DELETE FROM route_history
+        WHERE "date" = CURRENT_DATE AND
+        WHERE "emp_id" = $1;
+    `;
+
+    pool.query(sqlQuery, emp_id)
+        .then(dbRes => {
+            res.sendStatus(201);
+        })
+        .catch(err => {
+            res.sendStatus(500);
+            console.log('error in DELETE /employees/history: ', err);
+        });
+})
+
+router.get('/history/:date', rejectUnauthenticated, async (req, res) => {
+    const date = params.date;
+    
+    const sqlQuery = `
+        SELECT
+            first_name,
+            last_name,
+            phone,
+            emp_id,
+            route_id,
+            routes.name AS route_name
+        FROM route_history
+            JOIN employees ON route_history.emp_id = employees.id
+            JOIN routes ON route_history.route_id = routes.id;
+    `;
+    pool.query(sqlQuery, date)
+        .then(dbRes => {
+            res.send(dbRes.rows)
+        })
+        .catch(err => {
+            res.sendStatus(500);
+            console.log('error in GET /employees/history: ', err);
+        });
+})
 
 
 

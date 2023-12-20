@@ -217,5 +217,6 @@ CREATE TABLE ck_dev.route_history (
 	"id" SERIAL PRIMARY KEY,
 	"emp_id" INT NOT NULL REFERENCES ck_dev.employees(id) ON DELETE CASCADE,
 	"route_id" INT NOT NULL REFERENCES ck_dev.routes(id) ON DELETE CASCADE,
-	"date" DATE DEFAULT CURRENT_DATE
-)
+	"date" DATE DEFAULT CURRENT_DATE,
+	UNIQUE("emp_id", "date")
+);

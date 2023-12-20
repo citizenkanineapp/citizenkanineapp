@@ -301,7 +301,20 @@ router.post('/schedule', rejectUnauthenticated, async (req, res) => {
         })
 });
 
+// packleader route history
+router.post('/history', rejectUnauthenticated, async (req, res) => {
+    const { emp_id, route_id } = req.body;
+    const sqlQuery = `
+    INSERT INTO route_history
+        ("emp_id", "route_id")
+    VALUES
+        ($1, $2)
+    ON CONFLICT (emp_id, date)
+    DO UPDATE SET "route_id" = $2;
+    `;
 
+    pool.query(sqlQuery, [emp_id, route_id])
+})
 
 
 

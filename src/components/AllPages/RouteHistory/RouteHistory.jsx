@@ -28,7 +28,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function RouteHistoryModal({data, open, setOpen}) {
+function RouteHistoryModal({modalData, open, setOpen}) {
+  const dispatch = useDispatch()
+  const routeHistory = useSelector(store => store.modal.routeHistory);
+  console.log(routeHistory[0] && routeHistory[0].date + dayjs(routeHistory[0].date).format('MM/DD/YYYY'));
+
+  // useEffect(()=>{
+  //   console.log('in modal')
+  //   dispatch({type: 'SAGA_GET_ROUTE_HISTORY', payload: modalData});
+  // },[]);
+
   const handleClose = () => {
     setOpen(false);
   }
@@ -41,7 +50,7 @@ return (
     aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography sx={{fontWeight: '800', mb: 2}}>{data[0] && dayjs(data[0].date).format('MM/DD/YYYY')}</Typography>
+        <Typography sx={{fontWeight: '800', mb: 2}}>{routeHistory[0] && dayjs(routeHistory[0].date).utc().format('MM/DD/YYYY')}</Typography>
       <TableContainer component={Paper} >
           <Table stickyHeader size="small" sx={{overflow:'auto'}}>
             <TableHead>
@@ -53,7 +62,7 @@ return (
               </TableRow>
             </TableHead>
             <TableBody >
-            {data && data[0] && data.map((packleader) => (
+            {routeHistory && routeHistory[0] && routeHistory.map((packleader) => (
               <StyledTableRow key={packleader.emp_id}> 
                 <TableCell >{packleader.first_name} {packleader.last_name}</TableCell>
                 <TableCell >{packleader.route_name}</TableCell>
@@ -71,4 +80,4 @@ return (
 )
 }
 
-export default RouteHistoryModal
+export default RouteHistoryModal;

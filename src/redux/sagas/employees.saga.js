@@ -239,10 +239,10 @@ function* getRouteHistory(action){
             url: `/api/history/${date}`
         })
         console.log(routeHistory.data);
-        // yield put({
-        //     type: 'SET______',
-        //     payload: routeHistory
-        // })
+        yield put({
+            type: 'SET_ROUTE_HISTORY_MODAL',
+            payload: routeHistory.data
+        })
 
     } catch (err) {
         console.log ('error in getting route history', err);

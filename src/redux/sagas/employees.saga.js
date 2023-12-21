@@ -222,7 +222,7 @@ function* selectRouteForToday(){
     try {
         yield axios({
             method: 'POST',
-            url: '/api/employees/history',
+            url: '/api/history',
             data: action.payload
         })
     } catch (err) {
@@ -230,12 +230,20 @@ function* selectRouteForToday(){
     }
 }
 
-function* getRouteHistory(){
+function* getRouteHistory(action){
+    // console.log('here')
+    const date = action.payload
     try {
         const routeHistory = yield axios ({
             method: 'GET',
-            url: 'api/employees/history'
+            url: `/api/history/${date}`
         })
+        console.log(routeHistory.data);
+        // yield put({
+        //     type: 'SET______',
+        //     payload: routeHistory
+        // })
+
     } catch (err) {
         console.log ('error in getting route history', err);
     }
@@ -252,7 +260,9 @@ function* employeesSaga() {
         yield takeLatest('SAGA_DELETE_EMPLOYEE', deleteEmployee),
         yield takeLatest('SAGA_ADD_EMP_CHANGE', addEmpScheduleChange),
         yield takeLatest('SAGA_FETCH_CHANGES', fetchEmpChanges),
-        yield takeLatest('SAGA_SELECT_ROUTE', selectRouteForToday)
+        yield takeLatest('SAGA_SELECT_ROUTE', selectRouteForToday),
+        yield takeLatest('SAGA_GET_ROUTE_HISTORY', getRouteHistory)
+
 }
 
 export default employeesSaga;

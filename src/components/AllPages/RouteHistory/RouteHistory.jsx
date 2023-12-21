@@ -28,19 +28,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function RouteHistoryModal({modalData, open, setOpen}) {
-  const dispatch = useDispatch()
-  const routeHistory = useSelector(store => store.modal.routeHistory);
-  console.log(routeHistory[0] && routeHistory[0].date + dayjs(routeHistory[0].date).format('MM/DD/YYYY'));
+function RouteHistoryModal({open, setOpen}) {
 
-  // useEffect(()=>{
-  //   console.log('in modal')
-  //   dispatch({type: 'SAGA_GET_ROUTE_HISTORY', payload: modalData});
-  // },[]);
+  // subscribing to routeHistory reducer ensures that modal displays most route history for the selected date.
+  // calendar date is dispatched to server in parent component and sent to routeHistory reducer.
+  const routeHistory = useSelector(store => store.modal.routeHistory);
 
   const handleClose = () => {
     setOpen(false);
   }
+
 return (
   <>
     <Modal

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Accordion, AccordionSummary, AccordionDetails, ListItemAvatar, Stack, Avatar, Box, IconButton, List, ListItem, ListItemText, Typography, Grid } from '@mui/material';
+import { Accordion, AccordionSummary, Button, AccordionDetails, ListItemAvatar, Stack, Avatar, Box, IconButton, List, ListItem, ListItemText, Typography, Grid } from '@mui/material';
 import FlagIcon from '@mui/icons-material/Flag';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -25,7 +25,6 @@ function DailyRoutes() {
   useEffect(() => {
     // console.log("DailyRoutes useEffect", params.id)
     dispatch({ type: 'GET_DAILY_ROUTES' });
-
   }, [params.id]);
 
   // state and reducer definitions
@@ -39,6 +38,11 @@ function DailyRoutes() {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
+  //handles route selection
+  const handleClick = () => {
+    dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.id, route_id: route[0].id  }})
+  }
 
   //implementation of drag-n-drop feature
   const onDragEnd = (result) => {
@@ -91,6 +95,7 @@ function DailyRoutes() {
             </Typography>
           </Grid>
           <Grid item xs={8} sx={{display: 'flex', flexDirection: 'row-reverse', justifyContent: 'center', mb: 0}}>
+            <Stack direction='row' spacing={10} sx={{alignItems:'center'}}>
               <IconButton edge="end" 
                 sx={{border: 1, mt: 1,
                 flexDirection: 'column', px: 2}}
@@ -101,6 +106,8 @@ function DailyRoutes() {
                 />
                 <Typography>Map</Typography>
               </IconButton>
+              <Button onClick={(e) => handleClick()} variant='outlined' color='info' > Accept Route? </Button>
+            </Stack>
             </Grid>
               <Droppable droppableId={`${route[0].route}`}>
                 {(provided, snapshot) => (

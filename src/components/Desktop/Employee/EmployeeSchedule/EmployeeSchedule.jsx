@@ -63,7 +63,8 @@ function EmployeeSchedule(){
 
   const allEmployees = useSelector(store=> store.allEmployeesReducer.employees);
   const changes = useSelector(store=> store.allEmployeesReducer.empScheduleChanges);
-  // const routeHistory = useSelector(store => store.modal.routeHistory);
+  const routeHistory = useSelector(store => store.modal.routeHistory);
+
   const openModal = (view) => {
     dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: view }); //assures the view to be the right component
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
@@ -183,7 +184,8 @@ function EmployeeSchedule(){
               <Button variant="outlined" color="info" onClick={() => setAddChange(!addChange)}>Cancel</Button>
           </Grid> */}
     </Box>
-      <RouteHistoryModal open={open} setOpen={setOpen} />
+      {/* eliminates visiblie modal refresh. no UI response if date with no history pops up. */}
+      {routeHistory[0] ? <RouteHistoryModal open={open} setOpen={setOpen} /> : null}
       <Box sx={{display: 'flex', flexDirection: 'row', gap: 5, height: '75%'}}>
         <Box sx={{display:'flex', justifyContent:'center',justifyContent: 'flex-start'}}>
           {/* calendar here */}

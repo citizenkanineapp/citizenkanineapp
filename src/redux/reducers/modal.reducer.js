@@ -20,6 +20,8 @@ const routeHistory = (state = [], action) => {
   switch (action.type) {
     case 'SET_ROUTE_HISTORY_MODAL':
       return action.payload;
+    case 'CLEAR_MODALS':
+      return [];
     default:
       return state;
   }

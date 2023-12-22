@@ -12,6 +12,7 @@ const {
 // packleader route history
 router.post('/', async (req, res) => {
   const { emp_id, route_id } = req.body;
+    console.log(emp_id, route_id)
   const sqlQuery = `
   INSERT INTO route_history
       ("emp_id", "route_id")

@@ -30,12 +30,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function RouteHistoryModal({open, setOpen}) {
 
+  const dispatch = useDispatch();
+
   // subscribing to routeHistory reducer ensures that modal displays most route history for the selected date.
   // calendar date is dispatched to server in parent component and sent to routeHistory reducer.
   const routeHistory = useSelector(store => store.modal.routeHistory);
 
   const handleClose = () => {
     setOpen(false);
+    dispatch({ type: 'CLEAR_MODALS' })
   }
 
 return (

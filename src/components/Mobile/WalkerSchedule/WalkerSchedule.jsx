@@ -17,10 +17,12 @@ import { Typography, Grid, Avatar, CardActionArea, Box, Card, CardContent, FormC
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+//COMPONENTS
+import RouteHistoryModal from "../../AllPages/RouteHistory/RouteHistory";
+
 // used to disable user from scheduling on a weekend day
 const isWeekend = (date) => {
   const day = date.day();
-
   return day === 0 || day === 6;
 };
 
@@ -50,6 +52,15 @@ function EmployeeSchedule() {
 
   const allEmployees = useSelector(store => store.allEmployeesReducer.employees);
   const changes = useSelector(store => store.allEmployeesReducer.empScheduleChanges);
+  const routeHistory = useSelector(store => store.modal.routeHistory);
+
+  // open modal for schedule history
+  const [open, setOpen] = useState(false);
+  const handleOpen = (date)=> {
+    console.log('handle open')
+    dispatch({type: 'SAGA_GET_ROUTE_HISTORY', payload: dayjs(date).format('YYYY-MM-DD')});
+    setOpen(true);
+  }
 
   const [viewAll, setViewAll] = useState(false)
   const [value, setValue] = useState(dayjs());
@@ -80,6 +91,7 @@ function EmployeeSchedule() {
         </Select>
       </Grid>
       {/* Calendar */}
+      {routeHistory[0] ? <RouteHistoryModal display={'mobile'} open={open} setOpen={setOpen} /> : null}
       <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', mt: .5, mb: 10 }}>
         {viewAll ?
           <Card variant="outlined" sx={{ bgcolor: '#FCF4EB', width: '100vw', height: '80vh', display: 'flex', justifyContent: 'center' }}>
@@ -107,7 +119,20 @@ function EmployeeSchedule() {
                   // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
                   const weekInYear = day.diff(`${currentYear}-01-01`, 'week', false)
                   return (
-                    <Box key={day.$d} className="dayBox" sx={{ display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '30vw', height: '23vw', justifyContent: 'center', border: 1, borderColor: '#7BCEC8' }}>
+                    <Box 
+                      key={day.$d}
+                      className="dayBox"
+                      onClick={(e) => handleOpen(day)}
+                      sx={{ display: 'flex',
+                        flexDirection: 'column',
+                        alignContent: 'flex-start',
+                        width: '30vw',
+                        height: '23vw',
+                        justifyContent: 'center',
+                        border: 1,
+                        borderColor: '#7BCEC8'
+                      }}
+                    >  
                       {/* This box is just for the date number */}
                       <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: '1' }}>
                         <PickersDay {...DayComponentProps} sx={{ display: 'flex', alignContent: 'flex-start', width: '5vw', height: '5vw' }} />
@@ -248,7 +273,21 @@ function EmployeeSchedule() {
                   // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
                   const weekInYear = day.diff(`${currentYear}-01-01`, 'week', false)
                   return (
-                    <Box key={day.$d} className="dayBox" sx={{ display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '30vw', height: '23vw', justifyContent: 'center', border: 1, borderColor: '#7BCEC8' }}>
+                    <Box 
+                      key={day.$d}
+                      className="dayBox"
+                      onClick={(e) => handleOpen(day)}
+                      sx={{ 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignContent: 'flex-start',
+                        width: '30vw',
+                        height: '23vw',
+                        justifyContent: 'center',
+                        border: 1,
+                        borderColor: '#7BCEC8'
+                        }}
+                      >
                       {/* This box is just for the date number */}
                       <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: '1' }}>
                         <PickersDay {...DayComponentProps} sx={{ display: 'flex', alignContent: 'flex-start', width: '5vw', height: '5vw' }} />

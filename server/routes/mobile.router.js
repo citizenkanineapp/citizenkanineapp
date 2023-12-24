@@ -246,15 +246,36 @@ router.get('/route/:route_id', async (req, res) => {
     // routes need to be arrays of dog objects ...
     // do we want separate arrays per route?
     const routeQuery = `
-    SELECT daily_dogs.*, dogs.flag, dogs.notes AS dog_notes, dogs.image, routes.name AS route, clients.id, concat_ws(' ', clients.first_name, clients.last_name) AS client_name, clients.notes AS client_protocol, clients.lat, clients.long, clients.street, clients.zip from daily_dogs
-	JOIN dogs
-		ON daily_dogs.dog_id = dogs.id
-	JOIN routes
-		ON daily_dogs.route_id = routes.id
-	JOIN clients
-		ON daily_dogs.client_id = clients.id
-	    WHERE daily_dogs.date = $2 AND daily_dogs.route_id = $1
-	ORDER BY daily_dogs.index;
+    SELECT
+        daily_dogs.*,
+        dogs.flag,
+        dogs.notes AS dog_notes,
+        dogs.image,
+        routes.name AS route,
+        clients.id,
+        concat_ws(' ', clients.first_name, clients.last_name) AS client_name,
+        clients.notes AS client_protocol,
+        clients.lat,
+        clients.long,
+        clients.street,
+        clients.zip,
+        route_history.emp_id
+    FROM
+        daily_dogs
+    JOIN
+        dogs ON daily_dogs.dog_id = dogs.id
+    JOIN
+        routes ON daily_dogs.route_id = routes.id
+    JOIN
+        clients ON daily_dogs.client_id = clients.id
+    LEFT JOIN
+        route_history ON daily_dogs.route_id = route_history.route_id
+            AND route_history.date = $2
+    WHERE
+        daily_dogs.date = $2
+        AND daily_dogs.route_id = $1
+    ORDER BY
+        daily_dogs.index;
     `
 
     const routeValue = [route, today];
@@ -263,9 +284,8 @@ router.get('/route/:route_id', async (req, res) => {
         .then(routeResponse => {
             // console.log(routeResponse.rows);
             let routeArray = routeResponse.rows;
-
-
-            res.send(routeResponse.rows);
+            console.log('route id', routeArray[0].route_id, 'emp id', routeArray[0].emp_id);
+            res.send(routeArray);
         }).catch((error => {
             console.log('/route/:id GET error:', error);
         }));

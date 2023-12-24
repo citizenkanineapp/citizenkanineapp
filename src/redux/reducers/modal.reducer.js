@@ -16,6 +16,17 @@ const client = (state = [], action) => {
   }
 };
 
+const routeHistory = (state = [], action) => {
+  switch (action.type) {
+    case 'SET_ROUTE_HISTORY_MODAL':
+      return action.payload;
+    case 'CLEAR_MODALS':
+      return [];
+    default:
+      return state;
+  }
+}
+
 const employee = (state = '', action) => {
   switch (action.type) {
     case 'SET_EMPLOYEE_MODAL':
@@ -54,6 +65,7 @@ const modalReducer = combineReducers({
   employee,
   status,
   mobile,
+  routeHistory
 });
 
 export default modalReducer;

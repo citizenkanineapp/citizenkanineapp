@@ -23,13 +23,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 //COMPONENTS
 import EmployeeModal from "../EmployeeModal/EmployeeModal";
+import RouteHistoryModal from "../../../AllPages/RouteHistory/RouteHistory";
 //MUI
 import Button from '@mui/material/Button';
 
 // used to disable user from scheduling on a weekend day
 const isWeekend = (date) => {
   const day = date.day();
-
   return day === 0 || day === 6;
 };
 
@@ -62,10 +62,18 @@ function EmployeeSchedule(){
 
   const allEmployees = useSelector(store=> store.allEmployeesReducer.employees);
   const changes = useSelector(store=> store.allEmployeesReducer.empScheduleChanges);
+  const routeHistory = useSelector(store => store.modal.routeHistory);
 
   const openModal = (view) => {
     dispatch({ type: 'SET_EMPLOYEE_MODAL', payload: view }); //assures the view to be the right component
     dispatch({ type: 'SET_MODAL_STATUS' });   //opens the modal
+  }
+
+  // open modal for schedule history
+  const [open, setOpen] = useState(false);
+  const handleOpen = (date)=> {
+    dispatch({type: 'SAGA_GET_ROUTE_HISTORY', payload: dayjs(date).format('YYYY-MM-DD')});
+    setOpen(true);
   }
 
 
@@ -175,6 +183,8 @@ function EmployeeSchedule(){
               <Button variant="outlined" color="info" onClick={() => setAddChange(!addChange)}>Cancel</Button>
           </Grid> */}
     </Box>
+      {/* eliminates visiblie modal refresh. no UI response if date with no history pops up. */}
+      {routeHistory[0] ? <RouteHistoryModal display={'desktop'} open={open} setOpen={setOpen} /> : null}
       <Box sx={{display: 'flex', flexDirection: 'row', gap: 5, height: '75%'}}>
         <Box sx={{display:'flex', justifyContent:'center',justifyContent: 'flex-start'}}>
           {/* calendar here */}
@@ -205,7 +215,20 @@ function EmployeeSchedule(){
                             // dayjs calculates weeks in year as a decimal that rounds up so the calculation for weekInYear accounts for this issue. Without this, the last week of the year would be week 53 and the first week of the year would be 1 which are both odd and would render an incorrect schedule. 
                             const weekInYear = day.diff(`${currentYear}-01-01`, 'week', false)
                             return (
-                                <Box key={day.$d} className="dayBox"  sx={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start', width: '8vw', height: '7vw', justifyContent: 'center', border: 1, borderColor: '#7BCEC8'}}>
+                                <Box 
+                                  key={day.$d}
+                                  className="dayBox"
+                                  onClick={(e) => handleOpen(day)}
+                                  sx={{display: 'flex',
+                                    flexDirection: 'column',
+                                    alignContent: 'flex-start',
+                                    width: '8vw',
+                                    height: '7vw',
+                                    justifyContent: 'center',
+                                    border: 1,
+                                    borderColor: '#7BCEC8'
+                                  }}
+                                >
                                   {/* This box is just for the date number */}
                                   <Box sx={{display: 'flex', justifyContent: 'center'}}>
                                     <PickersDay {...DayComponentProps} sx={{display: 'flex', alignContent: 'flex-start'}}/>

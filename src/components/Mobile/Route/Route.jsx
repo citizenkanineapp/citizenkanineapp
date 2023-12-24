@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Accordion, AccordionSummary, AccordionDetails, ListItemAvatar, Stack, Avatar, Box, IconButton, List, ListItem, ListItemText, Typography, Grid } from '@mui/material';
+import { Accordion, AccordionSummary, Button, AccordionDetails, ListItemAvatar, Stack, Avatar, Box, IconButton, List, ListItem, ListItemText, Typography, Grid } from '@mui/material';
 import FlagIcon from '@mui/icons-material/Flag';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -21,24 +21,52 @@ function DailyRoutes() {
   const history = useHistory();
   const params = useParams();
 
-  // on page load - fetch routes, and also fetch specifc route data according to URL route ID
-  useEffect(() => {
-    // console.log("DailyRoutes useEffect", params.id)
-    dispatch({ type: 'GET_DAILY_ROUTES' });
-
-  }, [params.id]);
-
   // state and reducer definitions
   const [expanded, setExpanded] = useState(false);
   const user = useSelector(store => store.user);
   // reducer getting filled with a specific routes dogs
   const route = useSelector(store => store.routeReducer);
+
+  const setStatus = ()=>{
+    if(route[0] && route[0].emp_id === null) {
+      return 'unselected';
+    } else if ( route[0] && user && route[0].emp_id === user.emp_id) {
+      return'selected_user';
+    } else if (route[0] && user && route[0].emp_id != user.emp_id) {
+      return 'selected_other';
+    }
+  }
+  const [routeSelectStatus, setRouteSelectStatus] = useState(setStatus())
+
+  // on page load - fetch routes, and also fetch specifc route data according to URL route ID
+  useEffect(() => {
+    setRouteSelectStatus(setStatus());
+    console.log('how?: ', route[0] && route[0].emp_id, user.emp_id, routeSelectStatus)
+
+  },);
+
   // const routeName = route[0].route;
 
   // expands accordion
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
+  //handles route [selection]
+  const handleClick = () => {
+    // console.log('old route: ', route[0].emp_id, routeSelectStatus)
+    if (routeSelectStatus === 'unselected') {
+      dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.emp_id, route_id: params.id  }});
+      setRouteSelectStatus(setStatus());
+      console.log('new route: ',route[0].emp_id,routeSelectStatus)
+    } else if (routeSelectStatus === 'selected_user') {
+      dispatch({type: 'SAGA_UNSET_ROUTE', payload: { emp_id: user.emp_id, route_id: params.id  }});
+      setRouteSelectStatus(setStatus());
+      console.log('new route: ',route[0].emp_id,routeSelectStatus)
+    } else if (routeSelectStatus === 'selected_other') {
+      setRouteSelectStatus(setStatus());
+    }
+  }
 
   //implementation of drag-n-drop feature
   const onDragEnd = (result) => {
@@ -81,6 +109,34 @@ function DailyRoutes() {
     history.push(`/m/dog/${dogID}`)
   }
 
+  const RouteSelectButton = ({ routeSelectStatus, handleClick }) => {
+    let buttonText = '';
+    let buttonColor = '';
+    let isDisabled = false;
+
+    switch (routeSelectStatus) {
+      case 'unselected':
+        buttonText = 'Accept Route?';
+        buttonColor = 'info';
+        break;
+      case 'selected_user':
+        buttonText = 'Route Accepted';
+        buttonColor = '#B5E3E0';
+        break;
+      case 'selected_other':
+        buttonText = 'Route Taken';
+        buttonColor = 'lightgrey';
+        isDisabled = true;
+        break;
+    }
+
+    return (
+      <Button onClick={handleClick} variant="outlined" disabled={isDisabled} sx={{ borderColor: 'black', color: 'black', backgroundColor: buttonColor }} >
+        {buttonText}
+      </Button>
+    );
+  };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}> 
       {route[0] ?
@@ -91,6 +147,7 @@ function DailyRoutes() {
             </Typography>
           </Grid>
           <Grid item xs={8} sx={{display: 'flex', flexDirection: 'row-reverse', justifyContent: 'center', mb: 0}}>
+            <Stack direction='row' spacing={10} sx={{alignItems:'center'}}>
               <IconButton edge="end" 
                 sx={{border: 1, mt: 1,
                 flexDirection: 'column', px: 2}}
@@ -101,6 +158,8 @@ function DailyRoutes() {
                 />
                 <Typography>Map</Typography>
               </IconButton>
+              <RouteSelectButton routeSelectStatus={routeSelectStatus} handleClick={handleClick} />
+            </Stack>
             </Grid>
               <Droppable droppableId={`${route[0].route}`}>
                 {(provided, snapshot) => (

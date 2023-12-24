@@ -218,6 +218,52 @@ function* fetchEmpChanges(){
     }
 }
 
+function* setRouteHistory(action){
+    const { emp_id, route_id } = action.payload;
+    console.log(emp_id, route_id)
+    try {
+        yield axios({
+            method: 'POST',
+            url: '/api/history',
+            data: {emp_id, route_id }
+        })
+        yield put({ type: 'GET_ROUTE_DETAILS', payload: route_id})
+    } catch (err) {
+        console.log('error setting packleader route for today', err);
+    }
+}
+
+function* unsetRouteHistory(action){
+    const { emp_id, route_id } = action.payload;
+    try {
+        yield axios({
+            method: 'DELETE',
+            url: '/api/history',
+            data: {emp_id}
+        });
+        yield put({type: 'GET_ROUTE_DETAILS', payload: route_id})
+    } catch (err) {
+        consol.log('error deleting packleaderroute for today', err);
+    }
+}
+
+function* getRouteHistory(action){
+    // console.log('here')
+    const date = action.payload
+    try {
+        const routeHistory = yield axios ({
+            method: 'GET',
+            url: `/api/history/${date}`
+        })
+        yield put({
+            type: 'SET_ROUTE_HISTORY_MODAL',
+            payload: routeHistory.data
+        })
+    } catch (err) {
+        console.log ('error in getting route history', err);
+    }
+}
+
 function* employeesSaga() {
         yield takeLatest('SAGA_FETCH_EMPLOYEES', fetchAllEmployees),
         yield takeLatest('SAGA_FETCH_EMP_SCHEDULES_ODD', fetchOddEmpSchedules),
@@ -228,7 +274,11 @@ function* employeesSaga() {
         yield takeLatest('SAGA_ADD_EMPLOYEE', addEmployee),
         yield takeLatest('SAGA_DELETE_EMPLOYEE', deleteEmployee),
         yield takeLatest('SAGA_ADD_EMP_CHANGE', addEmpScheduleChange),
-        yield takeLatest('SAGA_FETCH_CHANGES', fetchEmpChanges)
+        yield takeLatest('SAGA_FETCH_CHANGES', fetchEmpChanges),
+        yield takeLatest('SAGA_GET_ROUTE_HISTORY', getRouteHistory),
+        yield takeLatest('SAGA_SET_ROUTE', setRouteHistory)
+        yield takeLatest('SAGA_UNSET_ROUTE', unsetRouteHistory);
+
 }
 
 export default employeesSaga;

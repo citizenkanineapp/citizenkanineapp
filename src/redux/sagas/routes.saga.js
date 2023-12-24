@@ -2,7 +2,6 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* getRoutes() {
-    // console.log('GETTING DAILY ROUTES');
 
     try {
         const routes = yield axios.get('/api/mobile/routes');
@@ -44,22 +43,6 @@ function* getRoutes() {
                     case 9: return '#94CFD3'; break;
                     default: return '#4A5061';
                 }
-       
-                //}
-                // else{
-                //     switch (last) {
-                //         case 0: return '#354D89'; break;
-                //         case 1: return '#DC682A'; break;
-                //         case 2: return '#F37E2D'; break;
-                //         case 3: return '#F87462'; break;
-                //         case 4: return '#53B0D1'; break;
-                //         case 5: return '#B02C65'; break;
-                //         case 6: return '#1F96F1'; break;
-                //         case 7: return '#7C87CF'; break;
-                //         case 8: return '#FFA1A1'; break;
-                //         case 9: return '#FA789F'; break;
-                //         default: return '#B668D0';
-                //     }}
                 }
             }
         
@@ -121,7 +104,7 @@ function* getRouteDetails(action) {
     try {
         const routeResult = yield axios({
             method: 'GET',
-            url: `/api/mobile/route/${routeID}`
+            url: `/api/mobile/route/${routeID}`,
         })
         //console.log(routeResult);
 

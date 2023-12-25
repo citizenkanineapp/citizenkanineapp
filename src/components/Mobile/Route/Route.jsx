@@ -32,6 +32,20 @@ function DailyRoutes() {
   const user = useSelector(store => store.user);
   // reducer getting filled with a specific routes dogs
   const route = useSelector(store => store.routeReducer);
+  const setStatus = ()=>{
+    if(route[0] && route[0].emp_id === null) {
+      console.log('unselected')
+      return 'unselected'
+    } else if ( route[0] && user && route[0].emp_id === user.emp_id) {
+      console.log('selected_user')
+      return'selected_user' 
+    } else if (route[0] && user && route[0].emp_id != user.emp_id) {
+      console.log('selected_other')
+      return 'selected_other'
+    }
+  }
+  const [routeSelectStatus, setRouteSelectStatus] = useState(setStatus())
+
   // const routeName = route[0].route;
 
   // expands accordion
@@ -39,9 +53,12 @@ function DailyRoutes() {
     setExpanded(isExpanded ? panel : false);
   };
 
+  
   //handles route [selection]
   const handleClick = () => {
-    dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.emp_id, route_id: route[0].route_id  }})
+    if (routeSelectStatus === 'unselected') {
+      dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.emp_id, route_id: route[0].route_id  }})
+    }
   }
 
   //implementation of drag-n-drop feature
@@ -79,6 +96,10 @@ function DailyRoutes() {
     }
   }
 
+  const determineStatusRoute = () => {
+    return '#B5E3E0'
+  } 
+
   // push to individual dog details
   const getDogDetails = (dogID) => {
    // console.log(dogID);
@@ -106,7 +127,7 @@ function DailyRoutes() {
                 />
                 <Typography>Map</Typography>
               </IconButton>
-              <Button onClick={(e) => handleClick()} variant='outlined' color='info' > Accept Route? </Button>
+              <Button onClick={(e) => handleClick()} variant='outlined' color='info' sx={{backgroundColor: () => determineStatusRoute()}} > Accept Route? </Button>
             </Stack>
             </Grid>
               <Droppable droppableId={`${route[0].route}`}>

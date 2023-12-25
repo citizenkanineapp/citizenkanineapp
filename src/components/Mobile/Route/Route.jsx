@@ -39,9 +39,9 @@ function DailyRoutes() {
     setExpanded(isExpanded ? panel : false);
   };
 
-  //handles route selection
+  //handles route [selection]
   const handleClick = () => {
-    dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.id, route_id: route[0].id  }})
+    dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.emp_id, route_id: route[0].route_id  }})
   }
 
   //implementation of drag-n-drop feature

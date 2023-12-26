@@ -38,8 +38,7 @@ router.delete('/', async (req, res) => {
   const { emp_id } = req.body;
   const sqlQuery = `
   DELETE FROM route_history
-      WHERE "date" = CURRENT_DATE AND
-      WHERE "emp_id" = $1;
+      WHERE "date" = CURRENT_DATE AND "emp_id" = $1;
   `;
 
   pool.query(sqlQuery, [emp_id])

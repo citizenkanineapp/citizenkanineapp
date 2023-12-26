@@ -227,8 +227,23 @@ function* setRouteHistory(action){
             url: '/api/history',
             data: {emp_id, route_id }
         })
+        yield put({ type: 'GET_ROUTE_DETAILS', payload: route_id})
     } catch (err) {
         console.log('error setting packleader route for today', err);
+    }
+}
+
+function* unsetRouteHistory(action){
+    const { emp_id, route_id } = action.payload;
+    try {
+        yield axios({
+            method: 'DELETE',
+            url: '/api/history',
+            data: {emp_id}
+        });
+        yield put({type: 'GET_ROUTE_DETAILS', payload: route_id})
+    } catch (err) {
+        consol.log('error deleting packleaderroute for today', err);
     }
 }
 
@@ -262,6 +277,7 @@ function* employeesSaga() {
         yield takeLatest('SAGA_FETCH_CHANGES', fetchEmpChanges),
         yield takeLatest('SAGA_GET_ROUTE_HISTORY', getRouteHistory),
         yield takeLatest('SAGA_SET_ROUTE', setRouteHistory)
+        yield takeLatest('SAGA_UNSET_ROUTE', unsetRouteHistory);
 
 }
 

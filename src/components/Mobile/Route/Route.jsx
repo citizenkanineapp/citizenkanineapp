@@ -34,17 +34,31 @@ function DailyRoutes() {
   const route = useSelector(store => store.routeReducer);
   const setStatus = ()=>{
     if(route[0] && route[0].emp_id === null) {
-      console.log('unselected')
-      return 'unselected'
+      console.log('unselected: emp_id in route', route[0].emp_id), 'user_id: ', user.emp_id;
+      console.log('unselected: route_id in route', route[0].route_id);
+      return 'unselected';
     } else if ( route[0] && user && route[0].emp_id === user.emp_id) {
-      console.log('selected_user')
-      return'selected_user' 
+      console.log('selected_user: emp_id in route', route[0].emp_id, 'user_id: ', user.emp_id);
+      console.log('selected_user: route_id in route', route[0].route_id);
+      return'selected_user';
     } else if (route[0] && user && route[0].emp_id != user.emp_id) {
-      console.log('selected_other')
-      return 'selected_other'
+      console.log('selected_other: emp_id in route', route[0].emp_id, 'user_id: ', user.emp_id);
+      console.log('selected_other: route_id in route', route[0].route_id);
+      return 'selected_other';
     }
   }
   const [routeSelectStatus, setRouteSelectStatus] = useState(setStatus())
+
+  const setText = () =>{
+    if (routeSelectStatus === 'unselected'){
+      return 'Accept Route'
+    } else if (routeSelectStatus === 'selected_other') {
+      return 'Route Taken'
+    } else if (routeSelectStatus === 'selected_user') {
+      return 'Unaccept Route?'
+    }
+  }
+  const [buttonText, setButtonText] = useState(setText());
 
   // const routeName = route[0].route;
 
@@ -57,7 +71,13 @@ function DailyRoutes() {
   //handles route [selection]
   const handleClick = () => {
     if (routeSelectStatus === 'unselected') {
-      dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.emp_id, route_id: route[0].route_id  }})
+      dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.emp_id, route_id: route[0].route_id  }});
+      setRouteSelectStatus(setStatus());
+      setButtonText(setText());
+    } if (routeSelectStatus === 'selected_user') {
+      dispatch({type: 'SAGA_UNSET_ROUTE', payload: { emp_id: user.emp_id, route_id: route[0].route_id  }});
+      setRouteSelectStatus(setStatus());
+      setButtonText(setText());
     }
   }
 
@@ -96,14 +116,17 @@ function DailyRoutes() {
     }
   }
 
-  const determineStatusRoute = () => {
-    return '#B5E3E0'
-  } 
-
   // push to individual dog details
   const getDogDetails = (dogID) => {
    // console.log(dogID);
     history.push(`/m/dog/${dogID}`)
+  }
+
+  const RouteSelectButton = () => {
+
+    return (
+      <Button onClick={(e) => handleClick()} variant='outlined' color='info' > {buttonText} </Button>
+      )
   }
 
   return (
@@ -127,7 +150,7 @@ function DailyRoutes() {
                 />
                 <Typography>Map</Typography>
               </IconButton>
-              <Button onClick={(e) => handleClick()} variant='outlined' color='info' sx={{backgroundColor: () => determineStatusRoute()}} > Accept Route? </Button>
+              {RouteSelectButton()}
             </Stack>
             </Grid>
               <Droppable droppableId={`${route[0].route}`}>

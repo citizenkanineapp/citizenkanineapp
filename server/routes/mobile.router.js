@@ -284,9 +284,8 @@ router.get('/route/:route_id', async (req, res) => {
         .then(routeResponse => {
             // console.log(routeResponse.rows);
             let routeArray = routeResponse.rows;
-
-
-            res.send(routeResponse.rows);
+            console.log('route id', routeArray[0].route_id, 'emp id', routeArray[0].emp_id);
+            res.send(routeArray);
         }).catch((error => {
             console.log('/route/:id GET error:', error);
         }));

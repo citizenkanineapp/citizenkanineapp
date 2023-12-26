@@ -104,7 +104,7 @@ function* getRouteDetails(action) {
     try {
         const routeResult = yield axios({
             method: 'GET',
-            url: `/api/mobile/route/${routeID}`
+            url: `/api/mobile/route/${routeID}`,
         })
         //console.log(routeResult);
 

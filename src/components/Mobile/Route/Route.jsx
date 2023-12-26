@@ -21,44 +21,29 @@ function DailyRoutes() {
   const history = useHistory();
   const params = useParams();
 
-  // on page load - fetch routes, and also fetch specifc route data according to URL route ID
-  useEffect(() => {
-    // console.log("DailyRoutes useEffect", params.id)
-    dispatch({ type: 'GET_DAILY_ROUTES' });
-  }, [params.id]);
-
   // state and reducer definitions
   const [expanded, setExpanded] = useState(false);
   const user = useSelector(store => store.user);
   // reducer getting filled with a specific routes dogs
   const route = useSelector(store => store.routeReducer);
+
   const setStatus = ()=>{
     if(route[0] && route[0].emp_id === null) {
-      console.log('unselected: emp_id in route', route[0].emp_id), 'user_id: ', user.emp_id;
-      console.log('unselected: route_id in route', route[0].route_id);
       return 'unselected';
     } else if ( route[0] && user && route[0].emp_id === user.emp_id) {
-      console.log('selected_user: emp_id in route', route[0].emp_id, 'user_id: ', user.emp_id);
-      console.log('selected_user: route_id in route', route[0].route_id);
       return'selected_user';
     } else if (route[0] && user && route[0].emp_id != user.emp_id) {
-      console.log('selected_other: emp_id in route', route[0].emp_id, 'user_id: ', user.emp_id);
-      console.log('selected_other: route_id in route', route[0].route_id);
       return 'selected_other';
     }
   }
   const [routeSelectStatus, setRouteSelectStatus] = useState(setStatus())
 
-  const setText = () =>{
-    if (routeSelectStatus === 'unselected'){
-      return 'Accept Route'
-    } else if (routeSelectStatus === 'selected_other') {
-      return 'Route Taken'
-    } else if (routeSelectStatus === 'selected_user') {
-      return 'Unaccept Route?'
-    }
-  }
-  const [buttonText, setButtonText] = useState(setText());
+  // on page load - fetch routes, and also fetch specifc route data according to URL route ID
+  useEffect(() => {
+    setRouteSelectStatus(setStatus());
+    console.log('how?: ', route[0] && route[0].emp_id, user.emp_id, routeSelectStatus)
+
+  },);
 
   // const routeName = route[0].route;
 
@@ -67,17 +52,19 @@ function DailyRoutes() {
     setExpanded(isExpanded ? panel : false);
   };
 
-  
   //handles route [selection]
   const handleClick = () => {
+    // console.log('old route: ', route[0].emp_id, routeSelectStatus)
     if (routeSelectStatus === 'unselected') {
-      dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.emp_id, route_id: route[0].route_id  }});
+      dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.emp_id, route_id: params.id  }});
       setRouteSelectStatus(setStatus());
-      setButtonText(setText());
-    } if (routeSelectStatus === 'selected_user') {
-      dispatch({type: 'SAGA_UNSET_ROUTE', payload: { emp_id: user.emp_id, route_id: route[0].route_id  }});
+      console.log('new route: ',route[0].emp_id,routeSelectStatus)
+    } else if (routeSelectStatus === 'selected_user') {
+      dispatch({type: 'SAGA_UNSET_ROUTE', payload: { emp_id: user.emp_id, route_id: params.id  }});
       setRouteSelectStatus(setStatus());
-      setButtonText(setText());
+      console.log('new route: ',route[0].emp_id,routeSelectStatus)
+    } else if (routeSelectStatus === 'selected_other') {
+      return null;
     }
   }
 
@@ -122,12 +109,32 @@ function DailyRoutes() {
     history.push(`/m/dog/${dogID}`)
   }
 
-  const RouteSelectButton = () => {
+  const RouteSelectButton = ({ routeSelectStatus, handleClick }) => {
+    let buttonText = '';
+    let buttonColor = '';
+
+    switch (routeSelectStatus) {
+      case 'unselected':
+        buttonText = 'Accept Route?';
+        buttonColor = 'info';
+        break;
+      case 'selected_user':
+        buttonText = 'Route Accepted';
+        buttonColor = '#B5E3E0';
+        break;
+      case 'selected_other':
+        buttonText = 'Route Taken';
+        buttonColor = 'lightgrey';
+        break;
+
+    }
 
     return (
-      <Button onClick={(e) => handleClick()} variant='outlined' color='info' > {buttonText} </Button>
-      )
-  }
+      <Button onClick={handleClick} variant="outlined" sx={{ borderColor: 'black', color: 'black', backgroundColor: buttonColor }} >
+        {buttonText}
+      </Button>
+    );
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}> 
@@ -150,7 +157,7 @@ function DailyRoutes() {
                 />
                 <Typography>Map</Typography>
               </IconButton>
-              {RouteSelectButton()}
+              <RouteSelectButton routeSelectStatus={routeSelectStatus} handleClick={handleClick} />
             </Stack>
             </Grid>
               <Droppable droppableId={`${route[0].route}`}>

@@ -225,3 +225,12 @@ CREATE TABLE ck_stage.admin_notes (
 	"note_type" VARCHAR(8),
 	"dog_id" INT REFERENCES ck_stage.dogs(id) ON DELETE CASCADE
 	);
+
+CREATE TABLE ck_stage.route_history (
+	"id" SERIAL PRIMARY KEY,
+	"emp_id" INT NOT NULL REFERENCES ck_stage.employees(id) ON DELETE CASCADE,
+	"route_id" INT NOT NULL REFERENCES ck_stage.routes(id) ON DELETE CASCADE,
+	"date" DATE DEFAULT CURRENT_DATE,
+	UNIQUE("emp_id", "date"),
+	UNIQUE("route_id", "date")
+);

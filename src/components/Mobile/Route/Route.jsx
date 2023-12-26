@@ -58,11 +58,11 @@ function DailyRoutes() {
     if (routeSelectStatus === 'unselected') {
       dispatch({type: 'SAGA_SET_ROUTE', payload: { emp_id: user.emp_id, route_id: params.id  }});
       setRouteSelectStatus(setStatus());
-      console.log('new route: ',route[0].emp_id,routeSelectStatus)
+      // console.log('new route: ',route[0].emp_id,routeSelectStatus)
     } else if (routeSelectStatus === 'selected_user') {
       dispatch({type: 'SAGA_UNSET_ROUTE', payload: { emp_id: user.emp_id, route_id: params.id  }});
       setRouteSelectStatus(setStatus());
-      console.log('new route: ',route[0].emp_id,routeSelectStatus)
+      // console.log('new route: ',route[0].emp_id,routeSelectStatus)
     } else if (routeSelectStatus === 'selected_other') {
       setRouteSelectStatus(setStatus());
     }

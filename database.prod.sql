@@ -227,3 +227,12 @@ CREATE TABLE ck_prod.admin_notes (
 	"note_type" VARCHAR(8),
 	"dog_id" INT REFERENCES ck_prod.dogs(id) ON DELETE CASCADE
 	);
+
+CREATE TABLE ck_prod.route_history (
+	"id" SERIAL PRIMARY KEY,
+	"emp_id" INT NOT NULL REFERENCES ck_prod.employees(id) ON DELETE CASCADE,
+	"route_id" INT NOT NULL REFERENCES ck_prod.routes(id) ON DELETE CASCADE,
+	"date" DATE DEFAULT CURRENT_DATE,
+	UNIQUE("emp_id", "date"),
+	UNIQUE("route_id", "date")
+);

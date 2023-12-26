@@ -64,7 +64,7 @@ function DailyRoutes() {
       setRouteSelectStatus(setStatus());
       console.log('new route: ',route[0].emp_id,routeSelectStatus)
     } else if (routeSelectStatus === 'selected_other') {
-      return null;
+      setRouteSelectStatus(setStatus());
     }
   }
 
@@ -112,6 +112,7 @@ function DailyRoutes() {
   const RouteSelectButton = ({ routeSelectStatus, handleClick }) => {
     let buttonText = '';
     let buttonColor = '';
+    let isDisabled = false;
 
     switch (routeSelectStatus) {
       case 'unselected':
@@ -125,12 +126,12 @@ function DailyRoutes() {
       case 'selected_other':
         buttonText = 'Route Taken';
         buttonColor = 'lightgrey';
+        isDisabled = true;
         break;
-
     }
 
     return (
-      <Button onClick={handleClick} variant="outlined" sx={{ borderColor: 'black', color: 'black', backgroundColor: buttonColor }} >
+      <Button onClick={handleClick} variant="outlined" disabled={isDisabled} sx={{ borderColor: 'black', color: 'black', backgroundColor: buttonColor }} >
         {buttonText}
       </Button>
     );

@@ -9,17 +9,25 @@ import { Table, TableContainer, TableHead, Paper, TableBody, TableRow, TableCell
 import {styled} from '@mui/system';
 
 //style for modal
-const style = {
+const style = (display)=>{
+  let width ;
+  if (display === 'mobile') {
+    width = 325
+  } else {
+    width = 650
+  }
+  return {  
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 450,
+  width: width,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-};
+  };
+}
 
 // CUSTOM COMPONENTS FOR SEARCH RESULTS
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -28,7 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function RouteHistoryModal({open, setOpen}) {
+function RouteHistoryModal({open, setOpen, display}) {
 
   const dispatch = useDispatch();
 
@@ -49,7 +57,7 @@ return (
     aria-labelledby="modal-modal-title"
     aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={style(display)}>
         <Typography sx={{fontWeight: '800', mb: 2}}>{routeHistory[0] && dayjs(routeHistory[0].date).utc().format('MM/DD/YYYY')}</Typography>
       <TableContainer component={Paper} >
           <Table stickyHeader size="small" sx={{overflow:'auto'}}>

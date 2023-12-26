@@ -30,7 +30,6 @@ import Button from '@mui/material/Button';
 // used to disable user from scheduling on a weekend day
 const isWeekend = (date) => {
   const day = date.day();
-
   return day === 0 || day === 6;
 };
 
@@ -185,7 +184,7 @@ function EmployeeSchedule(){
           </Grid> */}
     </Box>
       {/* eliminates visiblie modal refresh. no UI response if date with no history pops up. */}
-      {routeHistory[0] ? <RouteHistoryModal open={open} setOpen={setOpen} /> : null}
+      {routeHistory[0] ? <RouteHistoryModal display={'desktop'} open={open} setOpen={setOpen} /> : null}
       <Box sx={{display: 'flex', flexDirection: 'row', gap: 5, height: '75%'}}>
         <Box sx={{display:'flex', justifyContent:'center',justifyContent: 'flex-start'}}>
           {/* calendar here */}

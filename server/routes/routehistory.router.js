@@ -52,7 +52,7 @@ router.delete('/', async (req, res) => {
 });
 
 router.get('/:date', async (req, res) => {
-  console.log('in /api/history/:date', req.params.date)
+//   console.log('in /api/history/:date', req.params.date)
   const date = new Date(req.params.date);
   const sqlQuery = `
       SELECT

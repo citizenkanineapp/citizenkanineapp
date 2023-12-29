@@ -81,6 +81,7 @@ router.post('/', async (req, res) => {
 
 // creating array of invoice objects
 function createInvoiceItems(invoiceItems) {
+  // console.log('are we here?', invoiceItems);
 
   // creates set of unique client IDs and empty array object
   const clients = new Set(invoiceItems.map(({qb_id}) => qb_id));
@@ -104,6 +105,9 @@ function createInvoiceItems(invoiceItems) {
     invoice.CustomerRef = {
       "value": client
     }
+
+    // formats transaction number, which appears on invoice. Preferences.CustomTxnNumber must be TRUE.
+    invoice.DocNumber = `${client} - ${invoiceItems[0].month}${invoiceItems[0].year}`
     invoice.Line = [];
     invoicesList.push(invoice);
 

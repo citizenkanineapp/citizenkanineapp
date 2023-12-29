@@ -12,7 +12,7 @@ import {styled} from '@mui/system';
 const style = (display)=>{
   let width ;
   if (display === 'mobile') {
-    width = 325
+    width = '80vw'
   } else {
     width = 650
   }

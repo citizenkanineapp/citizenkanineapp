@@ -1,8 +1,8 @@
 // IMPORTS
 
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect} from 'react';
-import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
+// import { useState, useEffect} from 'react';
+// import dayjs from 'dayjs';
 
 // components
 import AdminNotes from '../AdminNotes/AdminNotes';
@@ -35,7 +35,7 @@ function SplashPage() {
               <AdminNotes  /> : null}
           </Card>
         </Grid>
-        <DogCount />
+        {/* <DogCount /> */}
         </Grid>
     </Box>
   );

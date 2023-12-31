@@ -42,6 +42,7 @@ function dateFormatFunction(dates) {
 router.get('/', rejectUnauthenticated, (req, res)=> {
     const sqlQuery = `
     SELECT * FROM employees
+    WHERE id != 0
     ORDER BY employees.last_name;
     `
 

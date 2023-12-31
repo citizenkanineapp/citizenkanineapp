@@ -107,7 +107,7 @@ function createInvoiceItems(invoiceItems) {
     }
 
     // formats transaction number, which appears on invoice. Preferences.CustomTxnNumber must be TRUE.
-    invoice.DocNumber = `${client} - ${invoiceItems[0].month}${invoiceItems[0].year}`
+    // invoice.DocNumber = `${client} - ${invoiceItems[0].month}${invoiceItems[0].year}`
     invoice.Line = [];
     invoicesList.push(invoice);
 

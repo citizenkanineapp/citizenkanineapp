@@ -221,7 +221,7 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
         const scheduleAdjustments = scheduleAdjustmentsResponse.rows;
 
         if (scheduleAdjustments < 1 ) {
-            const dogsScheduledForDay = fillScheduled(scheduledDogs);
+            // const dogsScheduledForDay = fillScheduled(scheduledDogs);
             // console.log(dogsScheduledForDay[0].dogs)
             res.send({dogsScheduledForDay});
         } else {

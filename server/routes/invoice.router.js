@@ -26,6 +26,8 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     const searchClientId = req.query.clientId;
     //console.log('client id?', searchClientId)
     const searchMonth = req.query.month;
+    const monthString = searchMonth.padStart(2,'0');
+
     const searchYear = req.query.year;
     let searchTerms;
 
@@ -200,7 +202,7 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
             // adds service details to invoice item
             for (let service of services) {
                 if (service.id === serviceId) {
-                    item.month = searchMonth;
+                    item.month = monthString;
                     item.year = searchYear;
                     item.service = {
                         price: service.price,

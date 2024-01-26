@@ -31,7 +31,7 @@ function DogCount() {
   // {scheduledDogs && scheduledDogs[0] && scheduledDogs[0].dogs[0].id != undefined && scheduledDogs.map((dog) => (...)}
 
 
-  const dogCount = scheduledDogs[0] ? scheduledDogs.length : 0;
+  const dogCount = scheduledDogs[0] && scheduledDogs[0].dog_id != undefined ? scheduledDogs.length : 0;
 
   //this version is if dogs sorted by client in mobile.router.js
   // const dogCount = scheduledDogs[0] ? scheduledDogs.reduce((acc, obj) => {
@@ -82,7 +82,7 @@ function DogCount() {
               </TableRow>
             </TableHead>
             <TableBody >
-            {scheduledDogs && scheduledDogs[0] && scheduledDogs.map((dog) => (
+            {scheduledDogs && scheduledDogs[0] && scheduledDogs[0].dog_id != undefined && scheduledDogs.map((dog) => (
               <StyledTableRow key={dog.dog_id}>
                 <TableCell >{dog.name}</TableCell>
                 <TableCell >{dog.client_last_name}, {dog.client_first_name}</TableCell>

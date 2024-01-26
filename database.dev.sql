@@ -47,7 +47,7 @@ CREATE TABLE ck_dev."user" (
 INSERT INTO ck_dev."user"
 	("username","password","admin", "emp_id","email")
 VALUES
-	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, null,'thecitizenkanine@gmail.com');
+	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 0,'thecitizenkanine@gmail.com');
 	-- REMOVE BEFORE DEPLOYMENT
 	-- ('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2,null);
 	

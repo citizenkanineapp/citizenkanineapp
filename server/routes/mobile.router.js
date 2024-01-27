@@ -181,7 +181,31 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
             client_last_name: dog.last_name,
             route_name: dog.route_name
         }));
-        return dogList;
+        const sortedDogList = dogList.sort((a, b) => {
+            const nameA = a.client_last_name.toUpperCase(); // Ignore case during sorting
+            const nameB = b.client_last_name.toUpperCase();
+            const dogNameA = a.name.toUpperCase(); // Ignore case during sorting
+            const dogNameB = b.name.toUpperCase();
+          
+            if (nameA < nameB) {
+              return -1;
+            }
+          
+            if (nameA > nameB) {
+              return 1;
+            }
+          
+            if (dogNameA < dogNameB) {
+                return -1;
+            }
+            
+            if (dogNameA > dogNameB) {
+                return 1;
+            }
+            // Names are equal
+            return 0;
+        });
+        return sortedDogList;
     };
 
     // BELOW sorts dogs by client

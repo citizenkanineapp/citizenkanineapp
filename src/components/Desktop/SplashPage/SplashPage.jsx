@@ -35,7 +35,7 @@ function SplashPage() {
               <AdminNotes  /> : null}
           </Card>
         </Grid>
-        {/* <DogCount /> */}
+        <DogCount />
         </Grid>
     </Box>
   );

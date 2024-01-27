@@ -169,8 +169,9 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
     const [ searchQuery, scheduleQuery ] = getDailyDogsSearchQuery(date);
 
     // fillScheduled organizes query response by client.
+
     const fillScheduled = (dogArray) => {
-        let dogList = dogArray.map(dog => ({
+     let dogList = dogArray.map(dog => ({
             dog_id: dog.dog_id,
             client_id: dog.client_id,
             name: dog.name,
@@ -180,34 +181,49 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
             client_last_name: dog.last_name,
             route_name: dog.route_name
         }));
-        
-        let idArray = dogArray.map(dog => dog.client_id);
+        return dogList;
+    };
 
-        //this filters out duplicate IDs
-        let uniqueIds = [...new Set(idArray)]
-
-        //this groups result.rows by id
-        const group = dogList.reduce((acc, item) => {
-            // console.log(acc)
-            if (!acc[item.client_id]) {
-                acc[item.client_id] = [];
-            }
-            acc[item.client_id].push(item);
-            return acc;
-        }, {})
-
-        let clients = uniqueIds.map(clientId => {
-            let dogsForClient = group[clientId];
+    // BELOW sorts dogs by client
+    // const fillScheduled = (dogArray) => {
+    //     let dogList = dogArray.map(dog => ({
+    //         dog_id: dog.dog_id,
+    //         client_id: dog.client_id,
+    //         name: dog.name,
+    //         id: dog.id,
+    //         route_id: dog.route_id,
+    //         client_first_name: dog.first_name,
+    //         client_last_name: dog.last_name,
+    //         route_name: dog.route_name
+    //     }));
         
-            const { client_last_name, client_first_name, route_id, route_name } = dogsForClient[0];
-            const client = { client_last_name, client_first_name, client_id: clientId, route_id, route_name };
+    //     let idArray = dogArray.map(dog => dog.client_id);
+
+    //     //this filters out duplicate IDs
+    //     let uniqueIds = [...new Set(idArray)]
+
+    //     //this groups result.rows by id
+    //     const group = dogList.reduce((acc, item) => {
+    //         // console.log(acc)
+    //         if (!acc[item.client_id]) {
+    //             acc[item.client_id] = [];
+    //         }
+    //         acc[item.client_id].push(item);
+    //         return acc;
+    //     }, {})
+
+    //     let clients = uniqueIds.map(clientId => {
+    //         let dogsForClient = group[clientId];
         
-            client.dogs = dogsForClient.map(({ name, id }) => ({ name, id }));
+    //         const { client_last_name, client_first_name, route_id, route_name } = dogsForClient[0];
+    //         const client = { client_last_name, client_first_name, client_id: clientId, route_id, route_name };
+        
+    //         client.dogs = dogsForClient.map(({ name, id }) => ({ name, id }));
             
-            return client;
-        });
-        return clients;
-    }
+    //         return client;
+    //     });
+    //     return clients;
+    // }
     
     try {
         // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
@@ -215,22 +231,26 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
         const scheduledDogsResponse = await client.query(searchQuery);
 
         const scheduledDogs = scheduledDogsResponse.rows;
+        // console.log(scheduledDogs);
     
         // find the schedule changes for the day
         const scheduleAdjustmentsResponse = await client.query(scheduleQuery,[date]);
         const scheduleAdjustments = scheduleAdjustmentsResponse.rows;
 
         if (scheduleAdjustments < 1 ) {
-            // const dogsScheduledForDay = fillScheduled(scheduledDogs);
+            const dogsScheduledForDay = fillScheduled(scheduledDogs);
             // console.log(dogsScheduledForDay[0].dogs)
             res.send({dogsScheduledForDay});
+            // res.sendStatus(201);
         } else {
             const adjustedDogs = getAdjustedSchedule(scheduledDogs,scheduleAdjustments)
             dogsScheduledForDay = fillScheduled(adjustedDogs);
             res.send({dogsScheduledForDay});
+            // res.sendStatus(201);
+
         }
     } catch (error) {
-        console.log('error checking scheduled dogs', error.detail);
+        console.log('error checking scheduled dogs', error);
         res.sendStatus(500);
     } finally {
         client.release();

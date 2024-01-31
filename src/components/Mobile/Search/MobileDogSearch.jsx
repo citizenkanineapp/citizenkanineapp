@@ -6,6 +6,9 @@ import { useHistory, Link, useParams } from 'react-router-dom';
 //MUI
 import { TableFooter, Paper, Stack, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import ResultsSearchDogs from '../../AllPages/SearchResults/ResultsSearchDogs';
 import ResultsAllDogs from '../../AllPages/SearchResults/ResultsAllDogs';
@@ -14,6 +17,7 @@ import ResultsDogByDay from '../../AllPages/SearchResults/ResultsDogByDay';
 export default function MobileDogSearch() {
 
   const clientList = useSelector(store => store.clientsReducer);
+  const dogListToday = useSelector(store => store.scheduledDogs)
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
@@ -27,6 +31,9 @@ export default function MobileDogSearch() {
     },[]
   );
 
+  let today = new Date().toISOString();
+
+  const [date, setDate] = useState(today);
   const daysOfWeek = ['mon','tue','wed','thu','fri'];
   // console.log(daysOfWeek)
   const dogList = [...new Set(clientList.flatMap((client) =>
@@ -36,6 +43,7 @@ export default function MobileDogSearch() {
       client_firstname: client.first_name,
       client_lastname: client.last_name,
       client_id: client.client_id,
+      route: client.route_name,
       mon: client.monday,
       tue: client.tuesday,
       wed: client.wednesday,
@@ -43,7 +51,8 @@ export default function MobileDogSearch() {
       fri: client.friday
     }))
   ))];
-    // console.log('doglist',dogList)
+
+  // console.log('doglist',dogList)
 
   const searchFunction = (event) => {
     setSubmittedSearch(search.toLowerCase())
@@ -60,6 +69,20 @@ export default function MobileDogSearch() {
     setSubmittedSearch('');
     setWeekSearch(day);
   }
+
+  const handleDateChange = (date) => {
+    setDate(date);
+    dispatch({ type: 'CHECK_DOG_SCHEDULES', payload: dayjs(date).format('YYYY-MM-DD') });
+  }
+
+  const searchDogsToday = () => {
+
+  }
+
+  const isWeekend = (date) => {
+    const day = date.day();
+    return day === 0 || day === 6;
+  };
 
   return (
     <Box className="mobile_container"
@@ -95,6 +118,19 @@ export default function MobileDogSearch() {
        }
       </Grid>
       <Stack sx={{display:'flex', flexDirection:'row'}}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              shouldDisableDate={isWeekend}
+              onChange={handleDateChange}
+              value={date}
+              renderInput={(params) => {
+                return <TextField {...params} sx={{ mt: 2 ,mx: 2, pb: 1, width: '30vw' }} />
+              }}
+            />
+        </LocalizationProvider>
+        <Button onClick={()=>searchDogsToday()}>Today</Button>  
+      </Stack>
+      <Stack sx={{display:'flex', flexDirection:'row'}}>
         {daysOfWeek.map((day,i) => (
           <Button key={i} onClick={()=>searchDogByDay(day)}>{day}</Button>
         ))}
@@ -115,7 +151,7 @@ export default function MobileDogSearch() {
                 <TableRow>
                   <TableCell sx={{fontWeight: '800'}}>Dog:</TableCell>
                   <TableCell sx={{fontWeight: '800'}}>Client:</TableCell>
-
+                  <TableCell sx={{fontWeight: '800'}}>Route:</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>

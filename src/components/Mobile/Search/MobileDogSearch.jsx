@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useHistory, Link, useParams } from 'react-router-dom';
-
+import dayjs from 'dayjs';
 
 //MUI
 import { TableFooter, Paper, Stack, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
@@ -13,27 +13,29 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import ResultsSearchDogs from '../../AllPages/SearchResults/ResultsSearchDogs';
 import ResultsAllDogs from '../../AllPages/SearchResults/ResultsAllDogs';
 import ResultsDogByDay from '../../AllPages/SearchResults/ResultsDogByDay';
+import ResultsScheduledDogs from '../../AllPages/SearchResults/ResultsScheduledDogs';
 
 export default function MobileDogSearch() {
 
   const clientList = useSelector(store => store.clientsReducer);
   const dogListToday = useSelector(store => store.scheduledDogs)
   const dispatch = useDispatch();
-  const history = useHistory();
-  const params = useParams();
+  let today = new Date().toISOString();
+
+  const [date, setDate] = useState(today);
   const [search, setSearch] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState('');
-  const [weekSearch, setWeekSearch] = useState('')
-  // const [dogList, setDogList] = useState(clientList ? createDogList : [])
+  const [weekSearch, setWeekSearch] = useState('');
+  
+  const dogCount = dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0;
+
 
   useEffect(() => {
     dispatch({ type: 'FETCH_CLIENTS' });
     },[]
   );
 
-  let today = new Date().toISOString();
-
-  const [date, setDate] = useState(today);
+  
   const daysOfWeek = ['mon','tue','wed','thu','fri'];
   // console.log(daysOfWeek)
   const dogList = [...new Set(clientList.flatMap((client) =>
@@ -62,21 +64,19 @@ export default function MobileDogSearch() {
     setWeekSearch('');
     setSubmittedSearch('');
     setSearch('');
+    setDate(today);
   }
 
   const searchDogByDay = (day) => {
     setSearch('');
     setSubmittedSearch('');
     setWeekSearch(day);
+    setDate('');
   }
 
   const handleDateChange = (date) => {
     setDate(date);
     dispatch({ type: 'CHECK_DOG_SCHEDULES', payload: dayjs(date).format('YYYY-MM-DD') });
-  }
-
-  const searchDogsToday = () => {
-
   }
 
   const isWeekend = (date) => {
@@ -117,7 +117,8 @@ export default function MobileDogSearch() {
         <Button onClick={() => searchFunction()} variant="contained" color="secondary">Search</Button>
        }
       </Grid>
-      <Stack sx={{display:'flex', flexDirection:'row'}}>
+      <Stack sx={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+      <Typography> <b>{dogCount}</b> Dogs scheduled </Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               shouldDisableDate={isWeekend}
@@ -128,7 +129,6 @@ export default function MobileDogSearch() {
               }}
             />
         </LocalizationProvider>
-        <Button onClick={()=>searchDogsToday()}>Today</Button>  
       </Stack>
       <Stack sx={{display:'flex', flexDirection:'row'}}>
         {daysOfWeek.map((day,i) => (
@@ -155,13 +155,15 @@ export default function MobileDogSearch() {
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
-            { submittedSearch && dogList.length > 0 ?
-              <ResultsSearchDogs dogList={dogList} submittedSearch={submittedSearch} />
-              : (weekSearch && dogList.length > 0  ) ?
-                <ResultsDogByDay dogList={dogList} weekSearch={weekSearch} />
-                : (dogList.length > 0 ) ?
-                <ResultsAllDogs dogList={dogList} />
-                : null
+            { date && dogListToday.length > 0 ?
+              <ResultsScheduledDogs dogList={dogListToday} />
+                : submittedSearch && dogList.length > 0 ?
+                  <ResultsSearchDogs dogList={dogList} submittedSearch={submittedSearch} />
+                  : (weekSearch && dogList.length > 0  ) ?
+                    <ResultsDogByDay dogList={dogList} weekSearch={weekSearch} />
+                    : (dogList.length > 0 ) ?
+                    <ResultsAllDogs dogList={dogList} />
+                    : null
             }
             </Table>
           </TableContainer >

@@ -47,7 +47,8 @@ export default function ResultsSearchDogs({dogList, clientList, openModal, submi
       }).map((dog ) => (
         <StyledTableRow key={dog.dog_id}> 
           <TableCell onClick={()=>getDogDetails(dog)}>{dog.dog_name}</TableCell>
-          <TableCell onClick={()=>getDogDetails(dog)}>{dog.client_firstname} {dog.client_lastname}</TableCell>
+          <TableCell onClick={()=>getDogDetails(dog)}>{dog.client_lastname}, {dog.client_firstname}</TableCell>
+          <TableCell>{dog.route}</TableCell>
           { view==='desktop' ?
           <>
             <TableCell onClick={()=>getDogDetails(dog)}> {dog.days.join(', ').toUpperCase()} </TableCell>

@@ -26,14 +26,15 @@ export default function MobileDogSearch() {
   const [search, setSearch] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState('');
   const [weekSearch, setWeekSearch] = useState('');
-  const [dogCount, setDogCount] = useState('')
+  const [dogCount, setDogCount] = useState('');
   
   // let dogCount = dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0;
 
 
   useEffect(() => {
     dispatch({ type: 'FETCH_CLIENTS' });
-    setDogCount(dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0)
+    setDogCount(dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0);
+    handleDateChange(today);
     },[]
   );
 

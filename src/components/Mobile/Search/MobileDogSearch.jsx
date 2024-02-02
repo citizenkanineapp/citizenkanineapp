@@ -33,7 +33,8 @@ export default function MobileDogSearch() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_CLIENTS' });
-    setDogCount(dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0)
+    setDogCount(dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0);
+    handleDateChange(today);
     },[]
   );
 

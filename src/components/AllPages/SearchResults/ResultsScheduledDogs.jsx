@@ -1,4 +1,5 @@
 import {useHistory} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { TableBody, TableRow, TableCell } from '@mui/material';
 import { styled } from '@mui/system';
 
@@ -11,6 +12,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function ResultsScheduledDogs({dogList}) {
   const history = useHistory();
+  const dispatch = useDispatch();
   const getDogDetails = (dog) => {
     dispatch({type: 'CLEAR_ROUTE'});
     history.push(`/m/dog/${dog.dog_id}`);

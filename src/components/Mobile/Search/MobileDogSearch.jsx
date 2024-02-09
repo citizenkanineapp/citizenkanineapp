@@ -1,11 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { useHistory, Link, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 //MUI
-import { TableFooter, Paper, Stack, Table, TablePagination, TableSortLabel, Toolbar, TableBody, TableContainer, TableHead, TableRow, TableCell, Avatar, AppBar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemSecondaryAction, Typography, Button, Grid, TextField } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Paper, Stack, Table, TableContainer, TableHead, TableRow, TableCell, Box, Typography, Button, Grid, TextField } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -38,7 +36,6 @@ export default function MobileDogSearch() {
     },[]
   );
 
-  
   const daysOfWeek = ['mon','tue','wed','thu','fri'];
   // console.log(daysOfWeek)
   const dogList = [...new Set(clientList.flatMap((client) =>

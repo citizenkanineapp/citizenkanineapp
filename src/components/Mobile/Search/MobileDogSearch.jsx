@@ -16,7 +16,8 @@ import ResultsScheduledDogs from '../../AllPages/SearchResults/ResultsScheduledD
 export default function MobileDogSearch() {
 
   const clientList = useSelector(store => store.clientsReducer);
-  const dogListToday = useSelector(store => store.scheduledDogs)
+  const dogListToday = useSelector(store => store.scheduledDogs);
+  const dogCount = dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0
   const dispatch = useDispatch();
   let today = new Date().toISOString();
 
@@ -24,14 +25,11 @@ export default function MobileDogSearch() {
   const [search, setSearch] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState('');
   const [weekSearch, setWeekSearch] = useState('');
-  const [dogCount, setDogCount] = useState('');
-  
-  // let dogCount = dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0;
-
+  // const [dogCount, setDogCount] = useState('');
 
   useEffect(() => {
     dispatch({ type: 'FETCH_CLIENTS' });
-    setDogCount(dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0);
+    // setDogCount(dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0);
     handleDateChange(today);
     },[]
   );
@@ -59,7 +57,6 @@ export default function MobileDogSearch() {
   const searchFunction = (event) => {
     setDate('');
     setSubmittedSearch(search.toLowerCase());
-    setDogCount(undefined)
   }
 
   const clearResults = (event) => {
@@ -74,13 +71,11 @@ export default function MobileDogSearch() {
     setSearch('');
     setSubmittedSearch('');
     setWeekSearch(day);
-    setDogCount(undefined)
   }
 
   const handleDateChange = (date) => {
     setDate(date);
     dispatch({ type: 'CHECK_DOG_SCHEDULES', payload: dayjs(date).format('YYYY-MM-DD') });
-    setDogCount(dogListToday[0] && dogListToday[0].dog_id != undefined ? dogListToday.length : 0);
   }
 
   const isWeekend = (date) => {

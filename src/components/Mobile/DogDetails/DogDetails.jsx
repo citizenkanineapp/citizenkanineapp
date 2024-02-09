@@ -52,6 +52,7 @@ function DogDetails() {
   }
 
   //this routes the user back to the route for the day
+  // back function breaks if modal pops up from dogsearch function. route reducer must be cleared.
   const backFunction = (event) => {
     const currentRoute  = route.filter(thisDog => thisDog.dog_id === dog.dog_id)
     if (currentRoute.length>0) {

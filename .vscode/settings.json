@@ -4,5 +4,6 @@
         "datepicker",
         "packleader",
         "Paolini"
-    ]
+    ],
+    "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace"
 }

@@ -184,6 +184,7 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
         const sortedDogList = dogList.sort((a, b) => {
             const nameA = a.client_last_name.toUpperCase(); // Ignore case during sorting
             const nameB = b.client_last_name.toUpperCase();
+            // console.log(nameA, nameB);
             const dogNameA = a.name.toUpperCase(); // Ignore case during sorting
             const dogNameB = b.name.toUpperCase();
           

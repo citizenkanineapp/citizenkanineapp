@@ -1,4 +1,7 @@
 const express = require('express');
+const pool = require('../modules/pool');
+const router = express.Router();
+
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { DateTime } = require("luxon");
@@ -10,10 +13,8 @@ const {
   } = require('../modules/authentication-middleware');
   const encryptLib = require('../modules/encryption');
 
-const pool = require('../modules/pool');
 // const userStrategy = require('../strategies/user.strategy');
 
-const router = express.Router();
 
 // sends password reset email
 router.post('/email_reset_link', async (req, res) => {
@@ -33,7 +34,7 @@ router.post('/email_reset_link', async (req, res) => {
 
       // //checks if email exists in database
       const userData = await pool.query(queryTextEmail,[email])
-      // console.log(userData.rows[0]);
+      console.log('email is; ', userData.rows[0]);
 
       //if e-mail exists
       if(userData.rows[0]) {
@@ -88,13 +89,13 @@ router.post('/email_reset_link', async (req, res) => {
               if (err) {
                   console.log(err);
               } else {
-                  console.log('email send?', emailres)
+                  console.log('email sent!')
                   res.sendStatus(200);
               }
           });
 
   } else {  
-      console.log(userData.rows[0]);
+      console.log('email undefined', userData.rows[0]);
       res.sendStatus(500);//formate error client side!
       return;
   }

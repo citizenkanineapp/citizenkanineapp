@@ -39,11 +39,14 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // THIS POST is for a user being added when an employee is added.
 router.post('/register/employee', rejectUnauthenticated, rejectUnauthorized, (req, res, next) => {
   const { username, emp_id, admin } = req.body;
-  const userName = username.toLowerCase();
+  const userName = username.toLowerCase().trim();
+  console.log(userName);
 
   // All new users will have a default password of 'packleader' until the user logs in and updates it.
-  const defaultPassword= 'packleader';
+  const defaultPassword='packleader';
   const password = encryptLib.encryptPassword(defaultPassword);
+  console.log('default pw is: ', defaultPassword);
+  console.log('encrypted pw is: ', password);
   console.log('register post received');
 
   const queryText = `INSERT INTO "user" (emp_id, username, password, admin, email)

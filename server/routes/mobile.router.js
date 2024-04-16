@@ -58,7 +58,7 @@ const getDailyDogsSearchQuery = (day) => {
         
         // SQL to grab schedule adjustments table
     const scheduleQuery = `
-    SELECT dogs_schedule_changes.*, dogs.name, clients.route_id from dogs_schedule_changes
+    SELECT dogs_schedule_changes.*, dogs.name, clients.route_id, clients.first_name, clients.last_name FROM dogs_schedule_changes
         JOIN dogs ON dogs_schedule_changes.dog_id = dogs.id
         JOIN clients ON dogs.client_id = clients.id
         WHERE dogs_schedule_changes.date_to_change = $1
@@ -171,7 +171,8 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
     // fillScheduled organizes query response by client.
 
     const fillScheduled = (dogArray) => {
-     let dogList = dogArray.map(dog => ({
+    // console.log('dogArray', dogArray);
+    let dogList = dogArray.map(dog => ({
             dog_id: dog.dog_id,
             client_id: dog.client_id,
             name: dog.name,
@@ -181,6 +182,7 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
             client_last_name: dog.last_name,
             route_name: dog.route_name
         }));
+        // console.log('dogList', dogList);
         const sortedDogList = dogList.sort((a, b) => {
             const nameA = a.client_last_name.toUpperCase(); // Ignore case during sorting
             const nameB = b.client_last_name.toUpperCase();
@@ -253,6 +255,8 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
     try {
         // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
         // find the dogs default scheduled for the day
+        
+        // scheduledDogsResponse defined by searchQuery line 30
         const scheduledDogsResponse = await client.query(searchQuery);
 
         const scheduledDogs = scheduledDogsResponse.rows;
@@ -263,13 +267,16 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
         const scheduleAdjustments = scheduleAdjustmentsResponse.rows;
 
         if (scheduleAdjustments < 1 ) {
+            
             const dogsScheduledForDay = fillScheduled(scheduledDogs);
             // console.log(dogsScheduledForDay[0].dogs)
             res.send({dogsScheduledForDay});
             // res.sendStatus(201);
         } else {
-            const adjustedDogs = getAdjustedSchedule(scheduledDogs,scheduleAdjustments)
+            const adjustedDogs = getAdjustedSchedule(scheduledDogs,scheduleAdjustments);
+            // console.log('adjustedDogs', adjustedDogs);
             dogsScheduledForDay = fillScheduled(adjustedDogs);
+            // console.log(dogsScheduledForDay);
             res.send({dogsScheduledForDay});
             // res.sendStatus(201);
 

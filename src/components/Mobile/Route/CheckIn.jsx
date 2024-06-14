@@ -42,14 +42,10 @@ function DogCheckIn ({ dog }) {
     <>
       {dog.cancelled ?
         <>
-          {user.admin ?
-            <Button edge="end" variant='contained' color='info' onClick={(event) => checkInDog(dog, 'status_cancel')} >
-              <AddCircleIcon sx={{ mr: 2, p: 1 }} />
-              ADD DOG
-            </Button>
-            :
-            null
-          }
+          <Button edge="end" variant='contained' color='info' onClick={(event) => checkInDog(dog, 'status_cancel')} >
+            <AddCircleIcon sx={{ mr: 2, p: 1 }} />
+            ADD DOG
+          </Button>
         </>
         :
         <>
@@ -61,15 +57,10 @@ function DogCheckIn ({ dog }) {
             <EventBusyIcon sx={{ mr: .5 }} />
             NO SHOW
           </Button>
-          {/* only admin has privileges to alter cancellation status */}
-            {user.admin ?
-              <Button edge="end" onClick={(event) => checkInDog(dog, 'status_cancel')} variant='contained' color='info' sx={{ mr: 1, fontSize: 10 }} size='small'>
-                <CancelIcon sx={{ mr: .5}} />
-                CANCEL WALK
-              </Button>
-              :
-              null
-            }
+            <Button edge="end" onClick={(event) => checkInDog(dog, 'status_cancel')} variant='contained' color='info' sx={{ mr: 1, fontSize: 10 }} size='small'>
+              <CancelIcon sx={{ mr: .5}} />
+              CANCEL WALK
+            </Button>
         </>
       }
     </>

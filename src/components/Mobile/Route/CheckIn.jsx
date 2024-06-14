@@ -12,7 +12,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 function DogCheckIn ({ dog }) {
 
-  const user = useSelector(store => store.user); //gets admin status
+  // const user = useSelector(store => store.user); //gets admin status
   const dispatch = useDispatch();
 
   // this was originally three different functions, one for each possible check-in status.

@@ -28,6 +28,19 @@ CREATE TABLE ck_dev.employees (
 	"admin" BOOLEAN DEFAULT FALSE
 	);
 
+--** Employees MOCK DATA **--
+-- REMOVE BEFORE DEPLOYMENT
+-- insert into ck_stage.employees 
+-- 	(first_name, last_name, email, phone, street, city, "zip", admin) 
+-- values 
+-- 	('Danny', 'Paolini', 'dpaolini0@paypal.com', '(840)673-2127', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Grant', 'Abels', 'gabels1@weather.com', '(885)747-7091', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Angie', 'Stevens', 'sohickey2@google.ru', '(915)638-0768', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Reeba', 'McEntire', 'rpretswell3@feedburner.com', '(964)688-1625', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Florence', 'Wells', 'fmary4@unesco.org', '(697)209-6190', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Otis', 'Barrand', 'obarrand5@wufoo.com', '(537)159-4107', '2900 W 43rd St', 'Minneapolis',  55410, false),
+-- 	('Lydia', 'Nichols', 'lnichols6@virginia.edu', '(802)528-0961', '2900 W 43rd St', 'Minneapolis',  55410, false);
+
 -- removed email from user since we no longer need it for password retrieval.
 CREATE TABLE ck_dev."user" (
 	"id" SERIAL PRIMARY KEY,
@@ -44,13 +57,13 @@ CREATE TABLE ck_dev."user" (
 --** USER INITIALIZATION DATA **--
 --** USERNAME: 'admin'
 --** PASSWORD: 'admin'
+
 INSERT INTO ck_dev."user"
 	("username","password","admin", "emp_id","email")
 VALUES
-	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 0,'thecitizenkanine@gmail.com');
+	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 0,'citizenkanineapp@gmail.com');
 	-- REMOVE BEFORE DEPLOYMENT
 	-- ('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2,null);
-	
 
 CREATE TABLE ck_dev.employees_schedule (
 	"id" SERIAL PRIMARY KEY,

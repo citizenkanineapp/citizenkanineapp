@@ -23,7 +23,7 @@ user=# CREATE DATABASE citizen_kanine
 
 Populate database.
 
-If you desire to seed local development database with dummy data, un-comment out relevant lines in database.dev.sql.
+To seed local development database with dummy data, un-comment out relevant code in database.dev.sql.
 ```
 psql citizen_kanine < database.dev.sql
 ```

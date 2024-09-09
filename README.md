@@ -1,35 +1,63 @@
-# Citizen Kanine App ![REPO SIZE](https://img.shields.io/github/repo-size/citizenkanineapp/citizenkanineapp?style=flat-square) ![TOP_LANGUAGE](https://img.shields.io/github/languages/top/citizenkanineapp/citizenkanineapp?style=flat-square)
+# Getting started: Local development environment
 
-Citizen Kanine App is a custom built React application and production business management tool for Citizen Kanine. This repo is intended to aid future developers tasked with maintaining or updating the application. 
+### Prerequisites
 
-Table of Contents
-* [1. Local deployment](README/deployment_local.md)
-* 2. Database
-* 3. Heroku
-* 4. Quickbooks
-* 5. App structure
+* node.js v16.x
+* postgreSQL v14.11
 
-## Built With:
+### Deploy locally
 
-* [React.js](https://reactjs.org/docs/getting-started.html)
-* [Node.js](https://nodejs.org/en/docs/)
-* [Material-UI](https://mui.com) - components and styling
-* [React-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) - Drag and Drop functionality for mobile view
-* [Day.js](https://day.js.org) - Time Utility
-* [SweetAlert](https://sweetalert.js.org) - Visual feedback for users
-* [Passport](https://www.passportjs.org) - Secure Login & Account Management
+```
+$ git clone git@github.com:citizenkanineapp/citizenkanineapp.git
+$ npm install
+```
+Create new database named "citizen_kanine" using postgreSQL CLI
+```
+$ createdb citizen_kanine
 
-*For a full list of dependencies - see the Package.json*
+// or, open psql
 
+$ psql
+user=# CREATE DATABASE citizen_kanine
+```
 
-## Authors & Acknowledgement
+Populate database.
 
-Thanks to [Cloudinary](https://cloudinary.com) whose API supplied image upload capabilities for multiple parts of this application.
+To seed local development database with dummy data, un-comment out relevant code in database.dev.sql.
+```
+psql citizen_kanine < database.dev.sql
+```
 
-Thanks to [Prime Digital Academy](www.primeacademy.io) who equipped and helped us make this application a reality.
+create dotenv file. (Keys for development env can be found in Heroku)
 
-Special thanks to the services that made the start of our Map display development possible:
+```
+SERVER_SESSION_SECRET=XXXXXXX
 
- - [Radar](https://radar.com) - for Geo Coding
- - [MapTiler](https://www.maptiler.com) 
- - [Pigeon Maps](https://pigeon-maps.js.org) - React Maps
+# quickbooks keys
+clientId= XXXXXXX
+clientSecret=XXXXXXX
+
+# API Key for Cloudinary
+CLOUDINARY_NAME=XXXXXXX
+CLOUDINARY_API_KEY=XXXXXXX
+CLOUDINARY_API_SECRET=XXXXXXX
+
+# API key for maps
+map_api_key=XXXXXXX
+
+# email reset keys
+# email citizenkanineapp@gmail.com is the developer email account.
+RESETEMAIL = citizenkanineapp@gmail.com
+EMAILKEY = XXXXXXXXX
+
+```
+
+Start the server.
+```
+$ npm run server
+```
+Open another terminal window and start your client.
+```
+$ npm run client
+```
+Navigate to http://localhost:3000 if the run client script doesn't automatically open the application.

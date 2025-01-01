@@ -211,47 +211,6 @@ router.get('/checkDogSchedule/:date', async (req, res) => {
         return sortedDogList;
     };
 
-    // BELOW sorts dogs by client
-    // const fillScheduled = (dogArray) => {
-    //     let dogList = dogArray.map(dog => ({
-    //         dog_id: dog.dog_id,
-    //         client_id: dog.client_id,
-    //         name: dog.name,
-    //         id: dog.id,
-    //         route_id: dog.route_id,
-    //         client_first_name: dog.first_name,
-    //         client_last_name: dog.last_name,
-    //         route_name: dog.route_name
-    //     }));
-        
-    //     let idArray = dogArray.map(dog => dog.client_id);
-
-    //     //this filters out duplicate IDs
-    //     let uniqueIds = [...new Set(idArray)]
-
-    //     //this groups result.rows by id
-    //     const group = dogList.reduce((acc, item) => {
-    //         // console.log(acc)
-    //         if (!acc[item.client_id]) {
-    //             acc[item.client_id] = [];
-    //         }
-    //         acc[item.client_id].push(item);
-    //         return acc;
-    //     }, {})
-
-    //     let clients = uniqueIds.map(clientId => {
-    //         let dogsForClient = group[clientId];
-        
-    //         const { client_last_name, client_first_name, route_id, route_name } = dogsForClient[0];
-    //         const client = { client_last_name, client_first_name, client_id: clientId, route_id, route_name };
-        
-    //         client.dogs = dogsForClient.map(({ name, id }) => ({ name, id }));
-            
-    //         return client;
-    //     });
-    //     return clients;
-    // }
-    
     try {
         // scheduled dogs is an array of objects - of the dogs originally scheduled for the day.
         // find the dogs default scheduled for the day

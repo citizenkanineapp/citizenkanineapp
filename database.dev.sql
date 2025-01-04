@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS ck_dev.clients_schedule;
 DROP TABLE IF EXISTS ck_dev.admin_notes;
 DROP TABLE IF EXISTS ck_dev.dogs;
 DROP TABLE IF EXISTS ck_dev.clients;
+DROP TABLE IF EXISTS ck_dev.route_history;
 DROP TABLE IF EXISTS ck_dev.routes;
 DROP TABLE IF EXISTS ck_dev.employees_schedule;
 DROP TABLE IF EXISTS ck_dev.employees_schedule_changes;
@@ -30,16 +31,16 @@ CREATE TABLE ck_dev.employees (
 
 --** Employees MOCK DATA **--
 -- REMOVE BEFORE DEPLOYMENT
--- insert into ck_stage.employees 
--- 	(first_name, last_name, email, phone, street, city, "zip", admin) 
--- values 
--- 	('Danny', 'Paolini', 'dpaolini0@paypal.com', '(840)673-2127', '2900 W 43rd St', 'Minneapolis',  55410, false),
--- 	('Grant', 'Abels', 'gabels1@weather.com', '(885)747-7091', '2900 W 43rd St', 'Minneapolis',  55410, false),
--- 	('Angie', 'Stevens', 'sohickey2@google.ru', '(915)638-0768', '2900 W 43rd St', 'Minneapolis',  55410, false),
--- 	('Reeba', 'McEntire', 'rpretswell3@feedburner.com', '(964)688-1625', '2900 W 43rd St', 'Minneapolis',  55410, false),
--- 	('Florence', 'Wells', 'fmary4@unesco.org', '(697)209-6190', '2900 W 43rd St', 'Minneapolis',  55410, false),
--- 	('Otis', 'Barrand', 'obarrand5@wufoo.com', '(537)159-4107', '2900 W 43rd St', 'Minneapolis',  55410, false),
--- 	('Lydia', 'Nichols', 'lnichols6@virginia.edu', '(802)528-0961', '2900 W 43rd St', 'Minneapolis',  55410, false);
+INSERT INTO ck_stage.employees 
+	(first_name, last_name, email, phone, street, city, "zip", admin) 
+values 
+	('Danny', 'Paolini', 'dpaolini0@paypal.com', '(840)673-2127', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Grant', 'Abels', 'gabels1@weather.com', '(885)747-7091', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Angie', 'Stevens', 'sohickey2@google.ru', '(915)638-0768', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Reeba', 'McEntire', 'rpretswell3@feedburner.com', '(964)688-1625', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Florence', 'Wells', 'fmary4@unesco.org', '(697)209-6190', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Otis', 'Barrand', 'obarrand5@wufoo.com', '(537)159-4107', '2900 W 43rd St', 'Minneapolis',  55410, false),
+	('Lydia', 'Nichols', 'lnichols6@virginia.edu', '(802)528-0961', '2900 W 43rd St', 'Minneapolis',  55410, false);
 
 -- removed email from user since we no longer need it for password retrieval.
 CREATE TABLE ck_dev."user" (
@@ -63,7 +64,7 @@ INSERT INTO ck_dev."user"
 VALUES
 	('admin','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 0,'citizenkanineapp@gmail.com');
 	-- REMOVE BEFORE DEPLOYMENT
-	-- ('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2,null);
+	('packleader','$2a$10$UqOGOFQpFGSPEi/X1emtGOkqYQ.LD6SjSC03FZ2lZpb5EiBEbrfEu',true, 2,null);
 
 CREATE TABLE ck_dev.employees_schedule (
 	"id" SERIAL PRIMARY KEY,
@@ -80,23 +81,23 @@ CREATE TABLE ck_dev.employees_schedule (
 --** Employee Schedule MOCK DATA **--
 -- REMOVE BEFORE DEPLOYMENT
 
--- insert into employees_schedule
--- 	("emp_id", "week", "1", "2", "3", "4", "5") 
--- values
--- 	(1, 1, true, true, false, true, true),
--- 	(1, 2, false, true, false, false, false),
--- 	(2, 1, false, true, true, false, false),
--- 	(2, 2, false, true, true, false, true),
--- 	(3, 1, false, false, false, false, false),
--- 	(3, 2, false, false, false, false, false),
--- 	(4, 1, true, true, true, false, true),
--- 	(4, 2, true, true, true, false, true),
--- 	(5, 1, false, false, false, true, true),
--- 	(5, 2, false, false, false, true, true),
--- 	(6, 1, false, true, true, true, false),
--- 	(6, 2, false, true, true, true, false),
--- 	(7, 1, true, true, true, true, false),
--- 	(7, 2, true, true, true, true, false);
+insert into employees_schedule
+	("emp_id", "week", "1", "2", "3", "4", "5") 
+values
+	(1, 1, true, true, false, true, true),
+	(1, 2, false, true, false, false, false),
+	(2, 1, false, true, true, false, false),
+	(2, 2, false, true, true, false, true),
+	(3, 1, false, false, false, false, false),
+	(3, 2, false, false, false, false, false),
+	(4, 1, true, true, true, false, true),
+	(4, 2, true, true, true, false, true),
+	(5, 1, false, false, false, true, true),
+	(5, 2, false, false, false, true, true),
+	(6, 1, false, true, true, true, false),
+	(6, 2, false, true, true, true, false),
+	(7, 1, true, true, true, true, false),
+	(7, 2, true, true, true, true, false);
 
 -- ADDED EMP SCHEDULE CHANGES TABLE ck_dev.(Yani)
 CREATE TABLE ck_dev.employees_schedule_changes (

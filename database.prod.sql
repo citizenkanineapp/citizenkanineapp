@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS ck_prod.clients_schedule;
 DROP TABLE IF EXISTS ck_prod.admin_notes;
 DROP TABLE IF EXISTS ck_prod.dogs;
 DROP TABLE IF EXISTS ck_prod.clients;
+DROP TABLE IF EXISTS ck_prod.route_history;
 DROP TABLE IF EXISTS ck_prod.routes;
 DROP TABLE IF EXISTS ck_prod.employees_schedule;
 DROP TABLE IF EXISTS ck_prod.employees_schedule_changes;

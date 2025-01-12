@@ -55,10 +55,10 @@ router.post("/", async (req, res) => {
             return res.send("connectToQB");
           }
   
-          if (authErr || authResponse.statusCode !== 200) {
-            console.error("Invoice request error:", authErr, authResponse.body?.Fault?.Error);
-            return reject(new Error("Failed to create invoice"));
-          }
+          // if (authErr || authResponse.statusCode !== 200) {
+          //   console.error("Invoice request error:", authErr, authResponse.body?.Fault?.Error);
+          //   return reject(new Error("Failed to create invoice"));
+          // }
   
           console.log("Invoice created:", JSON.stringify(authResponse.body, null, 2));
           resolve();

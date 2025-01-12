@@ -9,84 +9,66 @@ const router = express.Router();
 // api endpoint https://this_app/api/qbInvoice/
 
 router.post("/", async (req, res) => {
-  // console.log('in server post invoice',req.body);
-
-  // tools module is an implementation of Quickbooks Online OAuth2.0 SDK/toolkit.
-  // Module creates OAUTH token object
-  // from client's session data sent to this endpoint as part of HTTP request;
-  // https://github.com/citizenkanineapp/citizenkanineapp/blob/main/server/modules/tools.js
-
-  const token = tools.getToken(req.session);
-
-  if (token) {
-    // generates query URL
-    const query = "/invoice?";
-    const url = config.api_uri + req.session.realmId + query;
-    console.log("Making API INVOICE call to: " + url);
-
-    // creates invoice objects
+    const token = tools.getToken(req.session);
+  
+    if (!token) {
+      console.log("Null token received.");
+      return res.send("connectToQb");
+    }
+  
+    const url = `${config.api_uri}${req.session.realmId}/invoice?`;
+    console.log(`Making API INVOICE call to: ${url}`);
+  
     const invoicesList = createInvoiceItems(req.body);
-    console.log(JSON.stringify(invoicesList, null, 2));
-    // invoicesList.map(invoice => console.log(invoice.Line))
-    // batch-sends invoice objects to quickbooks
-    await Promise.all(
-      invoicesList.map((invoice) => {
-        const requestObj = {
-          method: "POST",
-          url: url,
-          headers: {
-            Authorization: "Bearer " + token.accessToken,
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          json: invoice,
-        };
-
-        // This function is an implementation of the Quickbooks OAuth2.0 SDK/toolkit
-        request(requestObj, function (err, response) {
-          // checks current access token. If access token is expired, it renews access token using the stored refresh token.
-          tools.checkForUnauthorized(req, requestObj, err, response).then(
-            function ({ err, response }) {
-              // status code 401 corrosponds to unauthorized request.
-              // in future testing. 'invalid_grant' also occurs;; err.body.error ;; when should we specify?
-              if (response.statusCode === 401) {
-                // If unauthorized, send this response back to client.
-                //if fetchQbCustomers() in quickbooks.saga.js recieves this response,
-                //client redirects to this app server's /connect_to_qb endpoint.
-                res.send("connectToQB");
-
-                // don't know if this second else-if block is necessary, ie, covering non-401 errors.
-              } else if (err || response.statusCode != 200) {
-                console.log(
-                  "ERROR!",
-                  err,
-                  response.body,
-                  response.body.Fault.Error,
-                );
-
-                //turned off since we don't have handling for it on client side
-                //res.sendStatus(403)
-              } else {
-                console.log(
-                  "invoice created",
-                  JSON.stringify(response.body, null, 2),
-                );
-              }
-            },
-            function (err) {
-              console.log("error in invoice request: ", err);
-              // return res.json(err)
-            },
-          );
-        });
-      }),
-    );
-    res.sendStatus(201);
-  } else {
-    console.log("null token", token);
-    res.send("connectToQb");
+  
+    try {
+      await Promise.all(
+        invoicesList.map((invoice) => sendInvoiceRequest(url, token, invoice, req))
+      );
+      res.sendStatus(201);
+    } catch (error) {
+      console.error("Error creating invoices:", error);
+      res.sendStatus(500);
+    }
+  });
+  
+  // Helper Function to Send Invoice Request
+  function sendInvoiceRequest(url, token, invoice, req) {
+    return new Promise((resolve, reject) => {
+      const requestObj = {
+        method: "POST",
+        url: url,
+        headers: {
+          Authorization: `Bearer ${token.accessToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        json: invoice,
+      };
+  
+      request(requestObj, async (err, response) => {
+        try {
+          const { err: authErr, response: authResponse } = await tools.checkForUnauthorized(req, requestObj, err, response);
+  
+          if (authResponse.statusCode === 401) {
+            console.warn("Unauthorized request: Connect to QB.");
+            return res.send("connectToQB");
+          }
+  
+          if (authErr || authResponse.statusCode !== 200) {
+            console.error("Invoice request error:", authErr, authResponse.body?.Fault?.Error);
+            return reject(new Error("Failed to create invoice"));
+          }
+  
+          console.log("Invoice created:", JSON.stringify(authResponse.body, null, 2));
+          resolve();
+        } catch (error) {
+          console.error("Error in invoice request handling:", error);
+          reject(error);
+        }
+      });
+    });
   }
-});
 
 // creating array of invoice objects
 function createInvoiceItems(invoiceItems) {

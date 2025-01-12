@@ -197,7 +197,6 @@ router.get('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
                 }
 
             }
-            console.log('in walks/week', item.clientid, serviceId);
             
             // adds service details to invoice item
             for (let service of services) {

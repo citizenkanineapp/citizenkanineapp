@@ -115,9 +115,6 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 
     const lat = geoStats.data.addresses[0].latitude;
     const long = geoStats.data.addresses[0].longitude;
-    // const lat = 0;
-    // const long = 0;
-    console.log('heres the geoStats!', lat, long);
 
     await client.query('BEGIN')
     const clientTxt = await client.query(`
@@ -128,7 +125,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
                             RETURNING "id";
   `, [first_name, last_name, street, city, zip, route_id, phone, email, notes, lat, long])
     const customerId = clientTxt.rows[0].id
-    console.log('DOG ARRAY IS:', dogArray);
+    // console.log('DOG ARRAY IS:', dogArray);
     await Promise.all(dogArray.map(dog => {
       const dogTxt = `
                           INSERT INTO dogs 
@@ -162,7 +159,6 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 
 //route to edit client
 router.put('/', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
-  console.log('in PUT api/client client:', req.body)
   const connection = await pool.connect();
   let { first_name, last_name, street, city, zip, client_id, phone, email, notes, vet_name, vet_phone, route, route_name, dogs } = req.body
   //  console.log('dogs array?', dogs)

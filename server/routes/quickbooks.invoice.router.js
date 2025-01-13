@@ -61,7 +61,8 @@ router.post("/", async (req, res) => {
             return reject(new Error("Failed to create invoice"));
           }
   
-          console.log("Invoice created:", JSON.stringify(authResponse.body, null, 2));
+          // console.log("Invoice created:", JSON.stringify(authResponse.body, null, 2));
+          console.log("Invoice created:", JSON.stringify(authResponse.body.Invoice.CustomerRef.name, null, 2));
           resolve();
         } catch (error) {
           console.error("Error in invoice request handling:", error);

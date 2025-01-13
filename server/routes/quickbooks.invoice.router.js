@@ -57,7 +57,7 @@ router.post("/", async (req, res) => {
           }
   
           if (authErr || authResponse.statusCode !== 200) {
-            console.error("Invoice request error:", authErr, authResponse.body);
+            console.error("Invoice request error:", authErr, JSON.stringify(authResponse.body?.fault?.error));
             return reject(new Error("Failed to create invoice"));
           }
   

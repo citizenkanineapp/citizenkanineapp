@@ -10,7 +10,6 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
     const token = tools.getToken(req.session);
-  
     if (!token) {
       console.log("Null token received.");
       return res.send("connectToQb");
@@ -22,10 +21,10 @@ router.post("/", async (req, res) => {
     const invoicesList = createInvoiceItems(req.body);
   
     try {
-      await Promise.all(
-        invoicesList.map((invoice) => sendInvoiceRequest(url, token, invoice, req))
-      );
-      // console.log(JSON.stringify(res.body,null, 2));
+      // await Promise.all(
+      //   invoicesList.map((invoice) => sendInvoiceRequest(url, token, invoice, req))
+      // );
+      await processBatches(url, token, invoicesList, req)
       res.sendStatus(201);
     } catch (error) {
       console.error("Error creating invoices:", error);
@@ -33,8 +32,27 @@ router.post("/", async (req, res) => {
     }
   });
   
+  async function processBatches(url, token, invoicesList, req) {
+    const batchSize = 30; // limit per QB guide
+    for (let i = 0; i < invoicesList.length; i += batchSize) {
+      const batch = invoicesList.slice(i, i + batchSize);
+      console.log(`Processing batch ${i / batchSize + 1} of the ${Math.ceil(invoicesList.length / batchSize)}`);
+      await sendBatchInvoices(batch, url, token, req);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+  }
+
+  async function sendBatchInvoices(batch, url, token, req) {
+    await Promise.all(
+      batch.map(invoice => sendInvoiceRequest(url, token, invoice, req))
+    );
+  }
+
   // Helper Function to Send Invoice Request
-  function sendInvoiceRequest(url, token, invoice, req) {
+  function sendInvoiceRequest(url, token, invoice, req, retryCount = 0) {
+    const maxRetries = 5;
+    const backoffTime = 1000 * Math.pow(2, retryCount);
+
     return new Promise((resolve, reject) => {
       const requestObj = {
         method: "POST",
@@ -48,26 +66,44 @@ router.post("/", async (req, res) => {
       };
   
       request(requestObj, async (err, response) => {
-        try {
-          const { err: authErr, response: authResponse } = await tools.checkForUnauthorized(req, requestObj, err, response);
+        // try {
+        //   const { err: authErr, response: authResponse } = await tools.checkForUnauthorized(req, requestObj, err, response);
   
-          if (authResponse.statusCode === 401) {
-            console.warn("Unauthorized request: Connect to QB.");
-            return res.send("connectToQB");
+        //   if (authResponse.statusCode === 401) {
+        //     console.warn("Unauthorized request: Connect to QB.");
+        //     return res.send("connectToQB");
+        //   }
+  
+        //   if (authErr || authResponse.statusCode !== 200) {
+        //     console.error("Invoice request error:", authErr, JSON.stringify(authResponse.body?.fault?.error));
+        //     return reject(new Error("Failed to create invoice"));
+        //   }
+  
+        //   // console.log("Invoice created:", JSON.stringify(authResponse.body, null, 2));
+        //   console.log("Invoice created:", JSON.stringify(authResponse.body.Invoice.CustomerRef.name, null, 2));
+        //   resolve();
+        // } catch (error) {
+        //   console.error("Error in invoice request handling:", error);
+        //   reject(error);
+        // }
+        
+        if (response?.statusCode === 429) {
+          console.warn(`Throttle limit exceeded. Retrying in ${backoffTime}ms`)
+          if (retryCount < maxRetries) {
+            setTimeout(() => resolve(sendInvoiceRequest(url, token, invoice, req, retryCount + 1)), backoffTime);
+          } else {
+            reject(new Error("Max retries reached for invoice request."));
           }
-  
-          if (authErr || authResponse.statusCode !== 200) {
-            console.error("Invoice request error:", authErr, JSON.stringify(authResponse.body?.fault?.error));
-            return reject(new Error("Failed to create invoice"));
-          }
-  
-          // console.log("Invoice created:", JSON.stringify(authResponse.body, null, 2));
-          console.log("Invoice created:", JSON.stringify(authResponse.body.Invoice.CustomerRef.name, null, 2));
-          resolve();
-        } catch (error) {
-          console.error("Error in invoice request handling:", error);
-          reject(error);
+          return;
         }
+        
+        if (err || response.statusCode !== 200) {
+          console.error("Invoice request error:", err, response?.body);
+          return reject(err || new Error("Failed to create valid invoice"));
+        }
+
+        console.log("Invoice created:", JSON.stringify(response.body.Invoice.CustomerRef.name, null, 2));
+        resolve();
       });
     });
   }

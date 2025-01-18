@@ -21,9 +21,6 @@ router.post("/", async (req, res) => {
     const invoicesList = createInvoiceItems(req.body);
   
     try {
-      // await Promise.all(
-      //   invoicesList.map((invoice) => sendInvoiceRequest(url, token, invoice, req))
-      // );
       await processBatches(url, token, invoicesList, req)
       res.sendStatus(201);
     } catch (error) {
@@ -66,27 +63,6 @@ router.post("/", async (req, res) => {
       };
   
       request(requestObj, async (err, response) => {
-        // try {
-        //   const { err: authErr, response: authResponse } = await tools.checkForUnauthorized(req, requestObj, err, response);
-  
-        //   if (authResponse.statusCode === 401) {
-        //     console.warn("Unauthorized request: Connect to QB.");
-        //     return res.send("connectToQB");
-        //   }
-  
-        //   if (authErr || authResponse.statusCode !== 200) {
-        //     console.error("Invoice request error:", authErr, JSON.stringify(authResponse.body?.fault?.error));
-        //     return reject(new Error("Failed to create invoice"));
-        //   }
-  
-        //   // console.log("Invoice created:", JSON.stringify(authResponse.body, null, 2));
-        //   console.log("Invoice created:", JSON.stringify(authResponse.body.Invoice.CustomerRef.name, null, 2));
-        //   resolve();
-        // } catch (error) {
-        //   console.error("Error in invoice request handling:", error);
-        //   reject(error);
-        // }
-        
         if (response?.statusCode === 429) {
           console.warn(`Throttle limit exceeded. Retrying in ${backoffTime}ms`)
           if (retryCount < maxRetries) {

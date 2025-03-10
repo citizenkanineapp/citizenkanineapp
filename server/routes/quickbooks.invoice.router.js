@@ -86,7 +86,7 @@ router.post("/", async (req, res) => {
 
 // creating array of invoice objects
 function createInvoiceItems(invoiceItems) {
-  console.log('invoiceItems: ', invoiceItems);
+  // console.log('invoiceItems: ', invoiceItems);
 
   // creates set of unique client IDs and empty array object
   const clients = new Set(invoiceItems.map(({ qb_id }) => qb_id));
@@ -96,7 +96,7 @@ function createInvoiceItems(invoiceItems) {
   //For each unique client in clients set, creates single invoice object.
   //invoice objects formatted to Quickbooks Online API
   clients.forEach((client) => {
-    console.log("client: ", client)
+    // console.log("client: ", client)
     // One invoice object per client
     const invoice = {};
 
@@ -119,7 +119,7 @@ function createInvoiceItems(invoiceItems) {
     // loops through invoiceItems; if invoice item matches current client id,
     // pushes new line item to invoice.Line array
     for (let item of invoiceItems) {
-      console.log("item: ", item)
+      // console.log("item: ", item)
       if (item.qb_id === client) {
         invoice.Line.push({
           Description: item.description,
@@ -147,7 +147,7 @@ function createInvoiceItems(invoiceItems) {
         };
       }
     }
-    console.log('new invoice', invoice)
+    // console.log('new invoice', invoice)
   });
   return invoicesList;
 }

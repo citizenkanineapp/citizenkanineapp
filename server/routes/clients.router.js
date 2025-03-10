@@ -19,10 +19,32 @@ const {
 router.get('/', rejectUnauthenticated, (req, res) => {
   console.log('in GET api/clients')
   const queryText = `
-                    SELECT clients.first_name, clients.id as client_id, clients.qb_id, clients.last_name, clients.notes, clients.phone, clients.mobile, clients.email, clients.lat, clients.long, routes.id as route,
-
-                    routes.name as route_name, clients.street, clients.city, clients.zip, dogs.name as dog_name, dogs.id as dog_id, dogs.image, dogs.vet_name, dogs.notes as dog_notes, 
-                    dogs.vet_phone, dogs.flag, dogs.regular, dogs.active, clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
+                    SELECT 
+                      clients.first_name, 
+                      clients.id as client_id, 
+                      clients.qb_id, 
+                      clients.last_name, 
+                      clients.notes, 
+                      clients.phone, 
+                      clients.mobile, 
+                      clients.email, 
+                      clients.lat, 
+                      clients.long, 
+                      routes.id as route,
+                      routes.name as route_name, 
+                      clients.street, 
+                      clients.city, 
+                      clients.zip, 
+                      dogs.name as dog_name, 
+                      dogs.id as dog_id, 
+                      dogs.image, 
+                      dogs.vet_name, 
+                      dogs.notes as dog_notes,
+                      dogs.vet_phone, 
+                      dogs.flag, 
+                      dogs.regular, 
+                      dogs.active, 
+                      clients_schedule."1" as monday, clients_schedule."2" as tuesday, clients_schedule."3" as wednesday, clients_schedule."4" as thursday, clients_schedule."5" as friday from clients
                             JOIN dogs
                             ON clients.id = dogs.client_id
                             JOIN routes

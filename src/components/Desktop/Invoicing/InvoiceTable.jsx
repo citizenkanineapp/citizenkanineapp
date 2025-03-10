@@ -28,6 +28,10 @@ function InvoiceTable({ monthsShort }) {
   dayjs().format('MM/DD/YYYY');
   //console.log(invoiceItems)
 
+  function currencyFormat(num) {
+    return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+ }
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sx={{ mx: 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -52,9 +56,9 @@ function InvoiceTable({ monthsShort }) {
                   <TableCell key={i+"2"} >{item.first_name} {item.last_name}</TableCell>
                   <TableCell key={i+"3"} >{item.service.service}</TableCell>
                   <TableCell key={i+"4"} >{month}: {item.dates.map((date,i) => (i < item.dates.length-1 ? date + ', ': date))}</TableCell>
-                  <TableCell key={i+"5"} >{item.dates.length}</TableCell>
-                  <TableCell key={i+"6"} >{item.service.price}</TableCell>
-                  <TableCell key={i+"7"} >{item.service.price * item.dates.length}</TableCell>
+                  <TableCell key={i+"5"}  sx ={{textAlign: 'center'}}>{item.dates.length}</TableCell>
+                  <TableCell key={i+"6"} sx ={{textAlign: 'right'}}>{currencyFormat(item.service.price)}</TableCell>
+                  <TableCell key={i+"7"}  sx ={{textAlign: 'right'}}>{currencyFormat(item.service.price * item.dates.length)}</TableCell>
                 </StyledTableRow>
               ))} 
             </TableBody>

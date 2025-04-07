@@ -21,6 +21,7 @@ const style = {
 
 function EmployeeScheduleChangesModal (props) {
 
+    const dispatch = useDispatch();
     const initialDate =()=> {
         if(dayjs().$W === 0 || dayjs().$W === 6){
           return dayjs().add(1, 'day');
@@ -29,7 +30,10 @@ function EmployeeScheduleChangesModal (props) {
           return dayjs();
       }}
     const [date, setDate] = useState(initialDate);
-    const [dateValues, setDateValues] = useState([initialDate()]);  
+    const [dateValues, setDateValues] = useState([initialDate()]);
+    const [employee, setEmployee] = useState('');
+    const [scheduled, setScheduled] = useState('');
+
     const [empChange, setEmpChange] = useState({emp_id:'', date_to_change:`${date.$y}-${date.$M + 1}-${date.$D}`, is_scheduled: ''});
   const allEmployees = useSelector(store=> store.allEmployeesReducer.employees);
   const changes = useSelector(store=> store.allEmployeesReducer.empScheduleChanges);
@@ -56,14 +60,30 @@ function EmployeeScheduleChangesModal (props) {
 
   const handleSubmit = () => {
     // dispatch change to be added to database
-    console.log(date)
-    console.log(empChange);
-    // dispatch({
-    //   type: 'SAGA_ADD_EMP_CHANGE',
-    //   payload: empChange
-    // })
-    // setEmpChange({emp_id:'', date_to_change:`${date.$y}-${date.$M + 1}-${date.$D}`, is_scheduled: ''})
-    // setDate(initialDate)
+    const changeDates = [];
+    dateValues.forEach(date => changeDates.push(`${date.$y}-${date.$M + 1}-${date.$D}`));
+
+    console.log('changeDates:', changeDates)
+    let newChanges = [];
+    if (changeDates.length > 0){
+        changeDates.map(date => {
+            let thisChange = { emp_id: employee, date_to_change: date, is_scheduled: scheduled}
+            newChanges.push(thisChange)
+        })
+    }
+    console.log('newChanges:', newChanges)
+
+    if (newChanges.length > 0){
+         dispatch({
+      type: 'SAGA_ADD_EMP_CHANGE',
+      payload: newChanges
+    })
+    setEmployee('');
+    setScheduled('');
+    setDateValues([initialDate()]);
+    props.setShowModal(false)  
+    }
+
   }
     
     const isWeekend = (date) => {
@@ -114,20 +134,21 @@ return (
     <Box 
     sx={{ ...style, width: 'auto', height: 'auto', outline: 'none', borderRadius: '5px', display: 'flex-column', alignContent: 'center', justifyContent: 'center' }}
     >
-                  <FormControl  sx={{width: '15vw' }}>
+                  <FormControl  sx={{width: 'auto', minWidth: '15vw' }}>
             <InputLabel>Employee</InputLabel>
-            <Select value={empChange.emp_id} onChange={(e) => setEmpChange({...empChange, emp_id: e.target.value})}>
-                  {allEmployees && allEmployees.map(employee => {
+
+            <Select value={employee} onChange={(e) => setEmployee(e.target.value)}>
+                {allEmployees && allEmployees.map(employee => {
                     return (
                         <MenuItem key={employee.id} value={employee.id}>{employee.first_name} {employee.last_name}</MenuItem>
-                        )
-                  })}
+                    )
+                })}
             </Select>
           </FormControl>
 
-          <FormControl  sx={{width: '15vw' }}>
+          <FormControl  sx={{width: 'auto', minWidth: '15vw' }}>
             <InputLabel>Change Type</InputLabel>
-            <Select value={empChange.is_scheduled} onChange={(e) => setEmpChange({...empChange, is_scheduled: e.target.value})}>
+            <Select value={scheduled} onChange={(e) => setScheduled(e.target.value)}>
               <MenuItem value={true}>Add Employee</MenuItem>
               <MenuItem value={false}>Remove Employee</MenuItem>
             </Select>

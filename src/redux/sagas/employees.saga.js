@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
+import swal from 'sweetalert'
 
 
 function* fetchAllEmployees() {
@@ -185,12 +186,18 @@ function* deleteEmployee(action) {
 
 function* addEmpScheduleChange(action){
     const change = action.payload;
+    console.log('action.payload aka change:', action.payload)
     try {
         yield axios({
             method: 'POST',
             url: '/api/employees/schedule',
             data: change
         })
+        yield swal({
+            title: "Changes saved!",
+            icon: 'success',
+            timer: 2000
+        });
         yield put({
             type: 'SAGA_FETCH_CHANGES'
         })

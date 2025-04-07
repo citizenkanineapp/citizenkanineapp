@@ -12,6 +12,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const imageRouter = require('./routes/image.router');
 const employeesRouter = require('./routes/employees.router');
+const employeeScheduleRouter = require('./routes/employeeSchedule.router')
 const clientsRouter = require('./routes/clients.router');
 const mobileRouter = require('./routes/mobile.router');
 const invoiceRouter = require('./routes/invoice.router');
@@ -61,6 +62,7 @@ app.use('/api/oauth2', oauth2Router);
 app.use('/api/qbInvoice', qbInvoiceRouter);
 app.use('/api/qb_services', qbServicesRouter);
 app.use('/api/history', routeHistory);
+app.use('/api/employeeSchedule', employeeScheduleRouter);
 
 // Serve static files
 app.use(express.static('build'));

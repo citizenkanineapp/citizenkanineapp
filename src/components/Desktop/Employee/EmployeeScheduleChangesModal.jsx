@@ -73,7 +73,7 @@ function EmployeeScheduleChangesModal (props) {
     }
     console.log('newChanges:', newChanges)
 
-    if (newChanges.length > 0){
+    if (newChanges.length > 0 && employee){
          dispatch({
       type: 'SAGA_ADD_EMP_CHANGE',
       payload: newChanges
@@ -84,6 +84,13 @@ function EmployeeScheduleChangesModal (props) {
     props.setShowModal(false)  
     }
 
+  }
+
+  const handleClose = () => {
+    setEmployee('');
+    setScheduled('');
+    setDateValues([initialDate()]);
+    props.setShowModal(false);
   }
     
     const isWeekend = (date) => {
@@ -168,8 +175,8 @@ return (
                 }}
             />
           </LocalizationProvider>
-          <Box sx={{display: 'flex'}}>
-        <Button variant='contained' color='secondary'  sx={{height: '70%'}} onClick={() => props.setShowModal(false)}>Cancel</Button>
+          <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+        <Button variant='outlined' color='secondary'  sx={{height: '70%'}} onClick={handleClose}>Cancel</Button>
           <Button variant='contained' color='secondary' onClick={handleSubmit} sx={{height: '70%'}}> Submit</Button>
           </Box>
     </Box>

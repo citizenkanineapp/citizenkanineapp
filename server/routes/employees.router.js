@@ -280,26 +280,36 @@ router.post('/', rejectUnauthenticated, async (req, res)=> {
 
 // add employee schedule changes
 router.post('/schedule', rejectUnauthenticated, async (req, res) => {
-    const {emp_id, date_to_change, is_scheduled} = req.body;
-    const sqlQuery = 
-        `
-        INSERT INTO employees_schedule_changes
-            ("emp_id", "date_to_change", "is_scheduled")
-        VALUES
-            ($1, $2, $3)
-        ON CONFLICT (emp_id, date_to_change)
-        DO UPDATE SET "is_scheduled" = $3;
-        `
 
-    const sqlValues = [emp_id, date_to_change, is_scheduled]
-    pool.query(sqlQuery, sqlValues)
-        .then(dbRes=>{
-            res.sendStatus(201);
-        })
-        .catch(error=>{
-            res.sendStatus(500);
-            console.log('error in POST /employees/schedule', error)
-        })
+    console.log('in api/employees/schedule')
+    console.log('req.body:', req.body)
+
+    const client = await pool.connect();
+
+    try {
+        await client.query('BEGIN')
+        await Promise.all(req.body.map(scheduleChange => {
+            const scheduleTxt = `
+                INSERT INTO employees_schedule_changes
+                    ("emp_id", "date_to_change", "is_scheduled")
+                VALUES
+                    ($1, $2, $3)
+                ON CONFLICT (emp_id, date_to_change)
+                DO UPDATE SET "is_scheduled" = $3;
+                `
+                const scheduleValues = [scheduleChange.emp_id, scheduleChange.date_to_change, scheduleChange.is_scheduled]
+                return client.query(scheduleTxt, scheduleValues)
+        }));
+        await client.query('COMMIT')
+        res.sendStatus(201);
+    } catch (error) {
+        await client.query('ROLLBACK')
+        console.log('Error in post route for employee schedule changes', error);
+        res.sendStatus(500);
+    } finally {
+        client.release()
+        console.log('client release')
+    }
 });
 
 

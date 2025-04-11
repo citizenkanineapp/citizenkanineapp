@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import dayjs from 'dayjs';
+// styles for customdatepicker
+import { styled } from '@mui/material/styles';
 // This plugin is needed to get the week number in year:
 var weekOfYear = require('dayjs/plugin/weekOfYear')
 dayjs.extend(weekOfYear)
@@ -24,6 +26,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 //COMPONENTS
 import EmployeeModal from "../EmployeeModal/EmployeeModal";
 import RouteHistoryModal from "../../../AllPages/RouteHistory/RouteHistory";
+import EmployeeScheduleChangesModal from '../EmployeeScheduleChangesModal';
+
 //MUI
 import Button from '@mui/material/Button';
 
@@ -36,9 +40,15 @@ const isWeekend = (date) => {
 const weeksInYear = Array.from({length: 53}, (_, i) => i + 1)
 // console.log('array of weeks',weeksInYear.length)
 
+// this is boilerplate MUI styled utility
+// constructing a custom PickersDay comonent
+// https://mui.com/system/styled/
+// this solution from this stack overflow: https://stackoverflow.com/questions/46762199/material-ui-select-multiple-dates-with-calendar
+
 function EmployeeSchedule(){
   const dispatch = useDispatch();
   const history = useHistory();
+  const [addChange, setAddChange] = useState(false);
 
   useEffect(()=>{
     // Fetch employee schedules
@@ -76,7 +86,6 @@ function EmployeeSchedule(){
     setOpen(true);
   }
 
-
   const [value, setValue] = useState(dayjs());
   // Calling dayjs() without parameters returns a fresh day.js object with the current date and time that looks like:
   // {$L: 'en', $u: undefined, $d: Sat Nov 05 2022 14:37:11 GMT-0500 (Central Daylight Time), $x: {…}, $y: 2022}
@@ -89,41 +98,6 @@ function EmployeeSchedule(){
 
   const avatarColors = ['#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D', '#4A5061', '#539BD1', '#7BCEC8', '#F9CB78', '#F5A572', '#F37E2D', '#F8614D' ];
   const avatarColors2 = ['#808590', '#87b8df', '#a3ddd9', '#fbdba1', '#f9c8aa', '#f7a56c', '#fa9082', '#808590', '#87b8df', '#a3ddd9', '#fbdba1', '#f9c8aa', '#f7a56c', '#FA9082' ];
-
-  // console.log(dayjs());
-
-
-  const initialDate =()=> {
-    if(dayjs().$W === 0 || dayjs().$W === 6){
-      return dayjs().add(1, 'day');
-    }
-    else{
-      return dayjs();
-  }}
-// The conditional useState prevents the user from adding an employee to a weekend day
-  const [date, setDate] = useState(initialDate);
-  const [empChange, setEmpChange] = useState({emp_id:'', date_to_change:`${date.$y}-${date.$M + 1}-${date.$D}`, is_scheduled: ''});
- //console.log('initial change:', empChange)
-  const handleDateChange=(newValue)=>{
-    // console.log(newValue)
-    // let changeDate = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
-    // console.log(changeDate)
-    setEmpChange({...empChange, date_to_change: `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`});
-    setDate(newValue)
-  }
-
-  const handleSubmit=()=>{
-    // dispatch change to be added to database
-    //console.log(date)
-    //console.log(empChange);
-    dispatch({
-      type: 'SAGA_ADD_EMP_CHANGE',
-      payload: empChange
-    })
-    setEmpChange({emp_id:'', date_to_change:`${date.$y}-${date.$M + 1}-${date.$D}`, is_scheduled: ''})
-    setDate(initialDate)
-    //console.log(empChange);
-  }
 
   const handleClick = (employee)=> {
     openModal('EmployeeDetails');
@@ -138,6 +112,13 @@ function EmployeeSchedule(){
     })
   }
 
+  const [showModal, setShowModal] = useState(false);
+
+  const clickAddScheduleChanges = () => {
+    setShowModal(true)
+    console.log("showModal: ", showModal)
+  }
+
   return (
     <>
     <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', height: '90%', width: '100%'}}>
@@ -148,40 +129,16 @@ function EmployeeSchedule(){
         </Box>
         <Box sx={{display: 'flex', flexDirection: 'row', gap: 2, justifyContent: 'flex-start'}}>
         {/* change form here */}
-          <FormControl  sx={{width: '15vw' }}>
-            <InputLabel>Employee</InputLabel>
-            <Select value={empChange.emp_id} onChange={(e) => setEmpChange({...empChange, emp_id: e.target.value})}>
-                  {allEmployees && allEmployees.map(employee => {
-                    return (
-                        <MenuItem key={employee.id} value={employee.id}>{employee.first_name} {employee.last_name}</MenuItem>
-                        )
-                  })}
-            </Select>
-          </FormControl>
-          <FormControl  sx={{width: '15vw' }}>
-            <InputLabel>Change Type</InputLabel>
-            <Select value={empChange.is_scheduled} onChange={(e) => setEmpChange({...empChange, is_scheduled: e.target.value})}>
-              <MenuItem value={true}>Add Employee</MenuItem>
-              <MenuItem value={false}>Remove Employee</MenuItem>
-            </Select>
-          </FormControl>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DesktopDatePicker
-                shouldDisableDate={isWeekend}
-                label="Date To Change"
-                inputFormat="MM/DD/YYYY"
-                value={date}
-                onChange={handleDateChange}
-                renderInput={(params) => <TextField {...params} sx={{width: '15vw' }} />}
-            />
-          </LocalizationProvider>
-          <Button variant='contained' color='secondary' onClick={handleSubmit} sx={{height: '70%', mt: 1}}> Submit</Button>
+
+          <Button variant='contained' color='secondary' onClick={clickAddScheduleChanges} sx={{height: '70%', mt: 1}}>Add schedule change</Button>
+
+           <EmployeeScheduleChangesModal
+            open={showModal}
+            setShowModal={setShowModal}
+            onClose={() => setShowModal(false)}
+          />        
         </Box>
 
-          {/* <Grid sx={{mt: 2}}>
-              
-              <Button variant="outlined" color="info" onClick={() => setAddChange(!addChange)}>Cancel</Button>
-          </Grid> */}
     </Box>
       {/* eliminates visiblie modal refresh. no UI response if date with no history pops up. */}
       {routeHistory[0] ? <RouteHistoryModal display={'desktop'} open={open} setOpen={setOpen} /> : null}

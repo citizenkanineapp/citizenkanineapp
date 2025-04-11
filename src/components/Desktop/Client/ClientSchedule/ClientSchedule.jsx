@@ -100,7 +100,6 @@ function ClientSchedule() {
       />
     );
   };
-  
 
   // adds or removes dates to the dateValues array.
   const handleDateChange = (date) => {
@@ -162,6 +161,13 @@ function ClientSchedule() {
     setDateValues([initialDate()]);
     // console.log('newChanges', newChanges)
 
+  }
+
+  const close = event => {
+    dispatch({type: 'CLEAR_CLIENT'});
+    dispatch({ type: 'FETCH_CLIENTS'});
+    dispatch({ type: 'SET_MODAL_STATUS' });
+    dispatch({ type: 'CLEAR_EDIT_DOG' });
   }
 
   // CALENDAR STUFF
@@ -424,8 +430,8 @@ function ClientSchedule() {
                     />
                 </LocalizationProvider>
               <Grid sx={{mt: 2, display:'flex', justifyContent: 'center', ml:15, mt:-5}}>
-                  <Button variant='contained' color='secondary' onClick={handleSubmit}> Submit</Button>
-                  <Button variant="outlined" color="info" sx={{ml:3}} onClick={() => setAddChange(!addChange)}>Cancel</Button>
+                  <Button variant="outlined" color="info" onClick={() => setAddChange(!addChange)}>Cancel</Button>
+                  <Button variant='contained'  sx={{ml:3}}color='secondary' onClick={handleSubmit}> Submit</Button>
               </Grid>
           </Grid>
         :
@@ -437,12 +443,16 @@ function ClientSchedule() {
             
         </Grid>
         }
-        <Grid item xs={11} sx={{display: 'flex', justifyContent: 'right', pb: 3}}>
+        <Grid item xs={11} sx={{display: 'flex', justifyContent: 'space-between', pb: 3}}>
           <Button 
             variant="outlined" color="info"
             onClick={() => {
               dispatch({ type: 'SET_CLIENT_MODAL', payload: 'ClientDetails' });}}>
-            Back
+            Back to client details
+          </Button>
+          <Button
+            variant="outlined" color="secondary" onClick={close}>
+            Close
           </Button>
         </Grid>
       </Grid>

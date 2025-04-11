@@ -280,26 +280,6 @@ router.post('/', rejectUnauthenticated, async (req, res)=> {
 
 // add employee schedule changes
 router.post('/schedule', rejectUnauthenticated, async (req, res) => {
-    // const {emp_id, date_to_change, is_scheduled} = req.body;
-    // const sqlQuery = 
-    //     `
-    //     INSERT INTO employees_schedule_changes
-    //         ("emp_id", "date_to_change", "is_scheduled")
-    //     VALUES
-    //         ($1, $2, $3)
-    //     ON CONFLICT (emp_id, date_to_change)
-    //     DO UPDATE SET "is_scheduled" = $3;
-    //     `
-
-    // const sqlValues = [emp_id, date_to_change, is_scheduled]
-    // pool.query(sqlQuery, sqlValues)
-    //     .then(dbRes=>{
-    //         res.sendStatus(201);
-    //     })
-    //     .catch(error=>{
-    //         res.sendStatus(500);
-    //         console.log('error in POST /employees/schedule', error)
-    //     })
 
     console.log('in api/employees/schedule')
     console.log('req.body:', req.body)

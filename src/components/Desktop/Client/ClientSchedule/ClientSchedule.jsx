@@ -386,6 +386,7 @@ function ClientSchedule() {
               </FormControl>
               <FormControl  sx={{ mr: 4, pb: 1, width: '15vw' }}>
                 <InputLabel>Action</InputLabel>
+                {/* setScheduled chooses to Add or Remove a scheduled walk */}
                 <Select value={scheduled} onChange={(event) => setScheduled(event.target.value)}>
                   <MenuItem value={true}>Add Walk</MenuItem>
                   <MenuItem value={false}>Cancel Walk</MenuItem>

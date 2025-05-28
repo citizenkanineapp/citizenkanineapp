@@ -128,6 +128,7 @@ function* quickBooksSync (action) {
        // console.log(services.status)
     } else if (services.data === 'connectToQB'){
         // console.log('services redirect')
+    swal("Connect to QuickBooks in order to sync customers.")
         location.href = redirect
     }
         
@@ -145,6 +146,7 @@ function* quickBooksSync (action) {
     // these functions handle the asyncronous functions as we want. 
     if (qbResult === 'connectToQb'){
        // console.log('need to connect to qb')
+        swal("Connect to QuickBooks in order to sync customers.")
         location.href = redirect
 
     }
@@ -185,7 +187,7 @@ console.log("originalData: ", originalData)
             yield put ({type: 'UPDATE_ALL_QB_CUSTOMERS', payload: originalData});
         }
             catch {
-                alert('Error updating QB customers. Try connecting to QB again');
+                swal('Error updating QB customers. Try connecting to QB again.');
         }
     }
 }

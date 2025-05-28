@@ -132,13 +132,11 @@ function* quickBooksSync (action) {
         location.href = redirect
     }
         
-   console.log('arrived in saga for updating qb customers')
+//    console.log('arrived in saga for updating qb customers')
     const qbCustomers = yield axios.get('/api/quickbooks/customer')
     const dbCustomers = yield axios.get('/api/clients')
     let qbResult = qbCustomers.data
     let dbResult = dbCustomers.data
-    console.log("qbResult: ", qbResult);
-    console.log("dbResult: ", dbResult);
 
        
     
@@ -174,8 +172,7 @@ function* quickBooksSync (action) {
             qb: qbCustomers,
             db: dbCustomers
         }
-console.log("combinedDataObject: ", combinedDataObject)
-console.log("originalData: ", originalData)
+
         try {
             const customersToUpdate = yield axios({
                 method: 'PUT',

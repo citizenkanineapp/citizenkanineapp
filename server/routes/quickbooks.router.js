@@ -596,7 +596,7 @@ if(customerAddressChange.length > 0){
                 city = $2,
                 zip = $3,
                 lat = $4,
-                long = $5
+                long = $5,
                 notes = $6
 
               WHERE

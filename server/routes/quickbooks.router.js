@@ -5,6 +5,7 @@ const tools = require('../modules/tools');
 const config = require('../modules/config');
 const request = require('request');
 const router = express.Router();
+require('dotenv').config();
 
 const {
   rejectUnauthenticated,
@@ -379,6 +380,7 @@ function processSchedule (customers) {
     let customersAddDogs = []
     let customersDeleteDogs = []
     let customerNoDogChange = []
+    let customerAddressChange = []
 
     for(let qbCustomer of qbData){
       for (let dbCustomer of dbData){
@@ -390,13 +392,15 @@ function processSchedule (customers) {
           else if(qbCustomer.dogs.length < dbCustomer.dogs.length ){
             customersDeleteDogs.push(qbCustomer)
           }
-          else {
+          else if (qbCustomer.street === dbCustomer.street){
             customerNoDogChange.push(qbCustomer)
+          }
+          else {
+            customerAddressChange.push(qbCustomer)
           }
         }
       }
     } //end of outermost for loop
-
     
     /* These two functions prepare the customer objects for SQL (if dogs were added or deleted) */
     let processedCustomerDeleteDogs = getDogIdToDelete(customersDeleteDogs, dbData)
@@ -563,6 +567,52 @@ if(processedCustomerDeleteDogs.length === 0){
       return connection.query(dogTxt, dogValues)
     }));
 }}
+
+/* For updating geocoordinates to reflect address changes */
+
+if(customerAddressChange.length > 0){
+    for(let customer of customerAddressChange){
+        for(let dbVersion of dbData){
+        if(customer.qb_id === dbVersion.qb_id){
+        //geocoding for client
+        const api_key = process.env.map_api_key;
+        const config = { headers: { Authorization: api_key } };
+        const address = customer.street
+        const town = customer.city
+        const zip = customer.zip
+
+        const geoStats = await axios.get(`https://api.radar.io/v1/geocode/forward?query=${address}+${town}+${zip}`, config);
+
+        const newLat = geoStats.data.addresses[0].latitude;
+        const newLong = geoStats.data.addresses[0].longitude;
+        customer.lat = newLat
+        customer.long = newLong
+        console.log("Customer with address change: ", customer)
+
+        const addressChangeText = `
+            UPDATE clients
+              SET
+                street = $1, 
+                city = $2,
+                zip = $3,
+                lat = $4,
+                long = $5
+                notes = $6
+
+              WHERE
+                qb_id = $7;
+            `
+          const values = [customer.street, customer.city, customer.zip, customer.lat, customer.long, customer.notes, customer.qb_id]
+          await connection.query(addressChangeText, values)
+
+      console.log(`Geocoordinates updated for ${customerAddressChange.length} customer(s)`)
+        }
+      }
+
+  }
+        
+}
+
     await connection.query('COMMIT')
     res.sendStatus(201);
   } catch (dbErr) {
@@ -574,8 +624,6 @@ if(processedCustomerDeleteDogs.length === 0){
     console.log('connection release');
   }
   });
-
-  
   function getDogIdToDelete (customers, dbData) {
     let processedCustomers = []
       for(let customer of customers ){

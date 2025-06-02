@@ -18,8 +18,8 @@ function* createQbInvoice (action) {
         })
        // console.log(invoiceResponse);
         if (invoiceResponse.data === 'connectToQb') {
+            swal("Redirecting to QuickBooks in order to sync customers.")
             location.href = redirect
-
         } else if (invoiceResponse.status === 201) {
             //don't know how to handle 201 status in router.
             swal("Invoices sent!")
@@ -128,20 +128,23 @@ function* quickBooksSync (action) {
        // console.log(services.status)
     } else if (services.data === 'connectToQB'){
         // console.log('services redirect')
+    swal("Connect to QuickBooks in order to sync customers.")
         location.href = redirect
     }
         
-   // console.log('arrived in saga for updating qb customers')
+//    console.log('arrived in saga for updating qb customers')
     const qbCustomers = yield axios.get('/api/quickbooks/customer')
     const dbCustomers = yield axios.get('/api/clients')
     let qbResult = qbCustomers.data
     let dbResult = dbCustomers.data
+
        
     
     // this duplicates the if/else block of lines 112-118. theoretcally, lines 114 should resolve before lines 121, but we aren't confident
     // these functions handle the asyncronous functions as we want. 
     if (qbResult === 'connectToQb'){
        // console.log('need to connect to qb')
+        swal("Connect to QuickBooks in order to sync customers.")
         location.href = redirect
 
     }
@@ -156,8 +159,8 @@ function* quickBooksSync (action) {
         let existingCustomerIds = new Set(dbResult.map(({qb_id}) => qb_id))
         let existingCustomers = qbResult.filter(({qb_id}) => existingCustomerIds.has(qb_id))
         let uniqueCustomers = qbResult.filter(({qb_id}) => !existingCustomerIds.has(qb_id))
-       // console.log('Unique customer objects in this route:', uniqueCustomers)
-       // console.log('existing customers', existingCustomers)
+       console.log('Unique customer objects in this route:', uniqueCustomers)
+       console.log('existing customers', existingCustomers)
         
     /*Existing clients to be updated go here: */
         const combinedDataObject = {
@@ -176,12 +179,12 @@ function* quickBooksSync (action) {
                 url: '/api/quickbooks/customer/put',
                 data: combinedDataObject
             })
-            //console.log('success in put route', customersToUpdate)
      /* Calls saga function that checks for new clients */
             yield put ({type: 'UPDATE_ALL_QB_CUSTOMERS', payload: originalData});
+            swal("Customers synced!")
         }
             catch {
-                alert('Error updating QB customers. Try connecting to QB again');
+                swal('Error updating QB customers. Try connecting to QB again.');
         }
     }
 }

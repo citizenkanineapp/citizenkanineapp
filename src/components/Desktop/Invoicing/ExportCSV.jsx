@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 import { CSVLink } from "react-csv";
 import { Button, Box } from "@mui/material";
 import dayjs from 'dayjs';
 import './CSVLink.css';
+import { Oval } from "react-loader-spinner";
 // let localeData = require('dayjs/plugin/localeData');
 // dayjs.extend(localeData);
 
@@ -13,6 +15,7 @@ const ExportCSV = ({ monthsShort }) => {
     const dispatch = useDispatch();
     const invoiceItems = useSelector(store => store.invoiceReducer);
    // console.log(invoiceItems);
+   const [loading, setLoading] = useState(false);
 
     const headers = [
         { label: 'InvoiceNo', key: 'InvoiceNo' },
@@ -52,6 +55,11 @@ const ExportCSV = ({ monthsShort }) => {
         }
     };
 
+    const exportToQB = (e) => {
+        // setLoading(true)
+        dispatch({type: 'CREATE_QB_INVOICE', payload: invoiceItems })
+    }
+
     return (
         <Box component="span">
             {invoiceItems && invoiceItems.map &&
@@ -68,13 +76,13 @@ const ExportCSV = ({ monthsShort }) => {
                    </CSVLink>
                 </Button>
                 <Button 
-                    onClick={
-                        e=>dispatch({type: 'CREATE_QB_INVOICE', payload: invoiceItems })
-                    }
+                    onClick={(e) => exportToQB(e)}
                     size="small"
                     variant="contained"
                     color="primary"
-                    sx={{ mx: 1, mt: 1 }}>
+                    sx={{ mx: 1, mt: 1 }}
+                    // disabled={loading}
+                    >
                         EXPORT QB
                 </Button>
             </Box>

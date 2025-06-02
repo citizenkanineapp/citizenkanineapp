@@ -18,8 +18,8 @@ function* createQbInvoice (action) {
         })
        // console.log(invoiceResponse);
         if (invoiceResponse.data === 'connectToQb') {
+            swal("Redirecting to QuickBooks in order to sync customers.")
             location.href = redirect
-            swal("Connect to QuickBooks in order to sync customers.")
         } else if (invoiceResponse.status === 201) {
             //don't know how to handle 201 status in router.
             swal("Invoices sent!")

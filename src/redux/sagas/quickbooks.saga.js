@@ -179,9 +179,9 @@ function* quickBooksSync (action) {
                 url: '/api/quickbooks/customer/put',
                 data: combinedDataObject
             })
-            //console.log('success in put route', customersToUpdate)
      /* Calls saga function that checks for new clients */
             yield put ({type: 'UPDATE_ALL_QB_CUSTOMERS', payload: originalData});
+            swal("Customers synced!")
         }
             catch {
                 swal('Error updating QB customers. Try connecting to QB again.');

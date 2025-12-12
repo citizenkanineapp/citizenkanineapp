@@ -75,7 +75,11 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 function filterCustomers(customers) {
   console.log('array of customers straight from QB?', Array.isArray(customers.QueryResponse.Customer));
   // TODO: add a temp log to show the data?
-  let customerArray = customers.QueryResponse.Customer 
+  let customerArray = customers.QueryResponse.Customer || [];
+  if (!Array.isArray(customers.QueryResponse.Customer)) {
+    console.log("⚠️ QuickBooks returned no customers — using empty array")
+  }
+
   let customersAfterProcessing = []
   for (let oneCustomer of customerArray) {
     let customer = {

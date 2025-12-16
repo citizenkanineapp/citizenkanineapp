@@ -21,7 +21,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
   if(token) {
 
     const query = encodeURI('/query?query= select * from customer');
-    console.log('QB COMPANY ID:', req.session.realmId)
+    // console.log('QB COMPANY ID:', req.session.realmId)
     const url = config.api_uri + req.session.realmId + query
      //console.log('Making API Customer call to: ' + url)
     // tools.refreshTokensWithToken(token.refreshToken)
@@ -53,7 +53,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
       
           //initial response from QB servers
           let customers = JSON.parse(response.body)
-          console.log('CUSTOMERS', customers)
+          // console.log('CUSTOMERS', customers)
       
           // this function starts the process of formatting the customer data
           let filteredCustomers =  filterCustomers(customers)
@@ -73,13 +73,7 @@ router.get('/customer', rejectUnauthenticated, (req, res) => {
 
   //this function processes the QB customers into a data object that matches our DB object
 function filterCustomers(customers) {
-  console.log('array of customers straight from QB?', Array.isArray(customers.QueryResponse.Customer));
-  // TODO: add a temp log to show the data?
-  let customerArray = customers.QueryResponse.Customer || [];
-  if (!Array.isArray(customers.QueryResponse.Customer)) {
-    console.log("⚠️ QuickBooks returned no customers — using empty array")
-  }
-
+  let customerArray = customers.QueryResponse.Customer;  
   let customersAfterProcessing = []
   for (let oneCustomer of customerArray) {
     let customer = {
